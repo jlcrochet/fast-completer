@@ -92,7 +92,7 @@ make install   # installs to %LOCALAPPDATA%\Programs
 
 Open a Developer Command Prompt and run:
 ```cmd
-cl /O2 /Fe:fast-completer.exe fast-completer.c generate_blob.c vendor\cjson\cJSON.c vendor\libyaml\src\api.c vendor\libyaml\src\reader.c vendor\libyaml\src\scanner.c vendor\libyaml\src\parser.c vendor\libyaml\src\loader.c /Ivendor\libyaml\include /DHAVE_CONFIG_H
+cl /O3 /Fe:fast-completer.exe fast-completer.c generate_blob.c vendor\cjson\cJSON.c vendor\libyaml\src\api.c vendor\libyaml\src\reader.c vendor\libyaml\src\scanner.c vendor\libyaml\src\parser.c vendor\libyaml\src\loader.c /Ivendor\libyaml\include /DHAVE_CONFIG_H
 ```
 
 Then copy `fast-completer.exe` to a directory in your PATH, such as:

@@ -1,7 +1,7 @@
 # Makefile for fast-completer
 
 CC ?= gcc
-CFLAGS ?= -O2 -Wall -Wextra
+CFLAGS ?= -O3 -Wall -Wextra
 LDFLAGS ?=
 
 # Include paths for vendor libraries
