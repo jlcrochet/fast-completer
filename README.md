@@ -21,6 +21,7 @@ This project provides a single native C binary that can provide completions for 
   - [Commands](#commands)
   - [Parameters](#parameters)
   - [Global Parameters](#global-parameters)
+- [Binary Blob Format](#binary-blob-format)
 - [Shell Integration](#shell-integration)
   - [Bash](#bash)
   - [Zsh](#zsh)
@@ -28,7 +29,6 @@ This project provides a single native C binary that can provide completions for 
   - [Elvish](#elvish)
   - [Nushell](#nushell)
   - [PowerShell](#powershell)
-- [Binary Blob Format](#binary-blob-format)
 - [Limitations](#limitations)
 - [How It Works](#how-it-works)
 
@@ -292,6 +292,23 @@ Global parameters appear in `global_params` and are available to all commands:
 | `takes_value` | No | Whether the option takes a value (default: true) |
 | `choices` | No | Array of valid values |
 
+## Binary Blob Format
+
+The blob format is designed for zero-copy memory-mapped access:
+
+| Section | Description |
+|---------|-------------|
+| Header (68 bytes) | Magic (`FCMP`), version, counts, offsets |
+| String table | VLQ length-prefixed, deduplicated strings |
+| Commands array | Fixed-size command structs (16 bytes each) |
+| Params array | Fixed-size param structs (13 bytes each) |
+| Choices data | Null-terminated uint32 offset arrays |
+| Members data | Null-terminated uint32 offset arrays |
+| Global params | Param structs for global options |
+| Root command | Single command struct for the CLI root |
+
+All integers are little-endian. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
+
 ## Shell Integration
 
 Completions are returned pre-sorted. Where possible, disable the shell's sorting to preserve the order.
@@ -426,23 +443,6 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
     Register-ArgumentCompleter -Native -CommandName $_.BaseName -ScriptBlock $fcCompleter
 }
 ```
-
-## Binary Blob Format
-
-The blob format is designed for zero-copy memory-mapped access:
-
-| Section | Description |
-|---------|-------------|
-| Header (68 bytes) | Magic (`FCMP`), version, counts, offsets |
-| String table | VLQ length-prefixed, deduplicated strings |
-| Commands array | Fixed-size command structs (16 bytes each) |
-| Params array | Fixed-size param structs (13 bytes each) |
-| Choices data | Null-terminated uint32 offset arrays |
-| Members data | Null-terminated uint32 offset arrays |
-| Global params | Param structs for global options |
-| Root command | Single command struct for the CLI root |
-
-All integers are little-endian. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
 
 ## Limitations
 
