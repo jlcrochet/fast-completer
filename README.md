@@ -4,6 +4,34 @@ A universal fast native shell completion provider for CLI tools.
 
 This project provides a single native C binary that can provide completions for any CLI tool by reading from a binary blob file. Unlike tool-specific completers, the same binary works with AWS CLI, Azure CLI, or any other tool with a generated blob.
 
+## Table of Contents
+
+- [Usage](#usage)
+  - [Output Formats](#output-formats)
+- [Installation](#installation)
+  - [Pre-built Binaries](#pre-built-binaries)
+  - [From Source](#from-source)
+- [Cache Directory](#cache-directory)
+- [Generating Blob Files](#generating-blob-files)
+  - [Example Schemas](#example-schemas)
+  - [Inspecting Blobs](#inspecting-blobs)
+- [Schema Format](#schema-format)
+  - [Top-level Properties](#top-level-properties)
+  - [Groups](#groups)
+  - [Commands](#commands)
+  - [Parameters](#parameters)
+  - [Global Parameters](#global-parameters)
+- [Shell Integration](#shell-integration)
+  - [Bash](#bash)
+  - [Zsh](#zsh)
+  - [Fish](#fish)
+  - [Elvish](#elvish)
+  - [Nushell](#nushell)
+  - [PowerShell](#powershell)
+- [Binary Blob Format](#binary-blob-format)
+- [Limitations](#limitations)
+- [How It Works](#how-it-works)
+
 ## Usage
 
 ```
@@ -175,6 +203,94 @@ python dump_blob.py commands.bin --command "s3 cp"
 # Show a range of commands
 python dump_blob.py commands.bin --range commands:0:20
 ```
+
+## Schema Format
+
+Schemas are JSON or YAML files that describe a CLI's command structure. The `schemas/` directory contains examples for AWS and Azure CLIs.
+
+### Top-level Properties
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` or `cli` | Yes | CLI name (e.g., `"aws"`). Determines the blob filename. |
+| `version` | No | CLI version string |
+| `global_params` | No | Array of parameters available to all commands |
+| `groups` | No | Array of command groups (subcommand namespaces) |
+| `commands` | Yes | Array of command definitions |
+
+### Groups
+
+Groups are subcommand namespaces (e.g., `aws s3`, `az storage`):
+
+```json
+{
+  "name": "s3",
+  "type": "group",
+  "summary": "Amazon S3 commands"
+}
+```
+
+### Commands
+
+Commands are the leaf nodes that perform actions:
+
+```json
+{
+  "name": "s3 cp",
+  "type": "command",
+  "summary": "Copies a file or object to/from S3",
+  "parameters": [...]
+}
+```
+
+The `name` is the full command path with spaces (e.g., `"ec2 run-instances"`).
+
+### Parameters
+
+Parameters define the flags and options for a command:
+
+```json
+{
+  "name": "--instance-type",
+  "options": ["--instance-type"],
+  "required": false,
+  "summary": "The instance type",
+  "choices": ["t2.micro", "t2.small", "t2.medium"]
+}
+```
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Primary option name (e.g., `"--instance-type"`) |
+| `options` | No | Array of option aliases |
+| `required` | No | Whether the parameter is required (default: false) |
+| `summary` | No | Short description for completion display |
+| `description` | No | Longer description |
+| `type` | No | Type hint (`"bool"` for flags that don't take values) |
+| `choices` | No | Array of valid values for completion |
+| `members` | No | For structure/list types, array of `{"key": "..."}` member names |
+
+Parameters with `type: "bool"` or names starting with `--no-` are treated as flags (no value required).
+
+### Global Parameters
+
+Global parameters appear in `global_params` and are available to all commands:
+
+```json
+{
+  "name": "--region",
+  "description": "The region to use",
+  "takes_value": true,
+  "choices": ["us-east-1", "us-west-2", "eu-west-1"]
+}
+```
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Option name (e.g., `"--region"`) |
+| `description` | No | Description for completion display |
+| `takes_value` | No | Whether the option takes a value (default: true) |
+| `choices` | No | Array of valid values |
 
 ## Shell Integration
 
