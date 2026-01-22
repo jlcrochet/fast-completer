@@ -9,7 +9,13 @@ Usage:
     python export_command_tree.py > gcloud_commands.json
 
 Requirements:
-    - Google Cloud SDK must be installed
+    Google Cloud SDK must be installed on the system. Unlike AWS/Azure CLIs,
+    gcloud is not pip-installable - install via:
+      - https://cloud.google.com/sdk/docs/install
+      - apt: sudo apt install google-cloud-cli
+      - brew: brew install google-cloud-sdk
+
+    Set CLOUDSDK_ROOT_DIR if installed in a non-standard location.
 """
 
 import json

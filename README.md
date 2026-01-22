@@ -217,18 +217,20 @@ fast-completer --generate-blob schemas/gcloud/gcloud_commands.json
 To regenerate schemas from the latest CLI version:
 
 ```bash
-# AWS (requires awscli installed)
+# AWS (requires awscli)
 cd schemas/aws
-python export_command_tree.py > aws_commands.json
+uv sync && uv run python export_command_tree.py > aws_commands.json
 
-# Azure (requires azure-cli installed)
+# Azure (requires azure-cli)
 cd schemas/az
-python export_command_tree.py > az_commands.json
+uv sync && uv run python export_command_tree.py > az_commands.json
 
-# gcloud (requires google-cloud-sdk installed)
+# gcloud (requires google-cloud-sdk installed on the system)
 cd schemas/gcloud
 python export_command_tree.py > gcloud_commands.json
 ```
+
+Each schema directory has a `pyproject.toml` for `uv` to manage dependencies. Run `uv sync` once to install dependencies, then `uv run python` to run the export script.
 
 The export scripts introspect the installed CLI to extract all commands, parameters, and descriptions. Run them after updating your CLI to get completions for new commands.
 

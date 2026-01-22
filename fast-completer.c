@@ -838,7 +838,7 @@ static bool alloc_buffers(void) {
 // Cache directory management
 // --------------------------------------------------------------------------
 
-// Get cache directory path (caller must free)
+// Get cache directory path
 static char *get_cache_dir(void) {
     // Check for custom cache directory
     const char *custom = getenv("FAST_COMPLETER_CACHE");
@@ -884,16 +884,13 @@ static bool ensure_cache_dir(void) {
         *last_slash = '\0';
         mkdir(parent, 0755);
     }
-    free(parent);
     mkdir(cache_dir, 0755);
 #endif
 
-    free(cache_dir);
     return true;
 }
 
 // Build full blob path in cache directory
-// Caller must free the result
 static char *build_cache_path(const char *name) {
     char *cache_dir = get_cache_dir();
     if (!cache_dir) return NULL;
@@ -906,7 +903,6 @@ static char *build_cache_path(const char *name) {
     snprintf(path, len, "%s/%s.bin", cache_dir, name);
 #endif
 
-    free(cache_dir);
     return path;
 }
 
@@ -920,7 +916,6 @@ static bool is_simple_name(const char *path) {
 }
 
 // Resolve blob path: if simple name, look in cache; otherwise use as-is
-// Caller must free the result
 static char *resolve_blob_path(const char *blob_arg) {
     // If it contains path separators or ends with .bin, use as-is
     if (!is_simple_name(blob_arg)) {
@@ -935,7 +930,6 @@ static char *resolve_blob_path(const char *blob_arg) {
     }
 
     char *path = build_cache_path(name);
-    free(name);
     return path;
 }
 
@@ -1017,11 +1011,9 @@ int main(int argc, char *argv[]) {
             ensure_cache_dir();
             derived_path = build_cache_path(name);
             output_path = derived_path;
-            free(name);
         }
 
         bool result = generate_blob(schema_path, output_path, big_endian);
-        free(derived_path);
         return result ? 0 : 1;
     }
 
@@ -1059,7 +1051,6 @@ int main(int argc, char *argv[]) {
     if (output_format == OUT_UNKNOWN) {
         fprintf(stderr, "Unknown output format: %s\n", format_name);
         fprintf(stderr, "Supported: lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, pwsh\n");
-        free(resolved_path);
         return 1;
     }
 
@@ -1069,21 +1060,17 @@ int main(int argc, char *argv[]) {
             char *cache_dir = get_cache_dir();
             fprintf(stderr, "Blob '%s' not found in %s\n", cli_name, cache_dir ? cache_dir : "(unknown)");
             fprintf(stderr, "Generate it with: fast-completer --generate-blob <schema>\n");
-            free(cache_dir);
         }
-        free(resolved_path);
         return 1;
     }
 
     if (!alloc_buffers()) {
-        free(resolved_path);
         return 1;
     }
 
     flockfile(stdout);
     complete(argc - spans_start, (const char **)(argv + spans_start));
     funlockfile(stdout);
-    free(resolved_path);
 
     return 0;
 }

@@ -30,10 +30,6 @@
 
 // Limits
 #define VLQ_MAX_LENGTH 32767
-#define MAX_STRINGS 1000000
-#define MAX_PARAMS 100000
-#define MAX_COMMANDS 100000
-#define MAX_CHOICES_LISTS 10000
 
 // Msgpack overhead constants
 #define KEY_VALUE_LEN 5
