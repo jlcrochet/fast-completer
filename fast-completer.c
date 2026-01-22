@@ -944,10 +944,49 @@ static char *resolve_blob_path(const char *blob_arg) {
     return path;
 }
 
+// Dump blob header for debugging
+static void dump_header(const char *path) {
+    const uint32_t *h = (const uint32_t *)(blob + 8);
+    uint16_t version = *(uint16_t *)(blob + 4);
+    uint16_t flags = *(uint16_t *)(blob + 6);
+
+    printf("=== HEADER ===\n");
+    printf("  path: %s\n", path);
+    printf("  magic: %.4s\n", (const char *)blob);
+    printf("  version: %u\n", version);
+    printf("  flags: %u", flags);
+    if (flags) {
+        printf(" (");
+        if (flags & HEADER_FLAG_BIG_ENDIAN) printf("big_endian");
+        if (flags & HEADER_FLAG_NO_DESCRIPTIONS) {
+            if (flags & HEADER_FLAG_BIG_ENDIAN) printf(", ");
+            printf("no_descriptions");
+        }
+        printf(")");
+    }
+    printf("\n");
+    printf("  max_command_path_len: %u\n", h[0]);
+    printf("  msgpack_buffer_size: %u\n", h[1]);
+    printf("  command_count: %u\n", h[2]);
+    printf("  param_count: %u\n", h[3]);
+    printf("  global_param_count: %u\n", h[4]);
+    printf("  string_table_size: %u\n", h[5]);
+    printf("  choices_count: %u\n", h[6]);
+    printf("  members_count: %u\n", h[7]);
+    printf("  string_table_off: %u\n", h[8]);
+    printf("  commands_off: %u\n", h[9]);
+    printf("  params_off: %u\n", h[10]);
+    printf("  choices_off: %u\n", h[11]);
+    printf("  members_off: %u\n", h[12]);
+    printf("  global_params_off: %u\n", h[13]);
+    printf("  root_command_off: %u\n", h[14]);
+}
+
 static void print_help(void) {
     puts("fast-completer - Universal fast completion provider\n");
     puts("Usage: fast-completer [--blob <path>] <format> <spans...>");
-    puts("       fast-completer --generate-blob <schema> [output]\n");
+    puts("       fast-completer --generate-blob <schema> [output]");
+    puts("       fast-completer --dump-header <blob>\n");
     puts("Completion mode:");
     puts("  fast-completer <format> <spans...>\n");
     puts("  format        Output format (see below)");
@@ -970,6 +1009,9 @@ static void print_help(void) {
     puts("  --no-descriptions   Omit descriptions entirely (smallest blob)");
     puts("  --long-descriptions Include full descriptions (default is first sentence)\n");
     puts("  If output is omitted, reads 'name' from schema and saves to cache.\n");
+    puts("Dump header mode:");
+    puts("  fast-completer --dump-header <blob>\n");
+    puts("  blob              Path or cache name (e.g., 'aws' or '/path/to/aws.bin')\n");
     puts("Output formats:");
     puts("  bash, lines       One value per line (no descriptions)");
     puts("  zsh               value:description");
@@ -986,12 +1028,28 @@ static void print_help(void) {
     puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
     puts("  fast-completer --blob /path/to/custom.bin zsh mycli --");
-    puts("      Complete flags using explicit blob path");
+    puts("      Complete flags using explicit blob path\n");
+    puts("  fast-completer --dump-header aws");
+    puts("      Dump header of cached aws.bin blob");
 }
 
 int main(int argc, char *argv[]) {
     if (argc >= 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
         print_help();
+        return 0;
+    }
+
+    // Handle --dump-header mode
+    if (argc >= 2 && strcmp(argv[1], "--dump-header") == 0) {
+        if (argc < 3) {
+            fprintf(stderr, "Usage: fast-completer --dump-header <blob>\n");
+            return 1;
+        }
+        char *path = resolve_blob_path(argv[2]);
+        if (!load_blob(path)) {
+            return 1;
+        }
+        dump_header(path);
         return 0;
     }
 
