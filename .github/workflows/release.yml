@@ -19,9 +19,10 @@ jobs:
           - os: macos-latest
             artifact: fast-completer-macos-arm64
             binary: fast-completer
-          - os: macos-13
+          - os: macos-latest
             artifact: fast-completer-macos-x86_64
             binary: fast-completer
+            cflags: -arch x86_64
           - os: windows-latest
             artifact: fast-completer-windows-x86_64
             binary: fast-completer.exe
@@ -54,7 +55,7 @@ jobs:
 
       - name: Build (Unix)
         if: runner.os != 'Windows'
-        run: make release
+        run: make release CFLAGS="${{ matrix.cflags }} -O3 -Wall -Wextra -DNDEBUG" LDFLAGS="${{ matrix.cflags }} -s"
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
