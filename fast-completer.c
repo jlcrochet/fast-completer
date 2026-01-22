@@ -941,14 +941,15 @@ static char *resolve_blob_path(const char *blob_arg) {
 
 static void print_help(void) {
     puts("fast-completer - Universal fast completion provider\n");
-    puts("Usage: fast-completer [--blob <path>] <name> <format> [spans...]");
+    puts("Usage: fast-completer [--blob <path>] <format> <spans...>");
     puts("       fast-completer --generate-blob <schema> [output]\n");
     puts("Completion mode:");
-    puts("  fast-completer <name> <format> <spans...>\n");
-    puts("  name          CLI name (e.g., 'aws') - looks up <name>.bin in cache");
+    puts("  fast-completer <format> <spans...>\n");
     puts("  format        Output format (see below)");
-    puts("  spans         Command line tokens including CLI name\n");
+    puts("  spans         Command line tokens starting with CLI name\n");
     puts("  --blob <path> Use blob at specified path instead of cache lookup\n");
+    puts("  The CLI name is derived from the first span and used to look up");
+    puts("  <name>.bin in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
 #ifdef _WIN32
     puts("    %LOCALAPPDATA%\\fast-completer\\<name>.bin");
@@ -974,9 +975,9 @@ static void print_help(void) {
     puts("Examples:");
     puts("  fast-completer --generate-blob aws.json");
     puts("      Generate blob from schema with {\"name\": \"aws\", ...}\n");
-    puts("  fast-completer aws bash aws s3 \"\"");
+    puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
-    puts("  fast-completer --blob /path/to/custom.bin mycli zsh mycli --");
+    puts("  fast-completer --blob /path/to/custom.bin zsh mycli --");
     puts("      Complete flags using explicit blob path");
 }
 
@@ -1034,14 +1035,14 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc < arg_idx + 2) {
-        fprintf(stderr, "Usage: fast-completer [--blob <path>] <name> <format> [spans...]\n");
+        fprintf(stderr, "Usage: fast-completer [--blob <path>] <format> <spans...>\n");
         fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
         return 1;
     }
 
-    const char *cli_name = argv[arg_idx];
-    const char *format_name = argv[arg_idx + 1];
-    int spans_start = arg_idx + 2;
+    const char *format_name = argv[arg_idx];
+    int spans_start = arg_idx + 1;
+    const char *cli_name = argv[spans_start]; // Derive from first span
 
     // Resolve blob path
     char *resolved_path = NULL;
