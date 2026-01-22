@@ -13,6 +13,7 @@ import argparse
 import datetime
 import json
 import logging
+import math
 import sys
 from os.path import expanduser
 from unittest.mock import patch
@@ -22,6 +23,8 @@ class JSONEncoder(json.JSONEncoder):
     """Custom JSON encoder that handles non-serializable types."""
 
     def default(self, obj):
+        if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+            return None
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
         if isinstance(obj, datetime.date):
