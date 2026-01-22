@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: fast-completer-linux-x86_64
+            binary: fast-completer
+          - os: macos-latest
+            artifact: fast-completer-macos-arm64
+            binary: fast-completer
+          - os: macos-13
+            artifact: fast-completer-macos-x86_64
+            binary: fast-completer
+          - os: windows-latest
+            artifact: fast-completer-windows-x86_64
+            binary: fast-completer.exe
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup MSYS2 (Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: mingw-w64-x86_64-gcc make
+
+      - name: Build (Unix)
+        if: runner.os != 'Windows'
+        run: make release
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: make release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.binary }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release files
+        run: |
+          cd artifacts
+          mv fast-completer-linux-x86_64/fast-completer fast-completer-linux-x86_64
+          mv fast-completer-macos-arm64/fast-completer fast-completer-macos-arm64
+          mv fast-completer-macos-x86_64/fast-completer fast-completer-macos-x86_64
+          mv fast-completer-windows-x86_64/fast-completer.exe fast-completer-windows-x86_64.exe
+          ls -la
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/fast-completer-linux-x86_64
+            artifacts/fast-completer-macos-arm64
+            artifacts/fast-completer-macos-x86_64
+            artifacts/fast-completer-windows-x86_64.exe
+          generate_release_notes: true
