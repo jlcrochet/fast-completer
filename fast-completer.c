@@ -950,13 +950,12 @@ static void dump_header(const char *path) {
     uint16_t version = *(uint16_t *)(blob + 4);
     uint16_t flags = *(uint16_t *)(blob + 6);
 
-    printf("=== HEADER ===\n");
-    printf("  path: %s\n", path);
-    printf("  magic: %.4s\n", (const char *)blob);
-    printf("  version: %u\n", version);
-    printf("  flags: %u", flags);
+    printf("path: %s\n", path);
+    printf("magic: %.4s\n", (const char *)blob);
+    printf("version: %u\n", version);
+    printf("flags: %u", flags);
     if (flags) {
-        printf(" (");
+        printf("(");
         if (flags & HEADER_FLAG_BIG_ENDIAN) printf("big_endian");
         if (flags & HEADER_FLAG_NO_DESCRIPTIONS) {
             if (flags & HEADER_FLAG_BIG_ENDIAN) printf(", ");
@@ -965,21 +964,21 @@ static void dump_header(const char *path) {
         printf(")");
     }
     printf("\n");
-    printf("  max_command_path_len: %u\n", h[0]);
-    printf("  msgpack_buffer_size: %u\n", h[1]);
-    printf("  command_count: %u\n", h[2]);
-    printf("  param_count: %u\n", h[3]);
-    printf("  global_param_count: %u\n", h[4]);
-    printf("  string_table_size: %u\n", h[5]);
-    printf("  choices_count: %u\n", h[6]);
-    printf("  members_count: %u\n", h[7]);
-    printf("  string_table_off: %u\n", h[8]);
-    printf("  commands_off: %u\n", h[9]);
-    printf("  params_off: %u\n", h[10]);
-    printf("  choices_off: %u\n", h[11]);
-    printf("  members_off: %u\n", h[12]);
-    printf("  global_params_off: %u\n", h[13]);
-    printf("  root_command_off: %u\n", h[14]);
+    printf("max_command_path_len: %u\n", h[0]);
+    printf("msgpack_buffer_size: %u\n", h[1]);
+    printf("command_count: %u\n", h[2]);
+    printf("param_count: %u\n", h[3]);
+    printf("global_param_count: %u\n", h[4]);
+    printf("string_table_size: %u\n", h[5]);
+    printf("choices_count: %u\n", h[6]);
+    printf("members_count: %u\n", h[7]);
+    printf("string_table_off: %u\n", h[8]);
+    printf("commands_off: %u\n", h[9]);
+    printf("params_off: %u\n", h[10]);
+    printf("choices_off: %u\n", h[11]);
+    printf("members_off: %u\n", h[12]);
+    printf("global_params_off: %u\n", h[13]);
+    printf("root_command_off: %u\n", h[14]);
 }
 
 static void print_help(void) {
