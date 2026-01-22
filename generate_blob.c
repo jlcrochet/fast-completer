@@ -16,10 +16,10 @@
 
 // Binary format constants (must match fast-completer.c)
 #define BLOB_MAGIC "FCMP"
-#define BLOB_VERSION 2
+#define BLOB_VERSION 3
 #define HEADER_SIZE 68
 #define PARAM_SIZE 17
-#define COMMAND_SIZE 16
+#define COMMAND_SIZE 20
 
 // Param flags
 #define FLAG_TAKES_VALUE 0x01
@@ -328,7 +328,6 @@ typedef struct {
     uint32_t desc_off;
     uint32_t choices_idx;   // Index into choices/members list (converted to offset later)
     uint8_t flags;
-    bool is_sentinel;
 } ParamEntry;
 
 typedef struct {
@@ -336,7 +335,8 @@ typedef struct {
     uint32_t desc_off;
     uint32_t params_idx;
     uint32_t subcommands_idx;
-    bool is_sentinel;
+    uint16_t params_count;
+    uint16_t subcommands_count;
 } CommandEntry;
 
 typedef struct {
@@ -409,13 +409,11 @@ static void blobgen_init(BlobGen *bg, bool big_endian, bool no_descriptions, boo
 
     bg->params_cap = 1024;
     bg->params = calloc(bg->params_cap, sizeof(ParamEntry));
-    bg->params[0].is_sentinel = true;
-    bg->params_count = 1;
+    bg->params_count = 0;
 
     bg->commands_cap = 1024;
     bg->commands = calloc(bg->commands_cap, sizeof(CommandEntry));
-    bg->commands[0].is_sentinel = true;
-    bg->commands_count = 1;
+    bg->commands_count = 0;
 
     bg->choices_cap = 256;
     bg->choices_lists = calloc(bg->choices_cap, sizeof(StringList));
@@ -847,21 +845,25 @@ static void sort_children(CommandNode *node) {
 // Collect params and commands
 // --------------------------------------------------------------------------
 
-static uint32_t collect_params(BlobGen *bg, cJSON *params_arr) {
-    if (!params_arr || !cJSON_IsArray(params_arr)) return 0;
+typedef struct {
+    uint32_t idx;
+    uint16_t count;
+} IdxCount;
+
+static IdxCount collect_params(BlobGen *bg, cJSON *params_arr) {
+    IdxCount result = {0, 0};
+    if (!params_arr || !cJSON_IsArray(params_arr)) return result;
 
     int count = cJSON_GetArraySize(params_arr);
-    if (count == 0) return 0;
+    if (count == 0) return result;
 
     uint32_t start_idx = (uint32_t)bg->params_count;
-    bool any_valid = false;
+    uint16_t valid_count = 0;
 
     for (int i = 0; i < count; i++) {
         cJSON *p = cJSON_GetArrayItem(params_arr, i);
         ParamInfo info;
         if (!get_param_info(p, &info)) continue;
-
-        any_valid = true;
 
         // Ensure capacity
         if (bg->params_count >= bg->params_cap) {
@@ -875,7 +877,6 @@ static uint32_t collect_params(BlobGen *bg, cJSON *params_arr) {
         pe->desc_off = strtab_add_desc(bg, info.description);
         pe->flags = 0;
         pe->choices_idx = (uint32_t)-1;
-        pe->is_sentinel = false;
 
         if (info.takes_value) pe->flags |= FLAG_TAKES_VALUE;
 
@@ -888,34 +889,32 @@ static uint32_t collect_params(BlobGen *bg, cJSON *params_arr) {
 
         track_param(bg, strlen(info.name), bg->no_descriptions ? 0 : strlen(info.description));
         free_param_info(&info);
+        valid_count++;
     }
 
-    if (!any_valid) return 0;
+    if (valid_count == 0) return result;
 
     finish_command_params(bg);
 
-    // Add sentinel
-    if (bg->params_count >= bg->params_cap) {
-        bg->params_cap *= 2;
-        bg->params = realloc(bg->params, bg->params_cap * sizeof(ParamEntry));
-    }
-    bg->params[bg->params_count].is_sentinel = true;
-    bg->params_count++;
-
-    return start_idx;
+    result.idx = start_idx;
+    result.count = valid_count;
+    return result;
 }
 
-static uint32_t collect_commands(BlobGen *bg, CommandNode *node);
+static IdxCount collect_commands(BlobGen *bg, CommandNode *node);
 
-static uint32_t collect_commands(BlobGen *bg, CommandNode *node) {
-    if (node->children_count == 0) return 0;
+static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
+    IdxCount result = {0, 0};
+    if (node->children_count == 0) return result;
 
     // First, recursively collect all children
     typedef struct {
         uint32_t name_off;
         uint32_t desc_off;
         uint32_t params_idx;
+        uint16_t params_count;
         uint32_t subcommands_idx;
+        uint16_t subcommands_count;
         const char *path;
         size_t desc_len;
     } ChildData;
@@ -925,7 +924,9 @@ static uint32_t collect_commands(BlobGen *bg, CommandNode *node) {
     for (size_t i = 0; i < node->children_count; i++) {
         CommandNode *child = node->children[i];
 
-        child_data[i].subcommands_idx = collect_commands(bg, child);
+        IdxCount sub_result = collect_commands(bg, child);
+        child_data[i].subcommands_idx = sub_result.idx;
+        child_data[i].subcommands_count = sub_result.count;
 
         cJSON *params_arr = NULL;
         const char *desc = "";
@@ -937,13 +938,15 @@ static uint32_t collect_commands(BlobGen *bg, CommandNode *node) {
             else if (desc_obj && cJSON_IsString(desc_obj)) desc = desc_obj->valuestring;
         }
 
-        child_data[i].params_idx = collect_params(bg, params_arr);
+        IdxCount params_result = collect_params(bg, params_arr);
+        child_data[i].params_idx = params_result.idx;
+        child_data[i].params_count = params_result.count;
         child_data[i].name_off = strtab_add(&bg->strtab, child->name);
         child_data[i].desc_off = strtab_add_desc(bg, desc);
         child_data[i].desc_len = bg->no_descriptions ? 0 : strlen(desc);
 
         // Track leaf command
-        if (child_data[i].subcommands_idx == 0 && child->cmd) {
+        if (child_data[i].subcommands_count == 0 && child->cmd) {
             cJSON *name_obj = cJSON_GetObjectItem(child->cmd, "name");
             const char *path = name_obj ? name_obj->valuestring : child->name;
             child_data[i].path = path;
@@ -967,19 +970,14 @@ static uint32_t collect_commands(BlobGen *bg, CommandNode *node) {
         ce->desc_off = child_data[i].desc_off;
         ce->params_idx = child_data[i].params_idx;
         ce->subcommands_idx = child_data[i].subcommands_idx;
-        ce->is_sentinel = false;
+        ce->params_count = child_data[i].params_count;
+        ce->subcommands_count = child_data[i].subcommands_count;
     }
-
-    // Add sentinel
-    if (bg->commands_count >= bg->commands_cap) {
-        bg->commands_cap *= 2;
-        bg->commands = realloc(bg->commands, bg->commands_cap * sizeof(CommandEntry));
-    }
-    bg->commands[bg->commands_count].is_sentinel = true;
-    bg->commands_count++;
 
     free(child_data);
-    return start_idx;
+    result.idx = start_idx;
+    result.count = (uint16_t)node->children_count;
+    return result;
 }
 
 // --------------------------------------------------------------------------
@@ -1201,7 +1199,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     sort_children(tree);
 
     // Collect all commands
-    uint32_t top_level_idx = collect_commands(&bg, tree);
+    IdxCount top_level = collect_commands(&bg, tree);
 
     // Add root command params (version)
     cJSON *version_name_obj = cJSON_GetObjectItem(data, "version_param_name");
@@ -1222,9 +1220,10 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc, false);
 
     uint32_t root_params_idx = (uint32_t)bg.params_count;
+    uint16_t root_params_count = 1;  // Just the version param
 
     // Ensure capacity
-    if (bg.params_count + 2 > bg.params_cap) {
+    if (bg.params_count + 1 > bg.params_cap) {
         bg.params_cap *= 2;
         bg.params = realloc(bg.params, bg.params_cap * sizeof(ParamEntry));
     }
@@ -1235,10 +1234,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     ver_param->desc_off = version_desc_off;
     ver_param->choices_idx = (uint32_t)-1;
     ver_param->flags = 0;
-    ver_param->is_sentinel = false;
-
-    bg.params[bg.params_count].is_sentinel = true;
-    bg.params_count++;
 
     // Build global params
     cJSON *global_params = cJSON_GetObjectItem(data, "global_params");
@@ -1290,7 +1285,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             pe->desc_off = strtab_add_desc(&bg, desc);
             pe->flags = takes_value ? FLAG_TAKES_VALUE : 0;
             pe->choices_idx = (uint32_t)-1;
-            pe->is_sentinel = false;
 
             if (gp_choices && cJSON_IsArray(gp_choices)) {
                 pe->choices_idx = (uint32_t)get_choices_index(&bg, gp_choices);
@@ -1303,14 +1297,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             free(short_opt);
         }
     }
-
-    // Add sentinel to global params
-    if (bg.global_params_count >= bg.global_params_cap) {
-        bg.global_params_cap *= 2;
-        bg.global_params = realloc(bg.global_params, bg.global_params_cap * sizeof(ParamEntry));
-    }
-    bg.global_params[bg.global_params_count].is_sentinel = true;
-    bg.global_params_count++;
 
     // Calculate buffer size
     size_t msgpack_buffer_size = calc_msgpack_buffer_size(&bg);
@@ -1389,14 +1375,12 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = commands_off;
     for (size_t i = 0; i < bg.commands_count; i++) {
         CommandEntry *ce = &bg.commands[i];
-        if (ce->is_sentinel) {
-            memset(blob + offset, 0, COMMAND_SIZE);
-        } else {
-            write_u32(blob + offset, ce->name_off, big_endian);
-            write_u32(blob + offset + 4, ce->desc_off, big_endian);
-            write_u32(blob + offset + 8, ce->params_idx, big_endian);
-            write_u32(blob + offset + 12, ce->subcommands_idx, big_endian);
-        }
+        write_u32(blob + offset, ce->name_off, big_endian);
+        write_u32(blob + offset + 4, ce->desc_off, big_endian);
+        write_u32(blob + offset + 8, ce->params_idx, big_endian);
+        write_u32(blob + offset + 12, ce->subcommands_idx, big_endian);
+        write_u16(blob + offset + 16, ce->params_count, big_endian);
+        write_u16(blob + offset + 18, ce->subcommands_count, big_endian);
         offset += COMMAND_SIZE;
     }
 
@@ -1404,23 +1388,19 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = params_off;
     for (size_t i = 0; i < bg.params_count; i++) {
         ParamEntry *pe = &bg.params[i];
-        if (pe->is_sentinel) {
-            memset(blob + offset, 0, PARAM_SIZE);
-        } else {
-            uint32_t choices_off_val = 0;
-            if (pe->choices_idx != (uint32_t)-1) {
-                if (pe->flags & FLAG_IS_MEMBERS) {
-                    choices_off_val = members_offsets[pe->choices_idx];
-                } else {
-                    choices_off_val = choices_offsets[pe->choices_idx];
-                }
+        uint32_t choices_off_val = 0;
+        if (pe->choices_idx != (uint32_t)-1) {
+            if (pe->flags & FLAG_IS_MEMBERS) {
+                choices_off_val = members_offsets[pe->choices_idx];
+            } else {
+                choices_off_val = choices_offsets[pe->choices_idx];
             }
-            write_u32(blob + offset, pe->name_off, big_endian);
-            write_u32(blob + offset + 4, pe->short_off, big_endian);
-            write_u32(blob + offset + 8, pe->desc_off, big_endian);
-            write_u32(blob + offset + 12, choices_off_val, big_endian);
-            blob[offset + 16] = pe->flags;
         }
+        write_u32(blob + offset, pe->name_off, big_endian);
+        write_u32(blob + offset + 4, pe->short_off, big_endian);
+        write_u32(blob + offset + 8, pe->desc_off, big_endian);
+        write_u32(blob + offset + 12, choices_off_val, big_endian);
+        blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
     }
 
@@ -1452,19 +1432,15 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = global_params_off;
     for (size_t i = 0; i < bg.global_params_count; i++) {
         ParamEntry *pe = &bg.global_params[i];
-        if (pe->is_sentinel) {
-            memset(blob + offset, 0, PARAM_SIZE);
-        } else {
-            uint32_t choices_off_val = 0;
-            if (pe->choices_idx != (uint32_t)-1) {
-                choices_off_val = choices_offsets[pe->choices_idx];
-            }
-            write_u32(blob + offset, pe->name_off, big_endian);
-            write_u32(blob + offset + 4, pe->short_off, big_endian);
-            write_u32(blob + offset + 8, pe->desc_off, big_endian);
-            write_u32(blob + offset + 12, choices_off_val, big_endian);
-            blob[offset + 16] = pe->flags;
+        uint32_t choices_off_val = 0;
+        if (pe->choices_idx != (uint32_t)-1) {
+            choices_off_val = choices_offsets[pe->choices_idx];
         }
+        write_u32(blob + offset, pe->name_off, big_endian);
+        write_u32(blob + offset + 4, pe->short_off, big_endian);
+        write_u32(blob + offset + 8, pe->desc_off, big_endian);
+        write_u32(blob + offset + 12, choices_off_val, big_endian);
+        blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
     }
 
@@ -1472,7 +1448,9 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     write_u32(blob + root_command_off, 0, big_endian);  // name_off (root has no name)
     write_u32(blob + root_command_off + 4, root_desc_off, big_endian);
     write_u32(blob + root_command_off + 8, root_params_idx, big_endian);
-    write_u32(blob + root_command_off + 12, top_level_idx, big_endian);
+    write_u32(blob + root_command_off + 12, top_level.idx, big_endian);
+    write_u16(blob + root_command_off + 16, root_params_count, big_endian);
+    write_u16(blob + root_command_off + 18, top_level.count, big_endian);
 
     // Write to file
     FILE *out = fopen(output_path, "wb");

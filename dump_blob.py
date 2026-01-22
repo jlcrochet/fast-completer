@@ -25,10 +25,10 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 2
+VERSION = 3
 HEADER_SIZE = 68
 PARAM_SIZE = 17
-COMMAND_SIZE = 16
+COMMAND_SIZE = 20
 
 # Param flags
 FLAG_TAKES_VALUE = 0x01
@@ -145,12 +145,14 @@ class BlobReader:
 
     def read_command(self, offset):
         """Read a Command struct at the given offset."""
-        values = struct.unpack_from('<IIII', self.data, offset)
+        values = struct.unpack_from('<IIIIHH', self.data, offset)
         return {
             'name_off': values[0],
             'desc_off': values[1],
             'params_idx': values[2],
             'subcommands_idx': values[3],
+            'params_count': values[4],
+            'subcommands_count': values[5],
         }
 
     def read_param(self, offset):
@@ -264,19 +266,17 @@ class BlobReader:
         parts = path.split()
         root = self.get_root_command()
         current_idx = root['subcommands_idx']
+        current_count = root['subcommands_count']
 
         for part in parts:
-            if current_idx == 0:
+            if current_count == 0:
                 return None
             found = False
             offset = self.header['commands_off'] + current_idx * COMMAND_SIZE
-            while True:
+            for _ in range(current_count):
                 cmd = self.read_command(offset)
-                if cmd['name_off'] == 0:
-                    break
                 name = self.get_string(cmd['name_off'])
                 if name == part:
-                    current_idx = cmd['subcommands_idx']
                     # Return the command info for the last part
                     if part == parts[-1]:
                         cmd['name'] = name
@@ -284,6 +284,8 @@ class BlobReader:
                         cmd['offset'] = offset
                         cmd['index'] = (offset - self.header['commands_off']) // COMMAND_SIZE
                         return cmd
+                    current_idx = cmd['subcommands_idx']
+                    current_count = cmd['subcommands_count']
                     found = True
                     break
                 offset += COMMAND_SIZE
@@ -311,9 +313,9 @@ class BlobReader:
                 matches.append(param)
         return matches
 
-    def dump_command_tree(self, cmd_idx, indent=0, max_depth=None):
+    def dump_command_tree(self, cmd_idx, count, indent=0, max_depth=None):
         """Recursively dump command tree."""
-        if cmd_idx == 0:
+        if count == 0:
             return []
         if max_depth is not None and indent >= max_depth:
             return ["  " * indent + "..."]
@@ -321,11 +323,8 @@ class BlobReader:
         lines = []
         offset = self.header['commands_off'] + cmd_idx * COMMAND_SIZE
 
-        while True:
+        for _ in range(count):
             cmd = self.read_command(offset)
-            if cmd['name_off'] == 0:  # sentinel
-                break
-
             name = self.get_string(cmd['name_off'])
             desc = self.get_string(cmd['desc_off'])
             prefix = "  " * indent
@@ -336,12 +335,10 @@ class BlobReader:
                 lines.append(f"{prefix}  # {desc[:60]}{'...' if len(desc) > 60 else ''}")
 
             # Dump params
-            if cmd['params_idx'] != 0:
+            if cmd['params_count'] > 0:
                 param_offset = self.header['params_off'] + cmd['params_idx'] * PARAM_SIZE
-                while True:
+                for _ in range(cmd['params_count']):
                     param = self.read_param(param_offset)
-                    if param['name_off'] == 0:
-                        break
                     pname = self.get_string(param['name_off'])
                     pidx = (param_offset - self.header['params_off']) // PARAM_SIZE
                     flags = []
@@ -358,8 +355,8 @@ class BlobReader:
                     param_offset += PARAM_SIZE
 
             # Recurse into subcommands
-            if cmd['subcommands_idx'] != 0:
-                lines.extend(self.dump_command_tree(cmd['subcommands_idx'], indent + 1, max_depth))
+            if cmd['subcommands_count'] > 0:
+                lines.extend(self.dump_command_tree(cmd['subcommands_idx'], cmd['subcommands_count'], indent + 1, max_depth))
 
             offset += COMMAND_SIZE
 
@@ -370,12 +367,12 @@ def format_command(cmd, verbose=False):
     """Format a command for display."""
     lines = []
     lines.append(f"Command [index={cmd['index']}] at offset {cmd.get('offset', '?')}")
-    lines.append(f"  name_off:       {cmd['name_off']} -> {cmd['name']!r}")
-    lines.append(f"  desc_off:       {cmd['desc_off']}")
+    lines.append(f"  name_off:        {cmd['name_off']} -> {cmd['name']!r}")
+    lines.append(f"  desc_off:        {cmd['desc_off']}")
     if verbose and cmd['description']:
-        lines.append(f"                  {cmd['description']!r}")
-    lines.append(f"  params_idx:     {cmd['params_idx']}")
-    lines.append(f"  subcommands_idx: {cmd['subcommands_idx']}")
+        lines.append(f"                   {cmd['description']!r}")
+    lines.append(f"  params_idx:      {cmd['params_idx']} (count: {cmd['params_count']})")
+    lines.append(f"  subcommands_idx: {cmd['subcommands_idx']} (count: {cmd['subcommands_count']})")
     return '\n'.join(lines)
 
 
@@ -446,7 +443,7 @@ def dump_text(reader, section=None):
     if section is None or section == 'tree':
         lines.append("=== COMMAND TREE ===")
         root = reader.get_root_command()
-        tree_lines = reader.dump_command_tree(root['subcommands_idx'])
+        tree_lines = reader.dump_command_tree(root['subcommands_idx'], root['subcommands_count'])
         lines.extend(tree_lines)
         lines.append("")
 
@@ -546,13 +543,12 @@ Examples:
         if cmd:
             print(format_command(cmd, args.verbose))
             # Also show params if present
-            if cmd['params_idx'] != 0:
+            if cmd['params_count'] > 0:
                 print("\nParams:")
-                offset = reader.header['params_off'] + cmd['params_idx'] * PARAM_SIZE
-                i = cmd['params_idx']
-                while True:
+                for j in range(cmd['params_count']):
+                    i = cmd['params_idx'] + j
                     param = reader.get_param_by_index(i)
-                    if param is None or param['name_off'] == 0:
+                    if param is None:
                         break
                     print(f"  [{i}] {param['name']}", end='')
                     if param['takes_value']:
@@ -561,18 +557,15 @@ Examples:
                         kind = 'members' if param['is_members'] else 'choices'
                         print(f" [{kind}={param['choices_or_members']}]", end='')
                     print()
-                    i += 1
             # Show subcommands if present
-            if cmd['subcommands_idx'] != 0:
+            if cmd['subcommands_count'] > 0:
                 print("\nSubcommands:")
-                offset = reader.header['commands_off'] + cmd['subcommands_idx'] * COMMAND_SIZE
-                i = cmd['subcommands_idx']
-                while True:
+                for j in range(cmd['subcommands_count']):
+                    i = cmd['subcommands_idx'] + j
                     subcmd = reader.get_command_by_index(i)
-                    if subcmd is None or subcmd['name_off'] == 0:
+                    if subcmd is None:
                         break
                     print(f"  [{i}] {subcmd['name']}")
-                    i += 1
         else:
             print(f"Command not found: {args.command}", file=sys.stderr)
             sys.exit(1)

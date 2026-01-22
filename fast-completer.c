@@ -36,10 +36,10 @@
 
 // Blob format constants (must match generate_blob.c)
 #define BLOB_MAGIC "FCMP"
-#define BLOB_VERSION 2
+#define BLOB_VERSION 3
 #define HEADER_SIZE 68
 #define PARAM_SIZE 17
-#define COMMAND_SIZE 16
+#define COMMAND_SIZE 20
 
 // Param flags
 #define FLAG_TAKES_VALUE 0x01
@@ -90,6 +90,8 @@ typedef struct {
     uint32_t desc_off;
     uint32_t params_idx;
     uint32_t subcommands_idx;
+    uint16_t params_count;
+    uint16_t subcommands_count;
 } Command;
 #pragma pack(pop)
 
@@ -97,6 +99,7 @@ typedef struct {
 typedef struct {
     uint32_t max_command_path_len;
     uint32_t msgpack_buffer_size;
+    uint32_t global_params_count;
     uint32_t string_table_off;
     uint32_t commands_off;
     uint32_t params_off;
@@ -176,12 +179,12 @@ static inline const Param *get_global_params(void) {
 
 // Get command's params (NULL if none)
 static inline const Param *cmd_params(const Command *cmd) {
-    return cmd->params_idx ? get_param(cmd->params_idx) : NULL;
+    return cmd->params_count ? get_param(cmd->params_idx) : NULL;
 }
 
 // Get command's subcommands (NULL if none)
 static inline const Command *cmd_subcommands(const Command *cmd) {
-    return cmd->subcommands_idx ? get_command(cmd->subcommands_idx) : NULL;
+    return cmd->subcommands_count ? get_command(cmd->subcommands_idx) : NULL;
 }
 
 // Read null-terminated array of string offsets at blob offset
@@ -303,7 +306,7 @@ static void output_completion(String value, String desc, CompletionType type) {
         if (desc.n > 0) {
             put_char(':');
             for (size_t i = 0; i < desc.n; i++) {
-                if (desc.p[i] == ':' || desc.p[i] == '\\') put_char('\\');
+                if (desc.p[i] == '\\') put_char('\\');  // escape backslashes
                 put_char(desc.p[i]);
             }
         }
@@ -366,7 +369,7 @@ static const Command *find_command(const char **args, int argc) {
     const Command *cmd = get_root_command();
     int i = 1;  // Skip first arg (CLI name)
 
-    while (i < argc && cmd_subcommands(cmd)) {
+    while (i < argc && cmd->subcommands_count > 0) {
         const char *arg = args[i];
 
         if (arg[0] == '-') {
@@ -375,9 +378,10 @@ static const Command *find_command(const char **args, int argc) {
         }
 
         const Command *found = NULL;
-        for (const Command *sub = cmd_subcommands(cmd); !str_empty(sub->name_off); sub++) {
-            if (str_eq(sub->name_off, arg)) {
-                found = sub;
+        const Command *subs = cmd_subcommands(cmd);
+        for (uint16_t j = 0; j < cmd->subcommands_count; j++) {
+            if (str_eq(subs[j].name_off, arg)) {
+                found = &subs[j];
                 break;
             }
         }
@@ -411,12 +415,14 @@ static bool param_used(const Param *param, const char **args, int argc) {
 
 // Recursively output leaf commands
 static void complete_leaf_commands(const Command *cmd, String path, const char *prefix) {
-    if (!cmd_subcommands(cmd)) return;
+    if (cmd->subcommands_count == 0) return;
 
     char *buf = path_buf;
     size_t prefix_len = prefix ? strlen(prefix) : 0;
+    const Command *subs = cmd_subcommands(cmd);
 
-    for (const Command *sub = cmd_subcommands(cmd); !str_empty(sub->name_off); sub++) {
+    for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
+        const Command *sub = &subs[i];
         String sub_name = str_get(sub->name_off);
 
         size_t new_len;
@@ -434,7 +440,7 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 
         bool matches = !prefix || strncmp(buf, prefix, prefix_len) == 0;
 
-        if (cmd_subcommands(sub)) {
+        if (sub->subcommands_count > 0) {
             if (!prefix || matches || strncmp(prefix, buf, new_len) == 0) {
                 complete_leaf_commands(sub, (String){buf, new_len}, prefix);
             }
@@ -454,8 +460,8 @@ static void complete_subcommands(const Command *cmd, const char *prefix) {
 }
 
 // Complete parameters from a param list
-static void complete_params_list(const Param *params, const char **args, int argc, const char *prefix) {
-    if (!params) return;
+static void complete_params_list(const Param *params, uint16_t params_count, const char **args, int argc, const char *prefix) {
+    if (!params || params_count == 0) return;
 
     size_t prefix_len = prefix ? strlen(prefix) : 0;
     bool prefix_is_dash = prefix_len >= 1 && prefix[0] == '-';
@@ -466,7 +472,8 @@ static void complete_params_list(const Param *params, const char **args, int arg
 
     // When prefix is "-" (single dash only), show short options first
     if (prefix_is_single_dash) {
-        for (const Param *p = params; !str_empty(p->name_off); p++) {
+        for (uint16_t i = 0; i < params_count; i++) {
+            const Param *p = &params[i];
             if (p->short_off == 0) continue;
             if (param_used(p, args, argc)) continue;
 
@@ -480,7 +487,8 @@ static void complete_params_list(const Param *params, const char **args, int arg
 
     // Show long options (always, unless prefix is single dash with more chars like "-x")
     if (!prefix_is_single_dash || prefix_len == 1) {
-        for (const Param *p = params; !str_empty(p->name_off); p++) {
+        for (uint16_t i = 0; i < params_count; i++) {
+            const Param *p = &params[i];
             if (param_used(p, args, argc)) continue;
 
             String name = str_get(p->name_off);
@@ -494,6 +502,8 @@ static void complete_params_list(const Param *params, const char **args, int arg
 
 // Complete global params
 static void complete_global_params(const char **args, int argc, const char *prefix) {
+    if (header.global_params_count == 0) return;
+
     size_t prefix_len = prefix ? strlen(prefix) : 0;
     bool prefix_is_dash = prefix_len >= 1 && prefix[0] == '-';
     bool prefix_is_double_dash = prefix_len >= 2 && prefix[0] == '-' && prefix[1] == '-';
@@ -501,9 +511,12 @@ static void complete_global_params(const char **args, int argc, const char *pref
 
     if (prefix_len > 0 && !prefix_is_dash) return;
 
+    const Param *global_params = get_global_params();
+
     // When prefix is "-" (single dash only), show short options first
     if (prefix_is_single_dash) {
-        for (const Param *p = get_global_params(); p->name_off; p++) {
+        for (uint32_t i = 0; i < header.global_params_count; i++) {
+            const Param *p = &global_params[i];
             if (p->short_off == 0) continue;
             if (param_used(p, args, argc)) continue;
 
@@ -517,7 +530,8 @@ static void complete_global_params(const char **args, int argc, const char *pref
 
     // Show long options
     if (!prefix_is_single_dash || prefix_len == 1) {
-        for (const Param *p = get_global_params(); p->name_off; p++) {
+        for (uint32_t i = 0; i < header.global_params_count; i++) {
+            const Param *p = &global_params[i];
             if (param_used(p, args, argc)) continue;
 
             String name = str_get(p->name_off);
@@ -545,13 +559,14 @@ static void complete_string_list(uint32_t off, const char *prefix) {
 }
 
 // Find a parameter by name (long or short option)
-static const Param *find_param(const Param *params, const char *opt) {
-    if (!params || !opt) return NULL;
+static const Param *find_param(const Param *params, uint16_t params_count, const char *opt) {
+    if (!params || params_count == 0 || !opt) return NULL;
     if (opt[0] != '-') return NULL;
 
     size_t opt_len = strlen(opt);
 
-    for (const Param *p = params; !str_empty(p->name_off); p++) {
+    for (uint16_t i = 0; i < params_count; i++) {
+        const Param *p = &params[i];
         // Check long option
         if (str_eq(p->name_off, opt)) return p;
         // Check short option
@@ -566,7 +581,11 @@ static const Param *find_param(const Param *params, const char *opt) {
 
 // Find a global param by name (long or short option)
 static const Param *find_global_param(const char *name, size_t len) {
-    for (const Param *p = get_global_params(); p->name_off; p++) {
+    if (header.global_params_count == 0) return NULL;
+
+    const Param *global_params = get_global_params();
+    for (uint32_t i = 0; i < header.global_params_count; i++) {
+        const Param *p = &global_params[i];
         // Check long option
         String pname = str_get(p->name_off);
         if (pname.n == len && memcmp(pname.p, name, len) == 0)
@@ -663,14 +682,14 @@ static void complete(int nspans, const char **spans) {
     const Command *cmd = find_command(spans, search_count);
 
     if (is_flag_prefix) {
-        complete_params_list(cmd_params(cmd), spans, search_count, last_span);
+        complete_params_list(cmd_params(cmd), cmd->params_count, spans, search_count, last_span);
         complete_global_params(spans, search_count, last_span);
         output_footer();
         return;
     }
 
     if (is_cmd_prefix) {
-        if (cmd_subcommands(cmd)) {
+        if (cmd->subcommands_count > 0) {
             complete_subcommands(cmd, last_span);
         }
         output_footer();
@@ -696,7 +715,7 @@ static void complete(int nspans, const char **spans) {
             return;
         }
 
-        const Param *param = find_param(cmd_params(cmd), prev_arg);
+        const Param *param = find_param(cmd_params(cmd), cmd->params_count, prev_arg);
         if (param && PARAM_TAKES_VALUE(param)) {
             if (PARAM_HAS_CHOICES(param)) {
                 complete_string_list(param->choices_off, NULL);
@@ -708,11 +727,11 @@ static void complete(int nspans, const char **spans) {
         }
     }
 
-    if (cmd_subcommands(cmd)) {
+    if (cmd->subcommands_count > 0) {
         complete_subcommands(cmd, NULL);
     }
 
-    complete_params_list(cmd_params(cmd), spans, search_count, NULL);
+    complete_params_list(cmd_params(cmd), cmd->params_count, spans, search_count, NULL);
     complete_global_params(spans, search_count, NULL);
 
     output_footer();
@@ -813,7 +832,9 @@ static bool load_blob(const char *path) {
     const uint32_t *h = (const uint32_t *)(blob + 8);
     header.max_command_path_len = h[0];
     header.msgpack_buffer_size = h[1];
-    // h[2]-h[7] are counts (unused at runtime)
+    // h[2]-h[3] are commands_count, params_count (unused - counts in Command struct)
+    header.global_params_count = h[4];
+    // h[5]-h[7] are strtab size, choices_count, members_count (unused)
     header.string_table_off = h[8];
     header.commands_off = h[9];
     header.params_off = h[10];
