@@ -840,6 +840,13 @@ static bool alloc_buffers(void) {
 
 // Get cache directory path (caller must free)
 static char *get_cache_dir(void) {
+    // Check for custom cache directory
+    const char *custom = getenv("FAST_COMPLETER_CACHE");
+    if (custom && *custom) {
+        return strdup(custom);
+    }
+
+    // Fall back to platform-specific default
     char *dir = NULL;
 
 #ifdef _WIN32
@@ -942,7 +949,7 @@ static void print_help(void) {
     puts("  format        Output format (see below)");
     puts("  spans         Command line tokens including CLI name\n");
     puts("  --blob <path> Use blob at specified path instead of cache lookup\n");
-    puts("  Cache location:");
+    puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
 #ifdef _WIN32
     puts("    %LOCALAPPDATA%\\fast-completer\\<name>.bin");
 #else

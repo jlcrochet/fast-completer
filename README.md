@@ -7,10 +7,10 @@ This project provides a single native C binary that can provide completions for 
 ## Usage
 
 ```
-fast-completer <blob> <output> <spans...>
+fast-completer <format> <spans...>
 ```
 
-The last span triggers completions: `""` for subcommands + flags, `-` or `--*` for flags only, `abc...` for matching subcommands. Run `fast-completer --help` for full usage information.
+The CLI name is derived from the first span and used to look up the blob in the cache directory. The last span triggers completions: `""` for subcommands + flags, `-` or `--*` for flags only, `abc...` for matching subcommands. Run `fast-completer --help` for full usage information.
 
 Parameters are sorted with required options first, then optional ones (alphabetically within each group).
 
@@ -99,12 +99,27 @@ Then copy `fast-completer.exe` to a directory in your PATH, such as:
 - `%LOCALAPPDATA%\Programs\` (create if needed, add to PATH)
 - `%USERPROFILE%\bin\` (create if needed, add to PATH)
 
+## Cache Directory
+
+Blobs are stored in and loaded from a cache directory:
+
+| Platform | Default Location |
+|----------|------------------|
+| Linux/macOS | `~/.cache/fast-completer/` |
+| Windows | `%LOCALAPPDATA%\fast-completer\` |
+
+Set `FAST_COMPLETER_CACHE` to override the default location:
+
+```bash
+export FAST_COMPLETER_CACHE=~/my-completions
+```
+
 ## Generating Blob Files
 
 Blob files contain the completion data for a specific CLI tool. Generate them from a JSON or YAML schema:
 
 ```bash
-# Auto-save to cache directory (~/.cache/fast-completer/<name>.bin)
+# Auto-save to cache directory
 fast-completer --generate-blob aws.json
 
 # Or specify output path explicitly
@@ -170,15 +185,18 @@ Completions are returned pre-sorted. Where possible, disable the shell's sorting
 Add to your `~/.bashrc`:
 
 ```bash
-_aws_completer() {
-    mapfile -t COMPREPLY < <(fast-completer aws bash "${COMP_WORDS[@]}")
+_fast_completer() {
+    mapfile -t COMPREPLY < <(fast-completer bash "${COMP_WORDS[@]}")
 }
-complete -o nosort -F _aws_completer aws  # -o nosort requires bash 4.4+
 
-_az_completer() {
-    mapfile -t COMPREPLY < <(fast-completer az bash "${COMP_WORDS[@]}")
-}
-complete -o nosort -F _az_completer az
+# Register for specific commands
+complete -o nosort -F _fast_completer aws az  # -o nosort requires bash 4.4+
+
+# Or register for all installed blobs
+_fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
+for blob in "$_fc_cache"/*.bin; do
+    [[ -f "$blob" ]] && complete -o nosort -F _fast_completer "$(basename "$blob" .bin)"
+done
 ```
 
 ### Zsh
@@ -186,19 +204,20 @@ complete -o nosort -F _az_completer az
 Add to your `~/.zshrc`:
 
 ```zsh
-_aws_completer() {
+_fast_completer() {
     local -a completions
-    completions=("${(@f)$(fast-completer aws zsh "${words[@]}")}")
+    completions=("${(@f)$(fast-completer zsh "${words[@]}")}")
     compadd -V unsorted -d completions -a completions  # -V preserves order
 }
-compdef _aws_completer aws
 
-_az_completer() {
-    local -a completions
-    completions=("${(@f)$(fast-completer az zsh "${words[@]}")}")
-    compadd -V unsorted -d completions -a completions
-}
-compdef _az_completer az
+# Register for specific commands
+compdef _fast_completer aws az
+
+# Or register for all installed blobs
+_fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
+for blob in "$_fc_cache"/*.bin(N); do
+    compdef _fast_completer "${blob:t:r}"
+done
 ```
 
 ### Fish
@@ -206,11 +225,19 @@ compdef _az_completer az
 Add to your `~/.config/fish/config.fish`:
 
 ```fish
-complete -c aws -e  # clear existing completions
-complete -c aws -k -a "(fast-completer aws fish (commandline -opc))"  # -k preserves order
+# Register for specific commands
+for cmd in aws az
+    complete -c $cmd -e  # clear existing completions
+    complete -c $cmd -k -a "(fast-completer fish (commandline -opc))"  # -k preserves order
+end
 
-complete -c az -e
-complete -c az -k -a "(fast-completer az fish (commandline -opc))"
+# Or register for all installed blobs
+set -l _fc_cache (if set -q FAST_COMPLETER_CACHE; echo $FAST_COMPLETER_CACHE; else; echo ~/.cache/fast-completer; end)
+for blob in $_fc_cache/*.bin
+    set -l cmd (basename $blob .bin)
+    complete -c $cmd -e
+    complete -c $cmd -k -a "(fast-completer fish (commandline -opc))"
+end
 ```
 
 ### Elvish
@@ -218,11 +245,16 @@ complete -c az -k -a "(fast-completer az fish (commandline -opc))"
 Add to your `~/.config/elvish/rc.elv`:
 
 ```elvish
-set edit:completion:arg-completer[aws] = {|@words|
-    fast-completer aws tsv $@words | from-lines | each {|line|
+var fast-completer~ = {|@words|
+    fast-completer tsv $@words | from-lines | each {|line|
         var parts = (str:split "\t" $line)
         edit:complex-candidate $parts[0] &display-suffix=' '$parts[1]
     }
+}
+
+# Register for specific commands
+for cmd [aws az] {
+    set edit:completion:arg-completer[$cmd] = $fast-completer~
 }
 ```
 
@@ -231,19 +263,22 @@ set edit:completion:arg-completer[aws] = {|@words|
 Add to your config:
 
 ```nu
-let aws_completer = {|spans|
-    ^fast-completer aws nushell ...$spans | from msgpack
+let fc_completer = {|spans|
+    ^fast-completer nushell ...$spans | from msgpack
 }
 
-let az_completer = {|spans|
-    ^fast-completer az nushell ...$spans | from msgpack
+# Check if a blob exists for the command
+def has-fc-blob [cmd: string] {
+    let cache = ($env.FAST_COMPLETER_CACHE? | default ($env.HOME | path join ".cache/fast-completer"))
+    ($cache | path join $"($cmd).bin" | path exists)
 }
 
 let external_completer = {|spans|
-    match $spans.0 {
-        aws => $aws_completer
-        az => $az_completer
-    } | do $in $spans
+    if (has-fc-blob $spans.0) {
+        do $fc_completer $spans
+    } else {
+        null  # fall back to default completion
+    }
 }
 
 $env.config.completions.external = {
@@ -257,13 +292,22 @@ $env.config.completions.external = {
 Add to your profile:
 
 ```pwsh
-Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
+$fcCompleter = {
     param($wordToComplete, $commandAst, $cursorPosition)
     $spans = $commandAst.CommandElements | ForEach-Object { $_.Extent.Text }
-    fast-completer aws pwsh @spans | ForEach-Object {
+    fast-completer pwsh @spans | ForEach-Object {
         $parts = $_ -split "`t"
         [System.Management.Automation.CompletionResult]::new($parts[0], $parts[1], $parts[2], $parts[3])
     }
+}
+
+# Register for specific commands
+Register-ArgumentCompleter -Native -CommandName aws, az -ScriptBlock $fcCompleter
+
+# Or register for all installed blobs
+$fcCache = if ($env:FAST_COMPLETER_CACHE) { $env:FAST_COMPLETER_CACHE } else { "$env:LOCALAPPDATA\fast-completer" }
+Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
+    Register-ArgumentCompleter -Native -CommandName $_.BaseName -ScriptBlock $fcCompleter
 }
 ```
 
