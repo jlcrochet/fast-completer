@@ -222,41 +222,40 @@ Schemas are JSON or YAML files that describe a CLI's command structure. The `sch
 
 Groups are subcommand namespaces (e.g., `aws s3`, `az storage`):
 
-```json
-{
-  "name": "s3",
-  "type": "group",
-  "summary": "Amazon S3 commands"
-}
+```yaml
+name: s3
+type: group
+summary: Amazon S3 commands
 ```
 
 ### Commands
 
 Commands are the leaf nodes that perform actions:
 
-```json
-{
-  "name": "s3 cp",
-  "type": "command",
-  "summary": "Copies a file or object to/from S3",
-  "parameters": [...]
-}
+```yaml
+name: s3 cp
+type: command
+summary: Copies a file or object to/from S3
+parameters:
+  - ...
 ```
 
-The `name` is the full command path with spaces (e.g., `"ec2 run-instances"`).
+The `name` is the full command path with spaces (e.g., `ec2 run-instances`).
 
 ### Parameters
 
 Parameters define the flags and options for a command:
 
-```json
-{
-  "name": "--instance-type",
-  "options": ["--instance-type"],
-  "required": false,
-  "summary": "The instance type",
-  "choices": ["t2.micro", "t2.small", "t2.medium"]
-}
+```yaml
+name: --instance-type
+options:
+  - --instance-type
+required: false
+summary: The instance type
+choices:
+  - t2.micro
+  - t2.small
+  - t2.medium
 ```
 
 | Property | Required | Description |
@@ -276,13 +275,14 @@ Parameters with `type: "bool"` or names starting with `--no-` are treated as fla
 
 Global parameters appear in `global_params` and are available to all commands:
 
-```json
-{
-  "name": "--region",
-  "description": "The region to use",
-  "takes_value": true,
-  "choices": ["us-east-1", "us-west-2", "eu-west-1"]
-}
+```yaml
+name: --region
+description: The region to use
+takes_value: true
+choices:
+  - us-east-1
+  - us-west-2
+  - eu-west-1
 ```
 
 | Property | Required | Description |
