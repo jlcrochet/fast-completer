@@ -30,6 +30,7 @@ This project provides a single native C binary that can provide completions for 
   - [Nushell](#nushell)
   - [PowerShell](#powershell)
 - [Limitations](#limitations)
+- [TODO](#todo)
 - [How It Works](#how-it-works)
 
 ## Usage
@@ -446,9 +447,13 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
 
 ## Limitations
 
-- Only outputs long options (e.g., `--instance-type`, not short options)
 - Does not support dynamic completers (e.g., completing resource names from your cloud account)
 - Structure member completion only provides top-level keys (e.g., `ebs=`, `device-name=`); nested members are not yet supported
+
+## TODO
+
+- **Dynamic completers**: Support for completing dynamic values (e.g., EC2 instance IDs, S3 bucket names) by invoking external scripts or commands
+- **Static completion generation**: Generate native shell completion scripts (e.g., Bash `complete` definitions, Zsh `_arguments` specs) directly from the blob, eliminating the runtime dependency on fast-completer
 
 ## How It Works
 
