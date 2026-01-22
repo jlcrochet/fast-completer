@@ -26,15 +26,130 @@
 #define FLAG_IS_MEMBERS  0x02
 
 // Header flags
-#define HEADER_FLAG_BIG_ENDIAN 0x01
+#define HEADER_FLAG_BIG_ENDIAN      0x01
+#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
 
 // Limits
 #define VLQ_MAX_LENGTH 32767
+#define SHORT_DESC_MAX_LEN 200
 
 // Msgpack overhead constants
 #define KEY_VALUE_LEN 5
 #define KEY_DESC_LEN 11
 #define OVERHEAD_PER_ITEM 25
+
+// --------------------------------------------------------------------------
+// Description truncation helpers
+// --------------------------------------------------------------------------
+
+// Check if position is inside a URL (has :// before without intervening space)
+static bool in_url(const char *s, size_t pos) {
+    // Look backwards for :// without hitting a space
+    if (pos < 3) return false;
+    for (size_t i = pos; i >= 3; i--) {
+        if (s[i-1] == ' ' || s[i-1] == '\t' || s[i-1] == '\n') return false;
+        if (s[i-1] == '/' && s[i-2] == '/' && s[i-3] == ':') return true;
+        if (i == 3) break;
+    }
+    return false;
+}
+
+// Check if period is part of an abbreviation (e.g., i.e., etc., vs.)
+static bool is_abbreviation(const char *s, size_t pos) {
+    // Common abbreviations - check if period is preceded by these
+    static const char *abbrevs[] = {
+        "e.g", "i.e", "etc", "vs", "approx", "incl", "excl",
+        "min", "max", "avg", "num", "vol", "ch", "sec", "fig",
+        NULL
+    };
+
+    if (pos < 2) return false;
+
+    for (const char **abbr = abbrevs; *abbr; abbr++) {
+        size_t len = strlen(*abbr);
+        if (pos >= len) {
+            bool match = true;
+            for (size_t i = 0; i < len && match; i++) {
+                char c1 = s[pos - len + i];
+                char c2 = (*abbr)[i];
+                // Case-insensitive comparison
+                if (c1 >= 'A' && c1 <= 'Z') c1 += 32;
+                if (c2 >= 'A' && c2 <= 'Z') c2 += 32;
+                if (c1 != c2) match = false;
+            }
+            if (match) {
+                // Make sure it's a word boundary before the abbreviation
+                if (pos == len || s[pos - len - 1] == ' ' || s[pos - len - 1] == '(') {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// Check if period is between digits (version number like 1.0.0)
+static bool is_version_number(const char *s, size_t pos, size_t len) {
+    if (pos == 0 || pos + 1 >= len) return false;
+    return (s[pos - 1] >= '0' && s[pos - 1] <= '9') &&
+           (s[pos + 1] >= '0' && s[pos + 1] <= '9');
+}
+
+// Truncate description to first sentence
+// Returns a newly allocated string (caller must free)
+static char *truncate_to_first_sentence(const char *desc) {
+    if (!desc || !*desc) return strdup("");
+
+    size_t len = strlen(desc);
+    size_t end = len;
+
+    for (size_t i = 0; i < len && i < SHORT_DESC_MAX_LEN; i++) {
+        char c = desc[i];
+        char next = (i + 1 < len) ? desc[i + 1] : '\0';
+
+        // Stop at newlines
+        if (c == '\n') {
+            end = i;
+            break;
+        }
+
+        // Check for sentence-ending punctuation followed by space/end
+        if ((c == '.' || c == ';' || c == ':') &&
+            (next == ' ' || next == '\n' || next == '\0' || next == '\t')) {
+
+            // Skip if it's a special case
+            if (c == '.') {
+                if (in_url(desc, i)) continue;
+                if (is_abbreviation(desc, i)) continue;
+                if (is_version_number(desc, i, len)) continue;
+            }
+
+            end = i;  // Stop before the punctuation
+            break;
+        }
+    }
+
+    // If we hit max length without finding sentence end, truncate with ...
+    if (end == len && len > SHORT_DESC_MAX_LEN) {
+        // Find last space before max length to avoid cutting words
+        end = SHORT_DESC_MAX_LEN;
+        while (end > SHORT_DESC_MAX_LEN - 30 && desc[end] != ' ') {
+            end--;
+        }
+        if (desc[end] == ' ') {
+            char *result = malloc(end + 4);
+            memcpy(result, desc, end);
+            memcpy(result + end, "...", 4);
+            return result;
+        }
+        end = SHORT_DESC_MAX_LEN;
+    }
+
+    char *result = malloc(end + 1);
+    memcpy(result, desc, end);
+    result[end] = '\0';
+    return result;
+}
 
 // --------------------------------------------------------------------------
 // String Table (with hash table for O(1) deduplication)
@@ -279,9 +394,16 @@ typedef struct {
 
     // Byte order
     bool big_endian;
+
+    // Description options
+    bool no_descriptions;
+    bool long_descriptions;  // Default is short (first sentence)
+
+    // Track if any descriptions were actually added
+    bool has_any_descriptions;
 } BlobGen;
 
-static void blobgen_init(BlobGen *bg, bool big_endian) {
+static void blobgen_init(BlobGen *bg, bool big_endian, bool no_descriptions, bool long_descriptions) {
     memset(bg, 0, sizeof(*bg));
     strtab_init(&bg->strtab);
 
@@ -308,6 +430,37 @@ static void blobgen_init(BlobGen *bg, bool big_endian) {
     bg->global_params_count = 0;
 
     bg->big_endian = big_endian;
+    bg->no_descriptions = no_descriptions;
+    bg->long_descriptions = long_descriptions;
+}
+
+// Add a description to the string table, applying truncation if needed
+// If track is true, sets has_any_descriptions flag
+static uint32_t strtab_add_desc_ex(BlobGen *bg, const char *desc, bool track) {
+    if (bg->no_descriptions || !desc || !*desc) {
+        return 0;
+    }
+
+    char *processed = NULL;
+    if (!bg->long_descriptions) {
+        // Default: truncate to first sentence
+        processed = truncate_to_first_sentence(desc);
+        desc = processed;
+    }
+
+    uint32_t offset = 0;
+    if (desc && *desc) {
+        offset = strtab_add(&bg->strtab, desc);
+        if (track) bg->has_any_descriptions = true;
+    }
+
+    free(processed);
+    return offset;
+}
+
+// Add a description and track it
+static uint32_t strtab_add_desc(BlobGen *bg, const char *desc) {
+    return strtab_add_desc_ex(bg, desc, true);
 }
 
 static void blobgen_free(BlobGen *bg) {
@@ -719,7 +872,7 @@ static uint32_t collect_params(BlobGen *bg, cJSON *params_arr) {
         ParamEntry *pe = &bg->params[bg->params_count++];
         pe->name_off = strtab_add(&bg->strtab, info.name);
         pe->short_off = info.short_opt ? strtab_add(&bg->strtab, info.short_opt) : 0;
-        pe->desc_off = strtab_add(&bg->strtab, info.description);
+        pe->desc_off = strtab_add_desc(bg, info.description);
         pe->flags = 0;
         pe->choices_idx = (uint32_t)-1;
         pe->is_sentinel = false;
@@ -733,7 +886,7 @@ static uint32_t collect_params(BlobGen *bg, cJSON *params_arr) {
             pe->flags |= FLAG_IS_MEMBERS;
         }
 
-        track_param(bg, strlen(info.name), strlen(info.description));
+        track_param(bg, strlen(info.name), bg->no_descriptions ? 0 : strlen(info.description));
         free_param_info(&info);
     }
 
@@ -786,8 +939,8 @@ static uint32_t collect_commands(BlobGen *bg, CommandNode *node) {
 
         child_data[i].params_idx = collect_params(bg, params_arr);
         child_data[i].name_off = strtab_add(&bg->strtab, child->name);
-        child_data[i].desc_off = strtab_add(&bg->strtab, desc);
-        child_data[i].desc_len = strlen(desc);
+        child_data[i].desc_off = strtab_add_desc(bg, desc);
+        child_data[i].desc_len = bg->no_descriptions ? 0 : strlen(desc);
 
         // Track leaf command
         if (child_data[i].subcommands_idx == 0 && child->cmd) {
@@ -1028,12 +1181,12 @@ char *get_schema_name(const char *schema_path) {
 // Main blob generation
 // --------------------------------------------------------------------------
 
-bool generate_blob(const char *schema_path, const char *output_path, bool big_endian) {
+bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, bool no_descriptions, bool long_descriptions) {
     cJSON *data = load_input_file(schema_path);
     if (!data) return false;
 
     BlobGen bg;
-    blobgen_init(&bg, big_endian);
+    blobgen_init(&bg, big_endian, no_descriptions, long_descriptions);
 
     cJSON *commands = cJSON_GetObjectItem(data, "commands");
     if (!commands || !cJSON_IsArray(commands)) {
@@ -1063,8 +1216,10 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
                             ? root_desc_obj->valuestring : "CLI";
 
     uint32_t version_name_off = strtab_add(&bg.strtab, version_name);
-    uint32_t version_desc_off = strtab_add(&bg.strtab, version_desc);
-    uint32_t root_desc_off = strtab_add(&bg.strtab, root_desc);
+    // Add version/root descriptions but don't count them for has_any_descriptions
+    // (these are defaults, not from the schema)
+    uint32_t version_desc_off = strtab_add_desc_ex(&bg, version_desc, false);
+    uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc, false);
 
     uint32_t root_params_idx = (uint32_t)bg.params_count;
 
@@ -1132,7 +1287,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             ParamEntry *pe = &bg.global_params[bg.global_params_count++];
             pe->name_off = strtab_add(&bg.strtab, long_opt ? long_opt : name);
             pe->short_off = short_opt ? strtab_add(&bg.strtab, short_opt) : 0;
-            pe->desc_off = strtab_add(&bg.strtab, desc);
+            pe->desc_off = strtab_add_desc(&bg, desc);
             pe->flags = takes_value ? FLAG_TAKES_VALUE : 0;
             pe->choices_idx = (uint32_t)-1;
             pe->is_sentinel = false;
@@ -1142,7 +1297,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             }
 
             bg.global_param_count++;
-            bg.global_param_bytes += strlen(long_opt ? long_opt : name) + strlen(desc);
+            bg.global_param_bytes += strlen(long_opt ? long_opt : name) + (bg.no_descriptions ? 0 : strlen(desc));
 
             free(long_opt);
             free(short_opt);
@@ -1207,7 +1362,10 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     // Write header
     memcpy(blob, BLOB_MAGIC, 4);
     write_u16(blob + 4, BLOB_VERSION, big_endian);
-    write_u16(blob + 6, big_endian ? HEADER_FLAG_BIG_ENDIAN : 0, big_endian);
+    uint16_t flags = 0;
+    if (big_endian) flags |= HEADER_FLAG_BIG_ENDIAN;
+    if (no_descriptions || !bg.has_any_descriptions) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
+    write_u16(blob + 6, flags, big_endian);
     write_u32(blob + 8, (uint32_t)bg.max_command_path_len + 1, big_endian);
     write_u32(blob + 12, (uint32_t)msgpack_buffer_size, big_endian);
     write_u32(blob + 16, (uint32_t)bg.commands_count, big_endian);

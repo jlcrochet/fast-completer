@@ -4,3 +4,4 @@ fast-completer
 fast-completer.exe
 *.bin
 .venv/
+pyproject.toml

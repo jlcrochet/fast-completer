@@ -30,8 +30,13 @@ HEADER_SIZE = 68
 PARAM_SIZE = 17
 COMMAND_SIZE = 16
 
+# Param flags
 FLAG_TAKES_VALUE = 0x01
 FLAG_IS_MEMBERS = 0x02
+
+# Header flags
+HEADER_FLAG_BIG_ENDIAN = 0x01
+HEADER_FLAG_NO_DESCRIPTIONS = 0x02
 
 
 class BlobReader:
@@ -401,7 +406,16 @@ def dump_text(reader, section=None):
     if section is None or section == 'header':
         lines.append("=== HEADER ===")
         for key, value in reader.header.items():
-            lines.append(f"  {key}: {value}")
+            if key == 'flags':
+                flag_names = []
+                if value & HEADER_FLAG_BIG_ENDIAN:
+                    flag_names.append('big_endian')
+                if value & HEADER_FLAG_NO_DESCRIPTIONS:
+                    flag_names.append('no_descriptions')
+                flag_str = ', '.join(flag_names) if flag_names else 'none'
+                lines.append(f"  {key}: {value} ({flag_str})")
+            else:
+                lines.append(f"  {key}: {value}")
         lines.append("")
 
     if section is None or section == 'root':

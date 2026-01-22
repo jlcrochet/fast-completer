@@ -196,6 +196,32 @@ fast-completer --generate-blob aws.json /custom/path/aws.bin
 
 The schema must have a `"name"` (or `"cli"`) property specifying the CLI name. This determines the blob filename when auto-saving to cache.
 
+### Generation Options
+
+| Option | Description |
+|--------|-------------|
+| `--no-descriptions` | Omit descriptions entirely (smallest blob) |
+| `--long-descriptions` | Include full descriptions (default is first sentence) |
+| `--big-endian` | Generate big-endian blob (for cross-compilation) |
+
+```bash
+# First sentence descriptions (default)
+fast-completer --generate-blob aws.json
+
+# Full descriptions
+fast-completer --generate-blob --long-descriptions aws.json
+
+# No descriptions
+fast-completer --generate-blob --no-descriptions aws.json
+```
+
+| CLI | Default | Long | None |
+|-----|---------|------|------|
+| AWS | 6.2 MB | 9.0 MB | 2.8 MB |
+| Azure | 1.8 MB | 2.4 MB | 0.7 MB |
+
+The blob header includes a flag indicating whether descriptions are present. This flag is set automatically if the schema has no descriptions (like gcloud), so the completer skips description lookups for all output formats.
+
 ### Example Schemas
 
 The `schemas/` directory contains pre-generated schemas and export scripts for popular CLIs:
@@ -346,7 +372,7 @@ The blob format is designed for zero-copy memory-mapped access:
 
 | Section | Description |
 |---------|-------------|
-| Header (68 bytes) | Magic (`FCMP`), version, counts, offsets |
+| Header (68 bytes) | Magic (`FCMP`), version, flags, counts, offsets |
 | String table | VLQ length-prefixed, deduplicated strings |
 | Commands array | Fixed-size command structs (16 bytes each) |
 | Params array | Fixed-size param structs (17 bytes each) |
@@ -355,7 +381,11 @@ The blob format is designed for zero-copy memory-mapped access:
 | Global params | Param structs for global options |
 | Root command | Single command struct for the CLI root |
 
-All integers are little-endian. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
+**Header flags:**
+- `0x01` - Big-endian byte order
+- `0x02` - No descriptions (set by `--no-descriptions` or auto-detected)
+
+All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
 
 ## Shell Integration
 

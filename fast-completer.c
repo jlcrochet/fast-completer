@@ -46,7 +46,8 @@
 #define FLAG_IS_MEMBERS  0x02
 
 // Header flags
-#define HEADER_FLAG_BIG_ENDIAN 0x01
+#define HEADER_FLAG_BIG_ENDIAN      0x01
+#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
 
 // Supported output formats
 typedef enum {
@@ -107,6 +108,7 @@ typedef struct {
 static const uint8_t *blob = NULL;
 static BlobHeader header;
 static OutputFormat output_format;
+static bool has_descriptions = true;  // Set from blob flags
 
 // Working buffers (allocated based on header values)
 static uint8_t *msgpack_buf = NULL;
@@ -437,7 +439,8 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
                 complete_leaf_commands(sub, (String){buf, new_len}, prefix);
             }
         } else if (matches) {
-            output_completion((String){buf, new_len}, str_get(sub->desc_off), COMP_COMMAND);
+            uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
+            output_completion((String){buf, new_len}, str_get(desc), COMP_COMMAND);
         }
 
         buf[path.n] = '\0';
@@ -469,7 +472,8 @@ static void complete_params_list(const Param *params, const char **args, int arg
 
             String short_opt = str_get(p->short_off);
             if (short_opt.n >= prefix_len && memcmp(short_opt.p, prefix, prefix_len) == 0) {
-                output_completion(short_opt, str_get(p->desc_off), COMP_PARAM_NAME);
+                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
             }
         }
     }
@@ -481,7 +485,8 @@ static void complete_params_list(const Param *params, const char **args, int arg
 
             String name = str_get(p->name_off);
             if (prefix_len == 0 || (name.n >= prefix_len && memcmp(name.p, prefix, prefix_len) == 0)) {
-                output_completion(name, str_get(p->desc_off), COMP_PARAM_NAME);
+                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                output_completion(name, str_get(desc), COMP_PARAM_NAME);
             }
         }
     }
@@ -504,7 +509,8 @@ static void complete_global_params(const char **args, int argc, const char *pref
 
             String short_opt = str_get(p->short_off);
             if (short_opt.n >= prefix_len && memcmp(short_opt.p, prefix, prefix_len) == 0) {
-                output_completion(short_opt, str_get(p->desc_off), COMP_PARAM_NAME);
+                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
             }
         }
     }
@@ -516,7 +522,8 @@ static void complete_global_params(const char **args, int argc, const char *pref
 
             String name = str_get(p->name_off);
             if (prefix_len == 0 || (name.n >= prefix_len && memcmp(name.p, prefix, prefix_len) == 0)) {
-                output_completion(name, str_get(p->desc_off), COMP_PARAM_NAME);
+                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                output_completion(name, str_get(desc), COMP_PARAM_NAME);
             }
         }
     }
@@ -798,6 +805,10 @@ static bool load_blob(const char *path) {
         return false;
     }
 
+    // Check if blob has descriptions
+    uint16_t flags = *(uint16_t *)(blob + 6);
+    has_descriptions = !(flags & HEADER_FLAG_NO_DESCRIPTIONS);
+
     // Parse header (skip magic:4, version:2, flags:2 = offset 8)
     const uint32_t *h = (const uint32_t *)(blob + 8);
     header.max_command_path_len = h[0];
@@ -952,10 +963,12 @@ static void print_help(void) {
 #endif
     puts("");
     puts("Blob generation mode:");
-    puts("  fast-completer --generate-blob [--big-endian] <schema> [output]\n");
-    puts("  schema        Path to JSON or YAML schema file");
-    puts("  output        Output path (optional - defaults to cache directory)");
-    puts("  --big-endian  Generate big-endian blob\n");
+    puts("  fast-completer --generate-blob [options] <schema> [output]\n");
+    puts("  schema              Path to JSON or YAML schema file");
+    puts("  output              Output path (optional - defaults to cache directory)");
+    puts("  --big-endian        Generate big-endian blob");
+    puts("  --no-descriptions   Omit descriptions entirely (smallest blob)");
+    puts("  --long-descriptions Include full descriptions (default is first sentence)\n");
     puts("  If output is omitted, reads 'name' from schema and saves to cache.\n");
     puts("Output formats:");
     puts("  bash, lines       One value per line (no descriptions)");
@@ -985,15 +998,27 @@ int main(int argc, char *argv[]) {
     // Handle --generate-blob mode (must come first)
     if (argc >= 2 && strcmp(argv[1], "--generate-blob") == 0) {
         bool big_endian = false;
+        bool no_descriptions = false;
+        bool long_descriptions = false;
         int arg_idx = 2;
 
-        if (argc > arg_idx && strcmp(argv[arg_idx], "--big-endian") == 0) {
-            big_endian = true;
+        // Parse options
+        while (argc > arg_idx && argv[arg_idx][0] == '-') {
+            if (strcmp(argv[arg_idx], "--big-endian") == 0) {
+                big_endian = true;
+            } else if (strcmp(argv[arg_idx], "--no-descriptions") == 0) {
+                no_descriptions = true;
+            } else if (strcmp(argv[arg_idx], "--long-descriptions") == 0) {
+                long_descriptions = true;
+            } else {
+                break;
+            }
             arg_idx++;
         }
 
         if (argc < arg_idx + 1) {
-            fprintf(stderr, "Usage: fast-completer --generate-blob [--big-endian] <schema> [output]\n");
+            fprintf(stderr, "Usage: fast-completer --generate-blob [options] <schema> [output]\n");
+            fprintf(stderr, "Options: --big-endian, --no-descriptions, --long-descriptions\n");
             return 1;
         }
 
@@ -1013,7 +1038,7 @@ int main(int argc, char *argv[]) {
             output_path = derived_path;
         }
 
-        bool result = generate_blob(schema_path, output_path, big_endian);
+        bool result = generate_blob(schema_path, output_path, big_endian, no_descriptions, long_descriptions);
         return result ? 0 : 1;
     }
 
