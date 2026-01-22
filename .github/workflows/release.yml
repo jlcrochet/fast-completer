@@ -81,10 +81,17 @@ jobs:
       - name: Prepare release files
         run: |
           cd artifacts
-          mv fast-completer-linux-x86_64/fast-completer fast-completer-linux-x86_64
-          mv fast-completer-macos-arm64/fast-completer fast-completer-macos-arm64
-          mv fast-completer-macos-x86_64/fast-completer fast-completer-macos-x86_64
-          mv fast-completer-windows-x86_64/fast-completer.exe fast-completer-windows-x86_64.exe
+          for dir in */; do
+            name="${dir%/}"
+            if [[ -f "$dir/fast-completer.exe" ]]; then
+              mv "$dir/fast-completer.exe" "${name}.exe"
+            else
+              mv "$dir/fast-completer" "${name}.tmp"
+              rm -rf "$dir"
+              mv "${name}.tmp" "$name"
+            fi
+          done
+          rm -rf */
           ls -la
 
       - name: Create release
