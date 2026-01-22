@@ -302,7 +302,7 @@ The blob format is designed for zero-copy memory-mapped access:
 | Header (68 bytes) | Magic (`FCMP`), version, counts, offsets |
 | String table | VLQ length-prefixed, deduplicated strings |
 | Commands array | Fixed-size command structs (16 bytes each) |
-| Params array | Fixed-size param structs (13 bytes each) |
+| Params array | Fixed-size param structs (17 bytes each) |
 | Choices data | Null-terminated uint32 offset arrays |
 | Members data | Null-terminated uint32 offset arrays |
 | Global params | Param structs for global options |
