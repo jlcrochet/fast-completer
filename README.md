@@ -6,6 +6,7 @@ This project provides a single native C binary that can provide completions for 
 
 ## Table of Contents
 
+- [Performance](#performance)
 - [Usage](#usage)
   - [Output Formats](#output-formats)
 - [Installation](#installation)
@@ -33,6 +34,42 @@ This project provides a single native C binary that can provide completions for 
 - [TODO](#todo)
 - [How It Works](#how-it-works)
 
+## Performance
+
+Some large CLIs ship with slow completion scripts. fast-completer provides a faster alternative by memory-mapping a pre-compiled binary blob instead of invoking the CLI on every tab press.
+
+| CLI | Native Completer | fast-completer | Speedup |
+|-----|------------------|----------------|---------|
+| AWS CLI | 34 ms | 0.5 ms | **~70x faster** |
+| Azure CLI | 190 ms | 0.3 ms | **~600x faster** |
+| gcloud CLI | 500 ms | 0.3 ms | **~1700x faster** |
+
+These CLIs use Python-based completers (argcomplete), which have significant startup overhead.
+
+<details>
+<summary>Benchmark methodology</summary>
+
+Benchmarks were run using [hyperfine](https://github.com/sharkdp/hyperfine) with 3 warmup runs:
+
+```bash
+# AWS CLI
+hyperfine --warmup 3 \
+    'COMP_LINE="aws s3 " COMP_POINT=7 aws_completer' \
+    './fast-completer bash aws s3 ""'
+
+# Azure CLI
+hyperfine --warmup 3 \
+    '{ COMP_LINE="az storage " COMP_POINT=11 _ARGCOMPLETE=1 az 2>/dev/null; } 8>&1' \
+    './fast-completer bash az storage ""'
+
+# gcloud CLI
+hyperfine --warmup 3 \
+    'bash -c '\''COMP_LINE="gcloud compute " COMP_POINT=15 _ARGCOMPLETE=1 gcloud 8>&1 2>/dev/null'\''' \
+    './fast-completer bash gcloud compute ""'
+```
+
+</details>
+
 ## Usage
 
 ```
@@ -49,11 +86,13 @@ Parameters are sorted with required options first, then optional ones (alphabeti
 
 | Format | Description |
 |--------|-------------|
-| `bash` | One value per line (alias: `lines`) |
+| `bash` | One value per line, no descriptions (alias: `lines`) |
 | `zsh` | value:description (colon-separated) |
 | `fish` | value\tdescription (tab-separated, alias: `tsv`) |
 | `pwsh` | PowerShell tab-separated format |
 | `nushell` | MessagePack array of maps (alias: `msgpack`) |
+
+Use the `lines` format when you only need values without descriptions.
 
 **Generic formats:**
 
@@ -165,12 +204,14 @@ The `schemas/` directory contains pre-generated schemas and export scripts for p
 |-----|--------|--------------|
 | AWS CLI | `schemas/aws/aws_commands.json` | `awscli` package |
 | Azure CLI | `schemas/az/az_commands.json` | `azure-cli` package |
+| gcloud CLI | `schemas/gcloud/gcloud_commands.json` | `google-cloud-sdk` |
 
 To use the included schemas:
 
 ```bash
 fast-completer --generate-blob schemas/aws/aws_commands.json
 fast-completer --generate-blob schemas/az/az_commands.json
+fast-completer --generate-blob schemas/gcloud/gcloud_commands.json
 ```
 
 To regenerate schemas from the latest CLI version:
@@ -183,6 +224,10 @@ python export_command_tree.py > aws_commands.json
 # Azure (requires azure-cli installed)
 cd schemas/az
 python export_command_tree.py > az_commands.json
+
+# gcloud (requires google-cloud-sdk installed)
+cd schemas/gcloud
+python export_command_tree.py > gcloud_commands.json
 ```
 
 The export scripts introspect the installed CLI to extract all commands, parameters, and descriptions. Run them after updating your CLI to get completions for new commands.
@@ -451,6 +496,7 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
 
 ## TODO
 
+- **More schemas**: Add schemas for other large CLIs (e.g., `kubectl`, `gh`)
 - **Dynamic completers**: Support for completing dynamic values (e.g., EC2 instance IDs, S3 bucket names) by invoking external scripts or commands
 
 ## How It Works

@@ -964,7 +964,7 @@ static void print_help(void) {
     puts("  --big-endian  Generate big-endian blob\n");
     puts("  If output is omitted, reads 'name' from schema and saves to cache.\n");
     puts("Output formats:");
-    puts("  bash, lines       One value per line");
+    puts("  bash, lines       One value per line (no descriptions)");
     puts("  zsh               value:description");
     puts("  fish, tsv         value\\tdescription");
     puts("  pwsh              PowerShell format");
@@ -972,6 +972,7 @@ static void print_help(void) {
     puts("  json              JSON array of objects");
     puts("  json-tuple        JSON array of tuples");
     puts("  msgpack-tuple     MessagePack array of tuples\n");
+    puts("Use 'lines' format when descriptions are not needed.\n");
     puts("Examples:");
     puts("  fast-completer --generate-blob aws.json");
     puts("      Generate blob from schema with {\"name\": \"aws\", ...}\n");
