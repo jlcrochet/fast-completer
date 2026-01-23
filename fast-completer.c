@@ -143,12 +143,6 @@ static inline String str_get(uint32_t off) {
     return s;
 }
 
-// Compare string table entry with C string (pre-computed length)
-static inline bool str_eq_n(uint32_t off, const char *cstr, size_t clen) {
-    String s = str_get(off);
-    return s.n == clen && memcmp(s.p, cstr, clen) == 0;
-}
-
 // Get command by index
 static inline const Command *get_command(uint32_t idx) {
     return (const Command *)(blob + header.commands_off + idx * COMMAND_SIZE);
