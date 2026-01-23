@@ -24,6 +24,7 @@ This project provides a single native C binary that can provide completions for 
   - [Global Parameters](#global-parameters)
 - [Binary Blob Format](#binary-blob-format)
 - [Shell Integration](#shell-integration)
+  - [Fallback Completers](#fallback-completers)
   - [Bash](#bash)
   - [Zsh](#zsh)
   - [Fish](#fish)
@@ -99,8 +100,11 @@ Use the `lines` format when you only need values without descriptions.
 | Option | Description |
 |--------|-------------|
 | `--add-space` | Append trailing space to completion values (implied by `nushell`) |
+| `--quiet`, `-q` | Suppress error messages if blob not found (for fallback scripts) |
 
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
+
+The `--quiet` option suppresses all error output, making it suitable for fallback completion setups where you want to try fast-completer first and fall back to another completer if no blob exists.
 
 **Generic formats:**
 
@@ -418,6 +422,10 @@ All integers are little-endian by default. The binary uses `mmap()` (or `MapView
 
 Completions are returned pre-sorted. Where possible, disable the shell's sorting to preserve the order.
 
+### Fallback Completers
+
+Use `--quiet` to try fast-completer first and fall back to another completer (like [carapace](https://github.com/carapace-sh/carapace)) if no blob exists. This lets you get fast completions for CLIs with pre-generated blobs while still having completions for other commands.
+
 ### Bash
 
 Add to your `~/.bashrc`:
@@ -435,6 +443,16 @@ _fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
 for blob in "$_fc_cache"/*.bin; do
     [[ -f "$blob" ]] && complete -o nosort -F _fast_completer "$(basename "$blob" .bin)"
 done
+```
+
+**With carapace fallback:**
+
+```bash
+_fc_or_carapace() {
+    mapfile -t COMPREPLY < <(fast-completer -q bash "${COMP_WORDS[@]}")
+    [[ ${#COMPREPLY[@]} -eq 0 ]] && mapfile -t COMPREPLY < <(carapace "${COMP_WORDS[0]}" bash "${COMP_WORDS[@]}")
+}
+complete -o nosort -F _fc_or_carapace aws az kubectl gh
 ```
 
 ### Zsh
@@ -458,6 +476,20 @@ for blob in "$_fc_cache"/*.bin(N); do
 done
 ```
 
+**With carapace fallback:**
+
+```zsh
+_fc_or_carapace() {
+    local -a completions
+    completions=("${(@f)$(fast-completer -q zsh "${words[@]}")}")
+    if [[ ${#completions[@]} -eq 0 ]]; then
+        completions=("${(@f)$(carapace "${words[1]}" zsh "${words[@]}")}")
+    fi
+    compadd -V unsorted -d completions -a completions
+}
+compdef _fc_or_carapace aws az kubectl gh
+```
+
 ### Fish
 
 Add to your `~/.config/fish/config.fish`:
@@ -475,6 +507,24 @@ for blob in $_fc_cache/*.bin
     set -l cmd (basename $blob .bin)
     complete -c $cmd -e
     complete -c $cmd -k -a "(fast-completer fish (commandline -opc))"
+end
+```
+
+**With carapace fallback:**
+
+```fish
+function _fc_or_carapace
+    set -l results (fast-completer -q fish (commandline -opc))
+    if test (count $results) -eq 0
+        carapace (commandline -opc)[1] fish (commandline -opc)
+    else
+        printf '%s\n' $results
+    end
+end
+
+for cmd in aws az kubectl gh
+    complete -c $cmd -e
+    complete -c $cmd -k -a "(_fc_or_carapace)"
 end
 ```
 
@@ -527,6 +577,24 @@ $env.config.completions.external = {
 }
 ```
 
+**With carapace fallback:**
+
+```nu
+let fc_completer = {|spans|
+    let result = (^fast-completer -q nushell ...$spans | from msgpack)
+    if ($result | is-empty) {
+        ^carapace $spans.0 nushell ...$spans | from json
+    } else {
+        $result
+    }
+}
+
+$env.config.completions.external = {
+    enable: true
+    completer: $fc_completer
+}
+```
+
 ### PowerShell
 
 Add to your profile:
@@ -549,6 +617,24 @@ $fcCache = if ($env:FAST_COMPLETER_CACHE) { $env:FAST_COMPLETER_CACHE } else { "
 Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
     Register-ArgumentCompleter -Native -CommandName $_.BaseName -ScriptBlock $fcCompleter
 }
+```
+
+**With carapace fallback:**
+
+```pwsh
+$fcOrCarapaceCompleter = {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    $spans = $commandAst.CommandElements | ForEach-Object { $_.Extent.Text }
+    $results = fast-completer -q pwsh @spans
+    if (-not $results) {
+        $results = carapace $spans[0] powershell @spans
+    }
+    $results | ForEach-Object {
+        $parts = $_ -split "`t"
+        [System.Management.Automation.CompletionResult]::new($parts[0], $parts[1], $parts[2], $parts[3])
+    }
+}
+Register-ArgumentCompleter -Native -CommandName aws, az, kubectl, gh -ScriptBlock $fcOrCarapaceCompleter
 ```
 
 ## Limitations

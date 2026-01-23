@@ -1313,13 +1313,15 @@ static void print_help(void) {
     puts("fast-completer - Universal fast completion provider\n");
     puts("Usage: fast-completer [options] <format> <spans...>");
     puts("       fast-completer --generate-blob <schema> [output]");
+    puts("       fast-completer --check <name>");
     puts("       fast-completer --dump-header <blob>\n");
     puts("Completion mode:");
     puts("  fast-completer [options] <format> <spans...>\n");
     puts("  format        Output format (see below)");
     puts("  spans         Command line tokens starting with CLI name\n");
     puts("  --blob <path> Use blob at specified path instead of cache lookup");
-    puts("  --add-space   Append trailing space to completion values\n");
+    puts("  --add-space   Append trailing space to completion values");
+    puts("  --quiet, -q   Suppress errors if blob not found (for fallback scripts)\n");
     puts("  The CLI name is derived from the first span and used to look up");
     puts("  <name>.bin in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
@@ -1337,6 +1339,10 @@ static void print_help(void) {
     puts("  --no-descriptions   Omit descriptions entirely (smallest blob)");
     puts("  --long-descriptions Include full descriptions (default is first sentence)\n");
     puts("  If output is omitted, reads 'name' from schema and saves to cache.\n");
+    puts("Check mode:");
+    puts("  fast-completer --check <name>\n");
+    puts("  name              CLI name to check (e.g., 'aws')");
+    puts("  Returns exit code 0 if blob exists in cache, 1 otherwise.\n");
     puts("Dump header mode:");
     puts("  fast-completer --dump-header <blob>\n");
     puts("  blob              Path or cache name (e.g., 'aws' or '/path/to/aws.bin')\n");
@@ -1354,6 +1360,8 @@ static void print_help(void) {
     puts("Examples:");
     puts("  fast-completer --generate-blob aws.json");
     puts("      Generate blob from schema with {\"name\": \"aws\", ...}\n");
+    puts("  fast-completer --check aws && echo 'aws completions available'");
+    puts("      Conditionally run command if aws blob exists\n");
     puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
     puts("  fast-completer --blob /path/to/custom.bin zsh mycli --");
@@ -1363,9 +1371,40 @@ static void print_help(void) {
 }
 
 int main(int argc, char *argv[]) {
+    // Pre-scan for --quiet/-q to redirect stderr early
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--quiet") == 0 || strcmp(argv[i], "-q") == 0) {
+#ifdef _WIN32
+            freopen("NUL", "w", stderr);
+#else
+            freopen("/dev/null", "w", stderr);
+#endif
+            break;
+        }
+        // Stop scanning at first non-option argument
+        if (argv[i][0] != '-') break;
+    }
+
     if (argc >= 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
         print_help();
         return 0;
+    }
+
+    // Handle --check mode: test if blob exists in cache
+    if (argc >= 2 && strcmp(argv[1], "--check") == 0) {
+        if (argc < 3) {
+            fprintf(stderr, "Usage: fast-completer --check <name>\n");
+            return 1;
+        }
+        char *path = resolve_blob_path(argv[2]);
+        if (!path) return 1;
+#ifdef _WIN32
+        DWORD attrs = GetFileAttributesA(path);
+        return (attrs != INVALID_FILE_ATTRIBUTES) ? 0 : 1;
+#else
+        struct stat st;
+        return (stat(path, &st) == 0) ? 0 : 1;
+#endif
     }
 
     // Handle --dump-header mode
@@ -1441,6 +1480,8 @@ int main(int argc, char *argv[]) {
         } else if (strcmp(argv[arg_idx], "--add-space") == 0) {
             add_trailing_space = true;
             arg_idx++;
+        } else if (strcmp(argv[arg_idx], "--quiet") == 0 || strcmp(argv[arg_idx], "-q") == 0) {
+            arg_idx++;  // Already handled by pre-scan
         } else {
             break;
         }
