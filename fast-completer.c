@@ -239,7 +239,8 @@ static void msgpack_write_str_with_space(String s) {
 }
 
 // I/O helpers
-#ifdef _WIN32
+#if defined(_MSC_VER)
+// MSVC: use _nolock variants
 static inline void put_char(int c) {
     _putc_nolock(c, stdout);
 }
@@ -248,17 +249,30 @@ static inline void put_bytes(const char *p, size_t n) {
 }
 #define flockfile(f) _lock_file(f)
 #define funlockfile(f) _unlock_file(f)
-#else
+#elif defined(_WIN32)
+// MinGW: use standard functions (no unlocked variants)
+static inline void put_char(int c) {
+    putc(c, stdout);
+}
+static inline void put_bytes(const char *p, size_t n) {
+    fwrite(p, 1, n, stdout);
+}
+#define flockfile(f) (void)(f)
+#define funlockfile(f) (void)(f)
+#elif defined(__APPLE__)
+// macOS: no fwrite_unlocked
 static inline void put_char(int c) {
     putc_unlocked(c, stdout);
 }
-#ifdef __APPLE__
 #define put_bytes(p, n) fwrite(p, 1, n, stdout)
 #else
+// Linux/other Unix: use unlocked variants
+static inline void put_char(int c) {
+    putc_unlocked(c, stdout);
+}
 static inline void put_bytes(const char *p, size_t n) {
     fwrite_unlocked(p, 1, n, stdout);
 }
-#endif
 #endif
 
 #define put_lit(s) put_bytes(s, sizeof(s) - 1)
