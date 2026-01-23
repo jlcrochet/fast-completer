@@ -73,7 +73,7 @@ hyperfine --warmup 3 \
 ## Usage
 
 ```
-fast-completer <format> <spans...>
+fast-completer [options] <format> <spans...>
 ```
 
 The CLI name is derived from the first span and used to look up the blob in the cache directory. The last span triggers completions: `""` for subcommands + flags, `-` or `--*` for flags only, `abc...` for matching subcommands. Run `fast-completer --help` for full usage information.
@@ -90,7 +90,6 @@ Parameters are sorted with required options first, then optional ones (alphabeti
 | `zsh` | value:description (colon-separated) |
 | `fish` | value\tdescription (tab-separated, alias: `tsv`) |
 | `pwsh` | PowerShell tab-separated format |
-| `nushell` | MessagePack with trailing spaces on values |
 
 Use the `lines` format when you only need values without descriptions.
 
@@ -98,7 +97,7 @@ Use the `lines` format when you only need values without descriptions.
 
 | Option | Description |
 |--------|-------------|
-| `--add-space` | Append trailing space to completion values (implied by `nushell`) |
+| `--add-space` | Append trailing space to completion values |
 | `--full-commands` | Complete full leaf command paths instead of next level |
 | `--quiet`, `-q` | Suppress error messages if blob not found (for fallback scripts) |
 
@@ -115,9 +114,6 @@ The `--quiet` option suppresses all error output, making it suitable for fallbac
 | `lines` | One value per line |
 | `tsv` | value\tdescription (tab-separated) |
 | `json` | JSON array of `{"value": ..., "description": ...}` objects |
-| `json-tuple` | JSON array of `[value, description]` tuples |
-| `msgpack` | MessagePack array of `{"value": ..., "description": ...}` maps |
-| `msgpack-tuple` | MessagePack array of `[value, description]` tuples |
 
 ## Installation
 
@@ -565,16 +561,30 @@ for cmd [aws az] {
 
 ### Nushell
 
-The `nushell` format automatically appends trailing spaces to completion values, since Nushell doesn't add them for external completers.
+Nushell doesn't add trailing spaces after external completions, so use `--add-space` to append them.
 
-Add to your config:
+**Simple (JSON):**
 
 ```nu
 $env.config.completions.external = {
     enable: true
     completer: {|spans|
         match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer nushell ...$spans | from msgpack)
+            az | aws | gcloud | gh => (^fast-completer --add-space json ...$spans | from json)
+            _ => null  # fall back to default completion
+        }
+    }
+}
+```
+
+**Faster (TSV parsing):**
+
+```nu
+$env.config.completions.external = {
+    enable: true
+    completer: {|spans|
+        match $spans.0 {
+            az | aws | gcloud | gh => (^fast-completer --add-space tsv ...$spans | lines | split column -n 2 "\t" value description)
             _ => null  # fall back to default completion
         }
     }
@@ -588,7 +598,7 @@ $env.config.completions.external = {
     enable: true
     completer: {|spans|
         match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer nushell ...$spans | from msgpack)
+            az | aws | gcloud | gh => (^fast-completer --add-space json ...$spans | from json)
             _ => (^carapace $spans.0 nushell ...$spans | from json)
         }
     }

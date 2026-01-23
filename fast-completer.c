@@ -15,8 +15,8 @@
  *   "abc..." - matching subcommands
  *
  * Output formats:
- *   lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, nushell, pwsh
- *   Aliases: bash -> lines, fish -> tsv, nu -> nushell
+ *   lines, zsh, tsv, json, pwsh
+ *   Aliases: bash -> lines, fish -> tsv
  */
 
 #include <errno.h>
@@ -49,10 +49,6 @@ typedef enum {
     OUT_ZSH,
     OUT_TSV,
     OUT_JSON,
-    OUT_JSON_TUPLE,
-    OUT_MSGPACK,
-    OUT_MSGPACK_TUPLE,
-    OUT_NUSHELL,
     OUT_PWSH,
     OUT_UNKNOWN
 } OutputFormat;
@@ -110,9 +106,6 @@ static bool add_trailing_space = false;  // Add trailing space to completion val
 static bool full_commands = false;       // Complete full leaf command paths instead of next level
 
 // Working buffers (allocated based on header values)
-static uint8_t *msgpack_buf = NULL;
-static size_t msgpack_len = 0;
-static uint32_t msgpack_count = 0;
 static char *path_buf = NULL;
 
 // Completion context (set once per complete() call)
@@ -127,14 +120,6 @@ static int g_span_count = 0;
 #define PARAM_HAS_CHOICES(p)   ((p)->choices_off && !((p)->flags & (FLAG_IS_MEMBERS | FLAG_IS_COMPLETER)))
 #define PARAM_HAS_MEMBERS(p)   ((p)->choices_off && ((p)->flags & FLAG_IS_MEMBERS))
 #define PARAM_HAS_COMPLETER(p) ((p)->choices_off && ((p)->flags & FLAG_IS_COMPLETER))
-
-// Get string length from string table offset (just reads VLQ prefix)
-static inline size_t str_len(uint32_t off) {
-    if (off == 0) return 0;
-    const uint8_t *p = blob + header.string_table_off + off;
-    if (p[0] < 128) return p[0];
-    return ((p[0] & 0x7f) << 8) | p[1];
-}
 
 // Get string from string table
 static inline String str_get(uint32_t off) {
@@ -201,144 +186,8 @@ static inline const uint32_t *get_string_offsets(uint32_t off) {
 // Track if we've started the JSON array
 static bool json_started = false;
 
-// MessagePack helpers
-static void msgpack_write_byte(uint8_t b) {
-    msgpack_buf[msgpack_len++] = b;
-}
-
-static void msgpack_write_bytes(const void *data, size_t len) {
-    memcpy(msgpack_buf + msgpack_len, data, len);
-    msgpack_len += len;
-}
-
-static void msgpack_write_str_header(size_t len) {
-    if (len <= 31) {
-        msgpack_write_byte(0xa0 | (uint8_t)len);
-    } else if (len <= 255) {
-        msgpack_write_byte(0xd9);
-        msgpack_write_byte((uint8_t)len);
-    } else if (len <= 65535) {
-        msgpack_write_byte(0xda);
-        uint8_t buf[2] = { (uint8_t)(len >> 8), (uint8_t)len };
-        msgpack_write_bytes(buf, 2);
-    } else {
-        msgpack_write_byte(0xdb);
-        uint8_t buf[4] = { (uint8_t)(len >> 24), (uint8_t)(len >> 16),
-                          (uint8_t)(len >> 8), (uint8_t)len };
-        msgpack_write_bytes(buf, 4);
-    }
-}
-
-static void msgpack_write_str(String s) {
-    msgpack_write_str_header(s.n);
-    msgpack_write_bytes(s.p, s.n);
-}
-
 static inline bool needs_trailing_space(String s) {
     return s.n > 0 && s.p[s.n - 1] != '=';
-}
-
-static void msgpack_write_str_with_space(String s) {
-    msgpack_write_str_header(s.n + 1);
-    msgpack_write_bytes(s.p, s.n);
-    msgpack_write_byte(' ');
-}
-
-// --------------------------------------------------------------------------
-// Msgpack buffer sizing (two-pass approach)
-// --------------------------------------------------------------------------
-
-// Calculate msgpack string header overhead
-static inline size_t msgpack_str_overhead(size_t len) {
-    if (len <= 31) return 1;
-    if (len <= 255) return 2;
-    if (len <= 65535) return 3;
-    return 5;
-}
-
-// Sizing state
-static size_t msgpack_size_needed = 0;
-static uint32_t msgpack_count_needed = 0;
-
-// Check if value would need trailing space (for sizing)
-static inline bool value_needs_space(size_t len, uint32_t name_off) {
-    if (!add_trailing_space || len == 0) return false;
-    // Check if last char is '=' - need to read the actual string for this
-    String s = str_get(name_off);
-    return s.n > 0 && s.p[s.n - 1] != '=';
-}
-
-// Check if value would need trailing space (by length and last char)
-static inline bool value_needs_space_str(String s) {
-    return add_trailing_space && s.n > 0 && s.p[s.n - 1] != '=';
-}
-
-// Size for one completion item
-// For MSGPACK/NUSHELL: {value: str} or {value: str, description: str}
-// For MSGPACK_TUPLE: [str, str]
-static inline void size_completion_item(size_t value_len, size_t desc_len, bool needs_space) {
-    size_t size;
-    if (output_format == OUT_MSGPACK_TUPLE) {
-        // fixarray(2) + two strings
-        size = 1;
-        size += msgpack_str_overhead(value_len) + value_len;
-        size += msgpack_str_overhead(desc_len) + desc_len;
-    } else {
-        // MSGPACK/NUSHELL: fixmap + "value" key + value string [+ "description" key + desc string]
-        size_t actual_value_len = value_len + (needs_space ? 1 : 0);
-        if (desc_len > 0) {
-            size = 1;  // fixmap(2) = 0x82
-            size += 1 + 5;  // fixstr "value"
-            size += msgpack_str_overhead(actual_value_len) + actual_value_len;
-            size += 1 + 11;  // fixstr "description"
-            size += msgpack_str_overhead(desc_len) + desc_len;
-        } else {
-            size = 1;  // fixmap(1) = 0x81
-            size += 1 + 5;  // fixstr "value"
-            size += msgpack_str_overhead(actual_value_len) + actual_value_len;
-        }
-    }
-    msgpack_size_needed += size;
-    msgpack_count_needed++;
-}
-
-// Collected lines from dynamic completer (for sizing)
-typedef struct {
-    char **lines;
-    size_t *lens;
-    size_t count;
-    size_t capacity;
-} CollectedLines;
-
-static CollectedLines collected = {NULL, NULL, 0, 0};
-
-// Add a line to collected lines
-static void collect_line(const char *line, size_t len) {
-    if (collected.count >= collected.capacity) {
-        size_t new_cap = collected.capacity == 0 ? 64 : collected.capacity * 2;
-        collected.lines = realloc(collected.lines, new_cap * sizeof(char *));
-        collected.lens = realloc(collected.lens, new_cap * sizeof(size_t));
-        collected.capacity = new_cap;
-    }
-    char *copy = malloc(len + 1);
-    memcpy(copy, line, len);
-    copy[len] = '\0';
-    collected.lines[collected.count] = copy;
-    collected.lens[collected.count] = len;
-    collected.count++;
-}
-
-// Free collected lines
-static void free_collected_lines(void) {
-    for (size_t i = 0; i < collected.count; i++) {
-        free(collected.lines[i]);
-    }
-    free(collected.lines);
-    free(collected.lens);
-    collected.lines = NULL;
-    collected.lens = NULL;
-    collected.count = 0;
-    collected.capacity = 0;
 }
 
 // I/O helpers
@@ -385,9 +234,8 @@ static inline void put_str(String s) {
 }
 
 // JSON string escaping
-static void print_json_str(String s) {
+static void print_json_str_inner(String s) {
     static const char hex[] = "0123456789abcdef";
-    put_char('"');
     for (size_t i = 0; i < s.n; i++) {
         switch (s.p[i]) {
             case '"':  put_lit("\\\""); break;
@@ -405,6 +253,18 @@ static void print_json_str(String s) {
                 }
         }
     }
+}
+
+static void print_json_str(String s) {
+    put_char('"');
+    print_json_str_inner(s);
+    put_char('"');
+}
+
+static void print_json_str_with_space(String s) {
+    put_char('"');
+    print_json_str_inner(s);
+    put_char(' ');
     put_char('"');
 }
 
@@ -417,7 +277,10 @@ static void output_completion(String value, String desc, CompletionType type) {
         put_char('{');
         print_json_str(STR_LIT("value"));
         put_char(':');
-        print_json_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            print_json_str_with_space(value);
+        else
+            print_json_str(value);
         if (desc.n > 0) {
             put_char(',');
             print_json_str(STR_LIT("description"));
@@ -429,6 +292,8 @@ static void output_completion(String value, String desc, CompletionType type) {
 
     case OUT_TSV:
         put_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            put_char(' ');
         if (desc.n > 0) {
             put_char('\t');
             put_str(desc);
@@ -438,6 +303,8 @@ static void output_completion(String value, String desc, CompletionType type) {
 
     case OUT_ZSH:
         put_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            put_char(' ');
         if (desc.n > 0) {
             put_char(':');
             for (size_t i = 0; i < desc.n; i++) {
@@ -450,11 +317,15 @@ static void output_completion(String value, String desc, CompletionType type) {
 
     case OUT_LINES:
         put_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            put_char(' ');
         put_char('\n');
         break;
 
     case OUT_PWSH:
         put_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            put_char(' ');
         put_char('\t');
         put_str(value);
         put_char('\t');
@@ -464,42 +335,8 @@ static void output_completion(String value, String desc, CompletionType type) {
         put_char('\n');
         break;
 
-    case OUT_JSON_TUPLE:
-        if (json_started) put_char(',');
-        json_started = true;
-        put_char('[');
-        print_json_str(value);
-        put_char(',');
-        print_json_str(desc);
-        put_char(']');
-        break;
-
-    case OUT_NUSHELL:
-    case OUT_MSGPACK:
-        msgpack_write_byte(desc.n > 0 ? 0x82 : 0x81);
-        msgpack_write_str(STR_LIT("value"));
-        if (add_trailing_space && needs_trailing_space(value))
-            msgpack_write_str_with_space(value);
-        else
-            msgpack_write_str(value);
-        if (desc.n > 0) {
-            msgpack_write_str(STR_LIT("description"));
-            msgpack_write_str(desc);
-        }
-        msgpack_count++;
-        break;
-
-    case OUT_MSGPACK_TUPLE:
-        msgpack_write_byte(0x92);
-        msgpack_write_str(value);
-        msgpack_write_str(desc);
-        msgpack_count++;
-        break;
-
-    default:
-        put_str(value);
-        put_char('\n');
-        break;
+    case OUT_UNKNOWN:
+        break;  // Should never happen
     }
 }
 
@@ -761,8 +598,7 @@ static int split_args(char *cmd, char **argv, int max_args) {
 // prefix: optional prefix to filter results
 // prefix_len: length of prefix
 static void execute_completer(const char *cli_name, String completer,
-                               const char *prefix, size_t prefix_len,
-                               bool collect_mode) {
+                               const char *prefix, size_t prefix_len) {
     if (!cli_name || !completer.p || completer.n == 0) return;
 
     // Build argument string: copy completer (need mutable string for splitting)
@@ -854,10 +690,7 @@ static void execute_completer(const char *cli_name, String completer,
                 if (line_pos > 0) {
                     line[line_pos] = '\0';
                     if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-                        if (collect_mode)
-                            collect_line(line, line_pos);
-                        else
-                            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
                     }
                     line_pos = 0;
                 }
@@ -870,10 +703,7 @@ static void execute_completer(const char *cli_name, String completer,
     if (line_pos > 0) {
         line[line_pos] = '\0';
         if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-            if (collect_mode)
-                collect_line(line, line_pos);
-            else
-                output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
         }
     }
 #else
@@ -915,10 +745,7 @@ static void execute_completer(const char *cli_name, String completer,
                 if (line_pos > 0) {
                     line[line_pos] = '\0';
                     if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-                        if (collect_mode)
-                            collect_line(line, line_pos);
-                        else
-                            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
                     }
                     line_pos = 0;
                 }
@@ -936,10 +763,7 @@ static void execute_completer(const char *cli_name, String completer,
     if (line_pos > 0) {
         line[line_pos] = '\0';
         if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-            if (collect_mode)
-                collect_line(line, line_pos);
-            else
-                output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
         }
     }
 
@@ -1007,127 +831,6 @@ static const Param *find_global_param(const char *name, size_t len) {
     return NULL;
 }
 
-// --------------------------------------------------------------------------
-// Msgpack sizing functions (first pass of two-pass approach)
-// --------------------------------------------------------------------------
-
-// Check if msgpack output format
-static inline bool is_msgpack_format(void) {
-    return output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE || output_format == OUT_NUSHELL;
-}
-
-// Size leaf commands recursively (for --full-commands mode)
-static void size_leaf_commands(const Command *cmd, size_t path_len) {
-    if (cmd->subcommands_count == 0) return;
-
-    const Command *subs = cmd_subcommands(cmd);
-    for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
-        const Command *sub = &subs[i];
-        size_t sub_name_len = str_len(sub->name_off);
-        size_t new_len = path_len > 0 ? path_len + 1 + sub_name_len : sub_name_len;
-
-        if (sub->subcommands_count > 0) {
-            size_leaf_commands(sub, new_len);
-        } else {
-            size_t desc_len = has_descriptions ? str_len(sub->desc_off) : 0;
-            // Command names never end with '=', so they always get trailing space if enabled
-            size_completion_item(new_len, desc_len, add_trailing_space);
-        }
-    }
-}
-
-// Size next-level subcommands
-static void size_next_level(const Command *cmd) {
-    if (cmd->subcommands_count == 0) return;
-
-    const Command *subs = cmd_subcommands(cmd);
-    for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
-        const Command *sub = &subs[i];
-        size_t name_len = str_len(sub->name_off);
-        size_t desc_len = has_descriptions ? str_len(sub->desc_off) : 0;
-        // Command names never end with '=', so they always get trailing space if enabled
-        size_completion_item(name_len, desc_len, add_trailing_space);
-    }
-}
-
-// Size subcommands (handles --full-commands flag)
-static void size_subcommands(const Command *cmd) {
-    if (full_commands) {
-        size_leaf_commands(cmd, 0);
-    } else {
-        size_next_level(cmd);
-    }
-}
-
-// Size params list (command-specific params)
-static void size_params_list(const Param *params, uint16_t params_count) {
-    if (!params || params_count == 0) return;
-
-    for (uint16_t i = 0; i < params_count; i++) {
-        const Param *p = &params[i];
-        // Count short option if present
-        if (p->short_off != 0) {
-            size_t short_len = str_len(p->short_off);
-            size_t desc_len = has_descriptions ? str_len(p->desc_off) : 0;
-            size_completion_item(short_len, desc_len, value_needs_space(short_len, p->short_off));
-        }
-        // Count long option
-        size_t name_len = str_len(p->name_off);
-        size_t desc_len = has_descriptions ? str_len(p->desc_off) : 0;
-        size_completion_item(name_len, desc_len, value_needs_space(name_len, p->name_off));
-    }
-}
-
-// Size global params
-static void size_global_params(void) {
-    if (header.global_params_count == 0) return;
-
-    const Param *global_params = get_global_params();
-    for (uint32_t i = 0; i < header.global_params_count; i++) {
-        const Param *p = &global_params[i];
-        // Count short option if present
-        if (p->short_off != 0) {
-            size_t short_len = str_len(p->short_off);
-            size_t desc_len = has_descriptions ? str_len(p->desc_off) : 0;
-            size_completion_item(short_len, desc_len, value_needs_space(short_len, p->short_off));
-        }
-        // Count long option
-        size_t name_len = str_len(p->name_off);
-        size_t desc_len = has_descriptions ? str_len(p->desc_off) : 0;
-        size_completion_item(name_len, desc_len, value_needs_space(name_len, p->name_off));
-    }
-}
-
-// Size string list (choices or members)
-static void size_string_list(uint32_t off) {
-    if (off == 0) return;
-
-    uint16_t count = get_string_list_count(off);
-    const uint32_t *offsets = get_string_offsets(off);
-
-    for (uint16_t i = 0; i < count; i++) {
-        size_t len = str_len(offsets[i]);
-        // Choices are values, so check for trailing space
-        size_completion_item(len, 0, value_needs_space(len, offsets[i]));
-    }
-}
-
-// Size collected lines (after running completer)
-static void size_collected_lines(void) {
-    for (size_t i = 0; i < collected.count; i++) {
-        String s = {collected.lines[i], collected.lens[i]};
-        size_completion_item(s.n, 0, value_needs_space_str(s));
-    }
-}
-
-// Output collected lines (after sizing and allocating buffer)
-static void output_collected_lines(void) {
-    for (size_t i = 0; i < collected.count; i++) {
-        String s = {collected.lines[i], collected.lens[i]};
-        output_completion(s, str_get(0), COMP_PARAM_VALUE);
-    }
-}
-
 // Check if span is empty/whitespace
 static inline bool is_new_arg(const char *span) {
     if (!span || !*span) return true;
@@ -1153,18 +856,9 @@ static OutputFormat parse_format(const char *name) {
         break;
     case 'j':
         if (len == 4 && memcmp(name, "json", 4) == 0) return OUT_JSON;
-        if (len == 10 && memcmp(name, "json-tuple", 10) == 0) return OUT_JSON_TUPLE;
         break;
     case 'l':
         if (len == 5 && memcmp(name, "lines", 5) == 0) return OUT_LINES;
-        break;
-    case 'm':
-        if (len == 7 && memcmp(name, "msgpack", 7) == 0) return OUT_MSGPACK;
-        if (len == 13 && memcmp(name, "msgpack-tuple", 13) == 0) return OUT_MSGPACK_TUPLE;
-        break;
-    case 'n':
-        if (len == 2 && name[1] == 'u') return OUT_NUSHELL;
-        if (len == 7 && memcmp(name, "nushell", 7) == 0) return OUT_NUSHELL;
         break;
     case 'p':
         if (len == 4 && memcmp(name, "pwsh", 4) == 0) return OUT_PWSH;
@@ -1180,135 +874,10 @@ static OutputFormat parse_format(const char *name) {
     return OUT_UNKNOWN;
 }
 
-// Output format header
-static void output_header(void) {
-    if (output_format == OUT_JSON || output_format == OUT_JSON_TUPLE) {
-        put_char('[');
-    }
-}
-
-// Output format footer
-static void output_footer(void) {
-    if (output_format == OUT_JSON || output_format == OUT_JSON_TUPLE) {
-        put_lit("]\n");
-    } else if (output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE || output_format == OUT_NUSHELL) {
-        uint8_t hdr[5];
-        size_t hdr_len;
-        if (msgpack_count <= 15) {
-            hdr[0] = 0x90 | (uint8_t)msgpack_count;
-            hdr_len = 1;
-        } else if (msgpack_count <= 65535) {
-            hdr[0] = 0xdc;
-            hdr[1] = (uint8_t)(msgpack_count >> 8);
-            hdr[2] = (uint8_t)msgpack_count;
-            hdr_len = 3;
-        } else {
-            hdr[0] = 0xdd;
-            hdr[1] = (uint8_t)(msgpack_count >> 24);
-            hdr[2] = (uint8_t)(msgpack_count >> 16);
-            hdr[3] = (uint8_t)(msgpack_count >> 8);
-            hdr[4] = (uint8_t)msgpack_count;
-            hdr_len = 5;
-        }
-        put_bytes((const char *)hdr, hdr_len);
-        if (msgpack_len > 0) {
-            put_bytes((const char *)msgpack_buf, msgpack_len);
-        }
-    }
-}
-
-// Sizing pass for msgpack output - mirrors complete() but calculates buffer size
-// For dynamic completers, collects output into 'collected' buffer
-// Returns true if a dynamic completer was used (collected lines need to be output)
-static bool size_completion(const Command *cmd) {
-    bool has_completer = false;
-
-    const char *last_span = g_spans[g_span_count];
-    bool is_empty = is_new_arg(last_span);
-    bool is_flag_prefix = last_span[0] == '-';
-    bool is_cmd_prefix = last_span[0] >= 'a' && last_span[0] <= 'z';
-
-    if (is_flag_prefix) {
-        // Size params (no filtering for used params in sizing pass - overestimates slightly)
-        size_params_list(cmd_params(cmd), cmd->params_count);
-        size_global_params();
-        return false;
-    }
-
-    if (is_cmd_prefix) {
-        if (cmd->subcommands_count > 0) {
-            size_subcommands(cmd);
-        }
-        return false;
-    }
-
-    if (!is_empty) {
-        return false;
-    }
-
-    const char *prev_arg = g_span_count > 0 ? g_spans[g_span_count - 1] : "";
-
-    if (prev_arg[0] == '-') {
-        size_t prev_len = g_arg_lens[g_span_count - 1];
-
-        const Param *gparam = find_global_param(prev_arg, prev_len);
-        if (gparam && PARAM_TAKES_VALUE(gparam)) {
-            if (PARAM_HAS_CHOICES(gparam)) {
-                size_string_list(gparam->choices_off);
-            } else if (PARAM_HAS_COMPLETER(gparam)) {
-                // Run completer and collect output
-                execute_completer(g_spans[0], str_get(gparam->choices_off), NULL, 0, true);
-                size_collected_lines();
-                has_completer = true;
-            }
-            return has_completer;
-        }
-
-        const Param *param = find_param(cmd_params(cmd), cmd->params_count, prev_arg, prev_len);
-        if (param && PARAM_TAKES_VALUE(param)) {
-            if (PARAM_HAS_CHOICES(param)) {
-                size_string_list(param->choices_off);
-            } else if (PARAM_HAS_MEMBERS(param)) {
-                size_string_list(param->choices_off);
-            } else if (PARAM_HAS_COMPLETER(param)) {
-                // Run completer and collect output
-                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0, true);
-                size_collected_lines();
-                has_completer = true;
-            }
-            return has_completer;
-        }
-    }
-
-    if (cmd->subcommands_count > 0) {
-        size_subcommands(cmd);
-    }
-
-    size_params_list(cmd_params(cmd), cmd->params_count);
-    size_global_params();
-
-    return false;
-}
-
-// Allocate msgpack buffer based on sizing pass results
-static bool alloc_msgpack_buffer(void) {
-    // Add array header overhead (1-5 bytes)
-    size_t array_overhead = 5;
-    size_t total = msgpack_size_needed + array_overhead;
-
-    msgpack_buf = malloc(total);
-    if (!msgpack_buf) {
-        perror("malloc");
-        return false;
-    }
-    return true;
-}
-
 // Main completion logic
 static void complete(int nspans, const char **spans) {
     if (nspans == 0) {
-        output_header();
-        output_footer();
+        if (output_format == OUT_JSON) put_lit("[]\n");
         return;
     }
 
@@ -1322,21 +891,10 @@ static void complete(int nspans, const char **spans) {
     g_span_count = nspans - 1;
     if (g_span_count < 1) g_span_count = 1;
 
-    // Find the deepest matching command (used by both sizing and output passes)
+    // Find the deepest matching command
     const Command *cmd = find_command();
 
-    // For msgpack formats, do sizing pass first then allocate buffer
-    bool has_collected_lines = false;
-    if (is_msgpack_format()) {
-        msgpack_size_needed = 0;
-        msgpack_count_needed = 0;
-        has_collected_lines = size_completion(cmd);
-        if (!alloc_msgpack_buffer()) {
-            return;
-        }
-    }
-
-    output_header();
+    if (output_format == OUT_JSON) put_char('[');
 
     const char *last_span = spans[nspans - 1];
     size_t last_span_len = arg_lens[nspans - 1];
@@ -1348,7 +906,7 @@ static void complete(int nspans, const char **spans) {
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
         complete_params_list(cmd_params(cmd), cmd->params_count, last_span, &pinfo);
         complete_global_params(last_span, &pinfo);
-        output_footer();
+        if (output_format == OUT_JSON) put_lit("]\n");
         return;
     }
 
@@ -1356,12 +914,12 @@ static void complete(int nspans, const char **spans) {
         if (cmd->subcommands_count > 0) {
             complete_subcommands(cmd, last_span, last_span_len);
         }
-        output_footer();
+        if (output_format == OUT_JSON) put_lit("]\n");
         return;
     }
 
     if (!is_empty) {
-        output_footer();
+        if (output_format == OUT_JSON) put_lit("]\n");
         return;
     }
 
@@ -1375,14 +933,9 @@ static void complete(int nspans, const char **spans) {
             if (PARAM_HAS_CHOICES(gparam)) {
                 complete_string_list(gparam->choices_off, NULL, 0);
             } else if (PARAM_HAS_COMPLETER(gparam)) {
-                if (has_collected_lines) {
-                    output_collected_lines();
-                    free_collected_lines();
-                } else {
-                    execute_completer(g_spans[0], str_get(gparam->choices_off), NULL, 0, false);
-                }
+                execute_completer(g_spans[0], str_get(gparam->choices_off), NULL, 0);
             }
-            output_footer();
+            if (output_format == OUT_JSON) put_lit("]\n");
             return;
         }
 
@@ -1393,14 +946,9 @@ static void complete(int nspans, const char **spans) {
             } else if (PARAM_HAS_MEMBERS(param)) {
                 complete_string_list(param->choices_off, NULL, 0);
             } else if (PARAM_HAS_COMPLETER(param)) {
-                if (has_collected_lines) {
-                    output_collected_lines();
-                    free_collected_lines();
-                } else {
-                    execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0, false);
-                }
+                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0);
             }
-            output_footer();
+            if (output_format == OUT_JSON) put_lit("]\n");
             return;
         }
     }
@@ -1413,7 +961,7 @@ static void complete(int nspans, const char **spans) {
     complete_params_list(cmd_params(cmd), cmd->params_count, NULL, &pinfo);
     complete_global_params(NULL, &pinfo);
 
-    output_footer();
+    if (output_format == OUT_JSON) put_lit("]\n");
 }
 
 // Load and validate blob file
@@ -1527,19 +1075,6 @@ static bool load_blob(const char *path) {
     return true;
 }
 
-// Allocate working buffers based on output format
-static bool alloc_buffers(void) {
-    // Always need path buffer for subcommand completion
-    path_buf = malloc(header.max_command_path_len);
-    if (!path_buf) {
-        perror("malloc");
-        return false;
-    }
-
-    // Note: msgpack buffer is allocated in complete() after sizing pass
-
-    return true;
-}
 
 // --------------------------------------------------------------------------
 // Cache directory management
@@ -1728,11 +1263,7 @@ static void print_help(void) {
     puts("  zsh               value:description");
     puts("  fish, tsv         value\\tdescription");
     puts("  pwsh              PowerShell format");
-    puts("  nushell           MessagePack with trailing spaces on values");
-    puts("  msgpack           MessagePack array of maps");
-    puts("  json              JSON array of objects");
-    puts("  json-tuple        JSON array of tuples");
-    puts("  msgpack-tuple     MessagePack array of tuples\n");
+    puts("  json              JSON array of {\"value\": ..., \"description\": ...}\n");
     puts("Use 'lines' format when descriptions are not needed.\n");
     puts("Examples:");
     puts("  fast-completer --generate-blob aws.json");
@@ -1890,13 +1421,8 @@ int main(int argc, char *argv[]) {
     output_format = parse_format(format_name);
     if (output_format == OUT_UNKNOWN) {
         fprintf(stderr, "Unknown output format: %s\n", format_name);
-        fprintf(stderr, "Supported: lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, nushell, pwsh\n");
+        fprintf(stderr, "Supported: lines, zsh, tsv, json, pwsh\n");
         return 1;
-    }
-
-    // nushell format implies --add-space
-    if (output_format == OUT_NUSHELL) {
-        add_trailing_space = true;
     }
 
     if (!load_blob(blob_path)) {
@@ -1909,8 +1435,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    if (!alloc_buffers()) {
-        return 1;
+    // Allocate path buffer only when needed for --full-commands
+    if (full_commands) {
+        path_buf = malloc(header.max_command_path_len);
+        if (!path_buf) {
+            perror("malloc");
+            return 1;
+        }
     }
 
     flockfile(stdout);

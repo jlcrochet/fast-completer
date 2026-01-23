@@ -2,6 +2,7 @@ __pycache__
 *.o
 fast-completer
 fast-completer.exe
+fast-completer.bak
 *.bin
 .venv/
 pyproject.toml
