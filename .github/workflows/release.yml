@@ -35,16 +35,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Generate libyaml config.h
-        shell: bash
-        run: |
-          cat > vendor/libyaml/src/config.h << 'EOF'
-          #define YAML_VERSION_MAJOR 0
-          #define YAML_VERSION_MINOR 2
-          #define YAML_VERSION_PATCH 5
-          #define YAML_VERSION_STRING "0.2.5"
-          EOF
-
       - name: Setup MSYS2 (Windows)
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
@@ -55,7 +45,13 @@ jobs:
 
       - name: Build (Unix)
         if: runner.os != 'Windows'
-        run: make release CFLAGS="${{ matrix.cflags }} -O3 -Wall -Wextra -DNDEBUG" LDFLAGS="${{ matrix.cflags }} -s"
+        run: |
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            make release CFLAGS="${{ matrix.cflags }} -O3 -Wall -Wextra -DNDEBUG" LDFLAGS="${{ matrix.cflags }}"
+            strip fast-completer
+          else
+            make release CFLAGS="${{ matrix.cflags }} -O3 -Wall -Wextra -DNDEBUG" LDFLAGS="${{ matrix.cflags }} -s"
+          fi
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
