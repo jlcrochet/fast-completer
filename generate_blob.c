@@ -86,13 +86,6 @@ static bool tok_is_bool(const char *js, jsmntok_t *tok) {
 
 // Skip a token and all its children, return index of next sibling
 static int tok_skip(jsmntok_t *tokens, int idx) {
-    int count = 1;
-    if (tokens[idx].type == JSMN_OBJECT) {
-        count += tokens[idx].size * 2;  // key-value pairs
-    } else if (tokens[idx].type == JSMN_ARRAY) {
-        count += tokens[idx].size;
-    }
-    // Recursively count nested structures
     int end = idx + 1;
     for (int i = 0; i < tokens[idx].size; i++) {
         if (tokens[idx].type == JSMN_OBJECT) {
@@ -130,15 +123,10 @@ static int arr_size(jsmntok_t *tokens, int arr_idx) {
     return tokens[arr_idx].size;
 }
 
-// Get array item index
-static int arr_get(jsmntok_t *tokens, int arr_idx, int item_idx) {
-    if (tokens[arr_idx].type != JSMN_ARRAY) return -1;
-    if (item_idx >= tokens[arr_idx].size) return -1;
-    int idx = arr_idx + 1;
-    for (int i = 0; i < item_idx; i++) {
-        idx = tok_skip(tokens, idx);
-    }
-    return idx;
+// Get first item in array (use with tok_skip for iteration)
+static inline int arr_first(jsmntok_t *tokens, int arr_idx) {
+    if (tokens[arr_idx].type != JSMN_ARRAY || tokens[arr_idx].size == 0) return -1;
+    return arr_idx + 1;
 }
 
 // --------------------------------------------------------------------------
@@ -260,7 +248,7 @@ static void strtab_init(StringTable *st) {
     st->data = malloc(st->data_cap);
     st->data_len = 0;
     st->max_str_len = 0;
-    st->hash_cap = 4096;
+    st->hash_cap = 65536;  // Start large to reduce resizing for big schemas
     st->hash_table = calloc(st->hash_cap, sizeof(HashEntry));
     st->strings[0] = strdup("");
     st->offsets[0] = 0;
@@ -525,12 +513,13 @@ static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     sl->offsets = malloc(count * sizeof(uint32_t));
     sl->count = count;
     size_t total_bytes = 0;
+    int item_idx = arr_first(tokens, arr_idx);
     for (int i = 0; i < count; i++) {
-        int item_idx = arr_get(tokens, arr_idx, i);
         char *s = tok_strdup(js, &tokens[item_idx]);
         sl->offsets[i] = strtab_add(&bg->strtab, s);
         total_bytes += strlen(s);
         free(s);
+        item_idx = tok_skip(tokens, item_idx);
     }
     track_choices(bg, total_bytes, count);
     return bg->choices_count++;
@@ -548,8 +537,8 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     sl->offsets = malloc(count * sizeof(uint32_t));
     sl->count = count;
     size_t total_bytes = 0;
+    int item_idx = arr_first(tokens, arr_idx);
     for (int i = 0; i < count; i++) {
-        int item_idx = arr_get(tokens, arr_idx, i);
         int key_idx = obj_get(js, tokens, item_idx, "key");
         if (key_idx >= 0) {
             char *key = tok_strdup(js, &tokens[key_idx]);
@@ -561,6 +550,7 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
         } else {
             sl->offsets[i] = 0;
         }
+        item_idx = tok_skip(tokens, item_idx);
     }
     track_members(bg, total_bytes, count);
     return bg->members_count++;
@@ -587,8 +577,8 @@ static bool get_param_info(const char *js, jsmntok_t *tokens, int param_idx, Par
     int options_idx = obj_get(js, tokens, param_idx, "options");
     if (options_idx >= 0 && tokens[options_idx].type == JSMN_ARRAY && arr_size(tokens, options_idx) > 0) {
         int opt_count = arr_size(tokens, options_idx);
+        int opt_idx = arr_first(tokens, options_idx);
         for (int i = 0; i < opt_count; i++) {
-            int opt_idx = arr_get(tokens, options_idx, i);
             char *opt = tok_strdup(js, &tokens[opt_idx]);
             if (strncmp(opt, "--", 2) == 0) {
                 if (!info->name || strlen(opt) > strlen(info->name)) {
@@ -602,6 +592,7 @@ static bool get_param_info(const char *js, jsmntok_t *tokens, int param_idx, Par
                 opt = NULL;
             }
             free(opt);
+            opt_idx = tok_skip(tokens, opt_idx);
         }
     } else {
         char *name_str = obj_get_str(js, tokens, param_idx, "name");
@@ -634,8 +625,8 @@ static bool get_param_info(const char *js, jsmntok_t *tokens, int param_idx, Par
     int choices_idx = obj_get(js, tokens, param_idx, "choices");
     bool is_bool_choices = false;
     if (choices_idx >= 0 && tokens[choices_idx].type == JSMN_ARRAY && arr_size(tokens, choices_idx) == 2) {
-        int c0 = arr_get(tokens, choices_idx, 0);
-        int c1 = arr_get(tokens, choices_idx, 1);
+        int c0 = arr_first(tokens, choices_idx);
+        int c1 = tok_skip(tokens, c0);
         char *s0 = tok_strdup(js, &tokens[c0]);
         char *s1 = tok_strdup(js, &tokens[c1]);
         if ((strcasecmp(s0, "true") == 0 || strcasecmp(s0, "false") == 0) &&
@@ -743,10 +734,10 @@ static CommandNode *node_add_child(CommandNode *node, const char *name) {
 static CommandNode *build_command_tree(const char *js, jsmntok_t *tokens, int commands_idx) {
     CommandNode *root = node_create("");
     int cmd_count = arr_size(tokens, commands_idx);
+    int cmd_idx = arr_first(tokens, commands_idx);
     for (int i = 0; i < cmd_count; i++) {
-        int cmd_idx = arr_get(tokens, commands_idx, i);
         char *name = obj_get_str(js, tokens, cmd_idx, "name");
-        if (!name[0]) { free(name); continue; }
+        if (!name[0]) { free(name); cmd_idx = tok_skip(tokens, cmd_idx); continue; }
         char *copy = strdup(name);
         char *token = strtok(copy, " ");
         CommandNode *node = root;
@@ -759,6 +750,7 @@ static CommandNode *build_command_tree(const char *js, jsmntok_t *tokens, int co
         node->cmd_idx = cmd_idx;
         free(copy);
         free(name);
+        cmd_idx = tok_skip(tokens, cmd_idx);
     }
     return root;
 }
@@ -789,10 +781,10 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
     if (count == 0) return result;
     uint32_t start_idx = (uint32_t)bg->params_count;
     uint16_t valid_count = 0;
+    int p_idx = arr_first(tokens, params_idx);
     for (int i = 0; i < count; i++) {
-        int p_idx = arr_get(tokens, params_idx, i);
         ParamInfo info;
-        if (!get_param_info(js, tokens, p_idx, &info)) continue;
+        if (!get_param_info(js, tokens, p_idx, &info)) { p_idx = tok_skip(tokens, p_idx); continue; }
         if (bg->params_count >= bg->params_cap) {
             bg->params_cap *= 2;
             bg->params = realloc(bg->params, bg->params_cap * sizeof(ParamEntry));
@@ -813,6 +805,7 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
         track_param(bg, strlen(info.name), bg->no_descriptions ? 0 : strlen(info.description));
         free_param_info(&info);
         valid_count++;
+        p_idx = tok_skip(tokens, p_idx);
     }
     if (valid_count == 0) return result;
     finish_command_params(bg);
@@ -1023,8 +1016,8 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     int global_params_idx = obj_get(js, tokens, 0, "global_params");
     if (global_params_idx >= 0 && tokens[global_params_idx].type == JSMN_ARRAY) {
         int gp_count = arr_size(tokens, global_params_idx);
+        int gp_idx = arr_first(tokens, global_params_idx);
         for (int i = 0; i < gp_count; i++) {
-            int gp_idx = arr_get(tokens, global_params_idx, i);
             char *name = obj_get_str(js, tokens, gp_idx, "name");
             char *desc = obj_get_str(js, tokens, gp_idx, "description");
             int tv_idx = obj_get(js, tokens, gp_idx, "takes_value");
@@ -1063,6 +1056,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             bg.global_param_count++;
             bg.global_param_bytes += strlen(long_opt ? long_opt : name) + (bg.no_descriptions ? 0 : strlen(desc));
             free(long_opt); free(short_opt); free(name); free(desc);
+            gp_idx = tok_skip(tokens, gp_idx);
         }
     }
 

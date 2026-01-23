@@ -119,6 +119,11 @@ static size_t msgpack_len = 0;
 static uint32_t msgpack_count = 0;
 static char *path_buf = NULL;
 
+// Completion context (set once per complete() call)
+static const char **g_spans = NULL;
+static size_t *g_arg_lens = NULL;
+static int g_span_count = 0;
+
 // Accessor macros
 #define PARAM_TAKES_VALUE(p) ((p)->flags & FLAG_TAKES_VALUE)
 #define PARAM_IS_MEMBERS(p)  ((p)->flags & FLAG_IS_MEMBERS)
@@ -144,16 +149,9 @@ static inline String str_get(uint32_t off) {
     return s;
 }
 
-// Check if string table entry is empty (sentinel)
-static inline bool str_empty(uint32_t off) {
-    if (off == 0) return true;
-    return blob[header.string_table_off + off] == 0;
-}
-
-// Compare string table entry with C string
-static inline bool str_eq(uint32_t off, const char *cstr) {
+// Compare string table entry with C string (pre-computed length)
+static inline bool str_eq_n(uint32_t off, const char *cstr, size_t clen) {
     String s = str_get(off);
-    size_t clen = strlen(cstr);
     return s.n == clen && memcmp(s.p, cstr, clen) == 0;
 }
 
@@ -365,22 +363,23 @@ static void output_completion(String value, String desc, CompletionType type) {
 }
 
 // Find the deepest matching command
-static const Command *find_command(const char **args, int argc) {
+static const Command *find_command(void) {
     const Command *cmd = get_root_command();
     int i = 1;  // Skip first arg (CLI name)
 
-    while (i < argc && cmd->subcommands_count > 0) {
-        const char *arg = args[i];
+    while (i < g_span_count && cmd->subcommands_count > 0) {
+        const char *arg = g_spans[i];
 
         if (arg[0] == '-') {
             i++;
             continue;
         }
 
+        size_t arg_len = g_arg_lens[i];
         const Command *found = NULL;
         const Command *subs = cmd_subcommands(cmd);
         for (uint16_t j = 0; j < cmd->subcommands_count; j++) {
-            if (str_eq(subs[j].name_off, arg)) {
+            if (str_eq_n(subs[j].name_off, arg, arg_len)) {
                 found = &subs[j];
                 break;
             }
@@ -398,27 +397,44 @@ static const Command *find_command(const char **args, int argc) {
 }
 
 // Check if a parameter has already been used (by long or short name)
-static bool param_used(const Param *param, const char **args, int argc) {
+static bool param_used(const Param *param) {
     String name = str_get(param->name_off);
     String short_opt = param->short_off ? str_get(param->short_off) : (String){NULL, 0};
 
-    for (int i = 0; i < argc; i++) {
-        const char *arg = args[i];
-        size_t arg_len = strlen(arg);
-        if (arg_len == name.n && memcmp(arg, name.p, name.n) == 0)
+    for (int i = 0; i < g_span_count; i++) {
+        size_t arg_len = g_arg_lens[i];
+        if (arg_len == name.n && memcmp(g_spans[i], name.p, name.n) == 0)
             return true;
-        if (short_opt.p && arg_len == short_opt.n && memcmp(arg, short_opt.p, short_opt.n) == 0)
+        if (short_opt.p && arg_len == short_opt.n && memcmp(g_spans[i], short_opt.p, short_opt.n) == 0)
             return true;
     }
     return false;
 }
 
+// Pre-computed prefix analysis for parameter completion
+typedef struct {
+    size_t len;
+    bool is_dash;         // starts with -
+    bool is_double_dash;  // starts with --
+    bool is_single_dash;  // starts with - but not --
+} PrefixInfo;
+
+static inline PrefixInfo make_prefix_info(const char *prefix, size_t len) {
+    PrefixInfo info = {0};
+    if (prefix && len > 0) {
+        info.len = len;
+        info.is_dash = prefix[0] == '-';
+        info.is_double_dash = len >= 2 && prefix[0] == '-' && prefix[1] == '-';
+        info.is_single_dash = info.is_dash && !info.is_double_dash;
+    }
+    return info;
+}
+
 // Recursively output leaf commands
-static void complete_leaf_commands(const Command *cmd, String path, const char *prefix) {
+static void complete_leaf_commands(const Command *cmd, String path, const char *prefix, size_t prefix_len) {
     if (cmd->subcommands_count == 0) return;
 
     char *buf = path_buf;
-    size_t prefix_len = prefix ? strlen(prefix) : 0;
     const Command *subs = cmd_subcommands(cmd);
 
     for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
@@ -442,7 +458,7 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 
         if (sub->subcommands_count > 0) {
             if (!prefix || matches || strncmp(prefix, buf, new_len) == 0) {
-                complete_leaf_commands(sub, (String){buf, new_len}, prefix);
+                complete_leaf_commands(sub, (String){buf, new_len}, prefix, prefix_len);
             }
         } else if (matches) {
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
@@ -454,31 +470,26 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 }
 
 // Complete subcommands (leaf commands only)
-static void complete_subcommands(const Command *cmd, const char *prefix) {
+static void complete_subcommands(const Command *cmd, const char *prefix, size_t prefix_len) {
     path_buf[0] = '\0';
-    complete_leaf_commands(cmd, (String){path_buf, 0}, prefix);
+    complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len);
 }
 
 // Complete parameters from a param list
-static void complete_params_list(const Param *params, uint16_t params_count, const char **args, int argc, const char *prefix) {
+static void complete_params_list(const Param *params, uint16_t params_count,
+                                  const char *prefix, const PrefixInfo *pinfo) {
     if (!params || params_count == 0) return;
-
-    size_t prefix_len = prefix ? strlen(prefix) : 0;
-    bool prefix_is_dash = prefix_len >= 1 && prefix[0] == '-';
-    bool prefix_is_double_dash = prefix_len >= 2 && prefix[0] == '-' && prefix[1] == '-';
-    bool prefix_is_single_dash = prefix_is_dash && !prefix_is_double_dash;
-
-    if (prefix_len > 0 && !prefix_is_dash) return;
+    if (pinfo->len > 0 && !pinfo->is_dash) return;
 
     // When prefix is "-" (single dash only), show short options first
-    if (prefix_is_single_dash) {
+    if (pinfo->is_single_dash) {
         for (uint16_t i = 0; i < params_count; i++) {
             const Param *p = &params[i];
             if (p->short_off == 0) continue;
-            if (param_used(p, args, argc)) continue;
+            if (param_used(p)) continue;
 
             String short_opt = str_get(p->short_off);
-            if (short_opt.n >= prefix_len && memcmp(short_opt.p, prefix, prefix_len) == 0) {
+            if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
             }
@@ -486,13 +497,13 @@ static void complete_params_list(const Param *params, uint16_t params_count, con
     }
 
     // Show long options (always, unless prefix is single dash with more chars like "-x")
-    if (!prefix_is_single_dash || prefix_len == 1) {
+    if (!pinfo->is_single_dash || pinfo->len == 1) {
         for (uint16_t i = 0; i < params_count; i++) {
             const Param *p = &params[i];
-            if (param_used(p, args, argc)) continue;
+            if (param_used(p)) continue;
 
             String name = str_get(p->name_off);
-            if (prefix_len == 0 || (name.n >= prefix_len && memcmp(name.p, prefix, prefix_len) == 0)) {
+            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 output_completion(name, str_get(desc), COMP_PARAM_NAME);
             }
@@ -501,27 +512,21 @@ static void complete_params_list(const Param *params, uint16_t params_count, con
 }
 
 // Complete global params
-static void complete_global_params(const char **args, int argc, const char *prefix) {
+static void complete_global_params(const char *prefix, const PrefixInfo *pinfo) {
     if (header.global_params_count == 0) return;
-
-    size_t prefix_len = prefix ? strlen(prefix) : 0;
-    bool prefix_is_dash = prefix_len >= 1 && prefix[0] == '-';
-    bool prefix_is_double_dash = prefix_len >= 2 && prefix[0] == '-' && prefix[1] == '-';
-    bool prefix_is_single_dash = prefix_is_dash && !prefix_is_double_dash;
-
-    if (prefix_len > 0 && !prefix_is_dash) return;
+    if (pinfo->len > 0 && !pinfo->is_dash) return;
 
     const Param *global_params = get_global_params();
 
     // When prefix is "-" (single dash only), show short options first
-    if (prefix_is_single_dash) {
+    if (pinfo->is_single_dash) {
         for (uint32_t i = 0; i < header.global_params_count; i++) {
             const Param *p = &global_params[i];
             if (p->short_off == 0) continue;
-            if (param_used(p, args, argc)) continue;
+            if (param_used(p)) continue;
 
             String short_opt = str_get(p->short_off);
-            if (short_opt.n >= prefix_len && memcmp(short_opt.p, prefix, prefix_len) == 0) {
+            if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
             }
@@ -529,13 +534,13 @@ static void complete_global_params(const char **args, int argc, const char *pref
     }
 
     // Show long options
-    if (!prefix_is_single_dash || prefix_len == 1) {
+    if (!pinfo->is_single_dash || pinfo->len == 1) {
         for (uint32_t i = 0; i < header.global_params_count; i++) {
             const Param *p = &global_params[i];
-            if (param_used(p, args, argc)) continue;
+            if (param_used(p)) continue;
 
             String name = str_get(p->name_off);
-            if (prefix_len == 0 || (name.n >= prefix_len && memcmp(name.p, prefix, prefix_len) == 0)) {
+            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 output_completion(name, str_get(desc), COMP_PARAM_NAME);
             }
@@ -544,10 +549,9 @@ static void complete_global_params(const char **args, int argc, const char *pref
 }
 
 // Complete string list at a blob offset (choices or members)
-static void complete_string_list(uint32_t off, const char *prefix) {
+static void complete_string_list(uint32_t off, const char *prefix, size_t prefix_len) {
     if (off == 0) return;
 
-    size_t prefix_len = prefix ? strlen(prefix) : 0;
     const uint32_t *offsets = get_string_offsets(off);
 
     for (; *offsets; offsets++) {
@@ -559,16 +563,15 @@ static void complete_string_list(uint32_t off, const char *prefix) {
 }
 
 // Find a parameter by name (long or short option)
-static const Param *find_param(const Param *params, uint16_t params_count, const char *opt) {
+static const Param *find_param(const Param *params, uint16_t params_count, const char *opt, size_t opt_len) {
     if (!params || params_count == 0 || !opt) return NULL;
     if (opt[0] != '-') return NULL;
-
-    size_t opt_len = strlen(opt);
 
     for (uint16_t i = 0; i < params_count; i++) {
         const Param *p = &params[i];
         // Check long option
-        if (str_eq(p->name_off, opt)) return p;
+        String name = str_get(p->name_off);
+        if (name.n == opt_len && memcmp(name.p, opt, opt_len) == 0) return p;
         // Check short option
         if (p->short_off) {
             String short_opt = str_get(p->short_off);
@@ -601,27 +604,54 @@ static const Param *find_global_param(const char *name, size_t len) {
 }
 
 // Check if span is empty/whitespace
-static bool is_new_arg(const char *span) {
+static inline bool is_new_arg(const char *span) {
     if (!span || !*span) return true;
-    for (const char *p = span; *p; p++) {
+    // Fast path: if first char is not whitespace, it's not a new arg
+    if (span[0] != ' ' && span[0] != '\t') return false;
+    // Slow path: check remaining chars for non-whitespace
+    for (const char *p = span + 1; *p; p++) {
         if (*p != ' ' && *p != '\t') return false;
     }
     return true;
 }
 
-// Parse output format
+// Parse output format - uses first char + length for fast dispatch
 static OutputFormat parse_format(const char *name) {
-    if (strcmp(name, "lines") == 0) return OUT_LINES;
-    if (strcmp(name, "bash") == 0) return OUT_LINES;
-    if (strcmp(name, "zsh") == 0) return OUT_ZSH;
-    if (strcmp(name, "tsv") == 0) return OUT_TSV;
-    if (strcmp(name, "fish") == 0) return OUT_TSV;
-    if (strcmp(name, "json") == 0) return OUT_JSON;
-    if (strcmp(name, "json-tuple") == 0) return OUT_JSON_TUPLE;
-    if (strcmp(name, "nushell") == 0 || strcmp(name, "nu") == 0) return OUT_MSGPACK;
-    if (strcmp(name, "msgpack") == 0) return OUT_MSGPACK;
-    if (strcmp(name, "msgpack-tuple") == 0) return OUT_MSGPACK_TUPLE;
-    if (strcmp(name, "pwsh") == 0 || strcmp(name, "powershell") == 0) return OUT_PWSH;
+    size_t len = strlen(name);
+    // Quick dispatch on first char and length
+    switch (name[0]) {
+    case 'b':
+        if (len == 4 && memcmp(name, "bash", 4) == 0) return OUT_LINES;
+        break;
+    case 'f':
+        if (len == 4 && memcmp(name, "fish", 4) == 0) return OUT_TSV;
+        break;
+    case 'j':
+        if (len == 4 && memcmp(name, "json", 4) == 0) return OUT_JSON;
+        if (len == 10 && memcmp(name, "json-tuple", 10) == 0) return OUT_JSON_TUPLE;
+        break;
+    case 'l':
+        if (len == 5 && memcmp(name, "lines", 5) == 0) return OUT_LINES;
+        break;
+    case 'm':
+        if (len == 7 && memcmp(name, "msgpack", 7) == 0) return OUT_MSGPACK;
+        if (len == 13 && memcmp(name, "msgpack-tuple", 13) == 0) return OUT_MSGPACK_TUPLE;
+        break;
+    case 'n':
+        if (len == 2 && name[1] == 'u') return OUT_MSGPACK;
+        if (len == 7 && memcmp(name, "nushell", 7) == 0) return OUT_MSGPACK;
+        break;
+    case 'p':
+        if (len == 4 && memcmp(name, "pwsh", 4) == 0) return OUT_PWSH;
+        if (len == 10 && memcmp(name, "powershell", 10) == 0) return OUT_PWSH;
+        break;
+    case 't':
+        if (len == 3 && memcmp(name, "tsv", 3) == 0) return OUT_TSV;
+        break;
+    case 'z':
+        if (len == 3 && memcmp(name, "zsh", 3) == 0) return OUT_ZSH;
+        break;
+    }
     return OUT_UNKNOWN;
 }
 
@@ -671,26 +701,35 @@ static void complete(int nspans, const char **spans) {
         return;
     }
 
+    // Pre-compute all arg lengths once and set globals
+    size_t arg_lens[nspans];
+    for (int i = 0; i < nspans; i++) {
+        arg_lens[i] = strlen(spans[i]);
+    }
+    g_spans = spans;
+    g_arg_lens = arg_lens;
+    g_span_count = nspans - 1;
+    if (g_span_count < 1) g_span_count = 1;
+
     const char *last_span = spans[nspans - 1];
+    size_t last_span_len = arg_lens[nspans - 1];
     bool is_empty = is_new_arg(last_span);
     bool is_flag_prefix = last_span[0] == '-';
     bool is_cmd_prefix = last_span[0] >= 'a' && last_span[0] <= 'z';
 
-    int search_count = nspans - 1;
-    if (search_count < 1) search_count = 1;
-
-    const Command *cmd = find_command(spans, search_count);
+    const Command *cmd = find_command();
 
     if (is_flag_prefix) {
-        complete_params_list(cmd_params(cmd), cmd->params_count, spans, search_count, last_span);
-        complete_global_params(spans, search_count, last_span);
+        PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
+        complete_params_list(cmd_params(cmd), cmd->params_count, last_span, &pinfo);
+        complete_global_params(last_span, &pinfo);
         output_footer();
         return;
     }
 
     if (is_cmd_prefix) {
         if (cmd->subcommands_count > 0) {
-            complete_subcommands(cmd, last_span);
+            complete_subcommands(cmd, last_span, last_span_len);
         }
         output_footer();
         return;
@@ -701,26 +740,26 @@ static void complete(int nspans, const char **spans) {
         return;
     }
 
-    const char *prev_arg = search_count > 0 ? spans[search_count - 1] : "";
+    const char *prev_arg = g_span_count > 0 ? spans[g_span_count - 1] : "";
 
     if (prev_arg[0] == '-') {
-        size_t prev_len = strlen(prev_arg);
+        size_t prev_len = arg_lens[g_span_count - 1];
 
         const Param *gparam = find_global_param(prev_arg, prev_len);
         if (gparam && PARAM_TAKES_VALUE(gparam)) {
             if (PARAM_HAS_CHOICES(gparam)) {
-                complete_string_list(gparam->choices_off, NULL);
+                complete_string_list(gparam->choices_off, NULL, 0);
             }
             output_footer();
             return;
         }
 
-        const Param *param = find_param(cmd_params(cmd), cmd->params_count, prev_arg);
+        const Param *param = find_param(cmd_params(cmd), cmd->params_count, prev_arg, prev_len);
         if (param && PARAM_TAKES_VALUE(param)) {
             if (PARAM_HAS_CHOICES(param)) {
-                complete_string_list(param->choices_off, NULL);
+                complete_string_list(param->choices_off, NULL, 0);
             } else if (PARAM_HAS_MEMBERS(param)) {
-                complete_string_list(param->choices_off, NULL);
+                complete_string_list(param->choices_off, NULL, 0);
             }
             output_footer();
             return;
@@ -728,11 +767,12 @@ static void complete(int nspans, const char **spans) {
     }
 
     if (cmd->subcommands_count > 0) {
-        complete_subcommands(cmd, NULL);
+        complete_subcommands(cmd, NULL, 0);
     }
 
-    complete_params_list(cmd_params(cmd), cmd->params_count, spans, search_count, NULL);
-    complete_global_params(spans, search_count, NULL);
+    PrefixInfo pinfo = {0};  // Empty prefix
+    complete_params_list(cmd_params(cmd), cmd->params_count, NULL, &pinfo);
+    complete_global_params(NULL, &pinfo);
 
     output_footer();
 }
