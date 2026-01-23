@@ -563,21 +563,7 @@ for cmd [aws az] {
 
 Nushell doesn't add trailing spaces after external completions, so use `--add-space` to append them.
 
-**Simple (JSON):**
-
-```nu
-$env.config.completions.external = {
-    enable: true
-    completer: {|spans|
-        match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer --add-space json ...$spans | from json)
-            _ => null  # fall back to default completion
-        }
-    }
-}
-```
-
-**Faster (TSV parsing):**
+**TSV:**
 
 ```nu
 $env.config.completions.external = {
@@ -591,7 +577,7 @@ $env.config.completions.external = {
 }
 ```
 
-**With carapace fallback:**
+**JSON (slower):**
 
 ```nu
 $env.config.completions.external = {
@@ -599,6 +585,20 @@ $env.config.completions.external = {
     completer: {|spans|
         match $spans.0 {
             az | aws | gcloud | gh => (^fast-completer --add-space json ...$spans | from json)
+            _ => null  # fall back to default completion
+        }
+    }
+}
+```
+
+**With carapace fallback:**
+
+```nu
+$env.config.completions.external = {
+    enable: true
+    completer: {|spans|
+        match $spans.0 {
+            az | aws | gcloud | gh => (^fast-completer --add-space tsv ...$spans | lines | split column -n 2 "\t" value description)
             _ => (^carapace $spans.0 nushell ...$spans | from json)
         }
     }
