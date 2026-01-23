@@ -23,7 +23,6 @@ This project provides a single native C binary that can provide completions for 
   - [Global Parameters](#global-parameters)
 - [Binary Blob Format](#binary-blob-format)
 - [Shell Integration](#shell-integration)
-  - [Fallback Completers](#fallback-completers)
   - [Bash](#bash)
   - [Zsh](#zsh)
   - [Fish](#fish)
@@ -429,15 +428,11 @@ Variable-length count prefix (u8 if count < 255, else 0xFF + u16), followed by u
 
 ### Memory Mapping
 
-All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory. The OS handles paging, so only accessed regions incur I/O. Combined with hot/cold separation, a typical completion touches only a few kilobytes of the multi-megabyte blob.
+All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory. The OS handles paging, so only accessed regions incur I/O. Combined with hot/cold separation, a typical completion touches only a few kilobytes of a multi-megabyte blob.
 
 ## Shell Integration
 
 Completions are returned pre-sorted. Where possible, disable the shell's sorting to preserve the order.
-
-### Fallback Completers
-
-Use `--quiet` to try fast-completer first and fall back to another completer (like [carapace](https://github.com/carapace-sh/carapace)) if no blob exists. This lets you get fast completions for CLIs with pre-generated blobs while still having completions for other commands.
 
 ### Bash
 
@@ -445,7 +440,9 @@ Add to your `~/.bashrc`:
 
 ```bash
 _fast_completer() {
-    mapfile -t COMPREPLY < <(fast-completer bash "${COMP_WORDS[@]}")
+    mapfile -t COMPREPLY < <(fast-completer -q bash "${COMP_WORDS[@]}")
+    # Optional: fall back to carapace
+    [[ ${#COMPREPLY[@]} -eq 0 ]] && mapfile -t COMPREPLY < <(carapace "${COMP_WORDS[0]}" bash "${COMP_WORDS[@]}")
 }
 
 # Register for specific commands
@@ -458,16 +455,6 @@ for blob in "$_fc_cache"/*.bin; do
 done
 ```
 
-**With carapace fallback:**
-
-```bash
-_fc_or_carapace() {
-    mapfile -t COMPREPLY < <(fast-completer -q bash "${COMP_WORDS[@]}")
-    [[ ${#COMPREPLY[@]} -eq 0 ]] && mapfile -t COMPREPLY < <(carapace "${COMP_WORDS[0]}" bash "${COMP_WORDS[@]}")
-}
-complete -o nosort -F _fc_or_carapace aws az kubectl gh
-```
-
 ### Zsh
 
 Add to your `~/.zshrc`:
@@ -475,7 +462,11 @@ Add to your `~/.zshrc`:
 ```zsh
 _fast_completer() {
     local -a completions
-    completions=("${(@f)$(fast-completer zsh "${words[@]}")}")
+    completions=("${(@f)$(fast-completer -q zsh "${words[@]}")}")
+    # Optional: fall back to carapace
+    if [[ ${#completions[@]} -eq 0 ]]; then
+        completions=("${(@f)$(carapace "${words[1]}" zsh "${words[@]}")}")
+    fi
     compadd -V unsorted -d completions -a completions  # -V preserves order
 }
 
@@ -489,29 +480,25 @@ for blob in "$_fc_cache"/*.bin(N); do
 done
 ```
 
-**With carapace fallback:**
-
-```zsh
-_fc_or_carapace() {
-    local -a completions
-    completions=("${(@f)$(fast-completer -q zsh "${words[@]}")}")
-    if [[ ${#completions[@]} -eq 0 ]]; then
-        completions=("${(@f)$(carapace "${words[1]}" zsh "${words[@]}")}")
-    fi
-    compadd -V unsorted -d completions -a completions
-}
-compdef _fc_or_carapace aws az kubectl gh
-```
-
 ### Fish
 
 Add to your `~/.config/fish/config.fish`:
 
 ```fish
+function _fast_completer
+    set -l results (fast-completer -q fish (commandline -opc))
+    if test (count $results) -eq 0
+        # Optional: fall back to carapace
+        carapace (commandline -opc)[1] fish (commandline -opc)
+    else
+        printf '%s\n' $results
+    end
+end
+
 # Register for specific commands
 for cmd in aws az
     complete -c $cmd -e  # clear existing completions
-    complete -c $cmd -k -a "(fast-completer fish (commandline -opc))"  # -k preserves order
+    complete -c $cmd -k -a "(_fast_completer)"  # -k preserves order
 end
 
 # Or register for all installed blobs
@@ -519,25 +506,7 @@ set -l _fc_cache (if set -q FAST_COMPLETER_CACHE; echo $FAST_COMPLETER_CACHE; el
 for blob in $_fc_cache/*.bin
     set -l cmd (basename $blob .bin)
     complete -c $cmd -e
-    complete -c $cmd -k -a "(fast-completer fish (commandline -opc))"
-end
-```
-
-**With carapace fallback:**
-
-```fish
-function _fc_or_carapace
-    set -l results (fast-completer -q fish (commandline -opc))
-    if test (count $results) -eq 0
-        carapace (commandline -opc)[1] fish (commandline -opc)
-    else
-        printf '%s\n' $results
-    end
-end
-
-for cmd in aws az kubectl gh
-    complete -c $cmd -e
-    complete -c $cmd -k -a "(_fc_or_carapace)"
+    complete -c $cmd -k -a "(_fast_completer)"
 end
 ```
 
@@ -563,43 +532,24 @@ for cmd [aws az] {
 
 Nushell doesn't add trailing spaces after external completions, so use `--add-space` to append them.
 
-**TSV:**
-
 ```nu
 $env.config.completions.external = {
     enable: true
     completer: {|spans|
         match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer --add-space tsv ...$spans | lines | split column -n 2 "\t" value description)
-            _ => null  # fall back to default completion
-        }
-    }
-}
-```
-
-**JSON (slower):**
-
-```nu
-$env.config.completions.external = {
-    enable: true
-    completer: {|spans|
-        match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer --add-space json ...$spans | from json)
-            _ => null  # fall back to default completion
-        }
-    }
-}
-```
-
-**With carapace fallback:**
-
-```nu
-$env.config.completions.external = {
-    enable: true
-    completer: {|spans|
-        match $spans.0 {
-            az | aws | gcloud | gh => (^fast-completer --add-space tsv ...$spans | lines | split column -n 2 "\t" value description)
-            _ => (^carapace $spans.0 nushell ...$spans | from json)
+            az | aws | gcloud | gh => {
+                let completions = ^fast-completer --add-space --full-commands tsv ...$spans
+                if ($completions | is-not-empty) {
+                    $completions | lines | split column -n 2 "\t" value description
+                }
+            }
+            # Optional: fall back to carapace
+            _ => {
+                let completions = ^carapace $cmd nushell ...$spans
+                if ($completions | is-not-empty) {
+                    $completions | from json
+                }
+            }
         }
     }
 }
@@ -613,7 +563,12 @@ Add to your profile:
 $fcCompleter = {
     param($wordToComplete, $commandAst, $cursorPosition)
     $spans = $commandAst.CommandElements | ForEach-Object { $_.Extent.Text }
-    fast-completer pwsh @spans | ForEach-Object {
+    $results = fast-completer -q pwsh @spans
+    # Optional: fall back to carapace
+    if (-not $results) {
+        $results = carapace $spans[0] powershell @spans
+    }
+    $results | ForEach-Object {
         $parts = $_ -split "`t"
         [System.Management.Automation.CompletionResult]::new($parts[0], $parts[1], $parts[2], $parts[3])
     }
@@ -629,31 +584,14 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
 }
 ```
 
-**With carapace fallback:**
-
-```pwsh
-$fcOrCarapaceCompleter = {
-    param($wordToComplete, $commandAst, $cursorPosition)
-    $spans = $commandAst.CommandElements | ForEach-Object { $_.Extent.Text }
-    $results = fast-completer -q pwsh @spans
-    if (-not $results) {
-        $results = carapace $spans[0] powershell @spans
-    }
-    $results | ForEach-Object {
-        $parts = $_ -split "`t"
-        [System.Management.Automation.CompletionResult]::new($parts[0], $parts[1], $parts[2], $parts[3])
-    }
-}
-Register-ArgumentCompleter -Native -CommandName aws, az, kubectl, gh -ScriptBlock $fcOrCarapaceCompleter
-```
-
 ## Limitations
 
 - Structure member completion only provides top-level keys (e.g., `ebs=`, `device-name=`); nested members are not yet supported
 
 ## TODO
 
-- **More schemas**: Add schemas for other large CLIs (e.g., `kubectl`)
+- Add schemas for other large CLIs (e.g., `kubectl`)
+- Check schemas for value types: if it's something like "path" or "directory", we may be able to provide completions for those
 
 ## How It Works
 
