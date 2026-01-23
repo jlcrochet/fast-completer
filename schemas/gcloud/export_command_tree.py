@@ -83,12 +83,10 @@ def convert_flags(flags_dict, command_path=''):
     return params
 
 
-def walk_commands(tree, path_parts=None, seen_groups=None):
-    """Recursively walk the command tree and yield commands/groups."""
+def walk_commands(tree, path_parts=None):
+    """Recursively walk the command tree and yield leaf commands."""
     if path_parts is None:
         path_parts = []
-    if seen_groups is None:
-        seen_groups = set()
 
     commands_dict = tree.get('commands', {})
 
@@ -100,16 +98,8 @@ def walk_commands(tree, path_parts=None, seen_groups=None):
         sub_flags = subtree.get('flags', {})
 
         if sub_commands:
-            # This is a group (has subcommands)
-            # Yield group for every level of the hierarchy
-            if path_str not in seen_groups:
-                seen_groups.add(path_str)
-                yield {
-                    'name': path_str,
-                    'type': 'group',
-                }
-            # Recurse into subcommands
-            yield from walk_commands(subtree, current_path, seen_groups)
+            # This is a group - recurse into subcommands
+            yield from walk_commands(subtree, current_path)
         else:
             # This is a leaf command
             cmd = {
@@ -136,8 +126,7 @@ def main():
     # Build the schema
     schema = {
         'name': 'gcloud',
-        'groups': [],
-        'commands': [],
+        'commands': list(walk_commands(tree)),
         'global_params': [],
     }
 
@@ -152,16 +141,8 @@ def main():
             param['choices'] = flag_value
         schema['global_params'].append(param)
 
-    # Walk all commands
-    # Note: groups must also be in 'commands' array for blob generator to create tree nodes
-    for item in walk_commands(tree):
-        if item['type'] == 'group':
-            schema['groups'].append(item)
-        schema['commands'].append(item)
-
     # Print stats to stderr first
-    sys.stderr.write(f"Exported {len(schema['groups'])} groups, "
-                     f"{len(schema['commands'])} commands, "
+    sys.stderr.write(f"Exported {len(schema['commands'])} commands, "
                      f"{len(schema['global_params'])} global params\n")
     sys.stderr.flush()
 

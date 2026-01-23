@@ -14,9 +14,9 @@
  * Keep these in sync with dump_blob.py.
  */
 #define BLOB_MAGIC   "FCMP"
-#define BLOB_VERSION 6
+#define BLOB_VERSION 7
 
-#define HEADER_SIZE  68
+#define HEADER_SIZE  64
 #define PARAM_SIZE   17
 #define COMMAND_SIZE 18
 

@@ -216,31 +216,13 @@ def build_command_tree():
     print(f"Found {len(services)} AWS services", file=sys.stderr)
 
     all_commands = []
-    groups = []
 
     for i, service_name in enumerate(sorted(services)):
         if (i + 1) % 50 == 0:
             print(f"Processing service {i + 1}/{len(services)}: {service_name}", file=sys.stderr)
 
         service_commands = extract_service(session, service_name)
-
-        if service_commands:
-            # Add service as a group
-            try:
-                service_model = session.get_service_model(service_name)
-                service_doc = strip_html(service_model.documentation) if hasattr(service_model, 'documentation') and service_model.documentation else ''
-                if len(service_doc) > 200:
-                    service_doc = service_doc[:197] + '...'
-            except:
-                service_doc = ''
-
-            groups.append({
-                'name': service_name,
-                'type': 'group',
-                'summary': service_doc,
-            })
-
-            all_commands.extend(service_commands)
+        all_commands.extend(service_commands)
 
     # Get CLI version
     try:
@@ -255,10 +237,8 @@ def build_command_tree():
         'version': cli_version,
         'cli': 'aws',
         'generated_by': 'export_command_tree.py',
-        'group_count': len(groups),
         'command_count': len(all_commands),
         'global_params': global_params,
-        'groups': groups,
         'commands': sorted(all_commands, key=lambda x: x['name']),
     }
 
@@ -268,7 +248,7 @@ def main():
 
     tree = build_command_tree()
 
-    print(f"Exported {tree['group_count']} groups and {tree['command_count']} commands", file=sys.stderr)
+    print(f"Exported {tree['command_count']} commands", file=sys.stderr)
 
     print(json.dumps(tree, indent=2, ensure_ascii=False))
 

@@ -234,14 +234,11 @@ def extract_command(help_file):
 def build_command_tree(help_files, cli_ctx):
     """Build structured command tree from help files."""
     commands = []
-    groups = []
 
     for help_file in help_files:
         info = extract_command(help_file)
         if info['type'] == 'command':
             commands.append(info)
-        else:
-            groups.append(info)
 
     # Get Azure CLI version
     try:
@@ -267,10 +264,8 @@ def build_command_tree(help_files, cli_ctx):
         'version': cli_version,
         'cli': 'az',
         'generated_by': 'export_command_tree.py',
-        'group_count': len(groups),
         'command_count': len(commands),
         'global_params': global_params,
-        'groups': sorted(groups, key=lambda x: x['name']),
         'commands': sorted(commands, key=lambda x: x['name']),
     }
 
@@ -302,7 +297,7 @@ def main():
     print(f"Processing {len(help_files)} help entries...", file=sys.stderr)
     tree = build_command_tree(help_files, cli_ctx)
 
-    print(f"Exported {tree['group_count']} groups and {tree['command_count']} commands", file=sys.stderr)
+    print(f"Exported {tree['command_count']} commands", file=sys.stderr)
 
     print(json.dumps(tree, indent=2, ensure_ascii=False, cls=JSONEncoder))
 

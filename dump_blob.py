@@ -25,8 +25,8 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 6
-HEADER_SIZE = 68
+VERSION = 7
+HEADER_SIZE = 64
 PARAM_SIZE = 17
 COMMAND_SIZE = 18
 
@@ -53,7 +53,7 @@ class BlobReader:
         if len(self.data) < HEADER_SIZE:
             raise ValueError(f"Blob too small: {len(self.data)} bytes (need at least {HEADER_SIZE})")
 
-        values = struct.unpack_from('<4sHHIIIIIIIIIIIIIII', self.data, 0)
+        values = struct.unpack_from('<4sHHIIIIIIIIIIIIII', self.data, 0)
 
         magic = values[0]
         if magic != MAGIC:
@@ -68,20 +68,19 @@ class BlobReader:
             'version': version,
             'flags': values[2],
             'max_command_path_len': values[3],
-            'msgpack_buffer_size': values[4],
-            'command_count': values[5],
-            'param_count': values[6],
-            'global_param_count': values[7],
-            'string_table_size': values[8],
-            'choices_count': values[9],
-            'members_count': values[10],
-            'string_table_off': values[11],
-            'commands_off': values[12],
-            'params_off': values[13],
-            'choices_off': values[14],
-            'members_off': values[15],
-            'global_params_off': values[16],
-            'root_command_off': values[17],
+            'command_count': values[4],
+            'param_count': values[5],
+            'global_param_count': values[6],
+            'string_table_size': values[7],
+            'choices_count': values[8],
+            'members_count': values[9],
+            'string_table_off': values[10],
+            'commands_off': values[11],
+            'params_off': values[12],
+            'choices_off': values[13],
+            'members_off': values[14],
+            'global_params_off': values[15],
+            'root_command_off': values[16],
         }
 
     def get_string(self, offset):

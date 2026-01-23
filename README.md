@@ -18,7 +18,6 @@ This project provides a single native C binary that can provide completions for 
   - [Inspecting Blobs](#inspecting-blobs)
 - [Schema Format](#schema-format)
   - [Top-level Properties](#top-level-properties)
-  - [Groups](#groups)
   - [Commands](#commands)
   - [Parameters](#parameters)
   - [Global Parameters](#global-parameters)
@@ -100,7 +99,10 @@ Use the `lines` format when you only need values without descriptions.
 | Option | Description |
 |--------|-------------|
 | `--add-space` | Append trailing space to completion values (implied by `nushell`) |
+| `--full-commands` | Complete full leaf command paths instead of next level |
 | `--quiet`, `-q` | Suppress error messages if blob not found (for fallback scripts) |
+
+By default, command completion shows the next level of subcommands (e.g., `aws ""` shows `s3`, `ec2`, etc.). Use `--full-commands` to show full leaf command paths instead (e.g., `s3 cp`, `s3 ls`, `ec2 describe-instances`).
 
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
 
@@ -229,8 +231,8 @@ fast-completer --generate-blob --no-descriptions aws.json
 
 | CLI | Default | Long | None |
 |-----|---------|------|------|
-| AWS | 5.7 MB | 8.6 MB | 2.3 MB |
-| Azure | 1.7 MB | 2.1 MB | 1.1 MB |
+| AWS | 5.8 MB | 8.7 MB | 2.3 MB |
+| Azure | 1.8 MB | 2.2 MB | 1.1 MB |
 
 The blob header includes a flag indicating whether descriptions are present. This flag is set automatically if the schema has no descriptions (like gcloud), so the completer skips description lookups for all output formats.
 
@@ -240,9 +242,10 @@ The `schemas/` directory contains pre-generated schemas and export scripts for p
 
 | CLI | Schema | Requirements |
 |-----|--------|--------------|
-| AWS CLI | `schemas/aws/aws_commands.json` | `awscli` package |
-| Azure CLI | `schemas/az/az_commands.json` | `azure-cli` package |
-| gcloud CLI | `schemas/gcloud/gcloud_commands.json` | `google-cloud-sdk` |
+| AWS CLI | `schemas/aws/aws_commands.json` | `awscli` pip package |
+| Azure CLI | `schemas/az/az_commands.json` | `azure-cli` pip package |
+| gcloud CLI | `schemas/gcloud/gcloud_commands.json` | Google Cloud SDK (system install) |
+| GitHub CLI | `schemas/gh/gh_commands.json` | `gh` CLI (system install) |
 
 To use the included schemas:
 
@@ -250,6 +253,7 @@ To use the included schemas:
 fast-completer --generate-blob schemas/aws/aws_commands.json
 fast-completer --generate-blob schemas/az/az_commands.json
 fast-completer --generate-blob schemas/gcloud/gcloud_commands.json
+fast-completer --generate-blob schemas/gh/gh_commands.json
 ```
 
 To regenerate schemas from the latest CLI version:
@@ -266,6 +270,10 @@ uv sync && uv run python export_command_tree.py > az_commands.json
 # gcloud (requires google-cloud-sdk installed on the system)
 cd schemas/gcloud
 python export_command_tree.py > gcloud_commands.json
+
+# GitHub CLI (requires gh installed: brew install gh, apt install gh, etc.)
+cd schemas/gh
+python export_command_tree.py > gh_commands.json
 ```
 
 Each schema directory has a `pyproject.toml` for `uv` to manage dependencies. Run `uv sync` once to install dependencies, then `uv run python` to run the export script.
@@ -301,18 +309,7 @@ Schemas are JSON files that describe a CLI's command structure. The `schemas/` d
 | `name` or `cli` | Yes | CLI name (e.g., `"aws"`). Determines the blob filename. |
 | `version` | No | CLI version string |
 | `global_params` | No | Array of parameters available to all commands |
-| `groups` | No | Array of command groups (subcommand namespaces) |
 | `commands` | Yes | Array of command definitions |
-
-### Groups
-
-Groups are subcommand namespaces (e.g., `aws s3`, `az storage`):
-
-```yaml
-name: s3
-type: group
-summary: Amazon S3 commands
-```
 
 ### Commands
 
@@ -397,26 +394,46 @@ choices:
 
 ## Binary Blob Format
 
-The blob format is designed for zero-copy memory-mapped access:
+The blob format is designed for zero-copy memory-mapped access with minimal page faults:
 
 | Section | Description |
 |---------|-------------|
-| Header (68 bytes) | Magic (`FCMP`), version, flags, counts, offsets |
-| String table | VLQ length-prefixed, deduplicated strings |
+| Header (64 bytes) | Magic (`FCMP`), version, flags, counts, offsets |
+| String table (hot) | Command names, parameter names, choices |
+| String table (cold) | Descriptions (rarely accessed) |
 | Commands array | Fixed-size command structs (18 bytes each) |
 | Params array | Fixed-size param structs (17 bytes each) |
-| Choices data | Count-prefixed uint32 offset arrays (deduplicated) |
-| Members data | Count-prefixed uint32 offset arrays (deduplicated) |
+| Choices data | Count-prefixed uint32 offset arrays |
+| Members data | Count-prefixed uint32 offset arrays |
 | Global params | Param structs for global options |
 | Root command | Single command struct for the CLI root |
 
-**Header flags:**
+### Design Methodology
+
+The format prioritizes fast lookups over compact size:
+
+**Fixed-size structs for O(1) indexing.** Commands (18 bytes) and params (17 bytes) use fixed sizes so any entry can be accessed by offset calculation rather than linear scanning. String data is stored separately in a string table, referenced by 32-bit offsets.
+
+**VLQ length-prefixed strings.** Each string is prefixed with its length encoded as a 1-2 byte variable-length quantity (VLQ). This allows reading string length without scanning for a null terminator, enabling efficient buffer size calculation.
+
+**Hot/cold string table separation.** The string table is split into two regions: "hot" data (command names, parameter names, choices) and "cold" data (descriptions). Since most completions display only names, the hot region stays in cache while description pages are only faulted in when needed. For the AWS CLI blob, this puts 81% of string data (descriptions) in the cold region.
+
+**Subtree clustering for command names.** Command names are written in pre-order traversal, so each service's commands are contiguous in the string table. When completing `aws s3 ...`, all S3 command names are adjacent in memory, minimizing page faults. This trades some string deduplication (~1% larger blob) for better locality.
+
+**Deduplication where it helps.** Choices and members lists are deduplicated via hash lookup, since many parameters share the same option sets. Parameter names and descriptions are also deduplicated since they repeat across commands.
+
+### Header Flags
+
 - `0x01` - Big-endian byte order
 - `0x02` - No descriptions (set by `--no-descriptions` or auto-detected)
 
-**Choices/members format:** Variable-length count prefix (u8 if count < 255, else 0xFF + u16), followed by uint32 string table offsets. Identical lists are deduplicated to save space.
+### Choices/Members Format
 
-All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
+Variable-length count prefix (u8 if count < 255, else 0xFF + u16), followed by uint32 string table offsets. Identical lists are deduplicated to save space.
+
+### Memory Mapping
+
+All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory. The OS handles paging, so only accessed regions incur I/O. Combined with hot/cold separation, a typical completion touches only a few kilobytes of the multi-megabyte blob.
 
 ## Shell Integration
 
@@ -643,7 +660,7 @@ Register-ArgumentCompleter -Native -CommandName aws, az, kubectl, gh -ScriptBloc
 
 ## TODO
 
-- **More schemas**: Add schemas for other large CLIs (e.g., `kubectl`, `gh`)
+- **More schemas**: Add schemas for other large CLIs (e.g., `kubectl`)
 
 ## How It Works
 

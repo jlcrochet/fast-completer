@@ -20,11 +20,6 @@
 #define VLQ_MAX_LENGTH 32767
 #define SHORT_DESC_MAX_LEN 200
 
-// Msgpack overhead constants
-#define KEY_VALUE_LEN 5
-#define KEY_DESC_LEN 11
-#define OVERHEAD_PER_ITEM 25
-
 // --------------------------------------------------------------------------
 // JSMN helpers
 // --------------------------------------------------------------------------
@@ -321,6 +316,40 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
     return offset;
 }
 
+// Add string without deduplication (for subtree clustering of command names)
+static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
+    if (!s) s = "";
+    if (st->count >= st->capacity) {
+        st->capacity *= 2;
+        st->strings = realloc(st->strings, st->capacity * sizeof(char *));
+        st->offsets = realloc(st->offsets, st->capacity * sizeof(uint32_t));
+    }
+    size_t len = strlen(s);
+    if (len > st->max_str_len) st->max_str_len = len;
+    size_t vlq_len = (len < 128) ? 1 : 2;
+    size_t total = vlq_len + len;
+    while (st->data_len + total > st->data_cap) {
+        st->data_cap *= 2;
+        st->data = realloc(st->data, st->data_cap);
+    }
+    uint32_t offset = (uint32_t)st->data_len;
+    if (len < 128) {
+        st->data[st->data_len++] = (uint8_t)len;
+    } else if (len <= VLQ_MAX_LENGTH) {
+        st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
+        st->data[st->data_len++] = (uint8_t)(len & 0xff);
+    } else {
+        fprintf(stderr, "String too long: %zu bytes\n", len);
+        return 0;
+    }
+    memcpy(st->data + st->data_len, s, len);
+    st->data_len += len;
+    st->strings[st->count] = strdup(s);
+    st->offsets[st->count] = offset;
+    st->count++;
+    return offset;
+}
+
 // --------------------------------------------------------------------------
 // Structures
 // --------------------------------------------------------------------------
@@ -350,7 +379,8 @@ typedef struct {
 } StringList;
 
 typedef struct {
-    StringTable strtab;
+    StringTable strtab;       // Hot strings (names, choices, etc.)
+    StringTable desc_strtab;  // Cold strings (descriptions) - written after hot for locality
     ParamEntry *params;
     size_t params_count;
     size_t params_cap;
@@ -366,19 +396,7 @@ typedef struct {
     ParamEntry *global_params;
     size_t global_params_count;
     size_t global_params_cap;
-    size_t total_leaf_commands;
-    size_t total_leaf_bytes;
-    size_t max_param_count;
-    size_t max_param_bytes;
-    size_t max_choices_count;
-    size_t max_choices_bytes;
-    size_t max_members_count;
-    size_t max_members_bytes;
     size_t max_command_path_len;
-    size_t global_param_count;
-    size_t global_param_bytes;
-    size_t current_param_bytes;
-    size_t current_param_count;
     bool big_endian;
     bool no_descriptions;
     bool long_descriptions;
@@ -388,6 +406,7 @@ typedef struct {
 static void blobgen_init(BlobGen *bg, bool big_endian, bool no_descriptions, bool long_descriptions) {
     memset(bg, 0, sizeof(*bg));
     strtab_init(&bg->strtab);
+    strtab_init(&bg->desc_strtab);  // Separate table for descriptions (cold data)
     bg->params_cap = 1024;
     bg->params = calloc(bg->params_cap, sizeof(ParamEntry));
     bg->commands_cap = 1024;
@@ -412,7 +431,8 @@ static uint32_t strtab_add_desc_ex(BlobGen *bg, const char *desc, bool track) {
     }
     uint32_t offset = 0;
     if (desc && *desc) {
-        offset = strtab_add(&bg->strtab, desc);
+        // Add to cold (description) string table - offset will be adjusted at write time
+        offset = strtab_add(&bg->desc_strtab, desc);
         if (track) bg->has_any_descriptions = true;
     }
     free(processed);
@@ -425,6 +445,7 @@ static uint32_t strtab_add_desc(BlobGen *bg, const char *desc) {
 
 static void blobgen_free(BlobGen *bg) {
     strtab_free(&bg->strtab);
+    strtab_free(&bg->desc_strtab);
     free(bg->params);
     free(bg->commands);
     for (size_t i = 0; i < bg->choices_count; i++) free(bg->choices_lists[i].offsets);
@@ -438,52 +459,8 @@ static void blobgen_free(BlobGen *bg) {
 // Tracking
 // --------------------------------------------------------------------------
 
-static void track_leaf_command(BlobGen *bg, size_t value_len, size_t desc_len) {
-    bg->total_leaf_commands++;
-    bg->total_leaf_bytes += value_len + desc_len;
-    if (value_len > bg->max_command_path_len) bg->max_command_path_len = value_len;
-}
-
-static void track_param(BlobGen *bg, size_t value_len, size_t desc_len) {
-    bg->current_param_bytes += value_len + desc_len;
-    bg->current_param_count++;
-}
-
-static void finish_command_params(BlobGen *bg) {
-    if (bg->current_param_bytes > bg->max_param_bytes) {
-        bg->max_param_bytes = bg->current_param_bytes;
-        bg->max_param_count = bg->current_param_count;
-    }
-    bg->current_param_bytes = 0;
-    bg->current_param_count = 0;
-}
-
-static void track_choices(BlobGen *bg, size_t total_bytes, size_t count) {
-    if (total_bytes > bg->max_choices_bytes) {
-        bg->max_choices_bytes = total_bytes;
-        bg->max_choices_count = count;
-    }
-}
-
-static void track_members(BlobGen *bg, size_t total_bytes, size_t count) {
-    if (total_bytes > bg->max_members_bytes) {
-        bg->max_members_bytes = total_bytes;
-        bg->max_members_count = count;
-    }
-}
-
-static size_t calc_msgpack_buffer_size(BlobGen *bg) {
-    size_t root_count = bg->total_leaf_commands + 1 + bg->global_param_count;
-    size_t root_bytes = 5 + root_count * OVERHEAD_PER_ITEM + bg->total_leaf_bytes + 50 + bg->global_param_bytes;
-    size_t deep_count = bg->max_param_count + bg->global_param_count;
-    size_t deep_bytes = 5 + deep_count * OVERHEAD_PER_ITEM + bg->max_param_bytes + bg->global_param_bytes;
-    size_t choices_bytes = 5 + bg->max_choices_count * OVERHEAD_PER_ITEM + bg->max_choices_bytes;
-    size_t members_bytes = 5 + bg->max_members_count * OVERHEAD_PER_ITEM + bg->max_members_bytes;
-    size_t buffer_size = root_bytes;
-    if (deep_bytes > buffer_size) buffer_size = deep_bytes;
-    if (choices_bytes > buffer_size) buffer_size = choices_bytes;
-    if (members_bytes > buffer_size) buffer_size = members_bytes;
-    return buffer_size;
+static void track_command_path_len(BlobGen *bg, size_t path_len) {
+    if (path_len > bg->max_command_path_len) bg->max_command_path_len = path_len;
 }
 
 // --------------------------------------------------------------------------
@@ -532,12 +509,10 @@ static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
 
     // Build temporary offset array
     uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    size_t total_bytes = 0;
     int item_idx = arr_first(tokens, arr_idx);
     for (int i = 0; i < count; i++) {
         char *s = tok_strdup(js, &tokens[item_idx]);
         offsets[i] = strtab_add(&bg->strtab, s);
-        total_bytes += strlen(s);
         free(s);
         item_idx = tok_skip(tokens, item_idx);
     }
@@ -560,7 +535,6 @@ static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
-    track_choices(bg, total_bytes, count);
     return bg->choices_count++;
 }
 
@@ -571,7 +545,6 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
 
     // Build temporary offset array
     uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    size_t total_bytes = 0;
     int item_idx = arr_first(tokens, arr_idx);
     for (int i = 0; i < count; i++) {
         int key_idx = obj_get(js, tokens, item_idx, "key");
@@ -580,7 +553,6 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
             char buf[1024];
             snprintf(buf, sizeof(buf), "%s=", key);
             offsets[i] = strtab_add(&bg->strtab, buf);
-            total_bytes += strlen(buf);
             free(key);
         } else {
             offsets[i] = 0;
@@ -606,7 +578,6 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
-    track_members(bg, total_bytes, count);
     return bg->members_count++;
 }
 
@@ -876,7 +847,6 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
             pe->choices_idx = strtab_add(&bg->strtab, info.completer);
             pe->flags |= FLAG_IS_COMPLETER;
         }
-        track_param(bg, strlen(info.name), bg->no_descriptions ? 0 : strlen(info.description));
         free_param_info(&info);
         valid_count++;
         p_idx = tok_skip(tokens, p_idx);
@@ -884,9 +854,8 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
     if (valid_count == 0) return result;
     if (valid_count > 65535) {
         fprintf(stderr, "Too many params in one command: %u (max 65535)\n", valid_count);
-        valid_count = 65535;  // Truncate - will produce invalid blob but won't crash
+        return result;  // Return empty result to signal error
     }
-    finish_command_params(bg);
     result.idx = start_idx;
     result.count = (uint16_t)valid_count;
     return result;
@@ -909,6 +878,13 @@ static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens,
 
     for (size_t i = 0; i < node->children_count; i++) {
         CommandNode *child = node->children[i];
+
+        // Add name BEFORE recursing (pre-order) for subtree clustering
+        // This puts each subtree's names contiguous in the string table
+        // Use nodupe to preserve clustering (deduplication would scatter names)
+        child_data[i].name_off = strtab_add_nodupe(&bg->strtab, child->name);
+
+        // Now recurse into children
         IdxCount sub_result = collect_commands(bg, js, tokens, child);
         child_data[i].subcommands_idx = sub_result.idx;
         child_data[i].subcommands_count = sub_result.count;
@@ -932,14 +908,13 @@ static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens,
         IdxCount params_result = collect_params(bg, js, tokens, params_arr_idx);
         child_data[i].params_idx = params_result.idx;
         child_data[i].params_count = params_result.count;
-        child_data[i].name_off = strtab_add(&bg->strtab, child->name);
         child_data[i].desc_off = strtab_add_desc(bg, desc);
         child_data[i].desc_len = bg->no_descriptions ? 0 : strlen(desc);
 
         if (child_data[i].subcommands_count == 0 && child->cmd_idx >= 0) {
             char *path = obj_get_str(js, tokens, child->cmd_idx, "name");
             child_data[i].path = path;
-            track_leaf_command(bg, strlen(path), child_data[i].desc_len);
+            track_command_path_len(bg, strlen(path));
         } else {
             child_data[i].path = NULL;
         }
@@ -1135,8 +1110,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
                 pe->choices_idx = (uint32_t)get_choices_index(&bg, js, tokens, choices_idx);
             }
 
-            bg.global_param_count++;
-            bg.global_param_bytes += strlen(long_opt ? long_opt : name) + (bg.no_descriptions ? 0 : strlen(desc));
             free(long_opt); free(short_opt); free(name); free(desc);
             gp_idx = tok_skip(tokens, gp_idx);
         }
@@ -1156,12 +1129,13 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         fprintf(stderr, "Too many global params: %zu (max 65535)\n", bg.global_params_count);
         return false;
     }
-    if (bg.strtab.data_len > UINT32_MAX) {
-        fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", bg.strtab.data_len);
+    // Combined string table size (hot + cold for descriptions)
+    size_t total_strtab_size = bg.strtab.data_len + bg.desc_strtab.data_len;
+    if (total_strtab_size > UINT32_MAX) {
+        fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
         return false;
     }
 
-    size_t msgpack_buffer_size = calc_msgpack_buffer_size(&bg);
     size_t commands_size = bg.commands_count * COMMAND_SIZE;
     size_t params_size = bg.params_count * PARAM_SIZE;
     size_t global_params_size = bg.global_params_count * PARAM_SIZE;
@@ -1186,7 +1160,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     }
 
     uint32_t string_table_off = HEADER_SIZE;
-    uint32_t commands_off = string_table_off + (uint32_t)bg.strtab.data_len;
+    uint32_t commands_off = string_table_off + (uint32_t)total_strtab_size;
     uint32_t params_off = commands_off + (uint32_t)commands_size;
     uint32_t choices_off = params_off + (uint32_t)params_size;
     uint32_t members_off = choices_off + (uint32_t)choices_size;
@@ -1218,28 +1192,35 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     if (no_descriptions || !bg.has_any_descriptions) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
     write_u16(blob + 6, flags, big_endian);
     write_u32(blob + 8, (uint32_t)bg.max_command_path_len + 1, big_endian);
-    write_u32(blob + 12, (uint32_t)msgpack_buffer_size, big_endian);
-    write_u32(blob + 16, (uint32_t)bg.commands_count, big_endian);
-    write_u32(blob + 20, (uint32_t)bg.params_count, big_endian);
-    write_u32(blob + 24, (uint32_t)bg.global_params_count, big_endian);
-    write_u32(blob + 28, (uint32_t)bg.strtab.data_len, big_endian);
-    write_u32(blob + 32, (uint32_t)bg.choices_count, big_endian);
-    write_u32(blob + 36, (uint32_t)bg.members_count, big_endian);
-    write_u32(blob + 40, string_table_off, big_endian);
-    write_u32(blob + 44, commands_off, big_endian);
-    write_u32(blob + 48, params_off, big_endian);
-    write_u32(blob + 52, choices_off, big_endian);
-    write_u32(blob + 56, members_off, big_endian);
-    write_u32(blob + 60, global_params_off, big_endian);
-    write_u32(blob + 64, root_command_off, big_endian);
+    write_u32(blob + 12, (uint32_t)bg.commands_count, big_endian);
+    write_u32(blob + 16, (uint32_t)bg.params_count, big_endian);
+    write_u32(blob + 20, (uint32_t)bg.global_params_count, big_endian);
+    write_u32(blob + 24, (uint32_t)total_strtab_size, big_endian);
+    write_u32(blob + 28, (uint32_t)bg.choices_count, big_endian);
+    write_u32(blob + 32, (uint32_t)bg.members_count, big_endian);
+    write_u32(blob + 36, string_table_off, big_endian);
+    write_u32(blob + 40, commands_off, big_endian);
+    write_u32(blob + 44, params_off, big_endian);
+    write_u32(blob + 48, choices_off, big_endian);
+    write_u32(blob + 52, members_off, big_endian);
+    write_u32(blob + 56, global_params_off, big_endian);
+    write_u32(blob + 60, root_command_off, big_endian);
 
+    // Write hot string table (names, choices, etc.)
     memcpy(blob + string_table_off, bg.strtab.data, bg.strtab.data_len);
+    // Write cold string table (descriptions) - at the end for better page locality
+    memcpy(blob + string_table_off + bg.strtab.data_len, bg.desc_strtab.data, bg.desc_strtab.data_len);
+
+    // Description offsets need adjustment: they're offsets into the cold table,
+    // but need to be relative to string_table_off (which points to hot table start)
+    uint32_t desc_off_adjust = (uint32_t)bg.strtab.data_len;
 
     offset = commands_off;
     for (size_t i = 0; i < bg.commands_count; i++) {
         CommandEntry *ce = &bg.commands[i];
+        uint32_t adj_desc_off = ce->desc_off ? ce->desc_off + desc_off_adjust : 0;
         write_u32(blob + offset, ce->name_off, big_endian);
-        write_u32(blob + offset + 4, ce->desc_off, big_endian);
+        write_u32(blob + offset + 4, adj_desc_off, big_endian);
         write_u32(blob + offset + 8, ce->params_idx, big_endian);
         write_u16(blob + offset + 12, ce->subcommands_idx, big_endian);
         write_u16(blob + offset + 14, ce->params_count, big_endian);
@@ -1250,6 +1231,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = params_off;
     for (size_t i = 0; i < bg.params_count; i++) {
         ParamEntry *pe = &bg.params[i];
+        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adjust : 0;
         uint32_t choices_off_val = 0;
         if (pe->choices_idx != (uint32_t)-1) {
             if (pe->flags & FLAG_IS_COMPLETER) {
@@ -1263,7 +1245,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         }
         write_u32(blob + offset, pe->name_off, big_endian);
         write_u32(blob + offset + 4, pe->short_off, big_endian);
-        write_u32(blob + offset + 8, pe->desc_off, big_endian);
+        write_u32(blob + offset + 8, adj_desc_off, big_endian);
         write_u32(blob + offset + 12, choices_off_val, big_endian);
         blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
@@ -1298,17 +1280,19 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = global_params_off;
     for (size_t i = 0; i < bg.global_params_count; i++) {
         ParamEntry *pe = &bg.global_params[i];
+        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adjust : 0;
         uint32_t choices_off_val = (pe->choices_idx != (uint32_t)-1) ? choices_offsets[pe->choices_idx] : 0;
         write_u32(blob + offset, pe->name_off, big_endian);
         write_u32(blob + offset + 4, pe->short_off, big_endian);
-        write_u32(blob + offset + 8, pe->desc_off, big_endian);
+        write_u32(blob + offset + 8, adj_desc_off, big_endian);
         write_u32(blob + offset + 12, choices_off_val, big_endian);
         blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
     }
 
+    uint32_t adj_root_desc_off = root_desc_off ? root_desc_off + desc_off_adjust : 0;
     write_u32(blob + root_command_off, 0, big_endian);
-    write_u32(blob + root_command_off + 4, root_desc_off, big_endian);
+    write_u32(blob + root_command_off + 4, adj_root_desc_off, big_endian);
     write_u32(blob + root_command_off + 8, root_params_idx, big_endian);
     write_u16(blob + root_command_off + 12, top_level.idx, big_endian);
     write_u16(blob + root_command_off + 14, 1, big_endian);
@@ -1319,7 +1303,10 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         perror(output_path);
         return false;
     }
-    fwrite(blob, 1, total_size, out);
+    if (fwrite(blob, 1, total_size, out) != total_size) {
+        perror(output_path);
+        return false;
+    }
     fclose(out);
 
     fprintf(stderr, "Generated %s (%zu bytes)\n", output_path, total_size);
@@ -1328,7 +1315,8 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     fprintf(stderr, "  Global params: %zu\n", bg.global_params_count);
     fprintf(stderr, "  Choices lists: %zu\n", bg.choices_count);
     fprintf(stderr, "  Members lists: %zu\n", bg.members_count);
-    fprintf(stderr, "  String table: %zu bytes\n", bg.strtab.data_len);
+    fprintf(stderr, "  String table: %zu bytes (hot: %zu, cold: %zu)\n",
+            total_strtab_size, bg.strtab.data_len, bg.desc_strtab.data_len);
 
     free(blob); free(choices_offsets); free(members_offsets);
     node_free(tree); free(js); free(tokens); blobgen_free(&bg);
