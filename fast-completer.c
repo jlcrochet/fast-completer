@@ -677,7 +677,8 @@ static void execute_completer(const char *cli_name, String completer,
     HANDLE stdout_write = CreateFileA(pipe_name, GENERIC_WRITE, 0, &sa, OPEN_EXISTING, 0, NULL);
     if (stdout_write == INVALID_HANDLE_VALUE) return;
 
-    STARTUPINFOA si = { sizeof(STARTUPINFOA) };
+    STARTUPINFOA si = {0};
+    si.cb = sizeof(STARTUPINFOA);
     si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
     si.hStdOutput = stdout_write;
     si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
