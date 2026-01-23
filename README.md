@@ -315,12 +315,13 @@ Schemas are JSON files that describe a CLI's command structure. The `schemas/` d
 
 Commands are the leaf nodes that perform actions:
 
-```yaml
-name: s3 cp
-type: command
-summary: Copies a file or object to/from S3
-parameters:
-  - ...
+```json
+{
+  "name": "s3 cp",
+  "type": "command",
+  "summary": "Copies a file or object to/from S3",
+  "parameters": [...]
+}
 ```
 
 The `name` is the full command path with spaces (e.g., `ec2 run-instances`).
@@ -329,16 +330,14 @@ The `name` is the full command path with spaces (e.g., `ec2 run-instances`).
 
 Parameters define the flags and options for a command:
 
-```yaml
-name: --instance-type
-options:
-  - --instance-type
-required: false
-summary: The instance type
-choices:
-  - t2.micro
-  - t2.small
-  - t2.medium
+```json
+{
+  "name": "--instance-type",
+  "options": ["--instance-type"],
+  "required": false,
+  "summary": "The instance type",
+  "choices": ["t2.micro", "t2.small", "t2.medium"]
+}
 ```
 
 | Property | Required | Description |
@@ -359,10 +358,12 @@ Parameters with `type: "bool"` or names starting with `--no-` are treated as fla
 
 The `completer` property enables dynamic completion by executing a CLI subcommand at completion time. The value is appended to the CLI name and executed, with each line of stdout becoming a completion option.
 
-```yaml
-name: --kubernetes-version
-summary: Version of Kubernetes to use
-completer: aks get-versions
+```json
+{
+  "name": "--kubernetes-version",
+  "summary": "Version of Kubernetes to use",
+  "completer": "aks get-versions"
+}
 ```
 
 When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values. This is useful for values that change over time (versions, resource names, regions, etc.).
@@ -375,14 +376,13 @@ Note: The special value `"dynamic"` is ignored (treated as no completer). This a
 
 Global parameters appear in `global_params` and are available to all commands:
 
-```yaml
-name: --region
-description: The region to use
-takes_value: true
-choices:
-  - us-east-1
-  - us-west-2
-  - eu-west-1
+```json
+{
+  "name": "--region",
+  "description": "The region to use",
+  "takes_value": true,
+  "choices": ["us-east-1", "us-west-2", "eu-west-1"]
+}
 ```
 
 | Property | Required | Description |
@@ -570,45 +570,28 @@ The `nushell` format automatically appends trailing spaces to completion values,
 Add to your config:
 
 ```nu
-let fc_completer = {|spans|
-    ^fast-completer nushell ...$spans | from msgpack
-}
-
-# Check if a blob exists for the command
-def has-fc-blob [cmd: string] {
-    let cache = ($env.FAST_COMPLETER_CACHE? | default ($env.HOME | path join ".cache/fast-completer"))
-    ($cache | path join $"($cmd).bin" | path exists)
-}
-
-let external_completer = {|spans|
-    if (has-fc-blob $spans.0) {
-        do $fc_completer $spans
-    } else {
-        null  # fall back to default completion
-    }
-}
-
 $env.config.completions.external = {
     enable: true
-    completer: $external_completer
+    completer: {|spans|
+        match $spans.0 {
+            az | aws | gcloud | gh => (^fast-completer nushell ...$spans | from msgpack)
+            _ => null  # fall back to default completion
+        }
+    }
 }
 ```
 
 **With carapace fallback:**
 
 ```nu
-let fc_completer = {|spans|
-    let result = (^fast-completer -q nushell ...$spans | from msgpack)
-    if ($result | is-empty) {
-        ^carapace $spans.0 nushell ...$spans | from json
-    } else {
-        $result
-    }
-}
-
 $env.config.completions.external = {
     enable: true
-    completer: $fc_completer
+    completer: {|spans|
+        match $spans.0 {
+            az | aws | gcloud | gh => (^fast-completer nushell ...$spans | from msgpack)
+            _ => (^carapace $spans.0 nushell ...$spans | from json)
+        }
+    }
 }
 ```
 
