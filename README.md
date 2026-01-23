@@ -160,7 +160,7 @@ make install   # installs to %LOCALAPPDATA%\Programs
 
 Open a Developer Command Prompt and run:
 ```cmd
-cl /O3 /Fe:fast-completer.exe fast-completer.c generate_blob.c vendor\cjson\cJSON.c vendor\libyaml\src\api.c vendor\libyaml\src\reader.c vendor\libyaml\src\scanner.c vendor\libyaml\src\parser.c vendor\libyaml\src\loader.c /Ivendor\libyaml\include /DHAVE_CONFIG_H
+cl /O2 /Fe:fast-completer.exe fast-completer.c generate_blob.c
 ```
 
 Then copy `fast-completer.exe` to a directory in your PATH, such as:
@@ -184,7 +184,7 @@ export FAST_COMPLETER_CACHE=~/my-completions
 
 ## Generating Blob Files
 
-Blob files contain the completion data for a specific CLI tool. Generate them from a JSON or YAML schema:
+Blob files contain the completion data for a specific CLI tool. Generate them from a JSON schema:
 
 ```bash
 # Auto-save to cache directory
@@ -280,7 +280,7 @@ python dump_blob.py commands.bin --range commands:0:20
 
 ## Schema Format
 
-Schemas are JSON or YAML files that describe a CLI's command structure. The `schemas/` directory contains examples for AWS and Azure CLIs.
+Schemas are JSON files that describe a CLI's command structure. The `schemas/` directory contains examples for AWS, Azure, and gcloud CLIs.
 
 ### Top-level Properties
 

@@ -1,7 +1,7 @@
 /*
- * generate_blob.h - Blob generation from JSON/YAML schema files
+ * generate_blob.h - Blob generation from JSON schema files
  *
- * Generates binary completion data blob from JSON or YAML command schema.
+ * Generates binary completion data blob from JSON command schema.
  */
 
 #ifndef GENERATE_BLOB_H
@@ -12,7 +12,7 @@
 /*
  * Generate a binary blob from a schema file.
  *
- * schema_path: Path to JSON or YAML schema file
+ * schema_path: Path to JSON schema file
  * output_path: Path to output blob file
  * big_endian: If true, generate big-endian blob
  * no_descriptions: If true, omit descriptions from blob (smaller size)

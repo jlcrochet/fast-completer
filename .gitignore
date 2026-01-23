@@ -5,3 +5,4 @@ fast-completer.exe
 *.bin
 .venv/
 pyproject.toml
+uv.lock

@@ -15,24 +15,13 @@ import json
 import logging
 import math
 import sys
+import time
 from os.path import expanduser
 from unittest.mock import patch
 
-
-class JSONEncoder(json.JSONEncoder):
-    """Custom JSON encoder that handles non-serializable types."""
-
-    def default(self, obj):
-        if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
-            return None
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        if isinstance(obj, datetime.date):
-            return obj.isoformat()
-        if hasattr(obj, '__dict__'):
-            return str(obj)
-        return super().default(obj)
-
+# Monkey-patch for Python 3.12+ compatibility (time.clock was removed)
+if not hasattr(time, 'clock'):
+    time.clock = time.perf_counter
 
 USER_HOME = expanduser('~')
 
@@ -275,6 +264,21 @@ def build_command_tree(help_files, cli_ctx):
         'groups': sorted(groups, key=lambda x: x['name']),
         'commands': sorted(commands, key=lambda x: x['name']),
     }
+
+
+class JSONEncoder(json.JSONEncoder):
+    """Custom JSON encoder that handles non-serializable types."""
+
+    def default(self, obj):
+        if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+            return None
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        if isinstance(obj, datetime.date):
+            return obj.isoformat()
+        if hasattr(obj, '__dict__'):
+            return str(obj)
+        return super().default(obj)
 
 
 def main():

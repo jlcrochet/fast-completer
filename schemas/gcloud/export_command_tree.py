@@ -166,7 +166,7 @@ def main():
     sys.stderr.flush()
 
     # Output JSON to stdout
-    print(json.dumps(schema, indent=2))
+    print(json.dumps(schema, indent=2, ensure_ascii=False))
 
 
 if __name__ == '__main__':

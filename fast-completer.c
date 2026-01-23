@@ -1023,7 +1023,7 @@ static void print_help(void) {
     puts("");
     puts("Blob generation mode:");
     puts("  fast-completer --generate-blob [options] <schema> [output]\n");
-    puts("  schema              Path to JSON or YAML schema file");
+    puts("  schema              Path to JSON schema file");
     puts("  output              Output path (optional - defaults to cache directory)");
     puts("  --big-endian        Generate big-endian blob");
     puts("  --no-descriptions   Omit descriptions entirely (smallest blob)");
