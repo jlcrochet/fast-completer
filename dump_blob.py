@@ -25,14 +25,15 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 3
+VERSION = 6
 HEADER_SIZE = 68
 PARAM_SIZE = 17
-COMMAND_SIZE = 20
+COMMAND_SIZE = 18
 
 # Param flags
-FLAG_TAKES_VALUE = 0x01
-FLAG_IS_MEMBERS = 0x02
+FLAG_TAKES_VALUE  = 0x01
+FLAG_IS_MEMBERS   = 0x02
+FLAG_IS_COMPLETER = 0x04
 
 # Header flags
 HEADER_FLAG_BIG_ENDIAN = 0x01
@@ -145,7 +146,7 @@ class BlobReader:
 
     def read_command(self, offset):
         """Read a Command struct at the given offset."""
-        values = struct.unpack_from('<IIIIHH', self.data, offset)
+        values = struct.unpack_from('<IIIHHH', self.data, offset)
         return {
             'name_off': values[0],
             'desc_off': values[1],
@@ -167,13 +168,26 @@ class BlobReader:
         }
 
     def read_string_offsets(self, offset):
-        """Read a null-terminated array of string offsets."""
+        """Read a variable-length count-prefixed array of string offsets.
+
+        Format: u8 count if <255, else 0xFF + u16 count, then count * u32 offsets.
+        """
+        if offset >= len(self.data):
+            return []
+        first = self.data[offset]
+        if first < 255:
+            count = first
+            pos = offset + 1
+        else:
+            if offset + 3 > len(self.data):
+                return []
+            count = struct.unpack_from('<H', self.data, offset + 1)[0]
+            pos = offset + 3
         offsets = []
-        pos = offset
-        while pos + 4 <= len(self.data):
-            val = struct.unpack_from('<I', self.data, pos)[0]
-            if val == 0:
+        for _ in range(count):
+            if pos + 4 > len(self.data):
                 break
+            val = struct.unpack_from('<I', self.data, pos)[0]
             offsets.append(val)
             pos += 4
         return offsets
@@ -203,12 +217,20 @@ class BlobReader:
         param['description'] = self.get_string(param['desc_off'])
         param['takes_value'] = bool(param['flags'] & FLAG_TAKES_VALUE)
         param['is_members'] = bool(param['flags'] & FLAG_IS_MEMBERS)
+        param['is_completer'] = bool(param['flags'] & FLAG_IS_COMPLETER)
         if param['choices_off'] != 0:
-            str_offsets = self.read_string_offsets(param['choices_off'])
-            param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
-            param['choices_or_members_offsets'] = str_offsets
+            if param['is_completer']:
+                # choices_off is a string table offset for completer
+                param['completer'] = self.get_string(param['choices_off'])
+                param['choices_or_members'] = None
+            else:
+                str_offsets = self.read_string_offsets(param['choices_off'])
+                param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
+                param['choices_or_members_offsets'] = str_offsets
+                param['completer'] = None
         else:
             param['choices_or_members'] = None
+            param['completer'] = None
         return param
 
     def get_commands(self, start=0, end=None):
@@ -242,12 +264,19 @@ class BlobReader:
             param['description'] = self.get_string(param['desc_off'])
             param['takes_value'] = bool(param['flags'] & FLAG_TAKES_VALUE)
             param['is_members'] = bool(param['flags'] & FLAG_IS_MEMBERS)
+            param['is_completer'] = bool(param['flags'] & FLAG_IS_COMPLETER)
 
             if param['choices_off'] != 0:
-                str_offsets = self.read_string_offsets(param['choices_off'])
-                param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
+                if param['is_completer']:
+                    param['completer'] = self.get_string(param['choices_off'])
+                    param['choices_or_members'] = None
+                else:
+                    str_offsets = self.read_string_offsets(param['choices_off'])
+                    param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
+                    param['completer'] = None
             else:
                 param['choices_or_members'] = None
+                param['completer'] = None
 
             params.append(param)
             offset += PARAM_SIZE
@@ -345,11 +374,15 @@ class BlobReader:
                     if param['flags'] & FLAG_TAKES_VALUE:
                         flags.append("takes_value")
                     if param['choices_off'] != 0:
-                        str_offsets = self.read_string_offsets(param['choices_off'])
-                        if param['flags'] & FLAG_IS_MEMBERS:
-                            flags.append(f"members({len(str_offsets)})")
+                        if param['flags'] & FLAG_IS_COMPLETER:
+                            completer = self.get_string(param['choices_off'])
+                            flags.append(f"completer={completer!r}")
                         else:
-                            flags.append(f"choices({len(str_offsets)})")
+                            str_offsets = self.read_string_offsets(param['choices_off'])
+                            if param['flags'] & FLAG_IS_MEMBERS:
+                                flags.append(f"members({len(str_offsets)})")
+                            else:
+                                flags.append(f"choices({len(str_offsets)})")
                     flag_str = f" [{', '.join(flags)}]" if flags else ""
                     lines.append(f"{prefix}  {pname}{flag_str} [idx={pidx}]")
                     param_offset += PARAM_SIZE
@@ -387,8 +420,11 @@ def format_param(param, verbose=False):
     if verbose and param['description']:
         lines.append(f"               {param['description']!r}")
     lines.append(f"  choices_off: {param['choices_off']}")
-    lines.append(f"  flags:       0x{param['flags']:02x} (takes_value={param['takes_value']}, is_members={param['is_members']})")
-    if param['choices_or_members']:
+    is_completer = param.get('is_completer', False)
+    lines.append(f"  flags:       0x{param['flags']:02x} (takes_value={param['takes_value']}, is_members={param['is_members']}, is_completer={is_completer})")
+    if param.get('completer'):
+        lines.append(f"  completer: {param['completer']!r}")
+    elif param['choices_or_members']:
         kind = "members" if param['is_members'] else "choices"
         lines.append(f"  {kind}: {param['choices_or_members']}")
         if 'choices_or_members_offsets' in param:
@@ -463,12 +499,16 @@ def dump_text(reader, section=None):
                 flags.append('V')
             if param['is_members']:
                 flags.append('M')
+            if param.get('is_completer'):
+                flags.append('C')
             flag_str = ''.join(flags) if flags else '-'
-            choices_str = ""
-            if param['choices_or_members']:
-                choices_str = f" -> {param['choices_or_members'][:3]}{'...' if len(param['choices_or_members']) > 3 else ''}"
-            lines.append(f"[{param['index']:5d}] {flag_str:2s} choices_off={param['choices_off']:6d} "
-                         f"| {param['name']!r}{choices_str}")
+            extra_str = ""
+            if param.get('completer'):
+                extra_str = f" -> completer={param['completer']!r}"
+            elif param['choices_or_members']:
+                extra_str = f" -> {param['choices_or_members'][:3]}{'...' if len(param['choices_or_members']) > 3 else ''}"
+            lines.append(f"[{param['index']:5d}] {flag_str:3s} choices_off={param['choices_off']:6d} "
+                         f"| {param['name']!r}{extra_str}")
         lines.append("")
 
     return '\n'.join(lines)
@@ -553,7 +593,9 @@ Examples:
                     print(f"  [{i}] {param['name']}", end='')
                     if param['takes_value']:
                         print(" [takes_value]", end='')
-                    if param['choices_or_members']:
+                    if param.get('completer'):
+                        print(f" [completer={param['completer']!r}]", end='')
+                    elif param['choices_or_members']:
                         kind = 'members' if param['is_members'] else 'choices'
                         print(f" [{kind}={param['choices_or_members']}]", end='')
                     print()
@@ -650,8 +692,13 @@ Examples:
                 flags = 'V' if param['takes_value'] else '-'
                 if param['is_members']:
                     flags += 'M'
-                print(f"[{param['index']:5d}] {flags:2s} choices_off={param['choices_off']:6d} "
-                      f"| {param['name']!r}")
+                if param.get('is_completer'):
+                    flags += 'C'
+                extra = ""
+                if param.get('completer'):
+                    extra = f" -> completer={param['completer']!r}"
+                print(f"[{param['index']:5d}] {flags:3s} choices_off={param['choices_off']:6d} "
+                      f"| {param['name']!r}{extra}")
         else:
             print(f"Unknown range type: {range_type}", file=sys.stderr)
             sys.exit(1)

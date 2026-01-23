@@ -144,11 +144,20 @@ def extract_parameter(param):
         source_commands = []
         for vs in value_sources:
             try:
-                source_commands.append(vs["link"]["command"])
+                cmd = vs["link"]["command"]
+                # Clean up command: remove backticks and leading 'az '
+                cmd = cmd.strip('`').strip()
+                if cmd.startswith('az '):
+                    cmd = cmd[3:]  # Remove 'az ' prefix since CLI name is implicit
+                # Add --output tsv for line-by-line parsing
+                if '--output' not in cmd and '-o' not in cmd:
+                    cmd = f"{cmd} --output tsv"
+                source_commands.append(cmd)
             except (KeyError, TypeError):
                 pass
         if source_commands:
-            info['value_sources'] = source_commands
+            # Use first command as completer (most have only one)
+            info['completer'] = source_commands[0] if len(source_commands) == 1 else source_commands
 
     if getattr(param, 'deprecate_info', None):
         info['deprecated'] = True

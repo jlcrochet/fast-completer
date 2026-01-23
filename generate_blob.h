@@ -10,6 +10,26 @@
 #include <stdbool.h>
 
 /*
+ * Blob format constants - shared between generator and reader.
+ * Keep these in sync with dump_blob.py.
+ */
+#define BLOB_MAGIC   "FCMP"
+#define BLOB_VERSION 6
+
+#define HEADER_SIZE  68
+#define PARAM_SIZE   17
+#define COMMAND_SIZE 18
+
+/* Param flags */
+#define FLAG_TAKES_VALUE  0x01
+#define FLAG_IS_MEMBERS   0x02
+#define FLAG_IS_COMPLETER 0x04
+
+/* Header flags */
+#define HEADER_FLAG_BIG_ENDIAN      0x01
+#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
+
+/*
  * Generate a binary blob from a schema file.
  *
  * schema_path: Path to JSON schema file

@@ -74,7 +74,7 @@ def convert_flags(flags_dict, command_path=''):
         elif flag_value == 'value':
             pass  # Takes a value, no special handling
         elif flag_value == 'dynamic':
-            pass  # Dynamic value, no choices
+            pass  # Skip - requires Python introspection, not actionable
         elif isinstance(flag_value, list):
             param['choices'] = flag_value
 

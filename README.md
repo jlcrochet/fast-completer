@@ -90,9 +90,17 @@ Parameters are sorted with required options first, then optional ones (alphabeti
 | `zsh` | value:description (colon-separated) |
 | `fish` | value\tdescription (tab-separated, alias: `tsv`) |
 | `pwsh` | PowerShell tab-separated format |
-| `nushell` | MessagePack array of maps (alias: `msgpack`) |
+| `nushell` | MessagePack with trailing spaces on values |
 
 Use the `lines` format when you only need values without descriptions.
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--add-space` | Append trailing space to completion values (implied by `nushell`) |
+
+The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
 
 **Generic formats:**
 
@@ -217,8 +225,8 @@ fast-completer --generate-blob --no-descriptions aws.json
 
 | CLI | Default | Long | None |
 |-----|---------|------|------|
-| AWS | 6.2 MB | 9.0 MB | 2.8 MB |
-| Azure | 1.8 MB | 2.4 MB | 0.7 MB |
+| AWS | 5.7 MB | 8.6 MB | 2.3 MB |
+| Azure | 1.7 MB | 2.1 MB | 1.1 MB |
 
 The blob header includes a flag indicating whether descriptions are present. This flag is set automatically if the schema has no descriptions (like gcloud), so the completer skips description lookups for all output formats.
 
@@ -342,8 +350,25 @@ choices:
 | `type` | No | Type hint (`"bool"` for flags that don't take values) |
 | `choices` | No | Array of valid values for completion |
 | `members` | No | For structure/list types, array of `{"key": "..."}` member names |
+| `completer` | No | Subcommand to execute for dynamic completions (see below) |
 
 Parameters with `type: "bool"` or names starting with `--no-` are treated as flags (no value required).
+
+#### Dynamic Completers
+
+The `completer` property enables dynamic completion by executing a CLI subcommand at completion time. The value is appended to the CLI name and executed, with each line of stdout becoming a completion option.
+
+```yaml
+name: --kubernetes-version
+summary: Version of Kubernetes to use
+completer: aks get-versions
+```
+
+When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values. This is useful for values that change over time (versions, resource names, regions, etc.).
+
+The completer command runs with a 2-second timeout. If the command takes longer or fails, no completions are shown for that parameter.
+
+Note: The special value `"dynamic"` is ignored (treated as no completer). This allows schemas to mark parameters as dynamically completed without specifying a command, useful when the completion source requires authentication or complex logic not suitable for shell execution.
 
 ### Global Parameters
 
@@ -374,16 +399,18 @@ The blob format is designed for zero-copy memory-mapped access:
 |---------|-------------|
 | Header (68 bytes) | Magic (`FCMP`), version, flags, counts, offsets |
 | String table | VLQ length-prefixed, deduplicated strings |
-| Commands array | Fixed-size command structs (16 bytes each) |
+| Commands array | Fixed-size command structs (18 bytes each) |
 | Params array | Fixed-size param structs (17 bytes each) |
-| Choices data | Null-terminated uint32 offset arrays |
-| Members data | Null-terminated uint32 offset arrays |
+| Choices data | Count-prefixed uint32 offset arrays (deduplicated) |
+| Members data | Count-prefixed uint32 offset arrays (deduplicated) |
 | Global params | Param structs for global options |
 | Root command | Single command struct for the CLI root |
 
 **Header flags:**
 - `0x01` - Big-endian byte order
 - `0x02` - No descriptions (set by `--no-descriptions` or auto-detected)
+
+**Choices/members format:** Variable-length count prefix (u8 if count < 255, else 0xFF + u16), followed by uint32 string table offsets. Identical lists are deduplicated to save space.
 
 All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory with no parsing overhead.
 
@@ -471,6 +498,8 @@ for cmd [aws az] {
 
 ### Nushell
 
+The `nushell` format automatically appends trailing spaces to completion values, since Nushell doesn't add them for external completers.
+
 Add to your config:
 
 ```nu
@@ -529,7 +558,6 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
 ## TODO
 
 - **More schemas**: Add schemas for other large CLIs (e.g., `kubectl`, `gh`)
-- **Dynamic completers**: Support for completing dynamic values (e.g., EC2 instance IDs, S3 bucket names) by invoking external scripts or commands
 
 ## How It Works
 

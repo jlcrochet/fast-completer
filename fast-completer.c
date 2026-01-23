@@ -12,8 +12,8 @@
  *   "abc..." - matching subcommands
  *
  * Output formats:
- *   lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, pwsh
- *   Aliases: bash -> lines, fish -> tsv, nushell -> msgpack
+ *   lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, nushell, pwsh
+ *   Aliases: bash -> lines, fish -> tsv, nu -> nushell
  */
 
 #include <stdbool.h>
@@ -29,25 +29,14 @@
 #include <windows.h>
 #else
 #include <fcntl.h>
+#include <poll.h>
+#include <spawn.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
+#include <time.h>
 #include <unistd.h>
 #endif
-
-// Blob format constants (must match generate_blob.c)
-#define BLOB_MAGIC "FCMP"
-#define BLOB_VERSION 3
-#define HEADER_SIZE 68
-#define PARAM_SIZE 17
-#define COMMAND_SIZE 20
-
-// Param flags
-#define FLAG_TAKES_VALUE 0x01
-#define FLAG_IS_MEMBERS  0x02
-
-// Header flags
-#define HEADER_FLAG_BIG_ENDIAN      0x01
-#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
 
 // Supported output formats
 typedef enum {
@@ -58,6 +47,7 @@ typedef enum {
     OUT_JSON_TUPLE,
     OUT_MSGPACK,
     OUT_MSGPACK_TUPLE,
+    OUT_NUSHELL,
     OUT_PWSH,
     OUT_UNKNOWN
 } OutputFormat;
@@ -89,7 +79,7 @@ typedef struct {
     uint32_t name_off;
     uint32_t desc_off;
     uint32_t params_idx;
-    uint32_t subcommands_idx;
+    uint16_t subcommands_idx;
     uint16_t params_count;
     uint16_t subcommands_count;
 } Command;
@@ -112,6 +102,7 @@ static const uint8_t *blob = NULL;
 static BlobHeader header;
 static OutputFormat output_format;
 static bool has_descriptions = true;  // Set from blob flags
+static bool add_trailing_space = false;  // Add trailing space to completion values
 
 // Working buffers (allocated based on header values)
 static uint8_t *msgpack_buf = NULL;
@@ -125,10 +116,12 @@ static size_t *g_arg_lens = NULL;
 static int g_span_count = 0;
 
 // Accessor macros
-#define PARAM_TAKES_VALUE(p) ((p)->flags & FLAG_TAKES_VALUE)
-#define PARAM_IS_MEMBERS(p)  ((p)->flags & FLAG_IS_MEMBERS)
-#define PARAM_HAS_CHOICES(p) (!PARAM_IS_MEMBERS(p) && (p)->choices_off != 0)
-#define PARAM_HAS_MEMBERS(p) (PARAM_IS_MEMBERS(p) && (p)->choices_off != 0)
+#define PARAM_TAKES_VALUE(p)   ((p)->flags & FLAG_TAKES_VALUE)
+#define PARAM_IS_MEMBERS(p)    ((p)->flags & FLAG_IS_MEMBERS)
+#define PARAM_IS_COMPLETER(p)  ((p)->flags & FLAG_IS_COMPLETER)
+#define PARAM_HAS_CHOICES(p)   ((p)->choices_off && !((p)->flags & (FLAG_IS_MEMBERS | FLAG_IS_COMPLETER)))
+#define PARAM_HAS_MEMBERS(p)   ((p)->choices_off && ((p)->flags & FLAG_IS_MEMBERS))
+#define PARAM_HAS_COMPLETER(p) ((p)->choices_off && ((p)->flags & FLAG_IS_COMPLETER))
 
 // Get string from string table
 static inline String str_get(uint32_t off) {
@@ -185,9 +178,17 @@ static inline const Command *cmd_subcommands(const Command *cmd) {
     return cmd->subcommands_count ? get_command(cmd->subcommands_idx) : NULL;
 }
 
-// Read null-terminated array of string offsets at blob offset
+// Read variable-length count-prefixed array of string offsets
+// Format: u8 count if <255, else 0xFF + u16 count, then count * u32 offsets
+static inline uint16_t get_string_list_count(uint32_t off) {
+    uint8_t first = blob[off];
+    if (first < 255) return first;
+    return *(const uint16_t *)(blob + off + 1);
+}
+
 static inline const uint32_t *get_string_offsets(uint32_t off) {
-    return (const uint32_t *)(blob + off);
+    uint8_t first = blob[off];
+    return (const uint32_t *)(blob + off + (first < 255 ? 1 : 3));
 }
 
 // Track if we've started the JSON array
@@ -203,31 +204,49 @@ static void msgpack_write_bytes(const void *data, size_t len) {
     msgpack_len += len;
 }
 
-static void msgpack_write_str(String s) {
-    if (s.n <= 31) {
-        msgpack_write_byte(0xa0 | (uint8_t)s.n);
-    } else if (s.n <= 255) {
+static void msgpack_write_str_header(size_t len) {
+    if (len <= 31) {
+        msgpack_write_byte(0xa0 | (uint8_t)len);
+    } else if (len <= 255) {
         msgpack_write_byte(0xd9);
-        msgpack_write_byte((uint8_t)s.n);
-    } else if (s.n <= 65535) {
+        msgpack_write_byte((uint8_t)len);
+    } else if (len <= 65535) {
         msgpack_write_byte(0xda);
-        uint8_t buf[2] = { (uint8_t)(s.n >> 8), (uint8_t)s.n };
+        uint8_t buf[2] = { (uint8_t)(len >> 8), (uint8_t)len };
         msgpack_write_bytes(buf, 2);
     } else {
         msgpack_write_byte(0xdb);
-        uint8_t buf[4] = { (uint8_t)(s.n >> 24), (uint8_t)(s.n >> 16),
-                          (uint8_t)(s.n >> 8), (uint8_t)s.n };
+        uint8_t buf[4] = { (uint8_t)(len >> 24), (uint8_t)(len >> 16),
+                          (uint8_t)(len >> 8), (uint8_t)len };
         msgpack_write_bytes(buf, 4);
     }
+}
+
+static void msgpack_write_str(String s) {
+    msgpack_write_str_header(s.n);
     msgpack_write_bytes(s.p, s.n);
+}
+
+static inline bool needs_trailing_space(String s) {
+    return s.n > 0 && s.p[s.n - 1] != '=';
+}
+
+static void msgpack_write_str_with_space(String s) {
+    msgpack_write_str_header(s.n + 1);
+    msgpack_write_bytes(s.p, s.n);
+    msgpack_write_byte(' ');
 }
 
 // I/O helpers
 #ifdef _WIN32
-#define put_char(c) putchar(c)
-#define put_bytes(p, n) fwrite(p, 1, n, stdout)
-#define flockfile(f) ((void)0)
-#define funlockfile(f) ((void)0)
+static inline void put_char(int c) {
+    _putc_nolock(c, stdout);
+}
+static inline void put_bytes(const char *p, size_t n) {
+    _fwrite_nolock(p, 1, n, stdout);
+}
+#define flockfile(f) _lock_file(f)
+#define funlockfile(f) _unlock_file(f)
 #else
 static inline void put_char(int c) {
     putc_unlocked(c, stdout);
@@ -337,10 +356,14 @@ static void output_completion(String value, String desc, CompletionType type) {
         put_char(']');
         break;
 
+    case OUT_NUSHELL:
     case OUT_MSGPACK:
         msgpack_write_byte(desc.n > 0 ? 0x82 : 0x81);
         msgpack_write_str(STR_LIT("value"));
-        msgpack_write_str(value);
+        if (add_trailing_space && needs_trailing_space(value))
+            msgpack_write_str_with_space(value);
+        else
+            msgpack_write_str(value);
         if (desc.n > 0) {
             msgpack_write_str(STR_LIT("description"));
             msgpack_write_str(desc);
@@ -362,6 +385,28 @@ static void output_completion(String value, String desc, CompletionType type) {
     }
 }
 
+// Compare strings lexicographically (for binary search)
+static inline int str_cmp(const char *a, size_t a_len, const char *b, size_t b_len) {
+    size_t min_len = (a_len < b_len) ? a_len : b_len;
+    int cmp = memcmp(a, b, min_len);
+    if (cmp != 0) return cmp;
+    return (a_len < b_len) ? -1 : (a_len > b_len) ? 1 : 0;
+}
+
+// Binary search for a command by name among sorted subcommands
+static const Command *bsearch_command(const Command *subs, uint16_t count, const char *name, size_t name_len) {
+    uint16_t lo = 0, hi = count;
+    while (lo < hi) {
+        uint16_t mid = lo + (hi - lo) / 2;
+        String s = str_get(subs[mid].name_off);
+        int cmp = str_cmp(s.p, s.n, name, name_len);
+        if (cmp < 0) lo = mid + 1;
+        else if (cmp > 0) hi = mid;
+        else return &subs[mid];
+    }
+    return NULL;
+}
+
 // Find the deepest matching command
 static const Command *find_command(void) {
     const Command *cmd = get_root_command();
@@ -376,14 +421,7 @@ static const Command *find_command(void) {
         }
 
         size_t arg_len = g_arg_lens[i];
-        const Command *found = NULL;
-        const Command *subs = cmd_subcommands(cmd);
-        for (uint16_t j = 0; j < cmd->subcommands_count; j++) {
-            if (str_eq_n(subs[j].name_off, arg, arg_len)) {
-                found = &subs[j];
-                break;
-            }
-        }
+        const Command *found = bsearch_command(cmd_subcommands(cmd), cmd->subcommands_count, arg, arg_len);
 
         if (found) {
             cmd = found;
@@ -552,14 +590,222 @@ static void complete_global_params(const char *prefix, const PrefixInfo *pinfo) 
 static void complete_string_list(uint32_t off, const char *prefix, size_t prefix_len) {
     if (off == 0) return;
 
+    uint16_t count = get_string_list_count(off);
     const uint32_t *offsets = get_string_offsets(off);
 
-    for (; *offsets; offsets++) {
-        String s = str_get(*offsets);
+    for (uint16_t i = 0; i < count; i++) {
+        String s = str_get(offsets[i]);
         if (!prefix || (s.n >= prefix_len && memcmp(s.p, prefix, prefix_len) == 0)) {
             output_completion(s, str_get(0), COMP_PARAM_VALUE);
         }
     }
+}
+
+// Split command string into argv array (simple space splitting)
+// Returns argc, fills argv (must have room for max_args+1 entries, last is NULL)
+static int split_args(char *cmd, char **argv, int max_args) {
+    int argc = 0;
+    char *p = cmd;
+    while (*p && argc < max_args) {
+        while (*p == ' ') p++;  // Skip spaces
+        if (!*p) break;
+        argv[argc++] = p;
+        while (*p && *p != ' ') p++;  // Find end of arg
+        if (*p) *p++ = '\0';  // Null-terminate
+    }
+    argv[argc] = NULL;
+    return argc;
+}
+
+// Execute a dynamic completer command and output results
+// cli_name: CLI name (e.g., "az") from g_spans[0]
+// completer: subcommand args (e.g., "aks get-versions --output tsv") - String with length
+// prefix: optional prefix to filter results
+// prefix_len: length of prefix
+static void execute_completer(const char *cli_name, String completer,
+                               const char *prefix, size_t prefix_len) {
+    if (!cli_name || !completer.p || completer.n == 0) return;
+
+    // Build argument string: copy completer (need mutable string for splitting)
+    char *args = malloc(completer.n + 1);
+    if (!args) return;
+    memcpy(args, completer.p, completer.n);
+    args[completer.n] = '\0';
+
+    // Split into argv: [cli_name, arg1, arg2, ..., NULL]
+    char *argv[64];
+    argv[0] = (char *)cli_name;
+    split_args(args, argv + 1, 62);
+
+#ifdef _WIN32
+    // Windows implementation using overlapped I/O with direct exec (no cmd.exe shell)
+    // Note: No cleanup needed - process exits after completion, OS reclaims all resources
+
+    // Build command line string from argv for CreateProcess
+    // Format: "cli arg1 arg2 ..." (CreateProcess expects space-separated)
+    size_t cmdline_len = strlen(cli_name) + 1 + completer.n + 1;
+    char *cmdline = malloc(cmdline_len);
+    if (!cmdline) return;
+    snprintf(cmdline, cmdline_len, "%s %.*s", cli_name, (int)completer.n, completer.p);
+
+    // Create named pipe with FILE_FLAG_OVERLAPPED for async reads
+    char pipe_name[256];
+    snprintf(pipe_name, sizeof(pipe_name), "\\\\.\\pipe\\fc_%lu_%lu",
+             (unsigned long)GetCurrentProcessId(), (unsigned long)GetTickCount());
+
+    HANDLE stdout_read = CreateNamedPipeA(
+        pipe_name, PIPE_ACCESS_INBOUND | FILE_FLAG_OVERLAPPED,
+        PIPE_TYPE_BYTE | PIPE_WAIT, 1, 4096, 4096, 0, NULL);
+    if (stdout_read == INVALID_HANDLE_VALUE) return;
+
+    SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
+    HANDLE stdout_write = CreateFileA(pipe_name, GENERIC_WRITE, 0, &sa, OPEN_EXISTING, 0, NULL);
+    if (stdout_write == INVALID_HANDLE_VALUE) return;
+
+    STARTUPINFOA si = { sizeof(STARTUPINFOA) };
+    si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+    si.hStdOutput = stdout_write;
+    si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+    si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+    si.wShowWindow = SW_HIDE;
+
+    PROCESS_INFORMATION pi = {0};
+    if (!CreateProcessA(NULL, cmdline, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi)) return;
+    CloseHandle(stdout_write);  // Child has it, close so reads see EOF when child exits
+
+    // Overlapped read setup
+    OVERLAPPED ov = {0};
+    ov.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+    if (!ov.hEvent) { TerminateProcess(pi.hProcess, 1); return; }
+
+    char line[4096];
+    size_t line_pos = 0;
+    char buf[4096];
+    DWORD bytes_read;
+    ULONGLONG start_time = GetTickCount64();
+    HANDLE wait_handles[2] = {ov.hEvent, pi.hProcess};
+
+    while (1) {
+        ULONGLONG elapsed = GetTickCount64() - start_time;
+        DWORD remaining = (elapsed >= 2000) ? 0 : (2000 - elapsed);
+
+        ResetEvent(ov.hEvent);
+        BOOL read_ok = ReadFile(stdout_read, buf, sizeof(buf), &bytes_read, &ov);
+        DWORD err = GetLastError();
+
+        if (!read_ok && err == ERROR_IO_PENDING) {
+            DWORD wait = WaitForMultipleObjects(2, wait_handles, FALSE, remaining);
+            if (wait == WAIT_OBJECT_0) {
+                if (!GetOverlappedResult(stdout_read, &ov, &bytes_read, FALSE)) break;
+            } else if (wait == WAIT_OBJECT_0 + 1) {
+                CancelIo(stdout_read);
+                if (!GetOverlappedResult(stdout_read, &ov, &bytes_read, FALSE) || bytes_read == 0) break;
+            } else {
+                CancelIo(stdout_read);
+                TerminateProcess(pi.hProcess, 1);
+                break;
+            }
+        } else if (!read_ok) {
+            break;
+        }
+
+        for (DWORD i = 0; i < bytes_read; i++) {
+            if (buf[i] == '\n' || buf[i] == '\r') {
+                if (line_pos > 0) {
+                    line[line_pos] = '\0';
+                    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0))
+                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+                    line_pos = 0;
+                }
+            } else if (line_pos < sizeof(line) - 1) {
+                line[line_pos++] = buf[i];
+            }
+        }
+    }
+
+    if (line_pos > 0) {
+        line[line_pos] = '\0';
+        if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0))
+            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+    }
+#else
+    // Unix implementation using posix_spawnp with direct exec (no shell)
+    int pipefd[2];
+    if (pipe(pipefd) < 0) return;
+
+    posix_spawn_file_actions_t actions;
+    posix_spawn_file_actions_init(&actions);
+    posix_spawn_file_actions_addclose(&actions, pipefd[0]);
+    posix_spawn_file_actions_adddup2(&actions, pipefd[1], STDOUT_FILENO);
+    posix_spawn_file_actions_addclose(&actions, pipefd[1]);
+    posix_spawn_file_actions_addopen(&actions, STDERR_FILENO, "/dev/null", O_WRONLY, 0);
+
+    extern char **environ;
+    pid_t pid;
+    if (posix_spawnp(&pid, cli_name, &actions, NULL, argv, environ) != 0) return;
+    close(pipefd[1]);  // Close write end so reads see EOF when child exits
+
+    // Non-blocking reads with poll() timeout
+    fcntl(pipefd[0], F_SETFL, fcntl(pipefd[0], F_GETFL) | O_NONBLOCK);
+
+    char line[4096];
+    size_t line_pos = 0;
+    char buf[4096];
+    struct timespec start, now;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    int timeout_ms = 2000;
+
+    while (timeout_ms > 0) {
+        struct pollfd pfd = { .fd = pipefd[0], .events = POLLIN };
+        if (poll(&pfd, 1, timeout_ms) <= 0) break;
+
+        ssize_t n = read(pipefd[0], buf, sizeof(buf));
+        if (n <= 0) break;
+
+        for (ssize_t i = 0; i < n; i++) {
+            if (buf[i] == '\n') {
+                if (line_pos > 0) {
+                    line[line_pos] = '\0';
+                    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0))
+                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+                    line_pos = 0;
+                }
+            } else if (line_pos < sizeof(line) - 1) {
+                line[line_pos++] = buf[i];
+            }
+        }
+
+        // Update remaining timeout
+        clock_gettime(CLOCK_MONOTONIC, &now);
+        int elapsed_ms = (now.tv_sec - start.tv_sec) * 1000 + (now.tv_nsec - start.tv_nsec) / 1000000;
+        timeout_ms = 2000 - elapsed_ms;
+    }
+
+    if (line_pos > 0) {
+        line[line_pos] = '\0';
+        if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0))
+            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
+    }
+
+    if (waitpid(pid, NULL, WNOHANG) == 0) {
+        kill(pid, SIGKILL);
+        waitpid(pid, NULL, 0);  // Reap zombie
+    }
+#endif
+}
+
+// Binary search for a param by long name among sorted params
+static const Param *bsearch_param(const Param *params, uint16_t count, const char *name, size_t name_len) {
+    uint16_t lo = 0, hi = count;
+    while (lo < hi) {
+        uint16_t mid = lo + (hi - lo) / 2;
+        String s = str_get(params[mid].name_off);
+        int cmp = str_cmp(s.p, s.n, name, name_len);
+        if (cmp < 0) lo = mid + 1;
+        else if (cmp > 0) hi = mid;
+        else return &params[mid];
+    }
+    return NULL;
 }
 
 // Find a parameter by name (long or short option)
@@ -567,16 +813,18 @@ static const Param *find_param(const Param *params, uint16_t params_count, const
     if (!params || params_count == 0 || !opt) return NULL;
     if (opt[0] != '-') return NULL;
 
-    for (uint16_t i = 0; i < params_count; i++) {
-        const Param *p = &params[i];
-        // Check long option
-        String name = str_get(p->name_off);
-        if (name.n == opt_len && memcmp(name.p, opt, opt_len) == 0) return p;
-        // Check short option
-        if (p->short_off) {
-            String short_opt = str_get(p->short_off);
-            if (short_opt.n == opt_len && memcmp(short_opt.p, opt, opt_len) == 0)
-                return p;
+    // Binary search for long option (--name)
+    const Param *p = bsearch_param(params, params_count, opt, opt_len);
+    if (p) return p;
+
+    // Linear fallback for short options (-x) - rare in practice
+    if (opt_len == 2 && opt[0] == '-' && opt[1] != '-') {
+        for (uint16_t i = 0; i < params_count; i++) {
+            if (params[i].short_off) {
+                String short_opt = str_get(params[i].short_off);
+                if (short_opt.n == opt_len && memcmp(short_opt.p, opt, opt_len) == 0)
+                    return &params[i];
+            }
         }
     }
     return NULL;
@@ -638,8 +886,8 @@ static OutputFormat parse_format(const char *name) {
         if (len == 13 && memcmp(name, "msgpack-tuple", 13) == 0) return OUT_MSGPACK_TUPLE;
         break;
     case 'n':
-        if (len == 2 && name[1] == 'u') return OUT_MSGPACK;
-        if (len == 7 && memcmp(name, "nushell", 7) == 0) return OUT_MSGPACK;
+        if (len == 2 && name[1] == 'u') return OUT_NUSHELL;
+        if (len == 7 && memcmp(name, "nushell", 7) == 0) return OUT_NUSHELL;
         break;
     case 'p':
         if (len == 4 && memcmp(name, "pwsh", 4) == 0) return OUT_PWSH;
@@ -666,7 +914,7 @@ static void output_header(void) {
 static void output_footer(void) {
     if (output_format == OUT_JSON || output_format == OUT_JSON_TUPLE) {
         put_lit("]\n");
-    } else if (output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE) {
+    } else if (output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE || output_format == OUT_NUSHELL) {
         uint8_t hdr[5];
         size_t hdr_len;
         if (msgpack_count <= 15) {
@@ -749,6 +997,8 @@ static void complete(int nspans, const char **spans) {
         if (gparam && PARAM_TAKES_VALUE(gparam)) {
             if (PARAM_HAS_CHOICES(gparam)) {
                 complete_string_list(gparam->choices_off, NULL, 0);
+            } else if (PARAM_HAS_COMPLETER(gparam)) {
+                execute_completer(g_spans[0], str_get(gparam->choices_off), NULL, 0);
             }
             output_footer();
             return;
@@ -760,6 +1010,9 @@ static void complete(int nspans, const char **spans) {
                 complete_string_list(param->choices_off, NULL, 0);
             } else if (PARAM_HAS_MEMBERS(param)) {
                 complete_string_list(param->choices_off, NULL, 0);
+            } else if (PARAM_HAS_COMPLETER(param)) {
+                // Execute dynamic completer command
+                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0);
             }
             output_footer();
             return;
@@ -808,8 +1061,12 @@ static bool load_blob(const char *path) {
     blob = MapViewOfFile(mapping, FILE_MAP_READ, 0, 0, 0);
     if (!blob) {
         fprintf(stderr, "MapViewOfFile: %lu\n", GetLastError());
+        CloseHandle(mapping);
+        CloseHandle(fh);
         return false;
     }
+    CloseHandle(mapping);  // Mapping remains valid until UnmapViewOfFile
+    CloseHandle(fh);       // File handle no longer needed
 #else
     int fd = open(path, O_RDONLY);
     if (fd < 0) {
@@ -895,7 +1152,7 @@ static bool alloc_buffers(void) {
     }
 
     // Only allocate msgpack buffer if needed
-    if (output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE) {
+    if (output_format == OUT_MSGPACK || output_format == OUT_MSGPACK_TUPLE || output_format == OUT_NUSHELL) {
         msgpack_buf = malloc(header.msgpack_buffer_size);
         if (!msgpack_buf) {
             perror("malloc");
@@ -946,7 +1203,7 @@ static bool ensure_cache_dir(void) {
     if (!cache_dir) return false;
 
 #ifdef _WIN32
-    // Create parent .cache dir first, then fast-completer
+    // Create fast-completer directory under %LOCALAPPDATA%
     CreateDirectoryA(cache_dir, NULL);
 #else
     // Create ~/.cache if needed, then ~/.cache/fast-completer
@@ -1044,14 +1301,15 @@ static void dump_header(const char *path) {
 
 static void print_help(void) {
     puts("fast-completer - Universal fast completion provider\n");
-    puts("Usage: fast-completer [--blob <path>] <format> <spans...>");
+    puts("Usage: fast-completer [options] <format> <spans...>");
     puts("       fast-completer --generate-blob <schema> [output]");
     puts("       fast-completer --dump-header <blob>\n");
     puts("Completion mode:");
-    puts("  fast-completer <format> <spans...>\n");
+    puts("  fast-completer [options] <format> <spans...>\n");
     puts("  format        Output format (see below)");
     puts("  spans         Command line tokens starting with CLI name\n");
-    puts("  --blob <path> Use blob at specified path instead of cache lookup\n");
+    puts("  --blob <path> Use blob at specified path instead of cache lookup");
+    puts("  --add-space   Append trailing space to completion values\n");
     puts("  The CLI name is derived from the first span and used to look up");
     puts("  <name>.bin in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
@@ -1077,7 +1335,8 @@ static void print_help(void) {
     puts("  zsh               value:description");
     puts("  fish, tsv         value\\tdescription");
     puts("  pwsh              PowerShell format");
-    puts("  nushell, msgpack  MessagePack array of maps");
+    puts("  nushell           MessagePack with trailing spaces on values");
+    puts("  msgpack           MessagePack array of maps");
     puts("  json              JSON array of objects");
     puts("  json-tuple        JSON array of tuples");
     puts("  msgpack-tuple     MessagePack array of tuples\n");
@@ -1164,14 +1423,21 @@ int main(int argc, char *argv[]) {
     int arg_idx = 1;
     const char *explicit_blob_path = NULL;
 
-    // Check for --blob option
-    if (argc > arg_idx + 1 && strcmp(argv[arg_idx], "--blob") == 0) {
-        explicit_blob_path = argv[arg_idx + 1];
-        arg_idx += 2;
+    // Check for options
+    while (argc > arg_idx && argv[arg_idx][0] == '-' && argv[arg_idx][1] == '-') {
+        if (argc > arg_idx + 1 && strcmp(argv[arg_idx], "--blob") == 0) {
+            explicit_blob_path = argv[arg_idx + 1];
+            arg_idx += 2;
+        } else if (strcmp(argv[arg_idx], "--add-space") == 0) {
+            add_trailing_space = true;
+            arg_idx++;
+        } else {
+            break;
+        }
     }
 
     if (argc < arg_idx + 2) {
-        fprintf(stderr, "Usage: fast-completer [--blob <path>] <format> <spans...>\n");
+        fprintf(stderr, "Usage: fast-completer [options] <format> <spans...>\n");
         fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
         return 1;
     }
@@ -1193,8 +1459,13 @@ int main(int argc, char *argv[]) {
     output_format = parse_format(format_name);
     if (output_format == OUT_UNKNOWN) {
         fprintf(stderr, "Unknown output format: %s\n", format_name);
-        fprintf(stderr, "Supported: lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, pwsh\n");
+        fprintf(stderr, "Supported: lines, zsh, tsv, json, json-tuple, msgpack, msgpack-tuple, nushell, pwsh\n");
         return 1;
+    }
+
+    // nushell format implies --add-space
+    if (output_format == OUT_NUSHELL) {
+        add_trailing_space = true;
     }
 
     if (!load_blob(blob_path)) {

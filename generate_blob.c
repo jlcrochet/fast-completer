@@ -16,21 +16,6 @@
 #define JSMN_STATIC
 #include "vendor/jsmn/jsmn.h"
 
-// Binary format constants (must match fast-completer.c)
-#define BLOB_MAGIC "FCMP"
-#define BLOB_VERSION 3
-#define HEADER_SIZE 68
-#define PARAM_SIZE 17
-#define COMMAND_SIZE 20
-
-// Param flags
-#define FLAG_TAKES_VALUE 0x01
-#define FLAG_IS_MEMBERS  0x02
-
-// Header flags
-#define HEADER_FLAG_BIG_ENDIAN      0x01
-#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
-
 // Limits
 #define VLQ_MAX_LENGTH 32767
 #define SHORT_DESC_MAX_LEN 200
@@ -199,6 +184,7 @@ static char *truncate_to_first_sentence(const char *desc) {
         while (end > SHORT_DESC_MAX_LEN - 30 && desc[end] != ' ') end--;
         if (desc[end] == ' ') {
             char *result = malloc(end + 4);
+            if (!result) return strdup("");
             memcpy(result, desc, end);
             memcpy(result + end, "...", 4);
             return result;
@@ -206,6 +192,7 @@ static char *truncate_to_first_sentence(const char *desc) {
         end = SHORT_DESC_MAX_LEN;
     }
     char *result = malloc(end + 1);
+    if (!result) return strdup("");
     memcpy(result, desc, end);
     result[end] = '\0';
     return result;
@@ -350,7 +337,7 @@ typedef struct {
     uint32_t name_off;
     uint32_t desc_off;
     uint32_t params_idx;
-    uint32_t subcommands_idx;
+    uint16_t subcommands_idx;
     uint16_t params_count;
     uint16_t subcommands_count;
 } CommandEntry;
@@ -358,6 +345,8 @@ typedef struct {
 typedef struct {
     uint32_t *offsets;
     size_t count;
+    uint32_t hash;       // For deduplication
+    uint32_t blob_off;   // Offset in blob once written (0 = not yet written)
 } StringList;
 
 typedef struct {
@@ -501,26 +490,76 @@ static size_t calc_msgpack_buffer_size(BlobGen *bg) {
 // Choices/Members
 // --------------------------------------------------------------------------
 
+// Hash a string list for deduplication
+static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
+    uint32_t h = 5381;
+    for (size_t i = 0; i < count; i++) {
+        h = ((h << 5) + h) ^ offsets[i];
+    }
+    return h ? h : 1;
+}
+
+// Find existing choice list with same contents
+static size_t find_existing_choices(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
+    for (size_t i = 0; i < bg->choices_count; i++) {
+        StringList *sl = &bg->choices_lists[i];
+        if (sl->hash == hash && sl->count == count) {
+            if (memcmp(sl->offsets, offsets, count * sizeof(uint32_t)) == 0) {
+                return i;
+            }
+        }
+    }
+    return (size_t)-1;
+}
+
+// Find existing member list with same contents
+static size_t find_existing_members(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
+    for (size_t i = 0; i < bg->members_count; i++) {
+        StringList *sl = &bg->members_lists[i];
+        if (sl->hash == hash && sl->count == count) {
+            if (memcmp(sl->offsets, offsets, count * sizeof(uint32_t)) == 0) {
+                return i;
+            }
+        }
+    }
+    return (size_t)-1;
+}
+
 static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, int arr_idx) {
     if (tokens[arr_idx].type != JSMN_ARRAY) return (size_t)-1;
     int count = arr_size(tokens, arr_idx);
     if (count == 0) return (size_t)-1;
+
+    // Build temporary offset array
+    uint32_t *offsets = malloc(count * sizeof(uint32_t));
+    size_t total_bytes = 0;
+    int item_idx = arr_first(tokens, arr_idx);
+    for (int i = 0; i < count; i++) {
+        char *s = tok_strdup(js, &tokens[item_idx]);
+        offsets[i] = strtab_add(&bg->strtab, s);
+        total_bytes += strlen(s);
+        free(s);
+        item_idx = tok_skip(tokens, item_idx);
+    }
+
+    // Check for existing identical list
+    uint32_t hash = hash_string_list(offsets, count);
+    size_t existing = find_existing_choices(bg, offsets, count, hash);
+    if (existing != (size_t)-1) {
+        free(offsets);
+        return existing;
+    }
+
+    // Add new list
     if (bg->choices_count >= bg->choices_cap) {
         bg->choices_cap *= 2;
         bg->choices_lists = realloc(bg->choices_lists, bg->choices_cap * sizeof(StringList));
     }
     StringList *sl = &bg->choices_lists[bg->choices_count];
-    sl->offsets = malloc(count * sizeof(uint32_t));
+    sl->offsets = offsets;
     sl->count = count;
-    size_t total_bytes = 0;
-    int item_idx = arr_first(tokens, arr_idx);
-    for (int i = 0; i < count; i++) {
-        char *s = tok_strdup(js, &tokens[item_idx]);
-        sl->offsets[i] = strtab_add(&bg->strtab, s);
-        total_bytes += strlen(s);
-        free(s);
-        item_idx = tok_skip(tokens, item_idx);
-    }
+    sl->hash = hash;
+    sl->blob_off = 0;
     track_choices(bg, total_bytes, count);
     return bg->choices_count++;
 }
@@ -529,13 +568,9 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     if (tokens[arr_idx].type != JSMN_ARRAY) return (size_t)-1;
     int count = arr_size(tokens, arr_idx);
     if (count == 0) return (size_t)-1;
-    if (bg->members_count >= bg->members_cap) {
-        bg->members_cap *= 2;
-        bg->members_lists = realloc(bg->members_lists, bg->members_cap * sizeof(StringList));
-    }
-    StringList *sl = &bg->members_lists[bg->members_count];
-    sl->offsets = malloc(count * sizeof(uint32_t));
-    sl->count = count;
+
+    // Build temporary offset array
+    uint32_t *offsets = malloc(count * sizeof(uint32_t));
     size_t total_bytes = 0;
     int item_idx = arr_first(tokens, arr_idx);
     for (int i = 0; i < count; i++) {
@@ -544,14 +579,33 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
             char *key = tok_strdup(js, &tokens[key_idx]);
             char buf[1024];
             snprintf(buf, sizeof(buf), "%s=", key);
-            sl->offsets[i] = strtab_add(&bg->strtab, buf);
+            offsets[i] = strtab_add(&bg->strtab, buf);
             total_bytes += strlen(buf);
             free(key);
         } else {
-            sl->offsets[i] = 0;
+            offsets[i] = 0;
         }
         item_idx = tok_skip(tokens, item_idx);
     }
+
+    // Check for existing identical list
+    uint32_t hash = hash_string_list(offsets, count);
+    size_t existing = find_existing_members(bg, offsets, count, hash);
+    if (existing != (size_t)-1) {
+        free(offsets);
+        return existing;
+    }
+
+    // Add new list
+    if (bg->members_count >= bg->members_cap) {
+        bg->members_cap *= 2;
+        bg->members_lists = realloc(bg->members_lists, bg->members_cap * sizeof(StringList));
+    }
+    StringList *sl = &bg->members_lists[bg->members_count];
+    sl->offsets = offsets;
+    sl->count = count;
+    sl->hash = hash;
+    sl->blob_off = 0;
     track_members(bg, total_bytes, count);
     return bg->members_count++;
 }
@@ -564,6 +618,7 @@ typedef struct {
     char *name;
     char *short_opt;
     char *description;
+    char *completer;
     bool takes_value;
     int choices_idx;
     int members_idx;
@@ -676,6 +731,20 @@ static bool get_param_info(const char *js, jsmntok_t *tokens, int param_idx, Par
         info->members_idx = members_idx;
     }
 
+    // Extract completer (mutually exclusive with choices/members)
+    if (info->choices_idx < 0 && info->members_idx < 0) {
+        int completer_idx = obj_get(js, tokens, param_idx, "completer");
+        if (completer_idx >= 0 && tokens[completer_idx].type == JSMN_STRING) {
+            char *completer = tok_strdup(js, &tokens[completer_idx]);
+            // Skip "dynamic" marker - not actionable without introspection
+            if (strcmp(completer, "dynamic") != 0) {
+                info->completer = completer;
+            } else {
+                free(completer);
+            }
+        }
+    }
+
     return true;
 }
 
@@ -683,6 +752,7 @@ static void free_param_info(ParamInfo *info) {
     free(info->name);
     free(info->short_opt);
     free(info->description);
+    free(info->completer);
 }
 
 // --------------------------------------------------------------------------
@@ -780,7 +850,7 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
     int count = arr_size(tokens, params_idx);
     if (count == 0) return result;
     uint32_t start_idx = (uint32_t)bg->params_count;
-    uint16_t valid_count = 0;
+    uint32_t valid_count = 0;
     int p_idx = arr_first(tokens, params_idx);
     for (int i = 0; i < count; i++) {
         ParamInfo info;
@@ -801,6 +871,10 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
         } else if (info.members_idx >= 0) {
             pe->choices_idx = (uint32_t)get_members_index(bg, js, tokens, info.members_idx);
             pe->flags |= FLAG_IS_MEMBERS;
+        } else if (info.completer) {
+            // Store completer string offset directly (reuses choices_idx field)
+            pe->choices_idx = strtab_add(&bg->strtab, info.completer);
+            pe->flags |= FLAG_IS_COMPLETER;
         }
         track_param(bg, strlen(info.name), bg->no_descriptions ? 0 : strlen(info.description));
         free_param_info(&info);
@@ -808,9 +882,13 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
         p_idx = tok_skip(tokens, p_idx);
     }
     if (valid_count == 0) return result;
+    if (valid_count > 65535) {
+        fprintf(stderr, "Too many params in one command: %u (max 65535)\n", valid_count);
+        valid_count = 65535;  // Truncate - will produce invalid blob but won't crash
+    }
     finish_command_params(bg);
     result.idx = start_idx;
-    result.count = valid_count;
+    result.count = (uint16_t)valid_count;
     return result;
 }
 
@@ -885,7 +963,12 @@ static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens,
     }
     free(child_data);
     result.idx = start_idx;
-    result.count = (uint16_t)node->children_count;
+    if (node->children_count > 65535) {
+        fprintf(stderr, "Too many subcommands in one command: %zu (max 65535)\n", node->children_count);
+        result.count = 65535;  // Will be caught by validation later
+    } else {
+        result.count = (uint16_t)node->children_count;
+    }
     return result;
 }
 
@@ -979,7 +1062,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     int commands_idx = obj_get(js, tokens, 0, "commands");
     if (commands_idx < 0 || tokens[commands_idx].type != JSMN_ARRAY) {
         fprintf(stderr, "Schema must have 'commands' array\n");
-        free(js); free(tokens); blobgen_free(&bg);
         return false;
     }
 
@@ -1060,14 +1142,48 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         }
     }
 
+    // Check for integer overflow in counts (process will exit on error, no need to free)
+    if (bg.commands_count > 65535) {
+        fprintf(stderr, "Too many commands: %zu (max 65535)\n", bg.commands_count);
+        return false;
+    }
+    // params_idx is u32, so limit is much higher (params_count per command is still u16)
+    if (bg.params_count > 16777215) {  // 2^24 - reasonable limit
+        fprintf(stderr, "Too many params: %zu (max 16777215)\n", bg.params_count);
+        return false;
+    }
+    if (bg.global_params_count > 65535) {
+        fprintf(stderr, "Too many global params: %zu (max 65535)\n", bg.global_params_count);
+        return false;
+    }
+    if (bg.strtab.data_len > UINT32_MAX) {
+        fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", bg.strtab.data_len);
+        return false;
+    }
+
     size_t msgpack_buffer_size = calc_msgpack_buffer_size(&bg);
     size_t commands_size = bg.commands_count * COMMAND_SIZE;
     size_t params_size = bg.params_count * PARAM_SIZE;
     size_t global_params_size = bg.global_params_count * PARAM_SIZE;
+    // Variable-length count: u8 for <255, 0xFF + u16 for >=255
     size_t choices_size = 0;
-    for (size_t i = 0; i < bg.choices_count; i++) choices_size += (bg.choices_lists[i].count + 1) * 4;
+    for (size_t i = 0; i < bg.choices_count; i++) {
+        size_t count = bg.choices_lists[i].count;
+        if (count > 65535) {
+            fprintf(stderr, "Choice list %zu too large: %zu items (max 65535)\n", i, count);
+            return false;
+        }
+        choices_size += (count < 255 ? 1 : 3) + count * 4;
+    }
     size_t members_size = 0;
-    for (size_t i = 0; i < bg.members_count; i++) members_size += (bg.members_lists[i].count + 1) * 4;
+    for (size_t i = 0; i < bg.members_count; i++) {
+        size_t count = bg.members_lists[i].count;
+        if (count > 65535) {
+            fprintf(stderr, "Member list %zu too large: %zu items (max 65535)\n", i, count);
+            return false;
+        }
+        members_size += (count < 255 ? 1 : 3) + count * 4;
+    }
 
     uint32_t string_table_off = HEADER_SIZE;
     uint32_t commands_off = string_table_off + (uint32_t)bg.strtab.data_len;
@@ -1078,17 +1194,20 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     uint32_t root_command_off = global_params_off + (uint32_t)global_params_size;
     size_t total_size = root_command_off + COMMAND_SIZE;
 
+    // Calculate blob offsets for each choice/member list (variable-length count)
     uint32_t *choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
     uint32_t offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
         choices_offsets[i] = offset;
-        offset += (uint32_t)(bg.choices_lists[i].count + 1) * 4;
+        size_t count = bg.choices_lists[i].count;
+        offset += (count < 255 ? 1 : 3) + (uint32_t)count * 4;
     }
     uint32_t *members_offsets = malloc(bg.members_count * sizeof(uint32_t));
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         members_offsets[i] = offset;
-        offset += (uint32_t)(bg.members_lists[i].count + 1) * 4;
+        size_t count = bg.members_lists[i].count;
+        offset += (count < 255 ? 1 : 3) + (uint32_t)count * 4;
     }
 
     uint8_t *blob = calloc(1, total_size);
@@ -1122,9 +1241,9 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         write_u32(blob + offset, ce->name_off, big_endian);
         write_u32(blob + offset + 4, ce->desc_off, big_endian);
         write_u32(blob + offset + 8, ce->params_idx, big_endian);
-        write_u32(blob + offset + 12, ce->subcommands_idx, big_endian);
-        write_u16(blob + offset + 16, ce->params_count, big_endian);
-        write_u16(blob + offset + 18, ce->subcommands_count, big_endian);
+        write_u16(blob + offset + 12, ce->subcommands_idx, big_endian);
+        write_u16(blob + offset + 14, ce->params_count, big_endian);
+        write_u16(blob + offset + 16, ce->subcommands_count, big_endian);
         offset += COMMAND_SIZE;
     }
 
@@ -1133,7 +1252,14 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         ParamEntry *pe = &bg.params[i];
         uint32_t choices_off_val = 0;
         if (pe->choices_idx != (uint32_t)-1) {
-            choices_off_val = (pe->flags & FLAG_IS_MEMBERS) ? members_offsets[pe->choices_idx] : choices_offsets[pe->choices_idx];
+            if (pe->flags & FLAG_IS_COMPLETER) {
+                // Completer: choices_idx is already a string table offset
+                choices_off_val = pe->choices_idx;
+            } else if (pe->flags & FLAG_IS_MEMBERS) {
+                choices_off_val = members_offsets[pe->choices_idx];
+            } else {
+                choices_off_val = choices_offsets[pe->choices_idx];
+            }
         }
         write_u32(blob + offset, pe->name_off, big_endian);
         write_u32(blob + offset + 4, pe->short_off, big_endian);
@@ -1143,18 +1269,30 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         offset += PARAM_SIZE;
     }
 
+    // Write choices lists (variable-length count: u8 if <255, else 0xFF + u16)
     offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
         StringList *sl = &bg.choices_lists[i];
+        if (sl->count < 255) {
+            blob[offset++] = (uint8_t)sl->count;
+        } else {
+            blob[offset++] = 0xFF;
+            write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
+        }
         for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
-        write_u32(blob + offset, 0, big_endian); offset += 4;
     }
 
+    // Write members lists (variable-length count: u8 if <255, else 0xFF + u16)
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         StringList *sl = &bg.members_lists[i];
+        if (sl->count < 255) {
+            blob[offset++] = (uint8_t)sl->count;
+        } else {
+            blob[offset++] = 0xFF;
+            write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
+        }
         for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
-        write_u32(blob + offset, 0, big_endian); offset += 4;
     }
 
     offset = global_params_off;
@@ -1172,15 +1310,13 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     write_u32(blob + root_command_off, 0, big_endian);
     write_u32(blob + root_command_off + 4, root_desc_off, big_endian);
     write_u32(blob + root_command_off + 8, root_params_idx, big_endian);
-    write_u32(blob + root_command_off + 12, top_level.idx, big_endian);
-    write_u16(blob + root_command_off + 16, 1, big_endian);
-    write_u16(blob + root_command_off + 18, top_level.count, big_endian);
+    write_u16(blob + root_command_off + 12, top_level.idx, big_endian);
+    write_u16(blob + root_command_off + 14, 1, big_endian);
+    write_u16(blob + root_command_off + 16, top_level.count, big_endian);
 
     FILE *out = fopen(output_path, "wb");
     if (!out) {
         perror(output_path);
-        free(blob); free(choices_offsets); free(members_offsets);
-        node_free(tree); free(js); free(tokens); blobgen_free(&bg);
         return false;
     }
     fwrite(blob, 1, total_size, out);
