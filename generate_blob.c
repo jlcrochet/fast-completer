@@ -810,6 +810,27 @@ static void sort_children(CommandNode *node) {
 }
 
 // --------------------------------------------------------------------------
+// Param sorting (for binary search in completer)
+// --------------------------------------------------------------------------
+
+static StringTable *sort_strtab = NULL;
+
+static const char *strtab_get_by_offset(StringTable *st, uint32_t off) {
+    if (off == 0) return "";
+    for (size_t i = 0; i < st->count; i++) {
+        if (st->offsets[i] == off) return st->strings[i];
+    }
+    return "";
+}
+
+static int cmp_params(const void *a, const void *b) {
+    const ParamEntry *pa = a, *pb = b;
+    const char *na = strtab_get_by_offset(sort_strtab, pa->name_off);
+    const char *nb = strtab_get_by_offset(sort_strtab, pb->name_off);
+    return strcmp(na, nb);
+}
+
+// --------------------------------------------------------------------------
 // Collect params and commands
 // --------------------------------------------------------------------------
 
@@ -855,6 +876,11 @@ static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, i
     if (valid_count > 65535) {
         fprintf(stderr, "Too many params in one command: %u (max 65535)\n", valid_count);
         return result;  // Return empty result to signal error
+    }
+    // Sort params by name for binary search in completer
+    if (valid_count > 1) {
+        sort_strtab = &bg->strtab;
+        qsort(&bg->params[start_idx], valid_count, sizeof(ParamEntry), cmp_params);
     }
     result.idx = start_idx;
     result.count = (uint16_t)valid_count;
@@ -1113,6 +1139,12 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             free(long_opt); free(short_opt); free(name); free(desc);
             gp_idx = tok_skip(tokens, gp_idx);
         }
+    }
+
+    // Sort global params by name for binary search in completer
+    if (bg.global_params_count > 1) {
+        sort_strtab = &bg.strtab;
+        qsort(bg.global_params, bg.global_params_count, sizeof(ParamEntry), cmp_params);
     }
 
     // Check for integer overflow in counts (process will exit on error, no need to free)
