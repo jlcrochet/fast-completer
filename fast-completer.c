@@ -111,6 +111,44 @@ static const char **g_spans = NULL;
 static size_t *g_arg_lens = NULL;
 static int g_span_count = 0;
 
+// Hash set for O(1) used-param lookups (lazily built only when completing params)
+#define USED_SET_SIZE 256  // Power of 2, must be > 2*MAX_SPANS
+typedef struct { const char *p; size_t n; } UsedEntry;
+static UsedEntry g_used_set[USED_SET_SIZE];
+static bool g_used_set_ready = false;
+
+static inline uint32_t hash_str(const char *p, size_t n) {
+    uint32_t h = 5381;
+    for (size_t i = 0; i < n; i++) h = ((h << 5) + h) ^ (uint8_t)p[i];
+    return h;
+}
+
+static void used_set_build(void) {
+    if (g_used_set_ready) return;
+    memset(g_used_set, 0, sizeof(g_used_set));
+    for (int i = 0; i < g_span_count; i++) {
+        if (g_spans[i][0] == '-') {
+            size_t n = g_arg_lens[i];
+            size_t idx = hash_str(g_spans[i], n) & (USED_SET_SIZE - 1);
+            while (g_used_set[idx].p) {
+                idx = (idx + 1) & (USED_SET_SIZE - 1);
+            }
+            g_used_set[idx].p = g_spans[i];
+            g_used_set[idx].n = n;
+        }
+    }
+    g_used_set_ready = true;
+}
+
+static bool used_set_contains(const char *p, size_t n) {
+    size_t idx = hash_str(p, n) & (USED_SET_SIZE - 1);
+    while (g_used_set[idx].p) {
+        if (g_used_set[idx].n == n && memcmp(g_used_set[idx].p, p, n) == 0) return true;
+        idx = (idx + 1) & (USED_SET_SIZE - 1);
+    }
+    return false;
+}
+
 // Accessor macros
 #define PARAM_TAKES_VALUE(p)   ((p)->flags & FLAG_TAKES_VALUE)
 #define PARAM_IS_MEMBERS(p)    ((p)->flags & FLAG_IS_MEMBERS)
@@ -395,16 +433,14 @@ static const Command *find_command(void) {
 }
 
 // Check if a parameter has already been used (by long or short name)
+// Uses hash set for O(1) lookup instead of O(spans) linear scan
 static bool param_used(const Param *param) {
+    used_set_build();  // Lazy init on first call
     String name = str_get(param->name_off);
-    String short_opt = param->short_off ? str_get(param->short_off) : (String){NULL, 0};
-
-    for (int i = 0; i < g_span_count; i++) {
-        size_t arg_len = g_arg_lens[i];
-        if (arg_len == name.n && memcmp(g_spans[i], name.p, name.n) == 0)
-            return true;
-        if (short_opt.p && arg_len == short_opt.n && memcmp(g_spans[i], short_opt.p, short_opt.n) == 0)
-            return true;
+    if (name.n > 0 && used_set_contains(name.p, name.n)) return true;
+    if (param->short_off) {
+        String short_opt = str_get(param->short_off);
+        if (used_set_contains(short_opt.p, short_opt.n)) return true;
     }
     return false;
 }
@@ -467,19 +503,50 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
     }
 }
 
+// Binary search for first subcommand with name >= prefix (lower bound)
+static uint16_t bsearch_prefix_lower(const Command *subs, uint16_t count,
+                                      const char *prefix, size_t prefix_len) {
+    uint16_t lo = 0, hi = count;
+    while (lo < hi) {
+        uint16_t mid = lo + (hi - lo) / 2;
+        String s = str_get(subs[mid].name_off);
+        size_t cmp_len = (s.n < prefix_len) ? s.n : prefix_len;
+        int cmp = memcmp(s.p, prefix, cmp_len);
+        if (cmp < 0 || (cmp == 0 && s.n < prefix_len)) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
+
 // Complete immediate subcommands (single level)
+// Uses binary search for prefix matching: O(log n + matches) instead of O(n)
 static void complete_next_level(const Command *cmd, const char *prefix, size_t prefix_len) {
     if (cmd->subcommands_count == 0) return;
 
     const Command *subs = cmd_subcommands(cmd);
-    for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
-        const Command *sub = &subs[i];
-        String name = str_get(sub->name_off);
 
-        if (!prefix || (name.n >= prefix_len && memcmp(name.p, prefix, prefix_len) == 0)) {
+    // No prefix: output all subcommands
+    if (!prefix || prefix_len == 0) {
+        for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
+            const Command *sub = &subs[i];
+            String name = str_get(sub->name_off);
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
             output_completion(name, str_get(desc), COMP_COMMAND);
         }
+        return;
+    }
+
+    // Binary search for first match, then iterate while prefix matches
+    uint16_t start = bsearch_prefix_lower(subs, cmd->subcommands_count, prefix, prefix_len);
+    for (uint16_t i = start; i < cmd->subcommands_count; i++) {
+        const Command *sub = &subs[i];
+        String name = str_get(sub->name_off);
+        if (name.n < prefix_len || memcmp(name.p, prefix, prefix_len) != 0) break;
+        uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
+        output_completion(name, str_get(desc), COMP_COMMAND);
     }
 }
 
@@ -744,7 +811,8 @@ static void execute_completer(const char *cli_name, String completer,
 }
 
 // Find a parameter by name (long or short option) using linear search
-// Params are NOT sorted - they preserve inheritance order (command's own params first)
+// Linear search is used because we must check both long AND short names,
+// and typical param count per command is small (< 10)
 static const Param *find_param(const Param *params, uint16_t params_count, const char *opt, size_t opt_len) {
     if (!params || params_count == 0 || !opt) return NULL;
     if (opt[0] != '-') return NULL;
@@ -828,6 +896,9 @@ static OutputFormat parse_format(const char *name) {
     return OUT_UNKNOWN;
 }
 
+// Maximum spans we support (command lines rarely exceed this)
+#define MAX_SPANS 128
+
 // Main completion logic
 static void complete(int nspans, const char **spans) {
     if (nspans == 0) {
@@ -835,14 +906,23 @@ static void complete(int nspans, const char **spans) {
         return;
     }
 
-    // Pre-compute all arg lengths once and set globals
-    size_t arg_lens[nspans];
-    for (int i = 0; i < nspans; i++) {
-        arg_lens[i] = strlen(spans[i]);
+    // Fail if too many spans
+    if (nspans > MAX_SPANS) {
+        fprintf(stderr, "Too many arguments (%d > %d)\n", nspans, MAX_SPANS);
+        exit(1);
     }
+
+    // Pre-compute all arg lengths once and set globals (fixed-size to avoid VLA)
+    // Exploit contiguous argv layout (works on Linux, macOS, Windows, BSDs)
+    size_t arg_lens[MAX_SPANS];
+    for (int i = 0; i < nspans - 1; i++) {
+        arg_lens[i] = (size_t)(spans[i + 1] - spans[i] - 1);
+    }
+    arg_lens[nspans - 1] = strlen(spans[nspans - 1]);
     g_spans = spans;
     g_arg_lens = arg_lens;
     g_span_count = nspans > 1 ? nspans - 1 : 1;
+    g_used_set_ready = false;  // Reset for lazy init
 
     // Find the deepest matching command
     const Command *cmd = find_command();

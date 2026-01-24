@@ -44,8 +44,8 @@ typedef enum {
  * output_path: Path to output blob file
  * big_endian: If true, generate big-endian blob
  * desc_mode: How to handle descriptions (DESC_NONE, DESC_SHORT, DESC_LONG)
- * desc_max_len: Maximum description length (0 = unlimited). If exceeded,
- *               truncate to (desc_max_len - 3) chars + "...".
+ * desc_max_len: Maximum description length in UTF-8 characters (0 = unlimited).
+ *               If exceeded, truncate to (desc_max_len - 1) chars + "…" (Unicode ellipsis).
  *
  * Returns true on success, false on error (errors printed to stderr).
  */

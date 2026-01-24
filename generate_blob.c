@@ -312,13 +312,28 @@ static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
     return offset;
 }
 
-// Look up string by offset (for sorting)
-static const char *strtab_lookup(StringTable *st, uint32_t offset) {
-    if (offset == 0) return "";
-    for (size_t i = 0; i < st->count; i++) {
-        if (st->offsets[i] == offset) return st->strings[i];
-    }
-    return "";
+// Compare two strings by their offsets in the string table (for sorting)
+// Decodes directly from the data buffer - O(1) instead of O(n) lookup
+static int strtab_cmp(StringTable *st, uint32_t off_a, uint32_t off_b) {
+    if (off_a == off_b) return 0;
+    if (off_a == 0) return -1;
+    if (off_b == 0) return 1;
+
+    // Decode string A
+    const uint8_t *pa = st->data + off_a;
+    size_t len_a = (pa[0] < 128) ? pa[0] : (((pa[0] & 0x7f) << 8) | pa[1]);
+    const char *str_a = (const char *)(pa + (pa[0] < 128 ? 1 : 2));
+
+    // Decode string B
+    const uint8_t *pb = st->data + off_b;
+    size_t len_b = (pb[0] < 128) ? pb[0] : (((pb[0] & 0x7f) << 8) | pb[1]);
+    const char *str_b = (const char *)(pb + (pb[0] < 128 ? 1 : 2));
+
+    // Compare with length awareness (strings aren't null-terminated in buffer)
+    size_t min_len = (len_a < len_b) ? len_a : len_b;
+    int cmp = memcmp(str_a, str_b, min_len);
+    if (cmp != 0) return cmp;
+    return (len_a < len_b) ? -1 : (len_a > len_b) ? 1 : 0;
 }
 
 // --------------------------------------------------------------------------
@@ -350,8 +365,12 @@ typedef struct {
 } StringList;
 
 typedef struct {
-    StringTable strtab;
-    StringTable desc_strtab;
+    // String tables organized by type for cache locality:
+    // Layout in blob: [commands][params][choices][descriptions]
+    StringTable cmd_strtab;     // Command names (pre-order, no dedup for clustering)
+    StringTable param_strtab;   // Param long names + short names
+    StringTable choice_strtab;  // Choices, members, completer strings
+    StringTable desc_strtab;    // Descriptions (cold, accessed only for output)
     ParamEntry *params;
     size_t params_count;
     size_t params_cap;
@@ -373,7 +392,9 @@ typedef struct {
 
 static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     memset(bg, 0, sizeof(*bg));
-    strtab_init(&bg->strtab);
+    strtab_init(&bg->cmd_strtab);
+    strtab_init(&bg->param_strtab);
+    strtab_init(&bg->choice_strtab);
     strtab_init(&bg->desc_strtab);
     bg->params_cap = 1024;
     bg->params = calloc(bg->params_cap, sizeof(ParamEntry));
@@ -423,7 +444,9 @@ static uint32_t strtab_add_desc(BlobGen *bg, const char *desc) {
 }
 
 static void blobgen_free(BlobGen *bg) {
-    strtab_free(&bg->strtab);
+    strtab_free(&bg->cmd_strtab);
+    strtab_free(&bg->param_strtab);
+    strtab_free(&bg->choice_strtab);
     strtab_free(&bg->desc_strtab);
     free(bg->params);
     free(bg->commands);
@@ -493,7 +516,7 @@ static size_t add_choices_from_string(BlobGen *bg, const char *choices_str) {
     char *token = strtok_r(copy, "|", &saveptr);
     size_t i = 0;
     while (token && i < count) {
-        offsets[i++] = strtab_add(&bg->strtab, token);
+        offsets[i++] = strtab_add(&bg->choice_strtab, token);
         token = strtok_r(NULL, "|", &saveptr);
     }
     free(copy);
@@ -567,7 +590,7 @@ static size_t add_members_from_string(BlobGen *bg, const char *members_str) {
                 memcpy(buf, token_start, copy_len);
                 buf[copy_len] = '=';
                 buf[copy_len + 1] = '\0';
-                offsets[i++] = strtab_add(&bg->strtab, buf);
+                offsets[i++] = strtab_add(&bg->choice_strtab, buf);
             }
             if (*p == '\0') break;
             token_start = p + 1;
@@ -677,11 +700,9 @@ static int cmp_params(const void *a, const void *b) {
     const ParamEntry *pa = (const ParamEntry *)a;
     const ParamEntry *pb = (const ParamEntry *)b;
     // Use name_off if present, otherwise short_off (for short-only params)
-    const char *na = pa->name_off ? strtab_lookup(&g_sort_bg->strtab, pa->name_off)
-                                  : strtab_lookup(&g_sort_bg->strtab, pa->short_off);
-    const char *nb = pb->name_off ? strtab_lookup(&g_sort_bg->strtab, pb->name_off)
-                                  : strtab_lookup(&g_sort_bg->strtab, pb->short_off);
-    return strcmp(na, nb);
+    uint32_t off_a = pa->name_off ? pa->name_off : pa->short_off;
+    uint32_t off_b = pb->name_off ? pb->name_off : pb->short_off;
+    return strtab_cmp(&g_sort_bg->param_strtab, off_a, off_b);
 }
 
 // Sort params within each depth level, then recurse
@@ -739,12 +760,16 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     } ChildData;
 
     ChildData *child_data = malloc(node->children_count * sizeof(ChildData));
+    if (!child_data) {
+        fprintf(stderr, "malloc failed in collect_commands\n");
+        return result;
+    }
 
     for (size_t i = 0; i < node->children_count; i++) {
         CommandNode *child = node->children[i];
 
         // Add name BEFORE recursing (pre-order) for subtree clustering
-        child_data[i].name_off = strtab_add_nodupe(&bg->strtab, child->name);
+        child_data[i].name_off = strtab_add_nodupe(&bg->cmd_strtab, child->name);
 
         // Recurse into children
         IdxCount sub_result = collect_commands(bg, child);
@@ -1034,8 +1059,8 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     parse_option_spec(tl.tokens[0].value, &long_opt, &short_opt);
 
     ParamEntry pe;
-    pe.name_off = long_opt ? strtab_add(&bg->strtab, long_opt) : 0;
-    pe.short_off = short_opt ? strtab_add(&bg->strtab, short_opt) : 0;
+    pe.name_off = long_opt ? strtab_add(&bg->param_strtab, long_opt) : 0;
+    pe.short_off = short_opt ? strtab_add(&bg->param_strtab, short_opt) : 0;
     pe.desc_off = 0;
     pe.flags = 0;
     pe.choices_idx = (uint32_t)-1;
@@ -1061,11 +1086,10 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 break;
             }
             case TOK_MEMBERS: {
-                // Wrap in braces for add_members_from_string
-                char *wrapped = malloc(strlen(t->value) + 3);
-                sprintf(wrapped, "{%s}", t->value);
+                // Wrap in braces for add_members_from_string (stack buffer, bounded by line length)
+                char wrapped[MAX_LINE_LEN + 3];
+                snprintf(wrapped, sizeof(wrapped), "{%s}", t->value);
                 size_t idx = add_members_from_string(bg, wrapped);
-                free(wrapped);
                 if (idx != (size_t)-1) {
                     pe.choices_idx = (uint32_t)idx;
                     pe.flags |= FLAG_IS_MEMBERS | FLAG_TAKES_VALUE;
@@ -1074,7 +1098,7 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 break;
             }
             case TOK_COMPLETER:
-                pe.choices_idx = strtab_add(&bg->strtab, t->value);
+                pe.choices_idx = strtab_add(&bg->choice_strtab, t->value);
                 pe.flags |= FLAG_IS_COMPLETER | FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
@@ -1397,12 +1421,21 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         return false;
     }
 
-    size_t total_strtab_size = bg.strtab.data_len + bg.desc_strtab.data_len;
+    // String table layout: [commands][params][choices][descriptions]
+    size_t cmd_len = bg.cmd_strtab.data_len;
+    size_t param_len = bg.param_strtab.data_len;
+    size_t choice_len = bg.choice_strtab.data_len;
+    size_t desc_len = bg.desc_strtab.data_len;
+    size_t total_strtab_size = cmd_len + param_len + choice_len + desc_len;
     if (total_strtab_size > UINT32_MAX) {
         fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
         node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
+    // Offset adjustments for each section
+    uint32_t param_off_adj = (uint32_t)cmd_len;
+    uint32_t choice_off_adj = (uint32_t)(cmd_len + param_len);
+    uint32_t desc_off_adj = (uint32_t)(cmd_len + param_len + choice_len);
 
     size_t commands_size = bg.commands_count * COMMAND_SIZE;
     size_t params_size = bg.params_count * PARAM_SIZE;
@@ -1471,17 +1504,22 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     write_u32(blob + 48, members_off, big_endian);
     write_u32(blob + 52, root_command_off, big_endian);
 
-    // Write hot string table
-    memcpy(blob + string_table_off, bg.strtab.data, bg.strtab.data_len);
-    // Write cold string table (descriptions)
-    memcpy(blob + string_table_off + bg.strtab.data_len, bg.desc_strtab.data, bg.desc_strtab.data_len);
-
-    uint32_t desc_off_adjust = (uint32_t)bg.strtab.data_len;
+    // Write string tables in order: commands, params, choices, descriptions
+    uint32_t st_off = string_table_off;
+    memcpy(blob + st_off, bg.cmd_strtab.data, cmd_len);
+    st_off += cmd_len;
+    memcpy(blob + st_off, bg.param_strtab.data, param_len);
+    st_off += param_len;
+    memcpy(blob + st_off, bg.choice_strtab.data, choice_len);
+    st_off += choice_len;
+    memcpy(blob + st_off, bg.desc_strtab.data, desc_len);
 
     offset = commands_off;
     for (size_t i = 0; i < bg.commands_count; i++) {
         CommandEntry *ce = &bg.commands[i];
-        uint32_t adj_desc_off = ce->desc_off ? ce->desc_off + desc_off_adjust : 0;
+        // Command names are in cmd_strtab (no adjustment needed - first section)
+        // Descriptions are in desc_strtab (need desc_off_adj)
+        uint32_t adj_desc_off = ce->desc_off ? ce->desc_off + desc_off_adj : 0;
         write_u32(blob + offset, ce->name_off, big_endian);
         write_u32(blob + offset + 4, adj_desc_off, big_endian);
         write_u32(blob + offset + 8, ce->params_idx, big_endian);
@@ -1494,26 +1532,32 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     offset = params_off;
     for (size_t i = 0; i < bg.params_count; i++) {
         ParamEntry *pe = &bg.params[i];
-        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adjust : 0;
+        // Param names are in param_strtab (need param_off_adj)
+        // Descriptions are in desc_strtab (need desc_off_adj)
+        // Completer strings are in choice_strtab (need choice_off_adj)
+        uint32_t adj_name_off = pe->name_off ? pe->name_off + param_off_adj : 0;
+        uint32_t adj_short_off = pe->short_off ? pe->short_off + param_off_adj : 0;
+        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adj : 0;
         uint32_t choices_off_val = 0;
         if (pe->choices_idx != (uint32_t)-1) {
             if (pe->flags & FLAG_IS_COMPLETER) {
-                choices_off_val = pe->choices_idx;
+                // Completer string is in choice_strtab
+                choices_off_val = pe->choices_idx + choice_off_adj;
             } else if (pe->flags & FLAG_IS_MEMBERS) {
                 choices_off_val = members_offsets[pe->choices_idx];
             } else {
                 choices_off_val = choices_offsets[pe->choices_idx];
             }
         }
-        write_u32(blob + offset, pe->name_off, big_endian);
-        write_u32(blob + offset + 4, pe->short_off, big_endian);
+        write_u32(blob + offset, adj_name_off, big_endian);
+        write_u32(blob + offset + 4, adj_short_off, big_endian);
         write_u32(blob + offset + 8, adj_desc_off, big_endian);
         write_u32(blob + offset + 12, choices_off_val, big_endian);
         blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
     }
 
-    // Write choices lists
+    // Write choices lists (string offsets are in choice_strtab, need choice_off_adj)
     offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
         StringList *sl = &bg.choices_lists[i];
@@ -1523,10 +1567,14 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             blob[offset++] = 0xFF;
             write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
         }
-        for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
+        for (size_t j = 0; j < sl->count; j++) {
+            uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
+            write_u32(blob + offset, adj_off, big_endian);
+            offset += 4;
+        }
     }
 
-    // Write members lists
+    // Write members lists (string offsets are in choice_strtab, need choice_off_adj)
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         StringList *sl = &bg.members_lists[i];
@@ -1536,10 +1584,14 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             blob[offset++] = 0xFF;
             write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
         }
-        for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
+        for (size_t j = 0; j < sl->count; j++) {
+            uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
+            write_u32(blob + offset, adj_off, big_endian);
+            offset += 4;
+        }
     }
 
-    uint32_t adj_root_desc_off = root_desc_off ? root_desc_off + desc_off_adjust : 0;
+    uint32_t adj_root_desc_off = root_desc_off ? root_desc_off + desc_off_adj : 0;
     write_u32(blob + root_command_off, 0, big_endian);
     write_u32(blob + root_command_off + 4, adj_root_desc_off, big_endian);
     write_u32(blob + root_command_off + 8, root_params.idx, big_endian);
@@ -1567,8 +1619,8 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     fprintf(stderr, "  Params: %zu\n", bg.params_count);
     fprintf(stderr, "  Choices lists: %zu\n", bg.choices_count);
     fprintf(stderr, "  Members lists: %zu\n", bg.members_count);
-    fprintf(stderr, "  String table: %zu bytes (hot: %zu, cold: %zu)\n",
-            total_strtab_size, bg.strtab.data_len, bg.desc_strtab.data_len);
+    fprintf(stderr, "  String table: %zu bytes (cmds: %zu, params: %zu, choices: %zu, descs: %zu)\n",
+            total_strtab_size, cmd_len, param_len, choice_len, desc_len);
 
     free(blob); free(choices_offsets); free(members_offsets);
     node_free(root); blobgen_free(&bg); free(root_desc);
