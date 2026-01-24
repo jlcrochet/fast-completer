@@ -17,8 +17,7 @@
 #define MAX_FIELDS 8
 #define MAX_LINE_LEN 8192
 
-#ifdef _WIN32
-static char *strndup(const char *s, size_t n) {
+static char *str_ndup(const char *s, size_t n) {
     size_t len = strlen(s);
     if (n < len) len = n;
     char *result = malloc(len + 1);
@@ -28,7 +27,6 @@ static char *strndup(const char *s, size_t n) {
     }
     return result;
 }
-#endif
 
 // --------------------------------------------------------------------------
 // UTF-8 helpers
@@ -1352,7 +1350,7 @@ char *get_schema_name(const char *schema_path) {
         // Extract just the name (first word before space, tab, or #)
         const char *p = line;
         while (*p && *p != ' ' && *p != '\t' && *p != '#') p++;
-        result = strndup(line, p - line);
+        result = str_ndup(line, p - line);
         break;
     }
 
