@@ -1223,9 +1223,9 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--quiet") == 0 || strcmp(argv[i], "-q") == 0) {
 #ifdef _WIN32
-            freopen("NUL", "w", stderr);
+            (void)freopen("NUL", "w", stderr);
 #else
-            freopen("/dev/null", "w", stderr);
+            (void)freopen("/dev/null", "w", stderr);
 #endif
             break;
         }
