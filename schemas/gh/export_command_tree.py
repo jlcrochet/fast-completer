@@ -176,9 +176,12 @@ def build_flags_list(command_path, raw_flags):
     params = []
     seen = set()
 
+    # Skip flags that are inherited from root (to avoid duplicates)
+    inherited_flags = {'--help', '--version'}
+
     for f in raw_flags:
         name = f['name']
-        if name in seen:
+        if name in seen or name in inherited_flags:
             continue
         seen.add(name)
 
