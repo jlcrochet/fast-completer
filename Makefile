@@ -1,7 +1,8 @@
 # Makefile for fast-completer
 
 CC ?= gcc
-CFLAGS ?= -O3 -Wall -Wextra
+WARNINGS = -Wall -Wextra -Wformat=2 -Wshadow -Wunused-result -Wstrict-prototypes
+CFLAGS ?= -O3 $(WARNINGS)
 LDFLAGS ?=
 
 # Source files
@@ -55,10 +56,10 @@ uninstall:
 	rm -f $(BINDIR)/$(TARGET)
 
 # Debug build
-debug: CFLAGS = -g -O0 -Wall -Wextra -DDEBUG
+debug: CFLAGS = -g -O0 $(WARNINGS) -DDEBUG
 debug: clean all
 
 # Release build (smaller binary)
-release: CFLAGS = -O3 -Wall -Wextra -DNDEBUG
+release: CFLAGS = -O3 $(WARNINGS) -DNDEBUG
 release: LDFLAGS = -s
 release: clean all
