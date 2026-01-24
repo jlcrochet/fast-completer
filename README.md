@@ -408,46 +408,33 @@ In this example:
 
 ## Binary Blob Format
 
-The blob format is designed for zero-copy memory-mapped access with minimal page faults:
+The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with minimal page faults. All integers are little-endian by default (use `--big-endian` for cross-compilation).
 
-| Section | Description |
-|---------|-------------|
-| Header (64 bytes) | Magic (`FCMP`), version, flags, counts, offsets |
-| String table (hot) | Command names, parameter names, choices |
-| String table (cold) | Descriptions (rarely accessed) |
-| Commands array | Fixed-size command structs (18 bytes each) |
-| Params array | Fixed-size param structs (17 bytes each) |
-| Choices data | Count-prefixed uint32 offset arrays |
-| Members data | Count-prefixed uint32 offset arrays |
-| Global params | Param structs for global options |
-| Root command | Single command struct for the CLI root |
+### Layout
 
-### Design Methodology
+| Section | Size | Description |
+|---------|------|-------------|
+| Header | 56 bytes | Magic (`FCMP`), version, flags, counts, section offsets |
+| String table | variable | VLQ length-prefixed strings, hot data first (names, choices), cold data last (descriptions) |
+| Commands | 18 bytes each | Fixed-size structs with name/description offsets, param/subcommand indices |
+| Params | 17 bytes each | Fixed-size structs with name/short/description/choices offsets, flags |
+| Choices | variable | Count-prefixed arrays of string table offsets (deduplicated) |
+| Members | variable | Count-prefixed arrays of string table offsets (deduplicated) |
+| Root command | 18 bytes | CLI root with global params and top-level subcommands |
 
-The format prioritizes fast lookups over compact size:
+### Design
 
-**Fixed-size structs for O(1) indexing.** Commands (18 bytes) and params (17 bytes) use fixed sizes so any entry can be accessed by offset calculation rather than linear scanning. String data is stored separately in a string table, referenced by 32-bit offsets.
-
-**VLQ length-prefixed strings.** Each string is prefixed with its length encoded as a 1-2 byte variable-length quantity (VLQ). This allows reading string length without scanning for a null terminator, enabling efficient buffer size calculation.
-
-**Hot/cold string table separation.** The string table is split into two regions: "hot" data (command names, parameter names, choices) and "cold" data (descriptions). Since most completions display only names, the hot region stays in cache while description pages are only faulted in when needed. For the AWS CLI blob, this puts 81% of string data (descriptions) in the cold region.
-
-**Subtree clustering for command names.** Command names are written in pre-order traversal, so each service's commands are contiguous in the string table. When completing `aws s3 ...`, all S3 command names are adjacent in memory, minimizing page faults. This trades some string deduplication (~1% larger blob) for better locality.
-
-**Deduplication where it helps.** Choices and members lists are deduplicated via hash lookup, since many parameters share the same option sets. Parameter names and descriptions are also deduplicated since they repeat across commands.
+- **Fixed-size structs** enable O(1) indexing by offset calculation
+- **Hot/cold string separation** keeps names in cache while descriptions page in only when needed (81% of AWS CLI string data is cold)
+- **Subtree clustering** writes command names in pre-order so related commands are contiguous in memory
+- **Deduplication** for choices, members, and repeated strings
 
 ### Header Flags
 
-- `0x01` - Big-endian byte order
-- `0x02` - No descriptions (set by `--no-descriptions` or auto-detected)
-
-### Choices/Members Format
-
-Variable-length count prefix (u8 if count < 255, else 0xFF + u16), followed by uint32 string table offsets. Identical lists are deduplicated to save space.
-
-### Memory Mapping
-
-All integers are little-endian by default. The binary uses `mmap()` (or `MapViewOfFile` on Windows) to map the blob directly into memory. The OS handles paging, so only accessed regions incur I/O. Combined with hot/cold separation, a typical completion touches only a few kilobytes of a multi-megabyte blob.
+| Flag | Description |
+|------|-------------|
+| `0x01` | Big-endian byte order |
+| `0x02` | No descriptions (auto-detected or `--no-descriptions`) |
 
 ## Shell Integration
 
