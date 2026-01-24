@@ -1,8 +1,7 @@
 /*
- * generate_blob.c - Blob generation from JSON schema files
+ * generate_blob.c - Blob generation from TSV schema files
  *
- * Generates binary completion data blob from JSON command schema.
- * Uses jsmn for minimal JSON parsing.
+ * Generates binary completion data blob from tab-separated command schema.
  */
 
 #include "generate_blob.h"
@@ -12,101 +11,39 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define JSMN_PARENT_LINKS
-#define JSMN_STATIC
-#include "vendor/jsmn/jsmn.h"
-
 // Limits
 #define VLQ_MAX_LENGTH 32767
 #define SHORT_DESC_MAX_LEN 200
+#define MAX_FIELDS 8
+#define MAX_LINE_LEN 8192
 
 // --------------------------------------------------------------------------
-// JSMN helpers
+// UTF-8 helpers
 // --------------------------------------------------------------------------
 
-typedef struct {
-    const char *js;      // JSON string
-    jsmntok_t *tokens;   // Token array
-    int num_tokens;      // Number of tokens
-} JsonDoc;
-
-// Compare token string with a C string
-static bool tok_eq(const char *js, jsmntok_t *tok, const char *s) {
-    if (tok->type != JSMN_STRING) return false;
-    size_t len = tok->end - tok->start;
-    return strlen(s) == len && strncmp(js + tok->start, s, len) == 0;
-}
-
-// Get string value from token (caller must free)
-static char *tok_strdup(const char *js, jsmntok_t *tok) {
-    if (tok->type != JSMN_STRING && tok->type != JSMN_PRIMITIVE) {
-        return strdup("");
+// Count UTF-8 characters in a string
+static size_t utf8_strlen(const char *s) {
+    size_t count = 0;
+    while (*s) {
+        // Count only lead bytes (not continuation bytes 10xxxxxx)
+        if ((*s & 0xC0) != 0x80) count++;
+        s++;
     }
-    size_t len = tok->end - tok->start;
-    char *s = malloc(len + 1);
-    memcpy(s, js + tok->start, len);
-    s[len] = '\0';
-    return s;
+    return count;
 }
 
-// Check if token is true
-static bool tok_is_true(const char *js, jsmntok_t *tok) {
-    if (tok->type != JSMN_PRIMITIVE) return false;
-    return tok->end - tok->start == 4 && strncmp(js + tok->start, "true", 4) == 0;
-}
-
-// Check if token is a boolean
-static bool tok_is_bool(const char *js, jsmntok_t *tok) {
-    if (tok->type != JSMN_PRIMITIVE) return false;
-    size_t len = tok->end - tok->start;
-    if (len == 4 && strncmp(js + tok->start, "true", 4) == 0) return true;
-    if (len == 5 && strncmp(js + tok->start, "false", 5) == 0) return true;
-    return false;
-}
-
-// Skip a token and all its children, return index of next sibling
-static int tok_skip(jsmntok_t *tokens, int idx) {
-    int end = idx + 1;
-    for (int i = 0; i < tokens[idx].size; i++) {
-        if (tokens[idx].type == JSMN_OBJECT) {
-            end++;  // skip key
-        }
-        end = tok_skip(tokens, end);
+// Find byte offset for the first n UTF-8 characters
+// Returns byte position after n characters (or end of string if fewer)
+static size_t utf8_byte_offset(const char *s, size_t n_chars) {
+    const char *p = s;
+    size_t chars = 0;
+    while (*p && chars < n_chars) {
+        if ((*p & 0xC0) != 0x80) chars++;
+        p++;
     }
-    return end;
-}
-
-// Find key in object, return token index of value or -1
-static int obj_get(const char *js, jsmntok_t *tokens, int obj_idx, const char *key) {
-    if (tokens[obj_idx].type != JSMN_OBJECT) return -1;
-    int idx = obj_idx + 1;
-    for (int i = 0; i < tokens[obj_idx].size; i++) {
-        if (tok_eq(js, &tokens[idx], key)) {
-            return idx + 1;  // Return value token
-        }
-        idx++;  // Skip key
-        idx = tok_skip(tokens, idx);  // Skip value
-    }
-    return -1;
-}
-
-// Get string property from object (caller must free), returns empty string if not found
-static char *obj_get_str(const char *js, jsmntok_t *tokens, int obj_idx, const char *key) {
-    int idx = obj_get(js, tokens, obj_idx, key);
-    if (idx < 0) return strdup("");
-    return tok_strdup(js, &tokens[idx]);
-}
-
-// Get array size
-static int arr_size(jsmntok_t *tokens, int arr_idx) {
-    if (tokens[arr_idx].type != JSMN_ARRAY) return 0;
-    return tokens[arr_idx].size;
-}
-
-// Get first item in array (use with tok_skip for iteration)
-static inline int arr_first(jsmntok_t *tokens, int arr_idx) {
-    if (tokens[arr_idx].type != JSMN_ARRAY || tokens[arr_idx].size == 0) return -1;
-    return arr_idx + 1;
+    // If we stopped mid-sequence, back up to start of this character
+    // (This shouldn't happen if input is valid UTF-8, but be safe)
+    return (size_t)(p - s);
 }
 
 // --------------------------------------------------------------------------
@@ -158,8 +95,15 @@ static bool is_version_number(const char *s, size_t pos, size_t len) {
 static char *truncate_to_first_sentence(const char *desc) {
     if (!desc || !*desc) return strdup("");
     size_t len = strlen(desc);
-    size_t end = len;
-    for (size_t i = 0; i < len && i < SHORT_DESC_MAX_LEN; i++) {
+    size_t char_count = utf8_strlen(desc);
+    size_t end = len;  // byte position
+    size_t chars_seen = 0;
+
+    // Iterate by bytes, but track character count for the limit
+    for (size_t i = 0; i < len && chars_seen < SHORT_DESC_MAX_LEN; i++) {
+        // Count UTF-8 characters (skip continuation bytes)
+        if ((desc[i] & 0xC0) != 0x80) chars_seen++;
+
         char c = desc[i];
         char next = (i + 1 < len) ? desc[i + 1] : '\0';
         if (c == '\n') { end = i; break; }
@@ -174,18 +118,25 @@ static char *truncate_to_first_sentence(const char *desc) {
             break;
         }
     }
-    if (end == len && len > SHORT_DESC_MAX_LEN) {
-        end = SHORT_DESC_MAX_LEN;
-        while (end > SHORT_DESC_MAX_LEN - 30 && desc[end] != ' ') end--;
+
+    // If no sentence break found and exceeds character limit, truncate at word boundary
+    if (end == len && char_count > SHORT_DESC_MAX_LEN) {
+        // Find byte offset for SHORT_DESC_MAX_LEN characters
+        size_t max_bytes = utf8_byte_offset(desc, SHORT_DESC_MAX_LEN);
+        end = max_bytes;
+        // Walk back to find a space (but not more than ~30 characters back)
+        size_t min_bytes = utf8_byte_offset(desc, SHORT_DESC_MAX_LEN > 30 ? SHORT_DESC_MAX_LEN - 30 : 0);
+        while (end > min_bytes && desc[end] != ' ') end--;
         if (desc[end] == ' ') {
-            char *result = malloc(end + 4);
+            char *result = malloc(end + 4);  // +3 for UTF-8 ellipsis, +1 for null
             if (!result) return strdup("");
             memcpy(result, desc, end);
-            memcpy(result + end, "...", 4);
+            memcpy(result + end, "\xe2\x80\xa6", 4);  // "…" + null terminator
             return result;
         }
-        end = SHORT_DESC_MAX_LEN;
+        end = max_bytes;
     }
+
     char *result = malloc(end + 1);
     if (!result) return strdup("");
     memcpy(result, desc, end);
@@ -230,7 +181,7 @@ static void strtab_init(StringTable *st) {
     st->data = malloc(st->data_cap);
     st->data_len = 0;
     st->max_str_len = 0;
-    st->hash_cap = 65536;  // Start large to reduce resizing for big schemas
+    st->hash_cap = 65536;
     st->hash_table = calloc(st->hash_cap, sizeof(HashEntry));
     st->strings[0] = strdup("");
     st->offsets[0] = 0;
@@ -350,6 +301,15 @@ static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
     return offset;
 }
 
+// Look up string by offset (for sorting)
+static const char *strtab_lookup(StringTable *st, uint32_t offset) {
+    if (offset == 0) return "";
+    for (size_t i = 0; i < st->count; i++) {
+        if (st->offsets[i] == offset) return st->strings[i];
+    }
+    return "";
+}
+
 // --------------------------------------------------------------------------
 // Structures
 // --------------------------------------------------------------------------
@@ -374,13 +334,13 @@ typedef struct {
 typedef struct {
     uint32_t *offsets;
     size_t count;
-    uint32_t hash;       // For deduplication
-    uint32_t blob_off;   // Offset in blob once written (0 = not yet written)
+    uint32_t hash;
+    uint32_t blob_off;
 } StringList;
 
 typedef struct {
-    StringTable strtab;       // Hot strings (names, choices, etc.)
-    StringTable desc_strtab;  // Cold strings (descriptions) - written after hot for locality
+    StringTable strtab;
+    StringTable desc_strtab;
     ParamEntry *params;
     size_t params_count;
     size_t params_cap;
@@ -393,20 +353,17 @@ typedef struct {
     StringList *members_lists;
     size_t members_count;
     size_t members_cap;
-    ParamEntry *global_params;
-    size_t global_params_count;
-    size_t global_params_cap;
     size_t max_command_path_len;
     bool big_endian;
-    bool no_descriptions;
-    bool long_descriptions;
+    DescriptionMode desc_mode;
+    size_t desc_max_len;
     bool has_any_descriptions;
 } BlobGen;
 
-static void blobgen_init(BlobGen *bg, bool big_endian, bool no_descriptions, bool long_descriptions) {
+static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     memset(bg, 0, sizeof(*bg));
     strtab_init(&bg->strtab);
-    strtab_init(&bg->desc_strtab);  // Separate table for descriptions (cold data)
+    strtab_init(&bg->desc_strtab);
     bg->params_cap = 1024;
     bg->params = calloc(bg->params_cap, sizeof(ParamEntry));
     bg->commands_cap = 1024;
@@ -415,27 +372,38 @@ static void blobgen_init(BlobGen *bg, bool big_endian, bool no_descriptions, boo
     bg->choices_lists = calloc(bg->choices_cap, sizeof(StringList));
     bg->members_cap = 256;
     bg->members_lists = calloc(bg->members_cap, sizeof(StringList));
-    bg->global_params_cap = 64;
-    bg->global_params = calloc(bg->global_params_cap, sizeof(ParamEntry));
     bg->big_endian = big_endian;
-    bg->no_descriptions = no_descriptions;
-    bg->long_descriptions = long_descriptions;
+    bg->desc_mode = desc_mode;
+    bg->desc_max_len = desc_max_len;
 }
 
 static uint32_t strtab_add_desc_ex(BlobGen *bg, const char *desc, bool track) {
-    if (bg->no_descriptions || !desc || !*desc) return 0;
+    if (bg->desc_mode == DESC_NONE || !desc || !*desc) return 0;
     char *processed = NULL;
-    if (!bg->long_descriptions) {
+    char *truncated = NULL;
+    if (bg->desc_mode == DESC_SHORT) {
         processed = truncate_to_first_sentence(desc);
         desc = processed;
     }
+    // Apply max length truncation if configured (counts UTF-8 characters, not bytes)
+    // Uses Unicode ellipsis (…) to distinguish from literal "..." in text
+    if (bg->desc_max_len > 0 && desc && utf8_strlen(desc) > bg->desc_max_len) {
+        size_t trunc_chars = bg->desc_max_len - 1;  // Room for "…" (1 character)
+        size_t trunc_bytes = utf8_byte_offset(desc, trunc_chars);
+        truncated = malloc(trunc_bytes + 4);  // +3 for UTF-8 ellipsis, +1 for null
+        if (truncated) {
+            memcpy(truncated, desc, trunc_bytes);
+            memcpy(truncated + trunc_bytes, "\xe2\x80\xa6", 4);  // "…" + null terminator
+            desc = truncated;
+        }
+    }
     uint32_t offset = 0;
     if (desc && *desc) {
-        // Add to cold (description) string table - offset will be adjusted at write time
         offset = strtab_add(&bg->desc_strtab, desc);
         if (track) bg->has_any_descriptions = true;
     }
     free(processed);
+    free(truncated);
     return offset;
 }
 
@@ -452,7 +420,6 @@ static void blobgen_free(BlobGen *bg) {
     free(bg->choices_lists);
     for (size_t i = 0; i < bg->members_count; i++) free(bg->members_lists[i].offsets);
     free(bg->members_lists);
-    free(bg->global_params);
 }
 
 // --------------------------------------------------------------------------
@@ -467,7 +434,6 @@ static void track_command_path_len(BlobGen *bg, size_t path_len) {
 // Choices/Members
 // --------------------------------------------------------------------------
 
-// Hash a string list for deduplication
 static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
     uint32_t h = 5381;
     for (size_t i = 0; i < count; i++) {
@@ -476,7 +442,6 @@ static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
     return h ? h : 1;
 }
 
-// Find existing choice list with same contents
 static size_t find_existing_choices(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
     for (size_t i = 0; i < bg->choices_count; i++) {
         StringList *sl = &bg->choices_lists[i];
@@ -489,7 +454,6 @@ static size_t find_existing_choices(BlobGen *bg, const uint32_t *offsets, size_t
     return (size_t)-1;
 }
 
-// Find existing member list with same contents
 static size_t find_existing_members(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
     for (size_t i = 0; i < bg->members_count; i++) {
         StringList *sl = &bg->members_lists[i];
@@ -502,24 +466,30 @@ static size_t find_existing_members(BlobGen *bg, const uint32_t *offsets, size_t
     return (size_t)-1;
 }
 
-static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, int arr_idx) {
-    if (tokens[arr_idx].type != JSMN_ARRAY) return (size_t)-1;
-    int count = arr_size(tokens, arr_idx);
-    if (count == 0) return (size_t)-1;
+// Add choices from pipe-separated string, return index
+static size_t add_choices_from_string(BlobGen *bg, const char *choices_str) {
+    if (!choices_str || !*choices_str) return (size_t)-1;
 
-    // Build temporary offset array
-    uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    int item_idx = arr_first(tokens, arr_idx);
-    for (int i = 0; i < count; i++) {
-        char *s = tok_strdup(js, &tokens[item_idx]);
-        offsets[i] = strtab_add(&bg->strtab, s);
-        free(s);
-        item_idx = tok_skip(tokens, item_idx);
+    // Count choices
+    size_t count = 1;
+    for (const char *p = choices_str; *p; p++) {
+        if (*p == '|') count++;
     }
 
+    uint32_t *offsets = malloc(count * sizeof(uint32_t));
+    char *copy = strdup(choices_str);
+    char *saveptr;
+    char *token = strtok_r(copy, "|", &saveptr);
+    size_t i = 0;
+    while (token && i < count) {
+        offsets[i++] = strtab_add(&bg->strtab, token);
+        token = strtok_r(NULL, "|", &saveptr);
+    }
+    free(copy);
+
     // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_choices(bg, offsets, count, hash);
+    uint32_t hash = hash_string_list(offsets, i);
+    size_t existing = find_existing_choices(bg, offsets, i, hash);
     if (existing != (size_t)-1) {
         free(offsets);
         return existing;
@@ -532,37 +502,71 @@ static size_t get_choices_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     }
     StringList *sl = &bg->choices_lists[bg->choices_count];
     sl->offsets = offsets;
-    sl->count = count;
+    sl->count = i;
     sl->hash = hash;
     sl->blob_off = 0;
     return bg->choices_count++;
 }
 
-static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, int arr_idx) {
-    if (tokens[arr_idx].type != JSMN_ARRAY) return (size_t)-1;
-    int count = arr_size(tokens, arr_idx);
-    if (count == 0) return (size_t)-1;
+// Add members from {key1|key2} string, return index
+// Handles nested braces: {foo{x}|bar} parses as members "foo{x}" and "bar"
+static size_t add_members_from_string(BlobGen *bg, const char *members_str) {
+    if (!members_str || members_str[0] != '{') return (size_t)-1;
 
-    // Build temporary offset array
-    uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    int item_idx = arr_first(tokens, arr_idx);
-    for (int i = 0; i < count; i++) {
-        int key_idx = obj_get(js, tokens, item_idx, "key");
-        if (key_idx >= 0) {
-            char *key = tok_strdup(js, &tokens[key_idx]);
-            char buf[1024];
-            snprintf(buf, sizeof(buf), "%s=", key);
-            offsets[i] = strtab_add(&bg->strtab, buf);
-            free(key);
-        } else {
-            offsets[i] = 0;
+    // Skip { and find matching } (handle nested braces)
+    const char *start = members_str + 1;
+    const char *end = NULL;
+    int depth = 1;
+    for (const char *p = start; *p; p++) {
+        if (*p == '{') depth++;
+        else if (*p == '}') {
+            depth--;
+            if (depth == 0) { end = p; break; }
         }
-        item_idx = tok_skip(tokens, item_idx);
+    }
+    if (!end) return (size_t)-1;
+
+    size_t len = end - start;
+    char *inner = malloc(len + 1);
+    memcpy(inner, start, len);
+    inner[len] = '\0';
+
+    // Count members (skip | inside nested braces)
+    size_t count = 1;
+    int brace_depth = 0;
+    for (const char *p = inner; *p; p++) {
+        if (*p == '{') brace_depth++;
+        else if (*p == '}') brace_depth--;
+        else if (*p == '|' && brace_depth == 0) count++;
     }
 
+    // Split on | (respecting nested braces)
+    uint32_t *offsets = malloc(count * sizeof(uint32_t));
+    size_t i = 0;
+    const char *token_start = inner;
+    brace_depth = 0;
+    for (const char *p = inner; ; p++) {
+        if (*p == '{') brace_depth++;
+        else if (*p == '}') brace_depth--;
+        else if ((*p == '|' && brace_depth == 0) || *p == '\0') {
+            if (p > token_start && i < count) {
+                size_t token_len = p - token_start;
+                char buf[256];
+                size_t copy_len = token_len < sizeof(buf) - 2 ? token_len : sizeof(buf) - 2;
+                memcpy(buf, token_start, copy_len);
+                buf[copy_len] = '=';
+                buf[copy_len + 1] = '\0';
+                offsets[i++] = strtab_add(&bg->strtab, buf);
+            }
+            if (*p == '\0') break;
+            token_start = p + 1;
+        }
+    }
+    free(inner);
+
     // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_members(bg, offsets, count, hash);
+    uint32_t hash = hash_string_list(offsets, i);
+    size_t existing = find_existing_members(bg, offsets, i, hash);
     if (existing != (size_t)-1) {
         free(offsets);
         return existing;
@@ -575,155 +579,10 @@ static size_t get_members_index(BlobGen *bg, const char *js, jsmntok_t *tokens, 
     }
     StringList *sl = &bg->members_lists[bg->members_count];
     sl->offsets = offsets;
-    sl->count = count;
+    sl->count = i;
     sl->hash = hash;
     sl->blob_off = 0;
     return bg->members_count++;
-}
-
-// --------------------------------------------------------------------------
-// Parameter extraction
-// --------------------------------------------------------------------------
-
-typedef struct {
-    char *name;
-    char *short_opt;
-    char *description;
-    char *completer;
-    bool takes_value;
-    int choices_idx;
-    int members_idx;
-} ParamInfo;
-
-static bool get_param_info(const char *js, jsmntok_t *tokens, int param_idx, ParamInfo *info) {
-    memset(info, 0, sizeof(*info));
-    info->choices_idx = -1;
-    info->members_idx = -1;
-
-    int options_idx = obj_get(js, tokens, param_idx, "options");
-    if (options_idx >= 0 && tokens[options_idx].type == JSMN_ARRAY && arr_size(tokens, options_idx) > 0) {
-        int opt_count = arr_size(tokens, options_idx);
-        int opt_idx = arr_first(tokens, options_idx);
-        for (int i = 0; i < opt_count; i++) {
-            char *opt = tok_strdup(js, &tokens[opt_idx]);
-            if (strncmp(opt, "--", 2) == 0) {
-                if (!info->name || strlen(opt) > strlen(info->name)) {
-                    free(info->name);
-                    info->name = opt;
-                    opt = NULL;
-                }
-            } else if (opt[0] == '-' && strlen(opt) == 2) {
-                free(info->short_opt);
-                info->short_opt = opt;
-                opt = NULL;
-            }
-            free(opt);
-            opt_idx = tok_skip(tokens, opt_idx);
-        }
-    } else {
-        char *name_str = obj_get_str(js, tokens, param_idx, "name");
-        if (!name_str[0]) { free(name_str); return false; }
-        if (strchr(name_str, ' ')) {
-            char *copy = strdup(name_str);
-            char *token = strtok(copy, " ");
-            while (token) {
-                if (strncmp(token, "--", 2) == 0) {
-                    if (!info->name || strlen(token) > strlen(info->name)) {
-                        free(info->name);
-                        info->name = strdup(token);
-                    }
-                } else if (token[0] == '-' && strlen(token) == 2) {
-                    free(info->short_opt);
-                    info->short_opt = strdup(token);
-                }
-                token = strtok(NULL, " ");
-            }
-            free(copy);
-        } else if (strncmp(name_str, "--", 2) == 0) {
-            info->name = strdup(name_str);
-        }
-        free(name_str);
-    }
-
-    if (!info->name) return false;
-
-    // Check for bool choices
-    int choices_idx = obj_get(js, tokens, param_idx, "choices");
-    bool is_bool_choices = false;
-    if (choices_idx >= 0 && tokens[choices_idx].type == JSMN_ARRAY && arr_size(tokens, choices_idx) == 2) {
-        int c0 = arr_first(tokens, choices_idx);
-        int c1 = tok_skip(tokens, c0);
-        char *s0 = tok_strdup(js, &tokens[c0]);
-        char *s1 = tok_strdup(js, &tokens[c1]);
-        if ((strcasecmp(s0, "true") == 0 || strcasecmp(s0, "false") == 0) &&
-            (strcasecmp(s1, "true") == 0 || strcasecmp(s1, "false") == 0)) {
-            is_bool_choices = true;
-        }
-        free(s0);
-        free(s1);
-    }
-
-    info->takes_value = true;
-    if (is_bool_choices) {
-        info->takes_value = false;
-    } else {
-        char *type = obj_get_str(js, tokens, param_idx, "type");
-        if (strcmp(type, "bool") == 0 || strcmp(type, "boolean") == 0) {
-            info->takes_value = false;
-        }
-        free(type);
-
-        int def_idx = obj_get(js, tokens, param_idx, "default");
-        if (def_idx >= 0 && tok_is_bool(js, &tokens[def_idx])) {
-            info->takes_value = false;
-        }
-    }
-
-    int tv_idx = obj_get(js, tokens, param_idx, "takes_value");
-    if (tv_idx >= 0) {
-        info->takes_value = tok_is_true(js, &tokens[tv_idx]);
-    }
-
-    // Get description
-    char *summary = obj_get_str(js, tokens, param_idx, "summary");
-    if (summary[0]) {
-        info->description = summary;
-    } else {
-        free(summary);
-        info->description = obj_get_str(js, tokens, param_idx, "description");
-    }
-
-    // Store choices/members indices
-    if (choices_idx >= 0 && !is_bool_choices) {
-        info->choices_idx = choices_idx;
-    }
-    int members_idx = obj_get(js, tokens, param_idx, "members");
-    if (info->choices_idx < 0 && members_idx >= 0) {
-        info->members_idx = members_idx;
-    }
-
-    // Extract completer (mutually exclusive with choices/members)
-    if (info->choices_idx < 0 && info->members_idx < 0) {
-        int completer_idx = obj_get(js, tokens, param_idx, "completer");
-        if (completer_idx >= 0 && tokens[completer_idx].type == JSMN_STRING) {
-            char *completer = tok_strdup(js, &tokens[completer_idx]);
-            // Skip "dynamic" marker - not actionable without introspection
-            if (strcmp(completer, "dynamic") != 0) {
-                info->completer = completer;
-            } else {
-                free(completer);
-            }
-        }
-    }
-
-    return true;
-}
-
-static void free_param_info(ParamInfo *info) {
-    free(info->name);
-    free(info->short_opt);
-    free(info->description);
-    free(info->completer);
 }
 
 // --------------------------------------------------------------------------
@@ -732,26 +591,32 @@ static void free_param_info(ParamInfo *info) {
 
 typedef struct CommandNode {
     char *name;
-    int cmd_idx;  // Index in tokens array, or -1
+    char *description;
     struct CommandNode **children;
     size_t children_count;
     size_t children_cap;
+    ParamEntry *params;
+    size_t params_count;
+    size_t params_cap;
 } CommandNode;
 
 static CommandNode *node_create(const char *name) {
     CommandNode *node = calloc(1, sizeof(CommandNode));
     node->name = strdup(name ? name : "");
-    node->cmd_idx = -1;
     node->children_cap = 8;
     node->children = calloc(node->children_cap, sizeof(CommandNode *));
+    node->params_cap = 8;
+    node->params = calloc(node->params_cap, sizeof(ParamEntry));
     return node;
 }
 
 static void node_free(CommandNode *node) {
     if (!node) return;
     free(node->name);
+    free(node->description);
     for (size_t i = 0; i < node->children_count; i++) node_free(node->children[i]);
     free(node->children);
+    free(node->params);
     free(node);
 }
 
@@ -772,28 +637,12 @@ static CommandNode *node_add_child(CommandNode *node, const char *name) {
     return child;
 }
 
-static CommandNode *build_command_tree(const char *js, jsmntok_t *tokens, int commands_idx) {
-    CommandNode *root = node_create("");
-    int cmd_count = arr_size(tokens, commands_idx);
-    int cmd_idx = arr_first(tokens, commands_idx);
-    for (int i = 0; i < cmd_count; i++) {
-        char *name = obj_get_str(js, tokens, cmd_idx, "name");
-        if (!name[0]) { free(name); cmd_idx = tok_skip(tokens, cmd_idx); continue; }
-        char *copy = strdup(name);
-        char *token = strtok(copy, " ");
-        CommandNode *node = root;
-        while (token) {
-            CommandNode *child = node_get_child(node, token);
-            if (!child) child = node_add_child(node, token);
-            node = child;
-            token = strtok(NULL, " ");
-        }
-        node->cmd_idx = cmd_idx;
-        free(copy);
-        free(name);
-        cmd_idx = tok_skip(tokens, cmd_idx);
+static void node_add_param(CommandNode *node, ParamEntry *pe) {
+    if (node->params_count >= node->params_cap) {
+        node->params_cap *= 2;
+        node->params = realloc(node->params, node->params_cap * sizeof(ParamEntry));
     }
-    return root;
+    node->params[node->params_count++] = *pe;
 }
 
 static int cmp_nodes(const void *a, const void *b) {
@@ -809,25 +658,30 @@ static void sort_children(CommandNode *node) {
     for (size_t i = 0; i < node->children_count; i++) sort_children(node->children[i]);
 }
 
-// --------------------------------------------------------------------------
-// Param sorting (for binary search in completer)
-// --------------------------------------------------------------------------
+// Global pointer for param sorting (qsort doesn't support context)
+static BlobGen *g_sort_bg = NULL;
 
-static StringTable *sort_strtab = NULL;
-
-static const char *strtab_get_by_offset(StringTable *st, uint32_t off) {
-    if (off == 0) return "";
-    for (size_t i = 0; i < st->count; i++) {
-        if (st->offsets[i] == off) return st->strings[i];
-    }
-    return "";
+// Compare params alphabetically by name (or short name for short-only params)
+static int cmp_params(const void *a, const void *b) {
+    const ParamEntry *pa = (const ParamEntry *)a;
+    const ParamEntry *pb = (const ParamEntry *)b;
+    // Use name_off if present, otherwise short_off (for short-only params)
+    const char *na = pa->name_off ? strtab_lookup(&g_sort_bg->strtab, pa->name_off)
+                                  : strtab_lookup(&g_sort_bg->strtab, pa->short_off);
+    const char *nb = pb->name_off ? strtab_lookup(&g_sort_bg->strtab, pb->name_off)
+                                  : strtab_lookup(&g_sort_bg->strtab, pb->short_off);
+    return strcmp(na, nb);
 }
 
-static int cmp_params(const void *a, const void *b) {
-    const ParamEntry *pa = a, *pb = b;
-    const char *na = strtab_get_by_offset(sort_strtab, pa->name_off);
-    const char *nb = strtab_get_by_offset(sort_strtab, pb->name_off);
-    return strcmp(na, nb);
+// Sort params within each depth level, then recurse
+static void sort_node_params(BlobGen *bg, CommandNode *node) {
+    if (node->params_count > 1) {
+        g_sort_bg = bg;
+        qsort(node->params, node->params_count, sizeof(ParamEntry), cmp_params);
+    }
+    for (size_t i = 0; i < node->children_count; i++) {
+        sort_node_params(bg, node->children[i]);
+    }
 }
 
 // --------------------------------------------------------------------------
@@ -836,68 +690,41 @@ static int cmp_params(const void *a, const void *b) {
 
 typedef struct { uint32_t idx; uint16_t count; } IdxCount;
 
-static IdxCount collect_params(BlobGen *bg, const char *js, jsmntok_t *tokens, int params_idx) {
+static IdxCount collect_params_from_node(BlobGen *bg, CommandNode *node) {
     IdxCount result = {0, 0};
-    if (params_idx < 0 || tokens[params_idx].type != JSMN_ARRAY) return result;
-    int count = arr_size(tokens, params_idx);
-    if (count == 0) return result;
+    if (node->params_count == 0) return result;
+
     uint32_t start_idx = (uint32_t)bg->params_count;
-    uint32_t valid_count = 0;
-    int p_idx = arr_first(tokens, params_idx);
-    for (int i = 0; i < count; i++) {
-        ParamInfo info;
-        if (!get_param_info(js, tokens, p_idx, &info)) { p_idx = tok_skip(tokens, p_idx); continue; }
+    for (size_t i = 0; i < node->params_count; i++) {
         if (bg->params_count >= bg->params_cap) {
             bg->params_cap *= 2;
             bg->params = realloc(bg->params, bg->params_cap * sizeof(ParamEntry));
         }
-        ParamEntry *pe = &bg->params[bg->params_count++];
-        pe->name_off = strtab_add(&bg->strtab, info.name);
-        pe->short_off = info.short_opt ? strtab_add(&bg->strtab, info.short_opt) : 0;
-        pe->desc_off = strtab_add_desc(bg, info.description);
-        pe->flags = 0;
-        pe->choices_idx = (uint32_t)-1;
-        if (info.takes_value) pe->flags |= FLAG_TAKES_VALUE;
-        if (info.choices_idx >= 0) {
-            pe->choices_idx = (uint32_t)get_choices_index(bg, js, tokens, info.choices_idx);
-        } else if (info.members_idx >= 0) {
-            pe->choices_idx = (uint32_t)get_members_index(bg, js, tokens, info.members_idx);
-            pe->flags |= FLAG_IS_MEMBERS;
-        } else if (info.completer) {
-            // Store completer string offset directly (reuses choices_idx field)
-            pe->choices_idx = strtab_add(&bg->strtab, info.completer);
-            pe->flags |= FLAG_IS_COMPLETER;
-        }
-        free_param_info(&info);
-        valid_count++;
-        p_idx = tok_skip(tokens, p_idx);
+        bg->params[bg->params_count++] = node->params[i];
     }
-    if (valid_count == 0) return result;
-    if (valid_count > 65535) {
-        fprintf(stderr, "Too many params in one command: %u (max 65535)\n", valid_count);
-        return result;  // Return empty result to signal error
+
+    if (node->params_count > 65535) {
+        fprintf(stderr, "Too many params in one command: %zu (max 65535)\n", node->params_count);
+        return result;
     }
-    // Sort params by name for binary search in completer
-    if (valid_count > 1) {
-        sort_strtab = &bg->strtab;
-        qsort(&bg->params[start_idx], valid_count, sizeof(ParamEntry), cmp_params);
-    }
+
+    // Params are sorted alphabetically within each depth level, with inheritance order preserved
+    // (command's own params first, then parent's, then grandparent's, etc.)
+    // Linear search is used in the completer, which is fine for typical param counts
     result.idx = start_idx;
-    result.count = (uint16_t)valid_count;
+    result.count = (uint16_t)node->params_count;
     return result;
 }
 
-static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens, CommandNode *node);
+static IdxCount collect_commands(BlobGen *bg, CommandNode *node);
 
-static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens, CommandNode *node) {
+static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     IdxCount result = {0, 0};
     if (node->children_count == 0) return result;
 
     typedef struct {
         uint32_t name_off, desc_off, params_idx, subcommands_idx;
         uint16_t params_count, subcommands_count;
-        const char *path;
-        size_t desc_len;
     } ChildData;
 
     ChildData *child_data = malloc(node->children_count * sizeof(ChildData));
@@ -906,45 +733,18 @@ static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens,
         CommandNode *child = node->children[i];
 
         // Add name BEFORE recursing (pre-order) for subtree clustering
-        // This puts each subtree's names contiguous in the string table
-        // Use nodupe to preserve clustering (deduplication would scatter names)
         child_data[i].name_off = strtab_add_nodupe(&bg->strtab, child->name);
 
-        // Now recurse into children
-        IdxCount sub_result = collect_commands(bg, js, tokens, child);
+        // Recurse into children
+        IdxCount sub_result = collect_commands(bg, child);
         child_data[i].subcommands_idx = sub_result.idx;
         child_data[i].subcommands_count = sub_result.count;
 
-        int params_arr_idx = -1;
-        const char *desc = "";
-        char *desc_alloc = NULL;
-        if (child->cmd_idx >= 0) {
-            params_arr_idx = obj_get(js, tokens, child->cmd_idx, "parameters");
-            char *summary = obj_get_str(js, tokens, child->cmd_idx, "summary");
-            if (summary[0]) {
-                desc_alloc = summary;
-                desc = desc_alloc;
-            } else {
-                free(summary);
-                desc_alloc = obj_get_str(js, tokens, child->cmd_idx, "description");
-                desc = desc_alloc;
-            }
-        }
-
-        IdxCount params_result = collect_params(bg, js, tokens, params_arr_idx);
+        // Collect params
+        IdxCount params_result = collect_params_from_node(bg, child);
         child_data[i].params_idx = params_result.idx;
         child_data[i].params_count = params_result.count;
-        child_data[i].desc_off = strtab_add_desc(bg, desc);
-        child_data[i].desc_len = bg->no_descriptions ? 0 : strlen(desc);
-
-        if (child_data[i].subcommands_count == 0 && child->cmd_idx >= 0) {
-            char *path = obj_get_str(js, tokens, child->cmd_idx, "name");
-            child_data[i].path = path;
-            track_command_path_len(bg, strlen(path));
-        } else {
-            child_data[i].path = NULL;
-        }
-        free(desc_alloc);
+        child_data[i].desc_off = strtab_add_desc(bg, child->description);
     }
 
     uint32_t start_idx = (uint32_t)bg->commands_count;
@@ -960,13 +760,12 @@ static IdxCount collect_commands(BlobGen *bg, const char *js, jsmntok_t *tokens,
         ce->subcommands_idx = child_data[i].subcommands_idx;
         ce->params_count = child_data[i].params_count;
         ce->subcommands_count = child_data[i].subcommands_count;
-        free((char *)child_data[i].path);
     }
     free(child_data);
     result.idx = start_idx;
     if (node->children_count > 65535) {
         fprintf(stderr, "Too many subcommands in one command: %zu (max 65535)\n", node->children_count);
-        result.count = 65535;  // Will be caught by validation later
+        result.count = 65535;
     } else {
         result.count = (uint16_t)node->children_count;
     }
@@ -988,42 +787,521 @@ static void write_u32(uint8_t *buf, uint32_t val, bool big_endian) {
 }
 
 // --------------------------------------------------------------------------
-// Load JSON file
+// Schema Parsing
 // --------------------------------------------------------------------------
 
-static bool load_json_file(const char *path, char **out_js, jsmntok_t **out_tokens, int *out_count) {
+#define MAX_DEPTH 32
+
+// Count leading tabs in a line
+static int count_leading_tabs(const char *line) {
+    int tabs = 0;
+    while (line[tabs] == '\t') tabs++;
+    return tabs;
+}
+
+// --------------------------------------------------------------------------
+// New format tokenizer
+// --------------------------------------------------------------------------
+
+typedef enum {
+    TOK_WORD,       // Regular word (whitespace-separated)
+    TOK_CHOICES,    // (value1|value2)
+    TOK_MEMBERS,    // {key1|key2}
+    TOK_COMPLETER,  // `completer`
+    TOK_BOOL,       // @bool
+    TOK_DESC,       // # description (rest of line)
+    TOK_END         // End of tokens
+} TokenType;
+
+typedef struct {
+    TokenType type;
+    char *value;    // Owned copy of token content (without delimiters)
+} Token;
+
+typedef struct {
+    Token *tokens;
+    size_t count;
+    size_t capacity;
+} TokenList;
+
+static void token_list_init(TokenList *tl) {
+    tl->capacity = 8;
+    tl->tokens = malloc(tl->capacity * sizeof(Token));
+    tl->count = 0;
+}
+
+static void token_list_add(TokenList *tl, TokenType type, const char *start, size_t len) {
+    if (tl->count >= tl->capacity) {
+        tl->capacity *= 2;
+        tl->tokens = realloc(tl->tokens, tl->capacity * sizeof(Token));
+    }
+    Token *t = &tl->tokens[tl->count++];
+    t->type = type;
+    t->value = malloc(len + 1);
+    memcpy(t->value, start, len);
+    t->value[len] = '\0';
+}
+
+static void token_list_free(TokenList *tl) {
+    for (size_t i = 0; i < tl->count; i++) {
+        free(tl->tokens[i].value);
+    }
+    free(tl->tokens);
+}
+
+// Tokenize a line in the new schema format
+// Returns false on error (unmatched delimiters)
+static bool tokenize_line(const char *line, TokenList *tl, const char *path, int line_num) {
+    token_list_init(tl);
+    const char *p = line;
+
+    while (*p) {
+        // Skip whitespace
+        while (*p == ' ' || *p == '\t') p++;
+        if (!*p) break;
+
+        // Check for description (# outside delimiters)
+        if (*p == '#') {
+            p++;  // Skip #
+            while (*p == ' ' || *p == '\t') p++;  // Skip leading whitespace after #
+            size_t len = strlen(p);
+            // Trim trailing whitespace
+            while (len > 0 && (p[len-1] == ' ' || p[len-1] == '\t' || p[len-1] == '\r' || p[len-1] == '\n')) len--;
+            token_list_add(tl, TOK_DESC, p, len);
+            break;  // Description consumes rest of line
+        }
+
+        // Check for choices: (...)
+        if (*p == '(') {
+            const char *start = p + 1;
+            int depth = 1;
+            p++;
+            while (*p && depth > 0) {
+                if (*p == '(') depth++;
+                else if (*p == ')') depth--;
+                if (depth > 0) p++;
+            }
+            if (depth != 0) {
+                fprintf(stderr, "%s:%d: error: unmatched '(' in choices\n", path, line_num);
+                token_list_free(tl);
+                return false;
+            }
+            token_list_add(tl, TOK_CHOICES, start, p - start);
+            p++;  // Skip closing )
+            continue;
+        }
+
+        // Check for members: {...}
+        if (*p == '{') {
+            const char *start = p + 1;
+            int depth = 1;
+            p++;
+            while (*p && depth > 0) {
+                if (*p == '{') depth++;
+                else if (*p == '}') depth--;
+                if (depth > 0) p++;
+            }
+            if (depth != 0) {
+                fprintf(stderr, "%s:%d: error: unmatched '{' in members\n", path, line_num);
+                token_list_free(tl);
+                return false;
+            }
+            token_list_add(tl, TOK_MEMBERS, start, p - start);
+            p++;  // Skip closing }
+            continue;
+        }
+
+        // Check for completer: `...`
+        if (*p == '`') {
+            const char *start = p + 1;
+            p++;
+            while (*p && *p != '`') p++;
+            if (*p != '`') {
+                fprintf(stderr, "%s:%d: error: unmatched '`' in completer\n", path, line_num);
+                token_list_free(tl);
+                return false;
+            }
+            token_list_add(tl, TOK_COMPLETER, start, p - start);
+            p++;  // Skip closing `
+            continue;
+        }
+
+        // Check for @bool keyword
+        if (*p == '@') {
+            const char *start = p;
+            p++;
+            while (*p && *p != ' ' && *p != '\t' && *p != '#') p++;
+            size_t len = p - start;
+            if (len == 5 && strncmp(start, "@bool", 5) == 0) {
+                token_list_add(tl, TOK_BOOL, "bool", 4);
+            } else {
+                // Unknown @ keyword, treat as word
+                token_list_add(tl, TOK_WORD, start, len);
+            }
+            continue;
+        }
+
+        // Regular word (until whitespace or # or special delimiter)
+        const char *start = p;
+        while (*p && *p != ' ' && *p != '\t' && *p != '#' && *p != '(' && *p != '{' && *p != '`') p++;
+        if (p > start) {
+            token_list_add(tl, TOK_WORD, start, p - start);
+        }
+    }
+
+    return true;
+}
+
+// Trim trailing whitespace
+static void trim_trailing(char *s) {
+    size_t len = strlen(s);
+    while (len > 0 && (s[len-1] == ' ' || s[len-1] == '\t' || s[len-1] == '\r' || s[len-1] == '\n')) {
+        s[--len] = '\0';
+    }
+}
+
+// Parse option spec and extract long/short options
+// Format: --long|-s, --long, -s, --long|--alias, etc.
+// Aliases separated by |, first of each type (short=2 chars, long=other) used
+static void parse_option_spec(const char *spec, char **long_opt, char **short_opt) {
+    static char long_buf[256];
+    static char short_buf[8];
+    *long_opt = NULL;
+    *short_opt = NULL;
+
+    char *copy = strdup(spec);
+    char *saveptr;
+    char *token = strtok_r(copy, "|", &saveptr);
+    while (token) {
+        size_t len = strlen(token);
+        if (len >= 2 && token[0] == '-') {
+            if (len == 2) {
+                // Short option: exactly 2 chars like -s
+                if (!*short_opt && len < sizeof(short_buf)) {
+                    strcpy(short_buf, token);
+                    *short_opt = short_buf;
+                }
+            } else {
+                // Long option: -foo, --foo, or longer
+                if (!*long_opt && len < sizeof(long_buf)) {
+                    strcpy(long_buf, token);
+                    *long_opt = long_buf;
+                }
+            }
+        }
+        token = strtok_r(NULL, "|", &saveptr);
+    }
+    free(copy);
+}
+
+// Parse param line in new format:
+//   --long-option|-s @bool # description
+//   --long-option|-s (choice1|choice2) # description
+//   --long-option {key1|key2} # description
+//   --long-option `completer` # description
+//
+// Tokens: option_spec [@bool | (choices) | {members} | `completer`] [# description]
+static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current_cmd, const char *path, int line_num) {
+    TokenList tl;
+    if (!tokenize_line(line, &tl, path, line_num)) {
+        return false;
+    }
+
+    if (tl.count == 0) {
+        token_list_free(&tl);
+        return false;
+    }
+
+    // First token must be option spec
+    if (tl.tokens[0].type != TOK_WORD || tl.tokens[0].value[0] != '-') {
+        token_list_free(&tl);
+        return false;
+    }
+
+    char *long_opt = NULL;
+    char *short_opt = NULL;
+    parse_option_spec(tl.tokens[0].value, &long_opt, &short_opt);
+
+    ParamEntry pe;
+    pe.name_off = long_opt ? strtab_add(&bg->strtab, long_opt) : 0;
+    pe.short_off = short_opt ? strtab_add(&bg->strtab, short_opt) : 0;
+    pe.desc_off = 0;
+    pe.flags = 0;
+    pe.choices_idx = (uint32_t)-1;
+
+    bool is_bool = false;
+    bool has_type = false;
+
+    // Process remaining tokens
+    for (size_t i = 1; i < tl.count; i++) {
+        Token *t = &tl.tokens[i];
+        switch (t->type) {
+            case TOK_BOOL:
+                is_bool = true;
+                has_type = true;
+                break;
+            case TOK_CHOICES: {
+                size_t idx = add_choices_from_string(bg, t->value);
+                if (idx != (size_t)-1) {
+                    pe.choices_idx = (uint32_t)idx;
+                    pe.flags |= FLAG_TAKES_VALUE;
+                }
+                has_type = true;
+                break;
+            }
+            case TOK_MEMBERS: {
+                // Wrap in braces for add_members_from_string
+                char *wrapped = malloc(strlen(t->value) + 3);
+                sprintf(wrapped, "{%s}", t->value);
+                size_t idx = add_members_from_string(bg, wrapped);
+                free(wrapped);
+                if (idx != (size_t)-1) {
+                    pe.choices_idx = (uint32_t)idx;
+                    pe.flags |= FLAG_IS_MEMBERS | FLAG_TAKES_VALUE;
+                }
+                has_type = true;
+                break;
+            }
+            case TOK_COMPLETER:
+                pe.choices_idx = strtab_add(&bg->strtab, t->value);
+                pe.flags |= FLAG_IS_COMPLETER | FLAG_TAKES_VALUE;
+                has_type = true;
+                break;
+            case TOK_DESC:
+                pe.desc_off = strtab_add_desc(bg, t->value);
+                break;
+            case TOK_WORD:
+                // Ignore unknown words
+                break;
+            case TOK_END:
+                break;
+        }
+    }
+
+    // Validation: @bool cannot combine with choices/members/completer
+    if (is_bool && (pe.flags & (FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER))) {
+        fprintf(stderr, "%s:%d: warning: @bool cannot combine with choices/members/completer\n", path, line_num);
+    }
+
+    // If no type specified and not bool, default to takes value
+    if (!is_bool && !has_type) {
+        pe.flags |= FLAG_TAKES_VALUE;
+    }
+
+    if (current_cmd) {
+        node_add_param(current_cmd, &pe);
+    }
+
+    token_list_free(&tl);
+    return true;
+}
+
+// Load file contents
+static char *load_file(const char *path) {
     FILE *f = fopen(path, "r");
-    if (!f) { perror(path); return false; }
+    if (!f) { perror(path); return NULL; }
     fseek(f, 0, SEEK_END);
     long size = ftell(f);
     fseek(f, 0, SEEK_SET);
-    char *js = malloc(size + 1);
-    size_t nread = fread(js, 1, size, f);
-    js[nread] = '\0';
+    char *content = malloc(size + 1);
+    size_t nread = fread(content, 1, size, f);
+    content[nread] = '\0';
     fclose(f);
+    return content;
+}
 
-    jsmn_parser parser;
-    jsmn_init(&parser);
-    int num_tokens = jsmn_parse(&parser, js, nread, NULL, 0);
-    if (num_tokens < 0) {
-        fprintf(stderr, "JSON parse error: %d\n", num_tokens);
-        free(js);
+// Main TSV parser - indentation-based format
+// First depth-0 command is the root/CLI name; its description is the root description
+// All subsequent commands are children of this root
+static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, char **out_root_desc) {
+    char *content = load_file(path);
+    if (!content) return false;
+
+    char *line = content;
+    int line_num = 0;
+    bool seen_root = false;
+    int current_depth = 0;
+
+    // Stack of command nodes by depth (stack[0] = root after first command)
+    CommandNode *stack[MAX_DEPTH];
+    for (int i = 0; i < MAX_DEPTH; i++) stack[i] = NULL;
+
+    while (line && *line) {
+        line_num++;
+
+        // Find end of line
+        char *eol = strchr(line, '\n');
+        if (eol) *eol = '\0';
+
+        // Validation: leading spaces are forbidden
+        if (line[0] == ' ') {
+            fprintf(stderr, "%s:%d: error: leading spaces not allowed, use tabs for indentation\n", path, line_num);
+            free(content);
+            return false;
+        }
+
+        int tabs = count_leading_tabs(line);
+        char *content_start = line + tabs;
+
+        trim_trailing(content_start);
+
+        // Skip empty lines and comment lines (# only)
+        if (!*content_start || content_start[0] == '#') {
+            line = eol ? eol + 1 : NULL;
+            continue;
+        }
+
+        // Handle parameter lines
+        if (content_start[0] == '-' && content_start[1] == '-') {
+            if (!seen_root) {
+                // Parameters before root command are not allowed
+                fprintf(stderr, "%s:%d: error: parameters must come after the root command; define them on the root command instead\n", path, line_num);
+                free(content);
+                return false;
+            }
+            // Param at depth N belongs to command at depth N-1
+            // (params are indented one level under their command)
+            if (tabs == 0) {
+                fprintf(stderr, "%s:%d: error: parameter after root command must be indented\n", path, line_num);
+                free(content);
+                return false;
+            }
+            if (tabs > current_depth + 1) {
+                fprintf(stderr, "%s:%d: error: parameter indentation (%d) too deep for current command depth (%d)\n",
+                        path, line_num, tabs, current_depth);
+                free(content);
+                return false;
+            }
+            CommandNode *target = stack[tabs - 1];
+            if (!target) {
+                fprintf(stderr, "%s:%d: error: no command at depth %d for parameter\n", path, line_num, tabs - 1);
+                free(content);
+                return false;
+            }
+            parse_param_line(bg, content_start, target, path, line_num);
+            line = eol ? eol + 1 : NULL;
+            continue;
+        }
+
+        // Command line: name [# description]
+        // Validate that line starts with a valid command name character (alphanumeric or _)
+        char c = content_start[0];
+        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+              (c >= '0' && c <= '9') || c == '_')) {
+            fprintf(stderr, "%s:%d: error: unexpected character '%c'; expected command name, parameter (--), or comment (#)\n",
+                    path, line_num, c);
+            free(content);
+            return false;
+        }
+
+        // Parse command name and description using tokenizer
+        TokenList cmd_tl;
+        if (!tokenize_line(content_start, &cmd_tl, path, line_num)) {
+            free(content);
+            return false;
+        }
+        const char *cmd_name = NULL;
+        const char *cmd_desc = NULL;
+        for (size_t i = 0; i < cmd_tl.count; i++) {
+            if (cmd_tl.tokens[i].type == TOK_WORD && !cmd_name) {
+                cmd_name = cmd_tl.tokens[i].value;
+            } else if (cmd_tl.tokens[i].type == TOK_DESC) {
+                cmd_desc = cmd_tl.tokens[i].value;
+            }
+        }
+        if (!cmd_name) {
+            token_list_free(&cmd_tl);
+            line = eol ? eol + 1 : NULL;
+            continue;
+        }
+
+        if (!seen_root) {
+            // First depth-0 command is the root
+            if (tabs != 0) {
+                fprintf(stderr, "%s:%d: error: first command must be at depth 0 (the root/CLI name)\n", path, line_num);
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
+            }
+            seen_root = true;
+            current_depth = 0;
+
+            // Set root name and description
+            free(root->name);
+            root->name = strdup(cmd_name);
+            if (cmd_desc && *cmd_desc && out_root_desc) {
+                *out_root_desc = strdup(cmd_desc);
+            }
+            stack[0] = root;
+        } else {
+            // Subsequent commands
+            // Validation: indentation can only increase by 1
+            if (tabs > current_depth + 1) {
+                fprintf(stderr, "%s:%d: error: indentation increased by more than 1 level (from %d to %d)\n",
+                        path, line_num, current_depth, tabs);
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
+            }
+            if (tabs == 0) {
+                fprintf(stderr, "%s:%d: error: only one root command allowed; subsequent commands must be indented\n",
+                        path, line_num);
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
+            }
+
+            current_depth = tabs;
+
+            // Get parent node
+            CommandNode *parent = stack[tabs - 1];
+            if (!parent) {
+                fprintf(stderr, "%s:%d: error: no parent command at depth %d\n", path, line_num, tabs - 1);
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
+            }
+
+            // Get or create child node
+            CommandNode *node = node_get_child(parent, cmd_name);
+            if (!node) {
+                node = node_add_child(parent, cmd_name);
+            }
+            if (cmd_desc && *cmd_desc) {
+                free(node->description);
+                node->description = strdup(cmd_desc);
+            }
+            stack[tabs] = node;
+
+            // Clear deeper stack entries
+            for (int i = tabs + 1; i < MAX_DEPTH; i++) stack[i] = NULL;
+
+            // Track command path length for buffer sizing
+            // Calculate full path length by walking up the stack (excluding root)
+            size_t path_len = strlen(cmd_name);
+            for (int i = tabs - 1; i >= 1; i--) {
+                if (stack[i] && stack[i]->name[0]) {
+                    path_len += 1 + strlen(stack[i]->name); // +1 for space
+                }
+            }
+            track_command_path_len(bg, path_len);
+        }
+
+        token_list_free(&cmd_tl);
+        line = eol ? eol + 1 : NULL;
+    }
+
+    if (!seen_root) {
+        fprintf(stderr, "%s: error: no root command found\n", path);
+        free(content);
         return false;
     }
 
-    jsmntok_t *tokens = malloc(num_tokens * sizeof(jsmntok_t));
-    jsmn_init(&parser);
-    int r = jsmn_parse(&parser, js, nread, tokens, num_tokens);
-    if (r < 0) {
-        fprintf(stderr, "JSON parse error: %d\n", r);
-        free(js);
-        free(tokens);
-        return false;
-    }
+    free(content);
 
-    *out_js = js;
-    *out_tokens = tokens;
-    *out_count = num_tokens;
+    // Sort params alphabetically within each depth level
+    sort_node_params(bg, root);
+
     return true;
 }
 
@@ -1031,19 +1309,41 @@ static bool load_json_file(const char *path, char **out_js, jsmntok_t **out_toke
 // Schema name extraction
 // --------------------------------------------------------------------------
 
+// Extract schema name from first depth-0 command (the root/CLI name)
 char *get_schema_name(const char *schema_path) {
-    char *js = NULL;
-    jsmntok_t *tokens = NULL;
-    int num_tokens = 0;
-    if (!load_json_file(schema_path, &js, &tokens, &num_tokens)) return NULL;
+    char *content = load_file(schema_path);
+    if (!content) return NULL;
 
     char *result = NULL;
-    int name_idx = obj_get(js, tokens, 0, "name");
-    if (name_idx < 0) name_idx = obj_get(js, tokens, 0, "cli");
-    if (name_idx >= 0) result = tok_strdup(js, &tokens[name_idx]);
+    char *line = content;
 
-    free(js);
-    free(tokens);
+    while (line && *line && !result) {
+        char *eol = strchr(line, '\n');
+        if (eol) *eol = '\0';
+
+        // Skip lines with leading tabs (not depth 0)
+        if (line[0] == '\t') {
+            line = eol ? eol + 1 : NULL;
+            continue;
+        }
+
+        trim_trailing(line);
+
+        // Skip empty lines, comments, and params
+        if (!*line || line[0] == '#' || (line[0] == '-' && line[1] == '-')) {
+            line = eol ? eol + 1 : NULL;
+            continue;
+        }
+
+        // First depth-0 non-param non-comment line is the root command
+        // Extract just the name (first word before space, tab, or #)
+        const char *p = line;
+        while (*p && *p != ' ' && *p != '\t' && *p != '#') p++;
+        result = strndup(line, p - line);
+        break;
+    }
+
+    free(content);
     return result;
 }
 
@@ -1051,132 +1351,57 @@ char *get_schema_name(const char *schema_path) {
 // Main blob generation
 // --------------------------------------------------------------------------
 
-bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, bool no_descriptions, bool long_descriptions) {
-    char *js = NULL;
-    jsmntok_t *tokens = NULL;
-    int num_tokens = 0;
-    if (!load_json_file(schema_path, &js, &tokens, &num_tokens)) return false;
-
+bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     BlobGen bg;
-    blobgen_init(&bg, big_endian, no_descriptions, long_descriptions);
+    blobgen_init(&bg, big_endian, desc_mode, desc_max_len);
 
-    int commands_idx = obj_get(js, tokens, 0, "commands");
-    if (commands_idx < 0 || tokens[commands_idx].type != JSMN_ARRAY) {
-        fprintf(stderr, "Schema must have 'commands' array\n");
+    CommandNode *root = node_create("");
+    char *root_desc = NULL;
+
+    if (!parse_tsv_schema(schema_path, &bg, root, &root_desc)) {
+        node_free(root);
+        blobgen_free(&bg);
         return false;
     }
 
-    CommandNode *tree = build_command_tree(js, tokens, commands_idx);
-    sort_children(tree);
-    IdxCount top_level = collect_commands(&bg, js, tokens, tree);
+    sort_children(root);
 
-    // Root params
-    char *version_name = obj_get_str(js, tokens, 0, "version_param_name");
-    char *version_desc = obj_get_str(js, tokens, 0, "version_param_desc");
-    char *root_desc = obj_get_str(js, tokens, 0, "root_desc");
-    if (!version_name[0]) { free(version_name); version_name = strdup("version"); }
-    if (!version_desc[0]) { free(version_desc); version_desc = strdup("Show version"); }
-    if (!root_desc[0]) { free(root_desc); root_desc = strdup("CLI"); }
+    IdxCount top_level = collect_commands(&bg, root);
 
-    uint32_t version_name_off = strtab_add(&bg.strtab, version_name);
-    uint32_t version_desc_off = strtab_add_desc_ex(&bg, version_desc, false);
-    uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc, false);
-    free(version_name); free(version_desc); free(root_desc);
+    // Collect root's own params (these inherit to all children, so they're the "global" params)
+    IdxCount root_params = collect_params_from_node(&bg, root);
 
-    uint32_t root_params_idx = (uint32_t)bg.params_count;
-    if (bg.params_count + 1 > bg.params_cap) {
-        bg.params_cap *= 2;
-        bg.params = realloc(bg.params, bg.params_cap * sizeof(ParamEntry));
-    }
-    ParamEntry *ver_param = &bg.params[bg.params_count++];
-    ver_param->name_off = version_name_off;
-    ver_param->short_off = 0;
-    ver_param->desc_off = version_desc_off;
-    ver_param->choices_idx = (uint32_t)-1;
-    ver_param->flags = 0;
+    // Root description
+    uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc ? root_desc : "CLI", false);
 
-    // Global params
-    int global_params_idx = obj_get(js, tokens, 0, "global_params");
-    if (global_params_idx >= 0 && tokens[global_params_idx].type == JSMN_ARRAY) {
-        int gp_count = arr_size(tokens, global_params_idx);
-        int gp_idx = arr_first(tokens, global_params_idx);
-        for (int i = 0; i < gp_count; i++) {
-            char *name = obj_get_str(js, tokens, gp_idx, "name");
-            char *desc = obj_get_str(js, tokens, gp_idx, "description");
-            int tv_idx = obj_get(js, tokens, gp_idx, "takes_value");
-            bool takes_value = tv_idx >= 0 && tok_is_true(js, &tokens[tv_idx]);
-
-            char *long_opt = NULL, *short_opt = NULL;
-            if (strchr(name, ' ')) {
-                char *copy = strdup(name);
-                char *tok = strtok(copy, " ");
-                while (tok) {
-                    if (strncmp(tok, "--", 2) == 0) { free(long_opt); long_opt = strdup(tok); }
-                    else if (tok[0] == '-' && strlen(tok) == 2) { free(short_opt); short_opt = strdup(tok); }
-                    tok = strtok(NULL, " ");
-                }
-                free(copy);
-            } else {
-                long_opt = strdup(name);
-            }
-
-            if (bg.global_params_count >= bg.global_params_cap) {
-                bg.global_params_cap *= 2;
-                bg.global_params = realloc(bg.global_params, bg.global_params_cap * sizeof(ParamEntry));
-            }
-            ParamEntry *pe = &bg.global_params[bg.global_params_count++];
-            pe->name_off = strtab_add(&bg.strtab, long_opt ? long_opt : name);
-            pe->short_off = short_opt ? strtab_add(&bg.strtab, short_opt) : 0;
-            pe->desc_off = strtab_add_desc(&bg, desc);
-            pe->flags = takes_value ? FLAG_TAKES_VALUE : 0;
-            pe->choices_idx = (uint32_t)-1;
-
-            int choices_idx = obj_get(js, tokens, gp_idx, "choices");
-            if (choices_idx >= 0 && tokens[choices_idx].type == JSMN_ARRAY) {
-                pe->choices_idx = (uint32_t)get_choices_index(&bg, js, tokens, choices_idx);
-            }
-
-            free(long_opt); free(short_opt); free(name); free(desc);
-            gp_idx = tok_skip(tokens, gp_idx);
-        }
-    }
-
-    // Sort global params by name for binary search in completer
-    if (bg.global_params_count > 1) {
-        sort_strtab = &bg.strtab;
-        qsort(bg.global_params, bg.global_params_count, sizeof(ParamEntry), cmp_params);
-    }
-
-    // Check for integer overflow in counts (process will exit on error, no need to free)
+    // Check for integer overflow in counts
     if (bg.commands_count > 65535) {
         fprintf(stderr, "Too many commands: %zu (max 65535)\n", bg.commands_count);
+        node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
-    // params_idx is u32, so limit is much higher (params_count per command is still u16)
-    if (bg.params_count > 16777215) {  // 2^24 - reasonable limit
+    if (bg.params_count > 16777215) {
         fprintf(stderr, "Too many params: %zu (max 16777215)\n", bg.params_count);
+        node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
-    if (bg.global_params_count > 65535) {
-        fprintf(stderr, "Too many global params: %zu (max 65535)\n", bg.global_params_count);
-        return false;
-    }
-    // Combined string table size (hot + cold for descriptions)
+
     size_t total_strtab_size = bg.strtab.data_len + bg.desc_strtab.data_len;
     if (total_strtab_size > UINT32_MAX) {
         fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
+        node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
 
     size_t commands_size = bg.commands_count * COMMAND_SIZE;
     size_t params_size = bg.params_count * PARAM_SIZE;
-    size_t global_params_size = bg.global_params_count * PARAM_SIZE;
-    // Variable-length count: u8 for <255, 0xFF + u16 for >=255
+
     size_t choices_size = 0;
     for (size_t i = 0; i < bg.choices_count; i++) {
         size_t count = bg.choices_lists[i].count;
         if (count > 65535) {
             fprintf(stderr, "Choice list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
         choices_size += (count < 255 ? 1 : 3) + count * 4;
@@ -1186,6 +1411,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         size_t count = bg.members_lists[i].count;
         if (count > 65535) {
             fprintf(stderr, "Member list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
         members_size += (count < 255 ? 1 : 3) + count * 4;
@@ -1196,11 +1422,9 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     uint32_t params_off = commands_off + (uint32_t)commands_size;
     uint32_t choices_off = params_off + (uint32_t)params_size;
     uint32_t members_off = choices_off + (uint32_t)choices_size;
-    uint32_t global_params_off = members_off + (uint32_t)members_size;
-    uint32_t root_command_off = global_params_off + (uint32_t)global_params_size;
+    uint32_t root_command_off = members_off + (uint32_t)members_size;
     size_t total_size = root_command_off + COMMAND_SIZE;
 
-    // Calculate blob offsets for each choice/member list (variable-length count)
     uint32_t *choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
     uint32_t offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
@@ -1221,30 +1445,26 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     write_u16(blob + 4, BLOB_VERSION, big_endian);
     uint16_t flags = 0;
     if (big_endian) flags |= HEADER_FLAG_BIG_ENDIAN;
-    if (no_descriptions || !bg.has_any_descriptions) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
+    if (desc_mode == DESC_NONE || !bg.has_any_descriptions) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
     write_u16(blob + 6, flags, big_endian);
     write_u32(blob + 8, (uint32_t)bg.max_command_path_len + 1, big_endian);
     write_u32(blob + 12, (uint32_t)bg.commands_count, big_endian);
     write_u32(blob + 16, (uint32_t)bg.params_count, big_endian);
-    write_u32(blob + 20, (uint32_t)bg.global_params_count, big_endian);
-    write_u32(blob + 24, (uint32_t)total_strtab_size, big_endian);
-    write_u32(blob + 28, (uint32_t)bg.choices_count, big_endian);
-    write_u32(blob + 32, (uint32_t)bg.members_count, big_endian);
-    write_u32(blob + 36, string_table_off, big_endian);
-    write_u32(blob + 40, commands_off, big_endian);
-    write_u32(blob + 44, params_off, big_endian);
-    write_u32(blob + 48, choices_off, big_endian);
-    write_u32(blob + 52, members_off, big_endian);
-    write_u32(blob + 56, global_params_off, big_endian);
-    write_u32(blob + 60, root_command_off, big_endian);
+    write_u32(blob + 20, (uint32_t)total_strtab_size, big_endian);
+    write_u32(blob + 24, (uint32_t)bg.choices_count, big_endian);
+    write_u32(blob + 28, (uint32_t)bg.members_count, big_endian);
+    write_u32(blob + 32, string_table_off, big_endian);
+    write_u32(blob + 36, commands_off, big_endian);
+    write_u32(blob + 40, params_off, big_endian);
+    write_u32(blob + 44, choices_off, big_endian);
+    write_u32(blob + 48, members_off, big_endian);
+    write_u32(blob + 52, root_command_off, big_endian);
 
-    // Write hot string table (names, choices, etc.)
+    // Write hot string table
     memcpy(blob + string_table_off, bg.strtab.data, bg.strtab.data_len);
-    // Write cold string table (descriptions) - at the end for better page locality
+    // Write cold string table (descriptions)
     memcpy(blob + string_table_off + bg.strtab.data_len, bg.desc_strtab.data, bg.desc_strtab.data_len);
 
-    // Description offsets need adjustment: they're offsets into the cold table,
-    // but need to be relative to string_table_off (which points to hot table start)
     uint32_t desc_off_adjust = (uint32_t)bg.strtab.data_len;
 
     offset = commands_off;
@@ -1267,7 +1487,6 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         uint32_t choices_off_val = 0;
         if (pe->choices_idx != (uint32_t)-1) {
             if (pe->flags & FLAG_IS_COMPLETER) {
-                // Completer: choices_idx is already a string table offset
                 choices_off_val = pe->choices_idx;
             } else if (pe->flags & FLAG_IS_MEMBERS) {
                 choices_off_val = members_offsets[pe->choices_idx];
@@ -1283,7 +1502,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         offset += PARAM_SIZE;
     }
 
-    // Write choices lists (variable-length count: u8 if <255, else 0xFF + u16)
+    // Write choices lists
     offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
         StringList *sl = &bg.choices_lists[i];
@@ -1296,7 +1515,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
     }
 
-    // Write members lists (variable-length count: u8 if <255, else 0xFF + u16)
+    // Write members lists
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         StringList *sl = &bg.members_lists[i];
@@ -1309,34 +1528,25 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         for (size_t j = 0; j < sl->count; j++) { write_u32(blob + offset, sl->offsets[j], big_endian); offset += 4; }
     }
 
-    offset = global_params_off;
-    for (size_t i = 0; i < bg.global_params_count; i++) {
-        ParamEntry *pe = &bg.global_params[i];
-        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adjust : 0;
-        uint32_t choices_off_val = (pe->choices_idx != (uint32_t)-1) ? choices_offsets[pe->choices_idx] : 0;
-        write_u32(blob + offset, pe->name_off, big_endian);
-        write_u32(blob + offset + 4, pe->short_off, big_endian);
-        write_u32(blob + offset + 8, adj_desc_off, big_endian);
-        write_u32(blob + offset + 12, choices_off_val, big_endian);
-        blob[offset + 16] = pe->flags;
-        offset += PARAM_SIZE;
-    }
-
     uint32_t adj_root_desc_off = root_desc_off ? root_desc_off + desc_off_adjust : 0;
     write_u32(blob + root_command_off, 0, big_endian);
     write_u32(blob + root_command_off + 4, adj_root_desc_off, big_endian);
-    write_u32(blob + root_command_off + 8, root_params_idx, big_endian);
+    write_u32(blob + root_command_off + 8, root_params.idx, big_endian);
     write_u16(blob + root_command_off + 12, top_level.idx, big_endian);
-    write_u16(blob + root_command_off + 14, 1, big_endian);
+    write_u16(blob + root_command_off + 14, root_params.count, big_endian);
     write_u16(blob + root_command_off + 16, top_level.count, big_endian);
 
     FILE *out = fopen(output_path, "wb");
     if (!out) {
         perror(output_path);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(blob); free(choices_offsets); free(members_offsets);
         return false;
     }
     if (fwrite(blob, 1, total_size, out) != total_size) {
         perror(output_path);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(blob); free(choices_offsets); free(members_offsets);
         return false;
     }
     fclose(out);
@@ -1344,13 +1554,12 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     fprintf(stderr, "Generated %s (%zu bytes)\n", output_path, total_size);
     fprintf(stderr, "  Commands: %zu\n", bg.commands_count);
     fprintf(stderr, "  Params: %zu\n", bg.params_count);
-    fprintf(stderr, "  Global params: %zu\n", bg.global_params_count);
     fprintf(stderr, "  Choices lists: %zu\n", bg.choices_count);
     fprintf(stderr, "  Members lists: %zu\n", bg.members_count);
     fprintf(stderr, "  String table: %zu bytes (hot: %zu, cold: %zu)\n",
             total_strtab_size, bg.strtab.data_len, bg.desc_strtab.data_len);
 
     free(blob); free(choices_offsets); free(members_offsets);
-    node_free(tree); free(js); free(tokens); blobgen_free(&bg);
+    node_free(root); blobgen_free(&bg); free(root_desc);
     return true;
 }

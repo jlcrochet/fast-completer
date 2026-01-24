@@ -3,17 +3,17 @@
 Dump fast-completer binary blob to human-readable format for validation.
 
 Usage:
-    python dump_blob.py commands.bin
-    python dump_blob.py commands.bin --section header
-    python dump_blob.py commands.bin --section tree
-    python dump_blob.py commands.bin --command 100
-    python dump_blob.py commands.bin --command "s3 cp"
-    python dump_blob.py commands.bin --param 500
-    python dump_blob.py commands.bin --string 1234
-    python dump_blob.py commands.bin --choices 8823963
-    python dump_blob.py commands.bin --find "bucket"
-    python dump_blob.py commands.bin --range commands:0:20
-    python dump_blob.py commands.bin --format json
+    python dump_blob.py commands.fcmpb
+    python dump_blob.py commands.fcmpb --section header
+    python dump_blob.py commands.fcmpb --section tree
+    python dump_blob.py commands.fcmpb --command 100
+    python dump_blob.py commands.fcmpb --command "s3 cp"
+    python dump_blob.py commands.fcmpb --param 500
+    python dump_blob.py commands.fcmpb --string 1234
+    python dump_blob.py commands.fcmpb --choices 8823963
+    python dump_blob.py commands.fcmpb --find "bucket"
+    python dump_blob.py commands.fcmpb --range commands:0:20
+    python dump_blob.py commands.fcmpb --format json
 """
 
 import argparse
@@ -25,8 +25,8 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 7
-HEADER_SIZE = 64
+VERSION = 9
+HEADER_SIZE = 56
 PARAM_SIZE = 17
 COMMAND_SIZE = 18
 
@@ -53,7 +53,7 @@ class BlobReader:
         if len(self.data) < HEADER_SIZE:
             raise ValueError(f"Blob too small: {len(self.data)} bytes (need at least {HEADER_SIZE})")
 
-        values = struct.unpack_from('<4sHHIIIIIIIIIIIIII', self.data, 0)
+        values = struct.unpack_from('<4sHHIIIIIIIIIIII', self.data, 0)
 
         magic = values[0]
         if magic != MAGIC:
@@ -70,17 +70,15 @@ class BlobReader:
             'max_command_path_len': values[3],
             'command_count': values[4],
             'param_count': values[5],
-            'global_param_count': values[6],
-            'string_table_size': values[7],
-            'choices_count': values[8],
-            'members_count': values[9],
-            'string_table_off': values[10],
-            'commands_off': values[11],
-            'params_off': values[12],
-            'choices_off': values[13],
-            'members_off': values[14],
-            'global_params_off': values[15],
-            'root_command_off': values[16],
+            'string_table_size': values[6],
+            'choices_count': values[7],
+            'members_count': values[8],
+            'string_table_off': values[9],
+            'commands_off': values[10],
+            'params_off': values[11],
+            'choices_off': values[12],
+            'members_off': values[13],
+            'root_command_off': values[14],
         }
 
     def get_string(self, offset):
@@ -248,37 +246,6 @@ class BlobReader:
         params = []
         for i in range(start, min(end, self.header['param_count'])):
             params.append(self.get_param_by_index(i))
-        return params
-
-    def get_global_params(self):
-        """Get global params as a list of dicts."""
-        params = []
-        offset = self.header['global_params_off']
-        for i in range(self.header['global_param_count']):
-            param = self.read_param(offset)
-            param['index'] = i
-            param['offset'] = offset
-            param['name'] = self.get_string(param['name_off'])
-            param['short'] = self.get_string(param['short_off']) if param['short_off'] else None
-            param['description'] = self.get_string(param['desc_off'])
-            param['takes_value'] = bool(param['flags'] & FLAG_TAKES_VALUE)
-            param['is_members'] = bool(param['flags'] & FLAG_IS_MEMBERS)
-            param['is_completer'] = bool(param['flags'] & FLAG_IS_COMPLETER)
-
-            if param['choices_off'] != 0:
-                if param['is_completer']:
-                    param['completer'] = self.get_string(param['choices_off'])
-                    param['choices_or_members'] = None
-                else:
-                    str_offsets = self.read_string_offsets(param['choices_off'])
-                    param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
-                    param['completer'] = None
-            else:
-                param['choices_or_members'] = None
-                param['completer'] = None
-
-            params.append(param)
-            offset += PARAM_SIZE
         return params
 
     def get_root_command(self):
@@ -458,23 +425,6 @@ def dump_text(reader, section=None):
         lines.append(f"  subcommands_idx: {root['subcommands_idx']}")
         lines.append("")
 
-    if section is None or section == 'global':
-        lines.append("=== GLOBAL PARAMS ===")
-        for param in reader.get_global_params():
-            if param['name_off'] == 0:
-                continue
-            flags = []
-            if param['takes_value']:
-                flags.append("takes_value")
-            if param['choices_or_members']:
-                kind = "members" if param['is_members'] else "choices"
-                flags.append(f"{kind}={param['choices_or_members']}")
-            flag_str = f" [{', '.join(flags)}]" if flags else ""
-            lines.append(f"  {param['name']}{flag_str}")
-            if param['description']:
-                lines.append(f"    # {param['description'][:70]}")
-        lines.append("")
-
     if section is None or section == 'tree':
         lines.append("=== COMMAND TREE ===")
         root = reader.get_root_command()
@@ -518,7 +468,6 @@ def dump_json(reader):
     return json.dumps({
         'header': reader.header,
         'root': reader.get_root_command(),
-        'global_params': reader.get_global_params(),
         'commands': reader.get_commands(),
         'params': reader.get_params(),
     }, indent=2)
@@ -530,24 +479,24 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s blob.bin                      # Dump all sections
-  %(prog)s blob.bin -s header            # Dump only header
-  %(prog)s blob.bin -s tree              # Dump command tree
-  %(prog)s blob.bin --command 100        # Dump command at index 100
-  %(prog)s blob.bin --command "s3 cp"    # Dump command by path
-  %(prog)s blob.bin --param 500          # Dump param at index 500
-  %(prog)s blob.bin --string 1234        # Dump string at offset 1234
-  %(prog)s blob.bin --choices 8823963    # Dump choices at offset
-  %(prog)s blob.bin --find bucket        # Find commands/params matching "bucket"
-  %(prog)s blob.bin --range commands:0:20  # Dump commands 0-19
-  %(prog)s blob.bin --range params:100:110 # Dump params 100-109
+  %(prog)s blob.fcmpb                      # Dump all sections
+  %(prog)s blob.fcmpb -s header            # Dump only header
+  %(prog)s blob.fcmpb -s tree              # Dump command tree
+  %(prog)s blob.fcmpb --command 100        # Dump command at index 100
+  %(prog)s blob.fcmpb --command "s3 cp"    # Dump command by path
+  %(prog)s blob.fcmpb --param 500          # Dump param at index 500
+  %(prog)s blob.fcmpb --string 1234        # Dump string at offset 1234
+  %(prog)s blob.fcmpb --choices 8823963    # Dump choices at offset
+  %(prog)s blob.fcmpb --find bucket        # Find commands/params matching "bucket"
+  %(prog)s blob.fcmpb --range commands:0:20  # Dump commands 0-19
+  %(prog)s blob.fcmpb --range params:100:110 # Dump params 100-109
         """
     )
     parser.add_argument('blob_file', type=Path, help='Binary blob file to dump')
     parser.add_argument('--format', '-f', choices=['text', 'json'], default='text',
                         help='Output format (default: text)')
     parser.add_argument('--section', '-s',
-                        choices=['header', 'root', 'global', 'tree', 'commands', 'params'],
+                        choices=['header', 'root', 'tree', 'commands', 'params'],
                         help='Only dump specific section')
     parser.add_argument('--command', '-c', metavar='INDEX_OR_PATH',
                         help='Dump a specific command by index (number) or path (e.g., "s3 cp")')

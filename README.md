@@ -17,10 +17,9 @@ This project provides a single native C binary that can provide completions for 
   - [Example Schemas](#example-schemas)
   - [Inspecting Blobs](#inspecting-blobs)
 - [Schema Format](#schema-format)
-  - [Top-level Properties](#top-level-properties)
-  - [Commands](#commands)
+  - [Directives](#directives)
   - [Parameters](#parameters)
-  - [Global Parameters](#global-parameters)
+  - [Example](#example)
 - [Binary Blob Format](#binary-blob-format)
 - [Shell Integration](#shell-integration)
   - [Bash](#bash)
@@ -77,7 +76,7 @@ fast-completer [options] <format> <spans...>
 
 The CLI name is derived from the first span and used to look up the blob in the cache directory. The last span triggers completions: `""` for subcommands + flags, `-` or `--*` for flags only, `abc...` for matching subcommands. Run `fast-completer --help` for full usage information.
 
-Parameters are sorted with required options first, then optional ones (alphabetically within each group).
+**Parameter ordering:** Parameters are listed with the most specific first—a command's own parameters appear before inherited parameters from parent commands, which appear before global parameters. This means the most relevant options are shown first when completing deeply nested commands.
 
 ### Output Formats
 
@@ -140,11 +139,7 @@ Move-Item fast-completer-windows-x86_64.exe $env:LOCALAPPDATA\Programs\fast-comp
 
 ### From Source
 
-Works on Linux, macOS, and Windows. Requires a C compiler and the vendor submodules:
-
-```bash
-git submodule update --init
-```
+Works on Linux, macOS, and Windows. Requires a C compiler.
 
 #### Linux / macOS
 
@@ -193,35 +188,41 @@ export FAST_COMPLETER_CACHE=~/my-completions
 
 ## Generating Blob Files
 
-Blob files contain the completion data for a specific CLI tool. Generate them from a JSON schema:
+Blob files contain the completion data for a specific CLI tool. Generate them from a schema file:
 
 ```bash
 # Auto-save to cache directory
-fast-completer --generate-blob aws.json
+fast-completer --generate-blob aws.fcmps
 
 # Or specify output path explicitly
-fast-completer --generate-blob aws.json /custom/path/aws.bin
+fast-completer --generate-blob aws.fcmps /custom/path/aws.fcmpb
 ```
 
-The schema must have a `"name"` (or `"cli"`) property specifying the CLI name. This determines the blob filename when auto-saving to cache.
+The CLI name is derived from the first command in the schema (the root command). This determines the blob filename when auto-saving to cache.
 
 ### Generation Options
 
 | Option | Description |
 |--------|-------------|
+| `--short-descriptions` | First sentence only (default) |
+| `--long-descriptions` | Include full descriptions |
 | `--no-descriptions` | Omit descriptions entirely (smallest blob) |
-| `--long-descriptions` | Include full descriptions (default is first sentence) |
 | `--big-endian` | Generate big-endian blob (for cross-compilation) |
+
+If multiple description options are given, the last one wins.
 
 ```bash
 # First sentence descriptions (default)
-fast-completer --generate-blob aws.json
+fast-completer --generate-blob aws.fcmps
+
+# Same as default, but explicit
+fast-completer --generate-blob --short-descriptions aws.fcmps
 
 # Full descriptions
-fast-completer --generate-blob --long-descriptions aws.json
+fast-completer --generate-blob --long-descriptions aws.fcmps
 
 # No descriptions
-fast-completer --generate-blob --no-descriptions aws.json
+fast-completer --generate-blob --no-descriptions aws.fcmps
 ```
 
 | CLI | Default | Long | None |
@@ -237,41 +238,41 @@ The `schemas/` directory contains pre-generated schemas and export scripts for p
 
 | CLI | Schema | Requirements |
 |-----|--------|--------------|
-| AWS CLI | `schemas/aws/aws_commands.json` | `awscli` pip package |
-| Azure CLI | `schemas/az/az_commands.json` | `azure-cli` pip package |
-| gcloud CLI | `schemas/gcloud/gcloud_commands.json` | Google Cloud SDK (system install) |
-| GitHub CLI | `schemas/gh/gh_commands.json` | `gh` CLI (system install) |
+| AWS CLI | `schemas/aws/aws.fcmps` | AWS CLI v2 (official installer, not PyPI) |
+| Azure CLI | `schemas/az/az.fcmps` | `azure-cli` pip package |
+| gcloud CLI | `schemas/gcloud/gcloud.fcmps` | Google Cloud SDK (system install) |
+| GitHub CLI | `schemas/gh/gh.fcmps` | `gh` CLI (system install) |
 
 To use the included schemas:
 
 ```bash
-fast-completer --generate-blob schemas/aws/aws_commands.json
-fast-completer --generate-blob schemas/az/az_commands.json
-fast-completer --generate-blob schemas/gcloud/gcloud_commands.json
-fast-completer --generate-blob schemas/gh/gh_commands.json
+fast-completer --generate-blob schemas/aws/aws.fcmps
+fast-completer --generate-blob schemas/az/az.fcmps
+fast-completer --generate-blob schemas/gcloud/gcloud.fcmps
+fast-completer --generate-blob schemas/gh/gh.fcmps
 ```
 
 To regenerate schemas from the latest CLI version:
 
 ```bash
-# AWS (requires awscli)
+# AWS (requires AWS CLI v2 installed via official installer)
 cd schemas/aws
-uv sync && uv run python export_command_tree.py > aws_commands.json
+python3 export_command_tree.py > aws.fcmps
 
-# Azure (requires azure-cli)
+# Azure (requires azure-cli pip package)
 cd schemas/az
-uv sync && uv run python export_command_tree.py > az_commands.json
+uv sync && uv run python export_command_tree.py > az.fcmps
 
 # gcloud (requires google-cloud-sdk installed on the system)
 cd schemas/gcloud
-python export_command_tree.py > gcloud_commands.json
+python3 export_command_tree.py > gcloud.fcmps
 
 # GitHub CLI (requires gh installed: brew install gh, apt install gh, etc.)
 cd schemas/gh
-python export_command_tree.py > gh_commands.json
+python3 export_command_tree.py > gh.fcmps
 ```
 
-Each schema directory has a `pyproject.toml` for `uv` to manage dependencies. Run `uv sync` once to install dependencies, then `uv run python` to run the export script.
+Some schema directories have a `pyproject.toml` for `uv` to manage pip dependencies (Azure CLI). For others, the CLI must be installed on the system (AWS CLI v2, gcloud, gh).
 
 The export scripts introspect the installed CLI to extract all commands, parameters, and descriptions. Run them after updating your CLI to get completions for new commands.
 
@@ -281,111 +282,129 @@ Use `dump_blob.py` to inspect and validate blob files:
 
 ```bash
 # Show header and summary
-python dump_blob.py commands.bin
+python dump_blob.py commands.fcmpb
 
 # Find commands matching a pattern
-python dump_blob.py commands.bin --find "s3.*copy"
+python dump_blob.py commands.fcmpb --find "s3.*copy"
 
 # Show a specific command by path
-python dump_blob.py commands.bin --command "s3 cp"
+python dump_blob.py commands.fcmpb --command "s3 cp"
 
 # Show a range of commands
-python dump_blob.py commands.bin --range commands:0:20
+python dump_blob.py commands.fcmpb --range commands:0:20
 ```
 
 ## Schema Format
 
-Schemas are JSON files that describe a CLI's command structure. The `schemas/` directory contains examples for AWS, Azure, and gcloud CLIs.
+Schemas use an indentation-based tab-separated format (`.fcmps` extension). Leading tabs determine the command hierarchy.
 
-### Top-level Properties
+### General Rules
 
-| Property | Required | Description |
-|----------|----------|-------------|
-| `name` or `cli` | Yes | CLI name (e.g., `"aws"`). Determines the blob filename. |
-| `version` | No | CLI version string |
-| `global_params` | No | Array of parameters available to all commands |
-| `commands` | Yes | Array of command definitions |
+- **Indentation determines hierarchy**: leading tabs set nesting depth
+- Lines starting with `#` are comments (allowed at any indentation level)
+- Empty lines are ignored
+- Fields are separated by tabs (additional tabs/spaces after the first tab are ignored for alignment)
+- Lines starting with `--` are parameter definitions
+- The first depth-0 command is the root (CLI name and description)
+- **No leading spaces allowed** — use tabs only for indentation
 
-### Commands
+### Structure
 
-Commands are the leaf nodes that perform actions:
-
-```json
-{
-  "name": "s3 cp",
-  "type": "command",
-  "summary": "Copies a file or object to/from S3",
-  "parameters": [...]
-}
 ```
-
-The `name` is the full command path with spaces (e.g., `ec2 run-instances`).
+[global params at depth 0, before root command]
+<root-command>	[description]     ← First depth-0 line = CLI name
+	<subcommand>	[description]
+		--param|-s(bool)	description
+		<sub-subcommand>	[description]
+			--param	TYPE	description
+```
 
 ### Parameters
 
-Parameters define the flags and options for a command:
+Parameter lines are indented under their parent command:
 
-```json
-{
-  "name": "--instance-type",
-  "options": ["--instance-type"],
-  "required": false,
-  "summary": "The instance type",
-  "choices": ["t2.micro", "t2.small", "t2.medium"]
-}
+```
+<tabs>--long-opt|-s	TYPE	description
 ```
 
-| Property | Required | Description |
-|----------|----------|-------------|
-| `name` | Yes | Primary option name (e.g., `"--instance-type"`) |
-| `options` | No | Array of option aliases |
-| `required` | No | Whether the parameter is required (default: false) |
-| `summary` | No | Short description for completion display |
-| `description` | No | Longer description |
-| `type` | No | Type hint (`"bool"` for flags that don't take values) |
-| `choices` | No | Array of valid values for completion |
-| `members` | No | For structure/list types, array of `{"key": "..."}` member names |
-| `completer` | No | Subcommand to execute for dynamic completions (see below) |
+| Field | Description |
+|-------|-------------|
+| `--long-opt\|-s` | **Required.** Long option, optionally with short alias (e.g., `--recursive\|-r`) |
+| `(bool)` | Optional. Suffix indicating boolean flag (e.g., `--verbose(bool)`) |
+| `TYPE` | Optional. One of: `a\|b\|c` (choices), `{k1\|k2}` (members), `@cmd` (completer) |
+| `description` | Optional. Help text |
 
-Parameters with `type: "bool"` or names starting with `--no-` are treated as flags (no value required).
+Type meanings:
+- **`(bool)` suffix** - Flag that doesn't take a value
+- **`choice1\|choice2\|...`** - Pipe-separated list of valid values
+- **`{key1\|key2\|...}`** - Members for key=value completion (braces required)
+- **`@command`** - Dynamic completer command to execute
 
-#### Dynamic Completers
+### Parameter Inheritance
 
-The `completer` property enables dynamic completion by executing a CLI subcommand at completion time. The value is appended to the CLI name and executed, with each line of stdout becoming a completion option.
+Parameters defined on a command group are automatically inherited by all descendant commands. For example, if `s3` has `--endpoint-url`, then `s3 cp`, `s3 ls`, and all other `s3` subcommands will also have `--endpoint-url` available.
 
-```json
-{
-  "name": "--kubernetes-version",
-  "summary": "Version of Kubernetes to use",
-  "completer": "aks get-versions"
-}
+When completing, parameters are listed in order of specificity:
+1. The command's own parameters (most specific)
+2. Parent command's parameters
+3. Grandparent's parameters
+4. ...continuing up to the root
+5. Global parameters (least specific)
+
+This ensures the most relevant options appear first when completing deeply nested commands.
+
+### Dynamic Completers
+
+The `@completer` syntax enables dynamic completion by executing a CLI subcommand at completion time. The command (without the `@`) is appended to the CLI name and executed, with each line of stdout becoming a completion option.
+
+Example:
+```
+		--kubernetes-version		@aks get-versions	Version of Kubernetes
 ```
 
-When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values. This is useful for values that change over time (versions, resource names, regions, etc.).
+When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values.
 
 The completer command runs with a 2-second timeout. If the command takes longer or fails, no completions are shown for that parameter.
 
-Note: The special value `"dynamic"` is ignored (treated as no completer). This allows schemas to mark parameters as dynamically completed without specifying a command, useful when the completion source requires authentication or complex logic not suitable for shell execution.
+### Validation Rules
 
-### Global Parameters
+The generator enforces these rules:
+- **Leading spaces forbidden**: Use tabs only (error on leading space)
+- **Single root command**: Only one depth-0 command allowed
+- **Incremental nesting**: Indentation can only increase by 1 level at a time
+- **Decreasing depth allowed**: Can jump back any number of levels
 
-Global parameters appear in `global_params` and are available to all commands:
+### Example
 
-```json
-{
-  "name": "--region",
-  "description": "The region to use",
-  "takes_value": true,
-  "choices": ["us-east-1", "us-west-2", "eu-west-1"]
-}
+```
+# AWS CLI schema for fast-completer
+# Generated from awscli 2.x
+
+# Global params (before root command)
+--output	json|text|table	The formatting style
+--debug(bool)	Turn on debug logging
+--region	The region to use
+--profile	Use a specific profile
+
+aws	Amazon Web Services CLI
+	s3	Amazon S3 operations
+		--endpoint-url	Override S3 endpoint URL
+		cp	Copy objects between buckets
+			--recursive|-r(bool)	Recursive copy
+			--storage-class	STANDARD|REDUCED_REDUNDANCY	Storage class
+			--acl	private|public-read	Canned ACL to apply
+		ls	List buckets or objects
+			--human-readable|-h(bool)	Display sizes in human readable format
+	ec2	Elastic Compute Cloud
+		describe-instances	Describe EC2 instances
+			--instance-ids	Instance IDs to describe
 ```
 
-| Property | Required | Description |
-|----------|----------|-------------|
-| `name` | Yes | Option name (e.g., `"--region"`) |
-| `description` | No | Description for completion display |
-| `takes_value` | No | Whether the option takes a value (default: true) |
-| `choices` | No | Array of valid values |
+In this example:
+- `--output`, `--debug`, `--region`, `--profile` are global (available everywhere)
+- `--endpoint-url` is on `s3` and inherited by `s3 cp`, `s3 ls`, etc.
+- `--recursive`, `--storage-class`, `--acl` are specific to `s3 cp`
+- When completing `aws s3 cp --`, options appear in order: `--recursive`, `--storage-class`, `--acl`, `--endpoint-url`, then globals
 
 ## Binary Blob Format
 
@@ -450,8 +469,8 @@ complete -o nosort -F _fast_completer aws az  # -o nosort requires bash 4.4+
 
 # Or register for all installed blobs
 _fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
-for blob in "$_fc_cache"/*.bin; do
-    [[ -f "$blob" ]] && complete -o nosort -F _fast_completer "$(basename "$blob" .bin)"
+for blob in "$_fc_cache"/*.fcmpb; do
+    [[ -f "$blob" ]] && complete -o nosort -F _fast_completer "$(basename "$blob" .fcmpb)"
 done
 ```
 
@@ -475,7 +494,7 @@ compdef _fast_completer aws az
 
 # Or register for all installed blobs
 _fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
-for blob in "$_fc_cache"/*.bin(N); do
+for blob in "$_fc_cache"/*.fcmpb(N); do
     compdef _fast_completer "${blob:t:r}"
 done
 ```
@@ -503,8 +522,8 @@ end
 
 # Or register for all installed blobs
 set -l _fc_cache (if set -q FAST_COMPLETER_CACHE; echo $FAST_COMPLETER_CACHE; else; echo ~/.cache/fast-completer; end)
-for blob in $_fc_cache/*.bin
-    set -l cmd (basename $blob .bin)
+for blob in $_fc_cache/*.fcmpb
+    set -l cmd (basename $blob .fcmpb)
     complete -c $cmd -e
     complete -c $cmd -k -a "(_fast_completer)"
 end
@@ -579,7 +598,7 @@ Register-ArgumentCompleter -Native -CommandName aws, az -ScriptBlock $fcComplete
 
 # Or register for all installed blobs
 $fcCache = if ($env:FAST_COMPLETER_CACHE) { $env:FAST_COMPLETER_CACHE } else { "$env:LOCALAPPDATA\fast-completer" }
-Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
+Get-ChildItem "$fcCache\*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object {
     Register-ArgumentCompleter -Native -CommandName $_.BaseName -ScriptBlock $fcCompleter
 }
 ```
@@ -595,7 +614,7 @@ Get-ChildItem "$fcCache\*.bin" -ErrorAction SilentlyContinue | ForEach-Object {
 
 ## How It Works
 
-1. `generate_blob.c` - Converts a JSON command tree to a binary blob file
+1. `generate_blob.c` - Converts a schema file to a binary blob file
 2. `dump_blob.py` - Inspects and validates blob files (for debugging)
 3. `fast-completer.c` - Native binary that memory-maps the blob and provides completions
 

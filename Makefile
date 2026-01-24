@@ -41,7 +41,7 @@ $(TARGET): $(OBJS)
 
 # Dependencies
 fast-completer.o: fast-completer.c generate_blob.h
-generate_blob.o: generate_blob.c generate_blob.h vendor/jsmn/jsmn.h
+generate_blob.o: generate_blob.c generate_blob.h
 
 clean:
 	rm -f $(OBJS) $(TARGET)

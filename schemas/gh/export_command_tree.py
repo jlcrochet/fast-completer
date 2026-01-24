@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-Export GitHub CLI (gh) command tree to JSON for shell completion generation.
+Export GitHub CLI (gh) command tree to TSV for shell completion generation.
 
 This script uses gh's built-in completion generation (Cobra framework) to extract
 all commands, subcommands, and flags in a structured format.
 
 Usage (requires gh CLI installed):
-    python export_command_tree.py > gh_commands.json
+    python export_command_tree.py > gh.fcmps
 
 Requirements:
     GitHub CLI must be installed: https://cli.github.com/
 """
 
-import json
 import re
 import subprocess
 import sys
@@ -120,9 +119,6 @@ def parse_cobra_completions(command_parts):
 
     Returns list of (completion, description) tuples.
     """
-    # Cobra's __complete returns completions for the next argument
-    # Format: completion\tdescription
-    # Last line is a directive (e.g., ":4" for ShellCompDirectiveNoFileComp)
     args = ['gh', '__complete'] + list(command_parts) + ['']
     output, rc = run_command(*args)
 
@@ -132,7 +128,6 @@ def parse_cobra_completions(command_parts):
     completions = []
     for line in output.strip().split('\n'):
         if line.startswith(':'):
-            # Directive line, skip
             continue
         if '\t' in line:
             comp, desc = line.split('\t', 1)
@@ -170,7 +165,6 @@ def get_subcommands(command_parts):
     completions = parse_cobra_completions(command_parts)
     subcommands = []
     for comp, desc in completions:
-        # Skip flags, help, and empty
         if comp.startswith('-') or comp in ('help', '') or comp.startswith(':'):
             continue
         subcommands.append({'name': comp, 'summary': desc})
@@ -179,7 +173,6 @@ def get_subcommands(command_parts):
 
 def build_flags_list(command_path, raw_flags):
     """Convert raw flags to parameter format with short/long options."""
-    # Group flags by base name (handle -f, --flag pairs)
     params = []
     seen = set()
 
@@ -191,15 +184,11 @@ def build_flags_list(command_path, raw_flags):
 
         param = {
             'name': name,
-            'options': [name],
-            'required': False,
             'description': f['summary'],
         }
 
         # Check if it's a boolean flag (no = in completion)
-        # Cobra shows value-taking flags with description hints
         if '=' not in name and not any(x in f['summary'].lower() for x in ['string', 'int', 'file', 'path', 'name', 'number']):
-            # Likely a boolean
             param['type'] = 'bool'
 
         # Check for dynamic completer
@@ -224,7 +213,6 @@ def walk_commands(command_parts=None, depth=0, max_depth=5, seen=None):
 
     command_path = ' '.join(command_parts)
 
-    # Avoid cycles
     if command_path in seen:
         return
     seen.add(command_path)
@@ -232,7 +220,6 @@ def walk_commands(command_parts=None, depth=0, max_depth=5, seen=None):
     subcommands = get_subcommands(command_parts)
 
     if subcommands:
-        # This is a group - recurse into subcommands
         for sub in subcommands:
             yield from walk_commands(
                 command_parts + [sub['name']],
@@ -241,21 +228,16 @@ def walk_commands(command_parts=None, depth=0, max_depth=5, seen=None):
                 seen
             )
     else:
-        # Leaf command
         if command_path:
             raw_flags = get_command_flags(command_parts)
             params = build_flags_list(command_path, raw_flags)
 
             cmd = {
                 'name': command_path,
-                'type': 'command',
                 'description': '',
+                'parameters': params,
             }
 
-            if params:
-                cmd['parameters'] = params
-
-            # Check for positional completer
             pos_key = (command_path, '')
             if pos_key in DYNAMIC_COMPLETERS:
                 cmd['positional_completer'] = DYNAMIC_COMPLETERS[pos_key]
@@ -265,7 +247,6 @@ def walk_commands(command_parts=None, depth=0, max_depth=5, seen=None):
 
 def get_global_flags():
     """Get global flags that apply to all commands."""
-    # Get flags from root level
     raw_flags = get_command_flags([])
 
     global_params = []
@@ -283,11 +264,130 @@ def get_global_flags():
     return global_params
 
 
+def escape_field(s):
+    """Escape a field for TSV output (replace tabs and newlines)."""
+    if not s:
+        return ''
+    return s.replace('\t', ' ').replace('\n', ' ').replace('\r', '')
+
+
+def write_param(p, indent=1, file=sys.stdout):
+    """Output single param line in new schema format."""
+    name = p.get('name', '')
+
+    # Extract long and short options
+    long_opt = None
+    short_opt = None
+
+    if name.startswith('--'):
+        long_opt = name
+    elif name.startswith('-') and len(name) == 2:
+        short_opt = name
+
+    if not long_opt and not short_opt:
+        return
+
+    # Check if boolean
+    is_bool = (p.get('type') == 'bool' or not p.get('takes_value', True))
+
+    # Build option spec: --long|-s or --long or -s
+    if long_opt and short_opt:
+        opt_spec = f"{long_opt}|{short_opt}"
+    elif long_opt:
+        opt_spec = long_opt
+    else:
+        opt_spec = short_opt
+
+    # Build type field
+    type_field = ''
+    if is_bool:
+        type_field = '@bool'
+    elif p.get('choices'):
+        type_field = '(' + '|'.join(p['choices']) + ')'
+    elif p.get('members'):
+        keys = [m['key'] if isinstance(m, dict) else m for m in p['members']]
+        type_field = '{' + '|'.join(keys) + '}'
+    elif p.get('completer'):
+        type_field = '`' + p['completer'] + '`'
+
+    desc = escape_field(p.get('description') or p.get('summary') or '')
+    tabs = '\t' * indent
+
+    parts = [f"{tabs}{opt_spec}"]
+    if type_field:
+        parts.append(type_field)
+    if desc:
+        parts.append(f"# {desc}")
+    print(' '.join(parts), file=file)
+
+
+class CommandTree:
+    """Tree structure for organizing commands by path."""
+
+    def __init__(self, name='', description='', parameters=None):
+        self.name = name
+        self.description = description
+        self.parameters = parameters or []
+        self.children = {}
+
+    def add_command(self, path_parts, description='', parameters=None):
+        """Add a command at the given path."""
+        if not path_parts:
+            self.description = description
+            self.parameters = parameters or []
+            return
+
+        first = path_parts[0]
+        if first not in self.children:
+            self.children[first] = CommandTree(first)
+        self.children[first].add_command(path_parts[1:], description, parameters)
+
+    def write(self, file, indent=1):
+        """Write this node and its children."""
+        tabs = '\t' * indent
+        desc = escape_field(self.description)
+        if desc:
+            print(f"{tabs}{self.name} # {desc}", file=file)
+        else:
+            print(f"{tabs}{self.name}", file=file)
+
+        # Write params for this node
+        for p in self.parameters:
+            write_param(p, indent=indent + 1, file=file)
+
+        # Write children
+        for name in sorted(self.children.keys()):
+            self.children[name].write(file, indent + 1)
+
+
+def write_tsv(commands, global_params, version, file=sys.stdout):
+    """Output schema in indentation-based format."""
+    print("# GitHub CLI schema for fast-completer", file=file)
+    print(f"# Generated from gh {version}", file=file)
+    print("", file=file)
+
+    # Root command
+    print("gh # GitHub CLI", file=file)
+
+    # Global params (under root command at indent 1)
+    if global_params:
+        for p in global_params:
+            write_param(p, indent=1, file=file)
+
+    # Build tree structure from flat command list
+    root = CommandTree()
+    for cmd in commands:
+        parts = cmd['name'].split()
+        root.add_command(parts, cmd.get('description', ''), cmd.get('parameters', []))
+
+    # Write all top-level commands
+    for name in sorted(root.children.keys()):
+        root.children[name].write(file, indent=1)
+
+
 def main():
-    # Check if gh is available
     version = get_gh_version()
     if version == 'unknown':
-        # Try running gh to see if it exists
         _, rc = run_command('gh', '--version')
         if rc != 0:
             print("Error: gh CLI not found. Install from https://cli.github.com/", file=sys.stderr)
@@ -295,7 +395,6 @@ def main():
 
     print(f"Exporting gh CLI {version} commands using Cobra __complete...", file=sys.stderr)
 
-    # Test that __complete works
     test_completions = parse_cobra_completions([])
     if not test_completions:
         print("Error: gh __complete not working. gh CLI may be too old.", file=sys.stderr)
@@ -303,23 +402,12 @@ def main():
 
     print(f"Found {len(test_completions)} top-level commands", file=sys.stderr)
 
-    # Build schema
-    schema = {
-        'name': 'gh',
-        'version': version,
-        'generated_by': 'export_command_tree.py (Cobra __complete)',
-        'commands': list(walk_commands()),
-        'global_params': get_global_flags(),
-    }
+    commands = sorted(walk_commands(), key=lambda x: x['name'])
+    global_params = get_global_flags()
 
-    # Sort
-    schema['commands'].sort(key=lambda x: x['name'])
-    schema['command_count'] = len(schema['commands'])
+    print(f"Exported {len(commands)} commands", file=sys.stderr)
 
-    print(f"Exported {schema['command_count']} commands", file=sys.stderr)
-
-    # Output JSON
-    print(json.dumps(schema, indent=2, ensure_ascii=False))
+    write_tsv(commands, global_params, version)
 
 
 if __name__ == '__main__':

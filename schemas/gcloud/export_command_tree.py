@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """
-Export gcloud CLI command tree to JSON for shell completion generation.
+Export gcloud CLI command tree to schema format for shell completion generation.
 
 This script reads gcloud's static completion tree and converts it to
 our schema format.
 
 Usage:
-    python export_command_tree.py > gcloud_commands.json
+    python export_command_tree.py > gcloud.fcmps
 
 Requirements:
     Google Cloud SDK must be installed on the system. Unlike AWS/Azure CLIs,
@@ -18,14 +18,12 @@ Requirements:
     Set CLOUDSDK_ROOT_DIR if installed in a non-standard location.
 """
 
-import json
 import os
 import sys
 
 
 def find_gcloud_completions():
     """Find the gcloud static completions file."""
-    # Common installation paths
     paths = [
         '/opt/google-cloud-cli/data/cli/gcloud_completions.py',
         '/opt/google-cloud-sdk/data/cli/gcloud_completions.py',
@@ -34,7 +32,6 @@ def find_gcloud_completions():
         '/usr/lib/google-cloud-sdk/data/cli/gcloud_completions.py',
     ]
 
-    # Also check CLOUDSDK_ROOT_DIR
     sdk_root = os.environ.get('CLOUDSDK_ROOT_DIR')
     if sdk_root:
         paths.insert(0, os.path.join(sdk_root, 'data/cli/gcloud_completions.py'))
@@ -48,25 +45,31 @@ def find_gcloud_completions():
 
 def load_completion_tree(path):
     """Load the static completion tree from gcloud."""
-    # Read the file and extract the STATIC_COMPLETION_CLI_TREE dict
     with open(path, 'r') as f:
         content = f.read()
 
-    # Execute the Python file to get the dict
     namespace = {}
     exec(content, namespace)
     return namespace.get('STATIC_COMPLETION_CLI_TREE', {})
 
 
-def convert_flags(flags_dict, command_path=''):
+def escape_field(s):
+    """Escape a field for schema output (replace tabs and newlines)."""
+    if not s:
+        return ''
+    return s.replace('\t', ' ').replace('\n', ' ').replace('\r', '')
+
+
+def convert_flags(flags_dict):
     """Convert gcloud flags dict to our parameters format."""
     params = []
 
     for flag_name, flag_value in sorted(flags_dict.items()):
+        if not flag_name.startswith('--'):
+            continue
+
         param = {
             'name': flag_name,
-            'options': [flag_name],
-            'required': False,
         }
 
         if flag_value == 'bool':
@@ -98,17 +101,105 @@ def walk_commands(tree, path_parts=None):
         sub_flags = subtree.get('flags', {})
 
         if sub_commands:
-            # This is a group - recurse into subcommands
             yield from walk_commands(subtree, current_path)
         else:
-            # This is a leaf command
             cmd = {
                 'name': path_str,
-                'type': 'command',
+                'parameters': convert_flags(sub_flags) if sub_flags else [],
             }
-            if sub_flags:
-                cmd['parameters'] = convert_flags(sub_flags, path_str)
             yield cmd
+
+
+def write_param(p, indent=1, file=sys.stdout):
+    """Output single param line in new schema format."""
+    name = p.get('name', '')
+    if not name.startswith('-'):
+        return
+
+    # Check if boolean
+    is_bool = p.get('type') == 'bool'
+
+    # Build option spec
+    opt_spec = name
+
+    # Build type field
+    type_field = ''
+    if is_bool:
+        type_field = '@bool'
+    elif p.get('choices'):
+        type_field = '(' + '|'.join(str(c) for c in p['choices']) + ')'
+    elif p.get('members'):
+        type_field = '{' + '|'.join(p['members']) + '}'
+    elif p.get('completer'):
+        type_field = '`' + p['completer'] + '`'
+
+    desc = escape_field(p.get('summary') or p.get('description') or '')
+    tabs = '\t' * indent
+
+    parts = [f"{tabs}{opt_spec}"]
+    if type_field:
+        parts.append(type_field)
+    if desc:
+        parts.append(f"# {desc}")
+    print(' '.join(parts), file=file)
+
+
+class CommandTree:
+    """Tree structure for organizing commands by path."""
+
+    def __init__(self, name='', parameters=None):
+        self.name = name
+        self.parameters = parameters or []
+        self.children = {}
+
+    def add_command(self, path_parts, parameters=None):
+        """Add a command at the given path."""
+        if not path_parts:
+            self.parameters = parameters or []
+            return
+
+        first = path_parts[0]
+        if first not in self.children:
+            self.children[first] = CommandTree(first)
+        self.children[first].add_command(path_parts[1:], parameters)
+
+    def write(self, file, indent=1):
+        """Write this node and its children."""
+        tabs = '\t' * indent
+        # gcloud completions don't have descriptions
+        print(f"{tabs}{self.name}", file=file)
+
+        # Write params for this node
+        for p in self.parameters:
+            write_param(p, indent=indent + 1, file=file)
+
+        # Write children
+        for name in sorted(self.children.keys()):
+            self.children[name].write(file, indent + 1)
+
+
+def write_schema(commands, global_params, file=sys.stdout):
+    """Output schema in indentation-based format."""
+    print("# gcloud CLI schema for fast-completer", file=file)
+    print("", file=file)
+
+    # Root command
+    print("gcloud # Google Cloud CLI", file=file)
+
+    # Global params (under root command at indent 1)
+    if global_params:
+        for p in global_params:
+            write_param(p, indent=1, file=file)
+
+    # Build tree structure from flat command list
+    root = CommandTree()
+    for cmd in commands:
+        parts = cmd['name'].split()
+        root.add_command(parts, cmd.get('parameters', []))
+
+    # Write all top-level commands
+    for name in sorted(root.children.keys()):
+        root.children[name].write(file, indent=1)
 
 
 def main():
@@ -123,31 +214,28 @@ def main():
 
     tree = load_completion_tree(completions_path)
 
-    # Build the schema
-    schema = {
-        'name': 'gcloud',
-        'commands': list(walk_commands(tree)),
-        'global_params': [],
-    }
+    commands = list(walk_commands(tree))
 
     # Convert global flags
     global_flags = tree.get('flags', {})
+    global_params = []
     for flag_name, flag_value in sorted(global_flags.items()):
+        if not flag_name.startswith('--'):
+            continue
         param = {
             'name': flag_name,
-            'takes_value': flag_value != 'bool',
         }
-        if isinstance(flag_value, list):
+        if flag_value == 'bool':
+            param['type'] = 'bool'
+        elif isinstance(flag_value, list):
             param['choices'] = flag_value
-        schema['global_params'].append(param)
+        global_params.append(param)
 
-    # Print stats to stderr first
-    sys.stderr.write(f"Exported {len(schema['commands'])} commands, "
-                     f"{len(schema['global_params'])} global params\n")
+    sys.stderr.write(f"Exported {len(commands)} commands, "
+                     f"{len(global_params)} global params\n")
     sys.stderr.flush()
 
-    # Output JSON to stdout
-    print(json.dumps(schema, indent=2, ensure_ascii=False))
+    write_schema(commands, global_params)
 
 
 if __name__ == '__main__':

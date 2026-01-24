@@ -7,7 +7,7 @@
  * generate_blob.c, allowing a single completer binary to work with any CLI.
  *
  * The CLI name is derived from the first span and used to look up
- * <name>.bin in the cache directory. Use --blob to specify an explicit path.
+ * <name>.fcmpb in the cache directory. Use --blob to specify an explicit path.
  *
  * The last span triggers completions:
  *   "" - subcommands + flags
@@ -89,11 +89,9 @@ typedef struct {
 // Blob header (parsed at load time - only fields actually used)
 typedef struct {
     uint32_t max_command_path_len;
-    uint32_t global_params_count;
     uint32_t string_table_off;
     uint32_t commands_off;
     uint32_t params_off;
-    uint32_t global_params_off;
     uint32_t root_command_off;
 } BlobHeader;
 
@@ -153,11 +151,6 @@ static inline const Param *get_param(uint32_t idx) {
 // Get root command
 static inline const Command *get_root_command(void) {
     return (const Command *)(blob + header.root_command_off);
-}
-
-// Get global params array
-static inline const Param *get_global_params(void) {
-    return (const Param *)(blob + header.global_params_off);
 }
 
 // Get command's params (NULL if none)
@@ -362,9 +355,18 @@ static const Command *bsearch_command(const Command *subs, uint16_t count, const
     return NULL;
 }
 
-// Find the deepest matching command
+// Maximum command path depth (root -> ... -> leaf)
+#define MAX_CMD_DEPTH 32
+
+// Command path from root to deepest match (for param inheritance)
+static const Command *g_cmd_path[MAX_CMD_DEPTH];
+static int g_cmd_path_len = 0;
+
+// Find the deepest matching command, tracking the path
 static const Command *find_command(void) {
+    g_cmd_path_len = 0;
     const Command *cmd = get_root_command();
+    g_cmd_path[g_cmd_path_len++] = cmd;
     int i = 1;  // Skip first arg (CLI name)
 
     while (i < g_span_count && cmd->subcommands_count > 0) {
@@ -380,6 +382,9 @@ static const Command *find_command(void) {
 
         if (found) {
             cmd = found;
+            if (g_cmd_path_len < MAX_CMD_DEPTH) {
+                g_cmd_path[g_cmd_path_len++] = cmd;
+            }
             i++;
         } else {
             break;
@@ -516,19 +521,13 @@ static void complete_params_list(const Param *params, uint16_t params_count,
             if (param_used(p)) continue;
 
             String name = str_get(p->name_off);
+            if (name.n == 0) continue;  // Skip short-only params
             if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 output_completion(name, str_get(desc), COMP_PARAM_NAME);
             }
         }
     }
-}
-
-// Complete global params
-static void complete_global_params(const char *prefix, const PrefixInfo *pinfo) {
-    if (header.global_params_count == 0) return;
-    // Safe cast: global_params_count is validated <= 65535 at blob generation
-    complete_params_list(get_global_params(), (uint16_t)header.global_params_count, prefix, pinfo);
 }
 
 // Complete string list at a blob offset (choices or members)
@@ -744,59 +743,44 @@ static void execute_completer(const char *cli_name, String completer,
 #endif
 }
 
-// Binary search for a param by long name among sorted params
-static const Param *bsearch_param(const Param *params, uint16_t count, const char *name, size_t name_len) {
-    uint16_t lo = 0, hi = count;
-    while (lo < hi) {
-        uint16_t mid = lo + (hi - lo) / 2;
-        String s = str_get(params[mid].name_off);
-        int cmp = str_cmp(s.p, s.n, name, name_len);
-        if (cmp < 0) lo = mid + 1;
-        else if (cmp > 0) hi = mid;
-        else return &params[mid];
-    }
-    return NULL;
-}
-
-// Find a parameter by name (long or short option)
+// Find a parameter by name (long or short option) using linear search
+// Params are NOT sorted - they preserve inheritance order (command's own params first)
 static const Param *find_param(const Param *params, uint16_t params_count, const char *opt, size_t opt_len) {
     if (!params || params_count == 0 || !opt) return NULL;
     if (opt[0] != '-') return NULL;
 
-    // Binary search for long option (--name)
-    const Param *p = bsearch_param(params, params_count, opt, opt_len);
-    if (p) return p;
+    bool is_short = (opt_len == 2 && opt[0] == '-' && opt[1] != '-');
 
-    // Linear fallback for short options (-x) - rare in practice
-    if (opt_len == 2 && opt[0] == '-' && opt[1] != '-') {
-        for (uint16_t i = 0; i < params_count; i++) {
-            if (params[i].short_off) {
-                String short_opt = str_get(params[i].short_off);
-                if (short_opt.n == opt_len && memcmp(short_opt.p, opt, opt_len) == 0)
-                    return &params[i];
-            }
+    for (uint16_t i = 0; i < params_count; i++) {
+        // Check long option
+        String s = str_get(params[i].name_off);
+        if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0)
+            return &params[i];
+
+        // Check short option
+        if (is_short && params[i].short_off) {
+            String short_opt = str_get(params[i].short_off);
+            if (short_opt.n == opt_len && memcmp(short_opt.p, opt, opt_len) == 0)
+                return &params[i];
         }
     }
     return NULL;
 }
 
-// Find a global param by name (long or short option)
-static const Param *find_global_param(const char *name, size_t len) {
-    if (header.global_params_count == 0) return NULL;
+// Complete params from entire command path (for inheritance)
+static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
+    for (int i = 0; i < g_cmd_path_len; i++) {
+        const Command *cmd = g_cmd_path[i];
+        complete_params_list(cmd_params(cmd), cmd->params_count, prefix, pinfo);
+    }
+}
 
-    const Param *global_params = get_global_params();
-    for (uint32_t i = 0; i < header.global_params_count; i++) {
-        const Param *p = &global_params[i];
-        // Check long option
-        String pname = str_get(p->name_off);
-        if (pname.n == len && memcmp(pname.p, name, len) == 0)
-            return p;
-        // Check short option
-        if (p->short_off) {
-            String short_opt = str_get(p->short_off);
-            if (short_opt.n == len && memcmp(short_opt.p, name, len) == 0)
-                return p;
-        }
+// Find a param by name across entire command path (deepest first for override semantics)
+static const Param *find_path_param(const char *opt, size_t opt_len) {
+    for (int i = g_cmd_path_len - 1; i >= 0; i--) {
+        const Command *cmd = g_cmd_path[i];
+        const Param *p = find_param(cmd_params(cmd), cmd->params_count, opt, opt_len);
+        if (p) return p;
     }
     return NULL;
 }
@@ -874,8 +858,7 @@ static void complete(int nspans, const char **spans) {
 
     if (is_flag_prefix) {
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
-        complete_params_list(cmd_params(cmd), cmd->params_count, last_span, &pinfo);
-        complete_global_params(last_span, &pinfo);
+        complete_path_params(last_span, &pinfo);
         if (output_format == OUT_JSON) put_lit("]\n");
         return;
     }
@@ -898,18 +881,7 @@ static void complete(int nspans, const char **spans) {
     if (prev_arg[0] == '-') {
         size_t prev_len = arg_lens[g_span_count - 1];
 
-        const Param *gparam = find_global_param(prev_arg, prev_len);
-        if (gparam && PARAM_TAKES_VALUE(gparam)) {
-            if (PARAM_HAS_CHOICES(gparam)) {
-                complete_string_list(gparam->choices_off, NULL, 0);
-            } else if (PARAM_HAS_COMPLETER(gparam)) {
-                execute_completer(g_spans[0], str_get(gparam->choices_off), NULL, 0);
-            }
-            if (output_format == OUT_JSON) put_lit("]\n");
-            return;
-        }
-
-        const Param *param = find_param(cmd_params(cmd), cmd->params_count, prev_arg, prev_len);
+        const Param *param = find_path_param(prev_arg, prev_len);
         if (param && PARAM_TAKES_VALUE(param)) {
             if (PARAM_HAS_CHOICES(param)) {
                 complete_string_list(param->choices_off, NULL, 0);
@@ -928,8 +900,7 @@ static void complete(int nspans, const char **spans) {
     }
 
     PrefixInfo pinfo = {0};  // Empty prefix
-    complete_params_list(cmd_params(cmd), cmd->params_count, NULL, &pinfo);
-    complete_global_params(NULL, &pinfo);
+    complete_path_params(NULL, &pinfo);
 
     if (output_format == OUT_JSON) put_lit("]\n");
 }
@@ -1032,15 +1003,12 @@ static bool load_blob(const char *path) {
     // Parse header (skip magic:4, version:2, flags:2 = offset 8)
     const uint32_t *h = (const uint32_t *)(blob + 8);
     header.max_command_path_len = h[0];
-    // h[1]-h[2] are commands_count, params_count (unused - counts in Command struct)
-    header.global_params_count = h[3];
-    // h[4]-h[6] are strtab size, choices_count, members_count (unused)
-    header.string_table_off = h[7];
-    header.commands_off = h[8];
-    header.params_off = h[9];
-    // h[10]-h[11] are choices_off, members_off (accessed via Param.choices_off)
-    header.global_params_off = h[12];
-    header.root_command_off = h[13];
+    // h[1]-h[5] are counts/sizes (used by dump_blob.py, not runtime)
+    header.string_table_off = h[6];
+    header.commands_off = h[7];
+    header.params_off = h[8];
+    // h[9]-h[10] are choices_off, members_off (used by dump_blob.py)
+    header.root_command_off = h[11];
 
     return true;
 }
@@ -1119,9 +1087,9 @@ static char *build_cache_path(const char *name) {
     size_t len = strlen(cache_dir) + strlen(name) + 10;
     char *path = malloc(len);
 #ifdef _WIN32
-    snprintf(path, len, "%s\\%s.bin", cache_dir, name);
+    snprintf(path, len, "%s\\%s.fcmpb", cache_dir, name);
 #else
-    snprintf(path, len, "%s/%s.bin", cache_dir, name);
+    snprintf(path, len, "%s/%s.fcmpb", cache_dir, name);
 #endif
 
     return path;
@@ -1138,16 +1106,16 @@ static bool is_simple_name(const char *path) {
 
 // Resolve blob path: if simple name, look in cache; otherwise use as-is
 static char *resolve_blob_path(const char *blob_arg) {
-    // If it contains path separators or ends with .bin, use as-is
+    // If it contains path separators, use as-is
     if (!is_simple_name(blob_arg)) {
         return strdup(blob_arg);
     }
 
-    // Strip .bin extension if present
+    // Strip .fcmpb extension if present
     char *name = strdup(blob_arg);
     size_t len = strlen(name);
-    if (len > 4 && strcmp(name + len - 4, ".bin") == 0) {
-        name[len - 4] = '\0';
+    if (len > 6 && strcmp(name + len - 6, ".fcmpb") == 0) {
+        name[len - 6] = '\0';
     }
 
     char *path = build_cache_path(name);
@@ -1165,7 +1133,7 @@ static void dump_header(const char *path) {
     printf("version: %u\n", version);
     printf("flags: %u", flags);
     if (flags) {
-        printf("(");
+        printf(" (");
         if (flags & HEADER_FLAG_BIG_ENDIAN) printf("big_endian");
         if (flags & HEADER_FLAG_NO_DESCRIPTIONS) {
             if (flags & HEADER_FLAG_BIG_ENDIAN) printf(", ");
@@ -1177,17 +1145,15 @@ static void dump_header(const char *path) {
     printf("max_command_path_len: %u\n", h[0]);
     printf("command_count: %u\n", h[1]);
     printf("param_count: %u\n", h[2]);
-    printf("global_param_count: %u\n", h[3]);
-    printf("string_table_size: %u\n", h[4]);
-    printf("choices_count: %u\n", h[5]);
-    printf("members_count: %u\n", h[6]);
-    printf("string_table_off: %u\n", h[7]);
-    printf("commands_off: %u\n", h[8]);
-    printf("params_off: %u\n", h[9]);
-    printf("choices_off: %u\n", h[10]);
-    printf("members_off: %u\n", h[11]);
-    printf("global_params_off: %u\n", h[12]);
-    printf("root_command_off: %u\n", h[13]);
+    printf("string_table_size: %u\n", h[3]);
+    printf("choices_count: %u\n", h[4]);
+    printf("members_count: %u\n", h[5]);
+    printf("string_table_off: %u\n", h[6]);
+    printf("commands_off: %u\n", h[7]);
+    printf("params_off: %u\n", h[8]);
+    printf("choices_off: %u\n", h[9]);
+    printf("members_off: %u\n", h[10]);
+    printf("root_command_off: %u\n", h[11]);
 }
 
 static void print_help(void) {
@@ -1205,21 +1171,25 @@ static void print_help(void) {
     puts("  --full-commands  Complete full leaf command paths instead of next level");
     puts("  --quiet, -q      Suppress errors if blob not found (for fallback scripts)\n");
     puts("  The CLI name is derived from the first span and used to look up");
-    puts("  <name>.bin in the cache directory.\n");
+    puts("  <name>.fcmpb in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
 #ifdef _WIN32
-    puts("    %LOCALAPPDATA%\\fast-completer\\<name>.bin");
+    puts("    %LOCALAPPDATA%\\fast-completer\\<name>.fcmpb");
 #else
-    puts("    ~/.cache/fast-completer/<name>.bin");
+    puts("    ~/.cache/fast-completer/<name>.fcmpb");
 #endif
     puts("");
     puts("Blob generation mode:");
     puts("  fast-completer --generate-blob [options] <schema> [output]\n");
-    puts("  schema              Path to JSON schema file");
-    puts("  output              Output path (optional - defaults to cache directory)");
-    puts("  --big-endian        Generate big-endian blob");
-    puts("  --no-descriptions   Omit descriptions entirely (smallest blob)");
-    puts("  --long-descriptions Include full descriptions (default is first sentence)\n");
+    puts("  schema               Path to schema file");
+    puts("  output               Output path (optional - defaults to cache directory)");
+    puts("  --big-endian         Generate big-endian blob");
+    puts("  --no-descriptions    Omit descriptions entirely (smallest blob)");
+    puts("  --short-descriptions First sentence only (default)");
+    puts("  --long-descriptions  Include full descriptions");
+    puts("  --description-length <n>  Truncate descriptions to n characters\n");
+    puts("  Description options can be combined: --long-descriptions --description-length 200");
+    puts("  will include full descriptions but truncate any exceeding 200 characters.");
     puts("  If output is omitted, reads 'name' from schema and saves to cache.\n");
     puts("Check mode:");
     puts("  fast-completer --check <name>\n");
@@ -1227,7 +1197,7 @@ static void print_help(void) {
     puts("  Returns exit code 0 if blob exists in cache, 1 otherwise.\n");
     puts("Dump header mode:");
     puts("  fast-completer --dump-header <blob>\n");
-    puts("  blob              Path or cache name (e.g., 'aws' or '/path/to/aws.bin')\n");
+    puts("  blob              Path or cache name (e.g., 'aws' or '/path/to/aws.fcmpb')\n");
     puts("Output formats:");
     puts("  bash, lines       One value per line (no descriptions)");
     puts("  zsh               value:description");
@@ -1236,16 +1206,16 @@ static void print_help(void) {
     puts("  json              JSON array of {\"value\": ..., \"description\": ...}\n");
     puts("Use 'lines' format when descriptions are not needed.\n");
     puts("Examples:");
-    puts("  fast-completer --generate-blob aws.json");
-    puts("      Generate blob from schema with {\"name\": \"aws\", ...}\n");
+    puts("  fast-completer --generate-blob aws.fcmps");
+    puts("      Generate blob from schema (CLI name derived from first command)\n");
     puts("  fast-completer --check aws && echo 'aws completions available'");
     puts("      Conditionally run command if aws blob exists\n");
     puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
-    puts("  fast-completer --blob /path/to/custom.bin zsh mycli --");
+    puts("  fast-completer --blob /path/to/custom.fcmpb zsh mycli --");
     puts("      Complete flags using explicit blob path\n");
     puts("  fast-completer --dump-header aws");
-    puts("      Dump header of cached aws.bin blob");
+    puts("      Dump header of cached aws.fcmpb blob");
 }
 
 int main(int argc, char *argv[]) {
@@ -1302,18 +1272,33 @@ int main(int argc, char *argv[]) {
     // Handle --generate-blob mode (must come first)
     if (argc >= 2 && strcmp(argv[1], "--generate-blob") == 0) {
         bool big_endian = false;
-        bool no_descriptions = false;
-        bool long_descriptions = false;
+        DescriptionMode desc_mode = DESC_SHORT;  // Default: first sentence only
+        size_t desc_max_len = 0;  // 0 = unlimited
         int arg_idx = 2;
 
-        // Parse options
+        // Parse options (last one wins for description mode)
         while (argc > arg_idx && argv[arg_idx][0] == '-') {
             if (strcmp(argv[arg_idx], "--big-endian") == 0) {
                 big_endian = true;
             } else if (strcmp(argv[arg_idx], "--no-descriptions") == 0) {
-                no_descriptions = true;
+                desc_mode = DESC_NONE;
+            } else if (strcmp(argv[arg_idx], "--short-descriptions") == 0) {
+                desc_mode = DESC_SHORT;
             } else if (strcmp(argv[arg_idx], "--long-descriptions") == 0) {
-                long_descriptions = true;
+                desc_mode = DESC_LONG;
+            } else if (strcmp(argv[arg_idx], "--description-length") == 0) {
+                if (argc <= arg_idx + 1) {
+                    fprintf(stderr, "--description-length requires a value\n");
+                    return 1;
+                }
+                char *endptr;
+                unsigned long val = strtoul(argv[arg_idx + 1], &endptr, 10);
+                if (*endptr != '\0' || val < 4) {
+                    fprintf(stderr, "--description-length must be an integer >= 4\n");
+                    return 1;
+                }
+                desc_max_len = (size_t)val;
+                arg_idx++;
             } else {
                 break;
             }
@@ -1322,7 +1307,7 @@ int main(int argc, char *argv[]) {
 
         if (argc < arg_idx + 1) {
             fprintf(stderr, "Usage: fast-completer --generate-blob [options] <schema> [output]\n");
-            fprintf(stderr, "Options: --big-endian, --no-descriptions, --long-descriptions\n");
+            fprintf(stderr, "Options: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
             return 1;
         }
 
@@ -1342,7 +1327,7 @@ int main(int argc, char *argv[]) {
             output_path = derived_path;
         }
 
-        bool result = generate_blob(schema_path, output_path, big_endian, no_descriptions, long_descriptions);
+        bool result = generate_blob(schema_path, output_path, big_endian, desc_mode, desc_max_len);
         return result ? 0 : 1;
     }
 

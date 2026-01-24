@@ -1,0 +1,1294 @@
+# GitHub CLI schema for fast-completer
+# Generated from gh 2.86.0
+
+gh # GitHub CLI
+	--version @bool # Show gh version
+	agent-task
+		create
+			--help @bool # Show help for command
+			--base @bool # Base branch for the pull request (use default branch if not provided)
+			--custom-agent @bool # Use a custom agent for the task. e.g., use 'my-agent' for the 'my-agent.md' agent
+			--follow @bool # Follow agent session logs
+			--from-file # Read task description from `file` (use "-" to read from standard input)
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		list
+			--help @bool # Show help for command
+			--limit # Maximum number of agent tasks to fetch
+			--web @bool # Open agent tasks in the browser
+		view
+			--help @bool # Show help for command
+			--follow @bool # Follow agent session logs
+			--log @bool # Show agent session logs
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--web @bool # Open agent task in the browser
+	alias
+		delete
+			--help @bool # Show help for command
+			--all @bool # Delete all aliases
+		import
+			--help @bool # Show help for command
+			--clobber # Overwrite existing aliases of the same name
+		list
+			--help @bool # Show help for command
+		set
+			--help @bool # Show help for command
+			--clobber # Overwrite existing aliases of the same name
+			--shell # Declare an alias to be passed through a shell interpreter
+	api
+		--help @bool # Show help for command
+		--cache @bool # Cache the response, e.g. "3600s", "60m", "1h"
+		--field # Add a typed parameter in `key=value` format (use "@<path>" or "@-" to read value from file or stdin)
+		--header @bool # Add a HTTP request header in `key:value` format
+		--hostname # The GitHub hostname for the request (default "github.com")
+		--include @bool # Include HTTP response status line and headers in the output
+		--input # The `file` to use as body for the HTTP request (use "-" to read from standard input)
+		--jq @bool # Query to select values from the response using jq syntax
+		--method @bool # The HTTP method for the request
+		--paginate @bool # Make additional HTTP requests to fetch all pages of results
+		--preview # Opt into GitHub API previews (names should omit '-preview')
+		--raw-field # Add a string parameter in `key=value` format
+		--silent # Do not print the response body
+		--slurp @bool # Use with "--paginate" to return an array of all pages of either JSON arrays or objects
+		--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		--verbose @bool # Include full HTTP request and response in the output
+	attestation
+		download
+			--owner @bool # GitHub organization to scope attestation lookup by
+			--repo # Repository name in the format <owner>/<repo>
+		trusted-root
+			--help @bool # Show help for command
+			--hostname @bool # Configure host to use
+			--tuf-root # Path to the TUF root.json file on disk
+			--tuf-url @bool # URL to the TUF repository mirror
+			--verify-only @bool # Don't output trusted_root.jsonl contents
+		verify
+			--owner @bool # GitHub organization to scope attestation lookup by
+			--repo # Repository name in the format <owner>/<repo>
+	auth
+		login
+			--help @bool # Show help for command
+			--clipboard @bool # Copy one-time OAuth device code to clipboard
+			--git-protocol @bool # The protocol to use for git operations on this host: {ssh|https}
+			--hostname # The hostname of the GitHub instance to authenticate with
+			--insecure-storage @bool # Save authentication credentials in plain text instead of credential store
+			--scopes @bool # Additional authentication scopes to request
+			--skip-ssh-key @bool # Skip generate/upload SSH key prompt
+			--web @bool # Open a browser to authenticate
+			--with-token @bool # Read token from standard input
+		logout
+			--help @bool # Show help for command
+			--hostname # The hostname of the GitHub instance to log out of
+			--user @bool # The account to log out of
+		refresh
+			--help @bool # Show help for command
+			--clipboard @bool # Copy one-time OAuth device code to clipboard
+			--hostname @bool # The GitHub host to use for authentication
+			--insecure-storage @bool # Save authentication credentials in plain text instead of credential store
+			--remove-scopes @bool # Authentication scopes to remove from gh
+			--reset-scopes @bool # Reset authentication scopes to the default minimum set of scopes
+			--scopes @bool # Additional authentication scopes for gh to have
+		setup-git
+			--help @bool # Show help for command
+			--force # Force setup even if the host is not known. Must be used in conjunction with `--hostname`
+			--hostname # The hostname to configure git for
+		status
+			--help @bool # Show help for command
+			--active @bool # Display the active account only
+			--hostname # Check only a specific hostname's auth status
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--show-token @bool # Display the auth token
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		switch
+			--help @bool # Show help for command
+			--hostname # The hostname of the GitHub instance to switch account for
+			--user @bool # The account to switch to
+		token
+			--help @bool # Show help for command
+			--hostname # The hostname of the GitHub instance authenticated with
+			--user @bool # The account to output the token for
+	browse
+		--help @bool # Show help for command
+		--actions @bool # Open repository actions
+		--branch # Select another branch by passing in the branch name
+		--commit @bool # Select another commit by passing in the commit SHA, default is the last commit
+		--no-browser # Print destination URL instead of opening the browser
+		--projects @bool # Open repository projects
+		--releases @bool # Open repository releases
+		--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		--settings @bool # Open repository settings
+		--wiki @bool # Open repository wiki
+	cache
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--all @bool # Delete all caches, can be used with --ref to delete all caches for a specific ref
+			--ref # Delete by cache key and ref, formatted as refs/heads/<branch name> or refs/pull/<number>/merge
+			--succeed-on-no-caches @bool # Return exit code 0 if no caches found. Must be used in conjunction with `--all`
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--key @bool # Filter by cache key prefix
+			--limit # Maximum number of caches to fetch
+			--order @bool # Order of caches returned: {asc|desc}
+			--ref # Filter by ref, formatted as refs/heads/<branch name> or refs/pull/<number>/merge
+			--sort @bool # Sort fetched caches: {created_at|last_accessed_at|size_in_bytes}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+	co
+		--help @bool # Show help for command
+	codespace
+		code
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--insiders @bool # Use the insiders version of Visual Studio Code
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+			--web @bool # Use the web version of Visual Studio Code
+		cp
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--expand # Expand remote file names on remote shell
+			--profile # Name of the SSH profile to use
+			--recursive @bool # Recursively copy directories
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+		create
+			--help @bool # Show help for command
+			--branch @bool # Repository branch
+			--default-permissions @bool # Do not prompt to accept additional permissions requested by the codespace
+			--devcontainer-path # Path to the devcontainer.json file to use when creating codespace
+			--display-name # Display name for the codespace (48 characters or less)
+			--idle-timeout @bool # Allowed inactivity before codespace is stopped, e.g. "10m", "1h"
+			--location @bool # Location: {EastUs|SouthEastAsia|WestEurope|WestUs2} (determined automatically if not provided)
+			--machine @bool # Hardware specifications for the VM
+			--repo # Repository name with owner: user/repo
+			--retention-period @bool # Allowed time after shutting down before the codespace is automatically deleted (maximum 30 days), e.g. "1h", "72h"
+			--status # Show status of post-create command and dotfiles
+			--web # Create codespace from browser, cannot be used with --display-name, --idle-timeout, or --retention-period
+		delete
+			--help @bool # Show help for command
+			--all @bool # Delete all codespaces
+			--codespace # Name of the codespace
+			--days @bool # Delete codespaces older than `N` days
+			--force @bool # Skip confirmation for codespaces that contain unsaved changes
+			--org @bool # The `login` handle of the organization (admin-only)
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+			--user # The `username` to delete codespaces for (used with --org)
+		edit
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--display-name # Set the display name
+			--machine @bool # Set hardware specifications for the VM
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+		jupyter
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+		list
+			--help @bool # Show help for command
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of codespaces to list
+			--org @bool # The `login` handle of the organization to list codespaces for (admin-only)
+			--repo # Repository name with owner: user/repo
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--user # The `username` to list codespaces for (used with --org)
+			--web @bool # List codespaces in the web browser, cannot be used with --user or --org
+		logs
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--follow @bool # Tail and follow the logs
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+		ports
+			forward
+				--codespace # Name of the codespace
+				--help @bool # Show help for command
+				--repo # Filter codespace selection by repository name (user/repo)
+				--repo-owner # Filter codespace selection by repository owner (username or org)
+			visibility
+				--codespace # Name of the codespace
+				--help @bool # Show help for command
+				--repo # Filter codespace selection by repository name (user/repo)
+				--repo-owner # Filter codespace selection by repository owner (username or org)
+		rebuild
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--full @bool # Perform a full rebuild
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+		ssh
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--config @bool # Write OpenSSH configuration to stdout
+			--debug # Log debug data to a file
+			--debug-file # Path of the file log to
+			--profile # Name of the SSH profile to use
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+			--server-port # SSH server port number (0 => pick unused)
+		stop
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--org @bool # The `login` handle of the organization (admin-only)
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+			--user # The `username` to stop codespace for (used with --org)
+		view
+			--help @bool # Show help for command
+			--codespace # Name of the codespace
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--repo # Filter codespace selection by repository name (user/repo)
+			--repo-owner # Filter codespace selection by repository owner (username or org)
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+	completion
+		--help @bool # Show help for command
+		--shell @bool # Shell type: {bash|zsh|fish|powershell}
+	config
+		clear-cache
+			--help @bool # Show help for command
+		get
+			--help @bool # Show help for command
+			--host @bool # Get per-host setting
+		list
+			--help @bool # Show help for command
+			--host @bool # Get per-host configuration
+		set
+			--help @bool # Show help for command
+			--host @bool # Set per-host setting
+	copilot
+		--help @bool # Show help for command
+		--remove @bool # Remove the downloaded Copilot CLI
+	extension
+		browse
+			--help @bool # Show help for command
+			--debug @bool # Log to /tmp/extBrowse-*
+			--single-column @bool # Render TUI with only one column of text
+		create
+			--help @bool # Show help for command
+			--precompiled @bool # Create a precompiled extension. Possible values: go, other
+		exec
+			--help @bool # Show help for command
+		install
+			--help @bool # Show help for command
+			--force @bool # Force upgrade extension, or ignore if latest already installed
+			--pin @bool # Pin extension to a release tag or commit ref
+		list
+			--help @bool # Show help for command
+		remove
+			--help @bool # Show help for command
+		search
+			--help @bool # Show help for command
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--license @bool # Filter based on license type
+			--limit # Maximum number of extensions to fetch
+			--order @bool # Order of repositories returned, ignored unless '--sort' flag is specified: {asc|desc}
+			--owner @bool # Filter on owner
+			--sort @bool # Sort fetched repositories: {forks|help-wanted-issues|stars|updated}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open the search query in the web browser
+		upgrade
+			--help @bool # Show help for command
+			--all @bool # Upgrade all extensions
+			--dry-run @bool # Only display upgrades
+			--force @bool # Force upgrade extension
+	gist
+		clone
+			--help @bool # Show help for command
+		create
+			--help @bool # Show help for command
+			--desc @bool # A description for this gist
+			--filename # Provide a filename to be used when reading from standard input
+			--public @bool # List the gist publicly (default "secret")
+			--web @bool # Open the web browser with created gist
+		delete
+			--help @bool # Show help for command
+			--yes @bool # Confirm deletion without prompting
+		edit
+			--help @bool # Show help for command
+			--add # Add a new file to the gist
+			--desc @bool # New description for the gist
+			--filename # Select a file to edit
+			--remove # Remove a file from the gist
+		list
+			--help @bool # Show help for command
+			--filter @bool # Filter gists using a regular `expression`
+			--include-content # Include gists' file content when filtering
+			--limit # Maximum number of gists to fetch
+			--public @bool # Show only public gists
+			--secret @bool # Show only secret gists
+		rename
+			--help @bool # Show help for command
+		view
+			--help @bool # Show help for command
+			--filename # Display a single file from the gist
+			--files # List file names from the gist
+			--raw # Print raw instead of rendered gist contents
+			--web @bool # Open gist in the browser
+	gpg-key
+		add
+			--help @bool # Show help for command
+			--title @bool # Title for the new key
+		delete
+			--help @bool # Show help for command
+			--yes @bool # Skip the confirmation prompt
+		list
+			--help @bool # Show help for command
+	issue
+		close
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comment @bool # Leave a closing comment
+			--reason @bool # Reason for closing: {completed|not planned}
+		comment
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--body @bool # The comment body `text`
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--create-if-none @bool # Create a new comment if no comments are found. Can be used only with --edit-last
+			--delete-last @bool # Delete the last comment of the current user
+			--edit-last @bool # Edit the last comment of the current user
+			--editor @bool # Skip prompts and open the text editor to write the body in
+			--web @bool # Open the web browser to write the comment
+			--yes @bool # Skip the delete confirmation prompt when --delete-last is provided
+		create
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--assignee @bool # Assign people by their `login`. Use "@me" to self-assign.
+			--body @bool # Supply a body. Will prompt for one otherwise.
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--editor @bool # Skip prompts and open the text editor to write the title and body in. The first line is the title and the remaining text is the body.
+			--label `label list --json name --jq ".[].name"` # Add labels by `name`
+			--milestone # Add the issue to a milestone by `name`
+			--project @bool # Add the issue to projects by `title`
+			--recover @bool # Recover input from a failed run of create
+			--template # Template `name` to use as starting body text
+			--title @bool # Supply a title. Will prompt for one otherwise.
+			--web @bool # Open the browser to create an issue
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--yes @bool # Confirm deletion without prompting
+		develop
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--base # Name of the remote branch you want to make your new branch from
+			--branch-repo # Name or URL of the repository where you want to create your new branch
+			--checkout @bool # Checkout the branch after creating it
+			--list @bool # List linked branches for the issue
+			--name # Name of the branch to create
+		edit
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--add-assignee @bool # Add assigned users by their `login`. Use "@me" to assign yourself, or "@copilot" to assign Copilot.
+			--add-label # Add labels by `name`
+			--add-project @bool # Add the issue to projects by `title`
+			--body @bool # Set the new body.
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--milestone # Edit the milestone the issue belongs to by `name`
+			--remove-assignee @bool # Remove assigned users by their `login`. Use "@me" to unassign yourself, or "@copilot" to unassign Copilot.
+			--remove-label # Remove labels by `name`
+			--remove-milestone @bool # Remove the milestone association from the issue
+			--remove-project @bool # Remove the issue from projects by `title`
+			--title @bool # Set the new title.
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--app @bool # Filter by GitHub App author
+			--assignee @bool # Filter by assignee
+			--author @bool # Filter by author
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--label @bool # Filter by label
+			--limit # Maximum number of issues to fetch
+			--mention @bool # Filter by mention
+			--milestone # Filter by milestone number or title
+			--search @bool # Search issues with `query`
+			--state @bool # Filter by state: {open|closed|all}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # List issues in the web browser
+		lock
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--reason @bool # Optional reason for locking conversation (off_topic, resolved, spam, too_heated).
+		pin
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		reopen
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comment @bool # Add a reopening comment
+		status
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		transfer
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		unlock
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		unpin
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comments @bool # View issue comments
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open an issue in the browser
+	label
+		clone
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--force @bool # Overwrite labels in the destination repository
+		create
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--color @bool # Color of the label
+			--description @bool # Description of the label
+			--force @bool # Update the label color and description if label already exists
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--yes @bool # Confirm deletion without prompting
+		edit
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--color @bool # Color of the label
+			--description @bool # Description of the label
+			--name # New name of the label
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of labels to fetch
+			--order @bool # Order of labels returned: {asc|desc}
+			--search # Search label names and descriptions
+			--sort # Sort fetched labels: {created|name}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # List labels in the web browser
+	org
+		list
+			--help @bool # Show help for command
+			--limit # Maximum number of organizations to list
+	pr
+		checkout
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--branch # Local branch name to use (default [the name of the head branch])
+			--detach @bool # Checkout PR with a detached HEAD
+			--force @bool # Reset the existing local branch to the latest state of the pull request
+			--recurse-submodules @bool # Update all submodules after checkout
+		checks
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--fail-fast @bool # Exit watch mode on first check failure
+			--interval # Refresh interval in seconds in watch mode
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--required @bool # Only show checks that are required
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--watch @bool # Watch checks until they finish
+			--web @bool # Open the web browser to show details about checks
+		close
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comment @bool # Leave a closing comment
+			--delete-branch @bool # Delete the local and remote branch after close
+		comment
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--body @bool # The comment body `text`
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--create-if-none @bool # Create a new comment if no comments are found. Can be used only with --edit-last
+			--delete-last @bool # Delete the last comment of the current user
+			--edit-last @bool # Edit the last comment of the current user
+			--editor @bool # Skip prompts and open the text editor to write the body in
+			--web @bool # Open the web browser to write the comment
+			--yes @bool # Skip the delete confirmation prompt when --delete-last is provided
+		create
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--assignee @bool # Assign people by their `login`. Use "@me" to self-assign.
+			--base # The `branch` into which you want your code merged
+			--body @bool # Body for the pull request
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--draft @bool # Mark pull request as a draft
+			--dry-run # Print details instead of creating the PR. May still push git changes.
+			--editor @bool # Skip prompts and open the text editor to write the title and body in. The first line is the title and the remaining text is the body.
+			--fill @bool # Use commit info for title and body
+			--fill-first @bool # Use first commit info for title and body
+			--fill-verbose @bool # Use commits msg+body for description
+			--head @bool # The `branch` that contains commits for your pull request (default [current branch])
+			--label `label list --json name --jq ".[].name"` # Add labels by `name`
+			--milestone # Add the pull request to a milestone by `name`
+			--no-maintainer-edit # Disable maintainer's ability to modify pull request
+			--project @bool # Add the pull request to projects by `title`
+			--recover @bool # Recover input from a failed run of create
+			--reviewer @bool # Request reviews from people or teams by their `handle`
+			--template # Template `file` to use as starting body text
+			--title @bool # Title for the pull request
+			--web @bool # Open the web browser to create a pull request
+		diff
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--color @bool # Use color in diff output: {always|never|auto}
+			--name-only # Display only names of changed files
+			--patch @bool # Display diff in patch format
+			--web @bool # Open the pull request diff in the browser
+		edit
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--add-assignee @bool # Add assigned users by their `login`. Use "@me" to assign yourself, or "@copilot" to assign Copilot.
+			--add-label # Add labels by `name`
+			--add-project @bool # Add the pull request to projects by `title`
+			--add-reviewer @bool # Add reviewers by their `login`.
+			--base @bool # Change the base `branch` for this pull request
+			--body @bool # Set the new body.
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--milestone # Edit the milestone the pull request belongs to by `name`
+			--remove-assignee @bool # Remove assigned users by their `login`. Use "@me" to unassign yourself, or "@copilot" to unassign Copilot.
+			--remove-label # Remove labels by `name`
+			--remove-milestone @bool # Remove the milestone association from the pull request
+			--remove-project @bool # Remove the pull request from projects by `title`
+			--remove-reviewer @bool # Remove reviewers by their `login`.
+			--title @bool # Set the new title.
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--app @bool # Filter by GitHub App author
+			--assignee @bool # Filter by assignee
+			--author @bool # Filter by author
+			--base @bool # Filter by base branch
+			--draft @bool # Filter by draft state
+			--head @bool # Filter by head branch ("<owner>:<branch>" syntax not supported)
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--label @bool # Filter by label
+			--limit # Maximum number of items to fetch
+			--search @bool # Search pull requests with `query`
+			--state @bool # Filter by state: {open|closed|merged|all}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # List pull requests in the web browser
+		lock
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--reason @bool # Optional reason for locking conversation (off_topic, resolved, spam, too_heated).
+		merge
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--admin @bool # Use administrator privileges to merge a pull request that does not meet requirements
+			--author-email @bool # Email `text` for merge commit author
+			--auto @bool # Automatically merge only after necessary requirements are met
+			--body @bool # Body `text` for the merge commit
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--delete-branch @bool # Delete the local and remote branch after merge
+			--disable-auto @bool # Disable auto-merge for this pull request
+			--match-head-commit @bool # Commit `SHA` that the pull request head must match to allow merge
+			--merge @bool # Merge the commits with the base branch
+			--rebase @bool # Rebase the commits onto the base branch
+			--squash # Squash the commits into one commit and merge it into the base branch
+			--subject @bool # Subject `text` for the merge commit
+		ready
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--undo @bool # Convert a pull request to "draft"
+		reopen
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comment @bool # Add a reopening comment
+		revert
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--body @bool # Body for the revert pull request
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--draft @bool # Mark revert pull request as a draft
+			--title @bool # Title for the revert pull request
+		review
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--approve @bool # Approve pull request
+			--body @bool # Specify the body of a review
+			--body-file # Read body text from `file` (use "-" to read from standard input)
+			--comment @bool # Comment on a pull request
+			--request-changes @bool # Request changes on a pull request
+		status
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--conflict-status @bool # Display the merge conflict status of each pull request
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		unlock
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		update-branch
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--rebase @bool # Update PR branch by rebasing on top of latest base branch
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--comments @bool # View pull request comments
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open a pull request in the browser
+	preview
+		prompter
+			--help @bool # Show help for command
+	project
+		close
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--undo @bool # Reopen a closed project
+		copy
+			--title @bool # Title for the new project
+		create
+			--title @bool # Title for the project
+		delete
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		edit
+			--help @bool # Show help for command
+			--description @bool # New description of the project
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--readme @bool # New readme for the project
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--title @bool # New title for the project
+			--visibility @bool # Change project visibility: {PUBLIC|PRIVATE}
+		field-create
+			--data-type # DataType of the new field.: {TEXT|SINGLE_SELECT|DATE|NUMBER}
+			--name # Name of the new field
+		field-delete
+			--id @bool # ID of the field to delete
+		field-list
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--limit # Maximum number of fields to fetch
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		item-add
+			--url @bool # URL of the issue or pull request to add to the project
+		item-archive
+			--id @bool # ID of the item to archive
+		item-create
+			--title @bool # Title for the draft issue
+		item-delete
+			--id @bool # ID of the item to delete
+		item-edit
+			--id @bool # ID of the item to edit
+		item-list
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--limit # Maximum number of items to fetch
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		link
+			--help @bool # Show help for command
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--repo @bool # The repository to be linked to this project
+			--team @bool # The team to be linked to this project
+		list
+			--help @bool # Show help for command
+			--closed @bool # Include closed projects
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--limit # Maximum number of projects to fetch
+			--owner @bool # Login of the owner
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open projects list in the browser
+		mark-template
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--owner @bool # Login of the org owner.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--undo @bool # Unmark the project as a template.
+		unlink
+			--help @bool # Show help for command
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--repo @bool # The repository to be unlinked from this project
+			--team @bool # The team to be unlinked from this project
+		view
+			--help @bool # Show help for command
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--owner @bool # Login of the owner. Use "@me" for the current user.
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open a project in the browser
+	release
+		create
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--discussion-category @bool # Start a discussion in the specified category
+			--draft @bool # Save the release as a draft instead of publishing it
+			--fail-on-no-commits @bool # Fail if there are no commits since the last release (no impact on the first release)
+			--generate-notes @bool # Automatically generate title and notes for the release via GitHub Release Notes API
+			--latest @bool # Mark this release as "Latest" (default [automatic based on date and version]). --latest=false to explicitly NOT set as latest
+			--notes @bool # Release notes
+			--notes-file # Read release notes from `file` (use "-" to read from standard input)
+			--notes-from-tag @bool # Fetch notes from the tag annotation or message of commit associated with tag
+			--notes-start-tag # Tag to use as the starting point for generating release notes
+			--prerelease @bool # Mark the release as a prerelease
+			--target @bool # Target `branch` or full commit SHA (default [main branch])
+			--title @bool # Release title
+			--verify-tag @bool # Abort in case the git tag doesn't already exist in the remote repository
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--cleanup-tag @bool # Delete the specified tag in addition to its release
+			--yes @bool # Skip the confirmation prompt
+		delete-asset
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--yes @bool # Skip the confirmation prompt
+		download
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--archive @bool # Download the source code archive in the specified `format` (zip or tar.gz)
+			--clobber # Overwrite existing files of the same name
+			--dir # The `directory` to download files into
+			--output # The `file` to write a single asset to (use "-" to write to standard output)
+			--pattern @bool # Download only assets that match a glob pattern
+			--skip-existing # Skip downloading when files of the same name exist
+		edit
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--discussion-category @bool # Start a discussion in the specified category when publishing a draft
+			--draft @bool # Save the release as a draft instead of publishing it
+			--latest @bool # Explicitly mark the release as "Latest"
+			--notes @bool # Release notes
+			--notes-file # Read release notes from `file` (use "-" to read from standard input)
+			--prerelease @bool # Mark the release as a prerelease
+			--tag # The name of the tag
+			--target @bool # Target `branch` or full commit SHA (default [main branch])
+			--title @bool # Release title
+			--verify-tag @bool # Abort in case the git tag doesn't already exist in the remote repository
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--exclude-drafts @bool # Exclude draft releases
+			--exclude-pre-releases @bool # Exclude pre-releases
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of items to fetch
+			--order @bool # Order of releases returned: {asc|desc}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		upload
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--clobber # Overwrite existing assets of the same name
+		verify
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		verify-asset
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--format @bool # Output format: {json}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open the release in the browser
+	repo
+		archive
+			--help @bool # Show help for command
+			--yes @bool # Skip the confirmation prompt
+		autolink
+			create
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--numeric @bool # Mark autolink as numeric
+			delete
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--yes @bool # Confirm deletion without prompting
+			list
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--jq @bool # Filter JSON output using a jq `expression`
+				--json @bool # Output JSON with the specified `fields`
+				--template @bool # Format JSON output using a Go template; see "gh help formatting"
+				--web @bool # List autolink references in the web browser
+			view
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--jq @bool # Filter JSON output using a jq `expression`
+				--json @bool # Output JSON with the specified `fields`
+				--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		clone
+			--help @bool # Show help for command
+			--upstream-remote-name # Upstream remote name when cloning a fork
+		create
+			--help @bool # Show help for command
+			--add-readme # Add a README file to the new repository
+			--clone @bool # Clone the new repository to the current directory
+			--description @bool # Description of the repository
+			--disable-issues @bool # Disable issues in the new repository
+			--disable-wiki @bool # Disable wiki in the new repository
+			--gitignore @bool # Specify a gitignore template for the repository
+			--homepage @bool # Repository home page `URL`
+			--include-all-branches @bool # Include all branches from template repository
+			--internal # Make the new repository internal
+			--license @bool # Specify an Open Source License for the repository
+			--private @bool # Make the new repository private
+			--public @bool # Make the new repository public
+			--push @bool # Push local commits to the new repository
+			--remote # Specify remote name for the new repository
+			--source # Specify path to local repository to use as source
+			--team # The `name` of the organization team to be granted access
+			--template @bool # Make the new repository based on a template `repository`
+		delete
+			--help @bool # Show help for command
+			--yes @bool # Confirm deletion without prompting
+		deploy-key
+			add
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--allow-write @bool # Allow write access for the key
+				--title @bool # Title of the new key
+			delete
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			list
+				--help @bool # Show help for command
+				--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+				--jq @bool # Filter JSON output using a jq `expression`
+				--json @bool # Output JSON with the specified `fields`
+				--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		edit
+			--help @bool # Show help for command
+			--accept-visibility-change-consequences @bool # Accept the consequences of changing the repository visibility
+			--add-topic @bool # Add repository topic
+			--allow-forking @bool # Allow forking of an organization repository
+			--allow-update-branch @bool # Allow a pull request head branch that is behind its base branch to be updated
+			--default-branch # Set the default branch `name` for the repository
+			--delete-branch-on-merge @bool # Delete head branch when pull requests are merged
+			--description @bool # Description of the repository
+			--enable-advanced-security @bool # Enable advanced security in the repository
+			--enable-auto-merge @bool # Enable auto-merge functionality
+			--enable-discussions @bool # Enable discussions in the repository
+			--enable-issues @bool # Enable issues in the repository
+			--enable-merge-commit @bool # Enable merging pull requests via merge commit
+			--enable-projects @bool # Enable projects in the repository
+			--enable-rebase-merge @bool # Enable merging pull requests via rebase
+			--enable-secret-scanning @bool # Enable secret scanning in the repository
+			--enable-secret-scanning-push-protection @bool # Enable secret scanning push protection in the repository. Secret scanning must be enabled first
+			--enable-squash-merge @bool # Enable merging pull requests via squashed commit
+			--enable-wiki @bool # Enable wiki in the repository
+			--homepage @bool # Repository home page `URL`
+			--remove-topic @bool # Remove repository topic
+			--template @bool # Make the repository available as a template repository
+			--visibility # Change the visibility of the repository to {public,private,internal}
+		fork
+			--help @bool # Show help for command
+			--clone @bool # Clone the fork
+			--default-branch-only @bool # Only include the default branch in the fork
+			--fork-name # Rename the forked repository
+			--org @bool # Create the fork in an organization
+			--remote @bool # Add a git remote for the fork
+			--remote-name # Specify the name for the new remote
+		gitignore
+			list
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		license
+			list
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+				--web @bool # Open https://choosealicense.com/ in the browser
+		list
+			--help @bool # Show help for command
+			--archived @bool # Show only archived repositories
+			--fork @bool # Show only forks
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--language @bool # Filter by primary coding language
+			--limit # Maximum number of repositories to list
+			--no-archived @bool # Omit archived repositories
+			--source @bool # Show only non-forks
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--topic @bool # Filter by topic
+			--visibility # Filter by repository visibility: {public|private|internal}
+		rename
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--yes @bool # Skip the confirmation prompt
+		set-default
+			--help @bool # Show help for command
+			--unset @bool # Unset the current default repository
+			--view @bool # View the current default repository
+		sync
+			--help @bool # Show help for command
+			--branch @bool # Branch to sync (default [default branch])
+			--force @bool # Hard reset the branch of the destination repository to match the source repository
+			--source @bool # Source repository
+		unarchive
+			--help @bool # Show help for command
+			--yes @bool # Skip the confirmation prompt
+		view
+			--help @bool # Show help for command
+			--branch @bool # View a specific branch of the repository
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open a repository in the browser
+	ruleset
+		check
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--default @bool # Check rules on default branch
+			--web @bool # Open the branch rules page in a web browser
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--limit # Maximum number of rulesets to list
+			--org @bool # List organization-wide rulesets for the provided organization
+			--parents @bool # Whether to include rulesets configured at higher levels that also apply
+			--web @bool # Open the list of rulesets in the web browser
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--org # Organization name if the provided ID is an organization-level ruleset
+			--parents @bool # Whether to include rulesets configured at higher levels that also apply
+			--web @bool # Open the ruleset in the browser
+	run
+		cancel
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--force @bool # Force cancel a workflow run
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		download
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--dir # The directory to download artifacts into
+			--name # Download artifacts that match any of the given names
+			--pattern @bool # Download artifacts that match a glob pattern
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--all @bool # Include disabled workflows
+			--branch @bool # Filter runs by branch
+			--commit @bool # Filter runs by the `SHA` of the commit
+			--created @bool # Filter runs by the `date` it was created
+			--event @bool # Filter runs by which `event` triggered the run
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of runs to fetch
+			--status @bool # Filter runs by status: {queued|completed|in_progress|requested|waiting|pending|action_required|cancelled|failure|neutral|skipped|stale|startup_failure|success|timed_out}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--user @bool # Filter runs by user who triggered the run
+			--workflow @bool # Filter runs by workflow
+		rerun
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--debug @bool # Rerun with debug logging
+			--failed @bool # Rerun only failed jobs, including dependencies
+			--job @bool # Rerun a specific job ID from a run, including dependencies
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--attempt # The attempt number of the workflow run
+			--exit-status @bool # Exit with non-zero status if run failed
+			--job @bool # View a specific job ID from a run
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--log @bool # View full log for either a run or specific job
+			--log-failed @bool # View the log for any failed steps in a run or specific job
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--verbose @bool # Show job steps
+			--web @bool # Open run in the browser
+		watch
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--compact @bool # Show only relevant/failed steps
+			--exit-status @bool # Exit with non-zero status if run fails
+			--interval # Refresh interval in seconds
+	search
+		code
+			--help @bool # Show help for command
+			--extension # Filter on file extension
+			--filename # Filter on filename
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--language @bool # Filter results by language
+			--limit # Maximum number of code results to fetch
+			--match # Restrict search to file contents or file path: {file|path}
+			--owner @bool # Filter on owner
+			--repo @bool # Filter on repository
+			--size @bool # Filter on size range, in kilobytes
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--web @bool # Open the search query in the web browser
+		commits
+			--help @bool # Show help for command
+			--author @bool # Filter by author
+			--author-date @bool # Filter based on authored `date`
+			--author-email @bool # Filter on author email
+			--author-name # Filter on author name
+			--committer @bool # Filter by committer
+			--committer-date @bool # Filter based on committed `date`
+			--committer-email @bool # Filter on committer email
+			--committer-name # Filter on committer name
+			--hash @bool # Filter by commit hash
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of commits to fetch
+			--merge @bool # Filter on merge commits
+			--order @bool # Order of commits returned, ignored unless '--sort' flag is specified: {asc|desc}
+			--owner @bool # Filter on repository owner
+			--parent @bool # Filter by parent hash
+			--repo @bool # Filter on repository
+			--sort @bool # Sort fetched commits: {author-date|committer-date}
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--tree @bool # Filter by tree hash
+			--visibility # Filter based on repository visibility: {public|private|internal}
+			--web @bool # Open the search query in the web browser
+		issues
+			--help @bool # Show help for command
+			--app @bool # Filter by GitHub App author
+			--archived @bool # Filter based on the repository archived state {true|false}
+			--assignee @bool # Filter by assignee
+			--author @bool # Filter by author
+			--closed @bool # Filter on closed at `date`
+			--commenter @bool # Filter based on comments by `user`
+			--comments # Filter on `number` of comments
+			--created @bool # Filter based on created at `date`
+			--include-prs @bool # Include pull requests in results
+			--interactions # Filter on `number` of reactions and comments
+			--involves @bool # Filter based on involvement of `user`
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--label @bool # Filter on label
+			--language @bool # Filter based on the coding language
+			--limit # Maximum number of results to fetch
+			--locked @bool # Filter on locked conversation status
+			--match @bool # Restrict search to specific field of issue: {title|body|comments}
+			--mentions @bool # Filter based on `user` mentions
+			--milestone @bool # Filter by milestone `title`
+			--no-assignee @bool # Filter on missing assignee
+			--no-label @bool # Filter on missing label
+			--no-milestone @bool # Filter on missing milestone
+			--no-project @bool # Filter on missing project
+			--order @bool # Order of results returned, ignored unless '--sort' flag is specified: {asc|desc}
+			--owner @bool # Filter on repository owner
+			--project # Filter on project board `owner/number`
+			--reactions # Filter on `number` of reactions
+			--repo @bool # Filter on repository
+			--sort # Sort fetched results: {comments|created|interactions|reactions|reactions-+1|reactions--1|reactions-heart|reactions-smile|reactions-tada|reactions-thinking_face|updated}
+			--state @bool # Filter based on state: {open|closed}
+			--team-mentions @bool # Filter based on team mentions
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--updated @bool # Filter on last updated at `date`
+			--visibility # Filter based on repository visibility: {public|private|internal}
+			--web @bool # Open the search query in the web browser
+		prs
+			--help @bool # Show help for command
+			--app @bool # Filter by GitHub App author
+			--archived @bool # Filter based on the repository archived state {true|false}
+			--assignee @bool # Filter by assignee
+			--author @bool # Filter by author
+			--base # Filter on base branch name
+			--checks @bool # Filter based on status of the checks: {pending|success|failure}
+			--closed @bool # Filter on closed at `date`
+			--commenter @bool # Filter based on comments by `user`
+			--comments # Filter on `number` of comments
+			--created @bool # Filter based on created at `date`
+			--draft @bool # Filter based on draft state
+			--head # Filter on head branch name
+			--interactions # Filter on `number` of reactions and comments
+			--involves @bool # Filter based on involvement of `user`
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--label @bool # Filter on label
+			--language @bool # Filter based on the coding language
+			--limit # Maximum number of results to fetch
+			--locked @bool # Filter on locked conversation status
+			--match @bool # Restrict search to specific field of issue: {title|body|comments}
+			--mentions @bool # Filter based on `user` mentions
+			--merged @bool # Filter based on merged state
+			--merged-at @bool # Filter on merged at `date`
+			--milestone @bool # Filter by milestone `title`
+			--no-assignee @bool # Filter on missing assignee
+			--no-label @bool # Filter on missing label
+			--no-milestone @bool # Filter on missing milestone
+			--no-project @bool # Filter on missing project
+			--order @bool # Order of results returned, ignored unless '--sort' flag is specified: {asc|desc}
+			--owner @bool # Filter on repository owner
+			--project # Filter on project board `owner/number`
+			--reactions # Filter on `number` of reactions
+			--repo @bool # Filter on repository
+			--review @bool # Filter based on review status: {none|required|approved|changes_requested}
+			--review-requested @bool # Filter on `user` or team requested to review
+			--reviewed-by @bool # Filter on `user` who reviewed
+			--sort # Sort fetched results: {comments|reactions|reactions-+1|reactions--1|reactions-smile|reactions-thinking_face|reactions-heart|reactions-tada|interactions|created|updated}
+			--state @bool # Filter based on state: {open|closed}
+			--team-mentions @bool # Filter based on team mentions
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--updated @bool # Filter on last updated at `date`
+			--visibility # Filter based on repository visibility: {public|private|internal}
+			--web @bool # Open the search query in the web browser
+		repos
+			--help @bool # Show help for command
+			--archived @bool # Filter based on the repository archived state {true|false}
+			--created @bool # Filter based on created at `date`
+			--followers # Filter based on `number` of followers
+			--forks # Filter on `number` of forks
+			--good-first-issues # Filter on `number` of issues with the 'good first issue' label
+			--help-wanted-issues # Filter on `number` of issues with the 'help wanted' label
+			--include-forks @bool # Include forks in fetched repositories: {false|true|only}
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--language @bool # Filter based on the coding language
+			--license @bool # Filter based on license type
+			--limit # Maximum number of repositories to fetch
+			--match # Restrict search to specific field of repository: {name|description|readme}
+			--number-topics # Filter on `number` of topics
+			--order @bool # Order of repositories returned, ignored unless '--sort' flag is specified: {asc|desc}
+			--owner @bool # Filter on owner
+			--size @bool # Filter on a size range, in kilobytes
+			--sort @bool # Sort fetched repositories: {forks|help-wanted-issues|stars|updated}
+			--stars # Filter on `number` of stars
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--topic @bool # Filter on topic
+			--updated @bool # Filter on last updated at `date`
+			--visibility # Filter based on visibility: {public|private|internal}
+			--web @bool # Open the search query in the web browser
+	secret
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--app @bool # Delete a secret for a specific application: {actions|codespaces|dependabot}
+			--env @bool # Delete a secret for an environment
+			--org @bool # Delete a secret for an organization
+			--user @bool # Delete a secret for your user
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--app @bool # List secrets for a specific application: {actions|codespaces|dependabot}
+			--env @bool # List secrets for an environment
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--org @bool # List secrets for an organization
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+			--user @bool # List a secret for your user
+		set
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--app @bool # Set the application for a secret: {actions|codespaces|dependabot}
+			--body @bool # The value for the secret (reads from standard input if not specified)
+			--env @bool # Set deployment `environment` secret
+			--env-file # Load secret names and values from a dotenv-formatted `file`
+			--no-repos-selected @bool # No repositories can access the organization secret
+			--no-store # Print the encrypted, base64-encoded value instead of storing it on GitHub
+			--org @bool # Set `organization` secret
+			--repos @bool # List of `repositories` that can access an organization or user secret
+			--user @bool # Set a secret for your user
+			--visibility @bool # Set visibility for an organization secret: {all|private|selected}
+	ssh-key
+		add
+			--help @bool # Show help for command
+			--title @bool # Title for the new key
+			--type @bool # Type of the ssh key: {authentication|signing}
+		delete
+			--help @bool # Show help for command
+			--yes @bool # Skip the confirmation prompt
+		list
+			--help @bool # Show help for command
+	status
+		--help @bool # Show help for command
+		--exclude # Comma separated list of repos to exclude in owner/name format
+		--org @bool # Report status within an organization
+	variable
+		delete
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--env @bool # Delete a variable for an environment
+			--org @bool # Delete a variable for an organization
+		get
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--env @bool # Get a variable for an environment
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--org @bool # Get a variable for an organization
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--env @bool # List variables for an environment
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--org @bool # List variables for an organization
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		set
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--body @bool # The value for the variable (reads from standard input if not specified)
+			--env @bool # Set deployment `environment` variable
+			--env-file # Load variable names and values from a dotenv-formatted `file`
+			--org @bool # Set `organization` variable
+			--repos @bool # List of `repositories` that can access an organization variable
+			--visibility @bool # Set visibility for an organization variable: {all|private|selected}
+	workflow
+		disable
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		enable
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+		list
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--all @bool # Include disabled workflows
+			--jq @bool # Filter JSON output using a jq `expression`
+			--json @bool # Output JSON with the specified `fields`
+			--limit # Maximum number of workflows to fetch
+			--template @bool # Format JSON output using a Go template; see "gh help formatting"
+		run
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--field # Add a string parameter in `key=value` format, respecting @ syntax (see "gh help api").
+			--json @bool # Read workflow inputs as JSON via STDIN
+			--raw-field # Add a string parameter in `key=value` format
+			--ref # Branch or tag name which contains the version of the workflow file you'd like to run
+		view
+			--help @bool # Show help for command
+			--repo @bool # Select another repository using the `[HOST/]OWNER/REPO` format
+			--ref # The branch or tag name which contains the version of the workflow file you'd like to view
+			--web @bool # Open workflow in the browser
+			--yaml # View the workflow yaml file
