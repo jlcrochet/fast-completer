@@ -835,9 +835,9 @@ static const Param *find_param(const Param *params, uint16_t params_count, const
     return NULL;
 }
 
-// Complete params from entire command path (for inheritance)
+// Complete params from entire command path (deepest first for relevance)
 static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
-    for (int i = 0; i < g_cmd_path_len; i++) {
+    for (int i = g_cmd_path_len - 1; i >= 0; i--) {
         const Command *cmd = g_cmd_path[i];
         complete_params_list(cmd_params(cmd), cmd->params_count, prefix, pinfo);
     }
