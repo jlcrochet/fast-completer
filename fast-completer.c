@@ -527,38 +527,8 @@ static void complete_params_list(const Param *params, uint16_t params_count,
 // Complete global params
 static void complete_global_params(const char *prefix, const PrefixInfo *pinfo) {
     if (header.global_params_count == 0) return;
-    if (pinfo->len > 0 && !pinfo->is_dash) return;
-
-    const Param *global_params = get_global_params();
-
-    // When prefix is "-" (single dash only), show short options first
-    if (pinfo->is_single_dash) {
-        for (uint32_t i = 0; i < header.global_params_count; i++) {
-            const Param *p = &global_params[i];
-            if (p->short_off == 0) continue;
-            if (param_used(p)) continue;
-
-            String short_opt = str_get(p->short_off);
-            if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
-                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
-            }
-        }
-    }
-
-    // Show long options
-    if (!pinfo->is_single_dash || pinfo->len == 1) {
-        for (uint32_t i = 0; i < header.global_params_count; i++) {
-            const Param *p = &global_params[i];
-            if (param_used(p)) continue;
-
-            String name = str_get(p->name_off);
-            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
-                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                output_completion(name, str_get(desc), COMP_PARAM_NAME);
-            }
-        }
-    }
+    // Safe cast: global_params_count is validated <= 65535 at blob generation
+    complete_params_list(get_global_params(), (uint16_t)header.global_params_count, prefix, pinfo);
 }
 
 // Complete string list at a blob offset (choices or members)
@@ -888,8 +858,7 @@ static void complete(int nspans, const char **spans) {
     }
     g_spans = spans;
     g_arg_lens = arg_lens;
-    g_span_count = nspans - 1;
-    if (g_span_count < 1) g_span_count = 1;
+    g_span_count = nspans > 1 ? nspans - 1 : 1;
 
     // Find the deepest matching command
     const Command *cmd = find_command();
@@ -900,7 +869,8 @@ static void complete(int nspans, const char **spans) {
     size_t last_span_len = arg_lens[nspans - 1];
     bool is_empty = is_new_arg(last_span);
     bool is_flag_prefix = last_span[0] == '-';
-    bool is_cmd_prefix = last_span[0] >= 'a' && last_span[0] <= 'z';
+    char c = last_span[0];
+    bool is_cmd_prefix = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 
     if (is_flag_prefix) {
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
