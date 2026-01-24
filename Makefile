@@ -1,7 +1,9 @@
 # Makefile for fast-completer
 
 CC ?= gcc
-WARNINGS = -Wall -Wextra -Wformat=2 -Wshadow -Wunused-result -Wstrict-prototypes
+WARNINGS = -Wall -Wextra -Wformat=2 -Wshadow -Wunused-result -Wstrict-prototypes \
+           -Wnull-dereference -Wduplicated-cond -Wduplicated-branches -Wlogical-op \
+           -Wundef -Wwrite-strings
 HARDENING = -fstack-protector-strong
 CFLAGS ?= -O3 $(WARNINGS) $(HARDENING)
 LDFLAGS ?=

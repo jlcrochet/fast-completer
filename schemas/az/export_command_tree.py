@@ -23,10 +23,6 @@ if not hasattr(time, 'clock'):
 
 USER_HOME = expanduser('~')
 
-# --help is not useful for completions, filter it out
-SKIP_PARAMS = frozenset(['--help -h'])
-
-
 def escape_field(s):
     """Escape a field for schema output (replace tabs and newlines)."""
     if not s:
@@ -42,7 +38,7 @@ def extract_global_params(cli_ctx):
     global_params = []
 
     for action in global_parser._actions:
-        if action.dest == 'help' or not action.option_strings:
+        if not action.option_strings:
             continue
 
         long_opt = None
@@ -100,9 +96,6 @@ def load_all_help(cli_ctx):
 
 def extract_parameter(param):
     """Extract parameter information from a help parameter object."""
-    if param.name in SKIP_PARAMS:
-        return None
-
     options = param.name.split() if param.name else []
 
     # Find long option

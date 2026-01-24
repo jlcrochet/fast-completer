@@ -165,7 +165,7 @@ def get_subcommands(command_parts):
     completions = parse_cobra_completions(command_parts)
     subcommands = []
     for comp, desc in completions:
-        if comp.startswith('-') or comp in ('help', '') or comp.startswith(':'):
+        if comp.startswith('-') or comp == '' or comp.startswith(':'):
             continue
         subcommands.append({'name': comp, 'summary': desc})
     return subcommands
@@ -252,8 +252,6 @@ def get_global_flags():
     global_params = []
     for f in raw_flags:
         name = f['name']
-        if name in ('--help', '-h'):
-            continue
         param = {
             'name': name,
             'description': f['summary'],

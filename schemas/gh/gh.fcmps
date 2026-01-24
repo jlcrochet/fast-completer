@@ -2,6 +2,7 @@
 # Generated from gh 2.86.0
 
 gh # GitHub CLI
+	--help @bool # Show help for command
 	--version @bool # Show gh version
 	agent-task
 		create
@@ -341,6 +342,405 @@ gh # GitHub CLI
 			--yes @bool # Skip the confirmation prompt
 		list
 			--help @bool # Show help for command
+	help
+		agent-task
+			create
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		alias
+			delete
+				--help @bool # Show help for command
+			import
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			set
+				--help @bool # Show help for command
+		api
+			--help @bool # Show help for command
+		attestation
+			download
+				--help @bool # Show help for command
+			trusted-root
+				--help @bool # Show help for command
+			verify
+				--help @bool # Show help for command
+		auth
+			login
+				--help @bool # Show help for command
+			logout
+				--help @bool # Show help for command
+			refresh
+				--help @bool # Show help for command
+			setup-git
+				--help @bool # Show help for command
+			status
+				--help @bool # Show help for command
+			switch
+				--help @bool # Show help for command
+			token
+				--help @bool # Show help for command
+		browse
+			--help @bool # Show help for command
+		cache
+			delete
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+		co
+			--help @bool # Show help for command
+		codespace
+			code
+				--help @bool # Show help for command
+			cp
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			jupyter
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			logs
+				--help @bool # Show help for command
+			ports
+				forward
+					--help @bool # Show help for command
+				visibility
+					--help @bool # Show help for command
+			rebuild
+				--help @bool # Show help for command
+			ssh
+				--help @bool # Show help for command
+			stop
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		completion
+			--help @bool # Show help for command
+		config
+			clear-cache
+				--help @bool # Show help for command
+			get
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			set
+				--help @bool # Show help for command
+		copilot
+			--help @bool # Show help for command
+		extension
+			browse
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			exec
+				--help @bool # Show help for command
+			install
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			remove
+				--help @bool # Show help for command
+			search
+				--help @bool # Show help for command
+			upgrade
+				--help @bool # Show help for command
+		gist
+			clone
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			rename
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		gpg-key
+			add
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+		help
+			--help @bool # Show help for command
+		issue
+			close
+				--help @bool # Show help for command
+			comment
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			develop
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			lock
+				--help @bool # Show help for command
+			pin
+				--help @bool # Show help for command
+			reopen
+				--help @bool # Show help for command
+			status
+				--help @bool # Show help for command
+			transfer
+				--help @bool # Show help for command
+			unlock
+				--help @bool # Show help for command
+			unpin
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		label
+			clone
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+		org
+			list
+				--help @bool # Show help for command
+		pr
+			checkout
+				--help @bool # Show help for command
+			checks
+				--help @bool # Show help for command
+			close
+				--help @bool # Show help for command
+			comment
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			diff
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			lock
+				--help @bool # Show help for command
+			merge
+				--help @bool # Show help for command
+			ready
+				--help @bool # Show help for command
+			reopen
+				--help @bool # Show help for command
+			revert
+				--help @bool # Show help for command
+			review
+				--help @bool # Show help for command
+			status
+				--help @bool # Show help for command
+			unlock
+				--help @bool # Show help for command
+			update-branch
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		preview
+			prompter
+				--help @bool # Show help for command
+		project
+			close
+				--help @bool # Show help for command
+			copy
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			field-create
+				--help @bool # Show help for command
+			field-delete
+				--help @bool # Show help for command
+			field-list
+				--help @bool # Show help for command
+			item-add
+				--help @bool # Show help for command
+			item-archive
+				--help @bool # Show help for command
+			item-create
+				--help @bool # Show help for command
+			item-delete
+				--help @bool # Show help for command
+			item-edit
+				--help @bool # Show help for command
+			item-list
+				--help @bool # Show help for command
+			link
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			mark-template
+				--help @bool # Show help for command
+			unlink
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		release
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			delete-asset
+				--help @bool # Show help for command
+			download
+				--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			upload
+				--help @bool # Show help for command
+			verify
+				--help @bool # Show help for command
+			verify-asset
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		repo
+			archive
+				--help @bool # Show help for command
+			autolink
+				create
+					--help @bool # Show help for command
+				delete
+					--help @bool # Show help for command
+				list
+					--help @bool # Show help for command
+				view
+					--help @bool # Show help for command
+			clone
+				--help @bool # Show help for command
+			create
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			deploy-key
+				add
+					--help @bool # Show help for command
+				delete
+					--help @bool # Show help for command
+				list
+					--help @bool # Show help for command
+			edit
+				--help @bool # Show help for command
+			fork
+				--help @bool # Show help for command
+			gitignore
+				list
+					--help @bool # Show help for command
+				view
+					--help @bool # Show help for command
+			license
+				list
+					--help @bool # Show help for command
+				view
+					--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			rename
+				--help @bool # Show help for command
+			set-default
+				--help @bool # Show help for command
+			sync
+				--help @bool # Show help for command
+			unarchive
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		ruleset
+			check
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+		run
+			cancel
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			download
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			rerun
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
+			watch
+				--help @bool # Show help for command
+		search
+			code
+				--help @bool # Show help for command
+			commits
+				--help @bool # Show help for command
+			issues
+				--help @bool # Show help for command
+			prs
+				--help @bool # Show help for command
+			repos
+				--help @bool # Show help for command
+		secret
+			delete
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			set
+				--help @bool # Show help for command
+		ssh-key
+			add
+				--help @bool # Show help for command
+			delete
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+		status
+			--help @bool # Show help for command
+		variable
+			delete
+				--help @bool # Show help for command
+			get
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			set
+				--help @bool # Show help for command
+		workflow
+			disable
+				--help @bool # Show help for command
+			enable
+				--help @bool # Show help for command
+			list
+				--help @bool # Show help for command
+			run
+				--help @bool # Show help for command
+			view
+				--help @bool # Show help for command
 	issue
 		close
 			--help @bool # Show help for command
