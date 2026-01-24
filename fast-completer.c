@@ -920,7 +920,14 @@ static void complete(int nspans, const char **spans) {
     }
     arg_lens[nspans - 1] = strlen(spans[nspans - 1]);
     g_spans = spans;
-    g_arg_lens = arg_lens;
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdangling-pointer"
+#endif
+    g_arg_lens = arg_lens;  // Safe: only accessed during complete()'s lifetime
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
     g_span_count = nspans > 1 ? nspans - 1 : 1;
     g_used_set_ready = false;  // Reset for lazy init
 
