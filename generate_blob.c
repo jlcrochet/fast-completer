@@ -17,6 +17,19 @@
 #define MAX_FIELDS 8
 #define MAX_LINE_LEN 8192
 
+#ifdef _WIN32
+static char *strndup(const char *s, size_t n) {
+    size_t len = strlen(s);
+    if (n < len) len = n;
+    char *result = malloc(len + 1);
+    if (result) {
+        memcpy(result, s, len);
+        result[len] = '\0';
+    }
+    return result;
+}
+#endif
+
 // --------------------------------------------------------------------------
 // UTF-8 helpers
 // --------------------------------------------------------------------------
