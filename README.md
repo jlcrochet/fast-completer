@@ -97,13 +97,13 @@ Use the `lines` format when you only need values without descriptions.
 |--------|-------------|
 | `--add-space` | Append trailing space to completion values |
 | `--full-commands` | Complete full leaf command paths instead of next level |
-| `--quiet`, `-q` | Suppress error messages if blob not found (for fallback scripts) |
+| `--quiet`, `-q` | Silently exit if blob not found (for fallback scripts) |
 
 By default, command completion shows the next level of subcommands (e.g., `aws ""` shows `s3`, `ec2`, etc.). Use `--full-commands` to show full leaf command paths instead (e.g., `s3 cp`, `s3 ls`, `ec2 describe-instances`).
 
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
 
-The `--quiet` option suppresses all error output, making it suitable for fallback completion setups where you want to try fast-completer first and fall back to another completer if no blob exists.
+The `--quiet` option silently exits if the blob doesn't exist, making it suitable for fallback completion setups. Unexpected errors (invalid blob format, version mismatch, etc.) still print to help diagnose issues. Use `--check` to test if a blob exists before attempting completions.
 
 **Generic formats:**
 

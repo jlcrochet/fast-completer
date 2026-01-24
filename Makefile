@@ -8,19 +8,20 @@ HARDENING = -fstack-protector-strong
 CFLAGS ?= -O3 $(WARNINGS) $(HARDENING)
 LDFLAGS ?=
 
-# Source files
+# Source files (base)
 SRCS = fast-completer.c \
        generate_blob.c
 
-# Object files
-OBJS = $(SRCS:.c=.o)
-
-# Output binary
+# Windows needs vendored getopt implementation
 ifeq ($(OS),Windows_NT)
+    SRCS += compat/getopt.c
     TARGET = fast-completer.exe
 else
     TARGET = fast-completer
 endif
+
+# Object files
+OBJS = $(SRCS:.c=.o)
 
 # Install directory (user-local by default)
 # Linux/macOS: ~/.local/bin
@@ -46,6 +47,9 @@ $(TARGET): $(OBJS)
 # Dependencies
 fast-completer.o: fast-completer.c generate_blob.h
 generate_blob.o: generate_blob.c generate_blob.h
+ifeq ($(OS),Windows_NT)
+compat/getopt.o: compat/getopt.c compat/getopt.h
+endif
 
 clean:
 	rm -f $(OBJS) $(TARGET)

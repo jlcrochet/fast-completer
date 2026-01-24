@@ -31,8 +31,10 @@
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include "compat/getopt.h"
 #else
 #include <fcntl.h>
+#include <getopt.h>
 #include <poll.h>
 #include <signal.h>
 #include <spawn.h>
@@ -65,6 +67,9 @@ typedef struct { const char *p; size_t n; } String;
 
 // Create String from string literal
 #define STR_LIT(s) ((String){s, sizeof(s) - 1})
+
+// Compare String against string literal (length check + memcmp)
+#define STR_EQ_LIT(s, lit) ((s).n == sizeof(lit) - 1 && memcmp((s).p, lit, sizeof(lit) - 1) == 0)
 
 // Packed structs matching binary format
 #pragma pack(push, 1)
@@ -102,6 +107,7 @@ static OutputFormat output_format;
 static bool has_descriptions = true;  // Set from blob flags
 static bool add_trailing_space = false;  // Add trailing space to completion values
 static bool full_commands = false;       // Complete full leaf command paths instead of next level
+static bool quiet_mode = false;          // Suppress "blob not found" error (for fallback scripts)
 
 // Working buffers (allocated based on header values)
 static char *path_buf = NULL;
@@ -394,7 +400,7 @@ static const Command *bsearch_command(const Command *subs, uint16_t count, const
 }
 
 // Maximum command path depth (root -> ... -> leaf)
-#define MAX_CMD_DEPTH 32
+#define MAX_CMD_DEPTH 64
 
 // Command path from root to deepest match (for param inheritance)
 static const Command *g_cmd_path[MAX_CMD_DEPTH];
@@ -867,32 +873,18 @@ static inline bool is_new_arg(const char *span) {
 
 // Parse output format - uses first char + length for fast dispatch
 static OutputFormat parse_format(const char *name) {
-    size_t len = strlen(name);
-    // Quick dispatch on first char and length
-    switch (name[0]) {
-    case 'b':
-        if (len == 4 && memcmp(name, "bash", 4) == 0) return OUT_LINES;
-        break;
-    case 'f':
-        if (len == 4 && memcmp(name, "fish", 4) == 0) return OUT_TSV;
-        break;
-    case 'j':
-        if (len == 4 && memcmp(name, "json", 4) == 0) return OUT_JSON;
-        break;
-    case 'l':
-        if (len == 5 && memcmp(name, "lines", 5) == 0) return OUT_LINES;
-        break;
-    case 'p':
-        if (len == 4 && memcmp(name, "pwsh", 4) == 0) return OUT_PWSH;
-        if (len == 10 && memcmp(name, "powershell", 10) == 0) return OUT_PWSH;
-        break;
-    case 't':
-        if (len == 3 && memcmp(name, "tsv", 3) == 0) return OUT_TSV;
-        break;
-    case 'z':
-        if (len == 3 && memcmp(name, "zsh", 3) == 0) return OUT_ZSH;
-        break;
+    String s = {name, strlen(name)};
+    #define FMT(lit) STR_EQ_LIT(s, lit)
+    switch (s.p[0]) {
+    case 'b': if (FMT("bash")) return OUT_LINES; break;
+    case 'f': if (FMT("fish")) return OUT_TSV; break;
+    case 'j': if (FMT("json")) return OUT_JSON; break;
+    case 'l': if (FMT("lines")) return OUT_LINES; break;
+    case 'p': if (FMT("pwsh") || FMT("powershell")) return OUT_PWSH; break;
+    case 't': if (FMT("tsv")) return OUT_TSV; break;
+    case 'z': if (FMT("zsh")) return OUT_ZSH; break;
     }
+    #undef FMT
     return OUT_UNKNOWN;
 }
 
@@ -1256,7 +1248,8 @@ static void print_help(void) {
     puts("  --blob <path>    Use blob at specified path instead of cache lookup");
     puts("  --add-space      Append trailing space to completion values");
     puts("  --full-commands  Complete full leaf command paths instead of next level");
-    puts("  --quiet, -q      Suppress errors if blob not found (for fallback scripts)\n");
+    puts("  --quiet, -q      Silently exit if blob not found (for fallback scripts)");
+    puts("                   Unexpected errors (invalid blob, etc.) still print\n");
     puts("  The CLI name is derived from the first span and used to look up");
     puts("  <name>.fcmpb in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
@@ -1297,6 +1290,8 @@ static void print_help(void) {
     puts("      Generate blob from schema (CLI name derived from first command)\n");
     puts("  fast-completer --check aws && echo 'aws completions available'");
     puts("      Conditionally run command if aws blob exists\n");
+    puts("  fast-completer -q json aws s3 \"\" || fallback_completer aws s3");
+    puts("      Try completions, fall back if blob not found\n");
     puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
     puts("  fast-completer --blob /path/to/custom.fcmpb zsh mycli --");
@@ -1305,33 +1300,163 @@ static void print_help(void) {
     puts("      Dump header of cached aws.fcmpb blob");
 }
 
+// Execution modes (mutually exclusive)
+typedef enum {
+    MODE_COMPLETE,       // Default: generate completions
+    MODE_CHECK,          // --check: test if blob exists
+    MODE_DUMP_HEADER,    // --dump-header: show blob header
+    MODE_GENERATE_BLOB   // --generate-blob: create blob from schema
+} Mode;
+
 int main(int argc, char *argv[]) {
-    // Pre-scan for --quiet/-q to redirect stderr early
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--quiet") == 0 || strcmp(argv[i], "-q") == 0) {
-#ifdef _WIN32
-            if (!freopen("NUL", "w", stderr)) _exit(1);
-#else
-            if (!freopen("/dev/null", "w", stderr)) _exit(1);
-#endif
+    // Mode selection
+    Mode mode = MODE_COMPLETE;
+
+    // Completion mode options
+    const char *explicit_blob_path = NULL;
+    bool complete_opts_used = false;  // Track if completion-specific options were used
+
+    // Generate-blob mode options
+    bool big_endian = false;
+    DescriptionMode desc_mode = DESC_SHORT;
+    size_t desc_max_len = 0;
+    bool generate_opts_used = false;  // Track if generate-blob-specific options were used
+
+    // Long options table
+    static struct option long_options[] = {
+        // Universal
+        {"help",               no_argument,       0, 'h'},
+
+        // Mode selectors (mutually exclusive)
+        {"check",              no_argument,       0, 'C'},
+        {"dump-header",        no_argument,       0, 'D'},
+        {"generate-blob",      no_argument,       0, 'G'},
+
+        // Completion mode options
+        {"blob",               required_argument, 0, 'b'},
+        {"add-space",          no_argument,       0, 'a'},
+        {"full-commands",      no_argument,       0, 'f'},
+        {"quiet",              no_argument,       0, 'q'},
+
+        // Generate-blob mode options
+        {"big-endian",         no_argument,       0, 'E'},
+        {"no-descriptions",    no_argument,       0, 'N'},
+        {"short-descriptions", no_argument,       0, 'S'},
+        {"long-descriptions",  no_argument,       0, 'L'},
+        {"description-length", required_argument, 0, 'l'},
+
+        {0, 0, 0, 0}
+    };
+
+    // '+' = POSIX mode (stop at first non-option = the format arg)
+    int c;
+    while ((c = getopt_long(argc, argv, "+hqafb:l:", long_options, NULL)) != -1) {
+        switch (c) {
+        // Universal
+        case 'h':
+            print_help();
+            return 0;
+
+        // Mode selectors (mutually exclusive)
+        case 'C':  // --check
+            if (mode != MODE_COMPLETE) {
+                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                return 1;
+            }
+            mode = MODE_CHECK;
             break;
+        case 'D':  // --dump-header
+            if (mode != MODE_COMPLETE) {
+                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                return 1;
+            }
+            mode = MODE_DUMP_HEADER;
+            break;
+        case 'G':  // --generate-blob
+            if (mode != MODE_COMPLETE) {
+                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                return 1;
+            }
+            mode = MODE_GENERATE_BLOB;
+            break;
+
+        // Completion mode options
+        case 'b':  // --blob
+            explicit_blob_path = optarg;
+            complete_opts_used = true;
+            break;
+        case 'a':  // --add-space
+            add_trailing_space = true;
+            complete_opts_used = true;
+            break;
+        case 'f':  // --full-commands
+            full_commands = true;
+            complete_opts_used = true;
+            break;
+        case 'q':  // --quiet, -q
+            quiet_mode = true;
+            complete_opts_used = true;
+            break;
+
+        // Generate-blob mode options
+        case 'E':  // --big-endian
+            big_endian = true;
+            generate_opts_used = true;
+            break;
+        case 'N':  // --no-descriptions
+            desc_mode = DESC_NONE;
+            generate_opts_used = true;
+            break;
+        case 'S':  // --short-descriptions
+            desc_mode = DESC_SHORT;
+            generate_opts_used = true;
+            break;
+        case 'L':  // --long-descriptions
+            desc_mode = DESC_LONG;
+            generate_opts_used = true;
+            break;
+        case 'l':  // --description-length
+            {
+                char *endptr;
+                unsigned long val = strtoul(optarg, &endptr, 10);
+                if (*endptr != '\0' || val < 4) {
+                    fprintf(stderr, "--description-length must be an integer >= 4\n");
+                    return 1;
+                }
+                desc_max_len = (size_t)val;
+                generate_opts_used = true;
+            }
+            break;
+
+        case '?':
+            // getopt_long already printed an error message
+            fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
+            return 1;
+
+        default:
+            fprintf(stderr, "Unexpected option: %c\n", c);
+            return 1;
         }
-        // Stop scanning at first non-option argument
-        if (argv[i][0] != '-') break;
     }
 
-    if (argc >= 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
-        print_help();
-        return 0;
+    // Validate option/mode compatibility
+    if (generate_opts_used && mode != MODE_GENERATE_BLOB) {
+        fprintf(stderr, "Error: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, and --description-length are only valid with --generate-blob\n");
+        return 1;
+    }
+    if (complete_opts_used && mode != MODE_COMPLETE) {
+        fprintf(stderr, "Error: --blob, --add-space, --full-commands, and --quiet are only valid in completion mode\n");
+        return 1;
     }
 
-    // Handle --check mode: test if blob exists in cache
-    if (argc >= 2 && strcmp(argv[1], "--check") == 0) {
-        if (argc < 3) {
+    // Dispatch based on mode
+    switch (mode) {
+    case MODE_CHECK: {
+        if (argc != optind + 1) {
             fprintf(stderr, "Usage: fast-completer --check <name>\n");
             return 1;
         }
-        char *path = resolve_blob_path(argv[2]);
+        char *path = resolve_blob_path(argv[optind]);
         if (!path) return 1;
 #ifdef _WIN32
         DWORD attrs = GetFileAttributesA(path);
@@ -1342,13 +1467,12 @@ int main(int argc, char *argv[]) {
 #endif
     }
 
-    // Handle --dump-header mode
-    if (argc >= 2 && strcmp(argv[1], "--dump-header") == 0) {
-        if (argc < 3) {
+    case MODE_DUMP_HEADER: {
+        if (argc != optind + 1) {
             fprintf(stderr, "Usage: fast-completer --dump-header <blob>\n");
             return 1;
         }
-        char *path = resolve_blob_path(argv[2]);
+        char *path = resolve_blob_path(argv[optind]);
         if (!load_blob(path)) {
             return 1;
         }
@@ -1356,50 +1480,15 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // Handle --generate-blob mode (must come first)
-    if (argc >= 2 && strcmp(argv[1], "--generate-blob") == 0) {
-        bool big_endian = false;
-        DescriptionMode desc_mode = DESC_SHORT;  // Default: first sentence only
-        size_t desc_max_len = 0;  // 0 = unlimited
-        int arg_idx = 2;
-
-        // Parse options (last one wins for description mode)
-        while (argc > arg_idx && argv[arg_idx][0] == '-') {
-            if (strcmp(argv[arg_idx], "--big-endian") == 0) {
-                big_endian = true;
-            } else if (strcmp(argv[arg_idx], "--no-descriptions") == 0) {
-                desc_mode = DESC_NONE;
-            } else if (strcmp(argv[arg_idx], "--short-descriptions") == 0) {
-                desc_mode = DESC_SHORT;
-            } else if (strcmp(argv[arg_idx], "--long-descriptions") == 0) {
-                desc_mode = DESC_LONG;
-            } else if (strcmp(argv[arg_idx], "--description-length") == 0) {
-                if (argc <= arg_idx + 1) {
-                    fprintf(stderr, "--description-length requires a value\n");
-                    return 1;
-                }
-                char *endptr;
-                unsigned long val = strtoul(argv[arg_idx + 1], &endptr, 10);
-                if (*endptr != '\0' || val < 4) {
-                    fprintf(stderr, "--description-length must be an integer >= 4\n");
-                    return 1;
-                }
-                desc_max_len = (size_t)val;
-                arg_idx++;
-            } else {
-                break;
-            }
-            arg_idx++;
-        }
-
-        if (argc < arg_idx + 1) {
+    case MODE_GENERATE_BLOB: {
+        if (argc < optind + 1 || argc > optind + 2) {
             fprintf(stderr, "Usage: fast-completer --generate-blob [options] <schema> [output]\n");
             fprintf(stderr, "Options: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
             return 1;
         }
 
-        const char *schema_path = argv[arg_idx];
-        const char *output_path = (argc > arg_idx + 1) ? argv[arg_idx + 1] : NULL;
+        const char *schema_path = argv[optind];
+        const char *output_path = (argc == optind + 2) ? argv[optind + 1] : NULL;
         char *derived_path = NULL;
 
         // If no output path, derive from schema's "name" property
@@ -1418,37 +1507,20 @@ int main(int argc, char *argv[]) {
         return result ? 0 : 1;
     }
 
-    // Parse completion mode arguments
-    int arg_idx = 1;
-    const char *explicit_blob_path = NULL;
-
-    // Check for options
-    while (argc > arg_idx && argv[arg_idx][0] == '-' && argv[arg_idx][1] == '-') {
-        if (argc > arg_idx + 1 && strcmp(argv[arg_idx], "--blob") == 0) {
-            explicit_blob_path = argv[arg_idx + 1];
-            arg_idx += 2;
-        } else if (strcmp(argv[arg_idx], "--add-space") == 0) {
-            add_trailing_space = true;
-            arg_idx++;
-        } else if (strcmp(argv[arg_idx], "--full-commands") == 0) {
-            full_commands = true;
-            arg_idx++;
-        } else if (strcmp(argv[arg_idx], "--quiet") == 0 || strcmp(argv[arg_idx], "-q") == 0) {
-            arg_idx++;  // Already handled by pre-scan
-        } else {
-            break;
-        }
+    case MODE_COMPLETE:
+        break;  // Fall through to completion logic below
     }
 
-    if (argc < arg_idx + 2) {
+    // Completion mode
+    if (argc < optind + 2) {
         fprintf(stderr, "Usage: fast-completer [options] <format> <spans...>\n");
         fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
         return 1;
     }
 
-    const char *format_name = argv[arg_idx];
-    int spans_start = arg_idx + 1;
-    const char *cli_name = argv[spans_start]; // Derive from first span
+    const char *format_name = argv[optind];
+    int spans_start = optind + 1;
+    const char *cli_name = argv[spans_start];
 
     // Resolve blob path
     char *resolved_path = NULL;
@@ -1467,9 +1539,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // In quiet mode, check if blob exists before attempting load (avoids error output)
+    if (quiet_mode) {
+#ifdef _WIN32
+        if (GetFileAttributesA(blob_path) == INVALID_FILE_ATTRIBUTES)
+            return 1;
+#else
+        if (access(blob_path, F_OK) != 0)
+            return 1;
+#endif
+    }
+
     if (!load_blob(blob_path)) {
-        // If cache lookup failed, show helpful error
-        if (!explicit_blob_path && is_simple_name(cli_name)) {
+        // If cache lookup failed, show helpful error (unless --quiet)
+        if (!quiet_mode && !explicit_blob_path && is_simple_name(cli_name)) {
             char *cache_dir = get_cache_dir();
             fprintf(stderr, "Blob '%s' not found in %s\n", cli_name, cache_dir ? cache_dir : "(unknown)");
             fprintf(stderr, "Generate it with: fast-completer --generate-blob <schema>\n");
