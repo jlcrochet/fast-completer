@@ -374,6 +374,10 @@ The generator enforces these rules:
 - **Incremental nesting**: Indentation can only increase by 1 level at a time
 - **Decreasing depth allowed**: Can jump back any number of levels
 
+### Editor Support
+
+A [tree-sitter grammar](https://github.com/jlcrochet/tree-sitter-fcmps) is available for syntax highlighting in editors that support tree-sitter.
+
 ### Example
 
 ```
