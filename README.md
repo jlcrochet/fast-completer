@@ -17,8 +17,8 @@ This project provides a single native C binary that can provide completions for 
   - [Example Schemas](#example-schemas)
   - [Inspecting Blobs](#inspecting-blobs)
 - [Schema Format](#schema-format)
-  - [Directives](#directives)
   - [Parameters](#parameters)
+  - [Dynamic Completers](#dynamic-completers)
   - [Example](#example)
 - [Binary Blob Format](#binary-blob-format)
 - [Shell Integration](#shell-integration)
@@ -164,7 +164,7 @@ make install   # installs to %LOCALAPPDATA%\Programs
 
 Open a Developer Command Prompt and run:
 ```cmd
-cl /O2 /Fe:fast-completer.exe fast-completer.c generate_blob.c
+cl /O2 /Fe:fast-completer.exe fast-completer.c generate_blob.c compat/getopt.c
 ```
 
 Then copy `fast-completer.exe` to a directory in your PATH, such as:
@@ -207,9 +207,10 @@ The CLI name is derived from the first command in the schema (the root command).
 | `--short-descriptions` | First sentence only (default) |
 | `--long-descriptions` | Include full descriptions |
 | `--no-descriptions` | Omit descriptions entirely (smallest blob) |
+| `--description-length <n>` | Truncate descriptions to n characters |
 | `--big-endian` | Generate big-endian blob (for cross-compilation) |
 
-If multiple description options are given, the last one wins.
+Description options can be combined: `--long-descriptions --description-length 200` includes full descriptions but truncates any exceeding 200 characters. If multiple description mode options are given, the last one wins.
 
 ```bash
 # First sentence descriptions (default)
@@ -296,27 +297,27 @@ python dump_blob.py commands.fcmpb --range commands:0:20
 
 ## Schema Format
 
-Schemas use an indentation-based tab-separated format (`.fcmps` extension). Leading tabs determine the command hierarchy.
+Schemas use an indentation-based format (`.fcmps` extension). Leading tabs determine the command hierarchy.
 
 ### General Rules
 
 - **Indentation determines hierarchy**: leading tabs set nesting depth
-- Lines starting with `#` are comments (allowed at any indentation level)
+- Lines starting with `#` (outside of delimiters) are comments or descriptions
 - Empty lines are ignored
-- Fields are separated by tabs (additional tabs/spaces after the first tab are ignored for alignment)
-- Lines starting with `--` are parameter definitions
+- Fields are separated by spaces; `#` introduces the description
+- Lines starting with `--` or `-` are parameter definitions
 - The first depth-0 command is the root (CLI name and description)
 - **No leading spaces allowed** — use tabs only for indentation
 
 ### Structure
 
 ```
-[global params at depth 0, before root command]
-<root-command>	[description]     ← First depth-0 line = CLI name
-	<subcommand>	[description]
-		--param|-s(bool)	description
-		<sub-subcommand>	[description]
-			--param	TYPE	description
+<root-command> # description     ← First depth-0 line = CLI name
+	--global-param @bool # description  (root params inherit to all subcommands)
+	<subcommand> # description
+		--param|-s @bool # description
+		<sub-subcommand> # description
+			--param (choice1|choice2) # description
 ```
 
 ### Parameters
@@ -324,21 +325,24 @@ Schemas use an indentation-based tab-separated format (`.fcmps` extension). Lead
 Parameter lines are indented under their parent command:
 
 ```
-<tabs>--long-opt|-s	TYPE	description
+<tabs><option-spec> [type-specifier] [# description]
 ```
 
-| Field | Description |
-|-------|-------------|
-| `--long-opt\|-s` | **Required.** Long option, optionally with short alias (e.g., `--recursive\|-r`) |
-| `(bool)` | Optional. Suffix indicating boolean flag (e.g., `--verbose(bool)`) |
-| `TYPE` | Optional. One of: `a\|b\|c` (choices), `{k1\|k2}` (members), `@cmd` (completer) |
-| `description` | Optional. Help text |
+**Option spec formats:**
+- `--long|-s` — long option with short alias
+- `--long` — long option only
+- `-s` — short option only
+- `--opt|-o|--alias` — multiple aliases (first short and first long are used)
 
-Type meanings:
-- **`(bool)` suffix** - Flag that doesn't take a value
-- **`choice1\|choice2\|...`** - Pipe-separated list of valid values
-- **`{key1\|key2\|...}`** - Members for key=value completion (braces required)
-- **`@command`** - Dynamic completer command to execute
+**Type specifiers** (optional):
+- `@bool` — boolean flag (doesn't take a value)
+- `(val1|val2|val3)` — choices (pipe-separated, in parentheses)
+- `{key1|key2}` — members for key=value completion
+- `` `command` `` — dynamic completer (see below)
+- No specifier — takes a value with no specific choices
+
+**Description** (optional):
+- `# description text` — everything after `#` (outside delimiters) is the description
 
 ### Parameter Inheritance
 
@@ -348,18 +352,17 @@ When completing, parameters are listed in order of specificity:
 1. The command's own parameters (most specific)
 2. Parent command's parameters
 3. Grandparent's parameters
-4. ...continuing up to the root
-5. Global parameters (least specific)
+4. ...continuing up to the root command's parameters (least specific)
 
 This ensures the most relevant options appear first when completing deeply nested commands.
 
 ### Dynamic Completers
 
-The `@completer` syntax enables dynamic completion by executing a CLI subcommand at completion time. The command (without the `@`) is appended to the CLI name and executed, with each line of stdout becoming a completion option.
+The `` `command` `` syntax enables dynamic completion by executing a command at completion time. The command is appended to the CLI name and executed, with each line of stdout becoming a completion option.
 
 Example:
 ```
-		--kubernetes-version		@aks get-versions	Version of Kubernetes
+		--kubernetes-version `aks get-versions` # Version of Kubernetes
 ```
 
 When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values.
@@ -384,28 +387,26 @@ A [tree-sitter grammar](https://github.com/jlcrochet/tree-sitter-fcmps) is avail
 # AWS CLI schema for fast-completer
 # Generated from awscli 2.x
 
-# Global params (before root command)
---output	json|text|table	The formatting style
---debug(bool)	Turn on debug logging
---region	The region to use
---profile	Use a specific profile
-
-aws	Amazon Web Services CLI
-	s3	Amazon S3 operations
-		--endpoint-url	Override S3 endpoint URL
-		cp	Copy objects between buckets
-			--recursive|-r(bool)	Recursive copy
-			--storage-class	STANDARD|REDUCED_REDUNDANCY	Storage class
-			--acl	private|public-read	Canned ACL to apply
-		ls	List buckets or objects
-			--human-readable|-h(bool)	Display sizes in human readable format
-	ec2	Elastic Compute Cloud
-		describe-instances	Describe EC2 instances
-			--instance-ids	Instance IDs to describe
+aws # Amazon Web Services CLI
+	--output (json|text|table) # The formatting style
+	--debug @bool # Turn on debug logging
+	--region # The region to use
+	--profile # Use a specific profile
+	s3 # Amazon S3 operations
+		--endpoint-url # Override S3 endpoint URL
+		cp # Copy objects between buckets
+			--recursive|-r @bool # Recursive copy
+			--storage-class (STANDARD|REDUCED_REDUNDANCY) # Storage class
+			--acl (private|public-read) # Canned ACL to apply
+		ls # List buckets or objects
+			--human-readable|-h @bool # Display sizes in human readable format
+	ec2 # Elastic Compute Cloud
+		describe-instances # Describe EC2 instances
+			--instance-ids # Instance IDs to describe
 ```
 
 In this example:
-- `--output`, `--debug`, `--region`, `--profile` are global (available everywhere)
+- `--output`, `--debug`, `--region`, `--profile` are on the root `aws` command (available everywhere)
 - `--endpoint-url` is on `s3` and inherited by `s3 cp`, `s3 ls`, etc.
 - `--recursive`, `--storage-class`, `--acl` are specific to `s3 cp`
 - When completing `aws s3 cp --`, options appear in order: `--recursive`, `--storage-class`, `--acl`, `--endpoint-url`, then globals
