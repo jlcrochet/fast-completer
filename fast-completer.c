@@ -119,7 +119,7 @@ static int g_span_count = 0;
 
 // Hash set for O(1) used-param lookups (lazily built only when completing params)
 // For small span counts, linear scan is faster (avoids 4KB memset overhead)
-#define USED_LINEAR_THRESHOLD 16
+#define USED_LINEAR_THRESHOLD 8
 #define USED_SET_SIZE 256  // Power of 2, must be > 2*MAX_SPANS
 typedef struct { const char *p; size_t n; } UsedEntry;
 static UsedEntry g_used_set[USED_SET_SIZE];
