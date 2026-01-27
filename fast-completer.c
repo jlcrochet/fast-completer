@@ -118,6 +118,8 @@ static size_t *g_arg_lens = NULL;
 static int g_span_count = 0;
 
 // Hash set for O(1) used-param lookups (lazily built only when completing params)
+// For small span counts, linear scan is faster (avoids 4KB memset overhead)
+#define USED_LINEAR_THRESHOLD 16
 #define USED_SET_SIZE 256  // Power of 2, must be > 2*MAX_SPANS
 typedef struct { const char *p; size_t n; } UsedEntry;
 static UsedEntry g_used_set[USED_SET_SIZE];
@@ -308,72 +310,72 @@ static void print_json_str_with_space(String s) {
 // Output a completion item
 static void output_completion(String value, String desc, CompletionType type) {
     switch (output_format) {
-    case OUT_JSON:
-        if (json_started) put_char(',');
-        json_started = true;
-        put_char('{');
-        print_json_str(STR_LIT("value"));
-        put_char(':');
-        if (add_trailing_space && needs_trailing_space(value))
-            print_json_str_with_space(value);
-        else
-            print_json_str(value);
-        if (desc.n > 0) {
-            put_char(',');
-            print_json_str(STR_LIT("description"));
+        case OUT_JSON:
+            if (json_started) put_char(',');
+            json_started = true;
+            put_char('{');
+            print_json_str(STR_LIT("value"));
             put_char(':');
-            print_json_str(desc);
-        }
-        put_char('}');
-        break;
-
-    case OUT_TSV:
-        put_str(value);
-        if (add_trailing_space && needs_trailing_space(value))
-            put_char(' ');
-        if (desc.n > 0) {
-            put_char('\t');
-            put_str(desc);
-        }
-        put_char('\n');
-        break;
-
-    case OUT_ZSH:
-        put_str(value);
-        if (add_trailing_space && needs_trailing_space(value))
-            put_char(' ');
-        if (desc.n > 0) {
-            put_char(':');
-            for (size_t i = 0; i < desc.n; i++) {
-                if (desc.p[i] == '\\') put_char('\\');  // escape backslashes
-                put_char(desc.p[i]);
+            if (add_trailing_space && needs_trailing_space(value))
+                print_json_str_with_space(value);
+            else
+                print_json_str(value);
+            if (desc.n > 0) {
+                put_char(',');
+                print_json_str(STR_LIT("description"));
+                put_char(':');
+                print_json_str(desc);
             }
-        }
-        put_char('\n');
-        break;
+            put_char('}');
+            break;
 
-    case OUT_LINES:
-        put_str(value);
-        if (add_trailing_space && needs_trailing_space(value))
-            put_char(' ');
-        put_char('\n');
-        break;
+        case OUT_TSV:
+            put_str(value);
+            if (add_trailing_space && needs_trailing_space(value))
+                put_char(' ');
+            if (desc.n > 0) {
+                put_char('\t');
+                put_str(desc);
+            }
+            put_char('\n');
+            break;
 
-    case OUT_PWSH:
-        put_str(value);
-        if (add_trailing_space && needs_trailing_space(value))
-            put_char(' ');
-        put_char('\t');
-        put_str(value);
-        put_char('\t');
-        put_char('0' + type);
-        put_char('\t');
-        put_str(desc.n > 0 ? desc : value);
-        put_char('\n');
-        break;
+        case OUT_ZSH:
+            put_str(value);
+            if (add_trailing_space && needs_trailing_space(value))
+                put_char(' ');
+            if (desc.n > 0) {
+                put_char(':');
+                for (size_t i = 0; i < desc.n; i++) {
+                    if (desc.p[i] == '\\') put_char('\\');  // escape backslashes
+                    put_char(desc.p[i]);
+                }
+            }
+            put_char('\n');
+            break;
 
-    case OUT_UNKNOWN:
-        break;  // Should never happen
+        case OUT_LINES:
+            put_str(value);
+            if (add_trailing_space && needs_trailing_space(value))
+                put_char(' ');
+            put_char('\n');
+            break;
+
+        case OUT_PWSH:
+            put_str(value);
+            if (add_trailing_space && needs_trailing_space(value))
+                put_char(' ');
+            put_char('\t');
+            put_str(value);
+            put_char('\t');
+            put_char('0' + type);
+            put_char('\t');
+            put_str(desc.n > 0 ? desc : value);
+            put_char('\n');
+            break;
+
+        case OUT_UNKNOWN:
+            break;  // Should never happen
     }
 }
 
@@ -438,9 +440,27 @@ static const Command *find_command(void) {
     return cmd;
 }
 
+// Linear scan for small span counts - avoids 4KB memset overhead of hash table
+static bool param_used_linear(const Param *param) {
+    String name = str_get(param->name_off);
+    String short_opt = param->short_off ? str_get(param->short_off) : (String){NULL, 0};
+
+    for (int i = 0; i < g_span_count; i++) {
+        if (g_spans[i][0] != '-') continue;
+        size_t n = g_arg_lens[i];
+        if (name.n > 0 && name.n == n && memcmp(name.p, g_spans[i], n) == 0) return true;
+        if (short_opt.p && short_opt.n == n && memcmp(short_opt.p, g_spans[i], n) == 0) return true;
+    }
+    return false;
+}
+
 // Check if a parameter has already been used (by long or short name)
-// Uses hash set for O(1) lookup instead of O(spans) linear scan
+// Uses linear scan for small span counts, hash set for large
 static bool param_used(const Param *param) {
+    if (g_span_count <= USED_LINEAR_THRESHOLD) {
+        return param_used_linear(param);
+    }
+
     used_set_build();  // Lazy init on first call
     String name = str_get(param->name_off);
     if (name.n > 0 && used_set_contains(name.p, name.n)) return true;
@@ -876,13 +896,13 @@ static OutputFormat parse_format(const char *name) {
     String s = {name, strlen(name)};
     #define FMT(lit) STR_EQ_LIT(s, lit)
     switch (s.p[0]) {
-    case 'b': if (FMT("bash")) return OUT_LINES; break;
-    case 'f': if (FMT("fish")) return OUT_TSV; break;
-    case 'j': if (FMT("json")) return OUT_JSON; break;
-    case 'l': if (FMT("lines")) return OUT_LINES; break;
-    case 'p': if (FMT("pwsh") || FMT("powershell")) return OUT_PWSH; break;
-    case 't': if (FMT("tsv")) return OUT_TSV; break;
-    case 'z': if (FMT("zsh")) return OUT_ZSH; break;
+        case 'b': if (FMT("bash")) return OUT_LINES; break;
+        case 'f': if (FMT("fish")) return OUT_TSV; break;
+        case 'j': if (FMT("json")) return OUT_JSON; break;
+        case 'l': if (FMT("lines")) return OUT_LINES; break;
+        case 'p': if (FMT("pwsh") || FMT("powershell")) return OUT_PWSH; break;
+        case 't': if (FMT("tsv")) return OUT_TSV; break;
+        case 'z': if (FMT("zsh")) return OUT_ZSH; break;
     }
     #undef FMT
     return OUT_UNKNOWN;
@@ -1352,90 +1372,90 @@ int main(int argc, char *argv[]) {
     int c;
     while ((c = getopt_long(argc, argv, "+hqafb:l:", long_options, NULL)) != -1) {
         switch (c) {
-        // Universal
-        case 'h':
-            print_help();
-            return 0;
+            // Universal
+            case 'h':
+                print_help();
+                return 0;
 
-        // Mode selectors (mutually exclusive)
-        case 'C':  // --check
-            if (mode != MODE_COMPLETE) {
-                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
-                return 1;
-            }
-            mode = MODE_CHECK;
-            break;
-        case 'D':  // --dump-header
-            if (mode != MODE_COMPLETE) {
-                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
-                return 1;
-            }
-            mode = MODE_DUMP_HEADER;
-            break;
-        case 'G':  // --generate-blob
-            if (mode != MODE_COMPLETE) {
-                fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
-                return 1;
-            }
-            mode = MODE_GENERATE_BLOB;
-            break;
-
-        // Completion mode options
-        case 'b':  // --blob
-            explicit_blob_path = optarg;
-            complete_opts_used = true;
-            break;
-        case 'a':  // --add-space
-            add_trailing_space = true;
-            complete_opts_used = true;
-            break;
-        case 'f':  // --full-commands
-            full_commands = true;
-            complete_opts_used = true;
-            break;
-        case 'q':  // --quiet, -q
-            quiet_mode = true;
-            complete_opts_used = true;
-            break;
-
-        // Generate-blob mode options
-        case 'E':  // --big-endian
-            big_endian = true;
-            generate_opts_used = true;
-            break;
-        case 'N':  // --no-descriptions
-            desc_mode = DESC_NONE;
-            generate_opts_used = true;
-            break;
-        case 'S':  // --short-descriptions
-            desc_mode = DESC_SHORT;
-            generate_opts_used = true;
-            break;
-        case 'L':  // --long-descriptions
-            desc_mode = DESC_LONG;
-            generate_opts_used = true;
-            break;
-        case 'l':  // --description-length
-            {
-                char *endptr;
-                unsigned long val = strtoul(optarg, &endptr, 10);
-                if (*endptr != '\0' || val < 4) {
-                    fprintf(stderr, "--description-length must be an integer >= 4\n");
+            // Mode selectors (mutually exclusive)
+            case 'C':  // --check
+                if (mode != MODE_COMPLETE) {
+                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
                     return 1;
                 }
-                desc_max_len = (size_t)val;
+                mode = MODE_CHECK;
+                break;
+            case 'D':  // --dump-header
+                if (mode != MODE_COMPLETE) {
+                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                    return 1;
+                }
+                mode = MODE_DUMP_HEADER;
+                break;
+            case 'G':  // --generate-blob
+                if (mode != MODE_COMPLETE) {
+                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                    return 1;
+                }
+                mode = MODE_GENERATE_BLOB;
+                break;
+
+            // Completion mode options
+            case 'b':  // --blob
+                explicit_blob_path = optarg;
+                complete_opts_used = true;
+                break;
+            case 'a':  // --add-space
+                add_trailing_space = true;
+                complete_opts_used = true;
+                break;
+            case 'f':  // --full-commands
+                full_commands = true;
+                complete_opts_used = true;
+                break;
+            case 'q':  // --quiet, -q
+                quiet_mode = true;
+                complete_opts_used = true;
+                break;
+
+            // Generate-blob mode options
+            case 'E':  // --big-endian
+                big_endian = true;
                 generate_opts_used = true;
-            }
-            break;
+                break;
+            case 'N':  // --no-descriptions
+                desc_mode = DESC_NONE;
+                generate_opts_used = true;
+                break;
+            case 'S':  // --short-descriptions
+                desc_mode = DESC_SHORT;
+                generate_opts_used = true;
+                break;
+            case 'L':  // --long-descriptions
+                desc_mode = DESC_LONG;
+                generate_opts_used = true;
+                break;
+            case 'l':  // --description-length
+                {
+                    char *endptr;
+                    unsigned long val = strtoul(optarg, &endptr, 10);
+                    if (*endptr != '\0' || val < 4) {
+                        fprintf(stderr, "--description-length must be an integer >= 4\n");
+                        return 1;
+                    }
+                    desc_max_len = (size_t)val;
+                    generate_opts_used = true;
+                }
+                break;
 
-        case '?':
-            // getopt_long already printed an error message
-            fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
-            return 1;
+            case '?':
+                // getopt_long already printed an error message
+                fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
+                return 1;
 
-        default:
-            fprintf(stderr, "Unexpected option: %c\n", c);
-            return 1;
+            default:
+                fprintf(stderr, "Unexpected option: %c\n", c);
+                return 1;
         }
     }
 
@@ -1451,64 +1471,64 @@ int main(int argc, char *argv[]) {
 
     // Dispatch based on mode
     switch (mode) {
-    case MODE_CHECK: {
-        if (argc != optind + 1) {
-            fprintf(stderr, "Usage: fast-completer --check <name>\n");
-            return 1;
-        }
-        char *path = resolve_blob_path(argv[optind]);
-        if (!path) return 1;
-#ifdef _WIN32
-        DWORD attrs = GetFileAttributesA(path);
-        return (attrs != INVALID_FILE_ATTRIBUTES) ? 0 : 1;
-#else
-        struct stat st;
-        return (stat(path, &st) == 0) ? 0 : 1;
-#endif
-    }
-
-    case MODE_DUMP_HEADER: {
-        if (argc != optind + 1) {
-            fprintf(stderr, "Usage: fast-completer --dump-header <blob>\n");
-            return 1;
-        }
-        char *path = resolve_blob_path(argv[optind]);
-        if (!load_blob(path)) {
-            return 1;
-        }
-        dump_header(path);
-        return 0;
-    }
-
-    case MODE_GENERATE_BLOB: {
-        if (argc < optind + 1 || argc > optind + 2) {
-            fprintf(stderr, "Usage: fast-completer --generate-blob [options] <schema> [output]\n");
-            fprintf(stderr, "Options: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
-            return 1;
-        }
-
-        const char *schema_path = argv[optind];
-        const char *output_path = (argc == optind + 2) ? argv[optind + 1] : NULL;
-        char *derived_path = NULL;
-
-        // If no output path, derive from schema's "name" property
-        if (!output_path) {
-            char *name = get_schema_name(schema_path);
-            if (!name) {
-                fprintf(stderr, "Schema must have 'name' property when output path is omitted\n");
+        case MODE_CHECK: {
+            if (argc != optind + 1) {
+                fprintf(stderr, "Usage: fast-completer --check <name>\n");
                 return 1;
             }
-            ensure_cache_dir();
-            derived_path = build_cache_path(name);
-            output_path = derived_path;
+            char *path = resolve_blob_path(argv[optind]);
+            if (!path) return 1;
+#ifdef _WIN32
+            DWORD attrs = GetFileAttributesA(path);
+            return (attrs != INVALID_FILE_ATTRIBUTES) ? 0 : 1;
+#else
+            struct stat st;
+            return (stat(path, &st) == 0) ? 0 : 1;
+#endif
         }
 
-        bool result = generate_blob(schema_path, output_path, big_endian, desc_mode, desc_max_len);
-        return result ? 0 : 1;
-    }
+        case MODE_DUMP_HEADER: {
+            if (argc != optind + 1) {
+                fprintf(stderr, "Usage: fast-completer --dump-header <blob>\n");
+                return 1;
+            }
+            char *path = resolve_blob_path(argv[optind]);
+            if (!load_blob(path)) {
+                return 1;
+            }
+            dump_header(path);
+            return 0;
+        }
 
-    case MODE_COMPLETE:
-        break;  // Fall through to completion logic below
+        case MODE_GENERATE_BLOB: {
+            if (argc < optind + 1 || argc > optind + 2) {
+                fprintf(stderr, "Usage: fast-completer --generate-blob [options] <schema> [output]\n");
+                fprintf(stderr, "Options: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
+                return 1;
+            }
+
+            const char *schema_path = argv[optind];
+            const char *output_path = (argc == optind + 2) ? argv[optind + 1] : NULL;
+            char *derived_path = NULL;
+
+            // If no output path, derive from schema's "name" property
+            if (!output_path) {
+                char *name = get_schema_name(schema_path);
+                if (!name) {
+                    fprintf(stderr, "Schema must have 'name' property when output path is omitted\n");
+                    return 1;
+                }
+                ensure_cache_dir();
+                derived_path = build_cache_path(name);
+                output_path = derived_path;
+            }
+
+            bool result = generate_blob(schema_path, output_path, big_endian, desc_mode, desc_max_len);
+            return result ? 0 : 1;
+        }
+
+        case MODE_COMPLETE:
+            break;  // Fall through to completion logic below
     }
 
     // Completion mode
