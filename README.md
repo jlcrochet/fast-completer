@@ -76,7 +76,7 @@ fast-completer [options] <format> <spans...>
 
 The CLI name is derived from the first span and used to look up the blob in the cache directory. The last span triggers completions: `""` for subcommands + flags, `-` or `--*` for flags only, `abc...` for matching subcommands. Run `fast-completer --help` for full usage information.
 
-**Parameter ordering:** Parameters are listed with the most specific first—a command's own parameters appear before inherited parameters from parent commands, which appear before global parameters. This means the most relevant options are shown first when completing deeply nested commands.
+**Parameter ordering:** Parameters are listed with the most specific first -— a command's own parameters appear before inherited parameters from parent commands, which appear before global parameters. This means the most relevant options are shown first when completing deeply nested commands.
 
 ### Output Formats
 
@@ -88,6 +88,14 @@ The CLI name is derived from the first span and used to look up the blob in the 
 | `zsh` | value:description (colon-separated) |
 | `fish` | value\tdescription (tab-separated, alias: `tsv`) |
 | `pwsh` | PowerShell tab-separated format |
+
+**Generic formats:**
+
+| Format | Description |
+|--------|-------------|
+| `lines` | One value per line |
+| `tsv` | value\tdescription (tab-separated) |
+| `json` | JSON array of `{"value": ..., "description": ...}` objects |
 
 Use the `lines` format when you only need values without descriptions.
 
@@ -104,14 +112,6 @@ By default, command completion shows the next level of subcommands (e.g., `aws "
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
 
 The `--quiet` option silently exits if the blob doesn't exist, making it suitable for fallback completion setups. Unexpected errors (invalid blob format, version mismatch, etc.) still print to help diagnose issues. Use `--check` to test if a blob exists before attempting completions.
-
-**Generic formats:**
-
-| Format | Description |
-|--------|-------------|
-| `lines` | One value per line |
-| `tsv` | value\tdescription (tab-separated) |
-| `json` | JSON array of `{"value": ..., "description": ...}` objects |
 
 ## Installation
 
