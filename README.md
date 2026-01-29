@@ -164,7 +164,7 @@ make install   # installs to %LOCALAPPDATA%\Programs
 
 Open a Developer Command Prompt and run:
 ```cmd
-cl /O2 /Fe:fast-completer.exe fast-completer.c generate_blob.c compat/getopt.c
+cl /O2 /Fe:fast-completer.exe src\\fast-completer.c src\\generate_blob.c compat\\getopt.c
 ```
 
 Then copy `fast-completer.exe` to a directory in your PATH, such as:
@@ -615,9 +615,9 @@ Get-ChildItem "$fcCache\*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object 
 
 ## How It Works
 
-1. `generate_blob.c` - Converts a schema file to a binary blob file
+1. `src/generate_blob.c` - Converts a schema file to a binary blob file
 2. `scripts/dump_blob.py` - Inspects and validates blob files (for debugging)
-3. `fast-completer.c` - Native binary that memory-maps the blob and provides completions
+3. `src/fast-completer.c` - Native binary that memory-maps the blob and provides completions
 
 The blob-based approach offers several advantages over compiled-in data:
 - **Single binary**: One `fast-completer` binary works with any CLI tool

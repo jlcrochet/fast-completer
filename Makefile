@@ -9,8 +9,8 @@ CFLAGS ?= -O3 $(WARNINGS) $(HARDENING)
 LDFLAGS ?=
 
 # Source files (base)
-SRCS = fast-completer.c \
-       generate_blob.c
+SRCS = src/fast-completer.c \
+       src/generate_blob.c
 
 # Windows needs vendored getopt implementation
 ifeq ($(OS),Windows_NT)
@@ -45,8 +45,8 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # Dependencies
-fast-completer.o: fast-completer.c generate_blob.h
-generate_blob.o: generate_blob.c generate_blob.h
+src/fast-completer.o: src/fast-completer.c src/generate_blob.h
+src/generate_blob.o: src/generate_blob.c src/generate_blob.h
 ifeq ($(OS),Windows_NT)
 compat/getopt.o: compat/getopt.c compat/getopt.h
 endif

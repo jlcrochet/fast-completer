@@ -495,6 +495,24 @@ static inline PrefixInfo make_prefix_info(const char *prefix, size_t len) {
     return info;
 }
 
+// Prefix tokenization guard (single spaces only, no leading/double spaces)
+static inline bool prefix_is_tokenizable(const char *prefix, size_t len) {
+    if (!prefix || len == 0) return false;
+    if (prefix[0] == ' ') return false;
+    bool has_space = false;
+    char prev = '\0';
+    for (size_t i = 0; i < len; i++) {
+        char c = prefix[i];
+        if (c == '\t' || c == '\n' || c == '\r') return false;
+        if (c == ' ') {
+            if (prev == ' ') return false;
+            has_space = true;
+        }
+        prev = c;
+    }
+    return has_space;
+}
+
 // Recursively output leaf commands
 static void complete_leaf_commands(const Command *cmd, String path, const char *prefix, size_t prefix_len) {
     if (cmd->subcommands_count == 0) return;
@@ -532,6 +550,56 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 
         buf[path.n] = '\0';
     }
+}
+
+// Prefix token-aware leaf completion (exact tokens via binary search, then DFS)
+static void complete_leaf_commands_token_prefix(const Command *cmd, const char *prefix, size_t prefix_len) {
+    if (!cmd || !prefix || prefix_len == 0) return;
+
+    bool trailing_space = prefix[prefix_len - 1] == ' ';
+    const char *p = prefix;
+    const char *end = prefix + prefix_len;
+    size_t path_len = 0;
+    const Command *cur = cmd;
+
+    path_buf[0] = '\0';
+
+    while (p < end) {
+        const char *start = p;
+        while (p < end && *p != ' ') p++;
+        size_t tok_len = (size_t)(p - start);
+        if (tok_len == 0) {
+            // Unexpected (e.g., double spaces); fall back to full scan
+            complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len);
+            return;
+        }
+
+        bool is_last = (p >= end);
+        bool token_complete = trailing_space || !is_last;
+        if (!token_complete) break;
+
+        if (cur->subcommands_count == 0) return;
+        const Command *found = bsearch_command(cmd_subcommands(cur), cur->subcommands_count, start, tok_len);
+        if (!found) return;
+
+        if (path_len > 0) {
+            if (path_len + 1 + tok_len >= header.max_command_path_len) return;
+            path_buf[path_len] = ' ';
+            memcpy(path_buf + path_len + 1, start, tok_len);
+            path_len += 1 + tok_len;
+        } else {
+            if (tok_len >= header.max_command_path_len) return;
+            memcpy(path_buf, start, tok_len);
+            path_len = tok_len;
+        }
+        path_buf[path_len] = '\0';
+
+        cur = found;
+
+        if (p < end && *p == ' ') p++;  // Skip single space delimiter
+    }
+
+    complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len);
 }
 
 // Binary search for first subcommand with name >= prefix (lower bound)
@@ -584,8 +652,12 @@ static void complete_next_level(const Command *cmd, const char *prefix, size_t p
 // Complete subcommands (full leaf paths or next level based on flag)
 static void complete_subcommands(const Command *cmd, const char *prefix, size_t prefix_len) {
     if (full_commands) {
-        path_buf[0] = '\0';
-        complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len);
+        if (prefix_is_tokenizable(prefix, prefix_len)) {
+            complete_leaf_commands_token_prefix(cmd, prefix, prefix_len);
+        } else {
+            path_buf[0] = '\0';
+            complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len);
+        }
     } else {
         complete_next_level(cmd, prefix, prefix_len);
     }
