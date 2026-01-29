@@ -15,11 +15,11 @@
  * Keep these in sync with dump_blob.py.
  */
 #define BLOB_MAGIC   "FCMP"
-#define BLOB_VERSION 9
+#define BLOB_VERSION 10
 
 #define HEADER_SIZE  56
-#define PARAM_SIZE   17
-#define COMMAND_SIZE 18
+#define PARAM_SIZE   20
+#define COMMAND_SIZE 20
 
 /* Param flags */
 #define FLAG_TAKES_VALUE  0x01

@@ -71,14 +71,14 @@ typedef struct { const char *p; size_t n; } String;
 // Compare String against string literal (length check + memcmp)
 #define STR_EQ_LIT(s, lit) ((s).n == sizeof(lit) - 1 && memcmp((s).p, lit, sizeof(lit) - 1) == 0)
 
-// Packed structs matching binary format
-#pragma pack(push, 1)
+// Structs matching binary format (4-byte aligned)
 typedef struct {
     uint32_t name_off;
     uint32_t short_off;    // 0 if none, else offset into string table
     uint32_t desc_off;
     uint32_t choices_off;  // 0 if none, else absolute offset into blob
     uint8_t  flags;        // FLAG_TAKES_VALUE, FLAG_IS_MEMBERS
+    uint8_t  _pad[3];
 } Param;
 
 typedef struct {
@@ -88,8 +88,11 @@ typedef struct {
     uint16_t subcommands_idx;
     uint16_t params_count;
     uint16_t subcommands_count;
+    uint16_t _pad;
 } Command;
-#pragma pack(pop)
+
+typedef char _assert_param_size[(sizeof(Param) == PARAM_SIZE) ? 1 : -1];
+typedef char _assert_command_size[(sizeof(Command) == COMMAND_SIZE) ? 1 : -1];
 
 // Blob header (parsed at load time - only fields actually used)
 typedef struct {
@@ -209,17 +212,19 @@ static inline const Command *cmd_subcommands(const Command *cmd) {
     return cmd->subcommands_count ? get_command(cmd->subcommands_idx) : NULL;
 }
 
-// Read variable-length count-prefixed array of string offsets
-// Format: u8 count if <255, else 0xFF + u16 count, then count * u32 offsets
+// Read count-prefixed array of string offsets
+// Format: u8 count if <255, else 0xFF + u16 count, padded to 4 bytes,
+// then count * u32 offsets
 static inline uint16_t get_string_list_count(uint32_t off) {
     uint8_t first = blob[off];
     if (first < 255) return first;
-    return *(const uint16_t *)(blob + off + 1);
+    uint16_t val;
+    memcpy(&val, blob + off + 1, sizeof(val));
+    return val;
 }
 
 static inline const uint32_t *get_string_offsets(uint32_t off) {
-    uint8_t first = blob[off];
-    return (const uint32_t *)(blob + off + (first < 255 ? 1 : 3));
+    return (const uint32_t *)(blob + off + 4);
 }
 
 // Track if we've started the JSON array
@@ -953,7 +958,8 @@ static void complete(int nspans, const char **spans) {
     bool is_empty = is_new_arg(last_span);
     bool is_flag_prefix = last_span[0] == '-';
     char c = last_span[0];
-    bool is_cmd_prefix = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    bool is_cmd_prefix = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                         (c >= '0' && c <= '9') || c == '_';
 
     if (is_flag_prefix) {
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
@@ -1075,10 +1081,18 @@ static bool load_blob(const char *path) {
         return false;
     }
 
-    // Check endianness compatibility BEFORE reading other fields
-    // Big-endian blobs store flags as [0x00, 0x01] at offset 6-7
-    // Little-endian blobs store flags as [0x00, 0x00] at offset 6-7
-    bool blob_is_big_endian = (blob[6] == 0x00 && blob[7] == 0x01);
+    // Check endianness compatibility BEFORE reading other fields.
+    // HEADER_FLAG_BIG_ENDIAN should appear in the low byte for little-endian blobs,
+    // and in the high byte for big-endian blobs.
+    uint8_t flags_lo = blob[6];
+    uint8_t flags_hi = blob[7];
+    bool flag_le = (flags_lo & HEADER_FLAG_BIG_ENDIAN) != 0;
+    bool flag_be = (flags_hi & HEADER_FLAG_BIG_ENDIAN) != 0;
+    if (flag_le && flag_be) {
+        fprintf(stderr, "%s: invalid flags (both endian markers set)\n", path);
+        return false;
+    }
+    bool blob_is_big_endian = flag_be;
     bool system_is_big_endian = (*(uint16_t *)"\0\1" == 1);
     if (blob_is_big_endian != system_is_big_endian) {
         fprintf(stderr, "%s: endianness mismatch (blob is %s-endian, system is %s-endian)\n",

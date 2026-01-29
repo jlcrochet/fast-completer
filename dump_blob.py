@@ -25,10 +25,10 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 9
+VERSION = 10
 HEADER_SIZE = 56
-PARAM_SIZE = 17
-COMMAND_SIZE = 18
+PARAM_SIZE = 20
+COMMAND_SIZE = 20
 
 # Param flags
 FLAG_TAKES_VALUE  = 0x01
@@ -143,7 +143,7 @@ class BlobReader:
 
     def read_command(self, offset):
         """Read a Command struct at the given offset."""
-        values = struct.unpack_from('<IIIHHH', self.data, offset)
+        values = struct.unpack_from('<IIIHHHH', self.data, offset)
         return {
             'name_off': values[0],
             'desc_off': values[1],
@@ -155,7 +155,7 @@ class BlobReader:
 
     def read_param(self, offset):
         """Read a Param struct at the given offset."""
-        values = struct.unpack_from('<IIIIB', self.data, offset)
+        values = struct.unpack_from('<IIIIBxxx', self.data, offset)
         return {
             'name_off': values[0],
             'short_off': values[1],
@@ -167,19 +167,20 @@ class BlobReader:
     def read_string_offsets(self, offset):
         """Read a variable-length count-prefixed array of string offsets.
 
-        Format: u8 count if <255, else 0xFF + u16 count, then count * u32 offsets.
+        Format: u8 count if <255, else 0xFF + u16 count, padded to 4 bytes,
+        then count * u32 offsets.
         """
         if offset >= len(self.data):
             return []
         first = self.data[offset]
         if first < 255:
             count = first
-            pos = offset + 1
+            pos = offset + 4
         else:
-            if offset + 3 > len(self.data):
+            if offset + 4 > len(self.data):
                 return []
             count = struct.unpack_from('<H', self.data, offset + 1)[0]
-            pos = offset + 3
+            pos = offset + 4
         offsets = []
         for _ in range(count):
             if pos + 4 > len(self.data):

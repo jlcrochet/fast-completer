@@ -1135,11 +1135,25 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
 static char *load_file(const char *path) {
     FILE *f = fopen(path, "r");
     if (!f) { perror(path); return NULL; }
-    fseek(f, 0, SEEK_END);
+    if (fseek(f, 0, SEEK_END) != 0) { perror(path); fclose(f); return NULL; }
     long size = ftell(f);
-    fseek(f, 0, SEEK_SET);
-    char *content = malloc(size + 1);
-    size_t nread = fread(content, 1, size, f);
+    if (size < 0) { perror("ftell"); fclose(f); return NULL; }
+    if (fseek(f, 0, SEEK_SET) != 0) { perror(path); fclose(f); return NULL; }
+    if ((size_t)size > SIZE_MAX - 1) {
+        fprintf(stderr, "%s: file too large\n", path);
+        fclose(f);
+        return NULL;
+    }
+    char *content = malloc((size_t)size + 1);
+    if (!content) { perror("malloc"); fclose(f); return NULL; }
+    size_t nread = fread(content, 1, (size_t)size, f);
+    if (nread != (size_t)size) {
+        if (ferror(f)) perror(path);
+        else fprintf(stderr, "%s: short read\n", path);
+        free(content);
+        fclose(f);
+        return NULL;
+    }
     content[nread] = '\0';
     fclose(f);
     return content;
@@ -1176,6 +1190,11 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         }
 
         int tabs = count_leading_tabs(line);
+        if (tabs >= MAX_DEPTH) {
+            fprintf(stderr, "%s:%d: error: indentation too deep (max depth %d)\n", path, line_num, MAX_DEPTH - 1);
+            free(content);
+            return false;
+        }
         char *content_start = line + tabs;
 
         trim_trailing(content_start);
@@ -1213,7 +1232,10 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
                 free(content);
                 return false;
             }
-            parse_param_line(bg, content_start, target, path, line_num);
+            if (!parse_param_line(bg, content_start, target, path, line_num)) {
+                free(content);
+                return false;
+            }
             line = eol ? eol + 1 : NULL;
             continue;
         }
@@ -1386,6 +1408,10 @@ char *get_schema_name(const char *schema_path) {
 // Main blob generation
 // --------------------------------------------------------------------------
 
+static inline size_t align4(size_t v) {
+    return (v + 3u) & ~((size_t)3u);
+}
+
 bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     BlobGen bg;
     blobgen_init(&bg, big_endian, desc_mode, desc_max_len);
@@ -1448,7 +1474,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
-        choices_size += (count < 255 ? 1 : 3) + count * 4;
+        choices_size += 4 + count * 4;
     }
     size_t members_size = 0;
     for (size_t i = 0; i < bg.members_count; i++) {
@@ -1458,15 +1484,15 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
-        members_size += (count < 255 ? 1 : 3) + count * 4;
+        members_size += 4 + count * 4;
     }
 
     uint32_t string_table_off = HEADER_SIZE;
-    uint32_t commands_off = string_table_off + (uint32_t)total_strtab_size;
-    uint32_t params_off = commands_off + (uint32_t)commands_size;
-    uint32_t choices_off = params_off + (uint32_t)params_size;
-    uint32_t members_off = choices_off + (uint32_t)choices_size;
-    uint32_t root_command_off = members_off + (uint32_t)members_size;
+    uint32_t commands_off = (uint32_t)align4(string_table_off + total_strtab_size);
+    uint32_t params_off = (uint32_t)align4(commands_off + commands_size);
+    uint32_t choices_off = (uint32_t)align4(params_off + params_size);
+    uint32_t members_off = (uint32_t)align4(choices_off + choices_size);
+    uint32_t root_command_off = (uint32_t)align4(members_off + members_size);
     size_t total_size = root_command_off + COMMAND_SIZE;
 
     uint32_t *choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
@@ -1474,14 +1500,14 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     for (size_t i = 0; i < bg.choices_count; i++) {
         choices_offsets[i] = offset;
         size_t count = bg.choices_lists[i].count;
-        offset += (count < 255 ? 1 : 3) + (uint32_t)count * 4;
+        offset += 4 + (uint32_t)count * 4;
     }
     uint32_t *members_offsets = malloc(bg.members_count * sizeof(uint32_t));
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         members_offsets[i] = offset;
         size_t count = bg.members_lists[i].count;
-        offset += (count < 255 ? 1 : 3) + (uint32_t)count * 4;
+        offset += 4 + (uint32_t)count * 4;
     }
 
     uint8_t *blob = calloc(1, total_size);
@@ -1562,11 +1588,16 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     for (size_t i = 0; i < bg.choices_count; i++) {
         StringList *sl = &bg.choices_lists[i];
         if (sl->count < 255) {
-            blob[offset++] = (uint8_t)sl->count;
+            blob[offset] = (uint8_t)sl->count;
+            blob[offset + 1] = 0;
+            blob[offset + 2] = 0;
+            blob[offset + 3] = 0;
         } else {
-            blob[offset++] = 0xFF;
-            write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
+            blob[offset] = 0xFF;
+            write_u16(blob + offset + 1, (uint16_t)sl->count, big_endian);
+            blob[offset + 3] = 0;
         }
+        offset += 4;
         for (size_t j = 0; j < sl->count; j++) {
             uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
             write_u32(blob + offset, adj_off, big_endian);
@@ -1579,11 +1610,16 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     for (size_t i = 0; i < bg.members_count; i++) {
         StringList *sl = &bg.members_lists[i];
         if (sl->count < 255) {
-            blob[offset++] = (uint8_t)sl->count;
+            blob[offset] = (uint8_t)sl->count;
+            blob[offset + 1] = 0;
+            blob[offset + 2] = 0;
+            blob[offset + 3] = 0;
         } else {
-            blob[offset++] = 0xFF;
-            write_u16(blob + offset, (uint16_t)sl->count, big_endian); offset += 2;
+            blob[offset] = 0xFF;
+            write_u16(blob + offset + 1, (uint16_t)sl->count, big_endian);
+            blob[offset + 3] = 0;
         }
+        offset += 4;
         for (size_t j = 0; j < sl->count; j++) {
             uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
             write_u32(blob + offset, adj_off, big_endian);

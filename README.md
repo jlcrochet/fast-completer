@@ -421,11 +421,11 @@ The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with m
 |---------|------|-------------|
 | Header | 56 bytes | Magic (`FCMP`), version, flags, counts, section offsets |
 | String table | variable | VLQ length-prefixed strings, hot data first (names, choices), cold data last (descriptions) |
-| Commands | 18 bytes each | Fixed-size structs with name/description offsets, param/subcommand indices |
-| Params | 17 bytes each | Fixed-size structs with name/short/description/choices offsets, flags |
-| Choices | variable | Count-prefixed arrays of string table offsets (deduplicated) |
-| Members | variable | Count-prefixed arrays of string table offsets (deduplicated) |
-| Root command | 18 bytes | CLI root with global params and top-level subcommands |
+| Commands | 20 bytes each | Fixed-size structs with name/description offsets, param/subcommand indices |
+| Params | 20 bytes each | Fixed-size structs with name/short/description/choices offsets, flags |
+| Choices | variable | Count-prefixed arrays of string table offsets (4-byte header, deduplicated) |
+| Members | variable | Count-prefixed arrays of string table offsets (4-byte header, deduplicated) |
+| Root command | 20 bytes | CLI root with global params and top-level subcommands |
 
 ### Design
 
