@@ -14,7 +14,7 @@ SRCS = src/fast-completer.c \
 
 # Windows needs vendored getopt implementation
 ifeq ($(OS),Windows_NT)
-    SRCS += compat/getopt.c
+    SRCS += src/compat/getopt.c
     TARGET = fast-completer.exe
 else
     TARGET = fast-completer
@@ -48,7 +48,7 @@ $(TARGET): $(OBJS)
 src/fast-completer.o: src/fast-completer.c src/generate_blob.h
 src/generate_blob.o: src/generate_blob.c src/generate_blob.h
 ifeq ($(OS),Windows_NT)
-compat/getopt.o: compat/getopt.c compat/getopt.h
+src/compat/getopt.o: src/compat/getopt.c src/compat/getopt.h
 endif
 
 clean:
