@@ -3,17 +3,17 @@
 Dump fast-completer binary blob to human-readable format for validation.
 
 Usage:
-    python dump_blob.py commands.fcmpb
-    python dump_blob.py commands.fcmpb --section header
-    python dump_blob.py commands.fcmpb --section tree
-    python dump_blob.py commands.fcmpb --command 100
-    python dump_blob.py commands.fcmpb --command "s3 cp"
-    python dump_blob.py commands.fcmpb --param 500
-    python dump_blob.py commands.fcmpb --string 1234
-    python dump_blob.py commands.fcmpb --choices 8823963
-    python dump_blob.py commands.fcmpb --find "bucket"
-    python dump_blob.py commands.fcmpb --range commands:0:20
-    python dump_blob.py commands.fcmpb --format json
+    python scripts/dump_blob.py commands.fcmpb
+    python scripts/dump_blob.py commands.fcmpb --section header
+    python scripts/dump_blob.py commands.fcmpb --section tree
+    python scripts/dump_blob.py commands.fcmpb --command 100
+    python scripts/dump_blob.py commands.fcmpb --command "s3 cp"
+    python scripts/dump_blob.py commands.fcmpb --param 500
+    python scripts/dump_blob.py commands.fcmpb --string 1234
+    python scripts/dump_blob.py commands.fcmpb --choices 8823963
+    python scripts/dump_blob.py commands.fcmpb --find "bucket"
+    python scripts/dump_blob.py commands.fcmpb --range commands:0:20
+    python scripts/dump_blob.py commands.fcmpb --format json
 """
 
 import argparse

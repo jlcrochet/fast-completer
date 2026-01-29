@@ -12,7 +12,7 @@
 
 /*
  * Blob format constants - shared between generator and reader.
- * Keep these in sync with dump_blob.py.
+ * Keep these in sync with scripts/dump_blob.py.
  */
 #define BLOB_MAGIC   "FCMP"
 #define BLOB_VERSION 10

@@ -200,6 +200,15 @@ fast-completer --generate-blob aws.fcmps /custom/path/aws.fcmpb
 
 The CLI name is derived from the first command in the schema (the root command). This determines the blob filename when auto-saving to cache.
 
+Generate blobs for all schemas at once:
+
+```bash
+./scripts/generate_all_blobs.py
+./scripts/generate_all_blobs.py --refresh
+```
+
+The `--refresh` flag runs each schema's `export_command_tree.py` first. If `pyproject.toml` is present and `uv` is installed, the script uses `uv sync` and `uv run python`; otherwise it falls back to `python3`.
+
 ### Generation Options
 
 | Option | Description |
@@ -279,20 +288,20 @@ The export scripts introspect the installed CLI to extract all commands, paramet
 
 ### Inspecting Blobs
 
-Use `dump_blob.py` to inspect and validate blob files:
+Use `scripts/dump_blob.py` to inspect and validate blob files:
 
 ```bash
 # Show header and summary
-python dump_blob.py commands.fcmpb
+python scripts/dump_blob.py commands.fcmpb
 
 # Find commands matching a pattern
-python dump_blob.py commands.fcmpb --find "s3.*copy"
+python scripts/dump_blob.py commands.fcmpb --find "s3.*copy"
 
 # Show a specific command by path
-python dump_blob.py commands.fcmpb --command "s3 cp"
+python scripts/dump_blob.py commands.fcmpb --command "s3 cp"
 
 # Show a range of commands
-python dump_blob.py commands.fcmpb --range commands:0:20
+python scripts/dump_blob.py commands.fcmpb --range commands:0:20
 ```
 
 ## Schema Format
@@ -607,7 +616,7 @@ Get-ChildItem "$fcCache\*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object 
 ## How It Works
 
 1. `generate_blob.c` - Converts a schema file to a binary blob file
-2. `dump_blob.py` - Inspects and validates blob files (for debugging)
+2. `scripts/dump_blob.py` - Inspects and validates blob files (for debugging)
 3. `fast-completer.c` - Native binary that memory-maps the blob and provides completions
 
 The blob-based approach offers several advantages over compiled-in data:

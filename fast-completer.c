@@ -1116,11 +1116,11 @@ static bool load_blob(const char *path) {
     // Parse header (skip magic:4, version:2, flags:2 = offset 8)
     const uint32_t *h = (const uint32_t *)(blob + 8);
     header.max_command_path_len = h[0];
-    // h[1]-h[5] are counts/sizes (used by dump_blob.py, not runtime)
+    // h[1]-h[5] are counts/sizes (used by scripts/dump_blob.py, not runtime)
     header.string_table_off = h[6];
     header.commands_off = h[7];
     header.params_off = h[8];
-    // h[9]-h[10] are choices_off, members_off (used by dump_blob.py)
+    // h[9]-h[10] are choices_off, members_off (used by scripts/dump_blob.py)
     header.root_command_off = h[11];
 
     return true;
