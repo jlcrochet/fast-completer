@@ -160,16 +160,45 @@ make
 make install   # installs to %LOCALAPPDATA%\Programs
 ```
 
-#### Windows (MSVC)
+#### Windows (MSVC, no MinGW/MSYS2)
 
-Open a Developer Command Prompt and run:
+From the repo root, open a **Developer Command Prompt** (x64) and run:
 ```cmd
-cl /O2 /Fe:fast-completer.exe src\\fast-completer.c src\\generate_blob.c compat\\getopt.c
+cl /O2 /DNDEBUG /Fe:fast-completer.exe src\\fast-completer.c src\\generate_blob.c src\\compat\\getopt.c
+```
+
+Notes:
+- The MSVC build uses the vendored `getopt` in `src\\compat\\getopt.c`.
+- `make install` is not available in a plain MSVC prompt; copy the binary manually.
+
+Debug build (no optimizations, symbols enabled):
+```cmd
+cl /Zi /Od /Fe:fast-completer.exe src\\fast-completer.c src\\generate_blob.c src\\compat\\getopt.c
 ```
 
 Then copy `fast-completer.exe` to a directory in your PATH, such as:
 - `%LOCALAPPDATA%\Programs\` (create if needed, add to PATH)
 - `%USERPROFILE%\bin\` (create if needed, add to PATH)
+
+Add the directory to PATH:
+
+**PowerShell (current session):**
+```pwsh
+$env:Path += ";$env:LOCALAPPDATA\Programs"
+```
+
+**CMD (current session):**
+```cmd
+set PATH=%PATH%;%LOCALAPPDATA%\Programs
+```
+
+**Permanent (Windows UI):** Start Menu → "Edit the system environment variables" → Environment Variables… → select `Path` → New → add the folder.
+
+Verify the install:
+```cmd
+where fast-completer
+fast-completer --help
+```
 
 ## Cache Directory
 
