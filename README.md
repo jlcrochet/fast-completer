@@ -271,6 +271,14 @@ fast-completer --generate-blob --no-descriptions aws.fcmps
 
 The blob header includes a flag indicating whether descriptions are present. This flag is set automatically if the schema has no descriptions (like gcloud), so the completer skips description lookups for all output formats.
 
+## Linting Schemas
+
+Validate a schema without generating a blob:
+
+```bash
+fast-completer --lint schemas/aws/aws.fcmps
+```
+
 ### Example Schemas
 
 The `schemas/` directory contains pre-generated schemas and export scripts for popular CLIs:
@@ -376,11 +384,14 @@ Parameter lines are indented under their parent command:
 - `@bool` — boolean flag (doesn't take a value)
 - `(val1|val2|val3)` — choices (pipe-separated, in parentheses)
 - `{key1|key2}` — members for key=value completion
+  - Values in choices/members may be quoted. Single quotes are raw. Double quotes support common escape sequences (e.g., `\n`, `\t`, `\\`, `\"`, `\xHH`). Backslashes can escape the next character in unquoted values.
+  - Nested parentheses/braces are not parsed; quote values containing `(`, `)`, `{`, or `}` (or `|`) to avoid splitting.
 - `` `command` `` — dynamic completer (see below)
 - No specifier — takes a value with no specific choices
 
 **Description** (optional):
 - `# description text` — everything after `#` (outside delimiters) is the description
+- `#` inside choices/members lists is literal content, not a description marker
 
 ### Parameter Inheritance
 
@@ -405,7 +416,9 @@ Example:
 
 When the user requests completions for `--kubernetes-version`, fast-completer runs `az aks get-versions` and uses the output lines as completion values.
 
-The completer command runs with a 2-second timeout. If the command takes longer or fails, no completions are shown for that parameter.
+Leading and trailing whitespace inside the backticks is trimmed. Use quotes (`''` or `""`) to pass empty arguments to the external command. To include a literal backtick inside the completer string, escape it as `\``.
+
+The completer command runs with a 1-second timeout by default. Override with `FAST_COMPLETER_TIMEOUT_MS` or `-T/--dynamic-completer-timeout` (milliseconds). If the command takes longer or fails, no completions are shown for that parameter. When stdout is a terminal, timeouts print a warning to stderr; otherwise they are silent to avoid interfering with shells.
 
 ### Validation Rules
 

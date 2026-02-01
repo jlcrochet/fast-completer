@@ -25,12 +25,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "generate_blob.h"
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <io.h>
 #include "compat/getopt.h"
 #else
 #include <fcntl.h>
@@ -70,6 +72,11 @@ typedef struct { const char *p; size_t n; } String;
 
 // Compare String against string literal (length check + memcmp)
 #define STR_EQ_LIT(s, lit) ((s).n == sizeof(lit) - 1 && memcmp((s).p, lit, sizeof(lit) - 1) == 0)
+
+static inline String str_get(uint32_t off);
+static void output_completion(String value, String desc, CompletionType type);
+static void output_completion_prefixed(const char *prefix, size_t prefix_len,
+                                       String value, String desc, CompletionType type);
 
 // Structs matching binary format (4-byte aligned)
 typedef struct {
@@ -127,6 +134,49 @@ static int g_span_count = 0;
 typedef struct { const char *p; size_t n; } UsedEntry;
 static UsedEntry g_used_set[USED_SET_SIZE];
 static bool g_used_set_ready = false;
+static bool g_used_short[256];
+static bool g_used_short_ready = false;
+
+// Emitted option de-duplication (across inheritance)
+#define EMIT_SET_SIZE 512
+static UsedEntry g_emit_set[EMIT_SET_SIZE];
+static bool g_emit_set_ready = false;
+
+// Cache for dynamic completer results (per invocation)
+typedef struct {
+    char *s;
+    size_t n;
+} CacheValue;
+
+typedef struct {
+    uint32_t hash;
+    uint32_t index;
+} CacheSetEntry;
+
+typedef struct {
+    char *cli;
+    size_t cli_len;
+    char *completer;
+    size_t completer_len;
+    char *prefix;
+    size_t prefix_len;
+    CacheValue *values;
+    size_t count;
+    size_t cap;
+    CacheSetEntry *dedupe;
+    size_t dedupe_count;
+    size_t dedupe_cap;
+} CompleterCacheEntry;
+
+static bool completer_cache_dedupe_contains(CompleterCacheEntry *e, const char *s, size_t n, uint32_t h);
+static bool completer_cache_dedupe_insert(CompleterCacheEntry *e, uint32_t h, uint32_t index);
+
+static CompleterCacheEntry *g_completer_cache = NULL;
+static size_t g_completer_cache_count = 0;
+static size_t g_completer_cache_cap = 0;
+
+static int g_completer_timeout_ms = 1000;
+static bool g_completer_timeout_override = false;
 
 static inline uint32_t hash_str(const char *p, size_t n) {
     uint32_t h = 5381;
@@ -134,21 +184,269 @@ static inline uint32_t hash_str(const char *p, size_t n) {
     return h;
 }
 
+static inline uint32_t hash_str_nonzero(const char *p, size_t n) {
+    uint32_t h = hash_str(p, n);
+    return h ? h : 1;
+}
+
+static size_t next_pow2(size_t n) {
+    size_t p = 1;
+    while (p < n) p <<= 1;
+    return p;
+}
+
+static char *dup_span(const char *p, size_t n) {
+    char *s = malloc(n + 1);
+    if (!s) return NULL;
+    memcpy(s, p, n);
+    s[n] = '\0';
+    return s;
+}
+
+static void completer_cache_clear(void) {
+    for (size_t i = 0; i < g_completer_cache_count; i++) {
+        CompleterCacheEntry *e = &g_completer_cache[i];
+        free(e->cli);
+        free(e->completer);
+        free(e->prefix);
+        for (size_t j = 0; j < e->count; j++) {
+            free(e->values[j].s);
+        }
+        free(e->values);
+        free(e->dedupe);
+    }
+    free(g_completer_cache);
+    g_completer_cache = NULL;
+    g_completer_cache_count = 0;
+    g_completer_cache_cap = 0;
+}
+
+static CompleterCacheEntry *completer_cache_find(const char *cli, String completer,
+                                                 const char *prefix, size_t prefix_len) {
+    size_t cli_len = strlen(cli);
+    const char *pfx = prefix ? prefix : "";
+    for (size_t i = 0; i < g_completer_cache_count; i++) {
+        CompleterCacheEntry *e = &g_completer_cache[i];
+        if (e->cli_len != cli_len || e->completer_len != completer.n || e->prefix_len != prefix_len)
+            continue;
+        if (memcmp(e->cli, cli, cli_len) != 0) continue;
+        if (memcmp(e->completer, completer.p, completer.n) != 0) continue;
+        if (prefix_len && memcmp(e->prefix, pfx, prefix_len) != 0) continue;
+        if (prefix_len == 0 && e->prefix_len == 0) return e;
+        if (prefix_len == e->prefix_len) return e;
+    }
+    return NULL;
+}
+
+static CompleterCacheEntry *completer_cache_add(const char *cli, String completer,
+                                                const char *prefix, size_t prefix_len) {
+    if (g_completer_cache_count >= g_completer_cache_cap) {
+        size_t next = g_completer_cache_cap ? g_completer_cache_cap * 2 : 8;
+        CompleterCacheEntry *tmp = realloc(g_completer_cache, next * sizeof(CompleterCacheEntry));
+        if (!tmp) return NULL;
+        g_completer_cache = tmp;
+        g_completer_cache_cap = next;
+    }
+    CompleterCacheEntry *e = &g_completer_cache[g_completer_cache_count];
+    memset(e, 0, sizeof(*e));
+    e->cli_len = strlen(cli);
+    e->completer_len = completer.n;
+    e->prefix_len = prefix_len;
+    e->cli = dup_span(cli, e->cli_len);
+    e->completer = dup_span(completer.p, completer.n);
+    e->prefix = dup_span(prefix ? prefix : "", prefix_len);
+    if (!e->cli || !e->completer || !e->prefix) {
+        free(e->cli);
+        free(e->completer);
+        free(e->prefix);
+        e->cli = e->completer = e->prefix = NULL;
+        return NULL;
+    }
+    g_completer_cache_count++;
+    return e;
+}
+
+static void completer_cache_add_value(CompleterCacheEntry *e, const char *s, size_t n) {
+    if (!e || n == 0) return;
+    uint32_t h = hash_str_nonzero(s, n);
+    if (completer_cache_dedupe_contains(e, s, n, h)) return;
+    if (e->count >= e->cap) {
+        size_t next = e->cap ? e->cap * 2 : 8;
+        CacheValue *tmp = realloc(e->values, next * sizeof(CacheValue));
+        if (!tmp) return;
+        e->values = tmp;
+        e->cap = next;
+    }
+    char *copy = dup_span(s, n);
+    if (!copy) return;
+    if (!completer_cache_dedupe_insert(e, h, (uint32_t)e->count)) {
+        free(copy);
+        return;
+    }
+    e->values[e->count].s = copy;
+    e->values[e->count].n = n;
+    e->count++;
+}
+
+static void completer_cache_emit(const CompleterCacheEntry *e, String out_prefix) {
+    if (!e) return;
+    for (size_t i = 0; i < e->count; i++) {
+        String v = {e->values[i].s, e->values[i].n};
+        if (out_prefix.p && out_prefix.n > 0) {
+            output_completion_prefixed(out_prefix.p, out_prefix.n, v, str_get(0), COMP_PARAM_VALUE);
+        } else {
+            output_completion(v, str_get(0), COMP_PARAM_VALUE);
+        }
+    }
+}
+
+static void completer_cache_free_values(CompleterCacheEntry *e) {
+    if (!e) return;
+    for (size_t i = 0; i < e->count; i++) free(e->values[i].s);
+    free(e->values);
+    e->values = NULL;
+    e->count = 0;
+    e->cap = 0;
+    free(e->dedupe);
+    e->dedupe = NULL;
+    e->dedupe_count = 0;
+    e->dedupe_cap = 0;
+}
+
+static void completer_cache_remove(CompleterCacheEntry *e) {
+    if (!e) return;
+    size_t idx = (size_t)-1;
+    for (size_t i = 0; i < g_completer_cache_count; i++) {
+        if (&g_completer_cache[i] == e) { idx = i; break; }
+    }
+    if (idx == (size_t)-1) return;
+    completer_cache_free_values(e);
+    free(e->cli);
+    free(e->completer);
+    free(e->prefix);
+    if (idx + 1 < g_completer_cache_count) {
+        g_completer_cache[idx] = g_completer_cache[g_completer_cache_count - 1];
+    }
+    g_completer_cache_count--;
+}
+
+static bool completer_cache_dedupe_rehash(CompleterCacheEntry *e, size_t new_cap) {
+    new_cap = next_pow2(new_cap);
+    CacheSetEntry *table = calloc(new_cap, sizeof(CacheSetEntry));
+    if (!table) return false;
+    for (size_t i = 0; i < e->count; i++) {
+        CacheValue *v = &e->values[i];
+        uint32_t h = hash_str_nonzero(v->s, v->n);
+        size_t mask = new_cap - 1;
+        size_t idx = h & mask;
+        while (table[idx].hash) idx = (idx + 1) & mask;
+        table[idx].hash = h;
+        table[idx].index = (uint32_t)i;
+    }
+    free(e->dedupe);
+    e->dedupe = table;
+    e->dedupe_cap = new_cap;
+    e->dedupe_count = e->count;
+    return true;
+}
+
+static bool completer_cache_dedupe_contains(CompleterCacheEntry *e, const char *s, size_t n, uint32_t h) {
+    if (!e->dedupe || e->dedupe_cap == 0) return false;
+    size_t mask = e->dedupe_cap - 1;
+    size_t idx = h & mask;
+    while (e->dedupe[idx].hash) {
+        if (e->dedupe[idx].hash == h) {
+            CacheValue *v = &e->values[e->dedupe[idx].index];
+            if (v->n == n && memcmp(v->s, s, n) == 0) return true;
+        }
+        idx = (idx + 1) & mask;
+    }
+    return false;
+}
+
+static bool completer_cache_dedupe_insert(CompleterCacheEntry *e, uint32_t h, uint32_t index) {
+    if (!e->dedupe || e->dedupe_cap == 0) {
+        if (!completer_cache_dedupe_rehash(e, 32)) return false;
+    }
+    if (e->dedupe_count * 10 >= e->dedupe_cap * 7) {
+        if (!completer_cache_dedupe_rehash(e, e->dedupe_cap * 2)) return false;
+    }
+    size_t mask = e->dedupe_cap - 1;
+    size_t idx = h & mask;
+    while (e->dedupe[idx].hash) idx = (idx + 1) & mask;
+    e->dedupe[idx].hash = h;
+    e->dedupe[idx].index = index;
+    e->dedupe_count++;
+    return true;
+}
+
+static inline void used_set_add(const char *p, size_t n) {
+    size_t idx = hash_str(p, n) & (USED_SET_SIZE - 1);
+    while (g_used_set[idx].p) {
+        idx = (idx + 1) & (USED_SET_SIZE - 1);
+    }
+    g_used_set[idx].p = p;
+    g_used_set[idx].n = n;
+}
+
+static inline bool is_short_cluster_token(const char *p, size_t n) {
+    if (n <= 2 || n > 4) return false;  // Heuristic: only small clusters like -abc
+    for (size_t i = 1; i < n; i++) {
+        if (!((p[i] >= 'a' && p[i] <= 'z') || (p[i] >= 'A' && p[i] <= 'Z'))) return false;
+    }
+    return true;
+}
+
+static inline void used_short_mark(const char *p, size_t n) {
+    if (n < 2 || p[0] != '-' || p[1] == '-') return;
+    g_used_short[(unsigned char)p[1]] = true;
+    if (is_short_cluster_token(p, n)) {
+        for (size_t i = 2; i < n; i++) g_used_short[(unsigned char)p[i]] = true;
+    }
+}
+
+static inline void emit_set_reset(void) {
+    memset(g_emit_set, 0, sizeof(g_emit_set));
+    g_emit_set_ready = true;
+}
+
+static inline bool emit_set_contains(const char *p, size_t n) {
+    size_t idx = hash_str(p, n) & (EMIT_SET_SIZE - 1);
+    while (g_emit_set[idx].p) {
+        if (g_emit_set[idx].n == n && memcmp(g_emit_set[idx].p, p, n) == 0) return true;
+        idx = (idx + 1) & (EMIT_SET_SIZE - 1);
+    }
+    return false;
+}
+
+static inline void emit_set_add(const char *p, size_t n) {
+    size_t idx = hash_str(p, n) & (EMIT_SET_SIZE - 1);
+    while (g_emit_set[idx].p) {
+        if (g_emit_set[idx].n == n && memcmp(g_emit_set[idx].p, p, n) == 0) return;
+        idx = (idx + 1) & (EMIT_SET_SIZE - 1);
+    }
+    g_emit_set[idx].p = p;
+    g_emit_set[idx].n = n;
+}
+
 static void used_set_build(void) {
-    if (g_used_set_ready) return;
+    if (g_used_set_ready && g_used_short_ready) return;
     memset(g_used_set, 0, sizeof(g_used_set));
+    memset(g_used_short, 0, sizeof(g_used_short));
     for (int i = 0; i < g_span_count; i++) {
-        if (g_spans[i][0] == '-') {
-            size_t n = g_arg_lens[i];
-            size_t idx = hash_str(g_spans[i], n) & (USED_SET_SIZE - 1);
-            while (g_used_set[idx].p) {
-                idx = (idx + 1) & (USED_SET_SIZE - 1);
-            }
-            g_used_set[idx].p = g_spans[i];
-            g_used_set[idx].n = n;
+        const char *span = g_spans[i];
+        if (span[0] != '-') continue;
+        size_t n = g_arg_lens[i];
+        if (n >= 2 && span[1] == '-') {
+            const char *eq = memchr(span, '=', n);
+            size_t base_len = eq ? (size_t)(eq - span) : n;
+            if (base_len > 1) used_set_add(span, base_len);
+        } else {
+            used_short_mark(span, n);
         }
     }
     g_used_set_ready = true;
+    g_used_short_ready = true;
 }
 
 static bool used_set_contains(const char *p, size_t n) {
@@ -232,6 +530,30 @@ static bool json_started = false;
 
 static inline bool needs_trailing_space(String s) {
     return s.n > 0 && s.p[s.n - 1] != '=';
+}
+
+static inline bool needs_trailing_space_concat(const char *prefix, size_t prefix_len, String s) {
+    if (s.n > 0) return s.p[s.n - 1] != '=';
+    return prefix_len > 0 && prefix[prefix_len - 1] != '=';
+}
+
+static inline bool stdout_is_tty(void) {
+#ifdef _WIN32
+    return _isatty(_fileno(stdout));
+#else
+    return isatty(fileno(stdout));
+#endif
+}
+
+static void init_completer_timeout(void) {
+    if (g_completer_timeout_override) return;
+    const char *env = getenv("FAST_COMPLETER_TIMEOUT_MS");
+    if (!env || !*env) return;
+    char *endptr = NULL;
+    long val = strtol(env, &endptr, 10);
+    if (!endptr || *endptr != '\0' || val <= 0) return;
+    if (val > INT32_MAX) val = INT32_MAX;
+    g_completer_timeout_ms = (int)val;
 }
 
 // I/O helpers
@@ -384,6 +706,85 @@ static void output_completion(String value, String desc, CompletionType type) {
     }
 }
 
+static void output_completion_prefixed(const char *prefix, size_t prefix_len,
+                                       String value, String desc, CompletionType type) {
+    if (!prefix || prefix_len == 0) {
+        output_completion(value, desc, type);
+        return;
+    }
+    bool add_space = add_trailing_space && needs_trailing_space_concat(prefix, prefix_len, value);
+    switch (output_format) {
+        case OUT_JSON:
+            if (json_started) put_char(',');
+            json_started = true;
+            put_char('{');
+            print_json_str(STR_LIT("value"));
+            put_char(':');
+            put_char('"');
+            print_json_str_inner((String){prefix, prefix_len});
+            print_json_str_inner(value);
+            if (add_space) put_char(' ');
+            put_char('"');
+            if (desc.n > 0) {
+                put_char(',');
+                print_json_str(STR_LIT("description"));
+                put_char(':');
+                print_json_str(desc);
+            }
+            put_char('}');
+            break;
+
+        case OUT_TSV:
+            put_bytes(prefix, prefix_len);
+            put_str(value);
+            if (add_space) put_char(' ');
+            if (desc.n > 0) {
+                put_char('\t');
+                put_str(desc);
+            }
+            put_char('\n');
+            break;
+
+        case OUT_ZSH:
+            put_bytes(prefix, prefix_len);
+            put_str(value);
+            if (add_space) put_char(' ');
+            if (desc.n > 0) {
+                put_char(':');
+                for (size_t i = 0; i < desc.n; i++) {
+                    if (desc.p[i] == '\\') put_char('\\');
+                    put_char(desc.p[i]);
+                }
+            }
+            put_char('\n');
+            break;
+
+        case OUT_LINES:
+            put_bytes(prefix, prefix_len);
+            put_str(value);
+            if (add_space) put_char(' ');
+            put_char('\n');
+            break;
+
+        case OUT_PWSH:
+            put_bytes(prefix, prefix_len);
+            put_str(value);
+            if (add_space) put_char(' ');
+            put_char('\t');
+            put_bytes(prefix, prefix_len);
+            put_str(value);
+            put_char('\t');
+            put_char('0' + type);
+            put_char('\t');
+            put_str(desc.n > 0 ? desc : value);
+            put_char('\n');
+            break;
+
+        case OUT_UNKNOWN:
+            break;
+    }
+}
+
 // Compare strings lexicographically (for binary search)
 static inline int str_cmp(const char *a, size_t a_len, const char *b, size_t b_len) {
     size_t min_len = (a_len < b_len) ? a_len : b_len;
@@ -453,8 +854,21 @@ static bool param_used_linear(const Param *param) {
     for (int i = 0; i < g_span_count; i++) {
         if (g_spans[i][0] != '-') continue;
         size_t n = g_arg_lens[i];
-        if (name.n > 0 && name.n == n && memcmp(name.p, g_spans[i], n) == 0) return true;
-        if (short_opt.p && short_opt.n == n && memcmp(short_opt.p, g_spans[i], n) == 0) return true;
+        const char *span = g_spans[i];
+        if (name.n > 0) {
+            const char *eq = memchr(span, '=', n);
+            size_t base_len = eq ? (size_t)(eq - span) : n;
+            if (name.n == base_len && memcmp(name.p, span, base_len) == 0) return true;
+        }
+        if (short_opt.p && short_opt.n >= 2 && span[0] == '-' && span[1] != '-') {
+            char short_ch = short_opt.p[1];
+            if (span[1] == short_ch) return true;  // -o or -oVALUE
+            if (!PARAM_TAKES_VALUE(param) && is_short_cluster_token(span, n)) {
+                for (size_t j = 2; j < n; j++) {
+                    if (span[j] == short_ch) return true;
+                }
+            }
+        }
     }
     return false;
 }
@@ -471,7 +885,7 @@ static bool param_used(const Param *param) {
     if (name.n > 0 && used_set_contains(name.p, name.n)) return true;
     if (param->short_off) {
         String short_opt = str_get(param->short_off);
-        if (used_set_contains(short_opt.p, short_opt.n)) return true;
+        if (short_opt.n >= 2 && g_used_short[(unsigned char)short_opt.p[1]]) return true;
     }
     return false;
 }
@@ -679,7 +1093,11 @@ static void complete_params_list(const Param *params, uint16_t params_count,
             String short_opt = str_get(p->short_off);
             if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
+                if (!g_emit_set_ready) emit_set_reset();
+                if (!emit_set_contains(short_opt.p, short_opt.n)) {
+                    output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
+                    emit_set_add(short_opt.p, short_opt.n);
+                }
             }
         }
     }
@@ -694,7 +1112,11 @@ static void complete_params_list(const Param *params, uint16_t params_count,
             if (name.n == 0) continue;  // Skip short-only params
             if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                output_completion(name, str_get(desc), COMP_PARAM_NAME);
+                if (!g_emit_set_ready) emit_set_reset();
+                if (!emit_set_contains(name.p, name.n)) {
+                    output_completion(name, str_get(desc), COMP_PARAM_NAME);
+                    emit_set_add(name.p, name.n);
+                }
             }
         }
     }
@@ -715,20 +1137,222 @@ static void complete_string_list(uint32_t off, const char *prefix, size_t prefix
     }
 }
 
-// Split command string into argv array (simple space splitting)
+static void complete_string_list_prefixed(uint32_t off, const char *prefix, size_t prefix_len,
+                                          String out_prefix) {
+    if (off == 0) return;
+
+    uint16_t count = get_string_list_count(off);
+    const uint32_t *offsets = get_string_offsets(off);
+
+    for (uint16_t i = 0; i < count; i++) {
+        String s = str_get(offsets[i]);
+        if (!prefix || (s.n >= prefix_len && memcmp(s.p, prefix, prefix_len) == 0)) {
+            output_completion_prefixed(out_prefix.p, out_prefix.n, s, str_get(0), COMP_PARAM_VALUE);
+        }
+    }
+}
+
+static bool parse_escape_char(const char **pp, char *out, const char **err_msg) {
+    const char *p = *pp;
+    if (!p || !*p) {
+        if (err_msg) *err_msg = "unterminated escape";
+        return false;
+    }
+    char c = *p++;
+    switch (c) {
+        case 'n': *out = '\n'; break;
+        case 'r': *out = '\r'; break;
+        case 't': *out = '\t'; break;
+        case 'v': *out = '\v'; break;
+        case 'b': *out = '\b'; break;
+        case 'a': *out = '\a'; break;
+        case 'f': *out = '\f'; break;
+        case '\\': *out = '\\'; break;
+        case '"': *out = '"'; break;
+        case '\'': *out = '\''; break;
+        case 'x':
+            if (isxdigit((unsigned char)p[0]) && isxdigit((unsigned char)p[1])) {
+                int hi = isdigit((unsigned char)p[0]) ? p[0] - '0' : (tolower((unsigned char)p[0]) - 'a' + 10);
+                int lo = isdigit((unsigned char)p[1]) ? p[1] - '0' : (tolower((unsigned char)p[1]) - 'a' + 10);
+                *out = (char)((hi << 4) | lo);
+                p += 2;
+            } else {
+                *out = 'x';
+            }
+            break;
+        default:
+            *out = c;
+            break;
+    }
+    *pp = p;
+    return true;
+}
+
+// Split command string into argv array (space-separated, supports quotes + escapes)
 // Returns argc, fills argv (must have room for max_args+1 entries, last is NULL)
-static int split_args(char *cmd, char **argv, int max_args) {
+// On error, returns -1 and sets err_msg.
+static int split_args(char *cmd, char **argv, int max_args, const char **err_msg) {
     int argc = 0;
     char *p = cmd;
+    if (err_msg) *err_msg = NULL;
     while (*p && argc < max_args) {
-        while (*p == ' ') p++;  // Skip spaces
+        while (*p == ' ' || *p == '\t') p++;  // Skip whitespace
         if (!*p) break;
-        argv[argc++] = p;
-        while (*p && *p != ' ') p++;  // Find end of arg
-        if (*p) *p++ = '\0';  // Null-terminate
+
+        char *w = p;
+        argv[argc++] = w;
+
+        while (*p && *p != ' ' && *p != '\t') {
+            if (*p == '\'') {
+                p++;
+                while (*p && *p != '\'') {
+                    *w++ = *p++;
+                }
+                if (*p != '\'') {
+                    if (err_msg) *err_msg = "unterminated quote";
+                    return -1;
+                }
+                p++;
+                continue;
+            }
+            if (*p == '"') {
+                p++;
+                while (*p && *p != '"') {
+                    if (*p == '\\') {
+                        const char *esc = p + 1;
+                        char out;
+                        if (!parse_escape_char(&esc, &out, err_msg)) return -1;
+                        *w++ = out;
+                        p = (char *)esc;
+                        continue;
+                    }
+                    *w++ = *p++;
+                }
+                if (*p != '"') {
+                    if (err_msg) *err_msg = "unterminated quote";
+                    return -1;
+                }
+                p++;
+                continue;
+            }
+            if (*p == '\\') {
+                const char *esc = p + 1;
+                char out;
+                if (!parse_escape_char(&esc, &out, err_msg)) return -1;
+                *w++ = out;
+                p = (char *)esc;
+                continue;
+            }
+            *w++ = *p++;
+        }
+        *w = '\0';
+        if (*p == ' ' || *p == '\t') p++;
+    }
+    while (*p == ' ' || *p == '\t') p++;
+    if (*p) {
+        if (err_msg) *err_msg = "too many arguments (max 62)";
+        return -1;
     }
     argv[argc] = NULL;
     return argc;
+}
+
+#ifdef _WIN32
+static bool cmdline_buf_append(char **buf, size_t *len, size_t *cap, const char *s, size_t n) {
+    if (*len + n + 1 > *cap) {
+        size_t next = (*cap > 0) ? *cap : 128;
+        while (*len + n + 1 > next) next *= 2;
+        char *tmp = realloc(*buf, next);
+        if (!tmp) return false;
+        *buf = tmp;
+        *cap = next;
+    }
+    memcpy(*buf + *len, s, n);
+    *len += n;
+    (*buf)[*len] = '\0';
+    return true;
+}
+
+static bool cmdline_buf_append_char(char **buf, size_t *len, size_t *cap, char c) {
+    return cmdline_buf_append(buf, len, cap, &c, 1);
+}
+
+static bool win_cmdline_append_arg(char **buf, size_t *len, size_t *cap, const char *arg) {
+    if (*len > 0) {
+        if (!cmdline_buf_append_char(buf, len, cap, ' ')) return false;
+    }
+    bool need_quotes = false;
+    if (!*arg) need_quotes = true;
+    for (const char *p = arg; *p; p++) {
+        if (*p == ' ' || *p == '\t' || *p == '"') {
+            need_quotes = true;
+            break;
+        }
+    }
+    if (!need_quotes) {
+        return cmdline_buf_append(buf, len, cap, arg, strlen(arg));
+    }
+
+    if (!cmdline_buf_append_char(buf, len, cap, '"')) return false;
+    size_t bs_count = 0;
+    for (const char *p = arg; ; p++) {
+        char c = *p;
+        if (c == '\\') {
+            bs_count++;
+            continue;
+        }
+        if (c == '"') {
+            for (size_t i = 0; i < bs_count * 2 + 1; i++) {
+                if (!cmdline_buf_append_char(buf, len, cap, '\\')) return false;
+            }
+            if (!cmdline_buf_append_char(buf, len, cap, '"')) return false;
+            bs_count = 0;
+            continue;
+        }
+        if (c == '\0') {
+            for (size_t i = 0; i < bs_count * 2; i++) {
+                if (!cmdline_buf_append_char(buf, len, cap, '\\')) return false;
+            }
+            if (!cmdline_buf_append_char(buf, len, cap, '"')) return false;
+            break;
+        }
+        for (size_t i = 0; i < bs_count; i++) {
+            if (!cmdline_buf_append_char(buf, len, cap, '\\')) return false;
+        }
+        bs_count = 0;
+        if (!cmdline_buf_append_char(buf, len, cap, c)) return false;
+    }
+    return true;
+}
+
+static char *build_windows_cmdline(char *const *argv) {
+    size_t len = 0;
+    size_t cap = 0;
+    char *buf = NULL;
+    for (size_t i = 0; argv[i]; i++) {
+        if (!win_cmdline_append_arg(&buf, &len, &cap, argv[i])) {
+            free(buf);
+            return NULL;
+        }
+    }
+    return buf;
+}
+#endif
+
+static void completer_line_finish(CompleterCacheEntry *store_entry, const char *line, size_t line_pos,
+                                  const char *prefix, size_t prefix_len,
+                                  bool truncated, bool *warned) {
+    if (truncated) {
+        if (warned && !*warned && stdout_is_tty()) {
+            fprintf(stderr, "fast-completer: completer output line too long, dropping\n");
+            *warned = true;
+        }
+        return;
+    }
+    if (line_pos == 0) return;
+    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
+        completer_cache_add_value(store_entry, line, line_pos);
+    }
 }
 
 // Execute a dynamic completer command and output results
@@ -736,45 +1360,77 @@ static int split_args(char *cmd, char **argv, int max_args) {
 // completer: subcommand args (e.g., "aks get-versions --output tsv") - String with length
 // prefix: optional prefix to filter results
 // prefix_len: length of prefix
+// out_prefix: optional prefix to prepend to emitted values (e.g., "--opt=")
 static void execute_completer(const char *cli_name, String completer,
-                               const char *prefix, size_t prefix_len) {
+                               const char *prefix, size_t prefix_len, String out_prefix) {
     if (!cli_name || !completer.p || completer.n == 0) return;
 
+    CompleterCacheEntry *cache_entry = completer_cache_find(cli_name, completer, prefix, prefix_len);
+    if (cache_entry) {
+        completer_cache_emit(cache_entry, out_prefix);
+        return;
+    }
+    cache_entry = completer_cache_add(cli_name, completer, prefix, prefix_len);
+    CompleterCacheEntry temp_entry = {0};
+    CompleterCacheEntry *store_entry = cache_entry ? cache_entry : &temp_entry;
+    bool timed_out = false;
+    bool ok = false;
+
+    char *args = NULL;
+#ifdef _WIN32
+    char *cmdline = NULL;
+    HANDLE stdout_read = INVALID_HANDLE_VALUE;
+    HANDLE stdout_write = INVALID_HANDLE_VALUE;
+    HANDLE event_handle = NULL;
+    PROCESS_INFORMATION pi = {0};
+#else
+    int pipefd[2] = {-1, -1};
+    posix_spawn_file_actions_t actions;
+    bool actions_init = false;
+    pid_t pid = -1;
+#endif
+
     // Build argument string: copy completer (need mutable string for splitting)
-    char *args = malloc(completer.n + 1);
-    if (!args) return;
+    args = malloc(completer.n + 1);
+    if (!args) goto cleanup;
     memcpy(args, completer.p, completer.n);
     args[completer.n] = '\0';
 
     // Split into argv: [cli_name, arg1, arg2, ..., NULL]
     char *argv[64];
     argv[0] = (char *)cli_name;
-    split_args(args, argv + 1, 62);
+    const char *split_err = NULL;
+    if (split_args(args, argv + 1, 62, &split_err) < 0) {
+        if (split_err) {
+            fprintf(stderr, "fast-completer: invalid completer args for '%s': %s\n",
+                    cli_name ? cli_name : "(unknown)", split_err);
+        } else {
+            fprintf(stderr, "fast-completer: invalid completer args for '%s'\n",
+                    cli_name ? cli_name : "(unknown)");
+        }
+        goto cleanup;
+    }
 
 #ifdef _WIN32
     // Windows implementation using overlapped I/O with direct exec (no cmd.exe shell)
-    // Note: No cleanup needed - process exits after completion, OS reclaims all resources
 
     // Build command line string from argv for CreateProcess
-    // Format: "cli arg1 arg2 ..." (CreateProcess expects space-separated)
-    size_t cmdline_len = strlen(cli_name) + 1 + completer.n + 1;
-    char *cmdline = malloc(cmdline_len);
-    if (!cmdline) return;
-    snprintf(cmdline, cmdline_len, "%s %.*s", cli_name, (int)completer.n, completer.p);
+    cmdline = build_windows_cmdline(argv);
+    if (!cmdline) goto cleanup;
 
     // Create named pipe with FILE_FLAG_OVERLAPPED for async reads
     char pipe_name[256];
     snprintf(pipe_name, sizeof(pipe_name), "\\\\.\\pipe\\fc_%lu_%lu",
              (unsigned long)GetCurrentProcessId(), (unsigned long)GetTickCount());
 
-    HANDLE stdout_read = CreateNamedPipeA(
+    stdout_read = CreateNamedPipeA(
         pipe_name, PIPE_ACCESS_INBOUND | FILE_FLAG_OVERLAPPED,
         PIPE_TYPE_BYTE | PIPE_WAIT, 1, 4096, 4096, 0, NULL);
-    if (stdout_read == INVALID_HANDLE_VALUE) return;
+    if (stdout_read == INVALID_HANDLE_VALUE) goto cleanup;
 
     SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
-    HANDLE stdout_write = CreateFileA(pipe_name, GENERIC_WRITE, 0, &sa, OPEN_EXISTING, 0, NULL);
-    if (stdout_write == INVALID_HANDLE_VALUE) return;
+    stdout_write = CreateFileA(pipe_name, GENERIC_WRITE, 0, &sa, OPEN_EXISTING, 0, NULL);
+    if (stdout_write == INVALID_HANDLE_VALUE) goto cleanup;
 
     STARTUPINFOA si = {0};
     si.cb = sizeof(STARTUPINFOA);
@@ -784,25 +1440,33 @@ static void execute_completer(const char *cli_name, String completer,
     si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
     si.wShowWindow = SW_HIDE;
 
-    PROCESS_INFORMATION pi = {0};
-    if (!CreateProcessA(NULL, cmdline, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi)) return;
+    if (!CreateProcessA(NULL, cmdline, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi)) {
+        goto cleanup;
+    }
     CloseHandle(stdout_write);  // Child has it, close so reads see EOF when child exits
+    stdout_write = INVALID_HANDLE_VALUE;
 
     // Overlapped read setup
     OVERLAPPED ov = {0};
     ov.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-    if (!ov.hEvent) { TerminateProcess(pi.hProcess, 1); return; }
+    if (!ov.hEvent) {
+        TerminateProcess(pi.hProcess, 1);
+        goto cleanup;
+    }
+    event_handle = ov.hEvent;
 
     char line[4096];
     size_t line_pos = 0;
+    bool line_truncated = false;
+    bool trunc_warned = false;
     char buf[4096];
-    DWORD bytes_read;
+    DWORD bytes_read = 0;
     ULONGLONG start_time = GetTickCount64();
     HANDLE wait_handles[2] = {ov.hEvent, pi.hProcess};
 
     while (1) {
         ULONGLONG elapsed = GetTickCount64() - start_time;
-        DWORD remaining = (elapsed >= 2000) ? 0 : (2000 - elapsed);
+        DWORD remaining = (elapsed >= (ULONGLONG)g_completer_timeout_ms) ? 0 : (DWORD)(g_completer_timeout_ms - elapsed);
 
         ResetEvent(ov.hEvent);
         BOOL read_ok = ReadFile(stdout_read, buf, sizeof(buf), &bytes_read, &ov);
@@ -815,6 +1479,11 @@ static void execute_completer(const char *cli_name, String completer,
             } else if (wait == WAIT_OBJECT_0 + 1) {
                 CancelIo(stdout_read);
                 if (!GetOverlappedResult(stdout_read, &ov, &bytes_read, FALSE) || bytes_read == 0) break;
+            } else if (wait == WAIT_TIMEOUT) {
+                CancelIo(stdout_read);
+                TerminateProcess(pi.hProcess, 1);
+                timed_out = true;
+                break;
             } else {
                 CancelIo(stdout_read);
                 TerminateProcess(pi.hProcess, 1);
@@ -826,91 +1495,119 @@ static void execute_completer(const char *cli_name, String completer,
 
         for (DWORD i = 0; i < bytes_read; i++) {
             if (buf[i] == '\n' || buf[i] == '\r') {
-                if (line_pos > 0) {
-                    line[line_pos] = '\0';
-                    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
-                    }
-                    line_pos = 0;
+                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+                line_pos = 0;
+                line_truncated = false;
+            } else if (!line_truncated) {
+                if (line_pos < sizeof(line) - 1) {
+                    line[line_pos++] = buf[i];
+                } else {
+                    line_truncated = true;
                 }
-            } else if (line_pos < sizeof(line) - 1) {
-                line[line_pos++] = buf[i];
             }
         }
     }
 
-    if (line_pos > 0) {
-        line[line_pos] = '\0';
-        if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
-        }
-    }
+    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
 #else
     // Unix implementation using posix_spawnp with direct exec (no shell)
-    int pipefd[2];
-    if (pipe(pipefd) < 0) return;
+    if (pipe(pipefd) < 0) goto cleanup;
 
-    posix_spawn_file_actions_t actions;
-    posix_spawn_file_actions_init(&actions);
+    if (posix_spawn_file_actions_init(&actions) != 0) goto cleanup;
+    actions_init = true;
     posix_spawn_file_actions_addclose(&actions, pipefd[0]);
     posix_spawn_file_actions_adddup2(&actions, pipefd[1], STDOUT_FILENO);
     posix_spawn_file_actions_addclose(&actions, pipefd[1]);
     posix_spawn_file_actions_addopen(&actions, STDERR_FILENO, "/dev/null", O_WRONLY, 0);
 
     extern char **environ;
-    pid_t pid;
-    if (posix_spawnp(&pid, cli_name, &actions, NULL, argv, environ) != 0) return;
+    if (posix_spawnp(&pid, cli_name, &actions, NULL, argv, environ) != 0) goto cleanup;
     close(pipefd[1]);  // Close write end so reads see EOF when child exits
+    pipefd[1] = -1;
 
     // Non-blocking reads with poll() timeout
     fcntl(pipefd[0], F_SETFL, fcntl(pipefd[0], F_GETFL) | O_NONBLOCK);
 
     char line[4096];
     size_t line_pos = 0;
+    bool line_truncated = false;
+    bool trunc_warned = false;
     char buf[4096];
     struct timespec start, now;
     clock_gettime(CLOCK_MONOTONIC, &start);
-    int timeout_ms = 2000;
+    int timeout_ms = g_completer_timeout_ms;
 
     while (timeout_ms > 0) {
         struct pollfd pfd = { .fd = pipefd[0], .events = POLLIN };
-        if (poll(&pfd, 1, timeout_ms) <= 0) break;
+        int poll_res = poll(&pfd, 1, timeout_ms);
+        if (poll_res == 0) { timed_out = true; break; }
+        if (poll_res < 0) break;
 
         ssize_t n = read(pipefd[0], buf, sizeof(buf));
         if (n <= 0) break;
 
         for (ssize_t i = 0; i < n; i++) {
             if (buf[i] == '\n') {
-                if (line_pos > 0) {
-                    line[line_pos] = '\0';
-                    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-                        output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
-                    }
-                    line_pos = 0;
+                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+                line_pos = 0;
+                line_truncated = false;
+            } else if (!line_truncated) {
+                if (line_pos < sizeof(line) - 1) {
+                    line[line_pos++] = buf[i];
+                } else {
+                    line_truncated = true;
                 }
-            } else if (line_pos < sizeof(line) - 1) {
-                line[line_pos++] = buf[i];
             }
         }
 
         // Update remaining timeout
         clock_gettime(CLOCK_MONOTONIC, &now);
         int elapsed_ms = (now.tv_sec - start.tv_sec) * 1000 + (now.tv_nsec - start.tv_nsec) / 1000000;
-        timeout_ms = 2000 - elapsed_ms;
+        timeout_ms = g_completer_timeout_ms - elapsed_ms;
     }
 
-    if (line_pos > 0) {
-        line[line_pos] = '\0';
-        if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
-            output_completion((String){line, line_pos}, str_get(0), COMP_PARAM_VALUE);
-        }
-    }
+    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
 
-    if (waitpid(pid, NULL, WNOHANG) == 0) {
+    if (pid > 0 && waitpid(pid, NULL, WNOHANG) == 0) {
         kill(pid, SIGKILL);
         waitpid(pid, NULL, 0);  // Reap zombie
     }
 #endif
+
+    ok = !timed_out;
+
+cleanup:
+    if (timed_out && stdout_is_tty()) {
+        fprintf(stderr, "fast-completer: completer timed out for '%s'\n", cli_name);
+    }
+    if (!ok) {
+        if (cache_entry) {
+            completer_cache_remove(cache_entry);
+        } else {
+            completer_cache_free_values(&temp_entry);
+        }
+    } else {
+        if (store_entry) {
+            completer_cache_emit(store_entry, out_prefix);
+        }
+        if (!cache_entry) {
+            completer_cache_free_values(&temp_entry);
+        }
+    }
+    free(args);
+#ifdef _WIN32
+    if (event_handle) CloseHandle(event_handle);
+    if (stdout_read != INVALID_HANDLE_VALUE) CloseHandle(stdout_read);
+    if (stdout_write != INVALID_HANDLE_VALUE) CloseHandle(stdout_write);
+    if (pi.hThread) CloseHandle(pi.hThread);
+    if (pi.hProcess) CloseHandle(pi.hProcess);
+    free(cmdline);
+#else
+    if (pipefd[0] != -1) close(pipefd[0]);
+    if (pipefd[1] != -1) close(pipefd[1]);
+    if (actions_init) posix_spawn_file_actions_destroy(&actions);
+#endif
+    return;
 }
 
 // Find a parameter by name (long or short option) using linear search
@@ -1019,6 +1716,8 @@ static void complete(int nspans, const char **spans) {
 #endif
     g_span_count = nspans > 1 ? nspans - 1 : 1;
     g_used_set_ready = false;  // Reset for lazy init
+    g_used_short_ready = false;
+    g_emit_set_ready = false;
 
     // Find the deepest matching command
     const Command *cmd = find_command();
@@ -1034,6 +1733,25 @@ static void complete(int nspans, const char **spans) {
                          (c >= '0' && c <= '9') || c == '_';
 
     if (is_flag_prefix) {
+        const char *eq = memchr(last_span, '=', last_span_len);
+        if (eq && eq > last_span) {
+            size_t opt_len = (size_t)(eq - last_span);
+            const Param *param = find_path_param(last_span, opt_len);
+            if (param && PARAM_TAKES_VALUE(param)) {
+                String out_prefix = {last_span, opt_len + 1};
+                const char *val_prefix = eq + 1;
+                size_t val_len = last_span_len - opt_len - 1;
+                if (PARAM_HAS_CHOICES(param)) {
+                    complete_string_list_prefixed(param->choices_off, val_prefix, val_len, out_prefix);
+                } else if (PARAM_HAS_MEMBERS(param)) {
+                    complete_string_list_prefixed(param->choices_off, val_prefix, val_len, out_prefix);
+                } else if (PARAM_HAS_COMPLETER(param)) {
+                    execute_completer(g_spans[0], str_get(param->choices_off), val_prefix, val_len, out_prefix);
+                }
+                if (output_format == OUT_JSON) put_lit("]\n");
+                return;
+            }
+        }
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
         complete_path_params(last_span, &pinfo);
         if (output_format == OUT_JSON) put_lit("]\n");
@@ -1065,7 +1783,7 @@ static void complete(int nspans, const char **spans) {
             } else if (PARAM_HAS_MEMBERS(param)) {
                 complete_string_list(param->choices_off, NULL, 0);
             } else if (PARAM_HAS_COMPLETER(param)) {
-                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0);
+                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0, (String){NULL, 0});
             }
             if (output_format == OUT_JSON) put_lit("]\n");
             return;
@@ -1347,6 +2065,7 @@ static void print_help(void) {
     puts("       fast-completer --generate-blob <schema> [output]");
     puts("       fast-completer --check <name>");
     puts("       fast-completer --dump-header <blob>\n");
+    puts("       fast-completer --lint <schema>\n");
     puts("Completion mode:");
     puts("  fast-completer [options] <format> <spans...>\n");
     puts("  format        Output format (see below)");
@@ -1356,6 +2075,9 @@ static void print_help(void) {
     puts("  --full-commands  Complete full leaf command paths instead of next level");
     puts("  --quiet, -q      Silently exit if blob not found (for fallback scripts)");
     puts("                   Unexpected errors (invalid blob, etc.) still print\n");
+    puts("  -T, --dynamic-completer-timeout <ms>  Override dynamic completer timeout");
+    puts("  Dynamic completers time out after 1000ms by default.");
+    puts("  Override with FAST_COMPLETER_TIMEOUT_MS or the flag above (milliseconds).\n");
     puts("  The CLI name is derived from the first span and used to look up");
     puts("  <name>.fcmpb in the cache directory.\n");
     puts("  Cache location (override with FAST_COMPLETER_CACHE env var):");
@@ -1384,6 +2106,9 @@ static void print_help(void) {
     puts("Dump header mode:");
     puts("  fast-completer --dump-header <blob>\n");
     puts("  blob              Path or cache name (e.g., 'aws' or '/path/to/aws.fcmpb')\n");
+    puts("Lint mode:");
+    puts("  fast-completer --lint <schema>\n");
+    puts("  schema            Path to schema file (validate only)\n");
     puts("Output formats:");
     puts("  bash, lines       One value per line (no descriptions)");
     puts("  zsh               value:description");
@@ -1398,6 +2123,8 @@ static void print_help(void) {
     puts("      Conditionally run command if aws blob exists\n");
     puts("  fast-completer -q json aws s3 \"\" || fallback_completer aws s3");
     puts("      Try completions, fall back if blob not found\n");
+    puts("  fast-completer -T 500 bash aws s3 \"\"");
+    puts("      Use a 500ms dynamic completer timeout\n");
     puts("  fast-completer bash aws s3 \"\"");
     puts("      Complete subcommands after 'aws s3'\n");
     puts("  fast-completer --blob /path/to/custom.fcmpb zsh mycli --");
@@ -1411,7 +2138,8 @@ typedef enum {
     MODE_COMPLETE,       // Default: generate completions
     MODE_CHECK,          // --check: test if blob exists
     MODE_DUMP_HEADER,    // --dump-header: show blob header
-    MODE_GENERATE_BLOB   // --generate-blob: create blob from schema
+    MODE_GENERATE_BLOB,  // --generate-blob: create blob from schema
+    MODE_LINT            // --lint: validate schema
 } Mode;
 
 int main(int argc, char *argv[]) {
@@ -1437,12 +2165,14 @@ int main(int argc, char *argv[]) {
         {"check",              no_argument,       0, 'C'},
         {"dump-header",        no_argument,       0, 'D'},
         {"generate-blob",      no_argument,       0, 'G'},
+        {"lint",               no_argument,       0, 'I'},
 
         // Completion mode options
         {"blob",               required_argument, 0, 'b'},
         {"add-space",          no_argument,       0, 'a'},
         {"full-commands",      no_argument,       0, 'f'},
         {"quiet",              no_argument,       0, 'q'},
+        {"dynamic-completer-timeout", required_argument, 0, 'T'},
 
         // Generate-blob mode options
         {"big-endian",         no_argument,       0, 'E'},
@@ -1456,7 +2186,7 @@ int main(int argc, char *argv[]) {
 
     // '+' = POSIX mode (stop at first non-option = the format arg)
     int c;
-    while ((c = getopt_long(argc, argv, "+hqafb:l:", long_options, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "+hqafIb:l:T:", long_options, NULL)) != -1) {
         switch (c) {
             // Universal
             case 'h':
@@ -1466,24 +2196,31 @@ int main(int argc, char *argv[]) {
             // Mode selectors (mutually exclusive)
             case 'C':  // --check
                 if (mode != MODE_COMPLETE) {
-                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                    fprintf(stderr, "Error: --check, --dump-header, --generate-blob, and --lint are mutually exclusive\n");
                     return 1;
                 }
                 mode = MODE_CHECK;
                 break;
             case 'D':  // --dump-header
                 if (mode != MODE_COMPLETE) {
-                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                    fprintf(stderr, "Error: --check, --dump-header, --generate-blob, and --lint are mutually exclusive\n");
                     return 1;
                 }
                 mode = MODE_DUMP_HEADER;
                 break;
             case 'G':  // --generate-blob
                 if (mode != MODE_COMPLETE) {
-                    fprintf(stderr, "Error: --check, --dump-header, and --generate-blob are mutually exclusive\n");
+                    fprintf(stderr, "Error: --check, --dump-header, --generate-blob, and --lint are mutually exclusive\n");
                     return 1;
                 }
                 mode = MODE_GENERATE_BLOB;
+                break;
+            case 'I':  // --lint
+                if (mode != MODE_COMPLETE) {
+                    fprintf(stderr, "Error: --check, --dump-header, --generate-blob, and --lint are mutually exclusive\n");
+                    return 1;
+                }
+                mode = MODE_LINT;
                 break;
 
             // Completion mode options
@@ -1502,6 +2239,20 @@ int main(int argc, char *argv[]) {
             case 'q':  // --quiet, -q
                 quiet_mode = true;
                 complete_opts_used = true;
+                break;
+            case 'T':  // --dynamic-completer-timeout
+                {
+                    char *endptr = NULL;
+                    long val = strtol(optarg, &endptr, 10);
+                    if (!endptr || *endptr != '\0' || val <= 0) {
+                        fprintf(stderr, "--dynamic-completer-timeout must be a positive integer (milliseconds)\n");
+                        return 1;
+                    }
+                    if (val > INT32_MAX) val = INT32_MAX;
+                    g_completer_timeout_ms = (int)val;
+                    g_completer_timeout_override = true;
+                    complete_opts_used = true;
+                }
                 break;
 
             // Generate-blob mode options
@@ -1551,7 +2302,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (complete_opts_used && mode != MODE_COMPLETE) {
-        fprintf(stderr, "Error: --blob, --add-space, --full-commands, and --quiet are only valid in completion mode\n");
+        fprintf(stderr, "Error: --blob, --add-space, --full-commands, --quiet, and --dynamic-completer-timeout are only valid in completion mode\n");
         return 1;
     }
 
@@ -1613,6 +2364,15 @@ int main(int argc, char *argv[]) {
             return result ? 0 : 1;
         }
 
+        case MODE_LINT: {
+            if (argc != optind + 1) {
+                fprintf(stderr, "Usage: fast-completer --lint <schema>\n");
+                return 1;
+            }
+            bool ok = lint_schema(argv[optind]);
+            return ok ? 0 : 1;
+        }
+
         case MODE_COMPLETE:
             break;  // Fall through to completion logic below
     }
@@ -1623,6 +2383,8 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Try 'fast-completer --help' for more information.\n");
         return 1;
     }
+
+    init_completer_timeout();
 
     const char *format_name = argv[optind];
     int spans_start = optind + 1;
@@ -1678,6 +2440,8 @@ int main(int argc, char *argv[]) {
     flockfile(stdout);
     complete(argc - spans_start, (const char **)(argv + spans_start));
     funlockfile(stdout);
+
+    completer_cache_clear();
 
     return 0;
 }

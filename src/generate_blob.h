@@ -59,4 +59,11 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
  */
 char *get_schema_name(const char *schema_path);
 
+/*
+ * Lint a schema file (syntax + structural validation).
+ *
+ * Returns true if schema is valid, false otherwise.
+ */
+bool lint_schema(const char *schema_path);
+
 #endif /* GENERATE_BLOB_H */

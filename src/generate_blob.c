@@ -10,11 +10,11 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 // Limits
 #define VLQ_MAX_LENGTH 32767
 #define SHORT_DESC_MAX_LEN 200
-#define MAX_FIELDS 8
 #define MAX_LINE_LEN 8192
 
 static char *str_ndup(const char *s, size_t n) {
@@ -55,6 +55,11 @@ static size_t utf8_byte_offset(const char *s, size_t n_chars) {
     // If we stopped mid-sequence, back up to start of this character
     // (This shouldn't happen if input is valid UTF-8, but be safe)
     return (size_t)(p - s);
+}
+
+static void trim_ws_span(const char **start, const char **end) {
+    while (*start < *end && isspace((unsigned char)**start)) (*start)++;
+    while (*end > *start && isspace((unsigned char)*((*end) - 1))) (*end)--;
 }
 
 // --------------------------------------------------------------------------
@@ -468,6 +473,196 @@ static void track_command_path_len(BlobGen *bg, size_t path_len) {
 // Choices/Members
 // --------------------------------------------------------------------------
 
+static bool buf_append(char **buf, size_t *len, size_t *cap, char c) {
+    if (*len + 1 >= *cap) {
+        size_t next = (*cap > 0) ? (*cap * 2) : 64;
+        char *tmp = realloc(*buf, next);
+        if (!tmp) {
+            perror("realloc");
+            return false;
+        }
+        *buf = tmp;
+        *cap = next;
+    }
+    (*buf)[(*len)++] = c;
+    return true;
+}
+
+static bool parse_list_items(const char *input, const char *path, int line_num,
+                             char ***out_items, size_t *out_count) {
+    size_t cap = 8;
+    size_t count = 0;
+    char **items = malloc(cap * sizeof(char *));
+    if (!items) {
+        perror("malloc");
+        return false;
+    }
+
+    size_t buf_cap = strlen(input) + 1;
+    char *buf = malloc(buf_cap);
+    if (!buf) {
+        perror("malloc");
+        free(items);
+        return false;
+    }
+    size_t len = 0;
+    size_t last_keep = 0;
+    bool token_started = false;
+    bool in_single = false;
+    bool in_double = false;
+    bool escaped = false;
+
+    for (const char *p = input; ; p++) {
+        char c = *p;
+        bool at_end = (c == '\0');
+
+        if (!at_end) {
+            if (in_single) {
+                if (c == '\'') {
+                    in_single = false;
+                } else {
+                    if (!buf_append(&buf, &len, &buf_cap, c)) goto error;
+                    last_keep = len;
+                    token_started = true;
+                }
+                continue;
+            }
+            if (in_double) {
+                if (escaped) {
+                    char out = c;
+                    switch (c) {
+                        case 'n': out = '\n'; break;
+                        case 'r': out = '\r'; break;
+                        case 't': out = '\t'; break;
+                        case 'v': out = '\v'; break;
+                        case 'b': out = '\b'; break;
+                        case 'a': out = '\a'; break;
+                        case 'f': out = '\f'; break;
+                        case '"': out = '"'; break;
+                        case '\\': out = '\\'; break;
+                        case 'x':
+                            if (isxdigit((unsigned char)p[1]) && isxdigit((unsigned char)p[2])) {
+                                int hi = isdigit((unsigned char)p[1]) ? p[1] - '0' : (tolower((unsigned char)p[1]) - 'a' + 10);
+                                int lo = isdigit((unsigned char)p[2]) ? p[2] - '0' : (tolower((unsigned char)p[2]) - 'a' + 10);
+                                out = (char)((hi << 4) | lo);
+                                p += 2;
+                            } else {
+                                out = 'x';
+                            }
+                            break;
+                        default:
+                            out = c;
+                            break;
+                    }
+                    if (!buf_append(&buf, &len, &buf_cap, out)) goto error;
+                    last_keep = len;
+                    token_started = true;
+                    escaped = false;
+                    continue;
+                }
+                if (c == '\\') {
+                    escaped = true;
+                    continue;
+                }
+                if (c == '"') {
+                    in_double = false;
+                    token_started = true;
+                    continue;
+                }
+                if (!buf_append(&buf, &len, &buf_cap, c)) goto error;
+                last_keep = len;
+                token_started = true;
+                continue;
+            }
+
+            if (c == '\'') {
+                in_single = true;
+                token_started = true;
+                continue;
+            }
+            if (c == '"') {
+                in_double = true;
+                token_started = true;
+                continue;
+            }
+            if (c == '\\' && p[1] != '\0') {
+                p++;
+                if (!buf_append(&buf, &len, &buf_cap, *p)) goto error;
+                last_keep = len;
+                token_started = true;
+                continue;
+            }
+            /* No nested delimiter tracking; use quotes for literal braces/parens. */
+        }
+
+        if (at_end || c == '|') {
+            if (in_single || in_double || escaped) {
+                fprintf(stderr, "%s:%d: error: unmatched quote in list\n", path, line_num);
+                for (size_t i = 0; i < count; i++) free(items[i]);
+                free(items);
+                free(buf);
+                return false;
+            }
+            if (token_started) {
+                size_t out_len = last_keep;
+                char *token = malloc(out_len + 1);
+                if (!token) {
+                    perror("malloc");
+                    goto error;
+                }
+                memcpy(token, buf, out_len);
+                token[out_len] = '\0';
+                if (count >= cap) {
+                    cap *= 2;
+                    char **next = realloc(items, cap * sizeof(char *));
+                    if (!next) {
+                        perror("realloc");
+                        free(token);
+                        goto error;
+                    }
+                    items = next;
+                }
+                items[count++] = token;
+            }
+            if (at_end) break;
+            len = 0;
+            last_keep = 0;
+            token_started = false;
+            continue;
+        }
+
+        if (isspace((unsigned char)c)) {
+            if (!token_started && len == 0) {
+                continue;  // Leading whitespace
+            }
+            if (!buf_append(&buf, &len, &buf_cap, c)) goto error;
+            continue;
+        }
+
+        if (!buf_append(&buf, &len, &buf_cap, c)) goto error;
+        last_keep = len;
+        token_started = true;
+    }
+
+    free(buf);
+
+    if (count == 0) {
+        fprintf(stderr, "%s:%d: error: list must contain at least one value\n", path, line_num);
+        free(items);
+        return false;
+    }
+
+    *out_items = items;
+    *out_count = count;
+    return true;
+
+error:
+    for (size_t i = 0; i < count; i++) free(items[i]);
+    free(items);
+    free(buf);
+    return false;
+}
+
 static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
     uint32_t h = 5381;
     for (size_t i = 0; i < count; i++) {
@@ -501,32 +696,37 @@ static size_t find_existing_members(BlobGen *bg, const uint32_t *offsets, size_t
 }
 
 // Add choices from pipe-separated string, return index
-static size_t add_choices_from_string(BlobGen *bg, const char *choices_str) {
-    if (!choices_str || !*choices_str) return (size_t)-1;
-
-    // Count choices
-    size_t count = 1;
-    for (const char *p = choices_str; *p; p++) {
-        if (*p == '|') count++;
+static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
+                                    const char *path, int line_num, size_t *out_idx) {
+    if (!choices_str || !*choices_str) {
+        fprintf(stderr, "%s:%d: error: choices list is empty\n", path, line_num);
+        return false;
     }
+
+    char **items = NULL;
+    size_t count = 0;
+    if (!parse_list_items(choices_str, path, line_num, &items, &count)) return false;
 
     uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    char *copy = strdup(choices_str);
-    char *saveptr;
-    char *token = strtok_r(copy, "|", &saveptr);
-    size_t i = 0;
-    while (token && i < count) {
-        offsets[i++] = strtab_add(&bg->choice_strtab, token);
-        token = strtok_r(NULL, "|", &saveptr);
+    if (!offsets) {
+        perror("malloc");
+        for (size_t i = 0; i < count; i++) free(items[i]);
+        free(items);
+        return false;
     }
-    free(copy);
+    for (size_t i = 0; i < count; i++) {
+        offsets[i] = strtab_add(&bg->choice_strtab, items[i]);
+        free(items[i]);
+    }
+    free(items);
 
     // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, i);
-    size_t existing = find_existing_choices(bg, offsets, i, hash);
+    uint32_t hash = hash_string_list(offsets, count);
+    size_t existing = find_existing_choices(bg, offsets, count, hash);
     if (existing != (size_t)-1) {
         free(offsets);
-        return existing;
+        *out_idx = existing;
+        return true;
     }
 
     // Add new list
@@ -536,74 +736,115 @@ static size_t add_choices_from_string(BlobGen *bg, const char *choices_str) {
     }
     StringList *sl = &bg->choices_lists[bg->choices_count];
     sl->offsets = offsets;
-    sl->count = i;
+    sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
-    return bg->choices_count++;
+    *out_idx = bg->choices_count++;
+    return true;
 }
 
 // Add members from {key1|key2} string, return index
-// Handles nested braces: {foo{x}|bar} parses as members "foo{x}" and "bar"
-static size_t add_members_from_string(BlobGen *bg, const char *members_str) {
-    if (!members_str || members_str[0] != '{') return (size_t)-1;
+static bool add_members_from_string(BlobGen *bg, const char *members_str,
+                                    const char *path, int line_num, size_t *out_idx) {
+    if (!members_str || members_str[0] != '{') {
+        fprintf(stderr, "%s:%d: error: members list must be in braces\n", path, line_num);
+        return false;
+    }
 
-    // Skip { and find matching } (handle nested braces)
+    // Skip { and find matching } (no nested brace tracking)
     const char *start = members_str + 1;
     const char *end = NULL;
-    int depth = 1;
+    bool in_single = false;
+    bool in_double = false;
+    bool escaped = false;
     for (const char *p = start; *p; p++) {
-        if (*p == '{') depth++;
-        else if (*p == '}') {
-            depth--;
-            if (depth == 0) { end = p; break; }
+        char c = *p;
+        if (in_single) {
+            if (c == '\'') in_single = false;
+            continue;
         }
+        if (in_double) {
+            if (escaped) {
+                escaped = false;
+                continue;
+            }
+            if (c == '\\') {
+                escaped = true;
+                continue;
+            }
+            if (c == '"') {
+                in_double = false;
+            }
+            continue;
+        }
+        if (c == '\\' && p[1] != '\0') {
+            p++;
+            continue;
+        }
+        if (c == '\'') {
+            in_single = true;
+            continue;
+        }
+        if (c == '"') {
+            in_double = true;
+            continue;
+        }
+        if (c == '}') { end = p; break; }
     }
-    if (!end) return (size_t)-1;
+    if (!end) {
+        fprintf(stderr, "%s:%d: error: unmatched '{' in members list\n", path, line_num);
+        return false;
+    }
 
     size_t len = end - start;
     char *inner = malloc(len + 1);
+    if (!inner) {
+        perror("malloc");
+        return false;
+    }
     memcpy(inner, start, len);
     inner[len] = '\0';
 
-    // Count members (skip | inside nested braces)
-    size_t count = 1;
-    int brace_depth = 0;
-    for (const char *p = inner; *p; p++) {
-        if (*p == '{') brace_depth++;
-        else if (*p == '}') brace_depth--;
-        else if (*p == '|' && brace_depth == 0) count++;
-    }
-
-    // Split on | (respecting nested braces)
-    uint32_t *offsets = malloc(count * sizeof(uint32_t));
-    size_t i = 0;
-    const char *token_start = inner;
-    brace_depth = 0;
-    for (const char *p = inner; ; p++) {
-        if (*p == '{') brace_depth++;
-        else if (*p == '}') brace_depth--;
-        else if ((*p == '|' && brace_depth == 0) || *p == '\0') {
-            if (p > token_start && i < count) {
-                size_t token_len = p - token_start;
-                char buf[256];
-                size_t copy_len = token_len < sizeof(buf) - 2 ? token_len : sizeof(buf) - 2;
-                memcpy(buf, token_start, copy_len);
-                buf[copy_len] = '=';
-                buf[copy_len + 1] = '\0';
-                offsets[i++] = strtab_add(&bg->choice_strtab, buf);
-            }
-            if (*p == '\0') break;
-            token_start = p + 1;
-        }
-    }
+    char **items = NULL;
+    size_t count = 0;
+    bool ok = parse_list_items(inner, path, line_num, &items, &count);
     free(inner);
+    if (!ok) return false;
+
+    uint32_t *offsets = malloc(count * sizeof(uint32_t));
+    if (!offsets) {
+        perror("malloc");
+        for (size_t i = 0; i < count; i++) free(items[i]);
+        free(items);
+        return false;
+    }
+    for (size_t i = 0; i < count; i++) {
+        char *item = items[i];
+        size_t token_len = strlen(item);
+        char *with_eq = malloc(token_len + 2);
+        if (!with_eq) {
+            perror("malloc");
+            for (size_t j = i; j < count; j++) free(items[j]);
+            free(items);
+            free(offsets);
+            return false;
+        }
+        memcpy(with_eq, item, token_len);
+        with_eq[token_len] = '=';
+        with_eq[token_len + 1] = '\0';
+        offsets[i] = strtab_add(&bg->choice_strtab, with_eq);
+        free(with_eq);
+        free(item);
+    }
+    free(items);
 
     // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, i);
-    size_t existing = find_existing_members(bg, offsets, i, hash);
+    uint32_t hash = hash_string_list(offsets, count);
+    size_t existing = find_existing_members(bg, offsets, count, hash);
     if (existing != (size_t)-1) {
         free(offsets);
-        return existing;
+        *out_idx = existing;
+        return true;
     }
 
     // Add new list
@@ -613,10 +854,11 @@ static size_t add_members_from_string(BlobGen *bg, const char *members_str) {
     }
     StringList *sl = &bg->members_lists[bg->members_count];
     sl->offsets = offsets;
-    sl->count = i;
+    sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
-    return bg->members_count++;
+    *out_idx = bg->members_count++;
+    return true;
 }
 
 // --------------------------------------------------------------------------
@@ -845,8 +1087,7 @@ typedef enum {
     TOK_MEMBERS,    // {key1|key2}
     TOK_COMPLETER,  // `completer`
     TOK_BOOL,       // @bool
-    TOK_DESC,       // # description (rest of line)
-    TOK_END         // End of tokens
+    TOK_DESC        // # description (rest of line)
 } TokenType;
 
 typedef struct {
@@ -860,22 +1101,28 @@ typedef struct {
     size_t capacity;
 } TokenList;
 
-static void token_list_init(TokenList *tl) {
+static bool token_list_init_checked(TokenList *tl) {
     tl->capacity = 8;
     tl->tokens = malloc(tl->capacity * sizeof(Token));
     tl->count = 0;
+    return tl->tokens != NULL;
 }
 
-static void token_list_add(TokenList *tl, TokenType type, const char *start, size_t len) {
+static bool token_list_add(TokenList *tl, TokenType type, const char *start, size_t len) {
     if (tl->count >= tl->capacity) {
         tl->capacity *= 2;
-        tl->tokens = realloc(tl->tokens, tl->capacity * sizeof(Token));
+        Token *next = realloc(tl->tokens, tl->capacity * sizeof(Token));
+        if (!next) return false;
+        tl->tokens = next;
     }
-    Token *t = &tl->tokens[tl->count++];
+    Token *t = &tl->tokens[tl->count];
     t->type = type;
     t->value = malloc(len + 1);
+    if (!t->value) return false;
     memcpy(t->value, start, len);
     t->value[len] = '\0';
+    tl->count++;
+    return true;
 }
 
 static void token_list_free(TokenList *tl) {
@@ -888,7 +1135,10 @@ static void token_list_free(TokenList *tl) {
 // Tokenize a line in the new schema format
 // Returns false on error (unmatched delimiters)
 static bool tokenize_line(const char *line, TokenList *tl, const char *path, int line_num) {
-    token_list_init(tl);
+    if (!token_list_init_checked(tl)) {
+        perror("malloc");
+        return false;
+    }
     const char *p = line;
 
     while (*p) {
@@ -903,26 +1153,74 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             size_t len = strlen(p);
             // Trim trailing whitespace
             while (len > 0 && (p[len-1] == ' ' || p[len-1] == '\t' || p[len-1] == '\r' || p[len-1] == '\n')) len--;
-            token_list_add(tl, TOK_DESC, p, len);
+            if (!token_list_add(tl, TOK_DESC, p, len)) {
+                perror("malloc");
+                token_list_free(tl);
+                return false;
+            }
             break;  // Description consumes rest of line
         }
 
         // Check for choices: (...)
         if (*p == '(') {
             const char *start = p + 1;
-            int depth = 1;
             p++;
-            while (*p && depth > 0) {
-                if (*p == '(') depth++;
-                else if (*p == ')') depth--;
-                if (depth > 0) p++;
+            bool in_single = false;
+            bool in_double = false;
+            bool escaped = false;
+            while (*p) {
+                char c = *p;
+                if (in_single) {
+                    if (c == '\'') in_single = false;
+                    p++;
+                    continue;
+                }
+                if (in_double) {
+                    if (escaped) {
+                        escaped = false;
+                        p++;
+                        continue;
+                    }
+                    if (c == '\\') {
+                        escaped = true;
+                        p++;
+                        continue;
+                    }
+                    if (c == '"') {
+                        in_double = false;
+                        p++;
+                        continue;
+                    }
+                    p++;
+                    continue;
+                }
+                if (c == '\\' && p[1] != '\0') {
+                    p += 2;
+                    continue;
+                }
+                if (c == '\'') {
+                    in_single = true;
+                    p++;
+                    continue;
+                }
+                if (c == '"') {
+                    in_double = true;
+                    p++;
+                    continue;
+                }
+                if (c == ')') break;
+                p++;
             }
-            if (depth != 0) {
+            if (*p != ')') {
                 fprintf(stderr, "%s:%d: error: unmatched '(' in choices\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
-            token_list_add(tl, TOK_CHOICES, start, p - start);
+            if (!token_list_add(tl, TOK_CHOICES, start, p - start)) {
+                perror("malloc");
+                token_list_free(tl);
+                return false;
+            }
             p++;  // Skip closing )
             continue;
         }
@@ -930,34 +1228,116 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
         // Check for members: {...}
         if (*p == '{') {
             const char *start = p + 1;
-            int depth = 1;
             p++;
-            while (*p && depth > 0) {
-                if (*p == '{') depth++;
-                else if (*p == '}') depth--;
-                if (depth > 0) p++;
+            bool in_single = false;
+            bool in_double = false;
+            bool escaped = false;
+            while (*p) {
+                char c = *p;
+                if (in_single) {
+                    if (c == '\'') in_single = false;
+                    p++;
+                    continue;
+                }
+                if (in_double) {
+                    if (escaped) {
+                        escaped = false;
+                        p++;
+                        continue;
+                    }
+                    if (c == '\\') {
+                        escaped = true;
+                        p++;
+                        continue;
+                    }
+                    if (c == '"') {
+                        in_double = false;
+                        p++;
+                        continue;
+                    }
+                    p++;
+                    continue;
+                }
+                if (c == '\\' && p[1] != '\0') {
+                    p += 2;
+                    continue;
+                }
+                if (c == '\'') {
+                    in_single = true;
+                    p++;
+                    continue;
+                }
+                if (c == '"') {
+                    in_double = true;
+                    p++;
+                    continue;
+                }
+                if (c == '}') break;
+                p++;
             }
-            if (depth != 0) {
+            if (*p != '}') {
                 fprintf(stderr, "%s:%d: error: unmatched '{' in members\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
-            token_list_add(tl, TOK_MEMBERS, start, p - start);
+            if (!token_list_add(tl, TOK_MEMBERS, start, p - start)) {
+                perror("malloc");
+                token_list_free(tl);
+                return false;
+            }
             p++;  // Skip closing }
             continue;
         }
 
-        // Check for completer: `...`
+        // Check for completer: `...` (supports escaping \` inside)
         if (*p == '`') {
-            const char *start = p + 1;
-            p++;
-            while (*p && *p != '`') p++;
-            if (*p != '`') {
-                fprintf(stderr, "%s:%d: error: unmatched '`' in completer\n", path, line_num);
+            p++;  // Skip opening `
+            size_t cap = strlen(p) + 1;
+            char *buf = malloc(cap);
+            if (!buf) {
+                perror("malloc");
                 token_list_free(tl);
                 return false;
             }
-            token_list_add(tl, TOK_COMPLETER, start, p - start);
+            size_t len = 0;
+            bool escaped = false;
+            while (*p) {
+                if (!escaped && *p == '`') break;
+                if (escaped) {
+                    if (*p == '`') {
+                        buf[len++] = '`';
+                    } else {
+                        buf[len++] = '\\';
+                        buf[len++] = *p;
+                    }
+                    escaped = false;
+                    p++;
+                    continue;
+                }
+                if (*p == '\\') {
+                    escaped = true;
+                    p++;
+                    continue;
+                }
+                buf[len++] = *p++;
+            }
+            if (*p != '`' || escaped) {
+                fprintf(stderr, "%s:%d: error: unmatched '`' in completer\n", path, line_num);
+                free(buf);
+                token_list_free(tl);
+                return false;
+            }
+            buf[len] = '\0';
+            const char *start = buf;
+            const char *end = buf + len;
+            trim_ws_span(&start, &end);
+            if (!token_list_add(tl, TOK_COMPLETER, start, (size_t)(end - start))) {
+                perror("malloc");
+                free(buf);
+                token_list_free(tl);
+                return false;
+            }
+            free(buf);
             p++;  // Skip closing `
             continue;
         }
@@ -969,10 +1349,18 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             while (*p && *p != ' ' && *p != '\t' && *p != '#') p++;
             size_t len = p - start;
             if (len == 5 && strncmp(start, "@bool", 5) == 0) {
-                token_list_add(tl, TOK_BOOL, "bool", 4);
+                if (!token_list_add(tl, TOK_BOOL, "bool", 4)) {
+                    perror("malloc");
+                    token_list_free(tl);
+                    return false;
+                }
             } else {
                 // Unknown @ keyword, treat as word
-                token_list_add(tl, TOK_WORD, start, len);
+                if (!token_list_add(tl, TOK_WORD, start, len)) {
+                    perror("malloc");
+                    token_list_free(tl);
+                    return false;
+                }
             }
             continue;
         }
@@ -981,7 +1369,11 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
         const char *start = p;
         while (*p && *p != ' ' && *p != '\t' && *p != '#' && *p != '(' && *p != '{' && *p != '`') p++;
         if (p > start) {
-            token_list_add(tl, TOK_WORD, start, p - start);
+            if (!token_list_add(tl, TOK_WORD, start, p - start)) {
+                perror("malloc");
+                token_list_free(tl);
+                return false;
+            }
         }
     }
 
@@ -999,13 +1391,18 @@ static void trim_trailing(char *s) {
 // Parse option spec and extract long/short options
 // Format: --long|-s, --long, -s, --long|--alias, etc.
 // Aliases separated by |, first of each type (short=2 chars, long=other) used
-static void parse_option_spec(const char *spec, char **long_opt, char **short_opt) {
+static bool parse_option_spec(const char *spec, char **long_opt, char **short_opt, const char **err_msg) {
     static char long_buf[256];
     static char short_buf[8];
     *long_opt = NULL;
     *short_opt = NULL;
+    if (err_msg) *err_msg = NULL;
 
     char *copy = strdup(spec);
+    if (!copy) {
+        if (err_msg) *err_msg = "out of memory";
+        return false;
+    }
     char *saveptr;
     char *token = strtok_r(copy, "|", &saveptr);
     while (token) {
@@ -1013,13 +1410,23 @@ static void parse_option_spec(const char *spec, char **long_opt, char **short_op
         if (len >= 2 && token[0] == '-') {
             if (len == 2) {
                 // Short option: exactly 2 chars like -s
-                if (!*short_opt && len < sizeof(short_buf)) {
+                if (len >= sizeof(short_buf)) {
+                    if (err_msg) *err_msg = "short option too long";
+                    free(copy);
+                    return false;
+                }
+                if (!*short_opt) {
                     strcpy(short_buf, token);
                     *short_opt = short_buf;
                 }
             } else {
                 // Long option: -foo, --foo, or longer
-                if (!*long_opt && len < sizeof(long_buf)) {
+                if (len >= sizeof(long_buf)) {
+                    if (err_msg) *err_msg = "long option too long";
+                    free(copy);
+                    return false;
+                }
+                if (!*long_opt) {
                     strcpy(long_buf, token);
                     *long_opt = long_buf;
                 }
@@ -1028,6 +1435,7 @@ static void parse_option_spec(const char *spec, char **long_opt, char **short_op
         token = strtok_r(NULL, "|", &saveptr);
     }
     free(copy);
+    return true;
 }
 
 // Parse param line in new format:
@@ -1056,7 +1464,18 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
 
     char *long_opt = NULL;
     char *short_opt = NULL;
-    parse_option_spec(tl.tokens[0].value, &long_opt, &short_opt);
+    const char *opt_err = NULL;
+    if (!parse_option_spec(tl.tokens[0].value, &long_opt, &short_opt, &opt_err)) {
+        fprintf(stderr, "%s:%d: error: %s in option spec '%s'\n",
+                path, line_num, opt_err ? opt_err : "invalid option", tl.tokens[0].value);
+        token_list_free(&tl);
+        return false;
+    }
+    if (!long_opt && !short_opt) {
+        fprintf(stderr, "%s:%d: error: invalid option spec '%s'\n", path, line_num, tl.tokens[0].value);
+        token_list_free(&tl);
+        return false;
+    }
 
     ParamEntry pe;
     pe.name_off = long_opt ? strtab_add(&bg->param_strtab, long_opt) : 0;
@@ -1077,11 +1496,13 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 has_type = true;
                 break;
             case TOK_CHOICES: {
-                size_t idx = add_choices_from_string(bg, t->value);
-                if (idx != (size_t)-1) {
-                    pe.choices_idx = (uint32_t)idx;
-                    pe.flags |= FLAG_TAKES_VALUE;
+                size_t idx = (size_t)-1;
+                if (!add_choices_from_string(bg, t->value, path, line_num, &idx)) {
+                    token_list_free(&tl);
+                    return false;
                 }
+                pe.choices_idx = (uint32_t)idx;
+                pe.flags |= FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
             }
@@ -1089,11 +1510,13 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 // Wrap in braces for add_members_from_string (stack buffer, bounded by line length)
                 char wrapped[MAX_LINE_LEN + 3];
                 snprintf(wrapped, sizeof(wrapped), "{%s}", t->value);
-                size_t idx = add_members_from_string(bg, wrapped);
-                if (idx != (size_t)-1) {
-                    pe.choices_idx = (uint32_t)idx;
-                    pe.flags |= FLAG_IS_MEMBERS | FLAG_TAKES_VALUE;
+                size_t idx = (size_t)-1;
+                if (!add_members_from_string(bg, wrapped, path, line_num, &idx)) {
+                    token_list_free(&tl);
+                    return false;
                 }
+                pe.choices_idx = (uint32_t)idx;
+                pe.flags |= FLAG_IS_MEMBERS | FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
             }
@@ -1108,14 +1531,15 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
             case TOK_WORD:
                 // Ignore unknown words
                 break;
-            case TOK_END:
-                break;
         }
     }
 
     // Validation: @bool cannot combine with choices/members/completer
     if (is_bool && (pe.flags & (FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER))) {
-        fprintf(stderr, "%s:%d: warning: @bool cannot combine with choices/members/completer\n", path, line_num);
+        fprintf(stderr, "%s:%d: warning: @bool cannot combine with choices/members/completer; ignoring type specifier\n",
+                path, line_num);
+        pe.flags &= ~(FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER);
+        pe.choices_idx = (uint32_t)-1;
     }
 
     // If no type specified and not bool, default to takes value
@@ -1206,7 +1630,7 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         }
 
         // Handle parameter lines
-        if (content_start[0] == '-' && content_start[1] == '-') {
+        if (content_start[0] == '-') {
             if (!seen_root) {
                 // Parameters before root command are not allowed
                 fprintf(stderr, "%s:%d: error: parameters must come after the root command; define them on the root command instead\n", path, line_num);
@@ -1387,7 +1811,7 @@ char *get_schema_name(const char *schema_path) {
         trim_trailing(line);
 
         // Skip empty lines, comments, and params
-        if (!*line || line[0] == '#' || (line[0] == '-' && line[1] == '-')) {
+        if (!*line || line[0] == '#' || line[0] == '-') {
             line = eol ? eol + 1 : NULL;
             continue;
         }
@@ -1661,4 +2085,20 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     free(blob); free(choices_offsets); free(members_offsets);
     node_free(root); blobgen_free(&bg); free(root_desc);
     return true;
+}
+
+bool lint_schema(const char *schema_path) {
+    BlobGen bg;
+    blobgen_init(&bg, false, DESC_SHORT, 0);
+
+    CommandNode *root = node_create("");
+    char *root_desc = NULL;
+
+    bool ok = parse_tsv_schema(schema_path, &bg, root, &root_desc);
+
+    node_free(root);
+    blobgen_free(&bg);
+    free(root_desc);
+
+    return ok;
 }
