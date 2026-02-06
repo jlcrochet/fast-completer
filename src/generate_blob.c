@@ -217,22 +217,19 @@ typedef struct {
 static bool strtab_grow_arrays(StringTable *st, size_t new_cap) {
     if (st->error) return false;
     if (new_cap < st->capacity) return true;
-    char **new_strings = malloc(new_cap * sizeof(char *));
-    uint32_t *new_offsets = malloc(new_cap * sizeof(uint32_t));
-    if (!new_strings || !new_offsets) {
-        fcmp_perror("malloc");
-        free(new_strings);
-        free(new_offsets);
+    char **new_strings = realloc(st->strings, new_cap * sizeof(char *));
+    if (!new_strings) {
+        fcmp_perror("realloc");
         st->error = true;
         return false;
     }
-    if (st->count) {
-        memcpy(new_strings, st->strings, st->count * sizeof(char *));
-        memcpy(new_offsets, st->offsets, st->count * sizeof(uint32_t));
-    }
-    free(st->strings);
-    free(st->offsets);
     st->strings = new_strings;
+    uint32_t *new_offsets = realloc(st->offsets, new_cap * sizeof(uint32_t));
+    if (!new_offsets) {
+        fcmp_perror("realloc");
+        st->error = true;
+        return false;
+    }
     st->offsets = new_offsets;
     st->capacity = new_cap;
     return true;
@@ -321,6 +318,51 @@ static void strtab_grow_hash(StringTable *st) {
     free(old_table);
 }
 
+// Write VLQ-encoded string to data buffer, store in string array.
+// Returns data offset, or 0 on error (with st->error set).
+static uint32_t strtab_write_entry(StringTable *st, const char *s) {
+    size_t len = strlen(s);
+    if (len > st->max_str_len) st->max_str_len = len;
+    if (len > VLQ_MAX_LENGTH) {
+        fcmp_errorf("String too long: %zu bytes\n", len);
+        st->error = true;
+        return 0;
+    }
+    // strdup before writing to data buffer so failure doesn't leave orphaned data
+    char *copy = strdup(s);
+    if (!copy) {
+        fcmp_perror("strdup");
+        st->error = true;
+        return 0;
+    }
+    size_t vlq_len = (len < 128) ? 1 : 2;
+    size_t total = vlq_len + len;
+    while (st->data_len + total > st->data_cap) {
+        st->data_cap *= 2;
+        uint8_t *new_data = realloc(st->data, st->data_cap);
+        if (!new_data) {
+            fcmp_perror("realloc");
+            free(copy);
+            st->error = true;
+            return 0;
+        }
+        st->data = new_data;
+    }
+    uint32_t offset = (uint32_t)st->data_len;
+    if (len < 128) {
+        st->data[st->data_len++] = (uint8_t)len;
+    } else {
+        st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
+        st->data[st->data_len++] = (uint8_t)(len & 0xff);
+    }
+    memcpy(st->data + st->data_len, s, len);
+    st->data_len += len;
+    st->strings[st->count] = copy;
+    st->offsets[st->count] = offset;
+    st->count++;
+    return offset;
+}
+
 static uint32_t strtab_add(StringTable *st, const char *s) {
     if (st->error) return 0;
     if (!s) s = "";
@@ -343,42 +385,9 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
         idx = h & (st->hash_cap - 1);
         while (st->hash_table[idx].hash) idx = (idx + 1) & (st->hash_cap - 1);
     }
-    size_t len = strlen(s);
-    if (len > st->max_str_len) st->max_str_len = len;
-    size_t vlq_len = (len < 128) ? 1 : 2;
-    size_t total = vlq_len + len;
-    while (st->data_len + total > st->data_cap) {
-        st->data_cap *= 2;
-        uint8_t *new_data = realloc(st->data, st->data_cap);
-        if (!new_data) {
-            fcmp_perror("realloc");
-            st->error = true;
-            return 0;
-        }
-        st->data = new_data;
-    }
-    uint32_t offset = (uint32_t)st->data_len;
-    if (len < 128) {
-        st->data[st->data_len++] = (uint8_t)len;
-    } else if (len <= VLQ_MAX_LENGTH) {
-        st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
-        st->data[st->data_len++] = (uint8_t)(len & 0xff);
-    } else {
-        fcmp_errorf("String too long: %zu bytes\n", len);
-        st->error = true;
-        return 0;
-    }
-    memcpy(st->data + st->data_len, s, len);
-    st->data_len += len;
     uint32_t str_idx = (uint32_t)st->count;
-    st->strings[st->count] = strdup(s);
-    if (!st->strings[st->count]) {
-        fcmp_perror("strdup");
-        st->error = true;
-        return 0;
-    }
-    st->offsets[st->count] = offset;
-    st->count++;
+    uint32_t offset = strtab_write_entry(st, s);
+    if (st->error) return 0;
     st->hash_table[idx].hash = h;
     st->hash_table[idx].idx = str_idx;
     return offset;
@@ -392,42 +401,7 @@ static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
         size_t new_cap = st->capacity ? st->capacity * 2 : 1024;
         if (!strtab_grow_arrays(st, new_cap)) return 0;
     }
-    size_t len = strlen(s);
-    if (len > st->max_str_len) st->max_str_len = len;
-    size_t vlq_len = (len < 128) ? 1 : 2;
-    size_t total = vlq_len + len;
-    while (st->data_len + total > st->data_cap) {
-        st->data_cap *= 2;
-        uint8_t *new_data = realloc(st->data, st->data_cap);
-        if (!new_data) {
-            fcmp_perror("realloc");
-            st->error = true;
-            return 0;
-        }
-        st->data = new_data;
-    }
-    uint32_t offset = (uint32_t)st->data_len;
-    if (len < 128) {
-        st->data[st->data_len++] = (uint8_t)len;
-    } else if (len <= VLQ_MAX_LENGTH) {
-        st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
-        st->data[st->data_len++] = (uint8_t)(len & 0xff);
-    } else {
-        fcmp_errorf("String too long: %zu bytes\n", len);
-        st->error = true;
-        return 0;
-    }
-    memcpy(st->data + st->data_len, s, len);
-    st->data_len += len;
-    st->strings[st->count] = strdup(s);
-    if (!st->strings[st->count]) {
-        fcmp_perror("strdup");
-        st->error = true;
-        return 0;
-    }
-    st->offsets[st->count] = offset;
-    st->count++;
-    return offset;
+    return strtab_write_entry(st, s);
 }
 
 // Compare two strings by their offsets in the string table (for sorting)
@@ -853,6 +827,48 @@ static void list_hash_rebuild(uint32_t **hash_idx, size_t *hash_cap,
     *hash_cap = new_cap;
 }
 
+// Store a string list with deduplication, return index via out_idx.
+// Takes ownership of offsets on success or frees them on error.
+static bool store_string_list(BlobGen *bg, uint32_t *offsets, size_t count,
+                              StringList **lists, size_t *list_count, size_t *list_cap,
+                              uint32_t **hash_idx, size_t *hash_cap,
+                              size_t *out_idx) {
+    uint32_t hash = hash_string_list(offsets, count);
+    size_t existing = find_existing_list(*lists, *hash_idx, *hash_cap,
+                                         offsets, count, hash);
+    if (existing != (size_t)-1) {
+        free(offsets);
+        *out_idx = existing;
+        return true;
+    }
+
+    if (*list_count >= *list_cap) {
+        size_t new_cap = *list_cap * 2;
+        StringList *next = realloc(*lists, new_cap * sizeof(StringList));
+        if (!next) {
+            fcmp_perror("realloc");
+            free(offsets);
+            bg->error = true;
+            return false;
+        }
+        *lists = next;
+        *list_cap = new_cap;
+    }
+    if (*list_count * 10 >= *hash_cap * 7) {
+        list_hash_rebuild(hash_idx, hash_cap, *lists, *list_count);
+    }
+    StringList *sl = &(*lists)[*list_count];
+    sl->offsets = offsets;
+    sl->count = count;
+    sl->hash = hash;
+    sl->blob_off = 0;
+    if (*hash_idx) {
+        list_hash_insert(*hash_idx, *hash_cap, hash, (uint32_t)*list_count);
+    }
+    *out_idx = (*list_count)++;
+    return true;
+}
+
 // Add choices from pipe-separated string, return index
 static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
                                     const char *path, int line_num, size_t *out_idx) {
@@ -886,45 +902,9 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
     }
     free(items);
 
-    // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_list(bg->choices_lists,
-                                         bg->choices_hash_idx, bg->choices_hash_cap,
-                                         offsets, count, hash);
-    if (existing != (size_t)-1) {
-        free(offsets);
-        *out_idx = existing;
-        return true;
-    }
-
-    // Add new list
-    if (bg->choices_count >= bg->choices_cap) {
-        bg->choices_cap *= 2;
-        StringList *next = realloc(bg->choices_lists, bg->choices_cap * sizeof(StringList));
-        if (!next) {
-            fcmp_perror("realloc");
-            free(offsets);
-            bg->error = true;
-            return false;
-        }
-        bg->choices_lists = next;
-    }
-    // Rebuild hash if load factor exceeds 70%
-    if (bg->choices_count * 10 >= bg->choices_hash_cap * 7) {
-        list_hash_rebuild(&bg->choices_hash_idx, &bg->choices_hash_cap,
-                          bg->choices_lists, bg->choices_count);
-    }
-    StringList *sl = &bg->choices_lists[bg->choices_count];
-    sl->offsets = offsets;
-    sl->count = count;
-    sl->hash = hash;
-    sl->blob_off = 0;
-    if (bg->choices_hash_idx) {
-        list_hash_insert(bg->choices_hash_idx, bg->choices_hash_cap,
-                         hash, (uint32_t)bg->choices_count);
-    }
-    *out_idx = bg->choices_count++;
-    return true;
+    return store_string_list(bg, offsets, count,
+                             &bg->choices_lists, &bg->choices_count, &bg->choices_cap,
+                             &bg->choices_hash_idx, &bg->choices_hash_cap, out_idx);
 }
 
 // Add members from {key1|key2} string, return index
@@ -1006,19 +986,25 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
     for (size_t i = 0; i < count; i++) {
         char *item = items[i];
         size_t token_len = strlen(item);
-        char *with_eq = malloc(token_len + 2);
-        if (!with_eq) {
-            fcmp_perror("malloc");
-            for (size_t j = i; j < count; j++) free(items[j]);
-            free(items);
-            free(offsets);
-            return false;
+        char with_eq[256];
+        char *with_eq_alloc = NULL;
+        char *eq_buf = with_eq;
+        if (token_len + 2 > sizeof(with_eq)) {
+            with_eq_alloc = malloc(token_len + 2);
+            if (!with_eq_alloc) {
+                fcmp_perror("malloc");
+                for (size_t j = i; j < count; j++) free(items[j]);
+                free(items);
+                free(offsets);
+                return false;
+            }
+            eq_buf = with_eq_alloc;
         }
-        memcpy(with_eq, item, token_len);
-        with_eq[token_len] = '=';
-        with_eq[token_len + 1] = '\0';
-        offsets[i] = strtab_add(&bg->choice_strtab, with_eq);
-        free(with_eq);
+        memcpy(eq_buf, item, token_len);
+        eq_buf[token_len] = '=';
+        eq_buf[token_len + 1] = '\0';
+        offsets[i] = strtab_add(&bg->choice_strtab, eq_buf);
+        free(with_eq_alloc);
         free(item);
         if (bg->choice_strtab.error) {
             for (size_t j = i + 1; j < count; j++) free(items[j]);
@@ -1030,45 +1016,9 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
     }
     free(items);
 
-    // Check for existing identical list
-    uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_list(bg->members_lists,
-                                         bg->members_hash_idx, bg->members_hash_cap,
-                                         offsets, count, hash);
-    if (existing != (size_t)-1) {
-        free(offsets);
-        *out_idx = existing;
-        return true;
-    }
-
-    // Add new list
-    if (bg->members_count >= bg->members_cap) {
-        bg->members_cap *= 2;
-        StringList *next = realloc(bg->members_lists, bg->members_cap * sizeof(StringList));
-        if (!next) {
-            fcmp_perror("realloc");
-            free(offsets);
-            bg->error = true;
-            return false;
-        }
-        bg->members_lists = next;
-    }
-    // Rebuild hash if load factor exceeds 70%
-    if (bg->members_count * 10 >= bg->members_hash_cap * 7) {
-        list_hash_rebuild(&bg->members_hash_idx, &bg->members_hash_cap,
-                          bg->members_lists, bg->members_count);
-    }
-    StringList *sl = &bg->members_lists[bg->members_count];
-    sl->offsets = offsets;
-    sl->count = count;
-    sl->hash = hash;
-    sl->blob_off = 0;
-    if (bg->members_hash_idx) {
-        list_hash_insert(bg->members_hash_idx, bg->members_hash_cap,
-                         hash, (uint32_t)bg->members_count);
-    }
-    *out_idx = bg->members_count++;
-    return true;
+    return store_string_list(bg, offsets, count,
+                             &bg->members_lists, &bg->members_count, &bg->members_cap,
+                             &bg->members_hash_idx, &bg->members_hash_cap, out_idx);
 }
 
 // --------------------------------------------------------------------------
@@ -1249,8 +1199,6 @@ static IdxCount collect_params_from_node(BlobGen *bg, CommandNode *node) {
     return result;
 }
 
-static IdxCount collect_commands(BlobGen *bg, CommandNode *node);
-
 static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     IdxCount result = {0, 0};
     if (bg->error || blobgen_strtab_error(bg)) return result;
@@ -1423,6 +1371,36 @@ static void token_list_free(TokenList *tl) {
     free(tl->tokens);
 }
 
+// Scan past a quote-aware delimited block (for choices/members).
+// p points to the first char after the opening delimiter.
+// Returns pointer to closing delimiter, or NULL if not found.
+static const char *scan_delimited(const char *p, char close) {
+    bool in_single = false;
+    bool in_double = false;
+    bool escaped = false;
+    while (*p) {
+        char c = *p;
+        if (in_single) {
+            if (c == '\'') in_single = false;
+            p++;
+            continue;
+        }
+        if (in_double) {
+            if (escaped) { escaped = false; p++; continue; }
+            if (c == '\\') { escaped = true; p++; continue; }
+            if (c == '"') { in_double = false; p++; continue; }
+            p++;
+            continue;
+        }
+        if (c == '\\' && p[1] != '\0') { p += 2; continue; }
+        if (c == '\'') { in_single = true; p++; continue; }
+        if (c == '"') { in_double = true; p++; continue; }
+        if (c == close) return p;
+        p++;
+    }
+    return NULL;
+}
+
 // Tokenize a line in the new schema format
 // Returns false on error (unmatched delimiters)
 static bool tokenize_line(const char *line, TokenList *tl, const char *path, int line_num) {
@@ -1455,128 +1433,36 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
         // Check for choices: (...)
         if (*p == '(') {
             const char *start = p + 1;
-            p++;
-            bool in_single = false;
-            bool in_double = false;
-            bool escaped = false;
-            while (*p) {
-                char c = *p;
-                if (in_single) {
-                    if (c == '\'') in_single = false;
-                    p++;
-                    continue;
-                }
-                if (in_double) {
-                    if (escaped) {
-                        escaped = false;
-                        p++;
-                        continue;
-                    }
-                    if (c == '\\') {
-                        escaped = true;
-                        p++;
-                        continue;
-                    }
-                    if (c == '"') {
-                        in_double = false;
-                        p++;
-                        continue;
-                    }
-                    p++;
-                    continue;
-                }
-                if (c == '\\' && p[1] != '\0') {
-                    p += 2;
-                    continue;
-                }
-                if (c == '\'') {
-                    in_single = true;
-                    p++;
-                    continue;
-                }
-                if (c == '"') {
-                    in_double = true;
-                    p++;
-                    continue;
-                }
-                if (c == ')') break;
-                p++;
-            }
-            if (*p != ')') {
+            const char *end = scan_delimited(start, ')');
+            if (!end) {
                 fcmp_errorf("%s:%d: error: unmatched '(' in choices\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
-            if (!token_list_add(tl, TOK_CHOICES, start, p - start)) {
+            if (!token_list_add(tl, TOK_CHOICES, start, end - start)) {
                 fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
-            p++;  // Skip closing )
+            p = end + 1;  // Skip closing )
             continue;
         }
 
         // Check for members: {...}
         if (*p == '{') {
             const char *start = p + 1;
-            p++;
-            bool in_single = false;
-            bool in_double = false;
-            bool escaped = false;
-            while (*p) {
-                char c = *p;
-                if (in_single) {
-                    if (c == '\'') in_single = false;
-                    p++;
-                    continue;
-                }
-                if (in_double) {
-                    if (escaped) {
-                        escaped = false;
-                        p++;
-                        continue;
-                    }
-                    if (c == '\\') {
-                        escaped = true;
-                        p++;
-                        continue;
-                    }
-                    if (c == '"') {
-                        in_double = false;
-                        p++;
-                        continue;
-                    }
-                    p++;
-                    continue;
-                }
-                if (c == '\\' && p[1] != '\0') {
-                    p += 2;
-                    continue;
-                }
-                if (c == '\'') {
-                    in_single = true;
-                    p++;
-                    continue;
-                }
-                if (c == '"') {
-                    in_double = true;
-                    p++;
-                    continue;
-                }
-                if (c == '}') break;
-                p++;
-            }
-            if (*p != '}') {
+            const char *end = scan_delimited(start, '}');
+            if (!end) {
                 fcmp_errorf("%s:%d: error: unmatched '{' in members\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
-            if (!token_list_add(tl, TOK_MEMBERS, start, p - start)) {
+            if (!token_list_add(tl, TOK_MEMBERS, start, end - start)) {
                 fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
-            p++;  // Skip closing }
+            p = end + 1;  // Skip closing }
             continue;
         }
 
@@ -2498,6 +2384,33 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         write_u32(blob + offset + 12, choices_off_val, big_endian);
         blob[offset + 16] = pe->flags;
         offset += PARAM_SIZE;
+    }
+
+    // Sort choices and members lists for binary search at runtime
+    for (size_t i = 0; i < bg.choices_count; i++) {
+        StringList *sl = &bg.choices_lists[i];
+        // Insertion sort (lists are typically small)
+        for (size_t j = 1; j < sl->count; j++) {
+            uint32_t key = sl->offsets[j];
+            size_t k = j;
+            while (k > 0 && strtab_cmp(&bg.choice_strtab, sl->offsets[k - 1], key) > 0) {
+                sl->offsets[k] = sl->offsets[k - 1];
+                k--;
+            }
+            sl->offsets[k] = key;
+        }
+    }
+    for (size_t i = 0; i < bg.members_count; i++) {
+        StringList *sl = &bg.members_lists[i];
+        for (size_t j = 1; j < sl->count; j++) {
+            uint32_t key = sl->offsets[j];
+            size_t k = j;
+            while (k > 0 && strtab_cmp(&bg.choice_strtab, sl->offsets[k - 1], key) > 0) {
+                sl->offsets[k] = sl->offsets[k - 1];
+                k--;
+            }
+            sl->offsets[k] = key;
+        }
     }
 
     // Write choices lists (string offsets are in choice_strtab, need choice_off_adj)

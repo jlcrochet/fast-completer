@@ -80,9 +80,12 @@ typedef struct { const char *p; size_t n; } String;
 #define STR_EQ_LIT(s, lit) ((s).n == sizeof(lit) - 1 && memcmp((s).p, lit, sizeof(lit) - 1) == 0)
 
 static inline String str_get(uint32_t off);
-static void output_completion(String value, String desc, CompletionType type);
-static void output_completion_prefixed(const char *prefix, size_t prefix_len,
-                                       String value, String desc, CompletionType type);
+static void output_completion_ex(const char *prefix, size_t prefix_len,
+                                 String value, String desc, CompletionType type);
+
+static inline void output_completion(String value, String desc, CompletionType type) {
+    output_completion_ex(NULL, 0, value, desc, type);
+}
 #if defined(DEBUG) || defined(FCMP_VALIDATE_BLOB)
 static bool validate_blob(const char *path);
 #endif
@@ -239,8 +242,7 @@ static CompleterCacheEntry *completer_cache_find(const char *cli, String complet
         if (memcmp(e->cli, cli, cli_len) != 0) continue;
         if (memcmp(e->completer, completer.p, completer.n) != 0) continue;
         if (prefix_len && memcmp(e->prefix, pfx, prefix_len) != 0) continue;
-        if (prefix_len == 0 && e->prefix_len == 0) return e;
-        if (prefix_len == e->prefix_len) return e;
+        return e;
     }
     return NULL;
 }
@@ -259,16 +261,20 @@ static CompleterCacheEntry *completer_cache_add(const char *cli, String complete
     e->cli_len = strlen(cli);
     e->completer_len = completer.n;
     e->prefix_len = prefix_len;
-    e->cli = dup_span(cli, e->cli_len);
-    e->completer = dup_span(completer.p, completer.n);
-    e->prefix = dup_span(prefix ? prefix : "", prefix_len);
-    if (!e->cli || !e->completer || !e->prefix) {
-        free(e->cli);
-        free(e->completer);
-        free(e->prefix);
-        e->cli = e->completer = e->prefix = NULL;
-        return NULL;
-    }
+    const char *pfx = prefix ? prefix : "";
+    char *buf = malloc(e->cli_len + 1 + completer.n + 1 + prefix_len + 1);
+    if (!buf) return NULL;
+    memcpy(buf, cli, e->cli_len);
+    buf[e->cli_len] = '\0';
+    e->cli = buf;
+    buf += e->cli_len + 1;
+    memcpy(buf, completer.p, completer.n);
+    buf[completer.n] = '\0';
+    e->completer = buf;
+    buf += completer.n + 1;
+    memcpy(buf, pfx, prefix_len);
+    buf[prefix_len] = '\0';
+    e->prefix = buf;
     g_completer_cache_count++;
     return e;
 }
@@ -311,7 +317,7 @@ static void completer_cache_emit(const CompleterCacheEntry *e, String out_prefix
     for (size_t i = 0; i < e->count; i++) {
         String v = {e->values[i].s, e->values[i].n};
         if (out_prefix.p && out_prefix.n > 0) {
-            output_completion_prefixed(out_prefix.p, out_prefix.n, v, str_get(0), COMP_PARAM_VALUE);
+            output_completion_ex(out_prefix.p, out_prefix.n, v, str_get(0), COMP_PARAM_VALUE);
         } else {
             output_completion(v, str_get(0), COMP_PARAM_VALUE);
         }
@@ -341,9 +347,7 @@ static void completer_cache_remove(CompleterCacheEntry *e) {
     }
     if (idx == (size_t)-1) return;
     completer_cache_free_values(e);
-    free(e->cli);
-    free(e->completer);
-    free(e->prefix);
+    free(e->cli);  // Single allocation for cli+completer+prefix
     if (idx + 1 < g_completer_cache_count) {
         g_completer_cache[idx] = g_completer_cache[g_completer_cache_count - 1];
     }
@@ -402,11 +406,14 @@ static bool completer_cache_dedupe_insert(CompleterCacheEntry *e, uint32_t h, ui
 
 static inline void used_set_add(const char *p, size_t n) {
     size_t idx = hash_str(p, n) & (USED_SET_SIZE - 1);
-    while (g_used_set[idx].p) {
+    for (size_t probes = 0; probes < USED_SET_SIZE; probes++) {
+        if (!g_used_set[idx].p) {
+            g_used_set[idx].p = p;
+            g_used_set[idx].n = n;
+            return;
+        }
         idx = (idx + 1) & (USED_SET_SIZE - 1);
     }
-    g_used_set[idx].p = p;
-    g_used_set[idx].n = n;
 }
 
 static inline bool is_short_cluster_token(const char *p, size_t n) {
@@ -895,8 +902,14 @@ static void print_json_str_with_space(String s) {
     put_char('"');
 }
 
-// Output a completion item
-static void output_completion(String value, String desc, CompletionType type) {
+// Output a completion item (with optional prefix prepended to value)
+static void output_completion_ex(const char *prefix, size_t prefix_len,
+                                 String value, String desc, CompletionType type) {
+    bool has_prefix = prefix && prefix_len > 0;
+    bool add_space = add_trailing_space &&
+        (has_prefix ? needs_trailing_space_concat(prefix, prefix_len, value)
+                    : needs_trailing_space(value));
+
     switch (output_format) {
         case OUT_JSON:
             if (json_started) put_char(',');
@@ -904,10 +917,17 @@ static void output_completion(String value, String desc, CompletionType type) {
             put_char('{');
             print_json_str(STR_LIT("value"));
             put_char(':');
-            if (add_trailing_space && needs_trailing_space(value))
+            if (has_prefix) {
+                put_char('"');
+                print_json_str_inner((String){prefix, prefix_len});
+                print_json_str_inner(value);
+                if (add_space) put_char(' ');
+                put_char('"');
+            } else if (add_space) {
                 print_json_str_with_space(value);
-            else
+            } else {
                 print_json_str(value);
+            }
             if (desc.n > 0) {
                 put_char(',');
                 print_json_str(STR_LIT("description"));
@@ -918,85 +938,7 @@ static void output_completion(String value, String desc, CompletionType type) {
             break;
 
         case OUT_TSV:
-            put_str(value);
-            if (add_trailing_space && needs_trailing_space(value))
-                put_char(' ');
-            if (desc.n > 0) {
-                put_char('\t');
-                put_str(desc);
-            }
-            put_char('\n');
-            break;
-
-        case OUT_ZSH:
-            put_str(value);
-            if (add_trailing_space && needs_trailing_space(value))
-                put_char(' ');
-            if (desc.n > 0) {
-                put_char(':');
-                for (size_t i = 0; i < desc.n; i++) {
-                    if (desc.p[i] == '\\') put_char('\\');  // escape backslashes
-                    put_char(desc.p[i]);
-                }
-            }
-            put_char('\n');
-            break;
-
-        case OUT_LINES:
-            put_str(value);
-            if (add_trailing_space && needs_trailing_space(value))
-                put_char(' ');
-            put_char('\n');
-            break;
-
-        case OUT_PWSH:
-            put_str(value);
-            if (add_trailing_space && needs_trailing_space(value))
-                put_char(' ');
-            put_char('\t');
-            put_str(value);
-            put_char('\t');
-            put_char('0' + type);
-            put_char('\t');
-            put_str(desc.n > 0 ? desc : value);
-            put_char('\n');
-            break;
-
-        case OUT_UNKNOWN:
-            break;  // Should never happen
-    }
-}
-
-static void output_completion_prefixed(const char *prefix, size_t prefix_len,
-                                       String value, String desc, CompletionType type) {
-    if (!prefix || prefix_len == 0) {
-        output_completion(value, desc, type);
-        return;
-    }
-    bool add_space = add_trailing_space && needs_trailing_space_concat(prefix, prefix_len, value);
-    switch (output_format) {
-        case OUT_JSON:
-            if (json_started) put_char(',');
-            json_started = true;
-            put_char('{');
-            print_json_str(STR_LIT("value"));
-            put_char(':');
-            put_char('"');
-            print_json_str_inner((String){prefix, prefix_len});
-            print_json_str_inner(value);
-            if (add_space) put_char(' ');
-            put_char('"');
-            if (desc.n > 0) {
-                put_char(',');
-                print_json_str(STR_LIT("description"));
-                put_char(':');
-                print_json_str(desc);
-            }
-            put_char('}');
-            break;
-
-        case OUT_TSV:
-            put_bytes(prefix, prefix_len);
+            if (has_prefix) put_bytes(prefix, prefix_len);
             put_str(value);
             if (add_space) put_char(' ');
             if (desc.n > 0) {
@@ -1007,7 +949,7 @@ static void output_completion_prefixed(const char *prefix, size_t prefix_len,
             break;
 
         case OUT_ZSH:
-            put_bytes(prefix, prefix_len);
+            if (has_prefix) put_bytes(prefix, prefix_len);
             put_str(value);
             if (add_space) put_char(' ');
             if (desc.n > 0) {
@@ -1021,18 +963,18 @@ static void output_completion_prefixed(const char *prefix, size_t prefix_len,
             break;
 
         case OUT_LINES:
-            put_bytes(prefix, prefix_len);
+            if (has_prefix) put_bytes(prefix, prefix_len);
             put_str(value);
             if (add_space) put_char(' ');
             put_char('\n');
             break;
 
         case OUT_PWSH:
-            put_bytes(prefix, prefix_len);
+            if (has_prefix) put_bytes(prefix, prefix_len);
             put_str(value);
             if (add_space) put_char(' ');
             put_char('\t');
-            put_bytes(prefix, prefix_len);
+            if (has_prefix) put_bytes(prefix, prefix_len);
             put_str(value);
             put_char('\t');
             put_char('0' + type);
@@ -1188,9 +1130,10 @@ static inline bool prefix_is_tokenizable(const char *prefix, size_t len) {
     return has_space;
 }
 
-// Recursively output leaf commands
-static void complete_leaf_commands(const Command *cmd, String path, const char *prefix, size_t prefix_len) {
-    if (cmd->subcommands_count == 0) return;
+// Recursively output leaf commands (depth-limited to MAX_CMD_DEPTH)
+static void complete_leaf_commands(const Command *cmd, String path, const char *prefix,
+                                   size_t prefix_len, int depth) {
+    if (cmd->subcommands_count == 0 || depth >= MAX_CMD_DEPTH) return;
 
     char *buf = path_buf;
     const Command *subs = cmd_subcommands(cmd);
@@ -1216,7 +1159,7 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 
         if (sub->subcommands_count > 0) {
             if (!prefix || matches || strncmp(prefix, buf, new_len) == 0) {
-                complete_leaf_commands(sub, (String){buf, new_len}, prefix, prefix_len);
+                complete_leaf_commands(sub, (String){buf, new_len}, prefix, prefix_len, depth + 1);
             }
         } else if (matches) {
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
@@ -1245,7 +1188,7 @@ static void complete_leaf_commands_token_prefix(const Command *cmd, const char *
         size_t tok_len = (size_t)(p - start);
         if (tok_len == 0) {
             // Unexpected (e.g., double spaces); fall back to full scan
-            complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len);
+            complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0);
             return;
         }
 
@@ -1274,7 +1217,7 @@ static void complete_leaf_commands_token_prefix(const Command *cmd, const char *
         if (p < end && *p == ' ') p++;  // Skip single space delimiter
     }
 
-    complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len);
+    complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0);
 }
 
 // Binary search for first subcommand with name >= prefix (lower bound)
@@ -1331,7 +1274,7 @@ static void complete_subcommands(const Command *cmd, const char *prefix, size_t 
             complete_leaf_commands_token_prefix(cmd, prefix, prefix_len);
         } else {
             path_buf[0] = '\0';
-            complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len);
+            complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len, 0);
         }
     } else {
         complete_next_level(cmd, prefix, prefix_len);
@@ -1354,7 +1297,6 @@ static void complete_params_list(const Param *params, uint16_t params_count,
             String short_opt = str_get(p->short_off);
             if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                if (!g_emit_set_ready) emit_set_reset();
                 if (!emit_set_contains(short_opt.p, short_opt.n)) {
                     output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
                     emit_set_add(short_opt.p, short_opt.n);
@@ -1373,7 +1315,6 @@ static void complete_params_list(const Param *params, uint16_t params_count,
             if (name.n == 0) continue;  // Skip short-only params
             if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                if (!g_emit_set_ready) emit_set_reset();
                 if (!emit_set_contains(name.p, name.n)) {
                     output_completion(name, str_get(desc), COMP_PARAM_NAME);
                     emit_set_add(name.p, name.n);
@@ -1383,33 +1324,53 @@ static void complete_params_list(const Param *params, uint16_t params_count,
     }
 }
 
-// Complete string list at a blob offset (choices or members)
-static void complete_string_list(uint32_t off, const char *prefix, size_t prefix_len) {
-    if (off == 0) return;
-
-    uint16_t count = get_string_list_count(off);
-    const uint32_t *offsets = get_string_offsets(off);
-
-    for (uint16_t i = 0; i < count; i++) {
-        String s = str_get(offsets[i]);
-        if (!prefix || (s.n >= prefix_len && memcmp(s.p, prefix, prefix_len) == 0)) {
-            output_completion(s, str_get(0), COMP_PARAM_VALUE);
+// Binary search for first string offset with value >= prefix (lower bound)
+static uint16_t bsearch_string_list_lower(const uint32_t *offsets, uint16_t count,
+                                           const char *prefix, size_t prefix_len) {
+    uint16_t lo = 0, hi = count;
+    while (lo < hi) {
+        uint16_t mid = lo + (hi - lo) / 2;
+        String s = str_get(offsets[mid]);
+        size_t cmp_len = (s.n < prefix_len) ? s.n : prefix_len;
+        int cmp = memcmp(s.p, prefix, cmp_len);
+        if (cmp < 0 || (cmp == 0 && s.n < prefix_len)) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
         }
     }
+    return lo;
 }
 
-static void complete_string_list_prefixed(uint32_t off, const char *prefix, size_t prefix_len,
-                                          String out_prefix) {
+// Complete string list at a blob offset (choices or members)
+// Uses binary search when a prefix is provided (lists are stored sorted)
+// out_prefix: optional prefix to prepend to emitted values (e.g., "--opt=")
+static void complete_string_list(uint32_t off, const char *prefix, size_t prefix_len,
+                                 String out_prefix) {
     if (off == 0) return;
 
     uint16_t count = get_string_list_count(off);
     const uint32_t *offsets = get_string_offsets(off);
+    bool has_out = out_prefix.p && out_prefix.n > 0;
 
-    for (uint16_t i = 0; i < count; i++) {
-        String s = str_get(offsets[i]);
-        if (!prefix || (s.n >= prefix_len && memcmp(s.p, prefix, prefix_len) == 0)) {
-            output_completion_prefixed(out_prefix.p, out_prefix.n, s, str_get(0), COMP_PARAM_VALUE);
+    if (!prefix || prefix_len == 0) {
+        for (uint16_t i = 0; i < count; i++) {
+            if (has_out)
+                output_completion_ex(out_prefix.p, out_prefix.n, str_get(offsets[i]), str_get(0), COMP_PARAM_VALUE);
+            else
+                output_completion(str_get(offsets[i]), str_get(0), COMP_PARAM_VALUE);
         }
+        return;
+    }
+
+    uint16_t start = bsearch_string_list_lower(offsets, count, prefix, prefix_len);
+    for (uint16_t i = start; i < count; i++) {
+        String s = str_get(offsets[i]);
+        if (s.n < prefix_len || memcmp(s.p, prefix, prefix_len) != 0) break;
+        if (has_out)
+            output_completion_ex(out_prefix.p, out_prefix.n, s, str_get(0), COMP_PARAM_VALUE);
+        else
+            output_completion(s, str_get(0), COMP_PARAM_VALUE);
     }
 }
 
@@ -2067,6 +2028,7 @@ static const Param *find_param(const Param *params, uint16_t params_count, const
 
 // Complete params from entire command path (deepest first for relevance)
 static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
+    if (!g_emit_set_ready) emit_set_reset();
     for (int i = g_cmd_path_len - 1; i >= 0; i--) {
         const Command *cmd = g_cmd_path[i];
         complete_params_list(cmd_params(cmd), cmd->params_count, prefix, pinfo);
@@ -2112,6 +2074,16 @@ static OutputFormat parse_format(const char *name) {
     return OUT_UNKNOWN;
 }
 
+// Complete param values (choices, members, or dynamic completer)
+static void complete_param_values(const Param *param, const char *prefix, size_t prefix_len,
+                                  String out_prefix) {
+    if (PARAM_HAS_CHOICES(param) || PARAM_HAS_MEMBERS(param)) {
+        complete_string_list(param->choices_off, prefix, prefix_len, out_prefix);
+    } else if (PARAM_HAS_COMPLETER(param)) {
+        execute_completer(g_spans[0], str_get(param->choices_off), prefix, prefix_len, out_prefix);
+    }
+}
+
 // Maximum spans we support (command lines rarely exceed this)
 #define MAX_SPANS 128
 
@@ -2134,10 +2106,14 @@ static void complete(int nspans, const char **spans) {
         arg_lens[i] = strlen(spans[i]);
     }
     g_spans = spans;
+#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 12
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdangling-pointer"
+#endif
     g_arg_lens = arg_lens;  // Safe: only accessed during complete()'s lifetime
+#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 12
 #pragma GCC diagnostic pop
+#endif
     g_span_count = nspans > 1 ? nspans - 1 : 1;
     g_used_set_ready = false;  // Reset for lazy init
     g_used_short_ready = false;
@@ -2169,13 +2145,7 @@ static void complete(int nspans, const char **spans) {
             if (!memchr(prev, '=', prev_len)) {
                 const Param *param = find_path_param(prev, prev_len);
                 if (param && PARAM_TAKES_VALUE(param)) {
-                    if (PARAM_HAS_CHOICES(param)) {
-                        complete_string_list(param->choices_off, last_span, last_span_len);
-                    } else if (PARAM_HAS_MEMBERS(param)) {
-                        complete_string_list(param->choices_off, last_span, last_span_len);
-                    } else if (PARAM_HAS_COMPLETER(param)) {
-                        execute_completer(g_spans[0], str_get(param->choices_off), last_span, last_span_len, (String){NULL, 0});
-                    }
+                    complete_param_values(param, last_span, last_span_len, (String){NULL, 0});
                     if (output_format == OUT_JSON) put_lit("]\n");
                     return;
                 }
@@ -2189,16 +2159,9 @@ static void complete(int nspans, const char **spans) {
             size_t opt_len = (size_t)(eq - last_span);
             const Param *param = find_path_param(last_span, opt_len);
             if (param && PARAM_TAKES_VALUE(param)) {
-                String out_prefix = {last_span, opt_len + 1};
                 const char *val_prefix = eq + 1;
                 size_t val_len = last_span_len - opt_len - 1;
-                if (PARAM_HAS_CHOICES(param)) {
-                    complete_string_list_prefixed(param->choices_off, val_prefix, val_len, out_prefix);
-                } else if (PARAM_HAS_MEMBERS(param)) {
-                    complete_string_list_prefixed(param->choices_off, val_prefix, val_len, out_prefix);
-                } else if (PARAM_HAS_COMPLETER(param)) {
-                    execute_completer(g_spans[0], str_get(param->choices_off), val_prefix, val_len, out_prefix);
-                }
+                complete_param_values(param, val_prefix, val_len, (String){last_span, opt_len + 1});
                 if (output_format == OUT_JSON) put_lit("]\n");
                 return;
             }
@@ -2229,13 +2192,7 @@ static void complete(int nspans, const char **spans) {
 
         const Param *param = find_path_param(prev_arg, prev_len);
         if (param && PARAM_TAKES_VALUE(param)) {
-            if (PARAM_HAS_CHOICES(param)) {
-                complete_string_list(param->choices_off, NULL, 0);
-            } else if (PARAM_HAS_MEMBERS(param)) {
-                complete_string_list(param->choices_off, NULL, 0);
-            } else if (PARAM_HAS_COMPLETER(param)) {
-                execute_completer(g_spans[0], str_get(param->choices_off), NULL, 0, (String){NULL, 0});
-            }
+            complete_param_values(param, NULL, 0, (String){NULL, 0});
             if (output_format == OUT_JSON) put_lit("]\n");
             return;
         }
