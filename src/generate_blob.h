@@ -1,7 +1,7 @@
 /*
- * generate_blob.h - Blob generation from TSV schema files
+ * generate_blob.h - Blob generation from .fcmps schema files
  *
- * Generates binary completion data blob from tab-separated command schema.
+ * Generates binary completion data blob from indentation-based tab-indented command schema.
  */
 
 #ifndef GENERATE_BLOB_H
@@ -15,9 +15,9 @@
  * Keep these in sync with scripts/dump_blob.py.
  */
 #define BLOB_MAGIC   "FCMP"
-#define BLOB_VERSION 10
+#define BLOB_VERSION 12
 
-#define HEADER_SIZE  56
+#define HEADER_SIZE  64
 #define PARAM_SIZE   20
 #define COMMAND_SIZE 20
 
@@ -40,7 +40,7 @@ typedef enum {
 /*
  * Generate a binary blob from a schema file.
  *
- * schema_path: Path to TSV schema file
+ * schema_path: Path to .fcmps schema file
  * output_path: Path to output blob file
  * big_endian: If true, generate big-endian blob
  * desc_mode: How to handle descriptions (DESC_NONE, DESC_SHORT, DESC_LONG)
@@ -54,7 +54,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
 /*
  * Extract the CLI name from a schema file.
  *
- * Reads the "#name" directive from the TSV schema. If not present, returns NULL.
+ * Reads the first depth-0 command (the root/CLI name). If not present, returns NULL.
  * Caller must free the returned string.
  */
 char *get_schema_name(const char *schema_path);

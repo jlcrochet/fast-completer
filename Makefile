@@ -10,6 +10,7 @@ LDFLAGS ?=
 
 # Source files (base)
 SRCS = src/fast-completer.c \
+       src/diagnostic.c \
        src/generate_blob.c
 
 # Windows needs vendored getopt implementation
@@ -45,8 +46,9 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # Dependencies
-src/fast-completer.o: src/fast-completer.c src/generate_blob.h
-src/generate_blob.o: src/generate_blob.c src/generate_blob.h
+src/fast-completer.o: src/fast-completer.c src/generate_blob.h src/diagnostic.h
+src/diagnostic.o: src/diagnostic.c src/diagnostic.h
+src/generate_blob.o: src/generate_blob.c src/generate_blob.h src/diagnostic.h
 ifeq ($(OS),Windows_NT)
 src/compat/getopt.o: src/compat/getopt.c src/compat/getopt.h
 endif
@@ -63,7 +65,7 @@ uninstall:
 	rm -f $(BINDIR)/$(TARGET)
 
 # Debug build
-debug: CFLAGS = -g -O0 $(WARNINGS) -DDEBUG
+debug: CFLAGS = -g -O0 $(WARNINGS) -DDEBUG -DFCMP_VALIDATE_BLOB
 debug: clean all
 
 # Release build (smaller binary)

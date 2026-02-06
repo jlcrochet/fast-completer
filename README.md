@@ -105,13 +105,13 @@ Use the `lines` format when you only need values without descriptions.
 |--------|-------------|
 | `--add-space` | Append trailing space to completion values |
 | `--full-commands` | Complete full leaf command paths instead of next level |
-| `--quiet`, `-q` | Silently exit if blob not found (for fallback scripts) |
+| `--quiet`, `-q` | Exit silently if blob not found (for fallback scripts) |
 
 By default, command completion shows the next level of subcommands (e.g., `aws ""` shows `s3`, `ec2`, etc.). Use `--full-commands` to show full leaf command paths instead (e.g., `s3 cp`, `s3 ls`, `ec2 describe-instances`).
 
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
 
-The `--quiet` option silently exits if the blob doesn't exist, making it suitable for fallback completion setups. Unexpected errors (invalid blob format, version mismatch, etc.) still print to help diagnose issues. Use `--check` to test if a blob exists before attempting completions.
+The `--quiet` option silently exits if the blob doesn't exist, making it suitable for fallback completion setups. Use `--check` to test if a blob exists before attempting completions.
 
 ## Installation
 
@@ -325,7 +325,15 @@ The export scripts introspect the installed CLI to extract all commands, paramet
 
 ### Inspecting Blobs
 
-Use `scripts/dump_blob.py` to inspect and validate blob files:
+The binary includes built-in blob inspection:
+
+```bash
+fast-completer --dump-header aws              # Show header of cached blob
+fast-completer --validate-blob aws            # Validate blob integrity
+fast-completer --validate-blob /path/to.fcmpb # Validate blob at path
+```
+
+For deeper inspection, use `scripts/dump_blob.py`:
 
 ```bash
 # Show header and summary
@@ -418,7 +426,7 @@ When the user requests completions for `--kubernetes-version`, fast-completer ru
 
 Leading and trailing whitespace inside the backticks is trimmed. Use quotes (`''` or `""`) to pass empty arguments to the external command. To include a literal backtick inside the completer string, escape it as `\``.
 
-The completer command runs with a 1-second timeout by default. Override with `FAST_COMPLETER_TIMEOUT_MS` or `-T/--dynamic-completer-timeout` (milliseconds). If the command takes longer or fails, no completions are shown for that parameter. When stdout is a terminal, timeouts print a warning to stderr; otherwise they are silent to avoid interfering with shells.
+The completer command runs with a 1-second timeout by default. Override with `FAST_COMPLETER_TIMEOUT_MS` or `-T/--dynamic-completer-timeout` (milliseconds). If the command takes longer or fails, no completions are shown for that parameter, and a warning is printed to stderr.
 
 ### Validation Rules
 
@@ -470,7 +478,7 @@ The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with m
 
 | Section | Size | Description |
 |---------|------|-------------|
-| Header | 56 bytes | Magic (`FCMP`), version, flags, counts, section offsets |
+| Header | 64 bytes | Magic (`FCMP`), version, flags, counts, section offsets |
 | String table | variable | VLQ length-prefixed strings, hot data first (names, choices), cold data last (descriptions) |
 | Commands | 20 bytes each | Fixed-size structs with name/description offsets, param/subcommand indices |
 | Params | 20 bytes each | Fixed-size structs with name/short/description/choices offsets, flags |

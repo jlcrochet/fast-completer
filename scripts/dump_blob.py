@@ -25,10 +25,12 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 10
-HEADER_SIZE = 56
+VERSION = 12
+HEADER_SIZE = 64
 PARAM_SIZE = 20
 COMMAND_SIZE = 20
+HEADER_FORMAT = '4sHHIIIIIIIIIIIIII'
+assert struct.calcsize(HEADER_FORMAT) == HEADER_SIZE, "header format out of sync with C code"
 
 # Param flags
 FLAG_TAKES_VALUE  = 0x01
@@ -46,14 +48,32 @@ class BlobReader:
     def __init__(self, data):
         self.data = data
         self.header = None
+        self.endian = None
         self._parse_header()
+
+    def _detect_endian(self):
+        if len(self.data) < 6:
+            raise ValueError("Blob too small to detect endianness")
+
+        ver_le = struct.unpack_from("<H", self.data, 4)[0]
+        ver_be = struct.unpack_from(">H", self.data, 4)[0]
+
+        if ver_le == VERSION and ver_be != VERSION:
+            return "<"
+        if ver_be == VERSION and ver_le != VERSION:
+            return ">"
+        if ver_le == VERSION and ver_be == VERSION:
+            # Should never happen for current VERSION, but keep a deterministic fallback.
+            return "<"
+        raise ValueError(f"Unsupported version bytes: {self.data[4:6].hex()}")
 
     def _parse_header(self):
         """Parse the blob header."""
         if len(self.data) < HEADER_SIZE:
             raise ValueError(f"Blob too small: {len(self.data)} bytes (need at least {HEADER_SIZE})")
 
-        values = struct.unpack_from('<4sHHIIIIIIIIIIII', self.data, 0)
+        self.endian = self._detect_endian()
+        values = struct.unpack_from(f'{self.endian}{HEADER_FORMAT}', self.data, 0)
 
         magic = values[0]
         if magic != MAGIC:
@@ -62,6 +82,14 @@ class BlobReader:
         version = values[1]
         if version != VERSION:
             raise ValueError(f"Unsupported version: {version} (expected {VERSION})")
+
+        # Sanity-check endianness flag for user clarity.
+        flags = values[2]
+        flag_big_endian = bool(flags & HEADER_FLAG_BIG_ENDIAN)
+        if flag_big_endian and self.endian != ">":
+            print("Warning: big-endian flag set but detected little-endian byte order", file=sys.stderr)
+        if (not flag_big_endian) and self.endian != "<":
+            print("Warning: big-endian flag not set but detected big-endian byte order", file=sys.stderr)
 
         self.header = {
             'magic': magic.decode('ascii'),
@@ -79,6 +107,8 @@ class BlobReader:
             'choices_off': values[12],
             'members_off': values[13],
             'root_command_off': values[14],
+            'cli_name_off': values[15],
+            'max_completer_tokens': values[16],
         }
 
     def get_string(self, offset):
@@ -143,7 +173,7 @@ class BlobReader:
 
     def read_command(self, offset):
         """Read a Command struct at the given offset."""
-        values = struct.unpack_from('<IIIHHHH', self.data, offset)
+        values = struct.unpack_from(f'{self.endian}IIIHHHH', self.data, offset)
         return {
             'name_off': values[0],
             'desc_off': values[1],
@@ -155,7 +185,7 @@ class BlobReader:
 
     def read_param(self, offset):
         """Read a Param struct at the given offset."""
-        values = struct.unpack_from('<IIIIBxxx', self.data, offset)
+        values = struct.unpack_from(f'{self.endian}IIIIBxxx', self.data, offset)
         return {
             'name_off': values[0],
             'short_off': values[1],
@@ -179,13 +209,13 @@ class BlobReader:
         else:
             if offset + 4 > len(self.data):
                 return []
-            count = struct.unpack_from('<H', self.data, offset + 1)[0]
+            count = struct.unpack_from(f'{self.endian}H', self.data, offset + 1)[0]
             pos = offset + 4
         offsets = []
         for _ in range(count):
             if pos + 4 > len(self.data):
                 break
-            val = struct.unpack_from('<I', self.data, pos)[0]
+            val = struct.unpack_from(f'{self.endian}I', self.data, pos)[0]
             offsets.append(val)
             pos += 4
         return offsets
@@ -416,6 +446,9 @@ def dump_text(reader, section=None):
                 lines.append(f"  {key}: {value} ({flag_str})")
             else:
                 lines.append(f"  {key}: {value}")
+        cli_off = reader.header.get('cli_name_off', 0) or 0
+        cli_name = reader.get_string(cli_off) if cli_off else ""
+        lines.append(f"  cli_name: {cli_name}")
         lines.append("")
 
     if section is None or section == 'root':

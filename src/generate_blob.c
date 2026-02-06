@@ -1,16 +1,29 @@
 /*
- * generate_blob.c - Blob generation from TSV schema files
+ * generate_blob.c - Blob generation from .fcmps schema files
  *
- * Generates binary completion data blob from tab-separated command schema.
+ * Generates binary completion data blob from indentation-based tab-indented command schema.
  */
 
 #include "generate_blob.h"
+#include "diagnostic.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <limits.h>
+
+#if defined(_MSC_VER)
+#define strdup _strdup
+static char *fcmp_strtok_r(char *str, const char *delim, char **saveptr) {
+    return strtok_s(str, delim, saveptr);
+}
+#else
+static char *fcmp_strtok_r(char *str, const char *delim, char **saveptr) {
+    return strtok_r(str, delim, saveptr);
+}
+#endif
 
 // Limits
 #define VLQ_MAX_LENGTH 32767
@@ -46,15 +59,33 @@ static size_t utf8_strlen(const char *s) {
 // Find byte offset for the first n UTF-8 characters
 // Returns byte position after n characters (or end of string if fewer)
 static size_t utf8_byte_offset(const char *s, size_t n_chars) {
-    const char *p = s;
+    if (!s || n_chars == 0) return 0;
+    const unsigned char *p = (const unsigned char *)s;
+    const unsigned char *start = p;
     size_t chars = 0;
     while (*p && chars < n_chars) {
-        if ((*p & 0xC0) != 0x80) chars++;
-        p++;
+        size_t adv = 1;
+        unsigned char c = *p;
+        if (c < 0x80) {
+            adv = 1;
+        } else if ((c & 0xE0) == 0xC0) {
+            adv = 2;
+        } else if ((c & 0xF0) == 0xE0) {
+            adv = 3;
+        } else if ((c & 0xF8) == 0xF0) {
+            adv = 4;
+        } else {
+            // Invalid lead byte; treat as a single byte.
+            adv = 1;
+        }
+
+        while (adv > 0 && *p) {
+            p++;
+            adv--;
+        }
+        chars++;
     }
-    // If we stopped mid-sequence, back up to start of this character
-    // (This shouldn't happen if input is valid UTF-8, but be safe)
-    return (size_t)(p - s);
+    return (size_t)(p - start);
 }
 
 static void trim_ws_span(const char **start, const char **end) {
@@ -180,7 +211,32 @@ typedef struct {
     size_t max_str_len;
     HashEntry *hash_table;
     size_t hash_cap;
+    bool error;
 } StringTable;
+
+static bool strtab_grow_arrays(StringTable *st, size_t new_cap) {
+    if (st->error) return false;
+    if (new_cap < st->capacity) return true;
+    char **new_strings = malloc(new_cap * sizeof(char *));
+    uint32_t *new_offsets = malloc(new_cap * sizeof(uint32_t));
+    if (!new_strings || !new_offsets) {
+        fcmp_perror("malloc");
+        free(new_strings);
+        free(new_offsets);
+        st->error = true;
+        return false;
+    }
+    if (st->count) {
+        memcpy(new_strings, st->strings, st->count * sizeof(char *));
+        memcpy(new_offsets, st->offsets, st->count * sizeof(uint32_t));
+    }
+    free(st->strings);
+    free(st->offsets);
+    st->strings = new_strings;
+    st->offsets = new_offsets;
+    st->capacity = new_cap;
+    return true;
+}
 
 static uint32_t hash_string(const char *s) {
     uint32_t h = 5381;
@@ -189,6 +245,7 @@ static uint32_t hash_string(const char *s) {
 }
 
 static void strtab_init(StringTable *st) {
+    memset(st, 0, sizeof(*st));
     st->capacity = 1024;
     st->strings = calloc(st->capacity, sizeof(char *));
     st->offsets = calloc(st->capacity, sizeof(uint32_t));
@@ -199,7 +256,28 @@ static void strtab_init(StringTable *st) {
     st->max_str_len = 0;
     st->hash_cap = 65536;
     st->hash_table = calloc(st->hash_cap, sizeof(HashEntry));
+    if (!st->strings || !st->offsets || !st->data || !st->hash_table) {
+        fcmp_perror("malloc");
+        st->error = true;
+        free(st->strings);
+        free(st->offsets);
+        free(st->data);
+        free(st->hash_table);
+        st->strings = NULL;
+        st->offsets = NULL;
+        st->data = NULL;
+        st->hash_table = NULL;
+        st->capacity = 0;
+        st->data_cap = 0;
+        st->hash_cap = 0;
+        return;
+    }
     st->strings[0] = strdup("");
+    if (!st->strings[0]) {
+        fcmp_perror("strdup");
+        st->error = true;
+        return;
+    }
     st->offsets[0] = 0;
     st->data[0] = 0;
     st->data_len = 1;
@@ -211,7 +289,9 @@ static void strtab_init(StringTable *st) {
 }
 
 static void strtab_free(StringTable *st) {
-    for (size_t i = 0; i < st->count; i++) free(st->strings[i]);
+    if (st->strings) {
+        for (size_t i = 0; i < st->count; i++) free(st->strings[i]);
+    }
     free(st->strings);
     free(st->offsets);
     free(st->data);
@@ -219,10 +299,18 @@ static void strtab_free(StringTable *st) {
 }
 
 static void strtab_grow_hash(StringTable *st) {
+    if (st->error) return;
     size_t old_cap = st->hash_cap;
     HashEntry *old_table = st->hash_table;
     st->hash_cap *= 2;
     st->hash_table = calloc(st->hash_cap, sizeof(HashEntry));
+    if (!st->hash_table) {
+        fcmp_perror("calloc");
+        st->hash_table = old_table;
+        st->hash_cap = old_cap;
+        st->error = true;
+        return;
+    }
     for (size_t i = 0; i < old_cap; i++) {
         if (old_table[i].hash) {
             size_t idx = old_table[i].hash & (st->hash_cap - 1);
@@ -234,6 +322,7 @@ static void strtab_grow_hash(StringTable *st) {
 }
 
 static uint32_t strtab_add(StringTable *st, const char *s) {
+    if (st->error) return 0;
     if (!s) s = "";
     uint32_t h = hash_string(s);
     size_t idx = h & (st->hash_cap - 1);
@@ -245,12 +334,12 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
         idx = (idx + 1) & (st->hash_cap - 1);
     }
     if (st->count >= st->capacity) {
-        st->capacity *= 2;
-        st->strings = realloc(st->strings, st->capacity * sizeof(char *));
-        st->offsets = realloc(st->offsets, st->capacity * sizeof(uint32_t));
+        size_t new_cap = st->capacity ? st->capacity * 2 : 1024;
+        if (!strtab_grow_arrays(st, new_cap)) return 0;
     }
     if (st->count * 2 >= st->hash_cap) {
         strtab_grow_hash(st);
+        if (st->error) return 0;
         idx = h & (st->hash_cap - 1);
         while (st->hash_table[idx].hash) idx = (idx + 1) & (st->hash_cap - 1);
     }
@@ -260,7 +349,13 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
     size_t total = vlq_len + len;
     while (st->data_len + total > st->data_cap) {
         st->data_cap *= 2;
-        st->data = realloc(st->data, st->data_cap);
+        uint8_t *new_data = realloc(st->data, st->data_cap);
+        if (!new_data) {
+            fcmp_perror("realloc");
+            st->error = true;
+            return 0;
+        }
+        st->data = new_data;
     }
     uint32_t offset = (uint32_t)st->data_len;
     if (len < 128) {
@@ -269,13 +364,19 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
         st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
         st->data[st->data_len++] = (uint8_t)(len & 0xff);
     } else {
-        fprintf(stderr, "String too long: %zu bytes\n", len);
+        fcmp_errorf("String too long: %zu bytes\n", len);
+        st->error = true;
         return 0;
     }
     memcpy(st->data + st->data_len, s, len);
     st->data_len += len;
     uint32_t str_idx = (uint32_t)st->count;
     st->strings[st->count] = strdup(s);
+    if (!st->strings[st->count]) {
+        fcmp_perror("strdup");
+        st->error = true;
+        return 0;
+    }
     st->offsets[st->count] = offset;
     st->count++;
     st->hash_table[idx].hash = h;
@@ -285,11 +386,11 @@ static uint32_t strtab_add(StringTable *st, const char *s) {
 
 // Add string without deduplication (for subtree clustering of command names)
 static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
+    if (st->error) return 0;
     if (!s) s = "";
     if (st->count >= st->capacity) {
-        st->capacity *= 2;
-        st->strings = realloc(st->strings, st->capacity * sizeof(char *));
-        st->offsets = realloc(st->offsets, st->capacity * sizeof(uint32_t));
+        size_t new_cap = st->capacity ? st->capacity * 2 : 1024;
+        if (!strtab_grow_arrays(st, new_cap)) return 0;
     }
     size_t len = strlen(s);
     if (len > st->max_str_len) st->max_str_len = len;
@@ -297,7 +398,13 @@ static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
     size_t total = vlq_len + len;
     while (st->data_len + total > st->data_cap) {
         st->data_cap *= 2;
-        st->data = realloc(st->data, st->data_cap);
+        uint8_t *new_data = realloc(st->data, st->data_cap);
+        if (!new_data) {
+            fcmp_perror("realloc");
+            st->error = true;
+            return 0;
+        }
+        st->data = new_data;
     }
     uint32_t offset = (uint32_t)st->data_len;
     if (len < 128) {
@@ -306,12 +413,18 @@ static uint32_t strtab_add_nodupe(StringTable *st, const char *s) {
         st->data[st->data_len++] = 0x80 | (uint8_t)(len >> 8);
         st->data[st->data_len++] = (uint8_t)(len & 0xff);
     } else {
-        fprintf(stderr, "String too long: %zu bytes\n", len);
+        fcmp_errorf("String too long: %zu bytes\n", len);
+        st->error = true;
         return 0;
     }
     memcpy(st->data + st->data_len, s, len);
     st->data_len += len;
     st->strings[st->count] = strdup(s);
+    if (!st->strings[st->count]) {
+        fcmp_perror("strdup");
+        st->error = true;
+        return 0;
+    }
     st->offsets[st->count] = offset;
     st->count++;
     return offset;
@@ -388,19 +501,34 @@ typedef struct {
     StringList *members_lists;
     size_t members_count;
     size_t members_cap;
+    uint32_t *choices_hash_idx;   // hash -> index mapping for dedup
+    size_t choices_hash_cap;
+    uint32_t *members_hash_idx;
+    size_t members_hash_cap;
     size_t max_command_path_len;
+    uint32_t max_completer_tokens;
     bool big_endian;
     DescriptionMode desc_mode;
     size_t desc_max_len;
     bool has_any_descriptions;
+    bool error;
 } BlobGen;
+
+static inline bool blobgen_strtab_error(const BlobGen *bg) {
+    return bg->cmd_strtab.error || bg->param_strtab.error || bg->choice_strtab.error || bg->desc_strtab.error;
+}
 
 static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     memset(bg, 0, sizeof(*bg));
+    bg->error = false;
     strtab_init(&bg->cmd_strtab);
     strtab_init(&bg->param_strtab);
     strtab_init(&bg->choice_strtab);
     strtab_init(&bg->desc_strtab);
+    if (bg->cmd_strtab.error || bg->param_strtab.error || bg->choice_strtab.error || bg->desc_strtab.error) {
+        bg->error = true;
+        return;
+    }
     bg->params_cap = 1024;
     bg->params = calloc(bg->params_cap, sizeof(ParamEntry));
     bg->commands_cap = 1024;
@@ -409,6 +537,17 @@ static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode
     bg->choices_lists = calloc(bg->choices_cap, sizeof(StringList));
     bg->members_cap = 256;
     bg->members_lists = calloc(bg->members_cap, sizeof(StringList));
+    bg->choices_hash_cap = 512;
+    bg->choices_hash_idx = malloc(bg->choices_hash_cap * sizeof(uint32_t));
+    if (bg->choices_hash_idx) memset(bg->choices_hash_idx, 0xFF, bg->choices_hash_cap * sizeof(uint32_t));
+    bg->members_hash_cap = 512;
+    bg->members_hash_idx = malloc(bg->members_hash_cap * sizeof(uint32_t));
+    if (bg->members_hash_idx) memset(bg->members_hash_idx, 0xFF, bg->members_hash_cap * sizeof(uint32_t));
+    if (!bg->params || !bg->commands || !bg->choices_lists || !bg->members_lists ||
+        !bg->choices_hash_idx || !bg->members_hash_idx) {
+        fcmp_perror("calloc");
+        bg->error = true;
+    }
     bg->big_endian = big_endian;
     bg->desc_mode = desc_mode;
     bg->desc_max_len = desc_max_len;
@@ -459,6 +598,8 @@ static void blobgen_free(BlobGen *bg) {
     free(bg->choices_lists);
     for (size_t i = 0; i < bg->members_count; i++) free(bg->members_lists[i].offsets);
     free(bg->members_lists);
+    free(bg->choices_hash_idx);
+    free(bg->members_hash_idx);
 }
 
 // --------------------------------------------------------------------------
@@ -478,7 +619,7 @@ static bool buf_append(char **buf, size_t *len, size_t *cap, char c) {
         size_t next = (*cap > 0) ? (*cap * 2) : 64;
         char *tmp = realloc(*buf, next);
         if (!tmp) {
-            perror("realloc");
+            fcmp_perror("realloc");
             return false;
         }
         *buf = tmp;
@@ -494,14 +635,14 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
     size_t count = 0;
     char **items = malloc(cap * sizeof(char *));
     if (!items) {
-        perror("malloc");
+        fcmp_perror("malloc");
         return false;
     }
 
     size_t buf_cap = strlen(input) + 1;
     char *buf = malloc(buf_cap);
     if (!buf) {
-        perror("malloc");
+        fcmp_perror("malloc");
         free(items);
         return false;
     }
@@ -597,7 +738,7 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
 
         if (at_end || c == '|') {
             if (in_single || in_double || escaped) {
-                fprintf(stderr, "%s:%d: error: unmatched quote in list\n", path, line_num);
+                fcmp_errorf("%s:%d: error: unmatched quote in list\n", path, line_num);
                 for (size_t i = 0; i < count; i++) free(items[i]);
                 free(items);
                 free(buf);
@@ -607,7 +748,7 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
                 size_t out_len = last_keep;
                 char *token = malloc(out_len + 1);
                 if (!token) {
-                    perror("malloc");
+                    fcmp_perror("malloc");
                     goto error;
                 }
                 memcpy(token, buf, out_len);
@@ -616,7 +757,7 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
                     cap *= 2;
                     char **next = realloc(items, cap * sizeof(char *));
                     if (!next) {
-                        perror("realloc");
+                        fcmp_perror("realloc");
                         free(token);
                         goto error;
                     }
@@ -647,7 +788,7 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
     free(buf);
 
     if (count == 0) {
-        fprintf(stderr, "%s:%d: error: list must contain at least one value\n", path, line_num);
+        fcmp_errorf("%s:%d: error: list must contain at least one value\n", path, line_num);
         free(items);
         return false;
     }
@@ -671,37 +812,55 @@ static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
     return h ? h : 1;
 }
 
-static size_t find_existing_choices(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
-    for (size_t i = 0; i < bg->choices_count; i++) {
-        StringList *sl = &bg->choices_lists[i];
-        if (sl->hash == hash && sl->count == count) {
-            if (memcmp(sl->offsets, offsets, count * sizeof(uint32_t)) == 0) {
-                return i;
-            }
+static size_t find_existing_list(StringList *lists,
+                                 uint32_t *hash_idx, size_t hash_cap,
+                                 const uint32_t *offsets, size_t n, uint32_t hash) {
+    if (!hash_idx || hash_cap == 0) return (size_t)-1;
+    size_t slot = hash & (hash_cap - 1);
+    for (size_t probes = 0; probes < hash_cap; probes++) {
+        uint32_t idx = hash_idx[slot];
+        if (idx == UINT32_MAX) return (size_t)-1;  // empty slot
+        StringList *sl = &lists[idx];
+        if (sl->hash == hash && sl->count == n &&
+            memcmp(sl->offsets, offsets, n * sizeof(uint32_t)) == 0) {
+            return idx;
         }
+        slot = (slot + 1) & (hash_cap - 1);
     }
     return (size_t)-1;
 }
 
-static size_t find_existing_members(BlobGen *bg, const uint32_t *offsets, size_t count, uint32_t hash) {
-    for (size_t i = 0; i < bg->members_count; i++) {
-        StringList *sl = &bg->members_lists[i];
-        if (sl->hash == hash && sl->count == count) {
-            if (memcmp(sl->offsets, offsets, count * sizeof(uint32_t)) == 0) {
-                return i;
-            }
-        }
+static void list_hash_insert(uint32_t *hash_idx, size_t hash_cap,
+                             uint32_t hash, uint32_t index) {
+    size_t slot = hash & (hash_cap - 1);
+    while (hash_idx[slot] != UINT32_MAX) {
+        slot = (slot + 1) & (hash_cap - 1);
     }
-    return (size_t)-1;
+    hash_idx[slot] = index;
+}
+
+static void list_hash_rebuild(uint32_t **hash_idx, size_t *hash_cap,
+                              StringList *lists, size_t count) {
+    size_t new_cap = *hash_cap * 2;
+    uint32_t *new_idx = malloc(new_cap * sizeof(uint32_t));
+    if (!new_idx) { free(*hash_idx); *hash_idx = NULL; *hash_cap = 0; return; }
+    memset(new_idx, 0xFF, new_cap * sizeof(uint32_t));
+    for (size_t i = 0; i < count; i++) {
+        list_hash_insert(new_idx, new_cap, lists[i].hash, (uint32_t)i);
+    }
+    free(*hash_idx);
+    *hash_idx = new_idx;
+    *hash_cap = new_cap;
 }
 
 // Add choices from pipe-separated string, return index
 static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
                                     const char *path, int line_num, size_t *out_idx) {
     if (!choices_str || !*choices_str) {
-        fprintf(stderr, "%s:%d: error: choices list is empty\n", path, line_num);
+        fcmp_errorf("%s:%d: error: choices list is empty\n", path, line_num);
         return false;
     }
+    if (bg->error || blobgen_strtab_error(bg)) return false;
 
     char **items = NULL;
     size_t count = 0;
@@ -709,7 +868,7 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
 
     uint32_t *offsets = malloc(count * sizeof(uint32_t));
     if (!offsets) {
-        perror("malloc");
+        fcmp_perror("malloc");
         for (size_t i = 0; i < count; i++) free(items[i]);
         free(items);
         return false;
@@ -717,12 +876,21 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
     for (size_t i = 0; i < count; i++) {
         offsets[i] = strtab_add(&bg->choice_strtab, items[i]);
         free(items[i]);
+        if (bg->choice_strtab.error) {
+            for (size_t j = i + 1; j < count; j++) free(items[j]);
+            free(items);
+            free(offsets);
+            bg->error = true;
+            return false;
+        }
     }
     free(items);
 
     // Check for existing identical list
     uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_choices(bg, offsets, count, hash);
+    size_t existing = find_existing_list(bg->choices_lists,
+                                         bg->choices_hash_idx, bg->choices_hash_cap,
+                                         offsets, count, hash);
     if (existing != (size_t)-1) {
         free(offsets);
         *out_idx = existing;
@@ -732,13 +900,29 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
     // Add new list
     if (bg->choices_count >= bg->choices_cap) {
         bg->choices_cap *= 2;
-        bg->choices_lists = realloc(bg->choices_lists, bg->choices_cap * sizeof(StringList));
+        StringList *next = realloc(bg->choices_lists, bg->choices_cap * sizeof(StringList));
+        if (!next) {
+            fcmp_perror("realloc");
+            free(offsets);
+            bg->error = true;
+            return false;
+        }
+        bg->choices_lists = next;
+    }
+    // Rebuild hash if load factor exceeds 70%
+    if (bg->choices_count * 10 >= bg->choices_hash_cap * 7) {
+        list_hash_rebuild(&bg->choices_hash_idx, &bg->choices_hash_cap,
+                          bg->choices_lists, bg->choices_count);
     }
     StringList *sl = &bg->choices_lists[bg->choices_count];
     sl->offsets = offsets;
     sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
+    if (bg->choices_hash_idx) {
+        list_hash_insert(bg->choices_hash_idx, bg->choices_hash_cap,
+                         hash, (uint32_t)bg->choices_count);
+    }
     *out_idx = bg->choices_count++;
     return true;
 }
@@ -747,9 +931,10 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
 static bool add_members_from_string(BlobGen *bg, const char *members_str,
                                     const char *path, int line_num, size_t *out_idx) {
     if (!members_str || members_str[0] != '{') {
-        fprintf(stderr, "%s:%d: error: members list must be in braces\n", path, line_num);
+        fcmp_errorf("%s:%d: error: members list must be in braces\n", path, line_num);
         return false;
     }
+    if (bg->error || blobgen_strtab_error(bg)) return false;
 
     // Skip { and find matching } (no nested brace tracking)
     const char *start = members_str + 1;
@@ -792,14 +977,14 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
         if (c == '}') { end = p; break; }
     }
     if (!end) {
-        fprintf(stderr, "%s:%d: error: unmatched '{' in members list\n", path, line_num);
+        fcmp_errorf("%s:%d: error: unmatched '{' in members list\n", path, line_num);
         return false;
     }
 
     size_t len = end - start;
     char *inner = malloc(len + 1);
     if (!inner) {
-        perror("malloc");
+        fcmp_perror("malloc");
         return false;
     }
     memcpy(inner, start, len);
@@ -813,7 +998,7 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
 
     uint32_t *offsets = malloc(count * sizeof(uint32_t));
     if (!offsets) {
-        perror("malloc");
+        fcmp_perror("malloc");
         for (size_t i = 0; i < count; i++) free(items[i]);
         free(items);
         return false;
@@ -823,7 +1008,7 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
         size_t token_len = strlen(item);
         char *with_eq = malloc(token_len + 2);
         if (!with_eq) {
-            perror("malloc");
+            fcmp_perror("malloc");
             for (size_t j = i; j < count; j++) free(items[j]);
             free(items);
             free(offsets);
@@ -835,12 +1020,21 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
         offsets[i] = strtab_add(&bg->choice_strtab, with_eq);
         free(with_eq);
         free(item);
+        if (bg->choice_strtab.error) {
+            for (size_t j = i + 1; j < count; j++) free(items[j]);
+            free(items);
+            free(offsets);
+            bg->error = true;
+            return false;
+        }
     }
     free(items);
 
     // Check for existing identical list
     uint32_t hash = hash_string_list(offsets, count);
-    size_t existing = find_existing_members(bg, offsets, count, hash);
+    size_t existing = find_existing_list(bg->members_lists,
+                                         bg->members_hash_idx, bg->members_hash_cap,
+                                         offsets, count, hash);
     if (existing != (size_t)-1) {
         free(offsets);
         *out_idx = existing;
@@ -850,13 +1044,29 @@ static bool add_members_from_string(BlobGen *bg, const char *members_str,
     // Add new list
     if (bg->members_count >= bg->members_cap) {
         bg->members_cap *= 2;
-        bg->members_lists = realloc(bg->members_lists, bg->members_cap * sizeof(StringList));
+        StringList *next = realloc(bg->members_lists, bg->members_cap * sizeof(StringList));
+        if (!next) {
+            fcmp_perror("realloc");
+            free(offsets);
+            bg->error = true;
+            return false;
+        }
+        bg->members_lists = next;
+    }
+    // Rebuild hash if load factor exceeds 70%
+    if (bg->members_count * 10 >= bg->members_hash_cap * 7) {
+        list_hash_rebuild(&bg->members_hash_idx, &bg->members_hash_cap,
+                          bg->members_lists, bg->members_count);
     }
     StringList *sl = &bg->members_lists[bg->members_count];
     sl->offsets = offsets;
     sl->count = count;
     sl->hash = hash;
     sl->blob_off = 0;
+    if (bg->members_hash_idx) {
+        list_hash_insert(bg->members_hash_idx, bg->members_hash_cap,
+                         hash, (uint32_t)bg->members_count);
+    }
     *out_idx = bg->members_count++;
     return true;
 }
@@ -878,11 +1088,33 @@ typedef struct CommandNode {
 
 static CommandNode *node_create(const char *name) {
     CommandNode *node = calloc(1, sizeof(CommandNode));
+    if (!node) {
+        fcmp_perror("calloc");
+        return NULL;
+    }
     node->name = strdup(name ? name : "");
+    if (!node->name) {
+        fcmp_perror("strdup");
+        free(node);
+        return NULL;
+    }
     node->children_cap = 8;
     node->children = calloc(node->children_cap, sizeof(CommandNode *));
+    if (!node->children) {
+        fcmp_perror("calloc");
+        free(node->name);
+        free(node);
+        return NULL;
+    }
     node->params_cap = 8;
     node->params = calloc(node->params_cap, sizeof(ParamEntry));
+    if (!node->params) {
+        fcmp_perror("calloc");
+        free(node->children);
+        free(node->name);
+        free(node);
+        return NULL;
+    }
     return node;
 }
 
@@ -896,43 +1128,62 @@ static void node_free(CommandNode *node) {
     free(node);
 }
 
-static CommandNode *node_get_child(CommandNode *node, const char *name) {
-    for (size_t i = 0; i < node->children_count; i++) {
-        if (strcmp(node->children[i]->name, name) == 0) return node->children[i];
+static size_t node_child_lower_bound(CommandNode *node, const char *name, bool *out_found) {
+    size_t lo = 0, hi = node->children_count;
+    while (lo < hi) {
+        size_t mid = lo + (hi - lo) / 2;
+        int cmp = strcmp(node->children[mid]->name, name);
+        if (cmp < 0) lo = mid + 1;
+        else hi = mid;
     }
-    return NULL;
+    if (out_found) {
+        *out_found = (lo < node->children_count && strcmp(node->children[lo]->name, name) == 0);
+    }
+    return lo;
 }
 
-static CommandNode *node_add_child(CommandNode *node, const char *name) {
+static CommandNode *node_get_or_add_child(CommandNode *node, const char *name) {
+    bool found = false;
+    size_t idx = node_child_lower_bound(node, name, &found);
+    if (found) return node->children[idx];
+
     if (node->children_count >= node->children_cap) {
-        node->children_cap *= 2;
-        node->children = realloc(node->children, node->children_cap * sizeof(CommandNode *));
+        size_t next_cap = node->children_cap ? node->children_cap * 2 : 8;
+        CommandNode **next = realloc(node->children, next_cap * sizeof(CommandNode *));
+        if (!next) {
+            fcmp_perror("realloc");
+            return NULL;
+        }
+        node->children = next;
+        node->children_cap = next_cap;
     }
     CommandNode *child = node_create(name);
-    node->children[node->children_count++] = child;
+    if (!child) return NULL;
+    if (idx < node->children_count) {
+        memmove(&node->children[idx + 1], &node->children[idx],
+                (node->children_count - idx) * sizeof(CommandNode *));
+    }
+    node->children[idx] = child;
+    node->children_count++;
     return child;
 }
 
-static void node_add_param(CommandNode *node, ParamEntry *pe) {
+static bool node_add_param(CommandNode *node, ParamEntry *pe) {
     if (node->params_count >= node->params_cap) {
-        node->params_cap *= 2;
-        node->params = realloc(node->params, node->params_cap * sizeof(ParamEntry));
+        size_t next_cap = node->params_cap ? node->params_cap * 2 : 8;
+        ParamEntry *next = realloc(node->params, next_cap * sizeof(ParamEntry));
+        if (!next) {
+            fcmp_perror("realloc");
+            return false;
+        }
+        node->params = next;
+        node->params_cap = next_cap;
     }
     node->params[node->params_count++] = *pe;
+    return true;
 }
 
-static int cmp_nodes(const void *a, const void *b) {
-    const CommandNode *na = *(const CommandNode **)a;
-    const CommandNode *nb = *(const CommandNode **)b;
-    return strcmp(na->name, nb->name);
-}
-
-static void sort_children(CommandNode *node) {
-    if (node->children_count > 1) {
-        qsort(node->children, node->children_count, sizeof(CommandNode *), cmp_nodes);
-    }
-    for (size_t i = 0; i < node->children_count; i++) sort_children(node->children[i]);
-}
+// Children are kept sorted on insert (binary search + memmove), so no post-pass sort is needed.
 
 // Global pointer for param sorting (qsort doesn't support context)
 static BlobGen *g_sort_bg = NULL;
@@ -966,20 +1217,28 @@ typedef struct { uint32_t idx; uint16_t count; } IdxCount;
 
 static IdxCount collect_params_from_node(BlobGen *bg, CommandNode *node) {
     IdxCount result = {0, 0};
+    if (bg->error || blobgen_strtab_error(bg)) return result;
     if (node->params_count == 0) return result;
+
+    if (node->params_count > 65535) {
+        fcmp_errorf("Too many params in one command: %zu (max 65535)\n", node->params_count);
+        bg->error = true;
+        return result;
+    }
 
     uint32_t start_idx = (uint32_t)bg->params_count;
     for (size_t i = 0; i < node->params_count; i++) {
         if (bg->params_count >= bg->params_cap) {
             bg->params_cap *= 2;
-            bg->params = realloc(bg->params, bg->params_cap * sizeof(ParamEntry));
+            ParamEntry *next = realloc(bg->params, bg->params_cap * sizeof(ParamEntry));
+            if (!next) {
+                fcmp_perror("realloc");
+                bg->error = true;
+                return result;
+            }
+            bg->params = next;
         }
         bg->params[bg->params_count++] = node->params[i];
-    }
-
-    if (node->params_count > 65535) {
-        fprintf(stderr, "Too many params in one command: %zu (max 65535)\n", node->params_count);
-        return result;
     }
 
     // Params are sorted alphabetically within each depth level, with inheritance order preserved
@@ -994,16 +1253,28 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node);
 
 static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     IdxCount result = {0, 0};
+    if (bg->error || blobgen_strtab_error(bg)) return result;
     if (node->children_count == 0) return result;
+    if (node->children_count > 65535) {
+        fcmp_errorf("Too many subcommands in one command: %zu (max 65535)\n", node->children_count);
+        bg->error = true;
+        return result;
+    }
 
     typedef struct {
         uint32_t name_off, desc_off, params_idx, subcommands_idx;
         uint16_t params_count, subcommands_count;
     } ChildData;
 
+    if (node->children_count > SIZE_MAX / sizeof(ChildData)) {
+        fcmp_errorf("Too many subcommands (overflow)\n");
+        bg->error = true;
+        return result;
+    }
     ChildData *child_data = malloc(node->children_count * sizeof(ChildData));
     if (!child_data) {
-        fprintf(stderr, "malloc failed in collect_commands\n");
+        fcmp_errorf("malloc failed in collect_commands\n");
+        bg->error = true;
         return result;
     }
 
@@ -1012,24 +1283,49 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
 
         // Add name BEFORE recursing (pre-order) for subtree clustering
         child_data[i].name_off = strtab_add_nodupe(&bg->cmd_strtab, child->name);
+        if (bg->cmd_strtab.error) {
+            bg->error = true;
+            free(child_data);
+            return result;
+        }
 
         // Recurse into children
         IdxCount sub_result = collect_commands(bg, child);
+        if (bg->error || blobgen_strtab_error(bg)) {
+            free(child_data);
+            return result;
+        }
         child_data[i].subcommands_idx = sub_result.idx;
         child_data[i].subcommands_count = sub_result.count;
 
         // Collect params
         IdxCount params_result = collect_params_from_node(bg, child);
+        if (bg->error || blobgen_strtab_error(bg)) {
+            free(child_data);
+            return result;
+        }
         child_data[i].params_idx = params_result.idx;
         child_data[i].params_count = params_result.count;
         child_data[i].desc_off = strtab_add_desc(bg, child->description);
+        if (blobgen_strtab_error(bg)) {
+            bg->error = true;
+            free(child_data);
+            return result;
+        }
     }
 
     uint32_t start_idx = (uint32_t)bg->commands_count;
     for (size_t i = 0; i < node->children_count; i++) {
         if (bg->commands_count >= bg->commands_cap) {
             bg->commands_cap *= 2;
-            bg->commands = realloc(bg->commands, bg->commands_cap * sizeof(CommandEntry));
+            CommandEntry *next = realloc(bg->commands, bg->commands_cap * sizeof(CommandEntry));
+            if (!next) {
+                fcmp_perror("realloc");
+                bg->error = true;
+                free(child_data);
+                return result;
+            }
+            bg->commands = next;
         }
         CommandEntry *ce = &bg->commands[bg->commands_count++];
         ce->name_off = child_data[i].name_off;
@@ -1041,12 +1337,7 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     }
     free(child_data);
     result.idx = start_idx;
-    if (node->children_count > 65535) {
-        fprintf(stderr, "Too many subcommands in one command: %zu (max 65535)\n", node->children_count);
-        result.count = 65535;
-    } else {
-        result.count = (uint16_t)node->children_count;
-    }
+    result.count = (uint16_t)node->children_count;
     return result;
 }
 
@@ -1136,7 +1427,7 @@ static void token_list_free(TokenList *tl) {
 // Returns false on error (unmatched delimiters)
 static bool tokenize_line(const char *line, TokenList *tl, const char *path, int line_num) {
     if (!token_list_init_checked(tl)) {
-        perror("malloc");
+        fcmp_perror("malloc");
         return false;
     }
     const char *p = line;
@@ -1154,7 +1445,7 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             // Trim trailing whitespace
             while (len > 0 && (p[len-1] == ' ' || p[len-1] == '\t' || p[len-1] == '\r' || p[len-1] == '\n')) len--;
             if (!token_list_add(tl, TOK_DESC, p, len)) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
@@ -1212,12 +1503,12 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
                 p++;
             }
             if (*p != ')') {
-                fprintf(stderr, "%s:%d: error: unmatched '(' in choices\n", path, line_num);
+                fcmp_errorf("%s:%d: error: unmatched '(' in choices\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
             if (!token_list_add(tl, TOK_CHOICES, start, p - start)) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
@@ -1276,12 +1567,12 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
                 p++;
             }
             if (*p != '}') {
-                fprintf(stderr, "%s:%d: error: unmatched '{' in members\n", path, line_num);
+                fcmp_errorf("%s:%d: error: unmatched '{' in members\n", path, line_num);
                 token_list_free(tl);
                 return false;
             }
             if (!token_list_add(tl, TOK_MEMBERS, start, p - start)) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
@@ -1295,7 +1586,7 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             size_t cap = strlen(p) + 1;
             char *buf = malloc(cap);
             if (!buf) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
@@ -1322,7 +1613,7 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
                 buf[len++] = *p++;
             }
             if (*p != '`' || escaped) {
-                fprintf(stderr, "%s:%d: error: unmatched '`' in completer\n", path, line_num);
+                fcmp_errorf("%s:%d: error: unmatched '`' in completer\n", path, line_num);
                 free(buf);
                 token_list_free(tl);
                 return false;
@@ -1332,7 +1623,7 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             const char *end = buf + len;
             trim_ws_span(&start, &end);
             if (!token_list_add(tl, TOK_COMPLETER, start, (size_t)(end - start))) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 free(buf);
                 token_list_free(tl);
                 return false;
@@ -1350,14 +1641,14 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
             size_t len = p - start;
             if (len == 5 && strncmp(start, "@bool", 5) == 0) {
                 if (!token_list_add(tl, TOK_BOOL, "bool", 4)) {
-                    perror("malloc");
+                    fcmp_perror("malloc");
                     token_list_free(tl);
                     return false;
                 }
             } else {
                 // Unknown @ keyword, treat as word
                 if (!token_list_add(tl, TOK_WORD, start, len)) {
-                    perror("malloc");
+                    fcmp_perror("malloc");
                     token_list_free(tl);
                     return false;
                 }
@@ -1370,7 +1661,7 @@ static bool tokenize_line(const char *line, TokenList *tl, const char *path, int
         while (*p && *p != ' ' && *p != '\t' && *p != '#' && *p != '(' && *p != '{' && *p != '`') p++;
         if (p > start) {
             if (!token_list_add(tl, TOK_WORD, start, p - start)) {
-                perror("malloc");
+                fcmp_perror("malloc");
                 token_list_free(tl);
                 return false;
             }
@@ -1386,6 +1677,45 @@ static void trim_trailing(char *s) {
     while (len > 0 && (s[len-1] == ' ' || s[len-1] == '\t' || s[len-1] == '\r' || s[len-1] == '\n')) {
         s[--len] = '\0';
     }
+}
+
+static uint32_t count_completer_tokens_u32(const char *s) {
+    if (!s || !*s) return 0;
+    uint32_t count = 0;
+    const char *p = s;
+    while (*p) {
+        while (*p == ' ' || *p == '\t') p++;
+        if (!*p) break;
+        if (count == UINT32_MAX) return UINT32_MAX;
+        count++;
+
+        while (*p && *p != ' ' && *p != '\t') {
+            if (*p == '\'') {
+                p++;
+                while (*p && *p != '\'') p++;
+                if (*p == '\'') p++;
+                continue;
+            }
+            if (*p == '"') {
+                p++;
+                while (*p && *p != '"') {
+                    if (*p == '\\' && p[1] != '\0') {
+                        p += 2;
+                        continue;
+                    }
+                    p++;
+                }
+                if (*p == '"') p++;
+                continue;
+            }
+            if (*p == '\\' && p[1] != '\0') {
+                p += 2;
+                continue;
+            }
+            p++;
+        }
+    }
+    return count;
 }
 
 // Parse option spec and extract long/short options
@@ -1404,7 +1734,7 @@ static bool parse_option_spec(const char *spec, char **long_opt, char **short_op
         return false;
     }
     char *saveptr;
-    char *token = strtok_r(copy, "|", &saveptr);
+    char *token = fcmp_strtok_r(copy, "|", &saveptr);
     while (token) {
         size_t len = strlen(token);
         if (len >= 2 && token[0] == '-') {
@@ -1432,7 +1762,7 @@ static bool parse_option_spec(const char *spec, char **long_opt, char **short_op
                 }
             }
         }
-        token = strtok_r(NULL, "|", &saveptr);
+        token = fcmp_strtok_r(NULL, "|", &saveptr);
     }
     free(copy);
     return true;
@@ -1446,6 +1776,8 @@ static bool parse_option_spec(const char *spec, char **long_opt, char **short_op
 //
 // Tokens: option_spec [@bool | (choices) | {members} | `completer`] [# description]
 static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current_cmd, const char *path, int line_num) {
+    if (bg->error || blobgen_strtab_error(bg)) return false;
+
     TokenList tl;
     if (!tokenize_line(line, &tl, path, line_num)) {
         return false;
@@ -1466,13 +1798,13 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     char *short_opt = NULL;
     const char *opt_err = NULL;
     if (!parse_option_spec(tl.tokens[0].value, &long_opt, &short_opt, &opt_err)) {
-        fprintf(stderr, "%s:%d: error: %s in option spec '%s'\n",
+        fcmp_errorf("%s:%d: error: %s in option spec '%s'\n",
                 path, line_num, opt_err ? opt_err : "invalid option", tl.tokens[0].value);
         token_list_free(&tl);
         return false;
     }
     if (!long_opt && !short_opt) {
-        fprintf(stderr, "%s:%d: error: invalid option spec '%s'\n", path, line_num, tl.tokens[0].value);
+        fcmp_errorf("%s:%d: error: invalid option spec '%s'\n", path, line_num, tl.tokens[0].value);
         token_list_free(&tl);
         return false;
     }
@@ -1483,6 +1815,11 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     pe.desc_off = 0;
     pe.flags = 0;
     pe.choices_idx = (uint32_t)-1;
+    if (blobgen_strtab_error(bg)) {
+        bg->error = true;
+        token_list_free(&tl);
+        return false;
+    }
 
     bool is_bool = false;
     bool has_type = false;
@@ -1507,11 +1844,21 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 break;
             }
             case TOK_MEMBERS: {
-                // Wrap in braces for add_members_from_string (stack buffer, bounded by line length)
-                char wrapped[MAX_LINE_LEN + 3];
-                snprintf(wrapped, sizeof(wrapped), "{%s}", t->value);
                 size_t idx = (size_t)-1;
-                if (!add_members_from_string(bg, wrapped, path, line_num, &idx)) {
+                size_t vlen = strlen(t->value);
+                char *wrapped = malloc(vlen + 3);
+                if (!wrapped) {
+                    fcmp_perror("malloc");
+                    token_list_free(&tl);
+                    return false;
+                }
+                wrapped[0] = '{';
+                memcpy(wrapped + 1, t->value, vlen);
+                wrapped[vlen + 1] = '}';
+                wrapped[vlen + 2] = '\0';
+                bool ok = add_members_from_string(bg, wrapped, path, line_num, &idx);
+                free(wrapped);
+                if (!ok) {
                     token_list_free(&tl);
                     return false;
                 }
@@ -1521,6 +1868,16 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                 break;
             }
             case TOK_COMPLETER:
+                {
+                    uint32_t tok_count = count_completer_tokens_u32(t->value);
+                    if (tok_count > UINT16_MAX) {
+                        fcmp_errorf("%s:%d: error: completer has too many arguments (%u > %u)\n",
+                                   path, line_num, tok_count, (unsigned)UINT16_MAX);
+                        token_list_free(&tl);
+                        return false;
+                    }
+                    if (tok_count > bg->max_completer_tokens) bg->max_completer_tokens = tok_count;
+                }
                 pe.choices_idx = strtab_add(&bg->choice_strtab, t->value);
                 pe.flags |= FLAG_IS_COMPLETER | FLAG_TAKES_VALUE;
                 has_type = true;
@@ -1536,7 +1893,7 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
 
     // Validation: @bool cannot combine with choices/members/completer
     if (is_bool && (pe.flags & (FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER))) {
-        fprintf(stderr, "%s:%d: warning: @bool cannot combine with choices/members/completer; ignoring type specifier\n",
+        fcmp_warnf("%s:%d: warning: @bool cannot combine with choices/members/completer; ignoring type specifier\n",
                 path, line_num);
         pe.flags &= ~(FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER);
         pe.choices_idx = (uint32_t)-1;
@@ -1548,7 +1905,11 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     }
 
     if (current_cmd) {
-        node_add_param(current_cmd, &pe);
+        if (!node_add_param(current_cmd, &pe)) {
+            bg->error = true;
+            token_list_free(&tl);
+            return false;
+        }
     }
 
     token_list_free(&tl);
@@ -1557,23 +1918,24 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
 
 // Load file contents
 static char *load_file(const char *path) {
-    FILE *f = fopen(path, "r");
-    if (!f) { perror(path); return NULL; }
-    if (fseek(f, 0, SEEK_END) != 0) { perror(path); fclose(f); return NULL; }
+    // Use binary mode to avoid newline translation (notably on Windows).
+    FILE *f = fopen(path, "rb");
+    if (!f) { fcmp_perror(path); return NULL; }
+    if (fseek(f, 0, SEEK_END) != 0) { fcmp_perror(path); fclose(f); return NULL; }
     long size = ftell(f);
-    if (size < 0) { perror("ftell"); fclose(f); return NULL; }
-    if (fseek(f, 0, SEEK_SET) != 0) { perror(path); fclose(f); return NULL; }
+    if (size < 0) { fcmp_perror("ftell"); fclose(f); return NULL; }
+    if (fseek(f, 0, SEEK_SET) != 0) { fcmp_perror(path); fclose(f); return NULL; }
     if ((size_t)size > SIZE_MAX - 1) {
-        fprintf(stderr, "%s: file too large\n", path);
+        fcmp_errorf("%s: file too large\n", path);
         fclose(f);
         return NULL;
     }
     char *content = malloc((size_t)size + 1);
-    if (!content) { perror("malloc"); fclose(f); return NULL; }
+    if (!content) { fcmp_perror("malloc"); fclose(f); return NULL; }
     size_t nread = fread(content, 1, (size_t)size, f);
     if (nread != (size_t)size) {
-        if (ferror(f)) perror(path);
-        else fprintf(stderr, "%s: short read\n", path);
+        if (ferror(f)) fcmp_perror(path);
+        else fcmp_errorf("%s: short read\n", path);
         free(content);
         fclose(f);
         return NULL;
@@ -1583,7 +1945,7 @@ static char *load_file(const char *path) {
     return content;
 }
 
-// Main TSV parser - indentation-based format
+// Main schema parser - indentation-based format
 // First depth-0 command is the root/CLI name; its description is the root description
 // All subsequent commands are children of this root
 static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, char **out_root_desc) {
@@ -1608,14 +1970,14 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
 
         // Validation: leading spaces are forbidden
         if (line[0] == ' ') {
-            fprintf(stderr, "%s:%d: error: leading spaces not allowed, use tabs for indentation\n", path, line_num);
+            fcmp_errorf("%s:%d: error: leading spaces not allowed, use tabs for indentation\n", path, line_num);
             free(content);
             return false;
         }
 
         int tabs = count_leading_tabs(line);
         if (tabs >= MAX_DEPTH) {
-            fprintf(stderr, "%s:%d: error: indentation too deep (max depth %d)\n", path, line_num, MAX_DEPTH - 1);
+            fcmp_errorf("%s:%d: error: indentation too deep (max depth %d)\n", path, line_num, MAX_DEPTH - 1);
             free(content);
             return false;
         }
@@ -1633,26 +1995,26 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         if (content_start[0] == '-') {
             if (!seen_root) {
                 // Parameters before root command are not allowed
-                fprintf(stderr, "%s:%d: error: parameters must come after the root command; define them on the root command instead\n", path, line_num);
+                fcmp_errorf("%s:%d: error: parameters must come after the root command; define them on the root command instead\n", path, line_num);
                 free(content);
                 return false;
             }
             // Param at depth N belongs to command at depth N-1
             // (params are indented one level under their command)
             if (tabs == 0) {
-                fprintf(stderr, "%s:%d: error: parameter after root command must be indented\n", path, line_num);
+                fcmp_errorf("%s:%d: error: parameter after root command must be indented\n", path, line_num);
                 free(content);
                 return false;
             }
             if (tabs > current_depth + 1) {
-                fprintf(stderr, "%s:%d: error: parameter indentation (%d) too deep for current command depth (%d)\n",
+                fcmp_errorf("%s:%d: error: parameter indentation (%d) too deep for current command depth (%d)\n",
                         path, line_num, tabs, current_depth);
                 free(content);
                 return false;
             }
             CommandNode *target = stack[tabs - 1];
             if (!target) {
-                fprintf(stderr, "%s:%d: error: no command at depth %d for parameter\n", path, line_num, tabs - 1);
+                fcmp_errorf("%s:%d: error: no command at depth %d for parameter\n", path, line_num, tabs - 1);
                 free(content);
                 return false;
             }
@@ -1669,7 +2031,7 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         char c = content_start[0];
         if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
               (c >= '0' && c <= '9') || c == '_')) {
-            fprintf(stderr, "%s:%d: error: unexpected character '%c'; expected command name, parameter (--), or comment (#)\n",
+            fcmp_errorf("%s:%d: error: unexpected character '%c'; expected command name, parameter (--), or comment (#)\n",
                     path, line_num, c);
             free(content);
             return false;
@@ -1699,7 +2061,7 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         if (!seen_root) {
             // First depth-0 command is the root
             if (tabs != 0) {
-                fprintf(stderr, "%s:%d: error: first command must be at depth 0 (the root/CLI name)\n", path, line_num);
+                fcmp_errorf("%s:%d: error: first command must be at depth 0 (the root/CLI name)\n", path, line_num);
                 token_list_free(&cmd_tl);
                 free(content);
                 return false;
@@ -1710,22 +2072,34 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
             // Set root name and description
             free(root->name);
             root->name = strdup(cmd_name);
+            if (!root->name) {
+                fcmp_perror("strdup");
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
+            }
             if (cmd_desc && *cmd_desc && out_root_desc) {
                 *out_root_desc = strdup(cmd_desc);
+                if (!*out_root_desc) {
+                    fcmp_perror("strdup");
+                    token_list_free(&cmd_tl);
+                    free(content);
+                    return false;
+                }
             }
             stack[0] = root;
         } else {
             // Subsequent commands
             // Validation: indentation can only increase by 1
             if (tabs > current_depth + 1) {
-                fprintf(stderr, "%s:%d: error: indentation increased by more than 1 level (from %d to %d)\n",
+                fcmp_errorf("%s:%d: error: indentation increased by more than 1 level (from %d to %d)\n",
                         path, line_num, current_depth, tabs);
                 token_list_free(&cmd_tl);
                 free(content);
                 return false;
             }
             if (tabs == 0) {
-                fprintf(stderr, "%s:%d: error: only one root command allowed; subsequent commands must be indented\n",
+                fcmp_errorf("%s:%d: error: only one root command allowed; subsequent commands must be indented\n",
                         path, line_num);
                 token_list_free(&cmd_tl);
                 free(content);
@@ -1737,20 +2111,29 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
             // Get parent node
             CommandNode *parent = stack[tabs - 1];
             if (!parent) {
-                fprintf(stderr, "%s:%d: error: no parent command at depth %d\n", path, line_num, tabs - 1);
+                fcmp_errorf("%s:%d: error: no parent command at depth %d\n", path, line_num, tabs - 1);
                 token_list_free(&cmd_tl);
                 free(content);
                 return false;
             }
 
             // Get or create child node
-            CommandNode *node = node_get_child(parent, cmd_name);
+            CommandNode *node = node_get_or_add_child(parent, cmd_name);
             if (!node) {
-                node = node_add_child(parent, cmd_name);
+                fcmp_errorf("%s:%d: error: out of memory\n", path, line_num);
+                token_list_free(&cmd_tl);
+                free(content);
+                return false;
             }
             if (cmd_desc && *cmd_desc) {
                 free(node->description);
                 node->description = strdup(cmd_desc);
+                if (!node->description) {
+                    fcmp_perror("strdup");
+                    token_list_free(&cmd_tl);
+                    free(content);
+                    return false;
+                }
             }
             stack[tabs] = node;
 
@@ -1773,7 +2156,7 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
     }
 
     if (!seen_root) {
-        fprintf(stderr, "%s: error: no root command found\n", path);
+        fcmp_errorf("%s: error: no root command found\n", path);
         free(content);
         return false;
     }
@@ -1782,6 +2165,8 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
 
     // Sort params alphabetically within each depth level
     sort_node_params(bg, root);
+
+    if (bg->error || blobgen_strtab_error(bg)) return false;
 
     return true;
 }
@@ -1839,34 +2224,83 @@ static inline size_t align4(size_t v) {
 bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
     BlobGen bg;
     blobgen_init(&bg, big_endian, desc_mode, desc_max_len);
+    if (bg.error) return false;
 
     CommandNode *root = node_create("");
+    if (!root) return false;
     char *root_desc = NULL;
+    uint32_t cli_name_off = 0;
 
     if (!parse_tsv_schema(schema_path, &bg, root, &root_desc)) {
         node_free(root);
         blobgen_free(&bg);
         return false;
     }
+    if (blobgen_strtab_error(&bg)) {
+        node_free(root);
+        blobgen_free(&bg);
+        free(root_desc);
+        return false;
+    }
 
-    sort_children(root);
+    // Store the schema root/CLI name in the blob header (used to validate runtime calls and
+    // to constrain dynamic completer execution).
+    if (root->name && root->name[0]) {
+        cli_name_off = strtab_add(&bg.cmd_strtab, root->name);
+        if (cli_name_off == 0) {
+            fcmp_errorf("Failed to store CLI name in string table\n");
+            node_free(root);
+            blobgen_free(&bg);
+            free(root_desc);
+            return false;
+        }
+    } else {
+        fcmp_errorf("%s: error: root command name missing\n", schema_path);
+        node_free(root);
+        blobgen_free(&bg);
+        free(root_desc);
+        return false;
+    }
+    if (blobgen_strtab_error(&bg)) {
+        node_free(root);
+        blobgen_free(&bg);
+        free(root_desc);
+        return false;
+    }
 
     IdxCount top_level = collect_commands(&bg, root);
 
     // Collect root's own params (these inherit to all children, so they're the "global" params)
     IdxCount root_params = collect_params_from_node(&bg, root);
 
+    if (bg.error || blobgen_strtab_error(&bg)) {
+        node_free(root);
+        blobgen_free(&bg);
+        free(root_desc);
+        return false;
+    }
+
     // Root description
     uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc ? root_desc : "CLI", false);
+    if (blobgen_strtab_error(&bg)) {
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        return false;
+    }
 
     // Check for integer overflow in counts
     if (bg.commands_count > 65535) {
-        fprintf(stderr, "Too many commands: %zu (max 65535)\n", bg.commands_count);
+        fcmp_errorf("Too many commands: %zu (max 65535)\n", bg.commands_count);
         node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
     if (bg.params_count > 16777215) {
-        fprintf(stderr, "Too many params: %zu (max 16777215)\n", bg.params_count);
+        fcmp_errorf("Too many params: %zu (max 16777215)\n", bg.params_count);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        return false;
+    }
+    if (bg.max_completer_tokens > UINT16_MAX) {
+        fcmp_errorf("Max completer args too large: %u (max %u)\n",
+                    bg.max_completer_tokens, (unsigned)UINT16_MAX);
         node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
@@ -1878,7 +2312,7 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     size_t desc_len = bg.desc_strtab.data_len;
     size_t total_strtab_size = cmd_len + param_len + choice_len + desc_len;
     if (total_strtab_size > UINT32_MAX) {
-        fprintf(stderr, "String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
+        fcmp_errorf("String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
         node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
@@ -1894,7 +2328,17 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     for (size_t i = 0; i < bg.choices_count; i++) {
         size_t count = bg.choices_lists[i].count;
         if (count > 65535) {
-            fprintf(stderr, "Choice list %zu too large: %zu items (max 65535)\n", i, count);
+            fcmp_errorf("Choice list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (count > (SIZE_MAX - 4) / 4) {
+            fcmp_errorf("Choice list %zu too large (overflow)\n", i);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (choices_size > SIZE_MAX - (4 + count * 4)) {
+            fcmp_errorf("Choices section too large (overflow)\n");
             node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
@@ -1904,29 +2348,70 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     for (size_t i = 0; i < bg.members_count; i++) {
         size_t count = bg.members_lists[i].count;
         if (count > 65535) {
-            fprintf(stderr, "Member list %zu too large: %zu items (max 65535)\n", i, count);
+            fcmp_errorf("Member list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (count > (SIZE_MAX - 4) / 4) {
+            fcmp_errorf("Member list %zu too large (overflow)\n", i);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (members_size > SIZE_MAX - (4 + count * 4)) {
+            fcmp_errorf("Members section too large (overflow)\n");
             node_free(root); blobgen_free(&bg); free(root_desc);
             return false;
         }
         members_size += 4 + count * 4;
     }
 
-    uint32_t string_table_off = HEADER_SIZE;
-    uint32_t commands_off = (uint32_t)align4(string_table_off + total_strtab_size);
-    uint32_t params_off = (uint32_t)align4(commands_off + commands_size);
-    uint32_t choices_off = (uint32_t)align4(params_off + params_size);
-    uint32_t members_off = (uint32_t)align4(choices_off + choices_size);
-    uint32_t root_command_off = (uint32_t)align4(members_off + members_size);
-    size_t total_size = root_command_off + COMMAND_SIZE;
+    size_t string_table_off_sz = HEADER_SIZE;
+    size_t commands_off_sz = align4(string_table_off_sz + total_strtab_size);
+    size_t params_off_sz = align4(commands_off_sz + commands_size);
+    size_t choices_off_sz = align4(params_off_sz + params_size);
+    size_t members_off_sz = align4(choices_off_sz + choices_size);
+    size_t root_command_off_sz = align4(members_off_sz + members_size);
+    size_t total_size = root_command_off_sz + COMMAND_SIZE;
+    if (commands_off_sz > UINT32_MAX || params_off_sz > UINT32_MAX ||
+        choices_off_sz > UINT32_MAX || members_off_sz > UINT32_MAX ||
+        root_command_off_sz > UINT32_MAX || total_size > UINT32_MAX) {
+        fcmp_errorf("Blob too large: %zu bytes (max 4GB)\n", total_size);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        return false;
+    }
 
-    uint32_t *choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
+    uint32_t string_table_off = (uint32_t)string_table_off_sz;
+    uint32_t commands_off = (uint32_t)commands_off_sz;
+    uint32_t params_off = (uint32_t)params_off_sz;
+    uint32_t choices_off = (uint32_t)choices_off_sz;
+    uint32_t members_off = (uint32_t)members_off_sz;
+    uint32_t root_command_off = (uint32_t)root_command_off_sz;
+
+    uint32_t *choices_offsets = NULL;
+    if (bg.choices_count) {
+        choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
+        if (!choices_offsets) {
+            fcmp_perror("malloc");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+    }
     uint32_t offset = choices_off;
     for (size_t i = 0; i < bg.choices_count; i++) {
         choices_offsets[i] = offset;
         size_t count = bg.choices_lists[i].count;
         offset += 4 + (uint32_t)count * 4;
     }
-    uint32_t *members_offsets = malloc(bg.members_count * sizeof(uint32_t));
+    uint32_t *members_offsets = NULL;
+    if (bg.members_count) {
+        members_offsets = malloc(bg.members_count * sizeof(uint32_t));
+        if (!members_offsets) {
+            fcmp_perror("malloc");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            free(choices_offsets);
+            return false;
+        }
+    }
     offset = members_off;
     for (size_t i = 0; i < bg.members_count; i++) {
         members_offsets[i] = offset;
@@ -1935,6 +2420,12 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     }
 
     uint8_t *blob = calloc(1, total_size);
+    if (!blob) {
+        fcmp_perror("calloc");
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(choices_offsets); free(members_offsets);
+        return false;
+    }
     memcpy(blob, BLOB_MAGIC, 4);
     write_u16(blob + 4, BLOB_VERSION, big_endian);
     uint16_t flags = 0;
@@ -1953,6 +2444,8 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     write_u32(blob + 44, choices_off, big_endian);
     write_u32(blob + 48, members_off, big_endian);
     write_u32(blob + 52, root_command_off, big_endian);
+    write_u32(blob + 56, cli_name_off, big_endian);
+    write_u32(blob + 60, bg.max_completer_tokens, big_endian);
 
     // Write string tables in order: commands, params, choices, descriptions
     uint32_t st_off = string_table_off;
@@ -2061,25 +2554,26 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
 
     FILE *out = fopen(output_path, "wb");
     if (!out) {
-        perror(output_path);
+        fcmp_perror(output_path);
         node_free(root); blobgen_free(&bg); free(root_desc);
         free(blob); free(choices_offsets); free(members_offsets);
         return false;
     }
     if (fwrite(blob, 1, total_size, out) != total_size) {
-        perror(output_path);
+        fcmp_perror(output_path);
+        fclose(out);
         node_free(root); blobgen_free(&bg); free(root_desc);
         free(blob); free(choices_offsets); free(members_offsets);
         return false;
     }
     fclose(out);
 
-    fprintf(stderr, "Generated %s (%zu bytes)\n", output_path, total_size);
-    fprintf(stderr, "  Commands: %zu\n", bg.commands_count);
-    fprintf(stderr, "  Params: %zu\n", bg.params_count);
-    fprintf(stderr, "  Choices lists: %zu\n", bg.choices_count);
-    fprintf(stderr, "  Members lists: %zu\n", bg.members_count);
-    fprintf(stderr, "  String table: %zu bytes (cmds: %zu, params: %zu, choices: %zu, descs: %zu)\n",
+    fcmp_infof("Generated %s (%zu bytes)\n", output_path, total_size);
+    fcmp_infof("  Commands: %zu\n", bg.commands_count);
+    fcmp_infof("  Params: %zu\n", bg.params_count);
+    fcmp_infof("  Choices lists: %zu\n", bg.choices_count);
+    fcmp_infof("  Members lists: %zu\n", bg.members_count);
+    fcmp_infof("  String table: %zu bytes (cmds: %zu, params: %zu, choices: %zu, descs: %zu)\n",
             total_strtab_size, cmd_len, param_len, choice_len, desc_len);
 
     free(blob); free(choices_offsets); free(members_offsets);
@@ -2090,11 +2584,17 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
 bool lint_schema(const char *schema_path) {
     BlobGen bg;
     blobgen_init(&bg, false, DESC_SHORT, 0);
+    if (bg.error) return false;
 
     CommandNode *root = node_create("");
+    if (!root) {
+        blobgen_free(&bg);
+        return false;
+    }
     char *root_desc = NULL;
 
     bool ok = parse_tsv_schema(schema_path, &bg, root, &root_desc);
+    if (ok && blobgen_strtab_error(&bg)) ok = false;
 
     node_free(root);
     blobgen_free(&bg);
