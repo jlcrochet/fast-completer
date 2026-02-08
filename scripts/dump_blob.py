@@ -25,21 +25,36 @@ from pathlib import Path
 
 # Binary format constants (must match generate_blob.c)
 MAGIC = b'FCMP'
-VERSION = 12
+VERSION = 14
 HEADER_SIZE = 64
 PARAM_SIZE = 20
 COMMAND_SIZE = 20
-HEADER_FORMAT = '4sHHIIIIIIIIIIIIII'
+SECTION_ENTRY_SIZE = 20
+HEADER_FORMAT = '<4sHHHHIIIIIIIIIIIII'
 assert struct.calcsize(HEADER_FORMAT) == HEADER_SIZE, "header format out of sync with C code"
 
+# Sections
+SECTION_STRINGS_HOT = 1
+SECTION_STRINGS_COLD = 2
+SECTION_COMMANDS = 3
+SECTION_PARAMS = 4
+SECTION_CHOICES = 5
+SECTION_MEMBERS = 6
+SECTION_ROOT = 7
+SECTION_OPTION_LONG = 8
+SECTION_OPTION_SHORT = 9
+
 # Param flags
-FLAG_TAKES_VALUE  = 0x01
-FLAG_IS_MEMBERS   = 0x02
-FLAG_IS_COMPLETER = 0x04
+FLAG_TAKES_VALUE = 0x01
+
+# Param value kinds
+VALUE_KIND_NONE = 0
+VALUE_KIND_CHOICES = 1
+VALUE_KIND_MEMBERS = 2
+VALUE_KIND_COMPLETER = 3
 
 # Header flags
-HEADER_FLAG_BIG_ENDIAN = 0x01
-HEADER_FLAG_NO_DESCRIPTIONS = 0x02
+HEADER_FLAG_NO_DESCRIPTIONS = 0x01
 
 
 class BlobReader:
@@ -48,32 +63,15 @@ class BlobReader:
     def __init__(self, data):
         self.data = data
         self.header = None
-        self.endian = None
+        self.endian = "<"
         self._parse_header()
-
-    def _detect_endian(self):
-        if len(self.data) < 6:
-            raise ValueError("Blob too small to detect endianness")
-
-        ver_le = struct.unpack_from("<H", self.data, 4)[0]
-        ver_be = struct.unpack_from(">H", self.data, 4)[0]
-
-        if ver_le == VERSION and ver_be != VERSION:
-            return "<"
-        if ver_be == VERSION and ver_le != VERSION:
-            return ">"
-        if ver_le == VERSION and ver_be == VERSION:
-            # Should never happen for current VERSION, but keep a deterministic fallback.
-            return "<"
-        raise ValueError(f"Unsupported version bytes: {self.data[4:6].hex()}")
 
     def _parse_header(self):
         """Parse the blob header."""
         if len(self.data) < HEADER_SIZE:
             raise ValueError(f"Blob too small: {len(self.data)} bytes (need at least {HEADER_SIZE})")
 
-        self.endian = self._detect_endian()
-        values = struct.unpack_from(f'{self.endian}{HEADER_FORMAT}', self.data, 0)
+        values = struct.unpack_from(HEADER_FORMAT, self.data, 0)
 
         magic = values[0]
         if magic != MAGIC:
@@ -83,43 +81,67 @@ class BlobReader:
         if version != VERSION:
             raise ValueError(f"Unsupported version: {version} (expected {VERSION})")
 
-        # Sanity-check endianness flag for user clarity.
         flags = values[2]
-        flag_big_endian = bool(flags & HEADER_FLAG_BIG_ENDIAN)
-        if flag_big_endian and self.endian != ">":
-            print("Warning: big-endian flag set but detected little-endian byte order", file=sys.stderr)
-        if (not flag_big_endian) and self.endian != "<":
-            print("Warning: big-endian flag not set but detected big-endian byte order", file=sys.stderr)
-
         self.header = {
             'magic': magic.decode('ascii'),
             'version': version,
-            'flags': values[2],
-            'max_command_path_len': values[3],
-            'command_count': values[4],
-            'param_count': values[5],
-            'string_table_size': values[6],
-            'choices_count': values[7],
-            'members_count': values[8],
-            'string_table_off': values[9],
-            'commands_off': values[10],
-            'params_off': values[11],
-            'choices_off': values[12],
-            'members_off': values[13],
-            'root_command_off': values[14],
-            'cli_name_off': values[15],
-            'max_completer_tokens': values[16],
+            'flags': flags,
+            'section_count': values[3],
+            'section_dir_off': values[5],
+            'command_count': values[6],
+            'param_count': values[7],
+            'cli_name_off': values[8],
+            'max_command_path_len': values[9],
+            'max_completer_tokens': values[10],
         }
 
-    def get_string(self, offset):
-        """Decode a VLQ length-prefixed string from the string table."""
+        sections = {}
+        sec_count = self.header['section_count']
+        sec_dir_off = self.header['section_dir_off']
+        if sec_count <= 0:
+            raise ValueError("Invalid section_count: 0")
+        if sec_dir_off + sec_count * SECTION_ENTRY_SIZE > len(self.data):
+            raise ValueError("Section directory out of bounds")
+
+        for i in range(sec_count):
+            off = sec_dir_off + i * SECTION_ENTRY_SIZE
+            sid, soff, ssize, esize, sflags = struct.unpack_from("<IIIII", self.data, off)
+            if soff + ssize > len(self.data):
+                raise ValueError(f"Section {sid} out of bounds")
+            sections[sid] = {
+                "off": soff,
+                "size": ssize,
+                "entry_size": esize,
+                "flags": sflags,
+            }
+        self.header['sections'] = sections
+        self.header['has_descriptions'] = not bool(flags & HEADER_FLAG_NO_DESCRIPTIONS)
+
+        # Required sections
+        for sid in (SECTION_STRINGS_HOT, SECTION_COMMANDS, SECTION_PARAMS,
+                    SECTION_CHOICES, SECTION_MEMBERS, SECTION_ROOT,
+                    SECTION_OPTION_LONG):
+            if sid not in sections:
+                raise ValueError(f"Missing required section id {sid}")
+
+        self.header['hot_strings_off'] = sections[SECTION_STRINGS_HOT]['off']
+        self.header['hot_strings_size'] = sections[SECTION_STRINGS_HOT]['size']
+        self.header['cold_strings_off'] = sections.get(SECTION_STRINGS_COLD, {}).get('off', 0)
+        self.header['cold_strings_size'] = sections.get(SECTION_STRINGS_COLD, {}).get('size', 0)
+        self.header['commands_off'] = sections[SECTION_COMMANDS]['off']
+        self.header['params_off'] = sections[SECTION_PARAMS]['off']
+        self.header['choices_off'] = sections[SECTION_CHOICES]['off']
+        self.header['members_off'] = sections[SECTION_MEMBERS]['off']
+        self.header['root_command_off'] = sections[SECTION_ROOT]['off']
+
+    def _decode_string(self, section_off, section_size, offset):
         if offset == 0:
             return ""
-
-        str_table_start = self.header['string_table_off']
-        pos = str_table_start + offset
+        pos = section_off + offset
 
         if pos >= len(self.data):
+            return f"<invalid offset {offset}>"
+        if offset >= section_size:
             return f"<invalid offset {offset}>"
 
         first_byte = self.data[pos]
@@ -137,12 +159,22 @@ class BlobReader:
 
         return self.data[start:start + length].decode('utf-8', errors='replace')
 
+    def get_string(self, offset):
+        """Decode a VLQ length-prefixed string from the hot string table."""
+        return self._decode_string(self.header['hot_strings_off'], self.header['hot_strings_size'], offset)
+
+    def get_desc(self, offset):
+        """Decode a VLQ length-prefixed string from the cold description table."""
+        if not self.header['has_descriptions']:
+            return ""
+        return self._decode_string(self.header['cold_strings_off'], self.header['cold_strings_size'], offset)
+
     def get_string_raw(self, offset):
         """Get string with metadata (offset, length, encoding bytes)."""
         if offset == 0:
             return {'offset': 0, 'length': 0, 'encoding_bytes': 1, 'value': ''}
 
-        str_table_start = self.header['string_table_off']
+        str_table_start = self.header['hot_strings_off']
         pos = str_table_start + offset
 
         if pos >= len(self.data):
@@ -185,32 +217,33 @@ class BlobReader:
 
     def read_param(self, offset):
         """Read a Param struct at the given offset."""
-        values = struct.unpack_from(f'{self.endian}IIIIBxxx', self.data, offset)
+        values = struct.unpack_from(f'{self.endian}IIIIBBxx', self.data, offset)
         return {
             'name_off': values[0],
             'short_off': values[1],
             'desc_off': values[2],
-            'choices_off': values[3],
-            'flags': values[4],
+            'value_ref': values[3],
+            'value_kind': values[4],
+            'flags': values[5],
         }
 
-    def read_string_offsets(self, offset):
+    def read_string_offsets(self, abs_offset):
         """Read a variable-length count-prefixed array of string offsets.
 
         Format: u8 count if <255, else 0xFF + u16 count, padded to 4 bytes,
         then count * u32 offsets.
         """
-        if offset >= len(self.data):
+        if abs_offset >= len(self.data):
             return []
-        first = self.data[offset]
+        first = self.data[abs_offset]
         if first < 255:
             count = first
-            pos = offset + 4
+            pos = abs_offset + 4
         else:
-            if offset + 4 > len(self.data):
+            if abs_offset + 4 > len(self.data):
                 return []
-            count = struct.unpack_from(f'{self.endian}H', self.data, offset + 1)[0]
-            pos = offset + 4
+            count = struct.unpack_from(f'{self.endian}H', self.data, abs_offset + 1)[0]
+            pos = abs_offset + 4
         offsets = []
         for _ in range(count):
             if pos + 4 > len(self.data):
@@ -229,7 +262,7 @@ class BlobReader:
         cmd['index'] = idx
         cmd['offset'] = offset
         cmd['name'] = self.get_string(cmd['name_off'])
-        cmd['description'] = self.get_string(cmd['desc_off'])
+        cmd['description'] = self.get_desc(cmd['desc_off'])
         return cmd
 
     def get_param_by_index(self, idx):
@@ -242,20 +275,27 @@ class BlobReader:
         param['offset'] = offset
         param['name'] = self.get_string(param['name_off'])
         param['short'] = self.get_string(param['short_off']) if param['short_off'] else None
-        param['description'] = self.get_string(param['desc_off'])
+        param['description'] = self.get_desc(param['desc_off'])
         param['takes_value'] = bool(param['flags'] & FLAG_TAKES_VALUE)
-        param['is_members'] = bool(param['flags'] & FLAG_IS_MEMBERS)
-        param['is_completer'] = bool(param['flags'] & FLAG_IS_COMPLETER)
-        if param['choices_off'] != 0:
-            if param['is_completer']:
-                # choices_off is a string table offset for completer
-                param['completer'] = self.get_string(param['choices_off'])
-                param['choices_or_members'] = None
-            else:
-                str_offsets = self.read_string_offsets(param['choices_off'])
+        param['is_members'] = (param['value_kind'] == VALUE_KIND_MEMBERS)
+        param['is_completer'] = (param['value_kind'] == VALUE_KIND_COMPLETER)
+        if param['value_kind'] == VALUE_KIND_COMPLETER and param['value_ref'] != 0:
+            param['completer'] = self.get_string(param['value_ref'])
+            param['choices_or_members'] = None
+        elif param['value_kind'] in (VALUE_KIND_CHOICES, VALUE_KIND_MEMBERS):
+            sec_off = self.header['members_off'] if param['is_members'] else self.header['choices_off']
+            sec_size = self.header['sections'][SECTION_MEMBERS if param['is_members'] else SECTION_CHOICES]['size']
+            list_count = struct.unpack_from("<I", self.data, sec_off)[0] if sec_size >= 4 else 0
+            if param['value_ref'] < list_count:
+                rel_off = struct.unpack_from("<I", self.data, sec_off + 4 + param['value_ref'] * 4)[0]
+                abs_off = sec_off + rel_off
+                str_offsets = self.read_string_offsets(abs_off)
                 param['choices_or_members'] = [self.get_string(off) for off in str_offsets]
                 param['choices_or_members_offsets'] = str_offsets
-                param['completer'] = None
+            else:
+                param['choices_or_members'] = []
+                param['choices_or_members_offsets'] = []
+            param['completer'] = None
         else:
             param['choices_or_members'] = None
             param['completer'] = None
@@ -284,7 +324,7 @@ class BlobReader:
         cmd = self.read_command(self.header['root_command_off'])
         cmd['offset'] = self.header['root_command_off']
         cmd['name'] = self.get_string(cmd['name_off'])
-        cmd['description'] = self.get_string(cmd['desc_off'])
+        cmd['description'] = self.get_desc(cmd['desc_off'])
         return cmd
 
     def find_command_by_path(self, path):
@@ -306,7 +346,7 @@ class BlobReader:
                     # Return the command info for the last part
                     if part == parts[-1]:
                         cmd['name'] = name
-                        cmd['description'] = self.get_string(cmd['desc_off'])
+                        cmd['description'] = self.get_desc(cmd['desc_off'])
                         cmd['offset'] = offset
                         cmd['index'] = (offset - self.header['commands_off']) // COMMAND_SIZE
                         return cmd
@@ -352,7 +392,7 @@ class BlobReader:
         for _ in range(count):
             cmd = self.read_command(offset)
             name = self.get_string(cmd['name_off'])
-            desc = self.get_string(cmd['desc_off'])
+            desc = self.get_desc(cmd['desc_off'])
             prefix = "  " * indent
             idx = (offset - self.header['commands_off']) // COMMAND_SIZE
 
@@ -370,16 +410,21 @@ class BlobReader:
                     flags = []
                     if param['flags'] & FLAG_TAKES_VALUE:
                         flags.append("takes_value")
-                    if param['choices_off'] != 0:
-                        if param['flags'] & FLAG_IS_COMPLETER:
-                            completer = self.get_string(param['choices_off'])
-                            flags.append(f"completer={completer!r}")
+                    if param['value_kind'] == VALUE_KIND_COMPLETER and param['value_ref'] != 0:
+                        completer = self.get_string(param['value_ref'])
+                        flags.append(f"completer={completer!r}")
+                    elif param['value_kind'] in (VALUE_KIND_CHOICES, VALUE_KIND_MEMBERS):
+                        sec_off = self.header['members_off'] if param['value_kind'] == VALUE_KIND_MEMBERS else self.header['choices_off']
+                        list_count = struct.unpack_from("<I", self.data, sec_off)[0]
+                        if param['value_ref'] < list_count:
+                            rel_off = struct.unpack_from("<I", self.data, sec_off + 4 + param['value_ref'] * 4)[0]
+                            str_offsets = self.read_string_offsets(sec_off + rel_off)
                         else:
-                            str_offsets = self.read_string_offsets(param['choices_off'])
-                            if param['flags'] & FLAG_IS_MEMBERS:
-                                flags.append(f"members({len(str_offsets)})")
-                            else:
-                                flags.append(f"choices({len(str_offsets)})")
+                            str_offsets = []
+                        if param['value_kind'] == VALUE_KIND_MEMBERS:
+                            flags.append(f"members({len(str_offsets)})")
+                        else:
+                            flags.append(f"choices({len(str_offsets)})")
                     flag_str = f" [{', '.join(flags)}]" if flags else ""
                     lines.append(f"{prefix}  {pname}{flag_str} [idx={pidx}]")
                     param_offset += PARAM_SIZE
@@ -416,7 +461,8 @@ def format_param(param, verbose=False):
     lines.append(f"  desc_off:    {param['desc_off']}")
     if verbose and param['description']:
         lines.append(f"               {param['description']!r}")
-    lines.append(f"  choices_off: {param['choices_off']}")
+    lines.append(f"  value_kind:  {param['value_kind']}")
+    lines.append(f"  value_ref:   {param['value_ref']}")
     is_completer = param.get('is_completer', False)
     lines.append(f"  flags:       0x{param['flags']:02x} (takes_value={param['takes_value']}, is_members={param['is_members']}, is_completer={is_completer})")
     if param.get('completer'):
@@ -438,8 +484,6 @@ def dump_text(reader, section=None):
         for key, value in reader.header.items():
             if key == 'flags':
                 flag_names = []
-                if value & HEADER_FLAG_BIG_ENDIAN:
-                    flag_names.append('big_endian')
                 if value & HEADER_FLAG_NO_DESCRIPTIONS:
                     flag_names.append('no_descriptions')
                 flag_str = ', '.join(flag_names) if flag_names else 'none'
@@ -490,7 +534,7 @@ def dump_text(reader, section=None):
                 extra_str = f" -> completer={param['completer']!r}"
             elif param['choices_or_members']:
                 extra_str = f" -> {param['choices_or_members'][:3]}{'...' if len(param['choices_or_members']) > 3 else ''}"
-            lines.append(f"[{param['index']:5d}] {flag_str:3s} choices_off={param['choices_off']:6d} "
+            lines.append(f"[{param['index']:5d}] {flag_str:3s} value_kind={param['value_kind']:1d} value_ref={param['value_ref']:6d} "
                          f"| {param['name']!r}{extra_str}")
         lines.append("")
 
@@ -679,7 +723,7 @@ Examples:
                 extra = ""
                 if param.get('completer'):
                     extra = f" -> completer={param['completer']!r}"
-                print(f"[{param['index']:5d}] {flags:3s} choices_off={param['choices_off']:6d} "
+                print(f"[{param['index']:5d}] {flags:3s} value_kind={param['value_kind']:1d} value_ref={param['value_ref']:6d} "
                       f"| {param['name']!r}{extra}")
         else:
             print(f"Unknown range type: {range_type}", file=sys.stderr)

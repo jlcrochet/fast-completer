@@ -80,24 +80,25 @@ typedef struct { const char *p; size_t n; } String;
 #define STR_EQ_LIT(s, lit) ((s).n == sizeof(lit) - 1 && memcmp((s).p, lit, sizeof(lit) - 1) == 0)
 
 static inline String str_get(uint32_t off);
+static inline String str_get_desc(uint32_t off);
 static void output_completion_ex(const char *prefix, size_t prefix_len,
                                  String value, String desc, CompletionType type);
 
 static inline void output_completion(String value, String desc, CompletionType type) {
     output_completion_ex(NULL, 0, value, desc, type);
 }
-#if defined(DEBUG) || defined(FCMP_VALIDATE_BLOB)
-static bool validate_blob(const char *path);
-#endif
+static bool validate_blob_quick(const char *path);
+static bool validate_blob_full(const char *path);
 
 // Structs matching binary format (4-byte aligned)
 typedef struct {
     uint32_t name_off;
-    uint32_t short_off;    // 0 if none, else offset into string table
+    uint32_t short_off;    // 0 if none, else offset into hot string table
     uint32_t desc_off;
-    uint32_t choices_off;  // 0 if none, else absolute offset into blob
-    uint8_t  flags;        // FLAG_TAKES_VALUE, FLAG_IS_MEMBERS
-    uint8_t  _pad[3];
+    uint32_t value_ref;    // list index or string offset, based on value_kind
+    uint8_t  value_kind;   // VALUE_KIND_*
+    uint8_t  flags;        // FLAG_TAKES_VALUE
+    uint8_t  _pad[2];
 } Param;
 
 typedef struct {
@@ -115,21 +116,47 @@ typedef char _assert_command_size[(sizeof(Command) == COMMAND_SIZE) ? 1 : -1];
 
 // Blob header (parsed at load time - only fields actually used)
 typedef struct {
+    uint16_t section_count;
+    uint32_t section_dir_off;
     uint32_t max_command_path_len;
     uint32_t command_count;
     uint32_t param_count;
-    uint32_t string_table_size;
-    uint32_t choices_count;
-    uint32_t members_count;
-    uint32_t string_table_off;
-    uint32_t commands_off;
-    uint32_t params_off;
-    uint32_t choices_off;
-    uint32_t members_off;
-    uint32_t root_command_off;
     uint32_t cli_name_off;
     uint32_t max_completer_tokens;
+    uint32_t hot_strings_off;
+    uint32_t hot_strings_size;
+    uint32_t cold_strings_off;
+    uint32_t cold_strings_size;
+    uint32_t commands_off;
+    uint32_t commands_size;
+    uint32_t params_off;
+    uint32_t params_size;
+    uint32_t choices_off;
+    uint32_t choices_size;
+    uint32_t members_off;
+    uint32_t members_size;
+    uint32_t root_command_off;
+    uint32_t root_command_size;
+    uint32_t option_long_off;
+    uint32_t option_long_size;
+    uint32_t option_short_off;
+    uint32_t option_short_size;
 } BlobHeader;
+
+typedef struct {
+    uint32_t start;
+    uint32_t count;
+} Slice32;
+
+typedef struct {
+    uint32_t param_idx;
+} LongIndexEntry;
+
+typedef struct {
+    uint8_t short_ch;
+    uint8_t _pad[3];
+    uint32_t param_idx;
+} ShortIndexEntry;
 
 // Global state
 static const uint8_t *blob = NULL;
@@ -140,6 +167,18 @@ static bool has_descriptions = true;  // Set from blob flags
 static bool add_trailing_space = false;  // Add trailing space to completion values
 static bool full_commands = false;       // Complete full leaf command paths instead of next level
 static bool quiet_mode = false;          // Suppress "blob not found" error (for fallback scripts)
+static uint32_t g_current_cmd_ref = 0;   // 0=root, n+1 => command index n
+
+// Pre-parsed index section pointers
+static const Slice32 *g_long_slices = NULL;
+static const LongIndexEntry *g_long_entries = NULL;
+static uint32_t g_long_cmd_refs = 0;
+static uint32_t g_long_total_entries = 0;
+
+static const Slice32 *g_short_slices = NULL;
+static const ShortIndexEntry *g_short_entries = NULL;
+static uint32_t g_short_cmd_refs = 0;
+static uint32_t g_short_total_entries = 0;
 
 // Working buffers (allocated based on header values)
 static char *path_buf = NULL;
@@ -502,21 +541,23 @@ static bool used_set_contains(const char *p, size_t n) {
 
 // Accessor macros
 #define PARAM_TAKES_VALUE(p)   ((p)->flags & FLAG_TAKES_VALUE)
-#define PARAM_IS_MEMBERS(p)    ((p)->flags & FLAG_IS_MEMBERS)
-#define PARAM_IS_COMPLETER(p)  ((p)->flags & FLAG_IS_COMPLETER)
-#define PARAM_HAS_CHOICES(p)   ((p)->choices_off && !((p)->flags & (FLAG_IS_MEMBERS | FLAG_IS_COMPLETER)))
-#define PARAM_HAS_MEMBERS(p)   ((p)->choices_off && ((p)->flags & FLAG_IS_MEMBERS))
-#define PARAM_HAS_COMPLETER(p) ((p)->choices_off && ((p)->flags & FLAG_IS_COMPLETER))
+#define PARAM_HAS_CHOICES(p)   ((p)->value_kind == VALUE_KIND_CHOICES)
+#define PARAM_HAS_MEMBERS(p)   ((p)->value_kind == VALUE_KIND_MEMBERS)
+#define PARAM_HAS_COMPLETER(p) ((p)->value_kind == VALUE_KIND_COMPLETER)
 
-// Get string from string table
-static inline String str_get(uint32_t off) {
+static inline String decode_string_at(const uint8_t *base, uint32_t off, uint32_t section_size) {
     String s;
     if (off == 0) {
         s.p = "";
         s.n = 0;
         return s;
     }
-    const uint8_t *p = blob + header.string_table_off + off;
+    if (off >= section_size) {
+        s.p = "";
+        s.n = 0;
+        return s;
+    }
+    const uint8_t *p = base + off;
     if (p[0] < 128) {
         s.n = p[0];
         s.p = (const char *)(p + 1);
@@ -525,6 +566,17 @@ static inline String str_get(uint32_t off) {
         s.p = (const char *)(p + 2);
     }
     return s;
+}
+
+// Get string from hot strings table
+static inline String str_get(uint32_t off) {
+    return decode_string_at(blob + header.hot_strings_off, off, header.hot_strings_size);
+}
+
+// Get string from cold description strings table
+static inline String str_get_desc(uint32_t off) {
+    if (!has_descriptions) return str_get(0);
+    return decode_string_at(blob + header.cold_strings_off, off, header.cold_strings_size);
 }
 
 // Get command by index
@@ -554,22 +606,46 @@ static inline const Command *cmd_subcommands(const Command *cmd) {
     return get_command(cmd->subcommands_idx);
 }
 
-// Read count-prefixed array of string offsets
+static inline uint32_t command_to_ref(const Command *cmd) {
+    if (!cmd) return 0;
+    const Command *root = get_root_command();
+    if (cmd == root) return 0;
+    const uint8_t *base = blob + header.commands_off;
+    const uint8_t *ptr = (const uint8_t *)cmd;
+    if (ptr < base) return 0;
+    size_t rel = (size_t)(ptr - base);
+    if (rel + COMMAND_SIZE > header.commands_size) return 0;
+    uint32_t idx = (uint32_t)(rel / COMMAND_SIZE);
+    return idx + 1;
+}
+
+static inline bool list_section_get(uint32_t section_off, uint32_t section_size, uint32_t index, uint32_t *out_list_off) {
+    if (!out_list_off || section_size < 4) return false;
+    uint32_t list_count = 0;
+    memcpy(&list_count, blob + section_off, sizeof(list_count));
+    if (index >= list_count) return false;
+    size_t table_off = (size_t)section_off + 4 + (size_t)index * 4;
+    if (table_off + 4 > (size_t)section_off + section_size) return false;
+    memcpy(out_list_off, blob + table_off, sizeof(*out_list_off));  // section-relative offset
+    if (*out_list_off >= section_size) return false;
+    return true;
+}
+
+// Read count-prefixed array of string offsets at absolute blob offset.
 // Format: u8 count if <255, else 0xFF + u16 count, padded to 4 bytes,
-// then count * u32 offsets
-static inline uint16_t get_string_list_count(uint32_t off) {
-    uint8_t first = blob[off];
+// then count * u32 hot-string offsets.
+static inline uint16_t get_string_list_count_abs(uint32_t abs_off) {
+    uint8_t first = blob[abs_off];
     if (first < 255) return first;
     uint16_t val;
-    memcpy(&val, blob + off + 1, sizeof(val));
+    memcpy(&val, blob + abs_off + 1, sizeof(val));
     return val;
 }
 
-static inline const uint32_t *get_string_offsets(uint32_t off) {
-    return (const uint32_t *)(blob + off + 4);
+static inline const uint32_t *get_string_offsets_abs(uint32_t abs_off) {
+    return (const uint32_t *)(blob + abs_off + 4);
 }
 
-#if defined(DEBUG) || defined(FCMP_VALIDATE_BLOB)
 static inline bool is_aligned4(uint32_t off) {
     return (off & 3u) == 0;
 }
@@ -578,19 +654,19 @@ static inline bool range_ok(size_t base, size_t len, size_t limit) {
     return base <= limit && len <= limit - base;
 }
 
-static bool decode_string_checked(uint32_t off, String *out) {
+static bool decode_hot_checked(uint32_t off, String *out) {
     if (!out) return false;
     if (off == 0) {
         out->p = "";
         out->n = 0;
         return true;
     }
-    if (header.string_table_off >= g_blob_size) return false;
-    if (!range_ok(header.string_table_off, header.string_table_size, g_blob_size)) return false;
-    if (off >= header.string_table_size) return false;
+    if (header.hot_strings_off >= g_blob_size) return false;
+    if (!range_ok(header.hot_strings_off, header.hot_strings_size, g_blob_size)) return false;
+    if (off >= header.hot_strings_size) return false;
 
-    size_t table_start = header.string_table_off;
-    size_t table_end = table_start + header.string_table_size;
+    size_t table_start = header.hot_strings_off;
+    size_t table_end = table_start + header.hot_strings_size;
     size_t abs_off = table_start + off;
     if (abs_off >= table_end) return false;
 
@@ -614,90 +690,124 @@ static bool decode_string_checked(uint32_t off, String *out) {
     return true;
 }
 
-static bool read_string_list_count_checked(uint32_t off, uint16_t *out_count, size_t section_end) {
-    if (!out_count) return false;
-    if (!range_ok(off, 4, section_end)) return false;
-    uint8_t first = blob[off];
-    if (first < 255) {
-        *out_count = first;
+static bool decode_cold_checked(uint32_t off, String *out) {
+    if (!out) return false;
+    if (off == 0) {
+        out->p = "";
+        out->n = 0;
         return true;
     }
-    uint16_t val;
-    memcpy(&val, blob + off + 1, sizeof(val));
-    *out_count = val;
+    if (!has_descriptions) return false;
+    if (header.cold_strings_off >= g_blob_size) return false;
+    if (!range_ok(header.cold_strings_off, header.cold_strings_size, g_blob_size)) return false;
+    if (off >= header.cold_strings_size) return false;
+
+    size_t table_start = header.cold_strings_off;
+    size_t table_end = table_start + header.cold_strings_size;
+    size_t abs_off = table_start + off;
+    if (abs_off >= table_end) return false;
+
+    const uint8_t *p = blob + abs_off;
+    size_t len;
+    size_t hdr;
+    if (p[0] < 128) {
+        len = p[0];
+        hdr = 1;
+    } else {
+        if (abs_off + 2 > table_end) return false;
+        len = ((p[0] & 0x7f) << 8) | p[1];
+        hdr = 2;
+    }
+    size_t str_start = abs_off + hdr;
+    if (str_start > table_end) return false;
+    if (len > table_end - str_start) return false;
+
+    out->p = (const char *)(blob + str_start);
+    out->n = len;
     return true;
 }
 
-static bool validate_blob(const char *path) {
+static bool validate_blob_quick(const char *path) {
     if (!range_ok(0, HEADER_SIZE, g_blob_size)) {
         fcmp_errorf("%s: invalid/corrupt blob: header truncated\n", path);
         return false;
     }
-    if (header.string_table_off < HEADER_SIZE) {
-        fcmp_errorf("%s: invalid/corrupt blob: string table offset before header\n", path);
+    if (header.section_count == 0) {
+        fcmp_errorf("%s: invalid/corrupt blob: missing section directory\n", path);
         return false;
     }
-    if (!range_ok(header.string_table_off, header.string_table_size, g_blob_size)) {
-        fcmp_errorf("%s: invalid/corrupt blob: string table out of bounds\n", path);
+    if (!range_ok(header.section_dir_off, (size_t)header.section_count * SECTION_ENTRY_SIZE, g_blob_size)) {
+        fcmp_errorf("%s: invalid/corrupt blob: section directory out of bounds\n", path);
         return false;
     }
-    if (!is_aligned4(header.string_table_off) ||
-        !is_aligned4(header.commands_off) ||
+    if (!range_ok(header.hot_strings_off, header.hot_strings_size, g_blob_size) ||
+        !range_ok(header.commands_off, header.commands_size, g_blob_size) ||
+        !range_ok(header.params_off, header.params_size, g_blob_size) ||
+        !range_ok(header.choices_off, header.choices_size, g_blob_size) ||
+        !range_ok(header.members_off, header.members_size, g_blob_size) ||
+        !range_ok(header.root_command_off, header.root_command_size, g_blob_size) ||
+        !range_ok(header.option_long_off, header.option_long_size, g_blob_size) ||
+        !range_ok(header.option_short_off, header.option_short_size, g_blob_size)) {
+        fcmp_errorf("%s: invalid/corrupt blob: section out of bounds\n", path);
+        return false;
+    }
+    if (has_descriptions && !range_ok(header.cold_strings_off, header.cold_strings_size, g_blob_size)) {
+        fcmp_errorf("%s: invalid/corrupt blob: cold strings section out of bounds\n", path);
+        return false;
+    }
+    if (!is_aligned4(header.commands_off) ||
         !is_aligned4(header.params_off) ||
         !is_aligned4(header.choices_off) ||
         !is_aligned4(header.members_off) ||
-        !is_aligned4(header.root_command_off)) {
+        !is_aligned4(header.root_command_off) ||
+        !is_aligned4(header.option_long_off) ||
+        !is_aligned4(header.option_short_off)) {
         fcmp_errorf("%s: invalid/corrupt blob: section offsets not 4-byte aligned\n", path);
-        return false;
-    }
-    if (!(header.string_table_off <= header.commands_off &&
-          header.commands_off <= header.params_off &&
-          header.params_off <= header.choices_off &&
-          header.choices_off <= header.members_off &&
-          header.members_off <= header.root_command_off)) {
-        fcmp_errorf("%s: invalid/corrupt blob: section offsets not monotonic\n", path);
-        return false;
-    }
-    if (!range_ok(header.root_command_off, COMMAND_SIZE, g_blob_size)) {
-        fcmp_errorf("%s: invalid/corrupt blob: root command out of bounds\n", path);
         return false;
     }
     if (header.command_count > 65535) {
         fcmp_errorf("%s: invalid/corrupt blob: command_count exceeds 65535\n", path);
         return false;
     }
-    if (header.command_count > SIZE_MAX / COMMAND_SIZE) {
-        fcmp_errorf("%s: invalid/corrupt blob: command section size overflow\n", path);
+    if (header.commands_size != (size_t)header.command_count * COMMAND_SIZE) {
+        fcmp_errorf("%s: invalid/corrupt blob: command section size mismatch\n", path);
         return false;
     }
-    size_t command_bytes = (size_t)header.command_count * COMMAND_SIZE;
-    if (!range_ok(header.commands_off, command_bytes, g_blob_size)) {
-        fcmp_errorf("%s: invalid/corrupt blob: command section out of bounds\n", path);
+    if (header.params_size != (size_t)header.param_count * PARAM_SIZE) {
+        fcmp_errorf("%s: invalid/corrupt blob: param section size mismatch\n", path);
         return false;
     }
-    if (header.param_count > SIZE_MAX / PARAM_SIZE) {
-        fcmp_errorf("%s: invalid/corrupt blob: param section size overflow\n", path);
+    if (header.root_command_size < COMMAND_SIZE) {
+        fcmp_errorf("%s: invalid/corrupt blob: root command section too small\n", path);
         return false;
     }
-    size_t param_bytes = (size_t)header.param_count * PARAM_SIZE;
-    if (!range_ok(header.params_off, param_bytes, g_blob_size)) {
-        fcmp_errorf("%s: invalid/corrupt blob: param section out of bounds\n", path);
+    if (g_long_cmd_refs != header.command_count + 1) {
+        fcmp_errorf("%s: invalid/corrupt blob: index section command ref count mismatch\n", path);
         return false;
     }
+    if (g_short_cmd_refs != 0 && g_short_cmd_refs != header.command_count + 1) {
+        fcmp_errorf("%s: invalid/corrupt blob: short index command ref count mismatch\n", path);
+        return false;
+    }
+    return true;
+}
+
+static bool validate_blob_full(const char *path) {
+    if (!validate_blob_quick(path)) return false;
 
     String cli_name;
-    if (!decode_string_checked(header.cli_name_off, &cli_name) || cli_name.n == 0) {
+    if (!decode_hot_checked(header.cli_name_off, &cli_name) || cli_name.n == 0) {
         fcmp_errorf("%s: invalid/corrupt blob: invalid cli name\n", path);
         return false;
     }
 
     const Command *root = get_root_command();
     String tmp;
-    if (!decode_string_checked(root->name_off, &tmp)) {
+    if (!decode_hot_checked(root->name_off, &tmp)) {
         fcmp_errorf("%s: invalid/corrupt blob: root command name out of bounds\n", path);
         return false;
     }
-    if (!decode_string_checked(root->desc_off, &tmp)) {
+    if (has_descriptions && !decode_cold_checked(root->desc_off, &tmp)) {
         fcmp_errorf("%s: invalid/corrupt blob: root command desc out of bounds\n", path);
         return false;
     }
@@ -714,11 +824,11 @@ static bool validate_blob(const char *path) {
 
     for (uint32_t i = 0; i < header.command_count; i++) {
         const Command *cmd = get_command(i);
-        if (!decode_string_checked(cmd->name_off, &tmp)) {
+        if (!decode_hot_checked(cmd->name_off, &tmp)) {
             fcmp_errorf("%s: invalid/corrupt blob: command name out of bounds\n", path);
             return false;
         }
-        if (!decode_string_checked(cmd->desc_off, &tmp)) {
+        if (has_descriptions && !decode_cold_checked(cmd->desc_off, &tmp)) {
             fcmp_errorf("%s: invalid/corrupt blob: command desc out of bounds\n", path);
             return false;
         }
@@ -736,70 +846,78 @@ static bool validate_blob(const char *path) {
 
     for (uint32_t i = 0; i < header.param_count; i++) {
         const Param *param = get_param(i);
-        if (!decode_string_checked(param->name_off, &tmp)) {
+        if (!decode_hot_checked(param->name_off, &tmp)) {
             fcmp_errorf("%s: invalid/corrupt blob: param name out of bounds\n", path);
             return false;
         }
-        if (!decode_string_checked(param->short_off, &tmp)) {
+        if (!decode_hot_checked(param->short_off, &tmp)) {
             fcmp_errorf("%s: invalid/corrupt blob: param short name out of bounds\n", path);
             return false;
         }
-        if (!decode_string_checked(param->desc_off, &tmp)) {
+        if (has_descriptions && !decode_cold_checked(param->desc_off, &tmp)) {
             fcmp_errorf("%s: invalid/corrupt blob: param desc out of bounds\n", path);
             return false;
         }
 
-        if (param->flags & FLAG_IS_COMPLETER) {
-            if (param->choices_off == 0 || !decode_string_checked(param->choices_off, &tmp)) {
+        if (param->value_kind == VALUE_KIND_COMPLETER) {
+            if (param->value_ref == 0 || !decode_hot_checked(param->value_ref, &tmp)) {
                 fcmp_errorf("%s: invalid/corrupt blob: param completer string invalid\n", path);
                 return false;
             }
             continue;
         }
 
-        if (param->choices_off == 0) continue;
-
-        bool is_members = (param->flags & FLAG_IS_MEMBERS) != 0;
-        size_t section_start = is_members ? header.members_off : header.choices_off;
-        size_t section_end = is_members ? header.root_command_off : header.members_off;
-        if (param->choices_off < section_start || param->choices_off >= section_end) {
-            fcmp_errorf("%s: invalid/corrupt blob: param %s list out of bounds\n",
-                        path, is_members ? "members" : "choices");
+        if (param->value_kind == VALUE_KIND_NONE) continue;
+        if (param->value_kind != VALUE_KIND_CHOICES && param->value_kind != VALUE_KIND_MEMBERS) {
+            fcmp_errorf("%s: invalid/corrupt blob: unknown param value kind\n", path);
             return false;
         }
-
-        uint16_t count = 0;
-        if (!read_string_list_count_checked(param->choices_off, &count, section_end)) {
-            fcmp_errorf("%s: invalid/corrupt blob: param %s list header out of bounds\n",
-                        path, is_members ? "members" : "choices");
+        uint32_t sec_off = (param->value_kind == VALUE_KIND_MEMBERS) ? header.members_off : header.choices_off;
+        uint32_t sec_size = (param->value_kind == VALUE_KIND_MEMBERS) ? header.members_size : header.choices_size;
+        uint32_t list_rel_off = 0;
+        if (!list_section_get(sec_off, sec_size, param->value_ref, &list_rel_off)) {
+            fcmp_errorf("%s: invalid/corrupt blob: param list index out of range\n", path);
             return false;
         }
-        if (count > (SIZE_MAX - 4) / 4) {
-            fcmp_errorf("%s: invalid/corrupt blob: param %s list size overflow\n",
-                        path, is_members ? "members" : "choices");
-            return false;
-        }
+        uint32_t list_abs_off = sec_off + list_rel_off;
+        uint16_t count = get_string_list_count_abs(list_abs_off);
         size_t list_bytes = 4 + (size_t)count * 4;
-        if (!range_ok(param->choices_off, list_bytes, section_end)) {
-            fcmp_errorf("%s: invalid/corrupt blob: param %s list out of bounds\n",
-                        path, is_members ? "members" : "choices");
+        if (!range_ok(list_abs_off, list_bytes, sec_off + sec_size)) {
+            fcmp_errorf("%s: invalid/corrupt blob: param list out of bounds\n", path);
             return false;
         }
 
         for (uint32_t j = 0; j < count; j++) {
             uint32_t entry_off;
-            memcpy(&entry_off, blob + param->choices_off + 4 + j * 4, sizeof(entry_off));
-            if (!decode_string_checked(entry_off, &tmp)) {
-                fcmp_errorf("%s: invalid/corrupt blob: param %s list entry invalid\n",
-                            path, is_members ? "members" : "choices");
+            memcpy(&entry_off, blob + list_abs_off + 4 + j * 4, sizeof(entry_off));
+            if (!decode_hot_checked(entry_off, &tmp)) {
+                fcmp_errorf("%s: invalid/corrupt blob: param list entry invalid\n", path);
                 return false;
             }
         }
     }
 
+    // Index sections basic consistency
+    for (uint32_t i = 0; i < g_long_total_entries; i++) {
+        if (g_long_entries[i].param_idx >= header.param_count) {
+            fcmp_errorf("%s: invalid/corrupt blob: long index param out of range\n", path);
+            return false;
+        }
+        const Param *p = get_param(g_long_entries[i].param_idx);
+        if (!decode_hot_checked(p->name_off, &tmp)) {
+            fcmp_errorf("%s: invalid/corrupt blob: long index name out of range\n", path);
+            return false;
+        }
+    }
+    for (uint32_t i = 0; i < g_short_total_entries; i++) {
+        if (g_short_entries[i].param_idx >= header.param_count) {
+            fcmp_errorf("%s: invalid/corrupt blob: short index param out of range\n", path);
+            return false;
+        }
+    }
+
     return true;
 }
-#endif
 
 // Track if we've started the JSON array
 static bool json_started = false;
@@ -1163,7 +1281,7 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
             }
         } else if (matches) {
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
-            output_completion((String){buf, new_len}, str_get(desc), COMP_COMMAND);
+            output_completion((String){buf, new_len}, str_get_desc(desc), COMP_COMMAND);
         }
 
         buf[path.n] = '\0';
@@ -1251,7 +1369,7 @@ static void complete_next_level(const Command *cmd, const char *prefix, size_t p
             const Command *sub = &subs[i];
             String name = str_get(sub->name_off);
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
-            output_completion(name, str_get(desc), COMP_COMMAND);
+            output_completion(name, str_get_desc(desc), COMP_COMMAND);
         }
         return;
     }
@@ -1263,7 +1381,7 @@ static void complete_next_level(const Command *cmd, const char *prefix, size_t p
         String name = str_get(sub->name_off);
         if (name.n < prefix_len || memcmp(name.p, prefix, prefix_len) != 0) break;
         uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
-        output_completion(name, str_get(desc), COMP_COMMAND);
+        output_completion(name, str_get_desc(desc), COMP_COMMAND);
     }
 }
 
@@ -1278,49 +1396,6 @@ static void complete_subcommands(const Command *cmd, const char *prefix, size_t 
         }
     } else {
         complete_next_level(cmd, prefix, prefix_len);
-    }
-}
-
-// Complete parameters from a param list
-static void complete_params_list(const Param *params, uint16_t params_count,
-                                  const char *prefix, const PrefixInfo *pinfo) {
-    if (!params || params_count == 0) return;
-    if (pinfo->len > 0 && !pinfo->is_dash) return;
-
-    // When prefix is "-" (single dash only), show short options first
-    if (pinfo->is_single_dash) {
-        for (uint16_t i = 0; i < params_count; i++) {
-            const Param *p = &params[i];
-            if (p->short_off == 0) continue;
-            if (param_used(p)) continue;
-
-            String short_opt = str_get(p->short_off);
-            if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
-                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                if (!emit_set_contains(short_opt.p, short_opt.n)) {
-                    output_completion(short_opt, str_get(desc), COMP_PARAM_NAME);
-                    emit_set_add(short_opt.p, short_opt.n);
-                }
-            }
-        }
-    }
-
-    // Show long options (always, unless prefix is single dash with more chars like "-x")
-    if (!pinfo->is_single_dash || pinfo->len == 1) {
-        for (uint16_t i = 0; i < params_count; i++) {
-            const Param *p = &params[i];
-            if (param_used(p)) continue;
-
-            String name = str_get(p->name_off);
-            if (name.n == 0) continue;  // Skip short-only params
-            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
-                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
-                if (!emit_set_contains(name.p, name.n)) {
-                    output_completion(name, str_get(desc), COMP_PARAM_NAME);
-                    emit_set_add(name.p, name.n);
-                }
-            }
-        }
     }
 }
 
@@ -1342,15 +1417,22 @@ static uint16_t bsearch_string_list_lower(const uint32_t *offsets, uint16_t coun
     return lo;
 }
 
-// Complete string list at a blob offset (choices or members)
+// Complete a choices/members string list by list index.
 // Uses binary search when a prefix is provided (lists are stored sorted)
 // out_prefix: optional prefix to prepend to emitted values (e.g., "--opt=")
-static void complete_string_list(uint32_t off, const char *prefix, size_t prefix_len,
-                                 String out_prefix) {
-    if (off == 0) return;
+static void complete_string_list(uint32_t list_index, bool is_members, const char *prefix,
+                                 size_t prefix_len, String out_prefix) {
+    uint32_t section_off = is_members ? header.members_off : header.choices_off;
+    uint32_t section_size = is_members ? header.members_size : header.choices_size;
+    uint32_t list_rel_off = 0;
+    if (!list_section_get(section_off, section_size, list_index, &list_rel_off)) return;
 
-    uint16_t count = get_string_list_count(off);
-    const uint32_t *offsets = get_string_offsets(off);
+    uint32_t list_abs_off = section_off + list_rel_off;
+    uint16_t count = get_string_list_count_abs(list_abs_off);
+    size_t list_bytes = 4 + (size_t)count * 4;
+    if (!range_ok(list_abs_off, list_bytes, section_off + section_size)) return;
+
+    const uint32_t *offsets = get_string_offsets_abs(list_abs_off);
     bool has_out = out_prefix.p && out_prefix.n > 0;
 
     if (!prefix || prefix_len == 0) {
@@ -2001,46 +2083,118 @@ spawn_actions_fail:
 #endif
 }
 
-// Find a parameter by name (long or short option) using linear search
-// Linear search is used because we must check both long AND short names,
-// and typical param count per command is small (< 10)
-static const Param *find_param(const Param *params, uint16_t params_count, const char *opt, size_t opt_len) {
-    if (!params || params_count == 0 || !opt) return NULL;
-    if (opt[0] != '-') return NULL;
-
-    bool is_short = (opt_len == 2 && opt[0] == '-' && opt[1] != '-');
-
-    for (uint16_t i = 0; i < params_count; i++) {
-        // Check long option
-        String s = str_get(params[i].name_off);
-        if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0)
-            return &params[i];
-
-        // Check short option
-        if (is_short && params[i].short_off) {
-            String short_opt = str_get(params[i].short_off);
-            if (short_opt.n == opt_len && memcmp(short_opt.p, opt, opt_len) == 0)
-                return &params[i];
-        }
-    }
-    return NULL;
+static inline bool get_long_slice(uint32_t cmd_ref, Slice32 *out) {
+    if (!out || !g_long_slices) return false;
+    if (cmd_ref >= g_long_cmd_refs) return false;
+    *out = g_long_slices[cmd_ref];
+    if ((size_t)out->start + out->count > g_long_total_entries) return false;
+    return true;
 }
 
-// Complete params from entire command path (deepest first for relevance)
+static inline bool get_short_slice(uint32_t cmd_ref, Slice32 *out) {
+    if (!out || !g_short_slices) return false;
+    if (cmd_ref >= g_short_cmd_refs) return false;
+    *out = g_short_slices[cmd_ref];
+    if ((size_t)out->start + out->count > g_short_total_entries) return false;
+    return true;
+}
+
+// Complete params for current command using precomputed long/short indexes.
 static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
     if (!g_emit_set_ready) emit_set_reset();
-    for (int i = g_cmd_path_len - 1; i >= 0; i--) {
-        const Command *cmd = g_cmd_path[i];
-        complete_params_list(cmd_params(cmd), cmd->params_count, prefix, pinfo);
+    if (pinfo->len > 0 && !pinfo->is_dash) return;
+
+    if (pinfo->is_single_dash) {
+        Slice32 sl;
+        if (get_short_slice(g_current_cmd_ref, &sl)) {
+            for (uint32_t i = 0; i < sl.count; i++) {
+                const ShortIndexEntry *e = &g_short_entries[sl.start + i];
+                uint32_t pidx = e->param_idx;
+                if (pidx >= header.param_count) continue;
+                const Param *p = get_param(pidx);
+                if (p->short_off == 0) continue;
+                if (param_used(p)) continue;
+                String short_opt = str_get(p->short_off);
+                if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
+                    uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                    if (!emit_set_contains(short_opt.p, short_opt.n)) {
+                        output_completion(short_opt, str_get_desc(desc), COMP_PARAM_NAME);
+                        emit_set_add(short_opt.p, short_opt.n);
+                    }
+                }
+            }
+        }
+    }
+
+    if (!pinfo->is_single_dash || pinfo->len == 1) {
+        Slice32 sl;
+        if (!get_long_slice(g_current_cmd_ref, &sl)) return;
+        for (uint32_t i = 0; i < sl.count; i++) {
+            const LongIndexEntry *e = &g_long_entries[sl.start + i];
+            uint32_t pidx = e->param_idx;
+            if (pidx >= header.param_count) continue;
+            const Param *p = get_param(pidx);
+            if (param_used(p)) continue;
+            String name = str_get(p->name_off);
+            if (name.n == 0) continue;
+            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
+                uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
+                if (!emit_set_contains(name.p, name.n)) {
+                    output_completion(name, str_get_desc(desc), COMP_PARAM_NAME);
+                    emit_set_add(name.p, name.n);
+                }
+            }
+        }
     }
 }
 
-// Find a param by name across entire command path (deepest first for override semantics)
+// Find a param by option token using precomputed long/short indexes.
 static const Param *find_path_param(const char *opt, size_t opt_len) {
-    for (int i = g_cmd_path_len - 1; i >= 0; i--) {
-        const Command *cmd = g_cmd_path[i];
-        const Param *p = find_param(cmd_params(cmd), cmd->params_count, opt, opt_len);
-        if (p) return p;
+    if (!opt || opt_len < 2 || opt[0] != '-') return NULL;
+
+    if (opt[1] == '-') {
+        Slice32 sl;
+        if (!get_long_slice(g_current_cmd_ref, &sl)) return NULL;
+        uint32_t lo = 0, hi = sl.count;
+        while (lo < hi) {
+            uint32_t mid = lo + (hi - lo) / 2;
+            const LongIndexEntry *e = &g_long_entries[sl.start + mid];
+            if (e->param_idx >= header.param_count) return NULL;
+            const Param *p = get_param(e->param_idx);
+            String s = str_get(p->name_off);
+            int cmp = str_cmp(s.p, s.n, opt, opt_len);
+            if (cmp < 0) lo = mid + 1;
+            else hi = mid;
+        }
+        if (lo < sl.count) {
+            const LongIndexEntry *e = &g_long_entries[sl.start + lo];
+            if (e->param_idx >= header.param_count) return NULL;
+            const Param *p = get_param(e->param_idx);
+            String s = str_get(p->name_off);
+            if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0 && e->param_idx < header.param_count) {
+                return get_param(e->param_idx);
+            }
+        }
+        return NULL;
+    }
+
+    if (opt_len == 2) {
+        uint8_t ch = (uint8_t)opt[1];
+        Slice32 sl;
+        if (!get_short_slice(g_current_cmd_ref, &sl)) return NULL;
+        uint32_t lo = 0, hi = sl.count;
+        while (lo < hi) {
+            uint32_t mid = lo + (hi - lo) / 2;
+            uint8_t cur = g_short_entries[sl.start + mid].short_ch;
+            if (cur < ch) lo = mid + 1;
+            else hi = mid;
+        }
+        if (lo < sl.count) {
+            const ShortIndexEntry *e = &g_short_entries[sl.start + lo];
+            if (e->short_ch == ch && e->param_idx < header.param_count) {
+                return get_param(e->param_idx);
+            }
+        }
     }
     return NULL;
 }
@@ -2078,9 +2232,9 @@ static OutputFormat parse_format(const char *name) {
 static void complete_param_values(const Param *param, const char *prefix, size_t prefix_len,
                                   String out_prefix) {
     if (PARAM_HAS_CHOICES(param) || PARAM_HAS_MEMBERS(param)) {
-        complete_string_list(param->choices_off, prefix, prefix_len, out_prefix);
+        complete_string_list(param->value_ref, PARAM_HAS_MEMBERS(param), prefix, prefix_len, out_prefix);
     } else if (PARAM_HAS_COMPLETER(param)) {
-        execute_completer(g_spans[0], str_get(param->choices_off), prefix, prefix_len, out_prefix);
+        execute_completer(g_spans[0], str_get(param->value_ref), prefix, prefix_len, out_prefix);
     }
 }
 
@@ -2121,6 +2275,7 @@ static void complete(int nspans, const char **spans) {
 
     // Find the deepest matching command
     const Command *cmd = find_command();
+    g_current_cmd_ref = command_to_ref(cmd);
 
     if (output_format == OUT_JSON) {
         json_started = false;
@@ -2302,28 +2457,11 @@ static bool load_blob(const char *path) {
         goto fail_unmap;
     }
 
-    // Check endianness compatibility BEFORE reading other fields.
-    // HEADER_FLAG_BIG_ENDIAN should appear in the low byte for little-endian blobs,
-    // and in the high byte for big-endian blobs.
-    uint8_t flags_lo = blob[6];
-    uint8_t flags_hi = blob[7];
-    bool flag_le = (flags_lo & HEADER_FLAG_BIG_ENDIAN) != 0;
-    bool flag_be = (flags_hi & HEADER_FLAG_BIG_ENDIAN) != 0;
-    if (flag_le && flag_be) {
-        fcmp_errorf("%s: invalid flags (both endian markers set)\n", path);
-        goto fail_unmap;
-    }
-    bool blob_is_big_endian = flag_be;
-    bool sys_be = system_is_big_endian();
-    if (blob_is_big_endian != sys_be) {
-        fcmp_errorf("%s: endianness mismatch (blob is %s-endian, system is %s-endian)\n",
-                path,
-                blob_is_big_endian ? "big" : "little",
-                sys_be ? "big" : "little");
+    if (system_is_big_endian()) {
+        fcmp_errorf("%s: unsupported host endianness (big-endian)\n", path);
         goto fail_unmap;
     }
 
-    // Validate version (now safe to read as native endianness)
     uint16_t version;
     memcpy(&version, blob + 4, sizeof(version));
     if (version != BLOB_VERSION) {
@@ -2336,28 +2474,157 @@ static bool load_blob(const char *path) {
     memcpy(&flags, blob + 6, sizeof(flags));
     has_descriptions = !(flags & HEADER_FLAG_NO_DESCRIPTIONS);
 
-    // Parse header (skip magic:4, version:2, flags:2 = offset 8)
-    uint32_t h[14];
-    memcpy(h, blob + 8, sizeof(h));
+    memset(&header, 0, sizeof(header));
+    memcpy(&header.section_count, blob + 8, sizeof(header.section_count));
+    memcpy(&header.section_dir_off, blob + 12, sizeof(header.section_dir_off));
+    memcpy(&header.command_count, blob + 16, sizeof(header.command_count));
+    memcpy(&header.param_count, blob + 20, sizeof(header.param_count));
+    memcpy(&header.cli_name_off, blob + 24, sizeof(header.cli_name_off));
+    memcpy(&header.max_command_path_len, blob + 28, sizeof(header.max_command_path_len));
+    memcpy(&header.max_completer_tokens, blob + 32, sizeof(header.max_completer_tokens));
 
-    header.max_command_path_len = h[0];
-    header.command_count = h[1];
-    header.param_count = h[2];
-    header.string_table_size = h[3];
-    header.choices_count = h[4];
-    header.members_count = h[5];
-    header.string_table_off = h[6];
-    header.commands_off = h[7];
-    header.params_off = h[8];
-    header.choices_off = h[9];
-    header.members_off = h[10];
-    header.root_command_off = h[11];
-    header.cli_name_off = h[12];
-    header.max_completer_tokens = h[13];
+    g_long_slices = NULL;
+    g_long_entries = NULL;
+    g_long_cmd_refs = 0;
+    g_long_total_entries = 0;
+    g_short_slices = NULL;
+    g_short_entries = NULL;
+    g_short_cmd_refs = 0;
+    g_short_total_entries = 0;
 
-#if defined(DEBUG) || defined(FCMP_VALIDATE_BLOB)
-    if (!validate_blob(path)) goto fail_unmap;
-#endif
+    if (!range_ok(header.section_dir_off, (size_t)header.section_count * SECTION_ENTRY_SIZE, g_blob_size)) {
+        fcmp_errorf("%s: invalid section directory\n", path);
+        goto fail_unmap;
+    }
+
+    bool have_hot = false, have_cmd = false, have_params = false, have_choices = false;
+    bool have_members = false, have_root = false, have_long = false, have_short = false;
+
+    for (uint32_t i = 0; i < header.section_count; i++) {
+        size_t off = (size_t)header.section_dir_off + (size_t)i * SECTION_ENTRY_SIZE;
+        uint32_t id, sec_off, sec_size, entry_size, sec_flags;
+        memcpy(&id, blob + off, sizeof(id));
+        memcpy(&sec_off, blob + off + 4, sizeof(sec_off));
+        memcpy(&sec_size, blob + off + 8, sizeof(sec_size));
+        memcpy(&entry_size, blob + off + 12, sizeof(entry_size));
+        memcpy(&sec_flags, blob + off + 16, sizeof(sec_flags));
+        (void)sec_flags;
+
+        if (!range_ok(sec_off, sec_size, g_blob_size)) {
+            fcmp_errorf("%s: section %u out of bounds\n", path, id);
+            goto fail_unmap;
+        }
+
+        switch (id) {
+            case SECTION_STRINGS_HOT:
+                header.hot_strings_off = sec_off;
+                header.hot_strings_size = sec_size;
+                have_hot = true;
+                break;
+            case SECTION_STRINGS_COLD:
+                header.cold_strings_off = sec_off;
+                header.cold_strings_size = sec_size;
+                break;
+            case SECTION_COMMANDS:
+                if (entry_size != COMMAND_SIZE) {
+                    fcmp_errorf("%s: invalid command entry size\n", path);
+                    goto fail_unmap;
+                }
+                header.commands_off = sec_off;
+                header.commands_size = sec_size;
+                have_cmd = true;
+                break;
+            case SECTION_PARAMS:
+                if (entry_size != PARAM_SIZE) {
+                    fcmp_errorf("%s: invalid param entry size\n", path);
+                    goto fail_unmap;
+                }
+                header.params_off = sec_off;
+                header.params_size = sec_size;
+                have_params = true;
+                break;
+            case SECTION_CHOICES:
+                header.choices_off = sec_off;
+                header.choices_size = sec_size;
+                have_choices = true;
+                break;
+            case SECTION_MEMBERS:
+                header.members_off = sec_off;
+                header.members_size = sec_size;
+                have_members = true;
+                break;
+            case SECTION_ROOT:
+                header.root_command_off = sec_off;
+                header.root_command_size = sec_size;
+                have_root = true;
+                break;
+            case SECTION_OPTION_LONG:
+                header.option_long_off = sec_off;
+                header.option_long_size = sec_size;
+                have_long = true;
+                break;
+            case SECTION_OPTION_SHORT:
+                header.option_short_off = sec_off;
+                header.option_short_size = sec_size;
+                have_short = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    if (!have_hot || !have_cmd || !have_params || !have_choices || !have_members ||
+        !have_root || !have_long) {
+        fcmp_errorf("%s: missing required section(s)\n", path);
+        goto fail_unmap;
+    }
+    if (has_descriptions && header.cold_strings_size == 0) {
+        fcmp_errorf("%s: descriptions enabled but cold strings section missing\n", path);
+        goto fail_unmap;
+    }
+
+    // Parse long index section headers
+    if (header.option_long_size < 8) {
+        fcmp_errorf("%s: invalid long index section\n", path);
+        goto fail_unmap;
+    }
+    memcpy(&g_long_cmd_refs, blob + header.option_long_off, sizeof(g_long_cmd_refs));
+    memcpy(&g_long_total_entries, blob + header.option_long_off + 4, sizeof(g_long_total_entries));
+    size_t long_need = 8 + (size_t)g_long_cmd_refs * sizeof(Slice32) +
+                       (size_t)g_long_total_entries * sizeof(LongIndexEntry);
+    if (long_need > header.option_long_size) {
+        fcmp_errorf("%s: invalid long index section size\n", path);
+        goto fail_unmap;
+    }
+    g_long_slices = (const Slice32 *)(blob + header.option_long_off + 8);
+    g_long_entries = (const LongIndexEntry *)(blob + header.option_long_off + 8 + (size_t)g_long_cmd_refs * sizeof(Slice32));
+
+    // Parse short index section headers (optional)
+    if (have_short) {
+        if (header.option_short_size < 8) {
+            fcmp_errorf("%s: invalid short index section\n", path);
+            goto fail_unmap;
+        }
+        memcpy(&g_short_cmd_refs, blob + header.option_short_off, sizeof(g_short_cmd_refs));
+        memcpy(&g_short_total_entries, blob + header.option_short_off + 4, sizeof(g_short_total_entries));
+        size_t short_need = 8 + (size_t)g_short_cmd_refs * sizeof(Slice32) +
+                            (size_t)g_short_total_entries * sizeof(ShortIndexEntry);
+        if (short_need > header.option_short_size) {
+            fcmp_errorf("%s: invalid short index section size\n", path);
+            goto fail_unmap;
+        }
+        g_short_slices = (const Slice32 *)(blob + header.option_short_off + 8);
+        g_short_entries = (const ShortIndexEntry *)(blob + header.option_short_off + 8 + (size_t)g_short_cmd_refs * sizeof(Slice32));
+    } else {
+        header.option_short_off = 0;
+        header.option_short_size = 0;
+        g_short_slices = NULL;
+        g_short_entries = NULL;
+        g_short_cmd_refs = 0;
+        g_short_total_entries = 0;
+    }
+
+    if (!validate_blob_quick(path)) goto fail_unmap;
 
     return true;
 
@@ -2369,6 +2636,15 @@ fail_unmap:
 #endif
     blob = NULL;
     g_blob_size = 0;
+    memset(&header, 0, sizeof(header));
+    g_long_slices = NULL;
+    g_long_entries = NULL;
+    g_long_cmd_refs = 0;
+    g_long_total_entries = 0;
+    g_short_slices = NULL;
+    g_short_entries = NULL;
+    g_short_cmd_refs = 0;
+    g_short_total_entries = 0;
     return false;
 
 fail:
@@ -2380,6 +2656,7 @@ fail:
 #endif
     blob = NULL;
     g_blob_size = 0;
+    memset(&header, 0, sizeof(header));
     return false;
 }
 
@@ -2499,42 +2776,41 @@ static char *resolve_blob_path(const char *blob_arg) {
 
 // Dump blob header for debugging
 static void dump_header(const char *path) {
-    uint32_t h[14];
-    memcpy(h, blob + 8, sizeof(h));
-    uint16_t version;
-    uint16_t flags;
+    uint16_t version = 0;
+    uint16_t flags = 0;
     memcpy(&version, blob + 4, sizeof(version));
     memcpy(&flags, blob + 6, sizeof(flags));
-
     printf("path: %s\n", path);
     printf("magic: %.4s\n", (const char *)blob);
     printf("version: %u\n", version);
     printf("flags: %u", flags);
     if (flags) {
         printf(" (");
-        if (flags & HEADER_FLAG_BIG_ENDIAN) printf("big_endian");
-        if (flags & HEADER_FLAG_NO_DESCRIPTIONS) {
-            if (flags & HEADER_FLAG_BIG_ENDIAN) printf(", ");
-            printf("no_descriptions");
-        }
+        if (flags & HEADER_FLAG_NO_DESCRIPTIONS) printf("no_descriptions");
         printf(")");
     }
     printf("\n");
-    printf("max_command_path_len: %u\n", h[0]);
-    printf("command_count: %u\n", h[1]);
-    printf("param_count: %u\n", h[2]);
-    printf("string_table_size: %u\n", h[3]);
-    printf("choices_count: %u\n", h[4]);
-    printf("members_count: %u\n", h[5]);
-    printf("string_table_off: %u\n", h[6]);
-    printf("commands_off: %u\n", h[7]);
-    printf("params_off: %u\n", h[8]);
-    printf("choices_off: %u\n", h[9]);
-    printf("members_off: %u\n", h[10]);
-    printf("root_command_off: %u\n", h[11]);
-    printf("cli_name_off: %u\n", h[12]);
-    printf("cli_name: %.*s\n", (int)str_get(h[12]).n, str_get(h[12]).p);
-    printf("max_completer_tokens: %u\n", h[13]);
+    printf("section_count: %u\n", header.section_count);
+    printf("section_dir_off: %u\n", header.section_dir_off);
+    printf("command_count: %u\n", header.command_count);
+    printf("param_count: %u\n", header.param_count);
+    printf("cli_name_off: %u\n", header.cli_name_off);
+    printf("cli_name: %.*s\n", (int)str_get(header.cli_name_off).n, str_get(header.cli_name_off).p);
+    printf("max_command_path_len: %u\n", header.max_command_path_len);
+    printf("max_completer_tokens: %u\n", header.max_completer_tokens);
+    printf("has_descriptions: %s\n", has_descriptions ? "yes" : "no");
+    printf("sections:\n");
+    for (uint32_t i = 0; i < header.section_count; i++) {
+        size_t off = (size_t)header.section_dir_off + (size_t)i * SECTION_ENTRY_SIZE;
+        uint32_t id = 0, sec_off = 0, sec_size = 0, entry_size = 0, sec_flags = 0;
+        memcpy(&id, blob + off, sizeof(id));
+        memcpy(&sec_off, blob + off + 4, sizeof(sec_off));
+        memcpy(&sec_size, blob + off + 8, sizeof(sec_size));
+        memcpy(&entry_size, blob + off + 12, sizeof(entry_size));
+        memcpy(&sec_flags, blob + off + 16, sizeof(sec_flags));
+        printf("  id=%u off=%u size=%u entry=%u flags=0x%x\n",
+               id, sec_off, sec_size, entry_size, sec_flags);
+    }
 }
 
 static void print_help(void) {
@@ -2570,7 +2846,6 @@ static void print_help(void) {
     puts("  fast-completer --generate-blob [options] <schema> [output]\n");
     puts("  schema               Path to schema file");
     puts("  output               Output path (optional - defaults to cache directory)");
-    puts("  --big-endian         Generate big-endian blob");
     puts("  --no-descriptions    Omit descriptions entirely (smallest blob)");
     puts("  --short-descriptions First sentence only (default)");
     puts("  --long-descriptions  Include full descriptions");
@@ -2636,7 +2911,6 @@ int main(int argc, char *argv[]) {
     bool complete_opts_used = false;  // Track if completion-specific options were used
 
     // Generate-blob mode options
-    bool big_endian = false;
     DescriptionMode desc_mode = DESC_SHORT;
     size_t desc_max_len = 0;
     bool generate_opts_used = false;  // Track if generate-blob-specific options were used
@@ -2661,7 +2935,6 @@ int main(int argc, char *argv[]) {
         {"dynamic-completer-timeout", required_argument, 0, 'T'},
 
         // Generate-blob mode options
-        {"big-endian",         no_argument,       0, 'E'},
         {"no-descriptions",    no_argument,       0, 'N'},
         {"short-descriptions", no_argument,       0, 'S'},
         {"long-descriptions",  no_argument,       0, 'L'},
@@ -2672,7 +2945,7 @@ int main(int argc, char *argv[]) {
 
     // '+' = POSIX mode (stop at first non-option = the format arg)
     int c;
-    while ((c = getopt_long(argc, argv, "+hqafIVb:l:T:", long_options, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "+hqafIVGb:l:T:", long_options, NULL)) != -1) {
         switch (c) {
             // Universal
             case 'h':
@@ -2749,10 +3022,6 @@ int main(int argc, char *argv[]) {
                 break;
 
             // Generate-blob mode options
-            case 'E':  // --big-endian
-                big_endian = true;
-                generate_opts_used = true;
-                break;
             case 'N':  // --no-descriptions
                 desc_mode = DESC_NONE;
                 generate_opts_used = true;
@@ -2790,7 +3059,7 @@ int main(int argc, char *argv[]) {
 
     // Validate option/mode compatibility
     if (generate_opts_used && mode != MODE_GENERATE_BLOB) {
-        fcmp_errorf("Error: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, and --description-length are only valid with --generate-blob\n");
+        fcmp_errorf("Error: --no-descriptions, --short-descriptions, --long-descriptions, and --description-length are only valid with --generate-blob\n");
         return 1;
     }
     if (complete_opts_used && mode != MODE_COMPLETE) {
@@ -2830,7 +3099,6 @@ int main(int argc, char *argv[]) {
         }
 
         case MODE_VALIDATE_BLOB: {
-#if defined(DEBUG) || defined(FCMP_VALIDATE_BLOB)
             if (argc != optind + 1) {
                 fcmp_errorf("Usage: fast-completer --validate-blob <blob>\n");
                 return 1;
@@ -2839,18 +3107,17 @@ int main(int argc, char *argv[]) {
             if (!load_blob(path)) {
                 return 1;
             }
+            if (!validate_blob_full(path)) {
+                return 1;
+            }
             printf("%s: ok\n", path);
             return 0;
-#else
-            fcmp_errorf("Error: --validate-blob requires a debug build\n");
-            return 1;
-#endif
         }
 
         case MODE_GENERATE_BLOB: {
             if (argc < optind + 1 || argc > optind + 2) {
                 fcmp_errorf("Usage: fast-completer --generate-blob [options] <schema> [output]\n");
-                fcmp_errorf("Options: --big-endian, --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
+                fcmp_errorf("Options: --no-descriptions, --short-descriptions, --long-descriptions, --description-length <n>\n");
                 return 1;
             }
 
@@ -2862,7 +3129,7 @@ int main(int argc, char *argv[]) {
             if (!output_path) {
                 char *name = get_schema_name(schema_path);
                 if (!name) {
-                    fcmp_errorf("Schema must have 'name' property when output path is omitted\n");
+                    fcmp_errorf("Schema must have a root command name when output path is omitted\n");
                     return 1;
                 }
                 ensure_cache_dir();
@@ -2870,7 +3137,7 @@ int main(int argc, char *argv[]) {
                 output_path = derived_path;
             }
 
-            bool result = generate_blob(schema_path, output_path, big_endian, desc_mode, desc_max_len);
+            bool result = generate_blob(schema_path, output_path, desc_mode, desc_max_len);
             return result ? 0 : 1;
         }
 

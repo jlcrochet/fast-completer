@@ -15,20 +15,38 @@
  * Keep these in sync with scripts/dump_blob.py.
  */
 #define BLOB_MAGIC   "FCMP"
-#define BLOB_VERSION 12
+#define BLOB_VERSION 14
 
-#define HEADER_SIZE  64
-#define PARAM_SIZE   20
-#define COMMAND_SIZE 20
+#define HEADER_SIZE         64
+#define SECTION_ENTRY_SIZE  20
+#define PARAM_SIZE          20
+#define COMMAND_SIZE        20
+
+/* Section ids */
+#define SECTION_STRINGS_HOT     1
+#define SECTION_STRINGS_COLD    2
+#define SECTION_COMMANDS        3
+#define SECTION_PARAMS          4
+#define SECTION_CHOICES         5
+#define SECTION_MEMBERS         6
+#define SECTION_ROOT            7
+#define SECTION_OPTION_LONG     8
+#define SECTION_OPTION_SHORT    9
+
+/* Section flags */
+#define SECTION_FLAG_OPTIONAL   0x01
 
 /* Param flags */
 #define FLAG_TAKES_VALUE  0x01
-#define FLAG_IS_MEMBERS   0x02
-#define FLAG_IS_COMPLETER 0x04
+
+/* Param value kinds */
+#define VALUE_KIND_NONE       0
+#define VALUE_KIND_CHOICES    1
+#define VALUE_KIND_MEMBERS    2
+#define VALUE_KIND_COMPLETER  3
 
 /* Header flags */
-#define HEADER_FLAG_BIG_ENDIAN      0x01
-#define HEADER_FLAG_NO_DESCRIPTIONS 0x02
+#define HEADER_FLAG_NO_DESCRIPTIONS 0x01
 
 /* Description mode for blob generation */
 typedef enum {
@@ -42,14 +60,13 @@ typedef enum {
  *
  * schema_path: Path to .fcmps schema file
  * output_path: Path to output blob file
- * big_endian: If true, generate big-endian blob
  * desc_mode: How to handle descriptions (DESC_NONE, DESC_SHORT, DESC_LONG)
  * desc_max_len: Maximum description length in UTF-8 characters (0 = unlimited).
  *               If exceeded, truncate to (desc_max_len - 1) chars + "…" (Unicode ellipsis).
  *
  * Returns true on success, false on error (errors printed to stderr).
  */
-bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len);
+bool generate_blob(const char *schema_path, const char *output_path, DescriptionMode desc_mode, size_t desc_max_len);
 
 /*
  * Extract the CLI name from a schema file.

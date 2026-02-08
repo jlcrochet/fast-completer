@@ -246,7 +246,6 @@ The `--refresh` flag runs each schema's `export_command_tree.py` first. If `pypr
 | `--long-descriptions` | Include full descriptions |
 | `--no-descriptions` | Omit descriptions entirely (smallest blob) |
 | `--description-length <n>` | Truncate descriptions to n characters |
-| `--big-endian` | Generate big-endian blob (for cross-compilation) |
 
 Description options can be combined: `--long-descriptions --description-length 200` includes full descriptions but truncates any exceeding 200 characters. If multiple description mode options are given, the last one wins.
 
@@ -472,19 +471,22 @@ In this example:
 
 ## Binary Blob Format
 
-The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with minimal page faults. All integers are little-endian by default (use `--big-endian` for cross-compilation).
+The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with minimal page faults. All integers are little-endian on disk.
 
 ### Layout
 
 | Section | Size | Description |
 |---------|------|-------------|
-| Header | 64 bytes | Magic (`FCMP`), version, flags, counts, section offsets |
-| String table | variable | VLQ length-prefixed strings, hot data first (names, choices), cold data last (descriptions) |
+| Header | 64 bytes | Magic (`FCMP`), version, flags, section directory metadata |
+| Section directory | variable | Section id + offset + size + entry size + flags |
+| Hot strings | variable | VLQ length-prefixed strings for command/param names and values |
+| Cold strings | variable | Optional description-only VLQ string section |
 | Commands | 20 bytes each | Fixed-size structs with name/description offsets, param/subcommand indices |
-| Params | 20 bytes each | Fixed-size structs with name/short/description/choices offsets, flags |
-| Choices | variable | Count-prefixed arrays of string table offsets (4-byte header, deduplicated) |
-| Members | variable | Count-prefixed arrays of string table offsets (4-byte header, deduplicated) |
+| Params | 20 bytes each | Fixed-size structs with name/short/description/value refs + typed value kind |
+| Choices | variable | Indexed count-prefixed arrays of hot-string offsets (deduplicated) |
+| Members | variable | Indexed count-prefixed arrays of hot-string offsets (deduplicated) |
 | Root command | 20 bytes | CLI root with global params and top-level subcommands |
+| Option indexes | variable | Per-command long-option index and optional short-option index |
 
 ### Design
 
@@ -497,8 +499,7 @@ The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with m
 
 | Flag | Description |
 |------|-------------|
-| `0x01` | Big-endian byte order |
-| `0x02` | No descriptions (auto-detected or `--no-descriptions`) |
+| `0x01` | No descriptions section |
 
 ## Shell Integration
 

@@ -436,7 +436,8 @@ typedef struct {
     uint32_t name_off;
     uint32_t short_off;
     uint32_t desc_off;
-    uint32_t choices_idx;
+    uint32_t value_ref;
+    uint8_t value_kind;
     uint8_t flags;
 } ParamEntry;
 
@@ -481,7 +482,6 @@ typedef struct {
     size_t members_hash_cap;
     size_t max_command_path_len;
     uint32_t max_completer_tokens;
-    bool big_endian;
     DescriptionMode desc_mode;
     size_t desc_max_len;
     bool has_any_descriptions;
@@ -492,7 +492,7 @@ static inline bool blobgen_strtab_error(const BlobGen *bg) {
     return bg->cmd_strtab.error || bg->param_strtab.error || bg->choice_strtab.error || bg->desc_strtab.error;
 }
 
-static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
+static void blobgen_init(BlobGen *bg, DescriptionMode desc_mode, size_t desc_max_len) {
     memset(bg, 0, sizeof(*bg));
     bg->error = false;
     strtab_init(&bg->cmd_strtab);
@@ -522,7 +522,6 @@ static void blobgen_init(BlobGen *bg, bool big_endian, DescriptionMode desc_mode
         fcmp_perror("calloc");
         bg->error = true;
     }
-    bg->big_endian = big_endian;
     bg->desc_mode = desc_mode;
     bg->desc_max_len = desc_max_len;
 }
@@ -1293,14 +1292,16 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
 // Byte order helpers
 // --------------------------------------------------------------------------
 
-static void write_u16(uint8_t *buf, uint16_t val, bool big_endian) {
-    if (big_endian) { buf[0] = val >> 8; buf[1] = val; }
-    else { buf[0] = val; buf[1] = val >> 8; }
+static void write_u16(uint8_t *buf, uint16_t val) {
+    buf[0] = (uint8_t)(val & 0xffu);
+    buf[1] = (uint8_t)((val >> 8) & 0xffu);
 }
 
-static void write_u32(uint8_t *buf, uint32_t val, bool big_endian) {
-    if (big_endian) { buf[0] = val >> 24; buf[1] = val >> 16; buf[2] = val >> 8; buf[3] = val; }
-    else { buf[0] = val; buf[1] = val >> 8; buf[2] = val >> 16; buf[3] = val >> 24; }
+static void write_u32(uint8_t *buf, uint32_t val) {
+    buf[0] = (uint8_t)(val & 0xffu);
+    buf[1] = (uint8_t)((val >> 8) & 0xffu);
+    buf[2] = (uint8_t)((val >> 16) & 0xffu);
+    buf[3] = (uint8_t)((val >> 24) & 0xffu);
 }
 
 // --------------------------------------------------------------------------
@@ -1699,8 +1700,9 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     pe.name_off = long_opt ? strtab_add(&bg->param_strtab, long_opt) : 0;
     pe.short_off = short_opt ? strtab_add(&bg->param_strtab, short_opt) : 0;
     pe.desc_off = 0;
+    pe.value_ref = 0;
+    pe.value_kind = VALUE_KIND_NONE;
     pe.flags = 0;
-    pe.choices_idx = (uint32_t)-1;
     if (blobgen_strtab_error(bg)) {
         bg->error = true;
         token_list_free(&tl);
@@ -1724,7 +1726,8 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                     token_list_free(&tl);
                     return false;
                 }
-                pe.choices_idx = (uint32_t)idx;
+                pe.value_ref = (uint32_t)idx;
+                pe.value_kind = VALUE_KIND_CHOICES;
                 pe.flags |= FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
@@ -1748,8 +1751,9 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                     token_list_free(&tl);
                     return false;
                 }
-                pe.choices_idx = (uint32_t)idx;
-                pe.flags |= FLAG_IS_MEMBERS | FLAG_TAKES_VALUE;
+                pe.value_ref = (uint32_t)idx;
+                pe.value_kind = VALUE_KIND_MEMBERS;
+                pe.flags |= FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
             }
@@ -1764,8 +1768,9 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
                     }
                     if (tok_count > bg->max_completer_tokens) bg->max_completer_tokens = tok_count;
                 }
-                pe.choices_idx = strtab_add(&bg->choice_strtab, t->value);
-                pe.flags |= FLAG_IS_COMPLETER | FLAG_TAKES_VALUE;
+                pe.value_ref = strtab_add(&bg->choice_strtab, t->value);
+                pe.value_kind = VALUE_KIND_COMPLETER;
+                pe.flags |= FLAG_TAKES_VALUE;
                 has_type = true;
                 break;
             case TOK_DESC:
@@ -1778,11 +1783,12 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
     }
 
     // Validation: @bool cannot combine with choices/members/completer
-    if (is_bool && (pe.flags & (FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER))) {
+    if (is_bool && (pe.flags & FLAG_TAKES_VALUE)) {
         fcmp_warnf("%s:%d: warning: @bool cannot combine with choices/members/completer; ignoring type specifier\n",
                 path, line_num);
-        pe.flags &= ~(FLAG_TAKES_VALUE | FLAG_IS_MEMBERS | FLAG_IS_COMPLETER);
-        pe.choices_idx = (uint32_t)-1;
+        pe.flags &= ~FLAG_TAKES_VALUE;
+        pe.value_ref = 0;
+        pe.value_kind = VALUE_KIND_NONE;
     }
 
     // If no type specified and not bool, default to takes value
@@ -2107,9 +2113,44 @@ static inline size_t align4(size_t v) {
     return (v + 3u) & ~((size_t)3u);
 }
 
-bool generate_blob(const char *schema_path, const char *output_path, bool big_endian, DescriptionMode desc_mode, size_t desc_max_len) {
+typedef struct {
+    uint32_t start;
+    uint32_t count;
+} Slice32;
+
+typedef struct {
+    uint32_t param_idx;
+} LongIndexEntry;
+
+typedef struct {
+    uint8_t short_ch;
+    uint8_t _pad[3];
+    uint32_t param_idx;
+} ShortIndexEntry;
+
+typedef struct {
+    uint32_t id;
+    uint32_t offset;
+    uint32_t size;
+    uint32_t entry_size;
+    uint32_t flags;
+} SectionEntry;
+
+static bool section_append(SectionEntry *sections, size_t *count, size_t cap, uint32_t id, uint32_t size,
+                           uint32_t entry_size, uint32_t flags) {
+    if (*count >= cap) return false;
+    sections[*count].id = id;
+    sections[*count].offset = 0;
+    sections[*count].size = size;
+    sections[*count].entry_size = entry_size;
+    sections[*count].flags = flags;
+    (*count)++;
+    return true;
+}
+
+bool generate_blob(const char *schema_path, const char *output_path, DescriptionMode desc_mode, size_t desc_max_len) {
     BlobGen bg;
-    blobgen_init(&bg, big_endian, desc_mode, desc_max_len);
+    blobgen_init(&bg, desc_mode, desc_max_len);
     if (bg.error) return false;
 
     CommandNode *root = node_create("");
@@ -2166,11 +2207,16 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         return false;
     }
 
-    // Root description
-    uint32_t root_desc_off = strtab_add_desc_ex(&bg, root_desc ? root_desc : "CLI", false);
-    if (blobgen_strtab_error(&bg)) {
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+    bool has_desc_section = (desc_mode != DESC_NONE && bg.has_any_descriptions);
+
+    // Root description (cold strings section only, and only when descriptions are enabled)
+    uint32_t root_desc_off = 0;
+    if (has_desc_section) {
+        root_desc_off = strtab_add_desc_ex(&bg, root_desc ? root_desc : "CLI", false);
+        if (blobgen_strtab_error(&bg)) {
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
     }
 
     // Check for integer overflow in counts
@@ -2191,200 +2237,23 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         return false;
     }
 
-    // String table layout: [commands][params][choices][descriptions]
+    // Hot strings layout: [commands][params][choices]
     size_t cmd_len = bg.cmd_strtab.data_len;
     size_t param_len = bg.param_strtab.data_len;
     size_t choice_len = bg.choice_strtab.data_len;
-    size_t desc_len = bg.desc_strtab.data_len;
-    size_t total_strtab_size = cmd_len + param_len + choice_len + desc_len;
-    if (total_strtab_size > UINT32_MAX) {
-        fcmp_errorf("String table too large: %zu bytes (max 4GB)\n", total_strtab_size);
+    size_t hot_len = cmd_len + param_len + choice_len;
+    size_t desc_len = has_desc_section ? bg.desc_strtab.data_len : 0;
+    if (hot_len > UINT32_MAX || desc_len > UINT32_MAX) {
+        fcmp_errorf("String section too large (max 4GB)\n");
         node_free(root); blobgen_free(&bg); free(root_desc);
         return false;
     }
-    // Offset adjustments for each section
+    // Offset adjustments within hot strings section
     uint32_t param_off_adj = (uint32_t)cmd_len;
     uint32_t choice_off_adj = (uint32_t)(cmd_len + param_len);
-    uint32_t desc_off_adj = (uint32_t)(cmd_len + param_len + choice_len);
 
     size_t commands_size = bg.commands_count * COMMAND_SIZE;
     size_t params_size = bg.params_count * PARAM_SIZE;
-
-    size_t choices_size = 0;
-    for (size_t i = 0; i < bg.choices_count; i++) {
-        size_t count = bg.choices_lists[i].count;
-        if (count > 65535) {
-            fcmp_errorf("Choice list %zu too large: %zu items (max 65535)\n", i, count);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        if (count > (SIZE_MAX - 4) / 4) {
-            fcmp_errorf("Choice list %zu too large (overflow)\n", i);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        if (choices_size > SIZE_MAX - (4 + count * 4)) {
-            fcmp_errorf("Choices section too large (overflow)\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        choices_size += 4 + count * 4;
-    }
-    size_t members_size = 0;
-    for (size_t i = 0; i < bg.members_count; i++) {
-        size_t count = bg.members_lists[i].count;
-        if (count > 65535) {
-            fcmp_errorf("Member list %zu too large: %zu items (max 65535)\n", i, count);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        if (count > (SIZE_MAX - 4) / 4) {
-            fcmp_errorf("Member list %zu too large (overflow)\n", i);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        if (members_size > SIZE_MAX - (4 + count * 4)) {
-            fcmp_errorf("Members section too large (overflow)\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-        members_size += 4 + count * 4;
-    }
-
-    size_t string_table_off_sz = HEADER_SIZE;
-    size_t commands_off_sz = align4(string_table_off_sz + total_strtab_size);
-    size_t params_off_sz = align4(commands_off_sz + commands_size);
-    size_t choices_off_sz = align4(params_off_sz + params_size);
-    size_t members_off_sz = align4(choices_off_sz + choices_size);
-    size_t root_command_off_sz = align4(members_off_sz + members_size);
-    size_t total_size = root_command_off_sz + COMMAND_SIZE;
-    if (commands_off_sz > UINT32_MAX || params_off_sz > UINT32_MAX ||
-        choices_off_sz > UINT32_MAX || members_off_sz > UINT32_MAX ||
-        root_command_off_sz > UINT32_MAX || total_size > UINT32_MAX) {
-        fcmp_errorf("Blob too large: %zu bytes (max 4GB)\n", total_size);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
-    }
-
-    uint32_t string_table_off = (uint32_t)string_table_off_sz;
-    uint32_t commands_off = (uint32_t)commands_off_sz;
-    uint32_t params_off = (uint32_t)params_off_sz;
-    uint32_t choices_off = (uint32_t)choices_off_sz;
-    uint32_t members_off = (uint32_t)members_off_sz;
-    uint32_t root_command_off = (uint32_t)root_command_off_sz;
-
-    uint32_t *choices_offsets = NULL;
-    if (bg.choices_count) {
-        choices_offsets = malloc(bg.choices_count * sizeof(uint32_t));
-        if (!choices_offsets) {
-            fcmp_perror("malloc");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
-        }
-    }
-    uint32_t offset = choices_off;
-    for (size_t i = 0; i < bg.choices_count; i++) {
-        choices_offsets[i] = offset;
-        size_t count = bg.choices_lists[i].count;
-        offset += 4 + (uint32_t)count * 4;
-    }
-    uint32_t *members_offsets = NULL;
-    if (bg.members_count) {
-        members_offsets = malloc(bg.members_count * sizeof(uint32_t));
-        if (!members_offsets) {
-            fcmp_perror("malloc");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            free(choices_offsets);
-            return false;
-        }
-    }
-    offset = members_off;
-    for (size_t i = 0; i < bg.members_count; i++) {
-        members_offsets[i] = offset;
-        size_t count = bg.members_lists[i].count;
-        offset += 4 + (uint32_t)count * 4;
-    }
-
-    uint8_t *blob = calloc(1, total_size);
-    if (!blob) {
-        fcmp_perror("calloc");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(choices_offsets); free(members_offsets);
-        return false;
-    }
-    memcpy(blob, BLOB_MAGIC, 4);
-    write_u16(blob + 4, BLOB_VERSION, big_endian);
-    uint16_t flags = 0;
-    if (big_endian) flags |= HEADER_FLAG_BIG_ENDIAN;
-    if (desc_mode == DESC_NONE || !bg.has_any_descriptions) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
-    write_u16(blob + 6, flags, big_endian);
-    write_u32(blob + 8, (uint32_t)bg.max_command_path_len + 1, big_endian);
-    write_u32(blob + 12, (uint32_t)bg.commands_count, big_endian);
-    write_u32(blob + 16, (uint32_t)bg.params_count, big_endian);
-    write_u32(blob + 20, (uint32_t)total_strtab_size, big_endian);
-    write_u32(blob + 24, (uint32_t)bg.choices_count, big_endian);
-    write_u32(blob + 28, (uint32_t)bg.members_count, big_endian);
-    write_u32(blob + 32, string_table_off, big_endian);
-    write_u32(blob + 36, commands_off, big_endian);
-    write_u32(blob + 40, params_off, big_endian);
-    write_u32(blob + 44, choices_off, big_endian);
-    write_u32(blob + 48, members_off, big_endian);
-    write_u32(blob + 52, root_command_off, big_endian);
-    write_u32(blob + 56, cli_name_off, big_endian);
-    write_u32(blob + 60, bg.max_completer_tokens, big_endian);
-
-    // Write string tables in order: commands, params, choices, descriptions
-    uint32_t st_off = string_table_off;
-    memcpy(blob + st_off, bg.cmd_strtab.data, cmd_len);
-    st_off += cmd_len;
-    memcpy(blob + st_off, bg.param_strtab.data, param_len);
-    st_off += param_len;
-    memcpy(blob + st_off, bg.choice_strtab.data, choice_len);
-    st_off += choice_len;
-    memcpy(blob + st_off, bg.desc_strtab.data, desc_len);
-
-    offset = commands_off;
-    for (size_t i = 0; i < bg.commands_count; i++) {
-        CommandEntry *ce = &bg.commands[i];
-        // Command names are in cmd_strtab (no adjustment needed - first section)
-        // Descriptions are in desc_strtab (need desc_off_adj)
-        uint32_t adj_desc_off = ce->desc_off ? ce->desc_off + desc_off_adj : 0;
-        write_u32(blob + offset, ce->name_off, big_endian);
-        write_u32(blob + offset + 4, adj_desc_off, big_endian);
-        write_u32(blob + offset + 8, ce->params_idx, big_endian);
-        write_u16(blob + offset + 12, ce->subcommands_idx, big_endian);
-        write_u16(blob + offset + 14, ce->params_count, big_endian);
-        write_u16(blob + offset + 16, ce->subcommands_count, big_endian);
-        offset += COMMAND_SIZE;
-    }
-
-    offset = params_off;
-    for (size_t i = 0; i < bg.params_count; i++) {
-        ParamEntry *pe = &bg.params[i];
-        // Param names are in param_strtab (need param_off_adj)
-        // Descriptions are in desc_strtab (need desc_off_adj)
-        // Completer strings are in choice_strtab (need choice_off_adj)
-        uint32_t adj_name_off = pe->name_off ? pe->name_off + param_off_adj : 0;
-        uint32_t adj_short_off = pe->short_off ? pe->short_off + param_off_adj : 0;
-        uint32_t adj_desc_off = pe->desc_off ? pe->desc_off + desc_off_adj : 0;
-        uint32_t choices_off_val = 0;
-        if (pe->choices_idx != (uint32_t)-1) {
-            if (pe->flags & FLAG_IS_COMPLETER) {
-                // Completer string is in choice_strtab
-                choices_off_val = pe->choices_idx + choice_off_adj;
-            } else if (pe->flags & FLAG_IS_MEMBERS) {
-                choices_off_val = members_offsets[pe->choices_idx];
-            } else {
-                choices_off_val = choices_offsets[pe->choices_idx];
-            }
-        }
-        write_u32(blob + offset, adj_name_off, big_endian);
-        write_u32(blob + offset + 4, adj_short_off, big_endian);
-        write_u32(blob + offset + 8, adj_desc_off, big_endian);
-        write_u32(blob + offset + 12, choices_off_val, big_endian);
-        blob[offset + 16] = pe->flags;
-        offset += PARAM_SIZE;
-    }
 
     // Sort choices and members lists for binary search at runtime
     for (size_t i = 0; i < bg.choices_count; i++) {
@@ -2413,9 +2282,460 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
         }
     }
 
-    // Write choices lists (string offsets are in choice_strtab, need choice_off_adj)
-    offset = choices_off;
+    // Choices/members section layout:
+    // u32 list_count + list_count*u32 list_offsets + list payloads
+    size_t choices_payload_size = 0;
     for (size_t i = 0; i < bg.choices_count; i++) {
+        size_t count = bg.choices_lists[i].count;
+        if (count > 65535) {
+            fcmp_errorf("Choice list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (count > (SIZE_MAX - 4) / 4) {
+            fcmp_errorf("Choice list %zu too large (overflow)\n", i);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (choices_payload_size > SIZE_MAX - (4 + count * 4)) {
+            fcmp_errorf("Choices section too large (overflow)\n");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        choices_payload_size += 4 + count * 4;
+    }
+    size_t choices_size = 4 + bg.choices_count * 4 + choices_payload_size;
+
+    size_t members_payload_size = 0;
+    for (size_t i = 0; i < bg.members_count; i++) {
+        size_t count = bg.members_lists[i].count;
+        if (count > 65535) {
+            fcmp_errorf("Member list %zu too large: %zu items (max 65535)\n", i, count);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (count > (SIZE_MAX - 4) / 4) {
+            fcmp_errorf("Member list %zu too large (overflow)\n", i);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        if (members_payload_size > SIZE_MAX - (4 + count * 4)) {
+            fcmp_errorf("Members section too large (overflow)\n");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            return false;
+        }
+        members_payload_size += 4 + count * 4;
+    }
+    size_t members_size = 4 + bg.members_count * 4 + members_payload_size;
+
+    // Build parent links and per-command option indices (root + each command)
+    size_t cmd_ref_count = bg.commands_count + 1;
+    if (cmd_ref_count > UINT32_MAX) {
+        fcmp_errorf("Too many command refs: %zu\n", cmd_ref_count);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        return false;
+    }
+    uint32_t *parent_ref = malloc(cmd_ref_count * sizeof(uint32_t));
+    uint32_t *own_params_idx = malloc(cmd_ref_count * sizeof(uint32_t));
+    uint32_t *own_params_count = malloc(cmd_ref_count * sizeof(uint32_t));
+    Slice32 *long_slices = calloc(cmd_ref_count, sizeof(Slice32));
+    Slice32 *short_slices = calloc(cmd_ref_count, sizeof(Slice32));
+    if (!parent_ref || !own_params_idx || !own_params_count || !long_slices || !short_slices) {
+        fcmp_perror("malloc");
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        return false;
+    }
+
+    own_params_idx[0] = root_params.idx;
+    own_params_count[0] = root_params.count;
+    parent_ref[0] = UINT32_MAX;
+    for (size_t i = 0; i < bg.commands_count; i++) {
+        own_params_idx[i + 1] = bg.commands[i].params_idx;
+        own_params_count[i + 1] = bg.commands[i].params_count;
+        parent_ref[i + 1] = UINT32_MAX;
+    }
+    for (uint32_t i = 0; i < top_level.count; i++) {
+        uint32_t child = top_level.idx + i;
+        if (child >= bg.commands_count) continue;
+        parent_ref[child + 1] = 0;
+    }
+    for (size_t i = 0; i < bg.commands_count; i++) {
+        CommandEntry *ce = &bg.commands[i];
+        for (uint32_t j = 0; j < ce->subcommands_count; j++) {
+            uint32_t child = ce->subcommands_idx + j;
+            if (child >= bg.commands_count) {
+                fcmp_errorf("Internal error: subcommand index out of range\n");
+                node_free(root); blobgen_free(&bg); free(root_desc);
+                free(parent_ref); free(own_params_idx); free(own_params_count);
+                free(long_slices); free(short_slices);
+                return false;
+            }
+            parent_ref[child + 1] = (uint32_t)i + 1;
+        }
+    }
+    for (size_t i = 1; i < cmd_ref_count; i++) {
+        if (parent_ref[i] == UINT32_MAX) {
+            fcmp_errorf("Internal error: unresolved parent for command %zu\n", i - 1);
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            free(parent_ref); free(own_params_idx); free(own_params_count);
+            free(long_slices); free(short_slices);
+            return false;
+        }
+    }
+
+    // Build per-command long/short option indices from inherited params.
+    LongIndexEntry *long_entries = NULL;
+    size_t long_total = 0, long_cap = 0;
+    ShortIndexEntry *short_entries = NULL;
+    size_t short_total = 0, short_cap = 0;
+
+    for (size_t ref = 0; ref < cmd_ref_count; ref++) {
+        long_slices[ref].start = (uint32_t)long_total;
+        short_slices[ref].start = (uint32_t)short_total;
+
+        // Build the chain from current command to root so we can walk root->...->current.
+        uint32_t chain_buf[128];
+        uint32_t *chain = chain_buf;
+        size_t chain_len = 0;
+        size_t chain_cap = sizeof(chain_buf) / sizeof(chain_buf[0]);
+        uint32_t cur = (uint32_t)ref;
+        while (1) {
+            if (chain_len == chain_cap) {
+                size_t next_cap = chain_cap * 2;
+                uint32_t *tmp = malloc(next_cap * sizeof(uint32_t));
+                if (!tmp) {
+                    fcmp_perror("malloc");
+                    node_free(root); blobgen_free(&bg); free(root_desc);
+                    free(parent_ref); free(own_params_idx); free(own_params_count);
+                    free(long_slices); free(short_slices);
+                    free(long_entries); free(short_entries);
+                    if (chain != chain_buf) free(chain);
+                    return false;
+                }
+                memcpy(tmp, chain, chain_len * sizeof(uint32_t));
+                if (chain != chain_buf) free(chain);
+                chain = tmp;
+                chain_cap = next_cap;
+            }
+            chain[chain_len++] = cur;
+            if (cur == 0) break;
+            cur = parent_ref[cur];
+            if (chain_len > cmd_ref_count) {
+                fcmp_errorf("Internal error: cycle in command parent map\n");
+                node_free(root); blobgen_free(&bg); free(root_desc);
+                free(parent_ref); free(own_params_idx); free(own_params_count);
+                free(long_slices); free(short_slices);
+                free(long_entries); free(short_entries);
+                if (chain != chain_buf) free(chain);
+                return false;
+            }
+        }
+
+        size_t inherited_count = 0;
+        for (size_t i = 0; i < chain_len; i++) {
+            inherited_count += own_params_count[chain[i]];
+        }
+        uint32_t *seen_long = NULL;
+        size_t seen_long_count = 0;
+        if (inherited_count > 0) {
+            seen_long = malloc(inherited_count * sizeof(uint32_t));
+            if (!seen_long) {
+                fcmp_perror("malloc");
+                node_free(root); blobgen_free(&bg); free(root_desc);
+                free(parent_ref); free(own_params_idx); free(own_params_count);
+                free(long_slices); free(short_slices);
+                free(long_entries); free(short_entries);
+                if (chain != chain_buf) free(chain);
+                return false;
+            }
+        }
+        bool seen_short[256] = {0};
+
+        // Iterate root->...->current so closer commands override inherited options.
+        for (size_t ci = chain_len; ci > 0; ci--) {
+            uint32_t node_ref = chain[ci - 1];
+            uint32_t base = own_params_idx[node_ref];
+            uint32_t cnt = own_params_count[node_ref];
+            for (uint32_t i = 0; i < cnt; i++) {
+                uint32_t param_idx = base + i;
+                if (param_idx >= bg.params_count) continue;
+                ParamEntry *pe = &bg.params[param_idx];
+
+                if (pe->name_off) {
+                    bool exists = false;
+                    for (size_t k = 0; k < seen_long_count; k++) {
+                        if (seen_long[k] == pe->name_off) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        seen_long[seen_long_count++] = pe->name_off;
+                        if (long_total >= long_cap) {
+                            size_t next = long_cap ? long_cap * 2 : 1024;
+                            LongIndexEntry *tmp = realloc(long_entries, next * sizeof(LongIndexEntry));
+                            if (!tmp) {
+                                fcmp_perror("realloc");
+                                free(seen_long);
+                                node_free(root); blobgen_free(&bg); free(root_desc);
+                                free(parent_ref); free(own_params_idx); free(own_params_count);
+                                free(long_slices); free(short_slices);
+                                free(long_entries); free(short_entries);
+                                if (chain != chain_buf) free(chain);
+                                return false;
+                            }
+                            long_entries = tmp;
+                            long_cap = next;
+                        }
+                        long_entries[long_total].param_idx = param_idx;
+                        long_total++;
+                    }
+                }
+
+                if (pe->short_off) {
+                    const uint8_t *sp = bg.param_strtab.data + pe->short_off;
+                    size_t slen = (sp[0] < 128) ? sp[0] : (((sp[0] & 0x7f) << 8) | sp[1]);
+                    const char *ss = (const char *)(sp + (sp[0] < 128 ? 1 : 2));
+                    if (slen >= 2 && ss[0] == '-') {
+                        uint8_t ch = (uint8_t)ss[1];
+                        if (!seen_short[ch]) {
+                            seen_short[ch] = true;
+                            if (short_total >= short_cap) {
+                                size_t next = short_cap ? short_cap * 2 : 1024;
+                                ShortIndexEntry *tmp = realloc(short_entries, next * sizeof(ShortIndexEntry));
+                                if (!tmp) {
+                                    fcmp_perror("realloc");
+                                    free(seen_long);
+                                    node_free(root); blobgen_free(&bg); free(root_desc);
+                                    free(parent_ref); free(own_params_idx); free(own_params_count);
+                                    free(long_slices); free(short_slices);
+                                    free(long_entries); free(short_entries);
+                                    if (chain != chain_buf) free(chain);
+                                    return false;
+                                }
+                                short_entries = tmp;
+                                short_cap = next;
+                            }
+                            short_entries[short_total].short_ch = ch;
+                            short_entries[short_total]._pad[0] = 0;
+                            short_entries[short_total]._pad[1] = 0;
+                            short_entries[short_total]._pad[2] = 0;
+                            short_entries[short_total].param_idx = param_idx;
+                            short_total++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Sort long entries for binary prefix search by option name.
+        size_t lstart = long_slices[ref].start;
+        size_t lcount = long_total - lstart;
+        for (size_t i = 1; i < lcount; i++) {
+            LongIndexEntry key = long_entries[lstart + i];
+            size_t k = i;
+            while (k > 0) {
+                LongIndexEntry prev = long_entries[lstart + k - 1];
+                if (strtab_cmp(&bg.param_strtab,
+                               bg.params[prev.param_idx].name_off,
+                               bg.params[key.param_idx].name_off) <= 0) break;
+                long_entries[lstart + k] = prev;
+                k--;
+            }
+            long_entries[lstart + k] = key;
+        }
+
+        // Sort short entries by short char for fast lookup.
+        size_t sstart = short_slices[ref].start;
+        size_t scount = short_total - sstart;
+        for (size_t i = 1; i < scount; i++) {
+            ShortIndexEntry key = short_entries[sstart + i];
+            size_t k = i;
+            while (k > 0 && short_entries[sstart + k - 1].short_ch > key.short_ch) {
+                short_entries[sstart + k] = short_entries[sstart + k - 1];
+                k--;
+            }
+            short_entries[sstart + k] = key;
+        }
+
+        long_slices[ref].count = (uint32_t)lcount;
+        short_slices[ref].count = (uint32_t)scount;
+        if (chain != chain_buf) free(chain);
+        free(seen_long);
+    }
+
+    size_t option_long_size = 8 + cmd_ref_count * sizeof(Slice32) + long_total * sizeof(uint32_t);
+    size_t option_short_size = short_total > 0
+        ? (8 + cmd_ref_count * sizeof(Slice32) + short_total * sizeof(ShortIndexEntry))
+        : 0;
+    if (commands_size > UINT32_MAX || params_size > UINT32_MAX ||
+        choices_size > UINT32_MAX || members_size > UINT32_MAX ||
+        option_long_size > UINT32_MAX ||
+        option_short_size > UINT32_MAX) {
+        fcmp_errorf("Blob section too large (max 4GB per section)\n");
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
+        return false;
+    }
+
+    // Build section list and offsets.
+    SectionEntry sections[10];
+    size_t section_count = 0;
+    if (!section_append(sections, &section_count, 10, SECTION_STRINGS_HOT, (uint32_t)hot_len, 1, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_COMMANDS, (uint32_t)commands_size, COMMAND_SIZE, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_PARAMS, (uint32_t)params_size, PARAM_SIZE, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_CHOICES, (uint32_t)choices_size, 0, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_MEMBERS, (uint32_t)members_size, 0, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_ROOT, COMMAND_SIZE, COMMAND_SIZE, 0) ||
+        !section_append(sections, &section_count, 10, SECTION_OPTION_LONG, (uint32_t)option_long_size, 0, 0)) {
+        fcmp_errorf("Internal error: section append failed\n");
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
+        return false;
+    }
+    if (short_total > 0) {
+        if (!section_append(sections, &section_count, 10, SECTION_OPTION_SHORT, (uint32_t)option_short_size, 0, 0)) {
+            fcmp_errorf("Internal error: section append failed\n");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            free(parent_ref); free(own_params_idx); free(own_params_count);
+            free(long_slices); free(short_slices);
+            free(long_entries); free(short_entries);
+            return false;
+        }
+    }
+    if (has_desc_section) {
+        if (!section_append(sections, &section_count, 10, SECTION_STRINGS_COLD, (uint32_t)desc_len, 1, SECTION_FLAG_OPTIONAL)) {
+            fcmp_errorf("Internal error: section append failed\n");
+            node_free(root); blobgen_free(&bg); free(root_desc);
+            free(parent_ref); free(own_params_idx); free(own_params_count);
+            free(long_slices); free(short_slices);
+            free(long_entries); free(short_entries);
+            return false;
+        }
+    }
+
+    size_t section_dir_off = HEADER_SIZE;
+    size_t section_dir_size = section_count * SECTION_ENTRY_SIZE;
+    size_t data_off = align4(section_dir_off + section_dir_size);
+    for (size_t i = 0; i < section_count; i++) {
+        data_off = align4(data_off);
+        sections[i].offset = (uint32_t)data_off;
+        data_off += sections[i].size;
+    }
+    size_t total_size = align4(data_off);
+    if (total_size > UINT32_MAX) {
+        fcmp_errorf("Blob too large: %zu bytes (max 4GB)\n", total_size);
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
+        return false;
+    }
+
+    uint8_t *blob = calloc(1, total_size);
+    if (!blob) {
+        fcmp_perror("calloc");
+        node_free(root); blobgen_free(&bg); free(root_desc);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
+        return false;
+    }
+
+    memcpy(blob, BLOB_MAGIC, 4);
+    write_u16(blob + 4, BLOB_VERSION);
+    uint16_t flags = 0;
+    if (!has_desc_section) flags |= HEADER_FLAG_NO_DESCRIPTIONS;
+    write_u16(blob + 6, flags);
+    write_u16(blob + 8, (uint16_t)section_count);
+    write_u16(blob + 10, 0);
+    write_u32(blob + 12, (uint32_t)section_dir_off);
+    write_u32(blob + 16, (uint32_t)bg.commands_count);
+    write_u32(blob + 20, (uint32_t)bg.params_count);
+    write_u32(blob + 24, cli_name_off);
+    write_u32(blob + 28, (uint32_t)bg.max_command_path_len + 1);
+    write_u32(blob + 32, bg.max_completer_tokens);
+
+    // Write section directory.
+    size_t dir_pos = section_dir_off;
+    for (size_t i = 0; i < section_count; i++) {
+        write_u32(blob + dir_pos, sections[i].id);
+        write_u32(blob + dir_pos + 4, sections[i].offset);
+        write_u32(blob + dir_pos + 8, sections[i].size);
+        write_u32(blob + dir_pos + 12, sections[i].entry_size);
+        write_u32(blob + dir_pos + 16, sections[i].flags);
+        dir_pos += SECTION_ENTRY_SIZE;
+    }
+
+    uint32_t off_hot = 0, off_cold = 0, off_cmd = 0, off_params = 0, off_choices = 0, off_members = 0;
+    uint32_t off_root = 0, off_long = 0, off_short = 0;
+    for (size_t i = 0; i < section_count; i++) {
+        switch (sections[i].id) {
+            case SECTION_STRINGS_HOT: off_hot = sections[i].offset; break;
+            case SECTION_STRINGS_COLD: off_cold = sections[i].offset; break;
+            case SECTION_COMMANDS: off_cmd = sections[i].offset; break;
+            case SECTION_PARAMS: off_params = sections[i].offset; break;
+            case SECTION_CHOICES: off_choices = sections[i].offset; break;
+            case SECTION_MEMBERS: off_members = sections[i].offset; break;
+            case SECTION_ROOT: off_root = sections[i].offset; break;
+            case SECTION_OPTION_LONG: off_long = sections[i].offset; break;
+            case SECTION_OPTION_SHORT: off_short = sections[i].offset; break;
+            default: break;
+        }
+    }
+
+    // Strings
+    memcpy(blob + off_hot, bg.cmd_strtab.data, cmd_len);
+    memcpy(blob + off_hot + cmd_len, bg.param_strtab.data, param_len);
+    memcpy(blob + off_hot + cmd_len + param_len, bg.choice_strtab.data, choice_len);
+    if (has_desc_section) memcpy(blob + off_cold, bg.desc_strtab.data, desc_len);
+
+    // Commands
+    size_t offset = off_cmd;
+    for (size_t i = 0; i < bg.commands_count; i++) {
+        CommandEntry *ce = &bg.commands[i];
+        uint32_t desc_off = has_desc_section ? ce->desc_off : 0;
+        write_u32(blob + offset, ce->name_off);
+        write_u32(blob + offset + 4, desc_off);
+        write_u32(blob + offset + 8, ce->params_idx);
+        write_u16(blob + offset + 12, ce->subcommands_idx);
+        write_u16(blob + offset + 14, ce->params_count);
+        write_u16(blob + offset + 16, ce->subcommands_count);
+        write_u16(blob + offset + 18, 0);
+        offset += COMMAND_SIZE;
+    }
+
+    // Params
+    offset = off_params;
+    for (size_t i = 0; i < bg.params_count; i++) {
+        ParamEntry *pe = &bg.params[i];
+        uint32_t name_off = pe->name_off ? pe->name_off + param_off_adj : 0;
+        uint32_t short_off = pe->short_off ? pe->short_off + param_off_adj : 0;
+        uint32_t desc_off = has_desc_section ? pe->desc_off : 0;
+        uint32_t value_ref = pe->value_ref;
+        if (pe->value_kind == VALUE_KIND_COMPLETER && value_ref) value_ref += choice_off_adj;
+        write_u32(blob + offset, name_off);
+        write_u32(blob + offset + 4, short_off);
+        write_u32(blob + offset + 8, desc_off);
+        write_u32(blob + offset + 12, value_ref);
+        blob[offset + 16] = pe->value_kind;
+        blob[offset + 17] = pe->flags;
+        blob[offset + 18] = 0;
+        blob[offset + 19] = 0;
+        offset += PARAM_SIZE;
+    }
+
+    // Choices section
+    write_u32(blob + off_choices, (uint32_t)bg.choices_count);
+    offset = off_choices + 4 + bg.choices_count * 4;
+    for (size_t i = 0; i < bg.choices_count; i++) {
+        write_u32(blob + off_choices + 4 + i * 4, (uint32_t)(offset - off_choices));
         StringList *sl = &bg.choices_lists[i];
         if (sl->count < 255) {
             blob[offset] = (uint8_t)sl->count;
@@ -2424,20 +2744,22 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             blob[offset + 3] = 0;
         } else {
             blob[offset] = 0xFF;
-            write_u16(blob + offset + 1, (uint16_t)sl->count, big_endian);
+            write_u16(blob + offset + 1, (uint16_t)sl->count);
             blob[offset + 3] = 0;
         }
         offset += 4;
         for (size_t j = 0; j < sl->count; j++) {
             uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
-            write_u32(blob + offset, adj_off, big_endian);
+            write_u32(blob + offset, adj_off);
             offset += 4;
         }
     }
 
-    // Write members lists (string offsets are in choice_strtab, need choice_off_adj)
-    offset = members_off;
+    // Members section
+    write_u32(blob + off_members, (uint32_t)bg.members_count);
+    offset = off_members + 4 + bg.members_count * 4;
     for (size_t i = 0; i < bg.members_count; i++) {
+        write_u32(blob + off_members + 4 + i * 4, (uint32_t)(offset - off_members));
         StringList *sl = &bg.members_lists[i];
         if (sl->count < 255) {
             blob[offset] = (uint8_t)sl->count;
@@ -2446,37 +2768,78 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
             blob[offset + 3] = 0;
         } else {
             blob[offset] = 0xFF;
-            write_u16(blob + offset + 1, (uint16_t)sl->count, big_endian);
+            write_u16(blob + offset + 1, (uint16_t)sl->count);
             blob[offset + 3] = 0;
         }
         offset += 4;
         for (size_t j = 0; j < sl->count; j++) {
             uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
-            write_u32(blob + offset, adj_off, big_endian);
+            write_u32(blob + offset, adj_off);
             offset += 4;
         }
     }
 
-    uint32_t adj_root_desc_off = root_desc_off ? root_desc_off + desc_off_adj : 0;
-    write_u32(blob + root_command_off, 0, big_endian);
-    write_u32(blob + root_command_off + 4, adj_root_desc_off, big_endian);
-    write_u32(blob + root_command_off + 8, root_params.idx, big_endian);
-    write_u16(blob + root_command_off + 12, top_level.idx, big_endian);
-    write_u16(blob + root_command_off + 14, root_params.count, big_endian);
-    write_u16(blob + root_command_off + 16, top_level.count, big_endian);
+    // Root command
+    write_u32(blob + off_root, 0);
+    write_u32(blob + off_root + 4, has_desc_section ? root_desc_off : 0);
+    write_u32(blob + off_root + 8, root_params.idx);
+    write_u16(blob + off_root + 12, top_level.idx);
+    write_u16(blob + off_root + 14, root_params.count);
+    write_u16(blob + off_root + 16, top_level.count);
+    write_u16(blob + off_root + 18, 0);
+
+    // Long index section
+    write_u32(blob + off_long, (uint32_t)cmd_ref_count);
+    write_u32(blob + off_long + 4, (uint32_t)long_total);
+    offset = off_long + 8;
+    for (size_t i = 0; i < cmd_ref_count; i++) {
+        write_u32(blob + offset, long_slices[i].start);
+        write_u32(blob + offset + 4, long_slices[i].count);
+        offset += 8;
+    }
+    for (size_t i = 0; i < long_total; i++) {
+        write_u32(blob + offset, long_entries[i].param_idx);
+        offset += 4;
+    }
+
+    // Short index section
+    if (short_total > 0) {
+        write_u32(blob + off_short, (uint32_t)cmd_ref_count);
+        write_u32(blob + off_short + 4, (uint32_t)short_total);
+        offset = off_short + 8;
+        for (size_t i = 0; i < cmd_ref_count; i++) {
+            write_u32(blob + offset, short_slices[i].start);
+            write_u32(blob + offset + 4, short_slices[i].count);
+            offset += 8;
+        }
+        for (size_t i = 0; i < short_total; i++) {
+            blob[offset] = short_entries[i].short_ch;
+            blob[offset + 1] = 0;
+            blob[offset + 2] = 0;
+            blob[offset + 3] = 0;
+            write_u32(blob + offset + 4, short_entries[i].param_idx);
+            offset += 8;
+        }
+    }
 
     FILE *out = fopen(output_path, "wb");
     if (!out) {
         fcmp_perror(output_path);
         node_free(root); blobgen_free(&bg); free(root_desc);
-        free(blob); free(choices_offsets); free(members_offsets);
+        free(blob);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
         return false;
     }
     if (fwrite(blob, 1, total_size, out) != total_size) {
         fcmp_perror(output_path);
         fclose(out);
         node_free(root); blobgen_free(&bg); free(root_desc);
-        free(blob); free(choices_offsets); free(members_offsets);
+        free(blob);
+        free(parent_ref); free(own_params_idx); free(own_params_count);
+        free(long_slices); free(short_slices);
+        free(long_entries); free(short_entries);
         return false;
     }
     fclose(out);
@@ -2486,17 +2849,24 @@ bool generate_blob(const char *schema_path, const char *output_path, bool big_en
     fcmp_infof("  Params: %zu\n", bg.params_count);
     fcmp_infof("  Choices lists: %zu\n", bg.choices_count);
     fcmp_infof("  Members lists: %zu\n", bg.members_count);
-    fcmp_infof("  String table: %zu bytes (cmds: %zu, params: %zu, choices: %zu, descs: %zu)\n",
-            total_strtab_size, cmd_len, param_len, choice_len, desc_len);
+    fcmp_infof("  Sections: %zu\n", section_count);
+    fcmp_infof("  Hot strings: %zu bytes (cmds: %zu, params: %zu, choices: %zu)\n",
+            hot_len, cmd_len, param_len, choice_len);
+    if (has_desc_section) fcmp_infof("  Cold strings: %zu bytes\n", desc_len);
+    fcmp_infof("  Option long index entries: %zu\n", long_total);
+    fcmp_infof("  Option short index entries: %zu\n", short_total);
 
-    free(blob); free(choices_offsets); free(members_offsets);
+    free(blob);
+    free(parent_ref); free(own_params_idx); free(own_params_count);
+    free(long_slices); free(short_slices);
+    free(long_entries); free(short_entries);
     node_free(root); blobgen_free(&bg); free(root_desc);
     return true;
 }
 
 bool lint_schema(const char *schema_path) {
     BlobGen bg;
-    blobgen_init(&bg, false, DESC_SHORT, 0);
+    blobgen_init(&bg, DESC_SHORT, 0);
     if (bg.error) return false;
 
     CommandNode *root = node_create("");
