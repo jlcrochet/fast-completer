@@ -41,7 +41,16 @@ def main() -> int:
         action="store_true",
         help="Rebuild *.fcmps by running export_command_tree.py first.",
     )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Write blobs to this directory instead of the default cache.",
+    )
     args = parser.parse_args()
+
+    if args.output_dir is not None:
+        args.output_dir.mkdir(parents=True, exist_ok=True)
 
     root_dir = Path(__file__).resolve().parents[1]
     schemas_dir = root_dir / "schemas"
@@ -72,7 +81,10 @@ def main() -> int:
             return 1
 
         print(f"Generating blob for {schema_file}")
-        run([str(fast_completer), "--generate-blob", str(schema_file)], cwd=root_dir)
+        cmd = [str(fast_completer), "--generate-blob", str(schema_file)]
+        if args.output_dir is not None:
+            cmd.append(str(args.output_dir / f"{name}.fcmpb"))
+        run(cmd, cwd=root_dir)
 
     return 0
 

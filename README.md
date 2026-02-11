@@ -11,7 +11,8 @@ This project provides a single native C binary that can provide completions for 
   - [Output Formats](#output-formats)
 - [Installation](#installation)
   - [Pre-built Binaries](#pre-built-binaries)
-  - [From Source](#from-source)
+  - [Install from Source (one-liner)](#install-from-source-one-liner)
+  - [From Source (manual)](#from-source-manual)
 - [Cache Directory](#cache-directory)
 - [Generating Blob Files](#generating-blob-files)
   - [Example Schemas](#example-schemas)
@@ -122,14 +123,28 @@ The `--quiet` option silently exits if the blob doesn't exist, making it suitabl
 
 Download the latest release for your platform from [GitHub Releases](../../releases/latest):
 
-| Platform | File |
-|----------|------|
-| Linux (x86_64) | `fast-completer-linux-x86_64` |
-| macOS (Apple Silicon) | `fast-completer-macos-arm64` |
-| macOS (Intel) | `fast-completer-macos-x86_64` |
-| Windows (x86_64) | `fast-completer-windows-x86_64.exe` |
+| Platform | Standalone Binary | ZIP (binary + prebuilt blobs) |
+|----------|-------------------|-------------------------------|
+| Linux (x86_64) | `fast-completer-linux-x86_64` | `fast-completer-linux-x86_64.zip` |
+| macOS (Apple Silicon) | `fast-completer-macos-arm64` | `fast-completer-macos-arm64.zip` |
+| macOS (Intel) | `fast-completer-macos-x86_64` | `fast-completer-macos-x86_64.zip` |
+| Windows (x86_64) | `fast-completer-windows-x86_64.exe` | `fast-completer-windows-x86_64.zip` |
 
-Download and move to a directory in your PATH:
+The **ZIP archives** include the binary and prebuilt blobs for all bundled schemas (aws, az, func, gcloud, gh), plus an install script that copies the blobs to the cache directory. This is the quickest way to get started — no blob generation needed.
+
+```bash
+# Linux / macOS
+unzip fast-completer-linux-x86_64.zip
+./fast-completer-linux-x86_64/install.sh   # copies blobs to ~/.cache/fast-completer/
+cp fast-completer-linux-x86_64/fast-completer ~/.local/bin/
+
+# Windows (PowerShell)
+Expand-Archive fast-completer-windows-x86_64.zip
+.\fast-completer-windows-x86_64\install.ps1   # copies blobs to %LOCALAPPDATA%\fast-completer\
+Copy-Item fast-completer-windows-x86_64\fast-completer.exe $env:LOCALAPPDATA\Programs\
+```
+
+The **standalone binaries** are also available if you prefer to generate blobs yourself:
 
 ```bash
 # Linux / macOS
@@ -140,7 +155,23 @@ mv fast-completer-* ~/.local/bin/fast-completer
 Move-Item fast-completer-windows-x86_64.exe $env:LOCALAPPDATA\Programs\fast-completer.exe
 ```
 
-### From Source
+### Install from Source (one-liner)
+
+Clone, build, install the binary, and generate all blobs in one command. Requires git and a C compiler.
+
+**Linux / macOS (requires `cc` or `gcc`):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.sh | sh
+```
+
+**Windows (requires [Developer Command Prompt](https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell) for `cl.exe`):**
+
+```powershell
+irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.ps1 | iex
+```
+
+### From Source (manual)
 
 Works on Linux, macOS, and Windows. Requires a C compiler.
 

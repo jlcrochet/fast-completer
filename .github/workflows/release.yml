@@ -64,11 +64,38 @@ jobs:
           name: ${{ matrix.artifact }}
           path: ${{ matrix.binary }}
 
-  release:
+  generate-blobs:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Linux binary
+        uses: actions/download-artifact@v4
+        with:
+          name: fast-completer-linux-x86_64
+
+      - name: Generate blobs
+        run: |
+          chmod +x fast-completer
+          python3 scripts/generate_all_blobs.py --output-dir blobs
+
+      - name: Upload blobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: blobs
+          path: blobs/
+
+  release:
+    needs: [build, generate-blobs]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -76,26 +103,43 @@ jobs:
 
       - name: Prepare release files
         run: |
-          cd artifacts
-          for dir in */; do
-            name="${dir%/}"
+          mkdir -p release
+
+          # Standalone binaries
+          for dir in artifacts/fast-completer-*/; do
+            name="$(basename "$dir")"
             if [[ -f "$dir/fast-completer.exe" ]]; then
-              mv "$dir/fast-completer.exe" "${name}.exe"
+              cp "$dir/fast-completer.exe" "release/${name}.exe"
             else
-              mv "$dir/fast-completer" "${name}.tmp"
-              rm -rf "$dir"
-              mv "${name}.tmp" "$name"
+              cp "$dir/fast-completer" "release/${name}"
             fi
           done
-          rm -rf */
-          ls -la
+
+          # ZIP archives with blobs
+          for dir in artifacts/fast-completer-*/; do
+            name="$(basename "$dir")"
+            staging="$name"
+            mkdir -p "$staging/blobs"
+            cp artifacts/blobs/*.fcmpb "$staging/blobs/"
+
+            if [[ "$name" == *windows* ]]; then
+              cp "$dir/fast-completer.exe" "$staging/"
+              cp scripts/install.ps1 "$staging/"
+            else
+              cp "$dir/fast-completer" "$staging/"
+              chmod +x "$staging/fast-completer"
+              cp scripts/install.sh "$staging/"
+              chmod +x "$staging/install.sh"
+            fi
+
+            (cd "$staging" && zip -r "../release/${name}.zip" .)
+            rm -rf "$staging"
+          done
+
+          ls -la release/
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            artifacts/fast-completer-linux-x86_64
-            artifacts/fast-completer-macos-arm64
-            artifacts/fast-completer-macos-x86_64
-            artifacts/fast-completer-windows-x86_64.exe
+          files: release/*
           generate_release_notes: true
