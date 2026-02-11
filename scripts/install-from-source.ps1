@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $generateArgs = if ($env:FC_GENERATE_OPTS) { $env:FC_GENERATE_OPTS -split ' ' } else { @() }
-$isWindows = $env:OS -eq "Windows_NT"
+$onWindows = $env:OS -eq "Windows_NT"
 $repo = "https://github.com/jlcrochet/fast-completer.git"
 $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "fast-completer-install"
 
@@ -12,7 +12,7 @@ try {
     git clone --depth 1 $repo $tmp
 
     Write-Host "Building..."
-    if ($isWindows) {
+    if ($onWindows) {
         Push-Location $tmp
         cl /O2 /DNDEBUG /Fe:fast-completer.exe src\fast-completer.c src\generate_blob.c src\compat\getopt.c
         Pop-Location
@@ -20,8 +20,8 @@ try {
         make -C $tmp
     }
 
-    $binary = if ($isWindows) { "fast-completer.exe" } else { "fast-completer" }
-    $dest = if ($isWindows) { "$env:LOCALAPPDATA\Programs" } else { "$HOME/.local/bin" }
+    $binary = if ($onWindows) { "fast-completer.exe" } else { "fast-completer" }
+    $dest = if ($onWindows) { "$env:LOCALAPPDATA\Programs" } else { "$HOME/.local/bin" }
     New-Item -ItemType Directory -Force -Path $dest | Out-Null
     Copy-Item (Join-Path $tmp $binary) $dest
     Write-Host "Installed binary to $dest/$binary"
@@ -33,7 +33,7 @@ try {
 
     $cache = if ($env:FAST_COMPLETER_CACHE) {
         $env:FAST_COMPLETER_CACHE
-    } elseif ($isWindows) {
+    } elseif ($onWindows) {
         "$env:LOCALAPPDATA\fast-completer"
     } else {
         "$HOME/.cache/fast-completer"
