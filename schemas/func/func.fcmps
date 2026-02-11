@@ -1,0 +1,174 @@
+func # Azure Functions Core Tools
+	init # Create a new Functions project
+		--csx @bool # Create .NET functions as C# script
+		--docker @bool # Create a Dockerfile for the project
+		--docker-only @bool # Add Dockerfile to existing project
+		--force @bool # Initialize even with existing files
+		--language # Language for the project
+		--managed-dependencies @bool # Install managed dependencies
+		--model (V1|V2|V3|V4) # Programming model version
+		--source-control @bool # Create a git repository
+		--worker-runtime (csharp|dotnet|dotnet-isolated|javascript|node|powershell|python|typescript|custom) # Language runtime
+		--target-framework (net10.0|net9.0|net8.0|net6.0|net48) # Target framework for dotnet-isolated
+	new # Create a new function from a template
+		--authlevel (function|anonymous|admin) # Authorization level for HTTP trigger
+		--csx @bool # Use C# script templates
+		--language|-l # Template language
+		--name|-n # Function name
+		--template|-t # Function template
+	start # Start the local Functions runtime host
+		--cert # Path to .pfx certificate file
+		--cors # Comma-separated CORS origins
+		--cors-credentials @bool # Allow cross-origin authenticated requests
+		--dotnet-isolated-debug @bool # Pause .NET worker for debugger attach
+		--enable-json-output @bool # Emit console logs as JSON
+		--enableAuth @bool # Enable full authentication pipeline
+		--functions # Space-separated list of functions to load
+		--language-worker # Arguments for the language worker
+		--no-build @bool # Skip building before running
+		--password # Password for .pfx certificate
+		--port # Local port to listen on
+		--timeout # Host start timeout in seconds
+		--useHttps @bool # Bind to https://localhost
+	run # Invoke a function directly (v1.x only)
+		--content # Inline content for the function
+		--debug @bool # Attach debugger to host process
+		--file # File to use as content
+		--no-interactive @bool # Don't prompt for input
+		--timeout # Wait timeout in seconds
+	pack # Create a deployment package
+		--output # Output path for the .zip package
+		--no-build @bool # Skip building before packing
+		--skip-install @bool # Skip npm install for Node.js
+		--build-native-deps @bool # Build Python deps in Docker
+	logs # Get logs for functions in Kubernetes
+		--platform (kubernetes) # Hosting platform
+		--name # Function app name in Azure
+	azure # Commands for working with Azure resources
+		--slot # Target deployment slot
+		--access-token # Access token for Azure auth
+		--access-token-stdin @bool # Read access token from stdin
+		--management-url # Azure cloud management URL
+		--subscription # Azure subscription
+		functionapp # Commands for function app management
+			fetch-app-settings # Download app settings to local.settings.json
+			list-functions # List functions in a function app
+				--show-keys @bool # Include function-level access keys in URLs
+			logstream # Stream logs from a function app
+				--browser @bool # Open live stream in browser
+			publish # Deploy project to a function app in Azure
+				--additional-packages # Packages to install for native deps
+				--build|-b (remote|local) # Build action for Linux function app
+				--build-native-deps @bool # Skip generating .wheels folder
+				--csx @bool # Publish as C# script project
+				--dotnet-cli-params # Additional dotnet build parameters
+				--force @bool # Ignore prepublishing verification
+				--list-ignored-files @bool # Show files ignored during publish
+				--list-included-files @bool # Show files included in publish
+				--no-build @bool # Skip building during publish
+				--nozip @bool # Disable Run-From-Package mode
+				--overwrite-settings|-y @bool # Suppress overwrite prompt
+				--publish-local-settings|-i @bool # Publish local.settings.json to Azure
+				--publish-settings-only|-o @bool # Only publish settings
+		storage # Commands for Azure Storage
+			fetch-connection-string # Get storage account connection string
+	azurecontainerapps # Deploy to Azure Container Apps
+		deploy # Deploy containerized function app
+			--environment # Container Apps environment name
+			--image-build @bool # Skip local Docker build
+			--image-name # Container image name with tag
+			--location # Region for deployment
+			--name # Function app deployment name
+			--registry # Registry for Docker build and push
+			--registry-password # Private registry password
+			--registry-username # Private registry username
+			--resource-group # Azure resource group
+			--storage-account # Storage account connection string
+			--worker-runtime (dotnet|dotnetIsolated|node|python|powershell|custom) # Runtime language
+	durable # Commands for Durable Functions
+		--connection-string-setting # Storage connection string setting name
+		--task-hub-name # Durable Task Hub name
+		delete-task-hub # Delete all task hub storage artifacts
+		get-history # Get orchestration instance history
+			--id # Orchestration instance ID
+		get-instances # Get status of all orchestration instances
+			--continuation-token # Pagination token
+			--created-after # Filter instances created after date
+			--created-before # Filter instances created before date
+			--runtime-status (running|completed|failed) # Filter by status
+			--top # Limit number of records returned
+		get-runtime-status # Get orchestration instance status
+			--id # Orchestration instance ID
+			--show-input @bool # Include function input in response
+			--show-output @bool # Include execution history in response
+		purge-history # Purge orchestration instance history
+			--created-after # Delete history after this date
+			--created-before # Delete history before this date
+			--runtime-status (completed|terminated|canceled|failed) # Filter by status
+		raise-event # Raise an event to an orchestration
+			--event-data # Data to pass to the event
+			--event-name # Name of the event
+			--id # Orchestration instance ID
+		rewind # Rewind an orchestration instance
+			--id # Orchestration instance ID
+			--reason # Reason for rewinding
+		start-new # Start a new orchestrator instance
+			--function-name # Orchestrator function name
+			--id # Orchestration instance ID
+			--input # Input for the orchestrator function
+		terminate # Stop an orchestration instance
+			--id # Orchestration instance ID
+			--reason # Reason for stopping
+	extensions # Commands for managing extensions
+		install # Install Functions extensions
+			--configPath # Path to extensions.csproj directory
+			--csx @bool # Support C# scripting projects
+			--force @bool # Update existing extension versions
+			--output # Output path for extensions
+			--package # Extension package identifier
+			--source # NuGet feed source
+			--version # Extension package version
+		sync # Install all referenced extensions
+			--configPath # Path to extensions.csproj directory
+			--csx @bool # Support C# scripting projects
+			--output # Output path for extensions
+	kubernetes # Commands for Kubernetes deployments
+		deploy # Deploy Functions project to Kubernetes
+			--config-map-name # Config map name for app settings
+			--cooldown-period # Scale-down cooldown in seconds
+			--dry-run @bool # Display template without executing
+			--ignore-errors @bool # Continue deployment on error
+			--image-name # Image name for pod deployment
+			--keda-version (v1|v2) # KEDA version to install
+			--keys-secret-name # Kubernetes Secrets name for access keys
+			--max-replicas # Maximum HPA replica count
+			--min-replicas # Minimum HPA replica count
+			--mount-funckeys-as-containervolume @bool # Mount access keys as volume
+			--name # Deployment name in Kubernetes
+			--namespace # Kubernetes namespace for deployment
+			--no-docker @bool # Read functions from directory
+			--polling-interval # Non-HTTP trigger polling interval
+			--pull-secret # Secret for private registry credentials
+			--registry # Registry for Docker build and push
+			--secret-name # Kubernetes Secrets name for app settings
+			--service-type (ClusterIP|NodePort|LoadBalancer) # Kubernetes Service type
+			--show-service-fqdn @bool # Show URLs with Kubernetes FQDN
+			--use-config-map @bool # Use ConfigMap instead of Secret
+		install # Install KEDA in a Kubernetes cluster
+			--dry-run @bool # Display template without executing
+			--keda-version (v1|v2) # KEDA version to install
+			--namespace # Kubernetes namespace for install
+		remove # Remove KEDA from Kubernetes cluster
+			--namespace # Kubernetes namespace for removal
+	settings # Manage local environment settings
+		add # Add a setting to local.settings.json
+			--connectionString @bool # Add to ConnectionStrings collection
+		decrypt # Decrypt values in local.settings.json
+		delete # Remove a setting from local.settings.json
+			--connectionString @bool # Remove from ConnectionStrings collection
+		encrypt # Encrypt values in local.settings.json
+		list # List settings from local.settings.json
+			--showValue @bool # Show actual unmasked values
+	templates # Commands for function templates
+		list # List available function templates
+			--language # Filter templates by language
