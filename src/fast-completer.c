@@ -63,6 +63,12 @@ typedef enum {
     OUT_UNKNOWN
 } OutputFormat;
 
+typedef enum {
+    CASE_SENSITIVE_FALSE = 0,
+    CASE_SENSITIVE_TRUE = 1,
+    CASE_SENSITIVE_SMART = 2
+} CaseSensitivityMode;
+
 // Completion types (for PowerShell)
 typedef enum {
     COMP_COMMAND = 2,
@@ -167,6 +173,7 @@ static bool has_descriptions = true;  // Set from blob flags
 static bool add_trailing_space = false;  // Add trailing space to completion values
 static bool full_commands = false;       // Complete full leaf command paths instead of next level
 static bool quiet_mode = false;          // Suppress "blob not found" error (for fallback scripts)
+static CaseSensitivityMode g_case_sensitive = CASE_SENSITIVE_SMART;
 static uint32_t g_current_cmd_ref = 0;   // 0=root, n+1 => command index n
 
 // Pre-parsed index section pointers
@@ -1114,6 +1121,50 @@ static inline int str_cmp(const char *a, size_t a_len, const char *b, size_t b_l
     return (a_len < b_len) ? -1 : (a_len > b_len) ? 1 : 0;
 }
 
+static inline unsigned char ascii_tolower(unsigned char c) {
+    return (c >= 'A' && c <= 'Z') ? (unsigned char)(c + ('a' - 'A')) : c;
+}
+
+static inline bool str_eq_mode(const char *a, size_t a_len, const char *b, size_t b_len,
+                               bool case_sensitive) {
+    if (a_len != b_len) return false;
+    if (case_sensitive) return memcmp(a, b, a_len) == 0;
+    for (size_t i = 0; i < a_len; i++) {
+        if (ascii_tolower((unsigned char)a[i]) != ascii_tolower((unsigned char)b[i])) return false;
+    }
+    return true;
+}
+
+static inline bool str_starts_with_mode(const char *s, size_t s_len, const char *prefix,
+                                        size_t prefix_len, bool case_sensitive) {
+    if (prefix_len == 0) return true;
+    if (!s || !prefix || s_len < prefix_len) return false;
+    if (case_sensitive) return memcmp(s, prefix, prefix_len) == 0;
+    for (size_t i = 0; i < prefix_len; i++) {
+        if (ascii_tolower((unsigned char)s[i]) != ascii_tolower((unsigned char)prefix[i])) return false;
+    }
+    return true;
+}
+
+static inline bool is_match_case_sensitive(const char *text, size_t len) {
+    switch (g_case_sensitive) {
+        case CASE_SENSITIVE_TRUE:
+            return true;
+        case CASE_SENSITIVE_FALSE:
+            return false;
+        case CASE_SENSITIVE_SMART:
+            break;
+    }
+
+    bool has_lower = false;
+    for (size_t i = 0; i < len; i++) {
+        unsigned char c = (unsigned char)text[i];
+        if (c >= 'A' && c <= 'Z') return true;
+        if (c >= 'a' && c <= 'z') has_lower = true;
+    }
+    return !has_lower;
+}
+
 // Binary search for a command by name among sorted subcommands
 static const Command *bsearch_command(const Command *subs, uint16_t count, const char *name, size_t name_len) {
     uint16_t lo = 0, hi = count;
@@ -1124,6 +1175,22 @@ static const Command *bsearch_command(const Command *subs, uint16_t count, const
         if (cmp < 0) lo = mid + 1;
         else if (cmp > 0) hi = mid;
         else return &subs[mid];
+    }
+    return NULL;
+}
+
+static const Command *find_subcommand_by_name(const Command *subs, uint16_t count,
+                                              const char *name, size_t name_len) {
+    bool case_sensitive = is_match_case_sensitive(name, name_len);
+    if (case_sensitive) return bsearch_command(subs, count, name, name_len);
+
+    for (uint16_t i = 0; i < count; i++) {
+        String s = str_get(subs[i].name_off);
+        if (s.n == name_len && memcmp(s.p, name, name_len) == 0) return &subs[i];
+    }
+    for (uint16_t i = 0; i < count; i++) {
+        String s = str_get(subs[i].name_off);
+        if (str_eq_mode(s.p, s.n, name, name_len, false)) return &subs[i];
     }
     return NULL;
 }
@@ -1151,7 +1218,7 @@ static const Command *find_command(void) {
         }
 
         size_t arg_len = g_arg_lens[i];
-        const Command *found = bsearch_command(cmd_subcommands(cmd), cmd->subcommands_count, arg, arg_len);
+        const Command *found = find_subcommand_by_name(cmd_subcommands(cmd), cmd->subcommands_count, arg, arg_len);
 
         if (found) {
             cmd = found;
@@ -1250,7 +1317,7 @@ static inline bool prefix_is_tokenizable(const char *prefix, size_t len) {
 
 // Recursively output leaf commands (depth-limited to MAX_CMD_DEPTH)
 static void complete_leaf_commands(const Command *cmd, String path, const char *prefix,
-                                   size_t prefix_len, int depth) {
+                                   size_t prefix_len, int depth, bool case_sensitive) {
     if (cmd->subcommands_count == 0 || depth >= MAX_CMD_DEPTH) return;
 
     char *buf = path_buf;
@@ -1273,11 +1340,12 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
         }
         buf[new_len] = '\0';
 
-        bool matches = !prefix || strncmp(buf, prefix, prefix_len) == 0;
+        bool matches = !prefix || str_starts_with_mode(buf, new_len, prefix, prefix_len, case_sensitive);
 
         if (sub->subcommands_count > 0) {
-            if (!prefix || matches || strncmp(prefix, buf, new_len) == 0) {
-                complete_leaf_commands(sub, (String){buf, new_len}, prefix, prefix_len, depth + 1);
+            if (!prefix || matches || str_starts_with_mode(prefix, prefix_len, buf, new_len, case_sensitive)) {
+                complete_leaf_commands(sub, (String){buf, new_len}, prefix, prefix_len, depth + 1,
+                                       case_sensitive);
             }
         } else if (matches) {
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
@@ -1289,8 +1357,13 @@ static void complete_leaf_commands(const Command *cmd, String path, const char *
 }
 
 // Prefix token-aware leaf completion (exact tokens via binary search, then DFS)
-static void complete_leaf_commands_token_prefix(const Command *cmd, const char *prefix, size_t prefix_len) {
+static void complete_leaf_commands_token_prefix(const Command *cmd, const char *prefix, size_t prefix_len,
+                                                bool case_sensitive) {
     if (!cmd || !prefix || prefix_len == 0) return;
+    if (!case_sensitive) {
+        complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len, 0, false);
+        return;
+    }
 
     bool trailing_space = prefix[prefix_len - 1] == ' ';
     const char *p = prefix;
@@ -1306,7 +1379,7 @@ static void complete_leaf_commands_token_prefix(const Command *cmd, const char *
         size_t tok_len = (size_t)(p - start);
         if (tok_len == 0) {
             // Unexpected (e.g., double spaces); fall back to full scan
-            complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0);
+            complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0, true);
             return;
         }
 
@@ -1335,7 +1408,7 @@ static void complete_leaf_commands_token_prefix(const Command *cmd, const char *
         if (p < end && *p == ' ') p++;  // Skip single space delimiter
     }
 
-    complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0);
+    complete_leaf_commands(cur, (String){path_buf, path_len}, prefix, prefix_len, 0, true);
 }
 
 // Binary search for first subcommand with name >= prefix (lower bound)
@@ -1358,7 +1431,8 @@ static uint16_t bsearch_prefix_lower(const Command *subs, uint16_t count,
 
 // Complete immediate subcommands (single level)
 // Uses binary search for prefix matching: O(log n + matches) instead of O(n)
-static void complete_next_level(const Command *cmd, const char *prefix, size_t prefix_len) {
+static void complete_next_level(const Command *cmd, const char *prefix, size_t prefix_len,
+                                bool case_sensitive) {
     if (cmd->subcommands_count == 0) return;
 
     const Command *subs = cmd_subcommands(cmd);
@@ -1368,6 +1442,17 @@ static void complete_next_level(const Command *cmd, const char *prefix, size_t p
         for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
             const Command *sub = &subs[i];
             String name = str_get(sub->name_off);
+            uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
+            output_completion(name, str_get_desc(desc), COMP_COMMAND);
+        }
+        return;
+    }
+
+    if (!case_sensitive) {
+        for (uint16_t i = 0; i < cmd->subcommands_count; i++) {
+            const Command *sub = &subs[i];
+            String name = str_get(sub->name_off);
+            if (!str_starts_with_mode(name.p, name.n, prefix, prefix_len, false)) continue;
             uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : sub->desc_off;
             output_completion(name, str_get_desc(desc), COMP_COMMAND);
         }
@@ -1387,15 +1472,16 @@ static void complete_next_level(const Command *cmd, const char *prefix, size_t p
 
 // Complete subcommands (full leaf paths or next level based on flag)
 static void complete_subcommands(const Command *cmd, const char *prefix, size_t prefix_len) {
+    bool case_sensitive = is_match_case_sensitive(prefix, prefix_len);
     if (full_commands) {
         if (prefix_is_tokenizable(prefix, prefix_len)) {
-            complete_leaf_commands_token_prefix(cmd, prefix, prefix_len);
+            complete_leaf_commands_token_prefix(cmd, prefix, prefix_len, case_sensitive);
         } else {
             path_buf[0] = '\0';
-            complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len, 0);
+            complete_leaf_commands(cmd, (String){path_buf, 0}, prefix, prefix_len, 0, case_sensitive);
         }
     } else {
-        complete_next_level(cmd, prefix, prefix_len);
+        complete_next_level(cmd, prefix, prefix_len, case_sensitive);
     }
 }
 
@@ -1434,6 +1520,7 @@ static void complete_string_list(uint32_t list_index, bool is_members, const cha
 
     const uint32_t *offsets = get_string_offsets_abs(list_abs_off);
     bool has_out = out_prefix.p && out_prefix.n > 0;
+    bool case_sensitive = is_match_case_sensitive(prefix, prefix_len);
 
     if (!prefix || prefix_len == 0) {
         for (uint16_t i = 0; i < count; i++) {
@@ -1441,6 +1528,18 @@ static void complete_string_list(uint32_t list_index, bool is_members, const cha
                 output_completion_ex(out_prefix.p, out_prefix.n, str_get(offsets[i]), str_get(0), COMP_PARAM_VALUE);
             else
                 output_completion(str_get(offsets[i]), str_get(0), COMP_PARAM_VALUE);
+        }
+        return;
+    }
+
+    if (!case_sensitive) {
+        for (uint16_t i = 0; i < count; i++) {
+            String s = str_get(offsets[i]);
+            if (!str_starts_with_mode(s.p, s.n, prefix, prefix_len, false)) continue;
+            if (has_out)
+                output_completion_ex(out_prefix.p, out_prefix.n, s, str_get(0), COMP_PARAM_VALUE);
+            else
+                output_completion(s, str_get(0), COMP_PARAM_VALUE);
         }
         return;
     }
@@ -1645,7 +1744,7 @@ static char *build_windows_cmdline(char *const *argv) {
 
 static void completer_line_finish(CompleterCacheEntry *store_entry, const char *line, size_t line_pos,
                                   const char *prefix, size_t prefix_len,
-                                  bool truncated, bool *warned) {
+                                  bool case_sensitive, bool truncated, bool *warned) {
     if (truncated) {
         if (warned && !*warned) {
             fcmp_warnf("fast-completer: completer output line too long, dropping\n");
@@ -1654,7 +1753,7 @@ static void completer_line_finish(CompleterCacheEntry *store_entry, const char *
         return;
     }
     if (line_pos == 0) return;
-    if (!prefix || (line_pos >= prefix_len && memcmp(line, prefix, prefix_len) == 0)) {
+    if (!prefix || str_starts_with_mode(line, line_pos, prefix, prefix_len, case_sensitive)) {
         completer_cache_add_value(store_entry, line, line_pos);
     }
 }
@@ -1680,6 +1779,7 @@ static void execute_completer(const char *cli_name, String completer,
     bool timed_out = false;
     bool launched = false;
     bool exited_ok = false;
+    bool case_sensitive = is_match_case_sensitive(prefix, prefix_len);
 
     char *args = NULL;
     char **argv = NULL;
@@ -1846,7 +1946,8 @@ static void execute_completer(const char *cli_name, String completer,
 
         for (DWORD i = 0; i < bytes_read; i++) {
             if (buf[i] == '\n' || buf[i] == '\r') {
-                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len,
+                                      case_sensitive, line_truncated, &trunc_warned);
                 line_pos = 0;
                 line_truncated = false;
             } else if (!line_truncated) {
@@ -1859,7 +1960,8 @@ static void execute_completer(const char *cli_name, String completer,
         }
     }
 
-    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len,
+                          case_sensitive, line_truncated, &trunc_warned);
     if (launched) {
         DWORD exit_code = 0;
         if (GetExitCodeProcess(pi.hProcess, &exit_code) && exit_code == STILL_ACTIVE) {
@@ -1974,7 +2076,8 @@ static void execute_completer(const char *cli_name, String completer,
 
         for (ssize_t i = 0; i < n; i++) {
             if (buf[i] == '\n') {
-                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+                completer_line_finish(store_entry, line, line_pos, prefix, prefix_len,
+                                      case_sensitive, line_truncated, &trunc_warned);
                 line_pos = 0;
                 line_truncated = false;
             } else if (!line_truncated) {
@@ -1997,7 +2100,8 @@ static void execute_completer(const char *cli_name, String completer,
         }
     }
 
-    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len, line_truncated, &trunc_warned);
+    completer_line_finish(store_entry, line, line_pos, prefix, prefix_len,
+                          case_sensitive, line_truncated, &trunc_warned);
 
     if (!timed_out && launched && pid > 0) {
         int status = 0;
@@ -2103,6 +2207,7 @@ static inline bool get_short_slice(uint32_t cmd_ref, Slice32 *out) {
 static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
     if (!g_emit_set_ready) emit_set_reset();
     if (pinfo->len > 0 && !pinfo->is_dash) return;
+    bool case_sensitive = is_match_case_sensitive(prefix, pinfo->len);
 
     if (pinfo->is_single_dash) {
         Slice32 sl;
@@ -2115,7 +2220,7 @@ static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
                 if (p->short_off == 0) continue;
                 if (param_used(p)) continue;
                 String short_opt = str_get(p->short_off);
-                if (short_opt.n >= pinfo->len && memcmp(short_opt.p, prefix, pinfo->len) == 0) {
+                if (str_starts_with_mode(short_opt.p, short_opt.n, prefix, pinfo->len, case_sensitive)) {
                     uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                     if (!emit_set_contains(short_opt.p, short_opt.n)) {
                         output_completion(short_opt, str_get_desc(desc), COMP_PARAM_NAME);
@@ -2137,7 +2242,7 @@ static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
             if (param_used(p)) continue;
             String name = str_get(p->name_off);
             if (name.n == 0) continue;
-            if (pinfo->len == 0 || (name.n >= pinfo->len && memcmp(name.p, prefix, pinfo->len) == 0)) {
+            if (str_starts_with_mode(name.p, name.n, prefix, pinfo->len, case_sensitive)) {
                 uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
                 if (!emit_set_contains(name.p, name.n)) {
                     output_completion(name, str_get_desc(desc), COMP_PARAM_NAME);
@@ -2151,10 +2256,28 @@ static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
 // Find a param by option token using precomputed long/short indexes.
 static const Param *find_path_param(const char *opt, size_t opt_len) {
     if (!opt || opt_len < 2 || opt[0] != '-') return NULL;
+    bool case_sensitive = is_match_case_sensitive(opt, opt_len);
 
     if (opt[1] == '-') {
         Slice32 sl;
         if (!get_long_slice(g_current_cmd_ref, &sl)) return NULL;
+        if (!case_sensitive) {
+            for (uint32_t i = 0; i < sl.count; i++) {
+                const LongIndexEntry *e = &g_long_entries[sl.start + i];
+                if (e->param_idx >= header.param_count) continue;
+                const Param *p = get_param(e->param_idx);
+                String s = str_get(p->name_off);
+                if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0) return p;
+            }
+            for (uint32_t i = 0; i < sl.count; i++) {
+                const LongIndexEntry *e = &g_long_entries[sl.start + i];
+                if (e->param_idx >= header.param_count) continue;
+                const Param *p = get_param(e->param_idx);
+                String s = str_get(p->name_off);
+                if (str_eq_mode(s.p, s.n, opt, opt_len, false)) return p;
+            }
+            return NULL;
+        }
         uint32_t lo = 0, hi = sl.count;
         while (lo < hi) {
             uint32_t mid = lo + (hi - lo) / 2;
@@ -2182,6 +2305,22 @@ static const Param *find_path_param(const char *opt, size_t opt_len) {
         uint8_t ch = (uint8_t)opt[1];
         Slice32 sl;
         if (!get_short_slice(g_current_cmd_ref, &sl)) return NULL;
+        if (!case_sensitive) {
+            uint8_t folded = ascii_tolower(ch);
+            for (uint32_t i = 0; i < sl.count; i++) {
+                const ShortIndexEntry *e = &g_short_entries[sl.start + i];
+                if (e->short_ch == ch && e->param_idx < header.param_count) {
+                    return get_param(e->param_idx);
+                }
+            }
+            for (uint32_t i = 0; i < sl.count; i++) {
+                const ShortIndexEntry *e = &g_short_entries[sl.start + i];
+                if (ascii_tolower(e->short_ch) == folded && e->param_idx < header.param_count) {
+                    return get_param(e->param_idx);
+                }
+            }
+            return NULL;
+        }
         uint32_t lo = 0, hi = sl.count;
         while (lo < hi) {
             uint32_t mid = lo + (hi - lo) / 2;
@@ -2828,6 +2967,8 @@ static void print_help(void) {
     puts("  --blob <path>    Use blob at specified path instead of cache lookup");
     puts("  --add-space      Append trailing space to completion values");
     puts("  --full-commands  Complete full leaf command paths instead of next level");
+    puts("  --case-sensitive <false|true|smart>");
+    puts("                   Completion prefix matching mode (default: smart)");
     puts("  --quiet, -q      Exit silently if blob not found (for fallback scripts)");
     puts("                   Errors/warnings are printed to stderr\n");
     puts("  -T, --dynamic-completer-timeout <ms>  Override dynamic completer timeout");
@@ -2900,6 +3041,29 @@ typedef enum {
     MODE_LINT            // --lint: validate schema
 } Mode;
 
+enum {
+    OPT_CASE_SENSITIVE = 1000
+};
+
+static bool parse_case_sensitivity_mode(const char *value, CaseSensitivityMode *out_mode) {
+    if (!value || !out_mode) return false;
+
+    size_t n = strlen(value);
+    if (str_eq_mode(value, n, "false", 5, false)) {
+        *out_mode = CASE_SENSITIVE_FALSE;
+        return true;
+    }
+    if (str_eq_mode(value, n, "true", 4, false)) {
+        *out_mode = CASE_SENSITIVE_TRUE;
+        return true;
+    }
+    if (str_eq_mode(value, n, "smart", 5, false)) {
+        *out_mode = CASE_SENSITIVE_SMART;
+        return true;
+    }
+    return false;
+}
+
 int main(int argc, char *argv[]) {
     fcmp_diag_init();
 
@@ -2931,6 +3095,7 @@ int main(int argc, char *argv[]) {
         {"blob",               required_argument, 0, 'b'},
         {"add-space",          no_argument,       0, 'a'},
         {"full-commands",      no_argument,       0, 'f'},
+        {"case-sensitive",     required_argument, 0, OPT_CASE_SENSITIVE},
         {"quiet",              no_argument,       0, 'q'},
         {"dynamic-completer-timeout", required_argument, 0, 'T'},
 
@@ -3002,6 +3167,13 @@ int main(int argc, char *argv[]) {
                 full_commands = true;
                 complete_opts_used = true;
                 break;
+            case OPT_CASE_SENSITIVE:  // --case-sensitive
+                if (!parse_case_sensitivity_mode(optarg, &g_case_sensitive)) {
+                    fcmp_errorf("--case-sensitive must be one of: false, true, smart\n");
+                    return 1;
+                }
+                complete_opts_used = true;
+                break;
             case 'q':  // --quiet, -q
                 quiet_mode = true;
                 complete_opts_used = true;
@@ -3063,7 +3235,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (complete_opts_used && mode != MODE_COMPLETE) {
-        fcmp_errorf("Error: --blob, --add-space, --full-commands, --quiet, and --dynamic-completer-timeout are only valid in completion mode\n");
+        fcmp_errorf("Error: --blob, --add-space, --full-commands, --case-sensitive, --quiet, and --dynamic-completer-timeout are only valid in completion mode\n");
         return 1;
     }
 

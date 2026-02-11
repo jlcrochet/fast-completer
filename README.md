@@ -105,11 +105,14 @@ Use the `lines` format when you only need values without descriptions.
 |--------|-------------|
 | `--add-space` | Append trailing space to completion values |
 | `--full-commands` | Complete full leaf command paths instead of next level |
+| `--case-sensitive <false|true|smart>` | Prefix matching mode (default: `smart`) |
 | `--quiet`, `-q` | Exit silently if blob not found (for fallback scripts) |
 
 By default, command completion shows the next level of subcommands (e.g., `aws ""` shows `s3`, `ec2`, etc.). Use `--full-commands` to show full leaf command paths instead (e.g., `s3 cp`, `s3 ls`, `ec2 describe-instances`).
 
 The `--add-space` option is useful for shells that don't automatically add a space after completions. Prefer shell-specific configuration when available (e.g., `complete -S ' '` in bash).
+
+`--case-sensitive smart` uses smart-case matching: if your prefix contains uppercase letters, matching is case-sensitive; if it only contains lowercase letters, matching is case-insensitive (for example, prefix `s` matches values starting with `s` and `S`).
 
 The `--quiet` option silently exits if the blob doesn't exist, making it suitable for fallback completion setups. Use `--check` to test if a blob exists before attempting completions.
 
