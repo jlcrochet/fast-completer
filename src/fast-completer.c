@@ -601,12 +601,6 @@ static inline const Command *get_root_command(void) {
     return (const Command *)(blob + header.root_command_off);
 }
 
-// Get command's params (NULL if none)
-static inline const Param *cmd_params(const Command *cmd) {
-    if (!cmd->params_count) return NULL;
-    return get_param(cmd->params_idx);
-}
-
 // Get command's subcommands (NULL if none)
 static inline const Command *cmd_subcommands(const Command *cmd) {
     if (!cmd->subcommands_count) return NULL;
