@@ -17,7 +17,7 @@ make -C "$TMPDIR/fast-completer" install
 echo "Generating blobs..."
 for schema in "$TMPDIR/fast-completer/schemas"/*/*.fcmps; do
     [ -f "$schema" ] || continue
-    "$TMPDIR/fast-completer/fast-completer" --generate-blob "$schema"
+    "$TMPDIR/fast-completer/fast-completer" --generate-blob "$@" "$schema"
 done
 
 # Set up bash completions

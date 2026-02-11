@@ -1,5 +1,6 @@
 $ErrorActionPreference = "Stop"
 
+$generateArgs = if ($env:FC_GENERATE_OPTS) { $env:FC_GENERATE_OPTS -split ' ' } else { @() }
 $repo = "https://github.com/jlcrochet/fast-completer.git"
 $tmp = Join-Path $env:TEMP "fast-completer-install"
 
@@ -21,7 +22,7 @@ try {
 
     Write-Host "Generating blobs..."
     Get-ChildItem "$tmp\schemas\*\*.fcmps" | ForEach-Object {
-        & "$tmp\fast-completer.exe" --generate-blob $_
+        & "$tmp\fast-completer.exe" --generate-blob @generateArgs $_
     }
 
     $cache = if ($env:FAST_COMPLETER_CACHE) { $env:FAST_COMPLETER_CACHE } else { "$env:LOCALAPPDATA\fast-completer" }

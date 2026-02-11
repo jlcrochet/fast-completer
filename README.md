@@ -171,6 +171,16 @@ curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scrip
 irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.ps1 | iex
 ```
 
+Options like `--no-descriptions` or `--long-descriptions` are forwarded to blob generation:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.sh | sh -s -- --no-descriptions
+```
+
+```powershell
+$env:FC_GENERATE_OPTS="--no-descriptions"; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.ps1 | iex
+```
+
 ### From Source (manual)
 
 Works on Linux, macOS, and Windows. Requires a C compiler.
