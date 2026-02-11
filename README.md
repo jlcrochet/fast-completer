@@ -286,6 +286,7 @@ The `schemas/` directory contains pre-generated schemas and export scripts for p
 |-----|--------|--------------|
 | AWS CLI | `schemas/aws/aws.fcmps` | AWS CLI v2 (official installer, not PyPI) |
 | Azure CLI | `schemas/az/az.fcmps` | `azure-cli` pip package |
+| Azure Functions Core Tools | `schemas/func/func.fcmps` | Hand-maintained (no export script) |
 | gcloud CLI | `schemas/gcloud/gcloud.fcmps` | Google Cloud SDK (system install) |
 | GitHub CLI | `schemas/gh/gh.fcmps` | `gh` CLI (system install) |
 
@@ -294,6 +295,7 @@ To use the included schemas:
 ```bash
 fast-completer --generate-blob schemas/aws/aws.fcmps
 fast-completer --generate-blob schemas/az/az.fcmps
+fast-completer --generate-blob schemas/func/func.fcmps
 fast-completer --generate-blob schemas/gcloud/gcloud.fcmps
 fast-completer --generate-blob schemas/gh/gh.fcmps
 ```
