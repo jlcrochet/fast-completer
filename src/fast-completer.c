@@ -2381,6 +2381,16 @@ static void complete(int nspans, const char **spans) {
         return;
     }
 
+    // Only CLI name, no completion word (e.g. PowerShell 5.1 drops empty args).
+    // Treat as completing an empty string.
+    const char *synth_spans[2];
+    if (nspans == 1) {
+        synth_spans[0] = spans[0];
+        synth_spans[1] = "";
+        spans = synth_spans;
+        nspans = 2;
+    }
+
     // Fail if too many spans
     if (nspans > MAX_SPANS) {
         fcmp_errorf("Too many arguments (%d > %d)\n", nspans, MAX_SPANS);
