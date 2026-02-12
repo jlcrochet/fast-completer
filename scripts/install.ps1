@@ -2,6 +2,8 @@ $ErrorActionPreference = "Stop"
 
 $githubRepo = "jlcrochet/fast-completer"
 $onWindows = $env:OS -eq "Windows_NT"
+$addPath = $env:FC_ADD_PATH -eq "1"
+$menuComplete = $env:FC_MENU_COMPLETE -eq "1"
 $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "fast-completer-install"
 
 # Detect platform
@@ -53,11 +55,27 @@ try {
     Copy-Item -Path "$extractDir/blobs/*.fcmpb" -Destination $cache
     Write-Host "Installed blobs to $cache"
 
-    # Set up PowerShell completions
+    # Add to PATH
+    if ($addPath) {
+        $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+        if ($currentPath -split ";" | Where-Object { $_ -eq $dest }) {
+            Write-Host "$dest is already in PATH"
+        } else {
+            [Environment]::SetEnvironmentVariable("Path", "$currentPath;$dest", "User")
+            $env:PATH += [System.IO.Path]::PathSeparator + $dest
+            Write-Host "Added $dest to PATH"
+        }
+    }
+
+    # Set up PowerShell profile
     $marker = "# fast-completer shell completions"
+    $menuMarker = "# fast-completer MenuComplete"
     $profilePath = $PROFILE.CurrentUserCurrentHost
-    $needsSetup = (-not (Test-Path $profilePath)) -or (-not (Select-String -Quiet -SimpleMatch $marker -Path $profilePath))
-    if ($needsSetup) {
+    New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
+
+    # Completions
+    $needsCompletions = (-not (Test-Path $profilePath)) -or (-not (Select-String -Quiet -SimpleMatch $marker -Path $profilePath))
+    if ($needsCompletions) {
         $completionBlock = @"
 
 $marker
@@ -75,24 +93,40 @@ Get-ChildItem "`$fcCache/*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object
     Register-ArgumentCompleter -Native -CommandName `$_.BaseName -ScriptBlock `$fcCompleter
 }
 "@
-        New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
         Add-Content -Path $profilePath -Value $completionBlock
         Write-Host "Added shell completions to $profilePath"
     } else {
         Write-Host "Shell completions already configured in $profilePath"
     }
 
+    # MenuComplete
+    if ($menuComplete) {
+        $hasMenu = (Test-Path $profilePath) -and (Select-String -Quiet -SimpleMatch $menuMarker -Path $profilePath)
+        if (-not $hasMenu) {
+            Add-Content -Path $profilePath -Value "`n$menuMarker`nSet-PSReadLineKeyHandler -Key Tab -Function MenuComplete"
+            Write-Host "Added MenuComplete to $profilePath"
+        } else {
+            Write-Host "MenuComplete already configured in $profilePath"
+        }
+    }
+
+    # Source profile to activate everything in current session
+    . $profilePath
     Write-Host ""
-    Write-Host "Done!"
-    Write-Host "  Binary installed to $dest/$binary"
-    Write-Host "  Blobs installed to $cache"
-    Write-Host "  Shell completions configured in $profilePath"
-    Write-Host ""
-    Write-Host "To activate completions in your current session, run:"
-    Write-Host "  . $profilePath"
-    if (-not ($env:PATH -split [System.IO.Path]::PathSeparator | Where-Object { $_ -eq $dest })) {
+    Write-Host "Done! Completions are active in this session."
+    Write-Host "  Binary: $dest/$binary"
+    Write-Host "  Blobs: $cache"
+    Write-Host "  Profile: $profilePath"
+    if (-not $addPath -and -not ($env:PATH -split [System.IO.Path]::PathSeparator | Where-Object { $_ -eq $dest })) {
         Write-Host ""
-        Write-Host "NOTE: Add $dest to your PATH if not already present."
+        Write-Host "To add $dest to your PATH permanently, run:"
+        Write-Host "  [Environment]::SetEnvironmentVariable('Path', [Environment]::GetEnvironmentVariable('Path', 'User') + ';$dest', 'User')"
+        Write-Host "Or re-run with: `$env:FC_ADD_PATH=1"
+    }
+    if (-not $menuComplete -and -not $listView) {
+        Write-Host ""
+        Write-Host "For interactive menu-style completions, re-run with:"
+        Write-Host "  `$env:FC_MENU_COMPLETE=1"
     }
 } finally {
     if (Test-Path $tmp) { Remove-Item -Recurse -Force $tmp }

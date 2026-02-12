@@ -3,9 +3,11 @@ set -e
 
 GITHUB_REPO="jlcrochet/fast-completer"
 MARKER="# fast-completer shell completions"
+PATH_MARKER="# fast-completer PATH"
 
-# Parse arguments: --shell <name> for completions
+# Parse arguments
 shells=""
+add_path=false
 while [ $# -gt 0 ]; do
     case "$1" in
         --shell)
@@ -16,6 +18,10 @@ while [ $# -gt 0 ]; do
                 bash|zsh|fish) shells="$shells $1" ;;
                 *) echo "Error: unsupported shell '$1' (supported: bash, zsh, fish, none)" >&2; exit 1 ;;
             esac
+            shift
+            ;;
+        --add-path)
+            add_path=true
             shift
             ;;
         *)
@@ -56,13 +62,35 @@ mkdir -p "$CACHE_DIR"
 cp "$TMPDIR/release/blobs/"*.fcmpb "$CACHE_DIR/"
 
 # Shell completion setup
+add_path_bash() {
+    if [ -f "$HOME/.bashrc" ] && grep -qF "$PATH_MARKER" "$HOME/.bashrc"; then
+        return
+    fi
+    printf '\n%s\nexport PATH="$HOME/.local/bin:$PATH"\n' "$PATH_MARKER" >> "$HOME/.bashrc"
+}
+
+add_path_zsh() {
+    if [ -f "$HOME/.zshrc" ] && grep -qF "$PATH_MARKER" "$HOME/.zshrc"; then
+        return
+    fi
+    printf '\n%s\nexport PATH="$HOME/.local/bin:$PATH"\n' "$PATH_MARKER" >> "$HOME/.zshrc"
+}
+
+add_path_fish() {
+    FISH_PATH_CONF="$HOME/.config/fish/conf.d/fast-completer-path.fish"
+    if [ -f "$FISH_PATH_CONF" ]; then
+        return
+    fi
+    mkdir -p "$(dirname "$FISH_PATH_CONF")"
+    printf '%s\nfish_add_path ~/.local/bin\n' "$PATH_MARKER" > "$FISH_PATH_CONF"
+}
+
 setup_bash() {
     BASHRC="$HOME/.bashrc"
     if [ -f "$BASHRC" ] && grep -qF "$MARKER" "$BASHRC"; then
         echo "Bash completions already configured in $BASHRC"
-        return
-    fi
-    cat >> "$BASHRC" << 'EOF'
+    else
+        cat >> "$BASHRC" << 'EOF'
 
 # fast-completer shell completions
 _fast_completer() {
@@ -74,16 +102,17 @@ for blob in "$_fc_cache"/*.fcmpb; do
 done
 unset _fc_cache
 EOF
-    echo "Added bash completions to $BASHRC"
+        echo "Added bash completions to $BASHRC"
+    fi
+    [ "$add_path" = true ] && add_path_bash
 }
 
 setup_zsh() {
     ZSHRC="$HOME/.zshrc"
     if [ -f "$ZSHRC" ] && grep -qF "$MARKER" "$ZSHRC"; then
         echo "Zsh completions already configured in $ZSHRC"
-        return
-    fi
-    cat >> "$ZSHRC" << 'EOF'
+    else
+        cat >> "$ZSHRC" << 'EOF'
 
 # fast-completer shell completions
 _fast_completer() {
@@ -97,17 +126,18 @@ for blob in "$_fc_cache"/*.fcmpb(N); do
 done
 unset _fc_cache
 EOF
-    echo "Added zsh completions to $ZSHRC"
+        echo "Added zsh completions to $ZSHRC"
+    fi
+    [ "$add_path" = true ] && add_path_zsh
 }
 
 setup_fish() {
     FISH_CONF="$HOME/.config/fish/conf.d/fast-completer.fish"
     if [ -f "$FISH_CONF" ]; then
         echo "Fish completions already configured in $FISH_CONF"
-        return
-    fi
-    mkdir -p "$(dirname "$FISH_CONF")"
-    cat > "$FISH_CONF" << 'EOF'
+    else
+        mkdir -p "$(dirname "$FISH_CONF")"
+        cat > "$FISH_CONF" << 'EOF'
 # fast-completer shell completions
 function _fast_completer
     fast-completer -q fish (commandline -opc)
@@ -120,7 +150,9 @@ for blob in $_fc_cache/*.fcmpb
     complete -c $cmd -k -a "(_fast_completer)"
 end
 EOF
-    echo "Added fish completions to $FISH_CONF"
+        echo "Added fish completions to $FISH_CONF"
+    fi
+    [ "$add_path" = true ] && add_path_fish
 }
 
 reload_cmds=""
@@ -138,6 +170,6 @@ echo "  Binary installed to $BINDIR/fast-completer"
 echo "  Blobs installed to $CACHE_DIR/"
 if [ -n "$reload_cmds" ]; then
     echo ""
-    echo "To activate completions in your current shell, run:"
+    echo "To activate in your current shell, run:"
     printf "$reload_cmds"
 fi

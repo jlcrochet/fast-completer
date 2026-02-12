@@ -171,17 +171,27 @@ curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scrip
 irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
 ```
 
-Use `--shell` to also configure shell completions (supported: `bash`, `zsh`, `fish`):
+Use `--shell` to configure shell completions, and `--add-path` to add `~/.local/bin` to your PATH:
 
 ```bash
-# Install with bash completions
-curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash
+# Install with bash completions and PATH setup
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --add-path
 
 # Install completions for multiple shells
-curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --shell zsh --shell fish
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --shell zsh --shell fish --add-path
 ```
 
-The PowerShell script automatically configures PowerShell completions.
+The PowerShell script automatically configures completions and sources the profile. Use environment variables for additional setup:
+
+```powershell
+# Full setup: add to PATH + interactive menu completions
+$env:FC_ADD_PATH=1; $env:FC_MENU_COMPLETE=1; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
+```
+
+| Variable | Effect |
+|----------|--------|
+| `FC_ADD_PATH=1` | Permanently adds install directory to PATH |
+| `FC_MENU_COMPLETE=1` | Enables `MenuComplete` (interactive menu on Tab) |
 
 ### From Source
 
