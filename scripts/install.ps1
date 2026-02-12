@@ -50,7 +50,7 @@ try {
         "$HOME/.cache/fast-completer"
     }
     New-Item -ItemType Directory -Force -Path $cache | Out-Null
-    Copy-Item (Join-Path $extractDir "blobs" "*.fcmpb") -Destination $cache
+    Copy-Item -Path (Join-Path $extractDir "blobs" "*.fcmpb") -Destination $cache
     Write-Host "Installed blobs to $cache"
 
     # Set up PowerShell completions
