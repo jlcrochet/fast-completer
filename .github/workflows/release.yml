@@ -124,12 +124,12 @@ jobs:
 
             if [[ "$name" == *windows* ]]; then
               cp "$dir/fast-completer.exe" "$staging/"
-              cp scripts/install.ps1 "$staging/"
+              cp scripts/install-blobs.ps1 "$staging/"
             else
               cp "$dir/fast-completer" "$staging/"
               chmod +x "$staging/fast-completer"
-              cp scripts/install.sh "$staging/"
-              chmod +x "$staging/install.sh"
+              cp scripts/install-blobs.sh "$staging/"
+              chmod +x "$staging/install-blobs.sh"
             fi
 
             (cd "$staging" && zip -r "../release/${name}.zip" .)

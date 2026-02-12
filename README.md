@@ -11,8 +11,8 @@ This project provides a single native C binary that can provide completions for 
   - [Output Formats](#output-formats)
 - [Installation](#installation)
   - [Pre-built Binaries](#pre-built-binaries)
-  - [Install from Source (one-liner)](#install-from-source-one-liner)
-  - [From Source (manual)](#from-source-manual)
+  - [Quick Install (one-liner)](#quick-install-one-liner)
+  - [From Source](#from-source)
 - [Cache Directory](#cache-directory)
 - [Generating Blob Files](#generating-blob-files)
   - [Example Schemas](#example-schemas)
@@ -135,12 +135,12 @@ The **ZIP archives** include the binary and prebuilt blobs for all bundled schem
 ```bash
 # Linux / macOS
 unzip fast-completer-linux-x86_64.zip
-./fast-completer-linux-x86_64/install.sh   # copies blobs to ~/.cache/fast-completer/
+./fast-completer-linux-x86_64/install-blobs.sh   # copies blobs to ~/.cache/fast-completer/
 cp fast-completer-linux-x86_64/fast-completer ~/.local/bin/
 
 # Windows (PowerShell)
 Expand-Archive fast-completer-windows-x86_64.zip
-.\fast-completer-windows-x86_64\install.ps1   # copies blobs to %LOCALAPPDATA%\fast-completer\
+.\fast-completer-windows-x86_64\install-blobs.ps1   # copies blobs to %LOCALAPPDATA%\fast-completer\
 Copy-Item fast-completer-windows-x86_64\fast-completer.exe $env:LOCALAPPDATA\Programs\
 ```
 
@@ -155,33 +155,35 @@ mv fast-completer-* ~/.local/bin/fast-completer
 Move-Item fast-completer-windows-x86_64.exe $env:LOCALAPPDATA\Programs\fast-completer.exe
 ```
 
-### Install from Source (one-liner)
+### Quick Install (one-liner)
 
-Clone, build, install the binary, and generate all blobs in one command. Requires git and a C compiler.
+Downloads the latest release, installs the binary and prebuilt blobs. Requires `curl` and `unzip`.
 
-**Linux / macOS (requires `cc` or `gcc`):**
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.sh | sh
-```
-
-**Windows (requires [Developer Command Prompt](https://learn.microsoft.com/en-us/visualstudio/ide/reference/command-prompt-powershell) for `cl.exe`):**
-
-```powershell
-irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.ps1 | iex
-```
-
-Options like `--no-descriptions` or `--long-descriptions` are forwarded to blob generation:
+**Linux / macOS:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.sh | sh -s -- --no-descriptions
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh
 ```
+
+**Windows / Azure Cloud Shell (PowerShell):**
 
 ```powershell
-$env:FC_GENERATE_OPTS="--no-descriptions"; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install-from-source.ps1 | iex
+irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
 ```
 
-### From Source (manual)
+Use `--shell` to also configure shell completions (supported: `bash`, `zsh`, `fish`):
+
+```bash
+# Install with bash completions
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash
+
+# Install completions for multiple shells
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --shell zsh --shell fish
+```
+
+The PowerShell script automatically configures PowerShell completions.
+
+### From Source
 
 Works on Linux, macOS, and Windows. Requires a C compiler.
 
