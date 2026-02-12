@@ -75,7 +75,7 @@ Get-ChildItem "`$fcCache/*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object
     Register-ArgumentCompleter -Native -CommandName `$_.BaseName -ScriptBlock `$fcCompleter
 }
 "@
-        New-Item -ItemType File -Force -Path $profilePath | Out-Null
+        New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
         Add-Content -Path $profilePath -Value $completionBlock
         Write-Host "Added shell completions to $profilePath"
     } else {
