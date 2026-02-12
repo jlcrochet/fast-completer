@@ -81,7 +81,8 @@ try {
 $marker
 `$fcCompleter = {
     param(`$wordToComplete, `$commandAst, `$cursorPosition)
-    `$spans = `$commandAst.CommandElements | ForEach-Object { `$_.Extent.Text }
+    `$spans = @(`$commandAst.CommandElements | ForEach-Object { `$_.Extent.Text })
+    if (`$cursorPosition -gt `$commandAst.CommandElements[-1].Extent.EndOffset) { `$spans += '' }
     `$results = fast-completer -q pwsh @spans
     `$results | ForEach-Object {
         `$parts = `$_ -split "``t"
