@@ -692,7 +692,7 @@ Add to your profile:
 $fcCompleter = {
     param($wordToComplete, $commandAst, $cursorPosition)
     $spans = @($commandAst.CommandElements | ForEach-Object { $_.Extent.Text })
-    if ($cursorPosition -gt $commandAst.CommandElements[-1].Extent.EndOffset) { $spans += '' }
+    if ($cursorPosition -gt $commandAst.CommandElements[-1].Extent.EndOffset) { $spans += ' ' }
     $results = fast-completer -q pwsh @spans
     # Optional: fall back to carapace
     if (-not $results) {
