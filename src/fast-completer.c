@@ -1178,15 +1178,15 @@ static const Command *find_subcommand_by_name(const Command *subs, uint16_t coun
     bool case_sensitive = is_match_case_sensitive(name, name_len);
     if (case_sensitive) return bsearch_command(subs, count, name, name_len);
 
+    const Command *ci_match = NULL;
     for (uint16_t i = 0; i < count; i++) {
         String s = str_get(subs[i].name_off);
-        if (s.n == name_len && memcmp(s.p, name, name_len) == 0) return &subs[i];
+        if (s.n != name_len) continue;
+        if (memcmp(s.p, name, name_len) == 0) return &subs[i];
+        if (!ci_match && str_eq_mode(s.p, s.n, name, name_len, false))
+            ci_match = &subs[i];
     }
-    for (uint16_t i = 0; i < count; i++) {
-        String s = str_get(subs[i].name_off);
-        if (str_eq_mode(s.p, s.n, name, name_len, false)) return &subs[i];
-    }
-    return NULL;
+    return ci_match;
 }
 
 // Maximum command path depth (root -> ... -> leaf)
@@ -2256,21 +2256,18 @@ static const Param *find_path_param(const char *opt, size_t opt_len) {
         Slice32 sl;
         if (!get_long_slice(g_current_cmd_ref, &sl)) return NULL;
         if (!case_sensitive) {
+            const Param *ci_match = NULL;
             for (uint32_t i = 0; i < sl.count; i++) {
                 const LongIndexEntry *e = &g_long_entries[sl.start + i];
                 if (e->param_idx >= header.param_count) continue;
                 const Param *p = get_param(e->param_idx);
                 String s = str_get(p->name_off);
-                if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0) return p;
+                if (s.n != opt_len) continue;
+                if (memcmp(s.p, opt, opt_len) == 0) return p;
+                if (!ci_match && str_eq_mode(s.p, s.n, opt, opt_len, false))
+                    ci_match = p;
             }
-            for (uint32_t i = 0; i < sl.count; i++) {
-                const LongIndexEntry *e = &g_long_entries[sl.start + i];
-                if (e->param_idx >= header.param_count) continue;
-                const Param *p = get_param(e->param_idx);
-                String s = str_get(p->name_off);
-                if (str_eq_mode(s.p, s.n, opt, opt_len, false)) return p;
-            }
-            return NULL;
+            return ci_match;
         }
         uint32_t lo = 0, hi = sl.count;
         while (lo < hi) {
@@ -2288,8 +2285,8 @@ static const Param *find_path_param(const char *opt, size_t opt_len) {
             if (e->param_idx >= header.param_count) return NULL;
             const Param *p = get_param(e->param_idx);
             String s = str_get(p->name_off);
-            if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0 && e->param_idx < header.param_count) {
-                return get_param(e->param_idx);
+            if (s.n == opt_len && memcmp(s.p, opt, opt_len) == 0) {
+                return p;
             }
         }
         return NULL;
@@ -2849,26 +2846,32 @@ static bool ensure_cache_dir(void) {
     // Create fast-completer directory under %LOCALAPPDATA%
     if (!CreateDirectoryA(cache_dir, NULL) && GetLastError() != ERROR_ALREADY_EXISTS) {
         fcmp_errorf("Failed to create cache directory: %s (error %lu)\n", cache_dir, GetLastError());
+        free(cache_dir);
         return false;
     }
 #else
     // Create ~/.cache if needed, then ~/.cache/fast-completer
     char *parent = strdup(cache_dir);
-    if (!parent) return false;
+    if (!parent) { free(cache_dir); return false; }
     char *last_slash = strrchr(parent, '/');
     if (last_slash) {
         *last_slash = '\0';
         if (mkdir(parent, 0755) != 0 && errno != EEXIST) {
             fcmp_errorf("Failed to create parent directory: %s: %s\n", parent, strerror(errno));
+            free(parent);
+            free(cache_dir);
             return false;
         }
     }
+    free(parent);
     if (mkdir(cache_dir, 0755) != 0 && errno != EEXIST) {
         fcmp_errorf("Failed to create cache directory: %s: %s\n", cache_dir, strerror(errno));
+        free(cache_dir);
         return false;
     }
 #endif
 
+    free(cache_dir);
     return true;
 }
 
@@ -2879,13 +2882,14 @@ static char *build_cache_path(const char *name) {
 
     size_t len = strlen(cache_dir) + strlen(name) + 10;
     char *path = malloc(len);
-    if (!path) return NULL;
+    if (!path) { free(cache_dir); return NULL; }
 #ifdef _WIN32
     snprintf(path, len, "%s\\%s.fcmpb", cache_dir, name);
 #else
     snprintf(path, len, "%s/%s.fcmpb", cache_dir, name);
 #endif
 
+    free(cache_dir);
     return path;
 }
 
@@ -2914,6 +2918,7 @@ static char *resolve_blob_path(const char *blob_arg) {
     }
 
     char *path = build_cache_path(name);
+    free(name);
     return path;
 }
 

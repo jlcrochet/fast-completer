@@ -1209,7 +1209,8 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
     }
 
     typedef struct {
-        uint32_t name_off, desc_off, params_idx, subcommands_idx;
+        uint32_t name_off, desc_off, params_idx;
+        uint16_t subcommands_idx;
         uint16_t params_count, subcommands_count;
     } ChildData;
 
@@ -1242,7 +1243,13 @@ static IdxCount collect_commands(BlobGen *bg, CommandNode *node) {
             free(child_data);
             return result;
         }
-        child_data[i].subcommands_idx = sub_result.idx;
+        if (sub_result.idx > UINT16_MAX) {
+            fcmp_errorf("subcommand index overflow: %u\n", sub_result.idx);
+            bg->error = true;
+            free(child_data);
+            return result;
+        }
+        child_data[i].subcommands_idx = (uint16_t)sub_result.idx;
         child_data[i].subcommands_count = sub_result.count;
 
         // Collect params
@@ -2148,7 +2155,23 @@ static bool section_append(SectionEntry *sections, size_t *count, size_t cap, ui
     return true;
 }
 
+static void sort_string_lists(StringTable *st, StringList *lists, size_t count) {
+    for (size_t i = 0; i < count; i++) {
+        StringList *sl = &lists[i];
+        for (size_t j = 1; j < sl->count; j++) {
+            uint32_t key = sl->offsets[j];
+            size_t k = j;
+            while (k > 0 && strtab_cmp(st, sl->offsets[k - 1], key) > 0) {
+                sl->offsets[k] = sl->offsets[k - 1];
+                k--;
+            }
+            sl->offsets[k] = key;
+        }
+    }
+}
+
 bool generate_blob(const char *schema_path, const char *output_path, DescriptionMode desc_mode, size_t desc_max_len) {
+    bool result = false;
     BlobGen bg;
     blobgen_init(&bg, desc_mode, desc_max_len);
     if (bg.error) return false;
@@ -2157,17 +2180,21 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     if (!root) return false;
     char *root_desc = NULL;
     uint32_t cli_name_off = 0;
+    uint32_t *parent_ref = NULL;
+    uint32_t *own_params_idx = NULL;
+    uint32_t *own_params_count = NULL;
+    Slice32 *long_slices = NULL;
+    Slice32 *short_slices = NULL;
+    LongIndexEntry *long_entries = NULL;
+    ShortIndexEntry *short_entries = NULL;
+    uint8_t *blob = NULL;
+    FILE *out = NULL;
 
     if (!parse_tsv_schema(schema_path, &bg, root, &root_desc)) {
-        node_free(root);
-        blobgen_free(&bg);
-        return false;
+        goto cleanup;
     }
     if (blobgen_strtab_error(&bg)) {
-        node_free(root);
-        blobgen_free(&bg);
-        free(root_desc);
-        return false;
+        goto cleanup;
     }
 
     // Store the schema root/CLI name in the blob header (used to validate runtime calls and
@@ -2176,23 +2203,14 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         cli_name_off = strtab_add(&bg.cmd_strtab, root->name);
         if (cli_name_off == 0) {
             fcmp_errorf("Failed to store CLI name in string table\n");
-            node_free(root);
-            blobgen_free(&bg);
-            free(root_desc);
-            return false;
+            goto cleanup;
         }
     } else {
         fcmp_errorf("%s: error: root command name missing\n", schema_path);
-        node_free(root);
-        blobgen_free(&bg);
-        free(root_desc);
-        return false;
+        goto cleanup;
     }
     if (blobgen_strtab_error(&bg)) {
-        node_free(root);
-        blobgen_free(&bg);
-        free(root_desc);
-        return false;
+        goto cleanup;
     }
 
     IdxCount top_level = collect_commands(&bg, root);
@@ -2201,10 +2219,7 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     IdxCount root_params = collect_params_from_node(&bg, root);
 
     if (bg.error || blobgen_strtab_error(&bg)) {
-        node_free(root);
-        blobgen_free(&bg);
-        free(root_desc);
-        return false;
+        goto cleanup;
     }
 
     bool has_desc_section = (desc_mode != DESC_NONE && bg.has_any_descriptions);
@@ -2214,27 +2229,23 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     if (has_desc_section) {
         root_desc_off = strtab_add_desc_ex(&bg, root_desc ? root_desc : "CLI", false);
         if (blobgen_strtab_error(&bg)) {
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
     }
 
     // Check for integer overflow in counts
     if (bg.commands_count > 65535) {
         fcmp_errorf("Too many commands: %zu (max 65535)\n", bg.commands_count);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+        goto cleanup;
     }
     if (bg.params_count > 16777215) {
         fcmp_errorf("Too many params: %zu (max 16777215)\n", bg.params_count);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+        goto cleanup;
     }
     if (bg.max_completer_tokens > UINT16_MAX) {
         fcmp_errorf("Max completer args too large: %u (max %u)\n",
                     bg.max_completer_tokens, (unsigned)UINT16_MAX);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+        goto cleanup;
     }
 
     // Hot strings layout: [commands][params][choices]
@@ -2245,8 +2256,7 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     size_t desc_len = has_desc_section ? bg.desc_strtab.data_len : 0;
     if (hot_len > UINT32_MAX || desc_len > UINT32_MAX) {
         fcmp_errorf("String section too large (max 4GB)\n");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+        goto cleanup;
     }
     // Offset adjustments within hot strings section
     uint32_t param_off_adj = (uint32_t)cmd_len;
@@ -2256,31 +2266,8 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     size_t params_size = bg.params_count * PARAM_SIZE;
 
     // Sort choices and members lists for binary search at runtime
-    for (size_t i = 0; i < bg.choices_count; i++) {
-        StringList *sl = &bg.choices_lists[i];
-        // Insertion sort (lists are typically small)
-        for (size_t j = 1; j < sl->count; j++) {
-            uint32_t key = sl->offsets[j];
-            size_t k = j;
-            while (k > 0 && strtab_cmp(&bg.choice_strtab, sl->offsets[k - 1], key) > 0) {
-                sl->offsets[k] = sl->offsets[k - 1];
-                k--;
-            }
-            sl->offsets[k] = key;
-        }
-    }
-    for (size_t i = 0; i < bg.members_count; i++) {
-        StringList *sl = &bg.members_lists[i];
-        for (size_t j = 1; j < sl->count; j++) {
-            uint32_t key = sl->offsets[j];
-            size_t k = j;
-            while (k > 0 && strtab_cmp(&bg.choice_strtab, sl->offsets[k - 1], key) > 0) {
-                sl->offsets[k] = sl->offsets[k - 1];
-                k--;
-            }
-            sl->offsets[k] = key;
-        }
-    }
+    sort_string_lists(&bg.choice_strtab, bg.choices_lists, bg.choices_count);
+    sort_string_lists(&bg.choice_strtab, bg.members_lists, bg.members_count);
 
     // Choices/members section layout:
     // u32 list_count + list_count*u32 list_offsets + list payloads
@@ -2289,18 +2276,15 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         size_t count = bg.choices_lists[i].count;
         if (count > 65535) {
             fcmp_errorf("Choice list %zu too large: %zu items (max 65535)\n", i, count);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         if (count > (SIZE_MAX - 4) / 4) {
             fcmp_errorf("Choice list %zu too large (overflow)\n", i);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         if (choices_payload_size > SIZE_MAX - (4 + count * 4)) {
             fcmp_errorf("Choices section too large (overflow)\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         choices_payload_size += 4 + count * 4;
     }
@@ -2311,18 +2295,15 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         size_t count = bg.members_lists[i].count;
         if (count > 65535) {
             fcmp_errorf("Member list %zu too large: %zu items (max 65535)\n", i, count);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         if (count > (SIZE_MAX - 4) / 4) {
             fcmp_errorf("Member list %zu too large (overflow)\n", i);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         if (members_payload_size > SIZE_MAX - (4 + count * 4)) {
             fcmp_errorf("Members section too large (overflow)\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            return false;
+            goto cleanup;
         }
         members_payload_size += 4 + count * 4;
     }
@@ -2332,20 +2313,16 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     size_t cmd_ref_count = bg.commands_count + 1;
     if (cmd_ref_count > UINT32_MAX) {
         fcmp_errorf("Too many command refs: %zu\n", cmd_ref_count);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        return false;
+        goto cleanup;
     }
-    uint32_t *parent_ref = malloc(cmd_ref_count * sizeof(uint32_t));
-    uint32_t *own_params_idx = malloc(cmd_ref_count * sizeof(uint32_t));
-    uint32_t *own_params_count = malloc(cmd_ref_count * sizeof(uint32_t));
-    Slice32 *long_slices = calloc(cmd_ref_count, sizeof(Slice32));
-    Slice32 *short_slices = calloc(cmd_ref_count, sizeof(Slice32));
+    parent_ref = malloc(cmd_ref_count * sizeof(uint32_t));
+    own_params_idx = malloc(cmd_ref_count * sizeof(uint32_t));
+    own_params_count = malloc(cmd_ref_count * sizeof(uint32_t));
+    long_slices = calloc(cmd_ref_count, sizeof(Slice32));
+    short_slices = calloc(cmd_ref_count, sizeof(Slice32));
     if (!parent_ref || !own_params_idx || !own_params_count || !long_slices || !short_slices) {
         fcmp_perror("malloc");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        return false;
+        goto cleanup;
     }
 
     own_params_idx[0] = root_params.idx;
@@ -2367,10 +2344,7 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
             uint32_t child = ce->subcommands_idx + j;
             if (child >= bg.commands_count) {
                 fcmp_errorf("Internal error: subcommand index out of range\n");
-                node_free(root); blobgen_free(&bg); free(root_desc);
-                free(parent_ref); free(own_params_idx); free(own_params_count);
-                free(long_slices); free(short_slices);
-                return false;
+                goto cleanup;
             }
             parent_ref[child + 1] = (uint32_t)i + 1;
         }
@@ -2378,17 +2352,12 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     for (size_t i = 1; i < cmd_ref_count; i++) {
         if (parent_ref[i] == UINT32_MAX) {
             fcmp_errorf("Internal error: unresolved parent for command %zu\n", i - 1);
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            free(parent_ref); free(own_params_idx); free(own_params_count);
-            free(long_slices); free(short_slices);
-            return false;
+            goto cleanup;
         }
     }
 
     // Build per-command long/short option indices from inherited params.
-    LongIndexEntry *long_entries = NULL;
     size_t long_total = 0, long_cap = 0;
-    ShortIndexEntry *short_entries = NULL;
     size_t short_total = 0, short_cap = 0;
 
     for (size_t ref = 0; ref < cmd_ref_count; ref++) {
@@ -2407,12 +2376,8 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
                 uint32_t *tmp = malloc(next_cap * sizeof(uint32_t));
                 if (!tmp) {
                     fcmp_perror("malloc");
-                    node_free(root); blobgen_free(&bg); free(root_desc);
-                    free(parent_ref); free(own_params_idx); free(own_params_count);
-                    free(long_slices); free(short_slices);
-                    free(long_entries); free(short_entries);
                     if (chain != chain_buf) free(chain);
-                    return false;
+                    goto cleanup;
                 }
                 memcpy(tmp, chain, chain_len * sizeof(uint32_t));
                 if (chain != chain_buf) free(chain);
@@ -2424,12 +2389,8 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
             cur = parent_ref[cur];
             if (chain_len > cmd_ref_count) {
                 fcmp_errorf("Internal error: cycle in command parent map\n");
-                node_free(root); blobgen_free(&bg); free(root_desc);
-                free(parent_ref); free(own_params_idx); free(own_params_count);
-                free(long_slices); free(short_slices);
-                free(long_entries); free(short_entries);
                 if (chain != chain_buf) free(chain);
-                return false;
+                goto cleanup;
             }
         }
 
@@ -2437,20 +2398,17 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         for (size_t i = 0; i < chain_len; i++) {
             inherited_count += own_params_count[chain[i]];
         }
-        uint32_t *seen_long = NULL;
-        size_t seen_long_count = 0;
-        if (inherited_count > 0) {
-            seen_long = malloc(inherited_count * sizeof(uint32_t));
-            if (!seen_long) {
-                fcmp_perror("malloc");
-                node_free(root); blobgen_free(&bg); free(root_desc);
-                free(parent_ref); free(own_params_idx); free(own_params_count);
-                free(long_slices); free(short_slices);
-                free(long_entries); free(short_entries);
-                if (chain != chain_buf) free(chain);
-                return false;
-            }
+        // Hash set for long option dedup (open addressing, 0 = empty sentinel).
+        // name_off is always > 0 for real params (checked by `if (pe->name_off)`).
+        size_t seen_cap = 16;
+        while (seen_cap < inherited_count * 2) seen_cap *= 2;
+        uint32_t *seen_long = calloc(seen_cap, sizeof(uint32_t));
+        if (!seen_long) {
+            fcmp_perror("calloc");
+            if (chain != chain_buf) free(chain);
+            goto cleanup;
         }
+        size_t seen_mask = seen_cap - 1;
         bool seen_short[256] = {0};
 
         // Iterate root->...->current so closer commands override inherited options.
@@ -2464,27 +2422,21 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
                 ParamEntry *pe = &bg.params[param_idx];
 
                 if (pe->name_off) {
-                    bool exists = false;
-                    for (size_t k = 0; k < seen_long_count; k++) {
-                        if (seen_long[k] == pe->name_off) {
-                            exists = true;
-                            break;
-                        }
-                    }
+                    // Hash set lookup/insert for long option dedup
+                    size_t slot = pe->name_off & seen_mask;
+                    while (seen_long[slot] && seen_long[slot] != pe->name_off)
+                        slot = (slot + 1) & seen_mask;
+                    bool exists = (seen_long[slot] != 0);
                     if (!exists) {
-                        seen_long[seen_long_count++] = pe->name_off;
+                        seen_long[slot] = pe->name_off;
                         if (long_total >= long_cap) {
                             size_t next = long_cap ? long_cap * 2 : 1024;
                             LongIndexEntry *tmp = realloc(long_entries, next * sizeof(LongIndexEntry));
                             if (!tmp) {
                                 fcmp_perror("realloc");
                                 free(seen_long);
-                                node_free(root); blobgen_free(&bg); free(root_desc);
-                                free(parent_ref); free(own_params_idx); free(own_params_count);
-                                free(long_slices); free(short_slices);
-                                free(long_entries); free(short_entries);
                                 if (chain != chain_buf) free(chain);
-                                return false;
+                                goto cleanup;
                             }
                             long_entries = tmp;
                             long_cap = next;
@@ -2508,12 +2460,8 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
                                 if (!tmp) {
                                     fcmp_perror("realloc");
                                     free(seen_long);
-                                    node_free(root); blobgen_free(&bg); free(root_desc);
-                                    free(parent_ref); free(own_params_idx); free(own_params_count);
-                                    free(long_slices); free(short_slices);
-                                    free(long_entries); free(short_entries);
                                     if (chain != chain_buf) free(chain);
-                                    return false;
+                                    goto cleanup;
                                 }
                                 short_entries = tmp;
                                 short_cap = next;
@@ -2575,11 +2523,7 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         option_long_size > UINT32_MAX ||
         option_short_size > UINT32_MAX) {
         fcmp_errorf("Blob section too large (max 4GB per section)\n");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
 
     // Build section list and offsets.
@@ -2593,30 +2537,18 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         !section_append(sections, &section_count, 10, SECTION_ROOT, COMMAND_SIZE, COMMAND_SIZE, 0) ||
         !section_append(sections, &section_count, 10, SECTION_OPTION_LONG, (uint32_t)option_long_size, 0, 0)) {
         fcmp_errorf("Internal error: section append failed\n");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
     if (short_total > 0) {
         if (!section_append(sections, &section_count, 10, SECTION_OPTION_SHORT, (uint32_t)option_short_size, 0, 0)) {
             fcmp_errorf("Internal error: section append failed\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            free(parent_ref); free(own_params_idx); free(own_params_count);
-            free(long_slices); free(short_slices);
-            free(long_entries); free(short_entries);
-            return false;
+            goto cleanup;
         }
     }
     if (has_desc_section) {
         if (!section_append(sections, &section_count, 10, SECTION_STRINGS_COLD, (uint32_t)desc_len, 1, SECTION_FLAG_OPTIONAL)) {
             fcmp_errorf("Internal error: section append failed\n");
-            node_free(root); blobgen_free(&bg); free(root_desc);
-            free(parent_ref); free(own_params_idx); free(own_params_count);
-            free(long_slices); free(short_slices);
-            free(long_entries); free(short_entries);
-            return false;
+            goto cleanup;
         }
     }
 
@@ -2631,21 +2563,13 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     size_t total_size = align4(data_off);
     if (total_size > UINT32_MAX) {
         fcmp_errorf("Blob too large: %zu bytes (max 4GB)\n", total_size);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
 
-    uint8_t *blob = calloc(1, total_size);
+    blob = calloc(1, total_size);
     if (!blob) {
         fcmp_perror("calloc");
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
 
     memcpy(blob, BLOB_MAGIC, 4);
@@ -2822,27 +2746,15 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         }
     }
 
-    FILE *out = fopen(output_path, "wb");
+    out = fopen(output_path, "wb");
     if (!out) {
         fcmp_perror(output_path);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(blob);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
     if (fwrite(blob, 1, total_size, out) != total_size) {
         fcmp_perror(output_path);
-        fclose(out);
-        node_free(root); blobgen_free(&bg); free(root_desc);
-        free(blob);
-        free(parent_ref); free(own_params_idx); free(own_params_count);
-        free(long_slices); free(short_slices);
-        free(long_entries); free(short_entries);
-        return false;
+        goto cleanup;
     }
-    fclose(out);
 
     fcmp_infof("Generated %s (%zu bytes)\n", output_path, total_size);
     fcmp_infof("  Commands: %zu\n", bg.commands_count);
@@ -2855,13 +2767,16 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     if (has_desc_section) fcmp_infof("  Cold strings: %zu bytes\n", desc_len);
     fcmp_infof("  Option long index entries: %zu\n", long_total);
     fcmp_infof("  Option short index entries: %zu\n", short_total);
+    result = true;
 
+cleanup:
+    if (out) fclose(out);
     free(blob);
     free(parent_ref); free(own_params_idx); free(own_params_count);
     free(long_slices); free(short_slices);
     free(long_entries); free(short_entries);
     node_free(root); blobgen_free(&bg); free(root_desc);
-    return true;
+    return result;
 }
 
 bool lint_schema(const char *schema_path) {
