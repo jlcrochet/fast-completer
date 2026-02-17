@@ -35,7 +35,7 @@ else
     BINDIR ?= $(PREFIX)/bin
 endif
 
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall debug release
 
 all: $(TARGET)
 
@@ -65,10 +65,11 @@ uninstall:
 	rm -f $(BINDIR)/$(TARGET)
 
 # Debug build
-debug: CFLAGS = -g -O0 $(WARNINGS) -DDEBUG -DFCMP_VALIDATE_BLOB
-debug: clean all
+debug:
+	$(MAKE) clean
+	$(MAKE) all CFLAGS="-g -O0 $(WARNINGS) $(HARDENING) -DDEBUG -DFCMP_VALIDATE_BLOB"
 
 # Release build (smaller binary)
-release: CFLAGS = -O3 $(WARNINGS) -DNDEBUG
-release: LDFLAGS = -s
-release: clean all
+release:
+	$(MAKE) clean
+	$(MAKE) all CFLAGS="-O3 $(WARNINGS) $(HARDENING) -DNDEBUG" LDFLAGS="-s"

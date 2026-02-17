@@ -31,8 +31,7 @@ static char *fcmp_strtok_r(char *str, const char *delim, char **saveptr) {
 #define MAX_LINE_LEN 8192
 
 static char *str_ndup(const char *s, size_t n) {
-    size_t len = strlen(s);
-    if (n < len) len = n;
+    size_t len = strnlen(s, n);
     char *result = malloc(len + 1);
     if (result) {
         memcpy(result, s, len);
@@ -99,10 +98,9 @@ static void trim_ws_span(const char **start, const char **end) {
 
 static bool in_url(const char *s, size_t pos) {
     if (pos < 3) return false;
-    for (size_t i = pos; i >= 3; i--) {
-        if (s[i-1] == ' ' || s[i-1] == '\t' || s[i-1] == '\n') return false;
-        if (s[i-1] == '/' && s[i-2] == '/' && s[i-3] == ':') return true;
-        if (i == 3) break;
+    for (size_t i = pos; i-- > 2; ) {
+        if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n') return false;
+        if (s[i] == ':' && s[i+1] == '/' && s[i+2] == '/') return true;
     }
     return false;
 }
@@ -142,7 +140,6 @@ static bool is_version_number(const char *s, size_t pos, size_t len) {
 static char *truncate_to_first_sentence(const char *desc) {
     if (!desc || !*desc) return strdup("");
     size_t len = strlen(desc);
-    size_t char_count = utf8_strlen(desc);
     size_t end = len;  // byte position
     size_t chars_seen = 0;
 
@@ -167,7 +164,7 @@ static char *truncate_to_first_sentence(const char *desc) {
     }
 
     // If no sentence break found and exceeds character limit, truncate at word boundary
-    if (end == len && char_count > SHORT_DESC_MAX_LEN) {
+    if (end == len && utf8_strlen(desc) > SHORT_DESC_MAX_LEN) {
         // Find byte offset for SHORT_DESC_MAX_LEN characters
         size_t max_bytes = utf8_byte_offset(desc, SHORT_DESC_MAX_LEN);
         end = max_bytes;
@@ -907,67 +904,16 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
 }
 
 // Add members from {key1|key2} string, return index
-static bool add_members_from_string(BlobGen *bg, const char *members_str,
-                                    const char *path, int line_num, size_t *out_idx) {
-    if (!members_str || members_str[0] != '{') {
-        fcmp_errorf("%s:%d: error: members list must be in braces\n", path, line_num);
-        return false;
-    }
+// Add members from already-stripped inner content (without braces)
+static bool add_members_from_items(BlobGen *bg, const char *content,
+                                   const char *path, int line_num, size_t *out_idx) {
     if (bg->error || blobgen_strtab_error(bg)) return false;
 
-    // Skip { and find matching } (no nested brace tracking)
-    const char *start = members_str + 1;
-    const char *end = NULL;
-    bool in_single = false;
-    bool in_double = false;
-    bool escaped = false;
-    for (const char *p = start; *p; p++) {
-        char c = *p;
-        if (in_single) {
-            if (c == '\'') in_single = false;
-            continue;
-        }
-        if (in_double) {
-            if (escaped) {
-                escaped = false;
-                continue;
-            }
-            if (c == '\\') {
-                escaped = true;
-                continue;
-            }
-            if (c == '"') {
-                in_double = false;
-            }
-            continue;
-        }
-        if (c == '\\' && p[1] != '\0') {
-            p++;
-            continue;
-        }
-        if (c == '\'') {
-            in_single = true;
-            continue;
-        }
-        if (c == '"') {
-            in_double = true;
-            continue;
-        }
-        if (c == '}') { end = p; break; }
-    }
-    if (!end) {
-        fcmp_errorf("%s:%d: error: unmatched '{' in members list\n", path, line_num);
-        return false;
-    }
-
-    size_t len = end - start;
-    char *inner = malloc(len + 1);
+    char *inner = strdup(content);
     if (!inner) {
         fcmp_perror("malloc");
         return false;
     }
-    memcpy(inner, start, len);
-    inner[len] = '\0';
 
     char **items = NULL;
     size_t count = 0;
@@ -1309,6 +1255,34 @@ static void write_u32(uint8_t *buf, uint32_t val) {
     buf[1] = (uint8_t)((val >> 8) & 0xffu);
     buf[2] = (uint8_t)((val >> 16) & 0xffu);
     buf[3] = (uint8_t)((val >> 24) & 0xffu);
+}
+
+static size_t write_string_list_section(uint8_t *blob, size_t section_off,
+                                        StringList *lists, size_t list_count,
+                                        uint32_t off_adj) {
+    write_u32(blob + section_off, (uint32_t)list_count);
+    size_t offset = section_off + 4 + list_count * 4;
+    for (size_t i = 0; i < list_count; i++) {
+        write_u32(blob + section_off + 4 + i * 4, (uint32_t)(offset - section_off));
+        StringList *sl = &lists[i];
+        if (sl->count < 255) {
+            blob[offset] = (uint8_t)sl->count;
+            blob[offset + 1] = 0;
+            blob[offset + 2] = 0;
+            blob[offset + 3] = 0;
+        } else {
+            blob[offset] = 0xFF;
+            write_u16(blob + offset + 1, (uint16_t)sl->count);
+            blob[offset + 3] = 0;
+        }
+        offset += 4;
+        for (size_t j = 0; j < sl->count; j++) {
+            uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + off_adj : 0;
+            write_u32(blob + offset, adj_off);
+            offset += 4;
+        }
+    }
+    return offset;
 }
 
 // --------------------------------------------------------------------------
@@ -1741,20 +1715,7 @@ static bool parse_param_line(BlobGen *bg, const char *line, CommandNode *current
             }
             case TOK_MEMBERS: {
                 size_t idx = (size_t)-1;
-                size_t vlen = strlen(t->value);
-                char *wrapped = malloc(vlen + 3);
-                if (!wrapped) {
-                    fcmp_perror("malloc");
-                    token_list_free(&tl);
-                    return false;
-                }
-                wrapped[0] = '{';
-                memcpy(wrapped + 1, t->value, vlen);
-                wrapped[vlen + 1] = '}';
-                wrapped[vlen + 2] = '\0';
-                bool ok = add_members_from_string(bg, wrapped, path, line_num, &idx);
-                free(wrapped);
-                if (!ok) {
+                if (!add_members_from_items(bg, t->value, path, line_num, &idx)) {
                     token_list_free(&tl);
                     return false;
                 }
@@ -2656,52 +2617,12 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     }
 
     // Choices section
-    write_u32(blob + off_choices, (uint32_t)bg.choices_count);
-    offset = off_choices + 4 + bg.choices_count * 4;
-    for (size_t i = 0; i < bg.choices_count; i++) {
-        write_u32(blob + off_choices + 4 + i * 4, (uint32_t)(offset - off_choices));
-        StringList *sl = &bg.choices_lists[i];
-        if (sl->count < 255) {
-            blob[offset] = (uint8_t)sl->count;
-            blob[offset + 1] = 0;
-            blob[offset + 2] = 0;
-            blob[offset + 3] = 0;
-        } else {
-            blob[offset] = 0xFF;
-            write_u16(blob + offset + 1, (uint16_t)sl->count);
-            blob[offset + 3] = 0;
-        }
-        offset += 4;
-        for (size_t j = 0; j < sl->count; j++) {
-            uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
-            write_u32(blob + offset, adj_off);
-            offset += 4;
-        }
-    }
+    offset = write_string_list_section(blob, off_choices,
+                                       bg.choices_lists, bg.choices_count, choice_off_adj);
 
     // Members section
-    write_u32(blob + off_members, (uint32_t)bg.members_count);
-    offset = off_members + 4 + bg.members_count * 4;
-    for (size_t i = 0; i < bg.members_count; i++) {
-        write_u32(blob + off_members + 4 + i * 4, (uint32_t)(offset - off_members));
-        StringList *sl = &bg.members_lists[i];
-        if (sl->count < 255) {
-            blob[offset] = (uint8_t)sl->count;
-            blob[offset + 1] = 0;
-            blob[offset + 2] = 0;
-            blob[offset + 3] = 0;
-        } else {
-            blob[offset] = 0xFF;
-            write_u16(blob + offset + 1, (uint16_t)sl->count);
-            blob[offset + 3] = 0;
-        }
-        offset += 4;
-        for (size_t j = 0; j < sl->count; j++) {
-            uint32_t adj_off = sl->offsets[j] ? sl->offsets[j] + choice_off_adj : 0;
-            write_u32(blob + offset, adj_off);
-            offset += 4;
-        }
-    }
+    offset = write_string_list_section(blob, off_members,
+                                       bg.members_lists, bg.members_count, choice_off_adj);
 
     // Root command
     write_u32(blob + off_root, 0);

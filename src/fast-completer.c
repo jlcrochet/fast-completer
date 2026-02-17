@@ -198,7 +198,7 @@ static int g_span_count = 0;
 // Hash set for O(1) used-param lookups (lazily built only when completing params)
 // For small span counts, linear scan is faster (avoids 4KB memset overhead)
 #define USED_LINEAR_THRESHOLD 8
-#define USED_SET_SIZE 256  // Power of 2, must be > 2*MAX_SPANS
+#define USED_SET_SIZE 256  // Power of 2, must be >= 2*MAX_SPANS
 typedef struct { const char *p; size_t n; } UsedEntry;
 static UsedEntry g_used_set[USED_SET_SIZE];
 static bool g_used_set_ready = false;
@@ -265,7 +265,10 @@ static inline uint32_t hash_str_nonzero(const char *p, size_t n) {
 
 static size_t next_pow2(size_t n) {
     size_t p = 1;
-    while (p < n) p <<= 1;
+    while (p < n) {
+        if (p > SIZE_MAX / 2) return n;  // overflow guard
+        p <<= 1;
+    }
     return p;
 }
 
@@ -539,7 +542,7 @@ static void used_set_build(void) {
 
 static bool used_set_contains(const char *p, size_t n) {
     size_t idx = hash_str(p, n) & (USED_SET_SIZE - 1);
-    while (g_used_set[idx].p) {
+    for (size_t probes = 0; probes < USED_SET_SIZE && g_used_set[idx].p; probes++) {
         if (g_used_set[idx].n == n && memcmp(g_used_set[idx].p, p, n) == 0) return true;
         idx = (idx + 1) & (USED_SET_SIZE - 1);
     }
@@ -569,6 +572,11 @@ static inline String decode_string_at(const uint8_t *base, uint32_t off, uint32_
         s.n = p[0];
         s.p = (const char *)(p + 1);
     } else {
+        if (off + 1 >= section_size) {
+            s.p = "";
+            s.n = 0;
+            return s;
+        }
         s.n = ((p[0] & 0x7f) << 8) | p[1];
         s.p = (const char *)(p + 2);
     }
