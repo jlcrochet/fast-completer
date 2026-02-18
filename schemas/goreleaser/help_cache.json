@@ -1,0 +1,1050 @@
+{
+  "goreleaser --help": {
+    "returncode": 0,
+    "stdout": "\n  Release engineering, simplified.                                                                                      \n                                                                                                                        \n  GoReleaser is a release automation tool, built with love and care by @caarlos0 and many contributors.                 \n                                                                                                                        \n  Complete documentation is available at https://goreleaser.com                                                         \n         \n  USAGE  \n         \n    goreleaser [command] [--flags]  \n            \n  EXAMPLES  \n            \n    # Initialize your project:      \n    goreleaser init                 \n                                    \n    # Verify your configuration:    \n    goreleaser check                \n                                    \n    # Verify dependencies:          \n    goreleaser healthcheck          \n                                    \n    # Build the binaries only:      \n    goreleaser build                \n                                    \n    # Run a snapshot release:       \n    goreleaser release --snapshot   \n                                    \n    # Run a complete release:       \n    goreleaser release              \n            \n  COMMANDS  \n            \n    build [--flags]                        Builds the current project\n    check [configuration files] [--flags]  Checks if configuration is valid\n    completion [command]                   Generate the autocompletion script for the specified shell\n    healthcheck [--flags]                  Checks if needed tools are installed\n    help [command]                         Help about any command\n    init [--flags]                         Generates a .goreleaser.yaml file\n    jsonschema [--flags]                   Outputs goreleaser's JSON schema\n    release [--flags]                      Releases the current project\n         \n  FLAGS  \n         \n    -h --help                              Help for goreleaser\n    --verbose                              Enable verbose mode\n    -v --version                           Version for goreleaser\n\n"
+  },
+  "goreleaser --version": {
+    "returncode": 0,
+    "stdout": "  ____       ____      _\n / ___| ___ |  _ \\ ___| | ___  __ _ ___  ___ _ __\n| |  _ / _ \\| |_) / _ \\ |/ _ \\/ _` / __|/ _ \\ '__|\n| |_| | (_) |  _ <  __/ |  __/ (_| \\__ \\  __/ |\n \\____|\\___/|_| \\_\\___|_|\\___|\\__,_|___/\\___|_|\ngoreleaser: Release engineering, simplified.\nhttps://goreleaser.com\n\nGitVersion:    2.13.3\nGitCommit:     0b78544f9956125fa41b2f15a6af68aa67484f2a\nGitTreeState:  false\nBuildDate:     2026-01-10T03:41:24Z\nBuiltBy:       goreleaser\nGoVersion:     go1.25.5\nCompiler:      gc\nModuleSum:     h1:S8d13YgzzFXxoUJ9NJInuyq3lPNCXTcuW8wSvM+rXnQ=\nPlatform:      linux/amd64\n"
+  },
+  "goreleaser __complete ": {
+    "returncode": 0,
+    "stdout": "build\tBuilds the current project\ncheck\tChecks if configuration is valid\ncompletion\tGenerate the autocompletion script for the specified shell\nhealthcheck\tChecks if needed tools are installed\nhelp\tHelp about any command\ninit\tGenerates a .goreleaser.yaml file\njsonschema\tOutputs goreleaser's JSON schema\nrelease\tReleases the current project\n:4\n"
+  },
+  "goreleaser __complete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for goreleaser\n--verbose\tEnable verbose mode\n--version\tversion for goreleaser\n:4\n"
+  },
+  "goreleaser __complete build ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete build --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--auto-snapshot\tAutomatically sets --snapshot if the repository is dirty\n--clean\tRemoves the 'dist' directory before building\n--config\tLoad configuration from file\n--help\thelp for build\n--id\tBuilds only the specified build ids\n--output\tCopy the binary to the path after the build. Only taken into account when using --single-target and a single id (either with --id or if configuration only has one build)\n--parallelism\tNumber of tasks to run concurrently (default: number of CPUs)\n--single-target\tBuilds only for current GOOS and GOARCH, regardless of what's set in the configuration file\n--skip\tSkip the given options (valid options are: before, post-hooks, pre-hooks, validate)\n--snapshot\tGenerate an unversioned snapshot build, skipping all validations\n--timeout\tTimeout to the entire build process\n:4\n"
+  },
+  "goreleaser __complete check ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yaml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yaml yml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yaml yml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yaml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yaml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yaml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yaml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yaml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yaml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yaml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yaml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yml yaml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yml yaml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete check yml yml yml yml yml ": {
+    "returncode": 0,
+    "stdout": "yaml\nyml\n:8\n"
+  },
+  "goreleaser __complete check yml yml yml yml yml --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for check\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "goreleaser __complete completion --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for completion\n:4\n"
+  },
+  "goreleaser __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for bash\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "goreleaser __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for fish\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "goreleaser __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for powershell\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "goreleaser __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for zsh\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "goreleaser __complete healthcheck ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete healthcheck --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--config\tConfiguration file\n--help\thelp for healthcheck\n--quiet\tQuiet mode: no output\n:4\n"
+  },
+  "goreleaser __complete help ": {
+    "returncode": 0,
+    "stdout": "build\tBuilds the current project\ncheck\tChecks if configuration is valid\ncompletion\tGenerate the autocompletion script for the specified shell\nhealthcheck\tChecks if needed tools are installed\nhelp\tHelp about any command\ninit\tGenerates a .goreleaser.yaml file\njsonschema\tOutputs goreleaser's JSON schema\nrelease\tReleases the current project\n:4\n"
+  },
+  "goreleaser __complete help --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help build ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help build --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help check ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help check --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "goreleaser __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help completion bash --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help completion fish --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help completion powershell --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help completion zsh --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help healthcheck ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help healthcheck --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help help --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help init ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help init --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help jsonschema ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help jsonschema --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete help release ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete help release --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for help\n:4\n"
+  },
+  "goreleaser __complete init ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete init --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--config\tLoad configuration from file\n--help\thelp for init\n--language\tWhich language will be used\n:4\n"
+  },
+  "goreleaser __complete jsonschema ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete jsonschema --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--help\thelp for jsonschema\n--output\tWhere to save the JSONSchema file\n:4\n"
+  },
+  "goreleaser __complete release ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "goreleaser __complete release --": {
+    "returncode": 0,
+    "stdout": "--verbose\tEnable verbose mode\n--auto-snapshot\tAutomatically sets --snapshot if the repository is dirty\n--clean\tRemoves the 'dist' directory\n--config\tLoad configuration from file\n--draft\tWhether to set the release to draft. Overrides release.draft in the configuration file\n--fail-fast\tWhether to abort the release publishing on the first error\n--help\thelp for release\n--parallelism\tAmount tasks to run concurrently (default: number of CPUs)\n--release-footer\tLoad custom release notes footer from a markdown file\n--release-footer-tmpl\tLoad custom release notes footer from a templated markdown file (overrides --release-footer)\n--release-header\tLoad custom release notes header from a markdown file\n--release-header-tmpl\tLoad custom release notes header from a templated markdown file (overrides --release-header)\n--release-notes\tLoad custom release notes from a markdown file (will skip GoReleaser changelog generation)\n--release-notes-tmpl\tLoad custom release notes from a templated markdown file (overrides --release-notes)\n--skip\tSkip the given options (valid options are announce, archive, aur, aur-source, before, chocolatey, docker, homebrew, ko, makeself, mcp, nfpm, nix, notarize, publish, sbom, scoop, sign, snapcraft, validate, winget)\n--snapshot\tGenerate an unversioned snapshot release, skipping all validations and without publishing any artifacts (implies --skip=announce,publish,validate)\n--timeout\tTimeout to the entire release process\n:4\n"
+  },
+  "goreleaser build --help": {
+    "returncode": 0,
+    "stdout": "\n  The `goreleaser build` command is analogous to the `go build` command, in the sense it only builds binaries.          \n                                                                                                                        \n  Its intended usage is, for example, within Makefiles to avoid setting up ldflags and etc in several places. That way, \n  the GoReleaser config becomes the source of truth for how the binaries should be built.                               \n                                                                                                                        \n  It also allows you to generate a local build for your current machine only using the `--single-target` option, and    \n  specific build IDs using the `--id` option in case you have more than one.                                            \n                                                                                                                        \n  When using `--single-target`, you use the `TARGET`, or GOOS`, `GOARCH`, `GOARM`, `GOAMD64`, `GOARM64`, `GORISCV64`,   \n  `GO386`, `GOPPC64`, and `GOMIPS` environment variables to determine the target, defaulting to the current machine     \n  target if not set.                                                                                                    \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser build [--flags]  \n         \n  FLAGS  \n         \n    --auto-snapshot   Automatically sets --snapshot if the repository is dirty\n    --clean           Removes the 'dist' directory before building\n    -f --config       Load configuration from file\n    -h --help         Help for build\n    --id              Builds only the specified build ids\n    -o --output       Copy the binary to the path after the build. Only taken into account when using --single-target and a single id (either with --id or if configuration only has one build)\n    -p --parallelism  Number of tasks to run concurrently (default: number of CPUs)\n    --single-target   Builds only for current GOOS and GOARCH, regardless of what's set in the configuration file\n    --skip            Skip the given options (valid options are: before, post-hooks, pre-hooks, validate)\n    --snapshot        Generate an unversioned snapshot build, skipping all validations\n    --timeout         Timeout to the entire build process (1h0m0s)\n    --verbose         Enable verbose mode\n\n"
+  },
+  "goreleaser check --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yaml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yaml yml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yaml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yaml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yaml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yaml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yml yaml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser check yml yml yml yml yml --help": {
+    "returncode": 0,
+    "stdout": "\n  Checks if configuration is valid                                                                                      \n         \n  USAGE  \n         \n    goreleaser check [configuration files] [--flags]  \n         \n  FLAGS  \n         \n    -h --help   Help for check\n    -q --quiet  Quiet mode: no output\n    --verbose   Enable verbose mode\n\n"
+  },
+  "goreleaser completion --help": {
+    "returncode": 0,
+    "stdout": "\n  Generate the autocompletion script for goreleaser for the specified shell.                                            \n  See each sub-command's help for details on how to use the generated script.                                           \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser completion [command] [--flags]  \n            \n  COMMANDS  \n            \n    bash [--flags]        Generate the autocompletion script for bash\n    fish [--flags]        Generate the autocompletion script for fish\n    powershell [--flags]  Generate the autocompletion script for powershell\n    zsh [--flags]         Generate the autocompletion script for zsh\n         \n  FLAGS  \n         \n    -h --help             Help for completion\n    --verbose             Enable verbose mode\n\n"
+  },
+  "goreleaser completion bash --help": {
+    "returncode": 0,
+    "stdout": "\n  Generate the autocompletion script for the bash shell.                                                                \n                                                                                                                        \n  This script depends on the 'bash-completion' package.                                                                 \n  If it is not installed already, you can install it via your OS's package manager.                                     \n                                                                                                                        \n  To load completions in your current shell session:                                                                    \n                                                                                                                        \n      source <(goreleaser completion bash)                                                                              \n                                                                                                                        \n  To load completions for every new session, execute once:                                                              \n                                                                                                                        \n  #### Linux:                                                                                                           \n                                                                                                                        \n      goreleaser completion bash > /etc/bash_completion.d/goreleaser                                                    \n                                                                                                                        \n  #### macOS:                                                                                                           \n                                                                                                                        \n      goreleaser completion bash > $(brew --prefix)/etc/bash_completion.d/goreleaser                                    \n                                                                                                                        \n  You will need to start a new shell for this setup to take effect.                                                     \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser completion bash [--flags]  \n         \n  FLAGS  \n         \n    -h --help          Help for bash\n    --no-descriptions  Disable completion descriptions\n    --verbose          Enable verbose mode\n\n"
+  },
+  "goreleaser completion fish --help": {
+    "returncode": 0,
+    "stdout": "\n  Generate the autocompletion script for the fish shell.                                                                \n                                                                                                                        \n  To load completions in your current shell session:                                                                    \n                                                                                                                        \n      goreleaser completion fish | source                                                                               \n                                                                                                                        \n  To load completions for every new session, execute once:                                                              \n                                                                                                                        \n      goreleaser completion fish > ~/.config/fish/completions/goreleaser.fish                                           \n                                                                                                                        \n  You will need to start a new shell for this setup to take effect.                                                     \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser completion fish [--flags]  \n         \n  FLAGS  \n         \n    -h --help          Help for fish\n    --no-descriptions  Disable completion descriptions\n    --verbose          Enable verbose mode\n\n"
+  },
+  "goreleaser completion powershell --help": {
+    "returncode": 0,
+    "stdout": "\n  Generate the autocompletion script for powershell.                                                                    \n                                                                                                                        \n  To load completions in your current shell session:                                                                    \n                                                                                                                        \n      goreleaser completion powershell | Out-String | Invoke-Expression                                                 \n                                                                                                                        \n  To load completions for every new session, add the output of the above command                                        \n  to your powershell profile.                                                                                           \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser completion powershell [--flags]  \n         \n  FLAGS  \n         \n    -h --help          Help for powershell\n    --no-descriptions  Disable completion descriptions\n    --verbose          Enable verbose mode\n\n"
+  },
+  "goreleaser completion zsh --help": {
+    "returncode": 0,
+    "stdout": "\n  Generate the autocompletion script for the zsh shell.                                                                 \n                                                                                                                        \n  If shell completion is not already enabled in your environment you will need                                          \n  to enable it.  You can execute the following once:                                                                    \n                                                                                                                        \n      echo \"autoload -U compinit; compinit\" >> ~/.zshrc                                                                 \n                                                                                                                        \n  To load completions in your current shell session:                                                                    \n                                                                                                                        \n      source <(goreleaser completion zsh)                                                                               \n                                                                                                                        \n  To load completions for every new session, execute once:                                                              \n                                                                                                                        \n  #### Linux:                                                                                                           \n                                                                                                                        \n      goreleaser completion zsh > \"${fpath[1]}/_goreleaser\"                                                             \n                                                                                                                        \n  #### macOS:                                                                                                           \n                                                                                                                        \n      goreleaser completion zsh > $(brew --prefix)/share/zsh/site-functions/_goreleaser                                 \n                                                                                                                        \n  You will need to start a new shell for this setup to take effect.                                                     \n                                                                                                                        \n         \n  USAGE  \n         \n    goreleaser completion zsh [--flags]  \n         \n  FLAGS  \n         \n    -h --help          Help for zsh\n    --no-descriptions  Disable completion descriptions\n    --verbose          Enable verbose mode\n\n"
+  },
+  "goreleaser healthcheck --help": {
+    "returncode": 0,
+    "stdout": "\n  Check if the needed tools are available in your $PATH, exits 1 if any of them are missing.                            \n         \n  USAGE  \n         \n    goreleaser healthcheck [--flags]  \n         \n  FLAGS  \n         \n    -f --config  Configuration file\n    -h --help    Help for healthcheck\n    -q --quiet   Quiet mode: no output\n    --verbose    Enable verbose mode\n\n"
+  },
+  "goreleaser help --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help build --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help check --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help completion --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help completion bash --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help completion fish --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help completion powershell --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help completion zsh --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help healthcheck --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help help --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help init --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help jsonschema --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser help release --help": {
+    "returncode": 0,
+    "stdout": "\n  Help provides help for any command in the application.                                                                \n  Simply type goreleaser help [path to command] for full details.                                                       \n         \n  USAGE  \n         \n    goreleaser help [command] [--flags]  \n         \n  FLAGS  \n         \n    -h --help  Help for help\n    --verbose  Enable verbose mode\n\n"
+  },
+  "goreleaser init --help": {
+    "returncode": 0,
+    "stdout": "\n  Generates a .goreleaser.yaml file                                                                                     \n         \n  USAGE  \n         \n    goreleaser init [--flags]  \n         \n  FLAGS  \n         \n    -f --config    Load configuration from file (.goreleaser.yaml)\n    -h --help      Help for init\n    -l --language  Which language will be used (go)\n    --verbose      Enable verbose mode\n\n"
+  },
+  "goreleaser jsonschema --help": {
+    "returncode": 0,
+    "stdout": "\n  Outputs goreleaser's JSON schema                                                                                      \n         \n  USAGE  \n         \n    goreleaser jsonschema [--flags]  \n         \n  FLAGS  \n         \n    -h --help    Help for jsonschema\n    -o --output  Where to save the JSONSchema file (-)\n    --verbose    Enable verbose mode\n\n"
+  },
+  "goreleaser release --help": {
+    "returncode": 0,
+    "stdout": "\n  Releases the current project                                                                                          \n         \n  USAGE  \n         \n    goreleaser release [--flags]  \n         \n  FLAGS  \n         \n    --auto-snapshot        Automatically sets --snapshot if the repository is dirty\n    --clean                Removes the 'dist' directory\n    -f --config            Load configuration from file\n    --draft                Whether to set the release to draft. Overrides release.draft in the configuration file\n    --fail-fast            Whether to abort the release publishing on the first error\n    -h --help              Help for release\n    -p --parallelism       Amount tasks to run concurrently (default: number of CPUs)\n    --release-footer       Load custom release notes footer from a markdown file\n    --release-footer-tmpl  Load custom release notes footer from a templated markdown file (overrides --release-footer)\n    --release-header       Load custom release notes header from a markdown file\n    --release-header-tmpl  Load custom release notes header from a templated markdown file (overrides --release-header)\n    --release-notes        Load custom release notes from a markdown file (will skip GoReleaser changelog generation)\n    --release-notes-tmpl   Load custom release notes from a templated markdown file (overrides --release-notes)\n    --skip                 Skip the given options (valid options are announce, archive, aur, aur-source, before, chocolatey, docker, homebrew, ko, makeself, mcp, nfpm, nix, notarize, publish, sbom, scoop, sign, snapcraft, validate, winget)\n    --snapshot             Generate an unversioned snapshot release, skipping all validations and without publishing any artifacts (implies --skip=announce,publish,validate)\n    --timeout              Timeout to the entire release process (1h0m0s)\n    --verbose              Enable verbose mode\n\n"
+  }
+}

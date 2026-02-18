@@ -1,0 +1,8 @@
+[project]
+name = "mise-schema-export"
+version = "0.1.0"
+description = "Export Mise command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-mise = "export_command_tree:main"

@@ -1,0 +1,10 @@
+{
+  "htop --help": {
+    "returncode": 0,
+    "stdout": "htop 3.4.1-3.4.1\n(C) 2004-2019 Hisham Muhammad. (C) 2020-2025 htop dev team.\nReleased under the GNU GPLv2+.\n\n-C --no-color                   Use a monochrome color scheme\n-d --delay=DELAY                Set the delay between updates, in tenths of seconds\n-F --filter=FILTER              Show only the commands matching the given filter\n-h --help                       Print this help screen\n-H --highlight-changes[=DELAY]  Highlight new and old processes\n-M --no-mouse                   Disable the mouse\n-n --max-iterations=NUMBER      Exit htop after NUMBER iterations/frame updates\n-p --pid=PID[,PID,PID...]       Show only the given PIDs\n   --readonly                   Disable all system and process changing features\n-s --sort-key=COLUMN            Sort by COLUMN in list view (try --sort-key=help for a list)\n-t --tree                       Show the tree view (can be combined with -s)\n-u --user[=USERNAME]            Show only processes for a given user (or $USER)\n-U --no-unicode                 Do not use unicode but plain ASCII\n-V --version                    Print version info\n   --drop-capabilities[=off|basic|strict] Drop Linux capabilities when running as root\n                                off - do not drop any capabilities\n                                basic (default) - drop all capabilities not needed by htop\n                                strict - drop all capabilities except those needed for\n                                         core functionality\n\nPress F1 inside htop for online help.\nSee 'man htop' for more information.\n"
+  },
+  "htop --version": {
+    "returncode": 0,
+    "stdout": "htop 3.4.1-3.4.1\n"
+  }
+}

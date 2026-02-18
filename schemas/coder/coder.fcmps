@@ -1,0 +1,293 @@
+# Coder CLI schema for fast-completer
+# Generated from coder 2.29.6
+
+coder # Coder CLI
+	--debug-options # Print all options, how they're set, then exit.
+	aibridge # Manage AI Bridge.
+		interceptions
+			list
+				--after-id # The ID of the last result on the previous page to use as a pagination
+				--initiator # Only return interceptions initiated by this user. Accepts a user ID,
+				--model # Only return interceptions from this model.
+				--provider # Only return interceptions from this provider.
+				--started-after # Only return interceptions started after this time. Must be before
+				--started-before # Only return interceptions started before this time. Must be after
+	autoupdate # Toggle auto-update policy for a workspace
+		--yes|-y # Bypass prompts.
+	config-ssh # Add an SSH Host entry for your workspaces "ssh
+		--yes|-y # Bypass prompts.
+		your
+	create # Create a workspace
+		--yes|-y # Bypass prompts.
+	delete # Delete a workspace
+		--orphan # Delete a workspace without deleting its resources. This can delete a
+		--yes|-y # Bypass prompts.
+	dotfiles # Personalize your workspace by applying a canonical
+		--branch|-b # Specifies which branch to clone. If empty, will default to cloning the
+		--yes|-y # Bypass prompts.
+	external-auth # Manage external authentication
+		access-token
+			--extra # Extract a field from the "extra" properties of the OAuth token.
+			else
+			fi
+	external-workspaces # Create or manage external workspaces
+		agent-instructions
+		create
+			--yes|-y # Bypass prompts.
+		list
+			--all|-a # Specifies whether all workspaces will be listed or not.
+	favorite # Add a workspace to your favorites
+	features # List Enterprise features
+		list
+	groups # Manage groups
+		create
+		delete
+		edit
+			--add-users|-a # Add users to the group. Accepts emails or IDs.
+			--avatar-url|-u # Update the group avatar.
+			--name|-n # Update the group name.
+			--rm-users|-r # Remove users to the group. Accepts emails or IDs.
+		list
+	licenses # Add, delete, and list licenses
+		add
+			--debug # Output license claims for debugging.
+			--file|-f # Load license from file.
+			--license|-l # License string.
+		delete
+		list
+	list # List workspaces
+		--all|-a # Specifies whether all workspaces will be listed or not.
+	login # Authenticate with Coder deployment
+		--use-token-as-session # By default, the CLI will generate a new session token when logging in.
+	logout # Unauthenticate your local session
+		--yes|-y # Bypass prompts.
+	netcheck # Print network debug information for DERP and STUN
+	notifications # Manage Coder notifications
+		SMTP
+		custom
+		from
+		notification
+		pause
+		resume
+		test
+	open # Open a workspace
+		app
+		vscode
+	organizations # Organization related commands
+		create
+			--yes|-y # Bypass prompts.
+		members
+			add
+			edit-roles
+			list
+			remove
+		roles
+			create
+				--dry-run # Does all the work, but does not submit the final updated role.
+				--stdin # Reads stdin for the json role definition to upload.
+				--yes|-y # Bypass prompts.
+				role.json
+			show
+			update
+				--dry-run # Does all the work, but does not submit the final updated role.
+				--stdin # Reads stdin for the json role definition to upload.
+				--yes|-y # Bypass prompts.
+		settings
+			set
+				group-sync
+				organization-sync
+				role-sync
+			show
+				group-sync
+				organization-sync
+				role-sync
+		show
+			--only-id # Only print the organization ID.
+			of.
+	ping # Ping a workspace
+		--num|-n # Specifies the number of pings to perform. By default, pings will
+		--time # Show the response time of each pong in local time.
+		--utc # Show the response time of each pong in UTC (implies --time).
+	port-forward # Forward ports from a workspace to the local machine.
+		your
+	prebuilds # Manage Coder prebuilds
+		pause
+		resume
+	provisioner # View and manage provisioner daemons and jobs
+		jobs
+			cancel
+			list
+		keys
+			create
+			delete
+				--yes|-y # Bypass prompts.
+			list
+		list
+		start
+	publickey # Output your Coder public key used for Git operations
+		--reset # Regenerate your public key. This will require updating the key on any
+		--yes|-y # Bypass prompts.
+	rename # Rename a workspace
+		--yes|-y # Bypass prompts.
+	reset-password # Directly connect to the database to reset a user's
+	restart # Restart a workspace
+		--always-prompt # Always prompt all parameters. Does not pull parameter values from
+		--build-options # Prompt for one-time build options defined with ephemeral parameters.
+		--yes|-y # Bypass prompts.
+	schedule # Schedule automated start and stop times for
+		extend
+		show
+			--all|-a # Specifies whether all workspaces will be listed or not.
+		start
+			Mon-Fri.
+			database.
+		stop
+			completed.
+			time.
+	server # Start a Coder server
+		--write-config
+		create-admin-user
+			--raw-url # Output the raw connection URL instead of a psql command.
+		dbcrypt
+			decrypt
+				--yes|-y # Bypass prompts.
+			delete
+				--yes|-y # Bypass prompts.
+			rotate
+				--yes|-y # Bypass prompts.
+		postgres-builtin-serve
+			--raw-url # Output the raw connection URL instead of a psql command.
+		postgres-builtin-url
+			--raw-url # Output the raw connection URL instead of a psql command.
+	show # Display details of a workspace's resources and agents
+	speedtest # Run upload and download tests from your machine to a
+		--direct|-d # Specifies whether to wait for a direct connection before testing
+		--pcap-file # Specifies a file to write a network capture to.
+	ssh # Start a shell into a workspace or run a command
+		--network-info-dir # Specifies a directory to write network information periodically.
+	start # Start a workspace
+		--always-prompt # Always prompt all parameters. Does not pull parameter values from
+		--build-options # Prompt for one-time build options defined with ephemeral parameters.
+		--no-wait # Return immediately after starting the workspace.
+		--yes|-y # Bypass prompts.
+	stat # Show resource usage for the current workspace.
+		cpu
+			--host # Force host CPU measurement.
+		disk
+		mem
+			--host # Force host memory measurement.
+	state # Manually manage Terraform state to fix broken
+		pull
+			--build|-b # Specify a workspace build to target by name. Defaults to latest.
+		push
+			--build|-b # Specify a workspace build to target by name. Defaults to latest.
+			--no-build|-n # Update the state without triggering a workspace build. Useful for
+	stop # Stop a workspace
+		--yes|-y # Bypass prompts.
+	support # Commands for troubleshooting issues with a Coder
+		bundle
+			--yes|-y # Bypass prompts.
+	task # Manage tasks
+		create
+			--name # Specify the name of the task. If you do not specify one, a name will
+			--quiet|-q # Only display the created task's ID.
+			--stdin # Reads from stdin for the task input.
+		delete
+			--yes|-y # Bypass prompts.
+		list
+			--status # Filter by task status.
+			--user # List tasks for the specified user (username, "me").
+		logs
+		send
+			--stdin # Reads the input from stdin.
+		status
+	templates # Manage templates
+		archive
+			--all # Include all unused template versions. By default, only failed template
+			--yes|-y # Bypass prompts.
+		create
+			--message|-m # Specify a message describing the changes in this version of the
+			--private # Disable the default behavior of granting template access to the
+			--provisioner-tag # Specify a set of tags to target provisioner daemons.
+			--var # Alias of --variable.
+			--variable # Specify a set of values for Terraform-managed variables.
+			--variables-file # Specify a file path with values for Terraform-managed variables.
+			--yes|-y # Bypass prompts.
+			flag
+		delete
+			--yes|-y # Bypass prompts.
+		edit
+			--activity-bump # Edit the template activity bump - workspaces created from this
+			--autostart-requirement-weekdays # Edit the template autostart requirement weekdays - workspaces created
+			--autostop-requirement-weekdays # Edit the template autostop requirement weekdays - workspaces created
+			--autostop-requirement-weeks # Edit the template autostop requirement weeks - workspaces created from
+			--default-ttl # Edit the template default time before shutdown - workspaces created
+			--deprecated # Sets the template as deprecated. Must be a message explaining why the
+			--description # Edit the template description.
+			--display-name # Edit the template display name.
+			--icon # Edit the template icon path.
+			--name # Edit the template name.
+			--yes|-y # Bypass prompts.
+		init
+			--id # Specify a given example template by ID.
+		list
+		presets
+			list
+				--template-version # Specify a template version to list presets for. Defaults to the active
+				version.
+			my-template-version
+		pull
+			--tar # Output the template as a tar archive to stdout.
+			--yes|-y # Bypass prompts.
+			--zip # Output the template as a zip archive to stdout.
+		push
+			--always-prompt # Always prompt all parameters. Does not pull parameter values from
+			--message|-m # Specify a message describing the changes in this version of the
+			--name # Specify a name for the new template version. It will be automatically
+			--provisioner-tag # Specify a set of tags to target provisioner daemons. If you do not
+			--provisioner-tag
+			--var # Alias of --variable.
+			--variable # Specify a set of values for Terraform-managed variables.
+			--variables-file # Specify a file path with values for Terraform-managed variables.
+			--yes|-y # Bypass prompts.
+		versions
+			archive
+				--yes|-y # Bypass prompts.
+			list
+				--include-archived # Include archived versions in the result list.
+			promote
+				--template-version
+			unarchive
+				--yes|-y # Bypass prompts.
+	tokens # Manage personal access tokens
+		create
+			--allow # Repeatable allow-list entry (<type>:<uuid>, e.g. workspace:1234-...).
+			--scope # Repeatable scope to attach to the token (e.g. workspace:read).
+		list
+			--all|-a # Specifies whether all users' tokens will be listed or not (must have
+		remove
+		view
+	unfavorite # Remove a workspace from your favorites
+	update # Will update and start a given workspace if it is out
+		--always-prompt # Always prompt all parameters. Does not pull parameter values from
+		--build-options # Prompt for one-time build options defined with ephemeral parameters.
+	users # Manage users
+		activate
+			platform
+		create
+			--email|-e # Specifies an email address for the new user.
+			--full-name|-n # Specifies an optional human-readable name for the new user.
+			--login-type # Optionally specify the login type for the user. Valid values are:
+			--password|-p # Specifies a password for the new user.
+			--username|-u # Specifies a username for the new user.
+		delete
+		edit-roles
+			--roles # A list of roles to give to the user. This removes any existing roles
+			--yes|-y # Bypass prompts.
+		list
+			--github-user-id # Filter users by their GitHub user ID.
+		show
+		suspend
+			platform
+	version # Show coder version
+	whoami # Fetch authenticated user info for Coder deployment

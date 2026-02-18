@@ -1,0 +1,23 @@
+# fd CLI schema for fast-completer
+# Generated from fd 10.3.0
+
+fd # A simple, fast alternative to find
+	--hidden|-H @bool # Search hidden files and directories
+	--no-ignore|-I @bool # Do not respect .(git|fd)ignore files
+	--case-sensitive|-s @bool # Case-sensitive search (default: smart case)
+	--ignore-case|-i @bool # Case-insensitive search (default: smart case)
+	--glob|-g @bool # Glob-based search (default: regular expression)
+	--absolute-path|-a @bool # Show absolute instead of relative paths
+	--list-details|-l @bool # Use a long listing format with file metadata
+	--follow|-L @bool # Follow symbolic links
+	--full-path|-p @bool # Search full abs. path (default: filename only)
+	--max-depth|-d # Set maximum search depth (default: none)
+	--exclude|-E # Exclude entries that match the given glob pattern
+	--type|-t # Filter by type: file (f), directory (d/dir), symlink (l),
+	--extension|-e # Filter by file extension
+	--size|-S # Limit results based on the size of files
+	--changed-within # Filter by file modification time (newer than)
+	--changed-before # Filter by file modification time (older than)
+	--owner|-o # Filter by owning user and/or group
+	--format # Print results according to template
+	--color|-c # When to use colors [default: auto] [possible values: auto,

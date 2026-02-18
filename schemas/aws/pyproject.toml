@@ -1,0 +1,6 @@
+[project]
+name = "aws-schema-generator"
+version = "0.1.0"
+description = "Export AWS CLI command tree to JSON"
+requires-python = ">=3.9"
+dependencies = []

@@ -1,0 +1,83 @@
+# Dive CLI schema for fast-completer
+# Generated from dive 0.13.1
+
+dive # Docker image explorer
+	--ci @bool # Skip the interactive TUI and validate against CI rules (same as env var CI=true)
+	--ci-config # If CI=true in the environment, use the given yaml to drive validation rules.
+	--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+	--help @bool # help for dive
+	--highestUserWastedPercent # (only valid with --ci given) highest allowable percentage of bytes wasted (as a ratio between 0-1), otherwise CI validation will fail.
+	--highestWastedBytes # (only valid with --ci given) highest allowable bytes wasted, otherwise CI validation will fail.
+	--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+	--json # Skip the interactive TUI and write the layer analysis statistics to a given file.
+	--lowestEfficiency # (only valid with --ci given) lowest allowable image efficiency (as a ratio between 0-1), otherwise CI validation will fail.
+	--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+	--version @bool # display version number
+	build # Builds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).
+		--config @bool # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+		--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+		--source @bool # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+	completion # Generate the autocompletion script for the specified shell
+		--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+		--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+		--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+		bash # Generate the autocompletion script for bash
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			--no-descriptions @bool # disable completion descriptions
+	help # Help about any command
+		--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+		--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+		--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+		build # Builds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+		completion # Generate the autocompletion script for the specified shell
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			bash # Generate the autocompletion script for bash
+				--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+				--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+				--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			fish # Generate the autocompletion script for fish
+				--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+				--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+				--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			powershell # Generate the autocompletion script for powershell
+				--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+				--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+				--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+			zsh # Generate the autocompletion script for zsh
+				--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+				--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+				--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+		help # Help about any command
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+		version # print the version number and exit (also --version)
+			--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+			--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+			--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive
+	version # print the version number and exit (also --version)
+		--config # config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)
+		--ignore-errors @bool # ignore image parsing errors and run the analysis anyway
+		--source # The container engine to fetch the image from. Allowed values: docker, podman, docker-archive

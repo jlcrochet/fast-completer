@@ -1,0 +1,834 @@
+{
+  "k3d --help": {
+    "returncode": 0,
+    "stdout": "https://k3d.io/\nk3d is a wrapper CLI that helps you to easily create k3s clusters inside docker.\nNodes of a k3d cluster are docker containers running a k3s image.\nAll Nodes of a k3d cluster are part of the same docker network.\n\nUsage:\n  k3d [flags]\n  k3d [command]\n\nAvailable Commands:\n  cluster      Manage cluster(s)\n  completion   Generate completion scripts for [bash, zsh, fish, powershell | psh]\n  config       Work with config file(s)\n  help         Help about any command\n  image        Handle container images.\n  kubeconfig   Manage kubeconfig(s)\n  node         Manage node(s)\n  registry     Manage registry/registries\n  version      Show k3d and default k3s version\n\nFlags:\n  -h, --help         help for k3d\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n      --version      Show k3d and default k3s version\n\nUse \"k3d [command] --help\" for more information about a command.\n"
+  },
+  "k3d --version": {
+    "returncode": 0,
+    "stdout": "k3d version v5.8.3\nk3s version v1.31.5-k3s1 (default)\n"
+  },
+  "k3d __complete ": {
+    "returncode": 0,
+    "stdout": "cluster\tManage cluster(s)\ncompletion\tGenerate completion scripts for [bash, zsh, fish, powershell | psh]\nconfig\tWork with config file(s)\nhelp\tHelp about any command\nimage\tHandle container images.\nkubeconfig\tManage kubeconfig(s)\nnode\tManage node(s)\nregistry\tManage registry/registries\nversion\tShow k3d and default k3s version\n:4\n"
+  },
+  "k3d __complete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for k3d\n--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--version\tShow k3d and default k3s version\n:4\n"
+  },
+  "k3d __complete cluster ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new cluster\ndelete\tDelete cluster(s).\nedit\t[EXPERIMENTAL] Edit cluster(s).\nlist\tList cluster(s)\nstart\tStart existing k3d cluster(s)\nstop\tStop existing k3d cluster(s)\n:4\n"
+  },
+  "k3d __complete cluster --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for cluster\n:4\n"
+  },
+  "k3d __complete cluster create ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete cluster create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--agents\tSpecify how many agents you want to create\n--agents-memory\tMemory limit imposed on the agents nodes [From docker]\n--api-port\tSpecify the Kubernetes API server port exposed on the LoadBalancer (Format: `[HOST:]HOSTPORT`)\n--config\tPath of a config file to use\n--env\tAdd environment variables to nodes (Format: `KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]`\n--gpus\tGPU devices to add to the cluster node containers ('all' to pass all GPUs) [From docker]\n--help\thelp for create\n--host-alias\tAdd `ip:host[,host,...]` mappings\n--host-pid-mode\tEnable host pid mode of server(s) and agent(s)\n--image\tSpecify k3s image that you want to use for the nodes\n--k3s-arg\tAdditional args passed to k3s command (Format: `ARG@NODEFILTER[;@NODEFILTER]`)\n--k3s-node-label\tAdd label to k3s node (Format: `KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]`\n--kubeconfig-switch-context\tDirectly switch the default kubeconfig's current-context to the new cluster's context (requires --kubeconfig-update-default)\n--kubeconfig-update-default\tDirectly update the default kubeconfig with the new cluster's context\n--lb-config-override\tUse dotted YAML path syntax to override nginx loadbalancer settings\n--network\tJoin an existing network\n--no-image-volume\tDisable the creation of a volume for importing images\n--no-lb\tDisable the creation of a LoadBalancer in front of the server nodes\n--no-rollback\tDisable the automatic rollback actions, if anything goes wrong\n--port\tMap ports from the node containers (via the serverlb) to the host (Format: `[HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]`)\n--registry-config\tSpecify path to an extra registries.yaml file\n--registry-create\tCreate a k3d-managed registry and connect it to the cluster (Format: `NAME[:HOST][:HOSTPORT]`\n--registry-use\tConnect to one or more k3d-managed registries running locally\n--runtime-label\tAdd label to container runtime (Format: `KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]`\n--runtime-ulimit\tAdd ulimit to container runtime (Format: `NAME[=SOFT]:[HARD]`\n--servers\tSpecify how many servers you want to create\n--servers-memory\tMemory limit imposed on the server nodes [From docker]\n--subnet\t[Experimental: IPAM] Define a subnet for the newly created container network (Example: `172.28.0.0/16`)\n--timeout\tRollback changes if cluster couldn't be created in specified duration.\n--token\tSpecify a cluster token. By default, we generate one.\n--volume\tMount volumes into the nodes (Format: `[SOURCE:]DEST[@NODEFILTER[;NODEFILTER...]]`\n--wait\tWait for the server(s) to be ready before returning. Use '--timeout DURATION' to not wait forever.\n:4\n"
+  },
+  "k3d __complete cluster delete ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete cluster delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tDelete all existing clusters\n--config\tPath of a config file to use\n--help\thelp for delete\n:4\n"
+  },
+  "k3d __complete cluster edit ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete cluster edit --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for edit\n--port-add\t[EXPERIMENTAL] Map ports from the node containers (via the serverlb) to the host (Format: `[HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]`)\n:4\n"
+  },
+  "k3d __complete cluster list ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete cluster list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for list\n--no-headers\tDisable headers\n--output\tOutput format. One of: json|yaml\n--token\tPrint k3s cluster token\n:4\n"
+  },
+  "k3d __complete cluster start ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete cluster start --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tStart all existing clusters\n--help\thelp for start\n--timeout\tMaximum waiting time for '--wait' before canceling/returning.\n--wait\tWait for the server(s) (and loadbalancer) to be ready before returning.\n:4\n"
+  },
+  "k3d __complete cluster stop ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete cluster stop --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tStop all existing clusters\n--help\thelp for stop\n:4\n"
+  },
+  "k3d __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\nzsh\nfish\npowershell\n:4\n"
+  },
+  "k3d __complete completion --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for completion\n:4\n"
+  },
+  "k3d __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for completion\n:4\n"
+  },
+  "k3d __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for completion\n:4\n"
+  },
+  "k3d __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for completion\n:4\n"
+  },
+  "k3d __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for completion\n:4\n"
+  },
+  "k3d __complete config ": {
+    "returncode": 0,
+    "stdout": "init\nmigrate\n:4\n"
+  },
+  "k3d __complete config --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for config\n:4\n"
+  },
+  "k3d __complete config init ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete config init --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--force\tForce overwrite of target file\n--help\thelp for init\n--output\tWrite a default k3d config\n:4\n"
+  },
+  "k3d __complete config migrate ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete config migrate --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for migrate\n:4\n"
+  },
+  "k3d __complete help ": {
+    "returncode": 0,
+    "stdout": "cluster\tManage cluster(s)\ncompletion\tGenerate completion scripts for [bash, zsh, fish, powershell | psh]\nconfig\tWork with config file(s)\nhelp\tHelp about any command\nimage\tHandle container images.\nkubeconfig\tManage kubeconfig(s)\nnode\tManage node(s)\nregistry\tManage registry/registries\nversion\tShow k3d and default k3s version\n:4\n"
+  },
+  "k3d __complete help --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new cluster\ndelete\tDelete cluster(s).\nedit\t[EXPERIMENTAL] Edit cluster(s).\nlist\tList cluster(s)\nstart\tStart existing k3d cluster(s)\nstop\tStop existing k3d cluster(s)\n:4\n"
+  },
+  "k3d __complete help cluster --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster create ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster edit ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster edit --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster list ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster start ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster start --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help cluster stop ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help cluster stop --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help completion ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help config ": {
+    "returncode": 0,
+    "stdout": "init\nmigrate\n:4\n"
+  },
+  "k3d __complete help config --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help config init ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help config init --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help config migrate ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help config migrate --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help help --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help image ": {
+    "returncode": 0,
+    "stdout": "import\tImport image(s) from docker into k3d cluster(s).\n:4\n"
+  },
+  "k3d __complete help image --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help image import ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help image import --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help kubeconfig ": {
+    "returncode": 0,
+    "stdout": "get\tPrint kubeconfig(s) from cluster(s).\nmerge\tWrite/Merge kubeconfig(s) from cluster(s) into new or existing kubeconfig/file.\n:4\n"
+  },
+  "k3d __complete help kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help kubeconfig get ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help kubeconfig get --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help kubeconfig merge ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help kubeconfig merge --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new k3s node in docker\ndelete\tDelete node(s).\nedit\t[EXPERIMENTAL] Edit node(s).\nlist\tList node(s)\nstart\tStart an existing k3d node\nstop\tStop an existing k3d node\n:4\n"
+  },
+  "k3d __complete help node --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node create ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node edit ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node edit --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node list ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node start ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node start --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help node stop ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help node stop --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help registry ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new registry\ndelete\tDelete registry/registries.\nlist\tList registries\n:4\n"
+  },
+  "k3d __complete help registry --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help registry create ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help registry create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help registry delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help registry delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help registry list ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help registry list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help version ": {
+    "returncode": 0,
+    "stdout": "list\tList k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n:4\n"
+  },
+  "k3d __complete help version --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete help version list ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "k3d __complete help version list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for help\n:4\n"
+  },
+  "k3d __complete image ": {
+    "returncode": 0,
+    "stdout": "import\tImport image(s) from docker into k3d cluster(s).\n:4\n"
+  },
+  "k3d __complete image --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for image\n:4\n"
+  },
+  "k3d __complete image import ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete image import --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--cluster\tSelect clusters to load the image to.\n--help\thelp for import\n--keep-tarball\tDo not delete the tarball containing the saved images from the shared volume\n--keep-tools\tDo not delete the tools node after import\n--mode\tWhich method to use to import images into the cluster [auto, direct, tools]. See https://k3d.io/stable/usage/importing_images/\n:4\n"
+  },
+  "k3d __complete kubeconfig ": {
+    "returncode": 0,
+    "stdout": "get\tPrint kubeconfig(s) from cluster(s).\nmerge\tWrite/Merge kubeconfig(s) from cluster(s) into new or existing kubeconfig/file.\n:4\n"
+  },
+  "k3d __complete kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for kubeconfig\n:4\n"
+  },
+  "k3d __complete kubeconfig get ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete kubeconfig get --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tOutput kubeconfigs from all existing clusters\n--help\thelp for get\n:4\n"
+  },
+  "k3d __complete kubeconfig merge ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete kubeconfig merge --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tGet kubeconfigs from all existing clusters\n--help\thelp for merge\n--kubeconfig-merge-default\tMerge into the default kubeconfig ($KUBECONFIG or /home/jeffrey/.kube/config)\n--kubeconfig-switch-context\tSwitch to new context\n--output\tDefine output [ - | FILE ] (default from $KUBECONFIG or /home/jeffrey/.kube/config\n--overwrite\t[Careful!] Overwrite existing file, ignoring its contents\n--update\tUpdate conflicting fields in existing kubeconfig\n:4\n"
+  },
+  "k3d __complete node ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new k3s node in docker\ndelete\tDelete node(s).\nedit\t[EXPERIMENTAL] Edit node(s).\nlist\tList node(s)\nstart\tStart an existing k3d node\nstop\tStop an existing k3d node\n:4\n"
+  },
+  "k3d __complete node --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for node\n:4\n"
+  },
+  "k3d __complete node create ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete node create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--cluster\tCluster URL or k3d cluster name to connect to.\n--help\thelp for create\n--image\tSpecify k3s image used for the node(s) (default: copied from existing node)\n--k3s-arg\tAdditional args passed to k3d command\n--k3s-node-label\tSpecify k3s node labels in format \"foo=bar\"\n--memory\tMemory limit imposed on the node [From docker]\n--network\tAdd node to (another) runtime network\n--replicas\tNumber of replicas of this node specification.\n--role\tSpecify node role [server, agent]\n--runtime-label\tSpecify container runtime labels in format \"foo=bar\"\n--runtime-ulimit\tSpecify container runtime ulimit in format \"ulimit=soft:hard\"\n--timeout\tMaximum waiting time for '--wait' before canceling/returning.\n--token\tOverride cluster token (required when connecting to an external cluster)\n--wait\tWait for the node(s) to be ready before returning.\n:4\n"
+  },
+  "k3d __complete node delete ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete node delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tDelete all existing nodes\n--help\thelp for delete\n--registries\tAlso delete registries\n:4\n"
+  },
+  "k3d __complete node edit ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete node edit --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for edit\n--port-add\t[EXPERIMENTAL] (serverlb only!) Map ports from the node container to the host (Format: `[HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]`)\n:4\n"
+  },
+  "k3d __complete node list ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete node list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for list\n--no-headers\tDisable headers\n--output\tOutput format. One of: json|yaml\n:4\n"
+  },
+  "k3d __complete node start ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete node start --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for start\n:4\n"
+  },
+  "k3d __complete node stop ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete node stop --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for stop\n:4\n"
+  },
+  "k3d __complete registry ": {
+    "returncode": 0,
+    "stdout": "create\tCreate a new registry\ndelete\tDelete registry/registries.\nlist\tList registries\n:4\n"
+  },
+  "k3d __complete registry --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for registry\n:4\n"
+  },
+  "k3d __complete registry create ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete registry create --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--default-network\tSpecify the network connected to the registry\n--delete-enabled\tEnable image deletion\n--help\thelp for create\n--image\tSpecify image used for the registry\n--no-help\tDisable the help text (How-To use the registry)\n--port\tSelect which port the registry should be listening on on your machine (localhost) (Format: `[HOST:]HOSTPORT`)\n--proxy-password\tSpecify the password of the proxied remote registry\n--proxy-remote-url\tSpecify the url of the proxied remote registry\n--proxy-username\tSpecify the username of the proxied remote registry\n--volume\tMount volumes into the registry node (Format: `[SOURCE:]DEST`\n:4\n"
+  },
+  "k3d __complete registry delete ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete registry delete --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--all\tDelete all existing registries\n--help\thelp for delete\n:4\n"
+  },
+  "k3d __complete registry list ": {
+    "returncode": 0,
+    "stdout": ":1\n"
+  },
+  "k3d __complete registry list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for list\n--no-headers\tDisable headers\n--output\tOutput format. One of: json|yaml\n:4\n"
+  },
+  "k3d __complete version ": {
+    "returncode": 0,
+    "stdout": "list\tList k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n:4\n"
+  },
+  "k3d __complete version --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--help\thelp for version\n--output\tThis will return version information as a different format.  Only json is supported\n:4\n"
+  },
+  "k3d __complete version list ": {
+    "returncode": 0,
+    "stdout": "k3d\nk3s\nk3d-proxy\nk3d-tools\n:4\n"
+  },
+  "k3d __complete version list --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--exclude\tExclude Regexp (default excludes pre-releases and arch-specific tags)\n--format\t[DEPRECATED] Use --output instead\n--help\thelp for list\n--include\tInclude Regexp (default includes everything\n--limit\tLimit number of tags in output (0 = unlimited)\n--output\tOutput Format [raw | repo]\n--sort\tSort Mode (asc | desc | off)\n:4\n"
+  },
+  "k3d __complete version list k3d ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete version list k3d --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--exclude\tExclude Regexp (default excludes pre-releases and arch-specific tags)\n--format\t[DEPRECATED] Use --output instead\n--help\thelp for list\n--include\tInclude Regexp (default includes everything\n--limit\tLimit number of tags in output (0 = unlimited)\n--output\tOutput Format [raw | repo]\n--sort\tSort Mode (asc | desc | off)\n:4\n"
+  },
+  "k3d __complete version list k3d-proxy ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete version list k3d-proxy --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--exclude\tExclude Regexp (default excludes pre-releases and arch-specific tags)\n--format\t[DEPRECATED] Use --output instead\n--help\thelp for list\n--include\tInclude Regexp (default includes everything\n--limit\tLimit number of tags in output (0 = unlimited)\n--output\tOutput Format [raw | repo]\n--sort\tSort Mode (asc | desc | off)\n:4\n"
+  },
+  "k3d __complete version list k3d-tools ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete version list k3d-tools --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--exclude\tExclude Regexp (default excludes pre-releases and arch-specific tags)\n--format\t[DEPRECATED] Use --output instead\n--help\thelp for list\n--include\tInclude Regexp (default includes everything\n--limit\tLimit number of tags in output (0 = unlimited)\n--output\tOutput Format [raw | repo]\n--sort\tSort Mode (asc | desc | off)\n:4\n"
+  },
+  "k3d __complete version list k3s ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "k3d __complete version list k3s --": {
+    "returncode": 0,
+    "stdout": "--timestamps\tEnable Log timestamps\n--trace\tEnable super verbose output (trace logging)\n--verbose\tEnable verbose output (debug logging)\n--exclude\tExclude Regexp (default excludes pre-releases and arch-specific tags)\n--format\t[DEPRECATED] Use --output instead\n--help\thelp for list\n--include\tInclude Regexp (default includes everything\n--limit\tLimit number of tags in output (0 = unlimited)\n--output\tOutput Format [raw | repo]\n--sort\tSort Mode (asc | desc | off)\n:4\n"
+  },
+  "k3d cluster --help": {
+    "returncode": 0,
+    "stdout": "Manage cluster(s)\n\nUsage:\n  k3d cluster [flags]\n  k3d cluster [command]\n\nAvailable Commands:\n  create      Create a new cluster\n  delete      Delete cluster(s).\n  edit        [EXPERIMENTAL] Edit cluster(s).\n  list        List cluster(s)\n  start       Start existing k3d cluster(s)\n  stop        Stop existing k3d cluster(s)\n\nFlags:\n  -h, --help   help for cluster\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d cluster [command] --help\" for more information about a command.\n"
+  },
+  "k3d cluster create --help": {
+    "returncode": 0,
+    "stdout": "\nCreate a new k3s cluster with containerized nodes (k3s in docker).\nEvery cluster will consist of one or more containers:\n\t- 1 (or more) server node container (k3s)\n\t- (optionally) 1 loadbalancer container as the entrypoint to the cluster (nginx)\n\t- (optionally) 1 (or more) agent node containers (k3s)\n\nUsage:\n  k3d cluster create NAME [flags]\n\nFlags:\n  -a, --agents int                                                     Specify how many agents you want to create\n      --agents-memory string                                           Memory limit imposed on the agents nodes [From docker]\n      --api-port [HOST:]HOSTPORT                                       Specify the Kubernetes API server port exposed on the LoadBalancer (Format: [HOST:]HOSTPORT)\n                                                                        - Example: `k3d cluster create --servers 3 --api-port 0.0.0.0:6550`\n  -c, --config string                                                  Path of a config file to use\n  -e, --env KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]                   Add environment variables to nodes (Format: KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]\n                                                                        - Example: `k3d cluster create --agents 2 -e \"HTTP_PROXY=my.proxy.com@server:0\" -e \"SOME_KEY=SOME_VAL@server:0\"`\n      --gpus string                                                    GPU devices to add to the cluster node containers ('all' to pass all GPUs) [From docker]\n  -h, --help                                                           help for create\n      --host-alias ip:host[,host,...]                                  Add ip:host[,host,...] mappings\n      --host-pid-mode                                                  Enable host pid mode of server(s) and agent(s)\n  -i, --image string                                                   Specify k3s image that you want to use for the nodes\n      --k3s-arg ARG@NODEFILTER[;@NODEFILTER]                           Additional args passed to k3s command (Format: ARG@NODEFILTER[;@NODEFILTER])\n                                                                        - Example: `k3d cluster create --k3s-arg \"--disable=traefik@server:0\"`\n      --k3s-node-label KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]        Add label to k3s node (Format: KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]\n                                                                        - Example: `k3d cluster create --agents 2 --k3s-node-label \"my.label@agent:0,1\" --k3s-node-label \"other.label=somevalue@server:0\"`\n      --kubeconfig-switch-context                                      Directly switch the default kubeconfig's current-context to the new cluster's context (requires --kubeconfig-update-default) (default true)\n      --kubeconfig-update-default                                      Directly update the default kubeconfig with the new cluster's context (default true)\n      --lb-config-override strings                                     Use dotted YAML path syntax to override nginx loadbalancer settings\n      --network string                                                 Join an existing network\n      --no-image-volume                                                Disable the creation of a volume for importing images\n      --no-lb                                                          Disable the creation of a LoadBalancer in front of the server nodes\n      --no-rollback                                                    Disable the automatic rollback actions, if anything goes wrong\n  -p, --port [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]   Map ports from the node containers (via the serverlb) to the host (Format: [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER])\n                                                                        - Example: `k3d cluster create --agents 2 -p 8080:80@agent:0 -p 8081@agent:1`\n      --registry-config string                                         Specify path to an extra registries.yaml file\n      --registry-create NAME[:HOST][:HOSTPORT]                         Create a k3d-managed registry and connect it to the cluster (Format: NAME[:HOST][:HOSTPORT]\n                                                                        - Example: `k3d cluster create --registry-create mycluster-registry:0.0.0.0:5432`\n      --registry-use stringArray                                       Connect to one or more k3d-managed registries running locally\n      --runtime-label KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]         Add label to container runtime (Format: KEY[=VALUE][@NODEFILTER[;NODEFILTER...]]\n                                                                        - Example: `k3d cluster create --agents 2 --runtime-label \"my.label@agent:0,1\" --runtime-label \"other.label=somevalue@server:0\"`\n      --runtime-ulimit NAME[=SOFT]:[HARD]                              Add ulimit to container runtime (Format: NAME[=SOFT]:[HARD]\n                                                                        - Example: `k3d cluster create --agents 2 --runtime-ulimit \"nofile=1024:1024\" --runtime-ulimit \"noproc=1024:1024\"`\n  -s, --servers int                                                    Specify how many servers you want to create\n      --servers-memory string                                          Memory limit imposed on the server nodes [From docker]\n      --subnet 172.28.0.0/16                                           [Experimental: IPAM] Define a subnet for the newly created container network (Example: 172.28.0.0/16)\n      --timeout duration                                               Rollback changes if cluster couldn't be created in specified duration.\n      --token string                                                   Specify a cluster token. By default, we generate one.\n  -v, --volume [SOURCE:]DEST[@NODEFILTER[;NODEFILTER...]]              Mount volumes into the nodes (Format: [SOURCE:]DEST[@NODEFILTER[;NODEFILTER...]]\n                                                                        - Example: `k3d cluster create --agents 2 -v /my/path@agent:0,1 -v /tmp/test:/tmp/other@server:0`\n      --wait                                                           Wait for the server(s) to be ready before returning. Use '--timeout DURATION' to not wait forever. (default true)\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d cluster delete --help": {
+    "returncode": 0,
+    "stdout": "Delete cluster(s).\n\nUsage:\n  k3d cluster delete [NAME [NAME ...] | --all] [flags]\n\nAliases:\n  delete, del, rm\n\nFlags:\n  -a, --all             Delete all existing clusters\n  -c, --config string   Path of a config file to use\n  -h, --help            help for delete\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d cluster edit --help": {
+    "returncode": 0,
+    "stdout": "[EXPERIMENTAL] Edit cluster(s).\n\nUsage:\n  k3d cluster edit CLUSTER [flags]\n\nAliases:\n  edit, update\n\nFlags:\n  -h, --help                                                               help for edit\n      --port-add [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]   [EXPERIMENTAL] Map ports from the node containers (via the serverlb) to the host (Format: [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER])\n                                                                            - Example: `k3d node edit k3d-mycluster-serverlb --port-add 8080:80`\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d cluster list --help": {
+    "returncode": 0,
+    "stdout": "List cluster(s).\n\nUsage:\n  k3d cluster list [NAME [NAME...]] [flags]\n\nAliases:\n  list, ls, get\n\nFlags:\n  -h, --help            help for list\n      --no-headers      Disable headers\n  -o, --output string   Output format. One of: json|yaml\n      --token           Print k3s cluster token\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d cluster start --help": {
+    "returncode": 0,
+    "stdout": "Start existing k3d cluster(s)\n\nUsage:\n  k3d cluster start [NAME [NAME...] | --all] [flags]\n\nFlags:\n  -a, --all                Start all existing clusters\n  -h, --help               help for start\n      --timeout duration   Maximum waiting time for '--wait' before canceling/returning.\n      --wait               Wait for the server(s) (and loadbalancer) to be ready before returning. (default true)\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d cluster stop --help": {
+    "returncode": 0,
+    "stdout": "Stop existing k3d cluster(s).\n\nUsage:\n  k3d cluster stop [NAME [NAME...] | --all] [flags]\n\nFlags:\n  -a, --all    Stop all existing clusters\n  -h, --help   help for stop\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d completion --help": {
+    "returncode": 0,
+    "stdout": "To load completions:\n\nBash:\n\n\t$ source <(k3d completion bash)\n\n\t# To load completions for each session, execute once:\n\t# Linux:\n\t$ k3d completion bash > /etc/bash_completion.d/k3d\n\t# macOS:\n\t$ k3d completion bash > /usr/local/etc/bash_completion.d/k3d\n\nZsh:\n\n\t# If shell completion is not already enabled in your environment,\n\t# you will need to enable it.  You can execute the following once:\n\n\t$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion zsh > \"${fpath[1]}/_k3d\"\n\n\t# You will need to start a new shell for this setup to take effect.\n\nfish:\n\n\t$ k3d completion fish | source\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion fish > ~/.config/fish/completions/k3d.fish\n\nPowerShell:\n\n\tPS> k3d completion powershell | Out-String | Invoke-Expression\n\n\t# To load completions for every new session, run:\n\tPS> k3d completion powershell > k3d.ps1\n\t# and source this file from your PowerShell profile.\n\nUsage:\n  k3d completion SHELL\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d completion bash --help": {
+    "returncode": 0,
+    "stdout": "To load completions:\n\nBash:\n\n\t$ source <(k3d completion bash)\n\n\t# To load completions for each session, execute once:\n\t# Linux:\n\t$ k3d completion bash > /etc/bash_completion.d/k3d\n\t# macOS:\n\t$ k3d completion bash > /usr/local/etc/bash_completion.d/k3d\n\nZsh:\n\n\t# If shell completion is not already enabled in your environment,\n\t# you will need to enable it.  You can execute the following once:\n\n\t$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion zsh > \"${fpath[1]}/_k3d\"\n\n\t# You will need to start a new shell for this setup to take effect.\n\nfish:\n\n\t$ k3d completion fish | source\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion fish > ~/.config/fish/completions/k3d.fish\n\nPowerShell:\n\n\tPS> k3d completion powershell | Out-String | Invoke-Expression\n\n\t# To load completions for every new session, run:\n\tPS> k3d completion powershell > k3d.ps1\n\t# and source this file from your PowerShell profile.\n\nUsage:\n  k3d completion SHELL\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d completion fish --help": {
+    "returncode": 0,
+    "stdout": "To load completions:\n\nBash:\n\n\t$ source <(k3d completion bash)\n\n\t# To load completions for each session, execute once:\n\t# Linux:\n\t$ k3d completion bash > /etc/bash_completion.d/k3d\n\t# macOS:\n\t$ k3d completion bash > /usr/local/etc/bash_completion.d/k3d\n\nZsh:\n\n\t# If shell completion is not already enabled in your environment,\n\t# you will need to enable it.  You can execute the following once:\n\n\t$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion zsh > \"${fpath[1]}/_k3d\"\n\n\t# You will need to start a new shell for this setup to take effect.\n\nfish:\n\n\t$ k3d completion fish | source\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion fish > ~/.config/fish/completions/k3d.fish\n\nPowerShell:\n\n\tPS> k3d completion powershell | Out-String | Invoke-Expression\n\n\t# To load completions for every new session, run:\n\tPS> k3d completion powershell > k3d.ps1\n\t# and source this file from your PowerShell profile.\n\nUsage:\n  k3d completion SHELL\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d completion powershell --help": {
+    "returncode": 0,
+    "stdout": "To load completions:\n\nBash:\n\n\t$ source <(k3d completion bash)\n\n\t# To load completions for each session, execute once:\n\t# Linux:\n\t$ k3d completion bash > /etc/bash_completion.d/k3d\n\t# macOS:\n\t$ k3d completion bash > /usr/local/etc/bash_completion.d/k3d\n\nZsh:\n\n\t# If shell completion is not already enabled in your environment,\n\t# you will need to enable it.  You can execute the following once:\n\n\t$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion zsh > \"${fpath[1]}/_k3d\"\n\n\t# You will need to start a new shell for this setup to take effect.\n\nfish:\n\n\t$ k3d completion fish | source\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion fish > ~/.config/fish/completions/k3d.fish\n\nPowerShell:\n\n\tPS> k3d completion powershell | Out-String | Invoke-Expression\n\n\t# To load completions for every new session, run:\n\tPS> k3d completion powershell > k3d.ps1\n\t# and source this file from your PowerShell profile.\n\nUsage:\n  k3d completion SHELL\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d completion zsh --help": {
+    "returncode": 0,
+    "stdout": "To load completions:\n\nBash:\n\n\t$ source <(k3d completion bash)\n\n\t# To load completions for each session, execute once:\n\t# Linux:\n\t$ k3d completion bash > /etc/bash_completion.d/k3d\n\t# macOS:\n\t$ k3d completion bash > /usr/local/etc/bash_completion.d/k3d\n\nZsh:\n\n\t# If shell completion is not already enabled in your environment,\n\t# you will need to enable it.  You can execute the following once:\n\n\t$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion zsh > \"${fpath[1]}/_k3d\"\n\n\t# You will need to start a new shell for this setup to take effect.\n\nfish:\n\n\t$ k3d completion fish | source\n\n\t# To load completions for each session, execute once:\n\t$ k3d completion fish > ~/.config/fish/completions/k3d.fish\n\nPowerShell:\n\n\tPS> k3d completion powershell | Out-String | Invoke-Expression\n\n\t# To load completions for every new session, run:\n\tPS> k3d completion powershell > k3d.ps1\n\t# and source this file from your PowerShell profile.\n\nUsage:\n  k3d completion SHELL\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d config --help": {
+    "returncode": 0,
+    "stdout": "Work with config file(s)\n\nUsage:\n  k3d config [flags]\n  k3d config [command]\n\nAvailable Commands:\n  init        \n  migrate     \n\nFlags:\n  -h, --help   help for config\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d config [command] --help\" for more information about a command.\n"
+  },
+  "k3d config init --help": {
+    "returncode": 0,
+    "stdout": "Usage:\n  k3d config init [flags]\n\nAliases:\n  init, create\n\nFlags:\n  -f, --force           Force overwrite of target file\n  -h, --help            help for init\n  -o, --output string   Write a default k3d config (default \"k3d-default.yaml\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d config migrate --help": {
+    "returncode": 0,
+    "stdout": "Usage:\n  k3d config migrate INPUT [OUTPUT] [flags]\n\nAliases:\n  migrate, update\n\nFlags:\n  -h, --help   help for migrate\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster edit --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster list --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster start --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help cluster stop --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help config --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help config init --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help config migrate --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help image --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help image import --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help kubeconfig get --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help kubeconfig merge --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node edit --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node list --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node start --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help node stop --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help registry --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help registry create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help registry delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help registry list --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d help version list --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type k3d help [path to command] for full details.\n\nUsage:\n  k3d help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d image --help": {
+    "returncode": 0,
+    "stdout": "Handle container images.\n\nUsage:\n  k3d image [flags]\n  k3d image [command]\n\nAliases:\n  image, images\n\nAvailable Commands:\n  import      Import image(s) from docker into k3d cluster(s).\n\nFlags:\n  -h, --help   help for image\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d image [command] --help\" for more information about a command.\n"
+  },
+  "k3d image import --help": {
+    "returncode": 0,
+    "stdout": "Import image(s) from docker into k3d cluster(s).\n\nIf an IMAGE starts with the prefix 'docker.io/', then this prefix is stripped internally.\nThat is, 'docker.io/k3d-io/k3d-tools:latest' is treated as 'k3d-io/k3d-tools:latest'.\n\nIf an IMAGE starts with the prefix 'library/' (or 'docker.io/library/'), then this prefix is stripped internally.\nThat is, 'library/busybox:latest' (or 'docker.io/library/busybox:latest') are treated as 'busybox:latest'.\n\nIf an IMAGE does not have a version tag, then ':latest' is assumed.\nThat is, 'k3d-io/k3d-tools' is treated as 'k3d-io/k3d-tools:latest'.\n\nA file ARCHIVE always takes precedence.\nSo if a file './k3d-io/k3d-tools' exists, k3d will try to import it instead of the IMAGE of the same name.\n\nUsage:\n  k3d image import [IMAGE | ARCHIVE [IMAGE | ARCHIVE...]] [flags]\n\nAliases:\n  import, load\n\nFlags:\n  -c, --cluster stringArray   Select clusters to load the image to. (default [k3s-default])\n  -h, --help                  help for import\n  -k, --keep-tarball          Do not delete the tarball containing the saved images from the shared volume\n  -t, --keep-tools            Do not delete the tools node after import\n  -m, --mode string           Which method to use to import images into the cluster [auto, direct, tools]. See https://k3d.io/stable/usage/importing_images/ (default \"tools-node\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Manage kubeconfig(s)\n\nUsage:\n  k3d kubeconfig [flags]\n  k3d kubeconfig [command]\n\nAvailable Commands:\n  get         Print kubeconfig(s) from cluster(s).\n  merge       Write/Merge kubeconfig(s) from cluster(s) into new or existing kubeconfig/file.\n\nFlags:\n  -h, --help   help for kubeconfig\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d kubeconfig [command] --help\" for more information about a command.\n"
+  },
+  "k3d kubeconfig get --help": {
+    "returncode": 0,
+    "stdout": "Print kubeconfig(s) from cluster(s).\n\nUsage:\n  k3d kubeconfig get [CLUSTER [CLUSTER [...]] | --all] [flags]\n\nAliases:\n  get, print, show\n\nFlags:\n  -a, --all    Output kubeconfigs from all existing clusters\n  -h, --help   help for get\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d kubeconfig merge --help": {
+    "returncode": 0,
+    "stdout": "Write/Merge kubeconfig(s) from cluster(s) into new or existing kubeconfig/file.\n\nUsage:\n  k3d kubeconfig merge [CLUSTER [CLUSTER [...]] | --all] [flags]\n\nAliases:\n  merge, write\n\nFlags:\n  -a, --all                         Get kubeconfigs from all existing clusters\n  -h, --help                        help for merge\n  -d, --kubeconfig-merge-default    Merge into the default kubeconfig ($KUBECONFIG or /home/jeffrey/.kube/config)\n  -s, --kubeconfig-switch-context   Switch to new context (default true)\n  -o, --output string               Define output [ - | FILE ] (default from $KUBECONFIG or /home/jeffrey/.kube/config\n      --overwrite                   [Careful!] Overwrite existing file, ignoring its contents\n  -u, --update                      Update conflicting fields in existing kubeconfig (default true)\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node --help": {
+    "returncode": 0,
+    "stdout": "Manage node(s)\n\nUsage:\n  k3d node [flags]\n  k3d node [command]\n\nAvailable Commands:\n  create      Create a new k3s node in docker\n  delete      Delete node(s).\n  edit        [EXPERIMENTAL] Edit node(s).\n  list        List node(s)\n  start       Start an existing k3d node\n  stop        Stop an existing k3d node\n\nFlags:\n  -h, --help   help for node\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d node [command] --help\" for more information about a command.\n"
+  },
+  "k3d node create --help": {
+    "returncode": 0,
+    "stdout": "Create a new containerized k3s node (k3s in docker).\n\nUsage:\n  k3d node create NAME [flags]\n\nFlags:\n  -c, --cluster string           Cluster URL or k3d cluster name to connect to. (default \"k3s-default\")\n  -h, --help                     help for create\n  -i, --image string             Specify k3s image used for the node(s) (default: copied from existing node)\n      --k3s-arg stringArray      Additional args passed to k3d command\n      --k3s-node-label strings   Specify k3s node labels in format \"foo=bar\"\n      --memory string            Memory limit imposed on the node [From docker]\n  -n, --network strings          Add node to (another) runtime network\n      --replicas int             Number of replicas of this node specification. (default 1)\n      --role string              Specify node role [server, agent] (default \"agent\")\n      --runtime-label strings    Specify container runtime labels in format \"foo=bar\"\n      --runtime-ulimit strings   Specify container runtime ulimit in format \"ulimit=soft:hard\"\n      --timeout duration         Maximum waiting time for '--wait' before canceling/returning.\n  -t, --token string             Override cluster token (required when connecting to an external cluster)\n      --wait                     Wait for the node(s) to be ready before returning. (default true)\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node delete --help": {
+    "returncode": 0,
+    "stdout": "Delete node(s).\n\nUsage:\n  k3d node delete (NAME | --all) [flags]\n\nFlags:\n  -a, --all          Delete all existing nodes\n  -h, --help         help for delete\n  -r, --registries   Also delete registries\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node edit --help": {
+    "returncode": 0,
+    "stdout": "[EXPERIMENTAL] Edit node(s).\n\nUsage:\n  k3d node edit NODE [flags]\n\nAliases:\n  edit, update\n\nFlags:\n  -h, --help                                                               help for edit\n      --port-add [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER]   [EXPERIMENTAL] (serverlb only!) Map ports from the node container to the host (Format: [HOST:][HOSTPORT:]CONTAINERPORT[/PROTOCOL][@NODEFILTER])\n                                                                            - Example: `k3d node edit k3d-mycluster-serverlb --port-add 8080:80`\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node list --help": {
+    "returncode": 0,
+    "stdout": "List node(s).\n\nUsage:\n  k3d node list [NODE [NODE...]] [flags]\n\nAliases:\n  list, ls, get\n\nFlags:\n  -h, --help            help for list\n      --no-headers      Disable headers\n  -o, --output string   Output format. One of: json|yaml\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node start --help": {
+    "returncode": 0,
+    "stdout": "Start an existing k3d node.\n\nUsage:\n  k3d node start NODE [flags]\n\nFlags:\n  -h, --help   help for start\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d node stop --help": {
+    "returncode": 0,
+    "stdout": "Stop an existing k3d node.\n\nUsage:\n  k3d node stop NAME [flags]\n\nFlags:\n  -h, --help   help for stop\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d registry --help": {
+    "returncode": 0,
+    "stdout": "Manage registry/registries\n\nUsage:\n  k3d registry [flags]\n  k3d registry [command]\n\nAliases:\n  registry, registries, reg\n\nAvailable Commands:\n  create      Create a new registry\n  delete      Delete registry/registries.\n  list        List registries\n\nFlags:\n  -h, --help   help for registry\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nAdditional help topics:\n  k3d registry    \n  k3d registry    \n\nUse \"k3d registry [command] --help\" for more information about a command.\n"
+  },
+  "k3d registry create --help": {
+    "returncode": 0,
+    "stdout": "Create a new registry.\n\nUsage:\n  k3d registry create NAME [flags]\n\nFlags:\n      --default-network string    Specify the network connected to the registry (default \"bridge\")\n      --delete-enabled            Enable image deletion\n  -h, --help                      help for create\n  -i, --image string              Specify image used for the registry (default \"docker.io/library/registry:2\")\n      --no-help                   Disable the help text (How-To use the registry)\n  -p, --port [HOST:]HOSTPORT      Select which port the registry should be listening on on your machine (localhost) (Format: [HOST:]HOSTPORT)\n                                   - Example: `k3d registry create --port 0.0.0.0:5111` (default \"random\")\n      --proxy-password string     Specify the password of the proxied remote registry\n      --proxy-remote-url string   Specify the url of the proxied remote registry\n      --proxy-username string     Specify the username of the proxied remote registry\n  -v, --volume [SOURCE:]DEST      Mount volumes into the registry node (Format: [SOURCE:]DEST\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d registry delete --help": {
+    "returncode": 0,
+    "stdout": "Delete registry/registries.\n\nUsage:\n  k3d registry delete (NAME | --all) [flags]\n\nAliases:\n  delete, del, rm\n\nFlags:\n  -a, --all    Delete all existing registries\n  -h, --help   help for delete\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d registry list --help": {
+    "returncode": 0,
+    "stdout": "List registries.\n\nUsage:\n  k3d registry list [NAME [NAME...]] [flags]\n\nAliases:\n  list, ls, get\n\nFlags:\n  -h, --help            help for list\n      --no-headers      Disable headers\n  -o, --output string   Output format. One of: json|yaml\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d version --help": {
+    "returncode": 0,
+    "stdout": "Show k3d and default k3s version\n\nUsage:\n  k3d version [flags]\n  k3d version [command]\n\nAvailable Commands:\n  list        List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nFlags:\n  -h, --help            help for version\n  -o, --output string   This will return version information as a different format.  Only json is supported\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n\nUse \"k3d version [command] --help\" for more information about a command.\n"
+  },
+  "k3d version list --help": {
+    "returncode": 0,
+    "stdout": "List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nUsage:\n  k3d version list COMPONENT [flags]\n\nAliases:\n  list, ls\n\nFlags:\n  -e, --exclude string   Exclude Regexp (default excludes pre-releases and arch-specific tags) (default \".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64|s390x).*\")\n  -f, --format string    [DEPRECATED] Use --output instead (default \"raw\")\n  -h, --help             help for list\n  -i, --include string   Include Regexp (default includes everything (default \".*\")\n  -l, --limit int        Limit number of tags in output (0 = unlimited)\n  -o, --output string    Output Format [raw | repo] (default \"raw\")\n  -s, --sort string      Sort Mode (asc | desc | off) (default \"desc\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d version list k3d --help": {
+    "returncode": 0,
+    "stdout": "List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nUsage:\n  k3d version list COMPONENT [flags]\n\nAliases:\n  list, ls\n\nFlags:\n  -e, --exclude string   Exclude Regexp (default excludes pre-releases and arch-specific tags) (default \".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64|s390x).*\")\n  -f, --format string    [DEPRECATED] Use --output instead (default \"raw\")\n  -h, --help             help for list\n  -i, --include string   Include Regexp (default includes everything (default \".*\")\n  -l, --limit int        Limit number of tags in output (0 = unlimited)\n  -o, --output string    Output Format [raw | repo] (default \"raw\")\n  -s, --sort string      Sort Mode (asc | desc | off) (default \"desc\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d version list k3d-proxy --help": {
+    "returncode": 0,
+    "stdout": "List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nUsage:\n  k3d version list COMPONENT [flags]\n\nAliases:\n  list, ls\n\nFlags:\n  -e, --exclude string   Exclude Regexp (default excludes pre-releases and arch-specific tags) (default \".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64|s390x).*\")\n  -f, --format string    [DEPRECATED] Use --output instead (default \"raw\")\n  -h, --help             help for list\n  -i, --include string   Include Regexp (default includes everything (default \".*\")\n  -l, --limit int        Limit number of tags in output (0 = unlimited)\n  -o, --output string    Output Format [raw | repo] (default \"raw\")\n  -s, --sort string      Sort Mode (asc | desc | off) (default \"desc\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d version list k3d-tools --help": {
+    "returncode": 0,
+    "stdout": "List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nUsage:\n  k3d version list COMPONENT [flags]\n\nAliases:\n  list, ls\n\nFlags:\n  -e, --exclude string   Exclude Regexp (default excludes pre-releases and arch-specific tags) (default \".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64|s390x).*\")\n  -f, --format string    [DEPRECATED] Use --output instead (default \"raw\")\n  -h, --help             help for list\n  -i, --include string   Include Regexp (default includes everything (default \".*\")\n  -l, --limit int        Limit number of tags in output (0 = unlimited)\n  -o, --output string    Output Format [raw | repo] (default \"raw\")\n  -s, --sort string      Sort Mode (asc | desc | off) (default \"desc\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  },
+  "k3d version list k3s --help": {
+    "returncode": 0,
+    "stdout": "List k3d/K3s versions. Component can be one of 'k3d', 'k3s', 'k3d-proxy', 'k3d-tools'.\n\nUsage:\n  k3d version list COMPONENT [flags]\n\nAliases:\n  list, ls\n\nFlags:\n  -e, --exclude string   Exclude Regexp (default excludes pre-releases and arch-specific tags) (default \".+(rc|engine|alpha|beta|dev|test|arm|arm64|amd64|s390x).*\")\n  -f, --format string    [DEPRECATED] Use --output instead (default \"raw\")\n  -h, --help             help for list\n  -i, --include string   Include Regexp (default includes everything (default \".*\")\n  -l, --limit int        Limit number of tags in output (0 = unlimited)\n  -o, --output string    Output Format [raw | repo] (default \"raw\")\n  -s, --sort string      Sort Mode (asc | desc | off) (default \"desc\")\n\nGlobal Flags:\n      --timestamps   Enable Log timestamps\n      --trace        Enable super verbose output (trace logging)\n      --verbose      Enable verbose output (debug logging)\n"
+  }
+}

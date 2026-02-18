@@ -5,5 +5,5 @@ fast-completer.exe
 fast-completer.bak
 *.bin
 .venv/
-pyproject.toml
+/pyproject.toml
 uv.lock

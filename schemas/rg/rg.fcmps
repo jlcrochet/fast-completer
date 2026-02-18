@@ -1,0 +1,105 @@
+# ripgrep CLI schema for fast-completer
+# Generated from rg 15.1.0
+
+rg # Recursively search directories for a regex pattern
+	--regexp|-e # A pattern to search for.
+	--file|-f # Search for patterns from the given file.
+	--pre # Search output of COMMAND for each PATH.
+	--pre-glob # Include or exclude files from a preprocessor.
+	--search-zip|-z @bool # Search in compressed files.
+	--case-sensitive|-s @bool # Search case sensitively (default).
+	--crlf @bool # Use CRLF line terminators (nice for Windows).
+	--dfa-size-limit # The upper size limit of the regex DFA.
+	--encoding|-E # Specify the text encoding of files to search.
+	--engine # Specify which regex engine to use.
+	--fixed-strings|-F @bool # Treat all patterns as literals.
+	--ignore-case|-i @bool # Case insensitive search.
+	--invert-match|-v @bool # Invert matching.
+	--line-regexp|-x @bool # Show matches surrounded by line boundaries.
+	--max-count|-m # Limit the number of matching lines.
+	--mmap @bool # Search with memory maps when possible.
+	--multiline|-U @bool # Enable searching across multiple lines.
+	--multiline-dotall @bool # Make '.' match line terminators.
+	--no-unicode @bool # Disable Unicode mode.
+	--null-data @bool # Use NUL as a line terminator.
+	--pcre2|-P @bool # Enable PCRE2 matching.
+	--regex-size-limit # The size limit of the compiled regex.
+	--smart-case|-S @bool # Smart case search.
+	--stop-on-nonmatch @bool # Stop searching after a non-match.
+	--text|-a @bool # Search binary files as if they were text.
+	--threads|-j # Set the approximate number of threads to use.
+	--word-regexp|-w @bool # Show matches surrounded by word boundaries.
+	--auto-hybrid-regex @bool # (DEPRECATED) Use PCRE2 if appropriate.
+	--no-pcre2-unicode @bool # (DEPRECATED) Disable Unicode mode for PCRE2.
+	--binary @bool # Search binary files.
+	--follow|-L @bool # Follow symbolic links.
+	--glob|-g # Include or exclude file paths.
+	--glob-case-insensitive @bool # Process all glob patterns case insensitively.
+	--iglob # Include/exclude paths case insensitively.
+	--ignore-file # Specify additional ignore files.
+	--ignore-file-case-insensitive @bool # Process ignore files case insensitively.
+	--max-depth|-d # Descend at most NUM directories.
+	--max-filesize # Ignore files larger than NUM in size.
+	--no-ignore @bool # Don't use ignore files.
+	--no-ignore-dot @bool # Don't use .ignore or .rgignore files.
+	--no-ignore-exclude @bool # Don't use local exclusion files.
+	--no-ignore-files @bool # Don't use --ignore-file arguments.
+	--no-ignore-global @bool # Don't use global ignore files.
+	--no-ignore-parent @bool # Don't use ignore files in parent directories.
+	--no-ignore-vcs @bool # Don't use ignore files from source control.
+	--no-require-git @bool # Use .gitignore outside of git repositories.
+	--one-file-system @bool # Skip directories on other file systems.
+	--type|-t # Only search files matching TYPE.
+	--type-not|-T # Do not search files matching TYPE.
+	--type-add # Add a new glob for a file type.
+	--type-clear # Clear globs for a file type.
+	--unrestricted|-u @bool # Reduce the level of "smart" filtering.
+	--after-context|-A # Show NUM lines after each match.
+	--before-context|-B # Show NUM lines before each match.
+	--block-buffered @bool # Force block buffering.
+	--byte-offset|-b @bool # Print the byte offset for each matching line.
+	--color # When to use color.
+	--colors # Configure color settings and styles.
+	--column @bool # Show column numbers.
+	--context|-C # Show NUM lines before and after each match.
+	--context-separator # Set the separator for contextual chunks.
+	--field-context-separator # Set the field context separator.
+	--field-match-separator # Set the field match separator.
+	--heading @bool # Print matches grouped by each file.
+	--hostname-bin # Run a program to get this system's hostname.
+	--hyperlink-format # Set the format of hyperlinks.
+	--include-zero @bool # Include zero matches in summary output.
+	--line-buffered @bool # Force line buffering.
+	--line-number|-n @bool # Show line numbers.
+	--no-line-number|-N @bool # Suppress line numbers.
+	--max-columns|-M # Omit lines longer than this limit.
+	--max-columns-preview @bool # Show preview for lines exceeding the limit.
+	--null|-0 @bool # Print a NUL byte after file paths.
+	--only-matching|-o @bool # Print only matched parts of a line.
+	--path-separator # Set the path separator for printing paths.
+	--passthru @bool # Print both matching and non-matching lines.
+	--pretty|-p @bool # Alias for colors, headings and line numbers.
+	--quiet|-q @bool # Do not print anything to stdout.
+	--replace|-r # Replace matches with the given text.
+	--sort # Sort results in ascending order.
+	--sortr # Sort results in descending order.
+	--trim @bool # Trim prefix whitespace from matches.
+	--vimgrep @bool # Print results in a vim compatible format.
+	--with-filename|-H @bool # Print the file path with each matching line.
+	--no-filename|-I @bool # Never print the path with each matching line.
+	--sort-files @bool # (DEPRECATED) Sort results by file path.
+	--count|-c @bool # Show count of matching lines for each file.
+	--count-matches @bool # Show count of every match for each file.
+	--files-with-matches|-l @bool # Print the paths with at least one match.
+	--files-without-match @bool # Print the paths that contain zero matches.
+	--json @bool # Show search results in a JSON Lines format.
+	--debug @bool # Show debug messages.
+	--no-ignore-messages @bool # Suppress gitignore parse error messages.
+	--no-messages @bool # Suppress some error messages.
+	--stats @bool # Print statistics about the search.
+	--trace @bool # Show trace messages.
+	--files @bool # Print each file that would be searched.
+	--generate # Generate man pages and completion scripts.
+	--no-config @bool # Never read configuration files.
+	--pcre2-version @bool # Print the version of PCRE2 that ripgrep uses.
+	--type-list @bool # Show all supported file types.

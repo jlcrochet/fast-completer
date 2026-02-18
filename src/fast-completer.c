@@ -149,20 +149,6 @@ typedef struct {
     uint32_t option_short_size;
 } BlobHeader;
 
-typedef struct {
-    uint32_t start;
-    uint32_t count;
-} Slice32;
-
-typedef struct {
-    uint32_t param_idx;
-} LongIndexEntry;
-
-typedef struct {
-    uint8_t short_ch;
-    uint8_t _pad[3];
-    uint32_t param_idx;
-} ShortIndexEntry;
 
 // Global state
 static const uint8_t *blob = NULL;
@@ -1650,8 +1636,8 @@ static int split_args(char *cmd, char **argv, int max_args, const char **err_msg
             }
             *w++ = *p++;
         }
+        if (*p) p++;  // skip delimiter (before null-terminating, since w may alias p)
         *w = '\0';
-        if (*p == ' ' || *p == '\t') p++;
     }
     while (*p == ' ' || *p == '\t') p++;
     if (*p) {

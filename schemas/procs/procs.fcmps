@@ -1,0 +1,29 @@
+# Procs CLI schema for fast-completer
+# Generated from procs 0.14.10
+
+procs # Process viewer
+	--and|-a # logic for multi-keyword
+	--or|-o # logic for multi-keyword
+	--nand|-d @bool # NAND logic for multi-keyword
+	--nor|-r # logic for multi-keyword
+	--list|-l @bool # Show list of kind
+	--thread @bool # Show thread
+	--tree|-t @bool # Tree view
+	--watch|-w @bool # Watch mode with default interval (1s)
+	--watch-interval|-W # Watch mode with custom interval
+	--insert|-i # Insert column to slot
+	--only # Specified column only
+	--sorta # Sort column by ascending
+	--sortd # Sort column by descending
+	--color|-c (auto|always|disable) # Color mode [possible values: auto, always, disable]
+	--theme (auto|dark|light) # Theme mode [possible values: auto, dark, light]
+	--pager|-p (auto|always|disable) # Pager mode [possible values: auto, always, disable]
+	--json @bool # JSON output
+	--interval # Interval to calculate throughput [default: 100]
+	--use-config (default|large) # Use built-in configuration [possible values: default, large]
+	--load-config # Load configuration from file
+	--gen-config @bool # Generate configuration sample file
+	--gen-completion (bash|elvish|fish|powershell|zsh) # Generate shell completion file [possible values: bash, elvish, fish, powershell, zsh]
+	--gen-completion-out (bash|elvish|fish|powershell|zsh) # Generate shell completion file and write to stdout [possible values: bash, elvish, fish, powershell, zsh]
+	--no-header @bool # Suppress header
+	--procfs # Path to procfs

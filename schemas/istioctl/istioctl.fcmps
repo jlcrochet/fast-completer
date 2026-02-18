@@ -1,0 +1,2161 @@
+# istioctl CLI schema for fast-completer
+# Generated from istioctl unknown
+
+istioctl # Istio service mesh CLI
+	--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+	--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+	--as-uid # UID to impersonate for the operation.
+	--context # Kubernetes configuration context
+	--help @bool # help for istioctl
+	--istioNamespace # Istio system namespace
+	--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+	--kubeconfig # Kubernetes configuration file
+	--namespace # Kubernetes namespace
+	--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+	admin # Manage control plane (istiod) configuration
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--selector # label selector
+		log # Manage istiod logging.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--selector # label selector
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ctrlz_port # ControlZ port
+			--level # Comma-separated list of output logging level for scopes in the format of <scope>:<level>[,<scope>:<level>,...]. Possible values for <level>: none, error, warn, info, debug
+			--log-reset @bool # Reset log levels to default value. (info)
+			--output # Output format: one of json|yaml|short
+			--reset @bool # Reset all levels to default value. (info)
+			--revision # Control plane revision
+			--stack-trace-level # Comma-separated list of stack trace level for scopes in the format of <scope>:<stack-trace-level>[,<scope>:<stack-trace-level>,...]. Possible values for <stack-trace-level>: none, error, warn, info, debug
+			--stack-trace-reset @bool # Reset stack stace levels to default value. (none)
+	analyze # Analyze Istio configuration and print validation messages
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--all-namespaces @bool # Analyze all namespaces
+		--analyzer # Select specific analyzers to run. Can be repeated. If not specified, all analyzers are run. (e.g. istioctl analyze --analyzer "gateway.ConflictingGatewayAnalyzer")
+		--color @bool # Default true.  Disable with '=false' or set $TERM to dumb
+		--failure-threshold # The severity level of analysis at which to set a non-zero exit code. Valid values: [Info Warning Error]
+		--ignore-unknown @bool # Don't complain about un-parseable input documents, for cases where analyze should run only on k8s compliant inputs.
+		--list-analyzers @bool # List the analyzers available to run. Suppresses normal execution.
+		--meshConfigFile # Overrides the mesh config values to use for analysis.
+		--output # Output format: one of [log json yaml]
+		--output-threshold # The severity level of analysis at which to display messages. Valid values: [Info Warning Error]
+		--recursive @bool # [Removed: The recursive flag has been removed and is hardcoded to true] Process directory arguments recursively.
+		--remote-contexts # Kubernetes configuration contexts for remote clusters to be used in multi-cluster analysis. Not to be confused with '--context'. If unspecified, contexts are read from the remote secrets in the cluster.
+		--revision # analyze a specific revision deployed.
+		--suppress # Suppress reporting a message code on a specific resource. Values are supplied in the form <code>=<resource> (e.g. '--suppress "IST0102=DestinationRule primary-dr.default"'). Can be repeated. You can include the wildcard character '*' to support a partial match (e.g. '--suppress "IST0102=DestinationRule *.default" ).
+		--timeout # The duration to wait before failing
+		--use-kube @bool # Use live Kubernetes cluster for analysis. Set --use-kube=false to analyze files only.
+		--verbose @bool # Enable verbose output
+	authz # (authz is experimental. Use `istioctl experimental authz`)
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+	bug-report # Cluster information and log capture support tool.
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--context # Name of the kubeconfig Context to use.
+		--critical-errs # List of comma separated glob patterns to match against log error strings. If any pattern matches an error in the log, the logs is given the highest priority for archive inclusion.
+		--dir # Set a specific directory for temporary artifact storage.
+		--dry-run @bool # Only log commands that would be run, don't fetch or write.
+		--duration # How far to go back in time from end-time for log entries to include in the archive. Default is infinity. If set, --start-time must be unset.
+		--end-time # End time for the range of log entries to include in the archive. Default is now.
+		--exclude # Spec for which pod's proxy logs to exclude from the archive, after the include spec is processed. See above for format and examples.
+		--filename # Path to a file containing configuration in YAML format. The file contents are applied over the default values and flag settings, with lists being replaced per JSON merge semantics.
+		--full-secrets @bool # If set, secret contents are included in output.
+		--ignore-errs # List of comma separated glob patterns to match against log error strings. Any error matching these patterns is ignored when calculating the log importance heuristic.
+		--include # Spec for which pod's proxy logs to include in the archive. See above for format and examples.
+		--istio-namespace # Namespace where Istio control plane is installed.
+		--kubeconfig # Path to kube config.
+		--output-dir # Set a specific directory for output archive file.
+		--proxy-admin-port # Envoy proxy admin port
+		--rq-concurrency # Set the concurrency limit of requests to the Kubernetes API server, defaults to 32.
+		--start-time # Start time for the range of log entries to include in the archive. Default is the infinite past. If set, --duration must be unset.
+		--timeout # Maximum amount of time to spend fetching logs. When timeout is reached only the logs captured so far are saved to the archive.
+		version # Prints out build version information
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Name of the kubeconfig Context to use.
+			--critical-errs # List of comma separated glob patterns to match against log error strings. If any pattern matches an error in the log, the logs is given the highest priority for archive inclusion.
+			--dir # Set a specific directory for temporary artifact storage.
+			--dry-run @bool # Only log commands that would be run, don't fetch or write.
+			--duration # How far to go back in time from end-time for log entries to include in the archive. Default is infinity. If set, --start-time must be unset.
+			--end-time # End time for the range of log entries to include in the archive. Default is now.
+			--exclude # Spec for which pod's proxy logs to exclude from the archive, after the include spec is processed. See above for format and examples.
+			--filename # Path to a file containing configuration in YAML format. The file contents are applied over the default values and flag settings, with lists being replaced per JSON merge semantics.
+			--full-secrets @bool # If set, secret contents are included in output.
+			--ignore-errs # List of comma separated glob patterns to match against log error strings. Any error matching these patterns is ignored when calculating the log importance heuristic.
+			--include # Spec for which pod's proxy logs to include in the archive. See above for format and examples.
+			--istio-namespace # Namespace where Istio control plane is installed.
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Path to kube config.
+			--namespace @bool # Kubernetes namespace
+			--output-dir # Set a specific directory for output archive file.
+			--proxy-admin-port # Envoy proxy admin port
+			--rq-concurrency # Set the concurrency limit of requests to the Kubernetes API server, defaults to 32.
+			--start-time # Start time for the range of log entries to include in the archive. Default is the infinite past. If set, --duration must be unset.
+			--timeout # Maximum amount of time to spend fetching logs. When timeout is reached only the logs captured so far are saved to the archive.
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--output # One of 'yaml' or 'json'.
+			--short @bool # Use --short=false to generate full version information
+	completion # Generate the autocompletion script for the specified shell
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		bash # Generate the autocompletion script for bash
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--no-descriptions @bool # disable completion descriptions
+	create-remote-secret # Create a secret with credentials to allow Istio to access remote Kubernetes apiservers
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--auth-plugin-config # Authenticator plug-in configuration. --auth-type=plugin must be set with this option
+		--auth-plugin-name # Authenticator plug-in name. --auth-type=plugin must be set with this option
+		--auth-type # Type of authentication to use. supported values = [bearer-token plugin]
+		--create-service-account @bool # If true, the service account needed for creating the remote secret will be created if it doesn't exist.
+		--manifests # Specify a path to a directory of charts and profiles
+		--name # Name of the local cluster whose credentials are stored in the secret. If a name is not specified the kube-system namespace's UUID of the local cluster will be used.
+		--secret-name # The name of the specific secret to use from the service-account. Needed when there are multiple secrets in the service account.
+		--server # The address and port of the Kubernetes API server.
+		--service-account # Create a secret with this service account's credentials. Default value is "istio-reader-service-account" if --type is "remote", "istiod" if --type is "config".
+		--tls-server-name # The server name that should be validated by kube-client during establishing TLS connection with kube-apiserver.
+		--type # Type of the generated secret. supported values = [remote config]
+	dashboard # Access to Istio web UIs
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+		--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+		--port # Local port to listen to
+		controlz # Open ControlZ web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ctrlz_port # ControlZ port
+			--revision # Control plane revision
+			--selector # Label selector
+		envoy # Open Envoy admin web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--selector # Label selector
+			--ui-port # The component dashboard UI port.
+		grafana # Open Grafana web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+		istiod-debug # Open Istio debug web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--revision # Control plane revision
+			--selector # Label selector
+		jaeger # Open Jaeger web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+		kiali # Open Kiali web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+		prometheus # Open Prometheus web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+		proxy # Open admin web UI for a proxy
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--selector # Label selector
+			--ui-port # The component dashboard UI port.
+		skywalking # Open SkyWalking UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+		zipkin # Open Zipkin web UI
+			--address # Address to listen on. Only accepts IP address or localhost as a value. When localhost is supplied, istioctl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these address are available to bind.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--browser @bool # When --browser is supplied as false, istioctl dashboard will not open the browser. Default is true which means istioctl dashboard will always open a browser to view the dashboard.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--port # Local port to listen to
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--ui-port # The component dashboard UI port.
+	experimental # Experimental commands that may be modified or deprecated
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		authz # Inspect Istio AuthorizationPolicy
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			check # Check AuthorizationPolicy applied in the pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				--file # The json file with Envoy config dump to be checked
+				--proxy-admin-port # Envoy proxy admin port
+		check-inject # Check the injection status or inject-ability of a given resource, explains why it is (or will be) injected or not
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--labels # Check namespace and label pairs injection status, split multiple labels by commas
+		config # Configure istioctl defaults
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			list # List istio configurable defaults
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		describe # Describe resource and related Istio configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			pod # Describe pods and their Istio configuration [kube-only]
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				--ignoreUnmeshed @bool # Suppress warnings for unmeshed pods
+				--proxy-admin-port # Envoy proxy admin port
+			service # Describe services and their Istio configuration [kube-only]
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				--ignoreUnmeshed @bool # Suppress warnings for unmeshed pods
+				--proxy-admin-port # Envoy proxy admin port
+		envoy-stats # Retrieves Envoy metrics in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--output # Output format: one of json|yaml|short|prom|prom-merged
+			--proxy-admin-port # Envoy proxy admin port
+			--selector # Label selector
+			--type # Where to grab the stats: one of server|clusters
+		injector # List sidecar injector and sidecar versions
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			list # List sidecar injector and sidecar versions
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		internal-debug # Retrieves the debug information of istio
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--all @bool # Send the same request to all instances of Istiod. Only applicable for in-cluster deployment.
+			--authority # XDS Subject Alternative Name (for example istiod.istio-system.svc)
+			--cert-dir # XDS Endpoint certificate directory
+			--insecure @bool # Skip server certificate and domain verification. (NOT SECURE!)
+			--list @bool # List all supported debug types.
+			--plaintext @bool # Use plain-text HTTP/2 when connecting to server (no TLS).
+			--revision # Control plane revision
+			--timeout # The duration to wait before failing
+			--xds-address # XDS Endpoint
+			--xds-label # Istiod pod label selector
+			--xds-port # Istiod pod port
+		metrics # Prints the metrics for the specified workload(s) when running in Kubernetes.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--duration # Duration of query metrics, default value is 1m.
+		precheck # Check whether Istio can safely be installed or upgraded
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--from-version # check changes since the provided version
+			--output # Output format: one of [log json yaml]
+			--output-threshold # The severity level of precheck at which to display messages. Valid values: [Info Warning Error]
+			--revision # Control plane revision
+			--skip-controlplane @bool # skip checking the control plane
+		proxy-status # Retrieves the synchronization status of each Envoy in the mesh
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--authority # XDS Subject Alternative Name (for example istiod.istio-system.svc)
+			--cert-dir # XDS Endpoint certificate directory
+			--file # Envoy config dump JSON file
+			--insecure @bool # Skip server certificate and domain verification. (NOT SECURE!)
+			--output # Output format: table or json
+			--plaintext @bool # Use plain-text HTTP/2 when connecting to server (no TLS).
+			--proxy-admin-port # Envoy proxy admin port
+			--revision # Control plane revision
+			--timeout # The duration to wait before failing
+			--verbosity # Verbosity level for proxy status output. 0=default, 1=show all xDS types (max verbosity)
+			--xds-address # XDS Endpoint
+			--xds-label # Istiod pod label selector
+			--xds-port # Istiod pod port
+		version # Prints out build version information
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--authority # XDS Subject Alternative Name (for example istiod.istio-system.svc)
+			--cert-dir # XDS Endpoint certificate directory
+			--insecure @bool # Skip server certificate and domain verification. (NOT SECURE!)
+			--output # One of 'yaml' or 'json'.
+			--plaintext @bool # Use plain-text HTTP/2 when connecting to server (no TLS).
+			--remote @bool # Use --remote=false to suppress control plane check
+			--revision # Control plane revision
+			--short @bool # Use --short=false to generate full version information
+			--timeout # The duration to wait before failing
+			--xds-address # XDS Endpoint
+			--xds-label # Istiod pod label selector
+			--xds-port # Istiod pod port
+		workload # Commands to assist in configuring and deploying workloads running on VMs and other non-Kubernetes environments
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			entry # Commands dealing with WorkloadEntry resources
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				configure # Generates all the required configuration files for a workload instance running on a VM or non-Kubernetes environment
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+					--autoregister @bool # Creates a WorkloadEntry upon connection to istiod (if enabled in pilot).
+					--capture-dns @bool # Enables the capture of outgoing DNS packets on port 53, redirecting to istio-agent
+					--clusterID # The ID used to identify the cluster
+					--externalIP # External IP address of the workload
+					--file # filename of the WorkloadGroup artifact. Leave this field empty if using the API server
+					--ingressIP # IP address of the ingress gateway
+					--ingressService # Name of the Service to be used as the ingress gateway, in the format <service>.<namespace>. If no namespace is provided, the default istio-system namespace will be used.
+					--internalIP # Internal IP address of the workload
+					--name # The name of the workload group
+					--namespace # The namespace that the workload instances belong to
+					--output # Output directory for generated files
+					--revision # Control plane revision
+					--tokenDuration # The token duration in seconds (default: 1 hour)
+			group # Commands dealing with WorkloadGroup resources
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				create # Creates a WorkloadGroup resource that provides a template for associated WorkloadEntries
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+					--annotations # The annotations to apply to the workload instances
+					--labels # The labels to apply to the workload instances; e.g. -l env=prod,vers=2
+					--locality # The locality associated with the endpoint.
+					--name # The name of the workload group
+					--namespace # The namespace that the workload instances will belong to
+					--network # Network enables Istio to group endpoints resident in the same L3 domain/network.
+					--ports # The incoming ports exposed by the workload instance
+					--serviceAccount # The service identity to associate with the workload instances
+					--weight # The load balancing weight associated with the endpoint.
+	help # Help about any command
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		admin # Manage control plane (istiod) configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			log # Manage istiod logging.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		analyze # Analyze Istio configuration and print validation messages
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		authz # (authz is experimental. Use `istioctl experimental authz`)
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		bug-report # Cluster information and log capture support tool.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			version # Prints out build version information
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		completion # Generate the autocompletion script for the specified shell
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			bash # Generate the autocompletion script for bash
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			fish # Generate the autocompletion script for fish
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			powershell # Generate the autocompletion script for powershell
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			zsh # Generate the autocompletion script for zsh
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		create-remote-secret # Create a secret with credentials to allow Istio to access remote Kubernetes apiservers
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		dashboard # Access to Istio web UIs
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			controlz # Open ControlZ web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			envoy # Open Envoy admin web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			grafana # Open Grafana web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			istiod-debug # Open Istio debug web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			jaeger # Open Jaeger web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			kiali # Open Kiali web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			prometheus # Open Prometheus web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			proxy # Open admin web UI for a proxy
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			skywalking # Open SkyWalking UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			zipkin # Open Zipkin web UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		experimental # Experimental commands that may be modified or deprecated
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			authz # Inspect Istio AuthorizationPolicy
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				check # Check AuthorizationPolicy applied in the pod.
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			check-inject # Check the injection status or inject-ability of a given resource, explains why it is (or will be) injected or not
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			config # Configure istioctl defaults
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				list # List istio configurable defaults
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			describe # Describe resource and related Istio configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				pod # Describe pods and their Istio configuration [kube-only]
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				service # Describe services and their Istio configuration [kube-only]
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			envoy-stats # Retrieves Envoy metrics in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			injector # List sidecar injector and sidecar versions
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				list # List sidecar injector and sidecar versions
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			internal-debug # Retrieves the debug information of istio
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			metrics # Prints the metrics for the specified workload(s) when running in Kubernetes.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			precheck # Check whether Istio can safely be installed or upgraded
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			proxy-status # Retrieves the synchronization status of each Envoy in the mesh
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			version # Prints out build version information
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			workload # Commands to assist in configuring and deploying workloads running on VMs and other non-Kubernetes environments
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				entry # Commands dealing with WorkloadEntry resources
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+					configure # Generates all the required configuration files for a workload instance running on a VM or non-Kubernetes environment
+						--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+						--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+						--as-uid # UID to impersonate for the operation.
+						--context # Kubernetes configuration context
+						--istioNamespace # Istio system namespace
+						--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+						--kubeconfig # Kubernetes configuration file
+						--namespace # Kubernetes namespace
+						--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+				group # Commands dealing with WorkloadGroup resources
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--as-uid # UID to impersonate for the operation.
+					--context # Kubernetes configuration context
+					--istioNamespace # Istio system namespace
+					--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+					--kubeconfig # Kubernetes configuration file
+					--namespace # Kubernetes namespace
+					--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+					create # Creates a WorkloadGroup resource that provides a template for associated WorkloadEntries
+						--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+						--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+						--as-uid # UID to impersonate for the operation.
+						--context # Kubernetes configuration context
+						--istioNamespace # Istio system namespace
+						--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+						--kubeconfig # Kubernetes configuration file
+						--namespace # Kubernetes namespace
+						--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		help # Help about any command
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		install # Applies an Istio manifest, installing or reconfiguring Istio on a cluster.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		kube-inject # Inject Istio sidecar into Kubernetes pod resources
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		manifest # Commands related to Istio manifests
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			generate # Generates an Istio install manifest
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			install # Applies an Istio manifest, installing or reconfiguring Istio on a cluster.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			translate # Translates an Istio install manifest to Helm values
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		proxy-config # Retrieve information about proxy configuration from Envoy [kube only]
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			all # Retrieves all configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			bootstrap # Retrieves bootstrap configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			cluster # Retrieves cluster configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			ecds # Retrieves typed extension configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			endpoint # Retrieves endpoint configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			listener # Retrieves listener configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			log # Retrieves logging levels of the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			rootca-compare # Compare ROOTCA values for the two given pods
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			route # Retrieves route configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			secret # Retrieves secret configuration for the Envoy in the specified pod
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		proxy-status # Retrieves the synchronization status of each Envoy in the mesh
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		remote-clusters # Lists the remote clusters each istiod instance is connected to.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		tag # Command group used to interact with revision tags
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			generate # Generate configuration for a revision tag to stdout
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			list # List existing revision tags
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			remove # Remove Istio control plane revision tag
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			set # Create or modify revision tags
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		uninstall # Uninstall Istio from a cluster
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		upgrade # Upgrade Istio control plane in-place
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		validate # Validate Istio policy and rules files
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		version # Prints out build version information
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		waypoint # Manage waypoint configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			apply # Apply a waypoint configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			delete # Delete a waypoint configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			generate # Generate a waypoint configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			list # List managed waypoint configurations
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			status # Show the status of waypoints
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		ztunnel-config # Update or retrieve current Ztunnel configuration.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			all # Retrieves all configuration for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			certificate # Retrieves certificate for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			connections # Retrieves connections for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			log # Retrieves logging levels of the Ztunnel instance in the specified pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			policy # Retrieves policies for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			service # Retrieves services for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			workload # Retrieves workload configuration for the specified Ztunnel pod.
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--as-uid # UID to impersonate for the operation.
+				--context # Kubernetes configuration context
+				--istioNamespace # Istio system namespace
+				--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+				--kubeconfig # Kubernetes configuration file
+				--namespace # Kubernetes namespace
+				--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+	install # Applies an Istio manifest, installing or reconfiguring Istio on a cluster.
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--charts @bool # Deprecated, use --manifests instead.
+		--dry-run @bool # Console/log output only, make no changes.
+		--filename # Path to file containing IstioOperator custom resource
+		--force @bool # Proceed even with validation errors.
+		--manifests # Specify a path to a directory of charts and profiles
+		--readiness-timeout # Maximum time to wait for Istio resources in each component to be ready.
+		--revision # Target control plane revision for the command.
+		--set # Override an IstioOperator value, e.g. to choose a profile
+		--skip-confirmation @bool # The skipConfirmation determines whether the user is prompted for confirmation.
+		--verify @bool # Verify the Istio control plane after installation/in-place upgrade
+	kube-inject # Inject Istio sidecar into Kubernetes pod resources
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--authority # XDS Subject Alternative Name (for example istiod.istio-system.svc)
+		--cert-dir # XDS Endpoint certificate directory
+		--filename # Input Kubernetes resource filename
+		--injectConfigFile # Injection configuration filename. Cannot be used with --injectConfigMapName
+		--insecure @bool # Skip server certificate and domain verification. (NOT SECURE!)
+		--meshConfigFile # Mesh configuration filename. Takes precedence over --meshConfigMapName if set
+		--meshConfigMapName # ConfigMap name for Istio mesh configuration, key should be "mesh"
+		--operatorFileName # Path to file containing IstioOperator custom resources. If configs from files like meshConfigFile, valuesFile are provided, they will be overridden by iop config values.
+		--output # Modified output Kubernetes resource filename
+		--plaintext @bool # Use plain-text HTTP/2 when connecting to server (no TLS).
+		--revision # Control plane revision
+		--timeout # The duration to wait before failing
+		--valuesFile # Injection values configuration filename.
+		--webhookConfig # MutatingWebhookConfiguration name for Istio
+		--xds-address # XDS Endpoint
+		--xds-label # Istiod pod label selector
+		--xds-port # Istiod pod port
+	manifest # Commands related to Istio manifests
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--dry-run @bool # Console/log output only, make no changes.
+		generate # Generates an Istio install manifest
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--charts @bool # Deprecated, use --manifests instead.
+			--cluster-specific @bool # If enabled, the current cluster will be checked for cluster-specific setting detection.
+			--dry-run @bool # Console/log output only, make no changes.
+			--filename # Path to file containing IstioOperator custom resource
+			--force @bool # Proceed even with validation errors.
+			--manifests # Specify a path to a directory of charts and profiles
+			--revision # Target control plane revision for the command.
+			--set # Override an IstioOperator value, e.g. to choose a profile
+		install # Applies an Istio manifest, installing or reconfiguring Istio on a cluster.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--charts @bool # Deprecated, use --manifests instead.
+			--dry-run @bool # Console/log output only, make no changes.
+			--filename # Path to file containing IstioOperator custom resource
+			--force @bool # Proceed even with validation errors.
+			--manifests # Specify a path to a directory of charts and profiles
+			--readiness-timeout # Maximum time to wait for Istio resources in each component to be ready.
+			--revision # Target control plane revision for the command.
+			--set # Override an IstioOperator value, e.g. to choose a profile
+			--skip-confirmation @bool # The skipConfirmation determines whether the user is prompted for confirmation.
+			--verify @bool # Verify the Istio control plane after installation/in-place upgrade
+		translate # Translates an Istio install manifest to Helm values
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--dry-run @bool # Console/log output only, make no changes.
+			--istioNamespace @bool # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace @bool # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--filename # Path to file containing IstioOperator custom resource
+			--manifests # Specify a path to a directory of charts and profiles
+			--output # where to put translated outputs
+			--revision # Target control plane revision for the command.
+			--set # Override an IstioOperator value, e.g. to choose a profile
+	proxy-config # Retrieve information about proxy configuration from Envoy [kube only]
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--output # Output format: one of json|yaml|short
+		--proxy-admin-port # Envoy proxy admin port
+		all # Retrieves all configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--address # Filter listeners by address field
+			--direction # Filter clusters by Direction field
+			--file # Envoy config dump file
+			--fqdn # Filter clusters by substring of Service FQDN field
+			--name # Filter routes by route name field
+			--output # Output format: one of json|yaml|short
+			--port # Filter clusters and listeners by Port field
+			--subset # Filter clusters by substring of Subset field
+			--type # Filter listeners by type field
+			--verbose @bool # Output more information
+			--with-headers @bool # Print summary with headers
+		bootstrap # Retrieves bootstrap configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Envoy config dump JSON file
+			--output # Output format: one of json|yaml|short
+		cluster # Retrieves cluster configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--direction # Filter clusters by Direction field
+			--file # Envoy config dump JSON file
+			--fqdn # Filter clusters by substring of Service FQDN field
+			--output # Output format: one of json|yaml|short
+			--port # Filter clusters by Port field
+			--subset # Filter clusters by substring of Subset field
+		ecds # Retrieves typed extension configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Envoy config dump JSON file
+			--output # Output format: one of json|yaml|short
+		endpoint # Retrieves endpoint configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--address # Filter endpoints by address field
+			--cluster # Filter endpoints by cluster name field
+			--file # Envoy config dump JSON file
+			--output # Output format: one of json|yaml|short
+			--port # Filter endpoints by Port field
+			--status # Filter endpoints by status field
+		listener # Retrieves listener configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--address # Filter listeners by address field
+			--file # Envoy config dump JSON file
+			--output # Output format: one of json|yaml|short
+			--port # Filter listeners by Port field
+			--type # Filter listeners by type field
+			--verbose @bool # Output more information
+		log # Retrieves logging levels of the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--level # Comma-separated minimum per-logger level of messages to output, in the form of [<logger>:]<level>,[<logger>:]<level>,... or <level> to change all active loggers, where logger components can be listed by running "istioctl proxy-config log <pod-name[.namespace]>"or referred from https://github.com/envoyproxy/envoy/blob/main/source/common/common/logger.h, and level can be one of [trace, debug, info, warning, error, critical, off]
+			--reset @bool # Reset levels to default value (warning).
+			--selector # Label selector
+		rootca-compare # Compare ROOTCA values for the two given pods
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		route # Retrieves route configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Envoy config dump JSON file
+			--name # Filter listeners by route name field
+			--output # Output format: one of json|yaml|short
+			--verbose @bool # Output more information
+		secret # Retrieves secret configuration for the Envoy in the specified pod
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--proxy-admin-port # Envoy proxy admin port
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Envoy config dump JSON file
+			--output # Output format: one of json|yaml|short
+	proxy-status # Retrieves the synchronization status of each Envoy in the mesh
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--authority # XDS Subject Alternative Name (for example istiod.istio-system.svc)
+		--cert-dir # XDS Endpoint certificate directory
+		--file # Envoy config dump JSON file
+		--insecure @bool # Skip server certificate and domain verification. (NOT SECURE!)
+		--output # Output format: table or json
+		--plaintext @bool # Use plain-text HTTP/2 when connecting to server (no TLS).
+		--proxy-admin-port # Envoy proxy admin port
+		--revision # Control plane revision
+		--timeout # The duration to wait before failing
+		--verbosity # Verbosity level for proxy status output. 0=default, 1=show all xDS types (max verbosity)
+		--xds-address # XDS Endpoint
+		--xds-label # Istiod pod label selector
+		--xds-port # Istiod pod port
+	remote-clusters # Lists the remote clusters each istiod instance is connected to.
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--revision # Control plane revision
+	tag # Command group used to interact with revision tags
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		generate # Generate configuration for a revision tag to stdout
+			--revision # Control plane revision to reference from a given revision tag
+		list # List existing revision tags
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--output # Output format for tag description (available formats: table,json,yaml)
+		remove # Remove Istio control plane revision tag
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--skip-confirmation @bool # The skipConfirmation determines whether the user is prompted for confirmation.
+		set # Create or modify revision tags
+			--revision # Control plane revision to reference from a given revision tag
+	uninstall # Uninstall Istio from a cluster
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--dry-run @bool # Console/log output only, make no changes.
+		--filename # The filename of the IstioOperator CR.
+		--force @bool # Proceed even with validation errors.
+		--manifests # Specify a path to a directory of charts and profiles
+		--purge @bool # Delete all Istio related sources for all versions
+		--revision # Target control plane revision for the command.
+		--set # Override an IstioOperator value, e.g. to choose a profile
+		--skip-confirmation @bool # The skipConfirmation determines whether the user is prompted for confirmation.
+		--verbose @bool # Verbose output.
+	upgrade # Upgrade Istio control plane in-place
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace @bool # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace @bool # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--charts @bool # Deprecated, use --manifests instead.
+		--dry-run @bool # Console/log output only, make no changes.
+		--filename # Path to file containing IstioOperator custom resource
+		--force @bool # Proceed even with validation errors.
+		--manifests # Specify a path to a directory of charts and profiles
+		--readiness-timeout # Maximum time to wait for Istio resources in each component to be ready.
+		--revision # Target control plane revision for the command.
+		--set # Override an IstioOperator value, e.g. to choose a profile
+		--skip-confirmation @bool # The skipConfirmation determines whether the user is prompted for confirmation.
+		--verify @bool # Verify the Istio control plane after installation/in-place upgrade
+	validate # Validate Istio policy and rules files
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig @bool # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--filename # Inputs of files to validate
+	version # Prints out build version information
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--output # One of 'yaml' or 'json'.
+		--remote @bool # Use --remote=false to suppress control plane check
+		--revision # Control plane revision
+		--short @bool # Use --short=false to generate full version information
+	waypoint # Manage waypoint configuration
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		--name # name of the waypoint
+		apply # Apply a waypoint configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--name # name of the waypoint
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--enroll-namespace @bool # If set, the namespace will be labeled with the waypoint name
+			--for # Specify the traffic type [all none service workload] for the waypoint
+			--overwrite @bool # Overwrite the existing Waypoint used by the namespace
+			--revision # The revision to label the waypoint with
+			--wait @bool # Wait for the waypoint to be ready
+			--waypoint-timeout # Timeout for waiting for waypoint ready
+		delete # Delete a waypoint configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--name # name of the waypoint
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--all @bool # Delete all waypoints in the namespace
+			--revision # Delete the specified version of the waypoint in the namespace
+		generate # Generate a waypoint configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--name # name of the waypoint
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--for # Specify the traffic type [all none service workload] for the waypoint
+			--revision # The revision to label the waypoint with
+		list # List managed waypoint configurations
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--name # name of the waypoint
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--all-namespaces @bool # List all waypoints in all namespaces
+		status # Show the status of waypoints
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--name # name of the waypoint
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--all-namespaces @bool # Show the status of waypoints in all namespaces
+			--wait @bool # Wait for the waypoint to be ready
+			--waypoint-timeout # Timeout for retrieving status for waypoint
+	ztunnel-config # Update or retrieve current Ztunnel configuration.
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--as-uid # UID to impersonate for the operation.
+		--context # Kubernetes configuration context
+		--istioNamespace # Istio system namespace
+		--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+		--kubeconfig # Kubernetes configuration file
+		--namespace # Kubernetes namespace
+		--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+		all # Retrieves all configuration for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+			--with-headers @bool # Print summary with headers
+		certificate # Retrieves certificate for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+		connections # Retrieves connections for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--direction # Filter workloads by direction (inbound or outbound)
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+			--raw @bool # If set, show IP addresses instead of names
+			--workload-namespace # Filter workloads by namespace field
+		log # Retrieves logging levels of the Ztunnel instance in the specified pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Ztunnel config dump JSON file
+			--level # Comma-separated minimum per-logger level of messages to output, in the form of [<logger>:]<level>,[<logger>:]<level>,... or <level> to change all active loggers, where logger components can be listed by running "istioctl ztunnel-config log <pod-name[.namespace]>", and level can be one of [trace, debug, info, warning, error, critical, off]
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+			--reset @bool # Reset levels to default value (warning).
+		policy # Retrieves policies for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--policy-namespace # Filter policies by namespace field
+			--proxy-admin-port # Ztunnel proxy admin port
+		service # Retrieves services for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+			--service-namespace # Filter services by namespace field
+		workload # Retrieves workload configuration for the specified Ztunnel pod.
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--as-uid # UID to impersonate for the operation.
+			--context # Kubernetes configuration context
+			--istioNamespace # Istio system namespace
+			--kubeclient-timeout # Kubernetes client timeout as a time.Duration string, defaults to 15 seconds.
+			--kubeconfig # Kubernetes configuration file
+			--namespace # Kubernetes namespace
+			--vklog # number for the log level verbosity. Like -v flag. ex: --vklog=9
+			--address # Filter workloads by address field
+			--file # Ztunnel config dump JSON file
+			--node # Filter workloads by node field
+			--output # Output format: one of json|yaml|short
+			--proxy-admin-port # Ztunnel proxy admin port
+			--workload-namespace # Filter workloads by namespace field
+			--workload-node # Filter workloads by node

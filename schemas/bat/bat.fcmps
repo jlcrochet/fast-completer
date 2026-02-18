@@ -1,0 +1,30 @@
+# bat CLI schema for fast-completer
+# Generated from bat 0.26.1
+
+bat # A cat clone with syntax highlighting
+	--show-all|-A @bool # Show non-printable characters (space, tab, newline, ..).
+	--nonprintable-notation # Set notation for non-printable characters.
+	--binary # How to treat binary content. (default: no-printing)
+	--plain...|-p @bool # Show plain style (alias for '--style=plain').
+	--language|-l # Set the language for syntax highlighting.
+	--highlight-line|-H # Highlight lines N through M.
+	--file-name # Specify the name to display for a file.
+	--diff|-d @bool # Only show lines that have been added/removed/modified.
+	--tabs # Set the tab width to T spaces.
+	--wrap # Specify the text-wrapping mode (*auto*, never, character).
+	--chop-long-lines|-S @bool # Truncate all lines longer than screen width. Alias for '--wrap=never'.
+	--number|-n @bool # Show line numbers (alias for '--style=numbers').
+	--color # When to use colors (*auto*, never, always).
+	--italic-text # Use italics in output (always, *never*)
+	--decorations # When to show the decorations (*auto*, never, always).
+	--paging # Specify when to use the pager, or use `-P` to disable (*auto*, never, always).
+	--map-syntax|-m # Use the specified syntax for files matching the glob pattern ('*.cpp:C++').
+	--theme # Set the color theme for syntax highlighting.
+	--theme-light # Sets the color theme for syntax highlighting used for light backgrounds.
+	--theme-dark # Sets the color theme for syntax highlighting used for dark backgrounds.
+	--list-themes @bool # Display all supported highlighting themes.
+	--squeeze-blank|-s @bool # Squeeze consecutive empty lines.
+	--style # Comma-separated list of style elements to display (*default*, auto, full, plain, changes,
+	--line-range|-r # Only print the lines from N to M.
+	--list-languages|-L @bool # Display all supported languages.
+	--completion (bash|fish|zsh|ps1) # Show shell completion for a certain shell. [possible values: bash, fish, zsh, ps1]

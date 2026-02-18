@@ -1,0 +1,1499 @@
+# Uv CLI schema for fast-completer
+# Generated from uv 0.7.3
+
+uv # Python package manager
+	--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+	--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+	--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+	--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+	--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+	--quiet...|-q @bool # Use quiet output
+	--verbose...|-v @bool # Use verbose output
+	--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+	--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+	--offline @bool # Disable network access [env: UV_OFFLINE=]
+	--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+	--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+	--directory # Change to the given directory prior to running the command
+	--project # Run the command within the given project directory [env: UV_PROJECT=]
+	--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+	--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	add # Add dependencies to the project
+		--requirements|-r # Add all packages listed in the given `requirements.txt` files
+		--constraints|-c # Constrain versions using the given requirements files [env:
+		--marker|-m # Apply this marker to all added packages
+		--dev @bool # Add the requirements to the development dependency group
+		--optional # Add the requirements to the package's optional dependencies for
+		--group # Add the requirements to the specified dependency group
+		--editable @bool # Add the requirements as editable
+		--raw-sources @bool # Add source requirements to `project.dependencies`, rather than
+		--rev # Commit to use when adding a dependency from Git
+		--tag # Tag to use when adding a dependency from Git
+		--branch # Branch to use when adding a dependency from Git
+		--extra # Extras to enable for the dependency
+		--no-sync @bool # Avoid syncing the virtual environment [env: UV_NO_SYNC=]
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env:
+		--frozen @bool # Add dependencies without re-locking the project [env:
+		--active @bool # Prefer the active virtual environment over the project's
+		--package # Add the dependency to a specific package in the workspace
+		--script # Add the dependency to the specified Python script, rather than
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+		--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+		--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+		--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use for resolving and syncing. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	build # Build Python packages into source distributions and wheels
+		--package # Build a specific package in the workspace
+		--all-packages @bool # Builds all packages in the workspace
+		--out-dir|-o # The output directory to which distributions should be written
+		--sdist @bool # Build a source distribution ("sdist") from the given directory
+		--wheel @bool # Build a binary distribution ("wheel") from the given directory
+		--no-build-logs @bool # Hide logs from the build backend
+		--force-pep517 @bool # Always build through PEP 517, don't use the fast path for the uv build backend
+		--build-constraints|-b # Constrain build dependencies using the given requirements files when building
+		--require-hashes @bool # Require a matching hash for each requirement [env: UV_REQUIRE_HASHES=]
+		--no-verify-hashes @bool # Disable validation of hashes in the requirements file [env: UV_NO_VERIFY_HASHES=]
+		--python|-p # The Python interpreter to use for the build environment. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--link-mode # The method to use when installing packages from the global cache [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	cache # Manage uv's cache
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		clean
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		dir
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		prune
+			--ci @bool # Optimize the cache for persistence in a continuous integration environment, like GitHub
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	export # Export the project's lockfile to an alternate format
+		--format # The format to which `uv.lock` should be exported [possible values: requirements.txt,
+		--all-packages @bool # Export the entire workspace
+		--package # Export the dependencies for a specific package in the workspace
+		--prune # Prune the given package from the dependency tree
+		--extra # Include optional dependencies from the specified extra name
+		--all-extras @bool # Include all optional dependencies
+		--no-extra # Exclude the specified optional dependencies, if `--all-extras` is supplied
+		--no-dev @bool # Disable the development dependency group
+		--only-dev @bool # Only include the development dependency group
+		--group # Include dependencies from the specified dependency group
+		--no-group # Disable the specified dependency group
+		--no-default-groups @bool # Ignore the default dependency groups
+		--only-group # Only include dependencies from the specified dependency group
+		--all-groups @bool # Include dependencies from all dependency groups
+		--no-annotate @bool # Exclude comment annotations indicating the source of each package
+		--no-header @bool # Exclude the comment header at the top of the generated output file
+		--no-editable @bool # Install any editable dependencies, including the project and any workspace members, as
+		--no-hashes @bool # Omit hashes in the generated output
+		--output-file|-o # Write the exported requirements to the given file
+		--no-emit-project @bool # Do not emit the current project
+		--no-emit-workspace @bool # Do not emit any workspace members, including the root project
+		--no-emit-package # Do not emit the given package(s)
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env: UV_LOCKED=]
+		--frozen @bool # Do not update the `uv.lock` before exporting [env: UV_FROZEN=]
+		--script # Export the dependencies for the specified PEP 723 Python script, rather than the current
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--link-mode # The method to use when installing packages from the global cache [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use during resolution. [env: UV_PYTHON=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	init # Create a new project
+		--name # The name of the project
+		--bare @bool # Only create a `pyproject.toml`
+		--package @bool # Set up the project to be built as a Python package
+		--no-package @bool # Do not set up the project to be built as a Python package
+		--app @bool # Create a project for an application
+		--lib @bool # Create a project for a library
+		--script @bool # Create a script
+		--description # Set the project description
+		--no-description @bool # Disable the description for the project
+		--vcs # Initialize a version control system for the project [possible
+		--build-backend # Initialize a build-backend of choice for the project [possible
+		--no-readme @bool # Do not create a `README.md` file
+		--author-from # Fill in the `authors` field in the `pyproject.toml` [possible
+		--no-pin-python @bool # Do not create a `.python-version` file for the project
+		--no-workspace @bool # Avoid discovering a workspace and create a standalone project
+		--python|-p # The Python interpreter to use to determine the minimum supported Python
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	lock # Update the project's lockfile
+		--check @bool # Check if the lockfile is up-to-date [env: UV_LOCKED=]
+		--check-exists @bool # Assert that a `uv.lock` exists without checking if it is up-to-date [env:
+		--dry-run @bool # Perform a dry run, without writing the lockfile
+		--script # Lock the specified Python script, rather than the current project
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--link-mode # The method to use when installing packages from the global cache [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use during resolution. [env: UV_PYTHON=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	pip # Manage Python packages with a pip-compatible interface
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		check
+			--system @bool # Check packages in the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--python|-p # The Python interpreter for which packages should be checked. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		compile
+			--constraints|-c # Constrain versions using the given requirements files [env: UV_CONSTRAINT=]
+			--overrides # Override versions using the given requirements files [env: UV_OVERRIDE=]
+			--build-constraints|-b # Constrain build dependencies using the given requirements files when building source
+			--extra # Include optional dependencies from the specified extra name; may be provided more than
+			--all-extras @bool # Include all optional dependencies
+			--no-deps @bool # Ignore package dependencies, instead only add those packages explicitly listed on the
+			--group # Install the specified dependency group from a `pyproject.toml`
+			--output-file|-o # Write the compiled requirements to the given `requirements.txt` or `pylock.toml` file
+			--format # The format in which the resolution should be output [possible values: requirements.txt,
+			--no-strip-extras @bool # Include extras in the output file
+			--no-strip-markers @bool # Include environment markers in the output file
+			--no-annotate @bool # Exclude comment annotations indicating the source of each package
+			--no-header @bool # Exclude the comment header at the top of the generated output file
+			--annotation-style # The style of the annotation comments included in the output file, used to indicate the
+			--custom-compile-command # The header comment to include at the top of the output file generated by `uv pip compile`
+			--system @bool # Install packages into the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--generate-hashes @bool # Include distribution hashes in the output file
+			--no-build @bool # Don't build source distributions
+			--no-binary # Don't install pre-built wheels
+			--only-binary # Only use pre-built wheels; don't build source distributions
+			--python-platform # The platform for which requirements should be resolved [possible values: windows, linux,
+			--universal @bool # Perform a universal resolution, attempting to generate a single `requirements.txt` output
+			--no-emit-package # Specify a package to omit from the output resolution. Its dependencies will still be
+			--emit-index-url @bool # Include `--index-url` and `--extra-index-url` entries in the generated output file
+			--emit-find-links @bool # Include `--find-links` entries in the generated output file
+			--emit-build-options @bool # Include `--no-binary` and `--only-binary` entries in the generated output file
+			--emit-index-annotation @bool # Include comment annotations indicating the index used to resolve each package (e.g., `#
+			--torch-backend # The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`,
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+			--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+			--resolution # The strategy to use when selecting between the different compatible versions for a given
+			--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+			--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+			--link-mode # The method to use when installing packages from the global cache [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--refresh @bool # Refresh all cached data
+			--refresh-package # Refresh cached data for a specific package
+			--python|-p # The Python interpreter to use during resolution.
+			--python-version # The Python version to use for resolution
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		freeze
+			--exclude-editable @bool # Exclude any editable packages from output
+			--strict @bool # Validate the Python environment, to detect packages with missing dependencies
+			--path # Restrict to the specified installation path for listing packages (can be used
+			--system @bool # List packages in the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--python|-p # The Python interpreter for which packages should be listed. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		install
+			--requirements|-r # Install all packages listed in the given `requirements.txt` or `pylock.toml` files
+			--editable|-e # Install the editable package based on the provided local file path
+			--constraints|-c # Constrain versions using the given requirements files [env: UV_CONSTRAINT=]
+			--overrides # Override versions using the given requirements files [env: UV_OVERRIDE=]
+			--build-constraints|-b # Constrain build dependencies using the given requirements files when building source
+			--extra # Include optional dependencies from the specified extra name; may be provided more than
+			--all-extras @bool # Include all optional dependencies
+			--no-deps @bool # Ignore package dependencies, instead only installing those packages explicitly listed on
+			--group # Install the specified dependency group from a `pyproject.toml`
+			--require-hashes @bool # Require a matching hash for each requirement [env: UV_REQUIRE_HASHES=]
+			--no-verify-hashes @bool # Disable validation of hashes in the requirements file [env: UV_NO_VERIFY_HASHES=]
+			--system @bool # Install packages into the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--break-system-packages @bool # Allow uv to modify an `EXTERNALLY-MANAGED` Python installation [env:
+			--no-break-system-packages @bool
+			--target # Install packages into the specified directory, rather than into the virtual or system
+			--prefix # Install packages into `lib`, `bin`, and other top-level folders under the specified
+			--no-build @bool # Don't build source distributions
+			--no-binary # Don't install pre-built wheels
+			--only-binary # Only use pre-built wheels; don't build source distributions
+			--python-version # The minimum Python version that should be supported by the requirements (e.g., `3.7` or
+			--python-platform # The platform for which requirements should be installed [possible values: windows, linux,
+			--exact @bool # Perform an exact sync, removing extraneous packages
+			--strict @bool # Validate the Python environment after completing the installation, to detect packages with
+			--dry-run @bool # Perform a dry run, i.e., don't actually install anything but resolve the dependencies and
+			--torch-backend # The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`,
+			--user @bool
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+			--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+			--resolution # The strategy to use when selecting between the different compatible versions for a given
+			--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+			--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+			--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+			--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+			--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+			--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--refresh @bool # Refresh all cached data
+			--refresh-package # Refresh cached data for a specific package
+			--python|-p # The Python interpreter into which packages should be installed. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		list
+			--editable|-e @bool # Only include editable projects
+			--exclude-editable @bool # Exclude any editable packages from output
+			--exclude # Exclude the specified package(s) from the output
+			--format # Select the output format [default: columns] [possible values: columns,
+			--outdated @bool # List outdated packages
+			--strict @bool # Validate the Python environment, to detect packages with missing
+			--system @bool # List packages in the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the
+			--python|-p # The Python interpreter for which packages should be listed. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		show
+			--strict @bool # Validate the Python environment, to detect packages with missing dependencies and
+			--files|-f @bool # Show the full list of installed files for each package
+			--system @bool # Show a package in the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--python|-p # The Python interpreter to find the package in. [env: UV_PYTHON=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		sync
+			--constraints|-c # Constrain versions using the given requirements files [env: UV_CONSTRAINT=]
+			--build-constraints|-b # Constrain build dependencies using the given requirements files when building source
+			--require-hashes @bool # Require a matching hash for each requirement [env: UV_REQUIRE_HASHES=]
+			--no-verify-hashes @bool # Disable validation of hashes in the requirements file [env: UV_NO_VERIFY_HASHES=]
+			--system @bool # Install packages into the system Python environment [env: UV_SYSTEM_PYTHON=]
+			--break-system-packages @bool # Allow uv to modify an `EXTERNALLY-MANAGED` Python installation [env:
+			--no-break-system-packages @bool
+			--target # Install packages into the specified directory, rather than into the virtual or system
+			--prefix # Install packages into `lib`, `bin`, and other top-level folders under the specified
+			--no-build @bool # Don't build source distributions
+			--no-binary # Don't install pre-built wheels
+			--only-binary # Only use pre-built wheels; don't build source distributions
+			--allow-empty-requirements @bool # Allow sync of empty requirements, which will clear the environment of all packages
+			--no-allow-empty-requirements @bool
+			--python-version # The minimum Python version that should be supported by the requirements (e.g., `3.7` or
+			--python-platform # The platform for which requirements should be installed [possible values: windows, linux,
+			--strict @bool # Validate the Python environment after completing the installation, to detect packages with
+			--dry-run @bool # Perform a dry run, i.e., don't actually install anything but resolve the dependencies and
+			--torch-backend # The backend to use when fetching packages in the PyTorch ecosystem (e.g., `cpu`, `cu126`,
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+			--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+			--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+			--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies.
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+			--refresh @bool # Refresh all cached data
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--refresh-package # Refresh cached data for a specific package
+			--python|-p # The Python interpreter into which packages should be installed. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		tree
+			--show-version-specifiers @bool # Show the version constraint(s) imposed on each package
+			--depth|-d # Maximum display depth of the dependency tree [default: 255]
+			--prune # Prune the given package from the display of the dependency tree
+			--package # Display only the specified packages
+			--no-dedupe @bool # Do not de-duplicate repeated dependencies. Usually, when a package
+			--invert @bool # Show the reverse dependencies for the given package. This flag will
+			--outdated @bool # Show the latest available version of each package in the tree
+			--strict @bool # Validate the Python environment, to detect packages with missing
+			--system @bool # List packages in the system Python environment [env:
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the
+			--python|-p # The Python interpreter for which packages should be listed. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		uninstall
+			--requirements|-r # Uninstall all packages listed in the given requirements files
+			--keyring-provider # Attempt to use `keyring` for authentication for remote requirements files [env:
+			--system @bool # Use the system Python to uninstall packages [env: UV_SYSTEM_PYTHON=]
+			--break-system-packages @bool # Allow uv to modify an `EXTERNALLY-MANAGED` Python installation [env:
+			--no-break-system-packages @bool
+			--target # Uninstall packages from the specified `--target` directory
+			--prefix # Uninstall packages from the specified `--prefix` directory
+			--dry-run @bool # Perform a dry run, i.e., don't actually uninstall anything but print the resulting plan
+			--python|-p # The Python interpreter from which packages should be uninstalled. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	publish # Upload distributions to an index
+		--index # The name of an index in the configuration to use for publishing. [env: UV_PUBLISH_INDEX=]
+		--username|-u # The username for the upload [env: UV_PUBLISH_USERNAME=]
+		--password|-p # The password for the upload [env: UV_PUBLISH_PASSWORD=]
+		--token|-t # The token for the upload [env: UV_PUBLISH_TOKEN=]
+		--trusted-publishing # Configure using trusted publishing through GitHub Actions [possible values: automatic,
+		--keyring-provider # Attempt to use `keyring` for authentication for remote requirements files [env:
+		--publish-url # The URL of the upload endpoint (not the index URL) [env: UV_PUBLISH_URL=]
+		--check-url # Check an index URL for existing files to skip duplicate uploads [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	python # Manage Python versions and installations
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		dir
+			--bin @bool # Show the directory into which `uv python` will install Python executables.
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		find
+			--no-project @bool # Avoid discovering a project or workspace
+			--system @bool # Only find system Python interpreters [env: UV_SYSTEM_PYTHON=]
+			--script # Find the environment for a Python script, rather than the current project
+			--show-version @bool # Show the Python version that would be used instead of the path to the
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		install
+			--install-dir|-i # The directory to store the Python installation in [env: UV_PYTHON_INSTALL_DIR=]
+			--mirror # Set the URL to use as the source for downloading Python installations [env:
+			--pypy-mirror # Set the URL to use as the source for downloading PyPy installations [env:
+			--python-downloads-json-url # URL pointing to JSON of custom Python installations [env: UV_PYTHON_DOWNLOADS_JSON_URL=]
+			--reinstall|-r @bool # Reinstall the requested Python version, if it's already installed
+			--force|-f @bool # Replace existing Python executables during installation
+			--default @bool # Use as the default Python version
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		list
+			--all-versions @bool # List all Python versions, including old patch versions
+			--all-platforms @bool # List Python downloads for all platforms
+			--all-arches @bool # List Python downloads for all architectures
+			--only-installed @bool # Only show installed Python versions
+			--only-downloads @bool # Only show available Python downloads
+			--show-urls @bool # Show the URLs of available Python downloads
+			--output-format (text|json) # Select the output format [default: text] [possible values: text, json]
+			--python-downloads-json-url # URL pointing to JSON of custom Python installations [env: UV_PYTHON_DOWNLOADS_JSON_URL=]
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		pin
+			--resolved @bool # Write the resolved Python interpreter path instead of the request
+			--no-project @bool # Avoid validating the Python pin is compatible with the project or workspace
+			--global @bool # Update the global Python version pin
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		uninstall
+			--install-dir|-i # The directory where the Python was installed [env:
+			--all @bool # Uninstall all managed Python versions
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	remove # Remove dependencies from the project
+		--dev @bool # Remove the packages from the development dependency group
+		--optional # Remove the packages from the project's optional dependencies for the
+		--group # Remove the packages from the specified dependency group
+		--no-sync @bool # Avoid syncing the virtual environment after re-locking the project [env:
+		--active @bool # Prefer the active virtual environment over the project's virtual
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env: UV_LOCKED=]
+		--frozen @bool # Remove dependencies without re-locking the project [env: UV_FROZEN=]
+		--package # Remove the dependencies from a specific package in the workspace
+		--script # Remove the dependency from the specified Python script, rather than from a
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+		--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+		--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+		--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use for resolving and syncing. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	run # Run a command or script
+		--extra # Include optional dependencies from the specified extra name
+		--all-extras @bool # Include all optional dependencies
+		--no-extra # Exclude the specified optional dependencies, if `--all-extras` is supplied
+		--no-dev @bool # Disable the development dependency group
+		--group # Include dependencies from the specified dependency group
+		--no-group # Disable the specified dependency group
+		--no-default-groups @bool # Ignore the default dependency groups
+		--only-group # Only include dependencies from the specified dependency group
+		--all-groups @bool # Include dependencies from all dependency groups
+		--module|-m @bool # Run a Python module
+		--only-dev @bool # Only include the development dependency group
+		--no-editable @bool # Install any editable dependencies, including the project and any workspace members, as
+		--exact @bool # Perform an exact sync, removing extraneous packages
+		--env-file # Load environment variables from a `.env` file [env: UV_ENV_FILE=]
+		--no-env-file @bool # Avoid reading environment variables from a `.env` file [env: UV_NO_ENV_FILE=]
+		--with # Run with the given packages installed
+		--with-editable # Run with the given packages installed in editable mode
+		--with-requirements # Run with all packages listed in the given `requirements.txt` files
+		--isolated @bool # Run the command in an isolated virtual environment
+		--active @bool # Prefer the active virtual environment over the project's virtual environment
+		--no-sync @bool # Avoid syncing the virtual environment [env: UV_NO_SYNC=]
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env: UV_LOCKED=]
+		--frozen @bool # Run without updating the `uv.lock` file [env: UV_FROZEN=]
+		--script|-s @bool # Run the given path as a Python script
+		--gui-script @bool # Run the given path as a Python GUI script
+		--all-packages @bool # Run the command with all workspace members installed
+		--package # Run the command in a specific package in the workspace
+		--no-project @bool # Avoid discovering the project or workspace
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+		--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+		--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+		--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use for the run environment. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	self # Manage the uv executable
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		update
+			--token # A GitHub token for authentication. A token is not required but can be used to
+			--dry-run @bool # Run without performing the update
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		version
+			--short @bool # Only print the version
+			--output-format (text|json) # [default: text] [possible values: text, json]
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	sync # Update the project's environment
+		--extra # Include optional dependencies from the specified extra name
+		--all-extras @bool # Include all optional dependencies
+		--no-extra # Exclude the specified optional dependencies, if `--all-extras` is supplied
+		--no-dev @bool # Disable the development dependency group
+		--only-dev @bool # Only include the development dependency group
+		--group # Include dependencies from the specified dependency group
+		--no-group # Disable the specified dependency group
+		--no-default-groups @bool # Ignore the default dependency groups
+		--only-group # Only include dependencies from the specified dependency group
+		--all-groups @bool # Include dependencies from all dependency groups
+		--no-editable @bool # Install any editable dependencies, including the project and any workspace members, as
+		--inexact @bool # Do not remove extraneous packages present in the environment
+		--active @bool # Sync dependencies to the active virtual environment
+		--no-install-project @bool # Do not install the current project
+		--no-install-workspace @bool # Do not install any workspace members, including the root project
+		--no-install-package # Do not install the given package(s)
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env: UV_LOCKED=]
+		--frozen @bool # Sync without updating the `uv.lock` file [env: UV_FROZEN=]
+		--dry-run @bool # Perform a dry run, without writing the lockfile or modifying the project environment
+		--all-packages @bool # Sync all packages in the workspace
+		--package # Sync for a specific package in the workspace
+		--script # Sync the environment for a Python script, rather than the current project
+		--check @bool # Check if the Python environment is synchronized with the project
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+		--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+		--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+		--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--refresh @bool # Refresh all cached data
+		--refresh-package # Refresh cached data for a specific package
+		--python|-p # The Python interpreter to use for the project environment. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	tool # Run and install commands provided by Python packages
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		dir
+			--bin @bool # Show the directory into which `uv tool` will install executables.
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		install
+			--with # Include the following additional requirements
+			--with-requirements # Include all requirements listed in the given `requirements.txt` files
+			--editable|-e @bool # Install the target package in editable mode, such that changes in the package's source
+			--with-editable # Include the given packages in editable mode
+			--constraints|-c # Constrain versions using the given requirements files [env: UV_CONSTRAINT=]
+			--overrides # Override versions using the given requirements files [env: UV_OVERRIDE=]
+			--build-constraints|-b # Constrain build dependencies using the given requirements files when building source
+			--force @bool # Force installation of the tool
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+			--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+			--resolution # The strategy to use when selecting between the different compatible versions for a given
+			--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+			--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+			--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+			--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+			--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+			--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+			--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+			--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+			--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+			--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--refresh @bool # Refresh all cached data
+			--refresh-package # Refresh cached data for a specific package
+			--python|-p # The Python interpreter to use to build the tool environment. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		list
+			--show-paths @bool # Whether to display the path to each tool environment and installed
+			--show-version-specifiers @bool # Whether to display the version specifier(s) used to install each tool
+			--show-with @bool # Whether to display the additional requirements installed with each tool
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		run
+			--from # Use the given package to provide the command
+			--with # Run with the given packages installed
+			--with-editable # Run with the given packages installed in editable mode
+			--with-requirements # Run with all packages listed in the given `requirements.txt` files
+			--constraints|-c # Constrain versions using the given requirements files [env: UV_CONSTRAINT=]
+			--build-constraints|-b # Constrain build dependencies using the given requirements files when building source
+			--overrides # Override versions using the given requirements files [env: UV_OVERRIDE=]
+			--isolated @bool # Run the tool in an isolated virtual environment, ignoring any already-installed tools
+			--env-file # Load environment variables from a `.env` file [env: UV_ENV_FILE=]
+			--no-env-file @bool # Avoid reading environment variables from a `.env` file [env: UV_NO_ENV_FILE=]
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+			--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+			--resolution # The strategy to use when selecting between the different compatible versions for a given
+			--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+			--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+			--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+			--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+			--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+			--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+			--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+			--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+			--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+			--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--refresh @bool # Refresh all cached data
+			--refresh-package # Refresh cached data for a specific package
+			--python|-p # The Python interpreter to use to build the run environment. [env:
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		uninstall
+			--all @bool # Uninstall all tools
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		update-shell
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+		upgrade
+			--all @bool # Upgrade all tools
+			--python|-p # Upgrade a tool, and specify it to use the given Python interpreter to
+			--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+			--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+			--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+			--resolution # The strategy to use when selecting between the different
+			--prerelease # The strategy to use when considering pre-release versions [env:
+			--fork-strategy # The strategy to use when selecting multiple versions of a given
+			--exclude-newer # Limit candidate packages to those that were uploaded prior to the
+			--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies.
+			--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+			--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+			--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+			--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+			--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+			--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+			--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+			--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+			--reinstall @bool # Reinstall all packages, regardless of whether they're already installed. Implies
+			--reinstall-package # Reinstall a specific package, regardless of whether it's already installed. Implies
+			--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+			--compile-bytecode @bool # Compile Python files to bytecode after installation [env: UV_COMPILE_BYTECODE=]
+			--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+			--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+			--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+			--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+			--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+			--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+			--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+			--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+			--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+			--quiet...|-q @bool # Use quiet output
+			--verbose...|-v @bool # Use verbose output
+			--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+			--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+			--offline @bool # Disable network access [env: UV_OFFLINE=]
+			--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+			--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+			--directory # Change to the given directory prior to running the command
+			--project # Run the command within the given project directory [env: UV_PROJECT=]
+			--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+			--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	tree # Display the project's dependency tree
+		--universal @bool # Show a platform-independent dependency tree
+		--depth|-d # Maximum display depth of the dependency tree [default: 255]
+		--prune # Prune the given package from the display of the dependency tree
+		--package # Display only the specified packages
+		--no-dedupe @bool # Do not de-duplicate repeated dependencies. Usually, when a package has already displayed
+		--invert @bool # Show the reverse dependencies for the given package. This flag will invert the tree and
+		--outdated @bool # Show the latest available version of each package in the tree
+		--only-dev @bool # Only include the development dependency group
+		--no-dev @bool # Disable the development dependency group
+		--group # Include dependencies from the specified dependency group
+		--no-group # Disable the specified dependency group
+		--no-default-groups @bool # Ignore the default dependency groups
+		--only-group # Only include dependencies from the specified dependency group
+		--all-groups @bool # Include dependencies from all dependency groups
+		--locked @bool # Assert that the `uv.lock` will remain unchanged [env: UV_LOCKED=]
+		--frozen @bool # Display the requirements without locking the project [env: UV_FROZEN=]
+		--script # Show the dependency tree the specified PEP 723 Python script, rather than the current
+		--python-version # The Python version to use when filtering the tree
+		--python-platform # The platform to use when filtering the tree [possible values: windows, linux, macos,
+		--no-build @bool # Don't build source distributions [env: UV_NO_BUILD=]
+		--no-build-package # Don't build source distributions for a specific package [env: UV_NO_BUILD_PACKAGE=]
+		--no-binary @bool # Don't install pre-built wheels [env: UV_NO_BINARY=]
+		--no-binary-package # Don't install pre-built wheels for a specific package [env: UV_NO_BINARY_PACKAGE=]
+		--config-setting|-C # Settings to pass to the PEP 517 build backend, specified as `KEY=VALUE` pairs
+		--no-build-isolation @bool # Disable isolation when building source distributions [env: UV_NO_BUILD_ISOLATION=]
+		--no-build-isolation-package # Disable isolation when building source distributions for a specific package
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--upgrade|-U @bool # Allow package upgrades, ignoring pinned versions in any existing output file. Implies
+		--upgrade-package|-P # Allow upgrades for a specific package, ignoring pinned versions in any existing output
+		--resolution # The strategy to use when selecting between the different compatible versions for a given
+		--prerelease # The strategy to use when considering pre-release versions [env: UV_PRERELEASE=] [possible
+		--fork-strategy # The strategy to use when selecting multiple versions of a given package across Python
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--no-sources @bool # Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
+		--link-mode # The method to use when installing packages from the global cache [env:
+		--python|-p # The Python interpreter to use for locking and filtering. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	venv # Create a virtual environment
+		--no-project @bool # Avoid discovering a project or workspace
+		--seed @bool # Install seed packages (one or more of: `pip`, `setuptools`, and `wheel`) into the virtual
+		--allow-existing @bool # Preserve any existing files or directories at the target path
+		--prompt # Provide an alternative prompt prefix for the virtual environment.
+		--system-site-packages @bool # Give the virtual environment access to the system site packages directory
+		--relocatable @bool # Make the virtual environment relocatable
+		--index-strategy # The strategy to use when resolving against multiple index URLs [env: UV_INDEX_STRATEGY=]
+		--keyring-provider # Attempt to use `keyring` for authentication for index URLs [env: UV_KEYRING_PROVIDER=]
+		--exclude-newer # Limit candidate packages to those that were uploaded prior to the given date [env:
+		--link-mode # The method to use when installing packages from the global cache [env: UV_LINK_MODE=]
+		--python|-p # The Python interpreter to use for the virtual environment. [env:
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env:
+		--index # The URLs to use when resolving dependencies, in addition to the default index [env:
+		--default-index # The URL of the default package index (by default: <https://pypi.org/simple>) [env:
+		--index-url|-i # (Deprecated: use `--default-index` instead) The URL of the Python package index (by
+		--extra-index-url # (Deprecated: use `--index` instead) Extra URLs of package indexes to use, in addition to
+		--find-links|-f # Locations to search for candidate distributions, in addition to those found in the
+		--no-index @bool # Ignore the registry index (e.g., PyPI), instead relying on direct URL dependencies and
+		--refresh @bool # Refresh all cached data
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary directory for the
+		--refresh-package # Refresh cached data for a specific package
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]
+	version # Read or update the project's version
+		--bump # Update the project version using the given semantics [possible
+		--dry-run @bool # Don't write a new version to the `pyproject.toml`
+		--short @bool # Only show the version
+		--output-format (text|json) # [default: text] [possible values: text, json]
+		--no-cache|-n @bool # Avoid reading from or writing to the cache, instead using a temporary
+		--cache-dir # Path to the cache directory [env: UV_CACHE_DIR=]
+		--managed-python @bool # Require use of uv-managed Python versions [env: UV_MANAGED_PYTHON=]
+		--no-managed-python @bool # Disable use of uv-managed Python versions [env: UV_NO_MANAGED_PYTHON=]
+		--no-python-downloads @bool # Disable automatic downloads of Python. [env: "UV_PYTHON_DOWNLOADS=never"]
+		--quiet...|-q @bool # Use quiet output
+		--verbose...|-v @bool # Use verbose output
+		--color (auto|always|never) # Control the use of color in output [possible values: auto, always, never]
+		--native-tls @bool # Whether to load TLS certificates from the platform's native certificate store [env:
+		--offline @bool # Disable network access [env: UV_OFFLINE=]
+		--allow-insecure-host # Allow insecure connections to a host [env: UV_INSECURE_HOST=]
+		--no-progress @bool # Hide all progress outputs [env: UV_NO_PROGRESS=]
+		--directory # Change to the given directory prior to running the command
+		--project # Run the command within the given project directory [env: UV_PROJECT=]
+		--config-file # The path to a `uv.toml` file to use for configuration [env: UV_CONFIG_FILE=]
+		--no-config @bool # Avoid discovering configuration files (`pyproject.toml`, `uv.toml`) [env: UV_NO_CONFIG=]

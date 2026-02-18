@@ -1,0 +1,41 @@
+# Zstd CLI schema for fast-completer
+# Generated from zstd 1.5.7
+
+zstd # Fast lossless compression algorithm
+	--keep|-k @bool # Preserve INPUT file(s). [Default]
+	--rm @bool # Remove INPUT file(s) after successful (de)compression.
+	--decompress|-d @bool # Perform decompression.
+	--force|-f @bool # Disable input and output checks. Allows overwriting existing files,
+	--stdout|-c @bool # Write to STDOUT (even if it is a console) and keep the INPUT file(s).
+	--verbose|-v @bool # Enable verbose output; pass multiple times to increase verbosity.
+	--quiet|-q @bool # Suppress warnings; pass twice to suppress errors.
+	--trace # Log tracing information to LOG.
+	--filelist # Read a list of files to operate on from LIST.
+	--output-dir-flat # Store processed files in DIR.
+	--output-dir-mirror # Store processed files in DIR, respecting original directory structure.
+	--ultra @bool # Enable levels beyond 19, up to 22; requires more memory.
+	--fast # Use to very fast compression levels. [Default: 1]
+	--adapt @bool # Dynamically adapt compression level to I/O conditions.
+	--long # Enable long distance matching with window log #. [Default: 27]
+	--patch-from # Use REF as the reference point for Zstandard's diff engine.
+	--single-thread @bool # Share a single thread for I/O and compression (slightly different than `-T1`).
+	--auto-threads # Use physical/logical cores when using `-T0`. [Default: Physical]
+	--rsyncable @bool # Compress using a rsync-friendly method (`-B` sets block size).
+	--exclude-compressed @bool # Only compress files that are not already compressed.
+	--stream-size # Specify size of streaming input from STDIN.
+	--size-hint # Optimize compression parameters for streaming input of approximately size #.
+	--target-compressed-block-size # Generate compressed blocks of approximately # size.
+	--no-dictID @bool # Don't write `dictID` into the header (dictionary compression only).
+	--format # Compress files to the `.zst` format. [Default]
+	--format # Compress files to the `.gz` format.
+	--format # Compress files to the `.xz` format.
+	--format # Compress files to the `.lzma` format.
+	--format # Compress files to the `.lz4` format.
+	--test @bool # Test compressed file integrity.
+	--train @bool # Create a dictionary from a training set of files.
+	--train-cover # Use the cover algorithm (with optional arguments).
+	--train-fastcover # Use the fast cover algorithm (with optional arguments).
+	--train-legacy # Use the legacy algorithm with selectivity #. [Default: 9]
+	--maxdict # Limit dictionary to specified size #. [Default: 112640]
+	--dictID # Force dictionary ID to #. [Default: Random]
+	--priority # Set process priority to real-time.

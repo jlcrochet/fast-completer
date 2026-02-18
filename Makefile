@@ -35,7 +35,7 @@ else
     BINDIR ?= $(PREFIX)/bin
 endif
 
-.PHONY: all clean install uninstall debug release
+.PHONY: all clean install uninstall debug release test test-clean
 
 all: $(TARGET)
 
@@ -73,3 +73,33 @@ debug:
 release:
 	$(MAKE) clean
 	$(MAKE) all CFLAGS="-O3 $(WARNINGS) $(HARDENING) -DNDEBUG" LDFLAGS="-s"
+
+# --- Test targets ---
+TEST_DIR = tests
+TEST_CFLAGS = -g -O0 $(WARNINGS) $(HARDENING) -DDEBUG -DFCMP_VALIDATE_BLOB
+
+$(TEST_DIR)/test_runtime: $(TEST_DIR)/test_runtime.c src/fast-completer.c \
+                          src/generate_blob.c src/generate_blob.h \
+                          src/diagnostic.c src/diagnostic.h $(TEST_DIR)/greatest.h
+	$(CC) $(TEST_CFLAGS) -Isrc -o $@ \
+	    $(TEST_DIR)/test_runtime.c src/diagnostic.c src/generate_blob.c
+
+$(TEST_DIR)/test_generate: $(TEST_DIR)/test_generate.c src/generate_blob.c \
+                           src/generate_blob.h src/diagnostic.c src/diagnostic.h \
+                           $(TEST_DIR)/greatest.h
+	$(CC) $(TEST_CFLAGS) -Isrc -o $@ \
+	    $(TEST_DIR)/test_generate.c src/diagnostic.c
+
+$(TEST_DIR)/test_integration: $(TEST_DIR)/test_integration.c $(TEST_DIR)/greatest.h \
+                              src/generate_blob.c src/generate_blob.h \
+                              src/diagnostic.c src/diagnostic.h $(TARGET)
+	$(CC) $(TEST_CFLAGS) -Isrc -o $@ \
+	    $(TEST_DIR)/test_integration.c src/diagnostic.c src/generate_blob.c
+
+test: $(TARGET) $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate $(TEST_DIR)/test_integration
+	@echo "=== test_runtime ===" && $(TEST_DIR)/test_runtime && \
+	 echo "=== test_generate ===" && $(TEST_DIR)/test_generate && \
+	 echo "=== test_integration ===" && $(TEST_DIR)/test_integration
+
+test-clean:
+	rm -f $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate $(TEST_DIR)/test_integration

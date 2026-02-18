@@ -2081,20 +2081,6 @@ static inline size_t align4(size_t v) {
     return (v + 3u) & ~((size_t)3u);
 }
 
-typedef struct {
-    uint32_t start;
-    uint32_t count;
-} Slice32;
-
-typedef struct {
-    uint32_t param_idx;
-} LongIndexEntry;
-
-typedef struct {
-    uint8_t short_ch;
-    uint8_t _pad[3];
-    uint32_t param_idx;
-} ShortIndexEntry;
 
 typedef struct {
     uint32_t id;

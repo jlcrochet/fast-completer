@@ -1,0 +1,710 @@
+# Skaffold CLI schema for fast-completer
+# Generated from skaffold unknown
+
+skaffold # Kubernetes development workflow
+	--color @bool # Specify the default output color in ANSI escape codes
+	--help @bool # help for skaffold
+	--interactive @bool # Allow user prompts for more information
+	--timestamps # Print timestamps in logs
+	--update-check @bool # Check for a more recent version of Skaffold
+	--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+	apply # Apply hydrated manifests to a cluster
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!
+		--iterative-status-check @bool # Run `status-check` iteratively after each deploy step, instead of all-together at the end of all deploys (default).
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--status-check @bool # Wait for deployed resources to stabilize
+		--status-check-selectors @bool # File containing resource selectors for kubernetes resources status check. A sample file looks like the following:
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tail @bool # Stream logs from deployed objects
+		--tolerate-failures-until-deadline @bool # Configures `status-check` to tolerate failures until Skaffold's statusCheckDeadline duration or the deployments progressDeadlineSeconds  Otherwise deployment failures skaffold encounters will immediately fail the deployment.  Defaults to 'false'
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+	build # Build the artifacts
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-concurrency @bool # Number of concurrently running builds. Set to 0 to run all builds in parallel. Doesn't violate build order among dependencies.
+		--build-image @bool # Only build artifacts with image names that contain the given substring. Default is to build sources for all artifacts
+		--cache-artifacts @bool # Set to false to disable default caching of artifacts
+		--cache-file @bool # Specify the location of the cache file (default $HOME/.skaffold/cache)
+		--check-cluster-node-platforms @bool # When set to true, images are built for the target platforms matching the active kubernetes cluster node platforms. Enabled by default for `dev`, `debug` and `run`
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--disable-multi-platform-build @bool # When set to true, forces only single platform image builds even when multiple target platforms are specified. Enabled by default for `dev` and `debug` modes, to keep dev-loop fast
+		--dry-run @bool # Don't build images, just compute the tag for each artifact.
+		--file-output @bool # Filename to write build images to
+		--filename @bool # Path or URL to the Skaffold config file
+		--insecure-registry @bool # Target registries for built images which are not secure
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--mute-logs @bool # mute logs for specified stages in pipeline (build, deploy, status-check, none, all)
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--output @bool # Used in conjunction with --quiet flag. Format output with go-template. For full struct documentation, see https://godoc.org/github.com/GoogleContainerTools/skaffold/v2/cmd/skaffold/app/flags#BuildOutput
+		--platform @bool # The platform to target for the build artifacts
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--push @bool # Push the built images to the specified image repository.
+		--quiet @bool # Suppress the build output and print image built on success. See --output to format output.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--skip-tests @bool # Whether to skip the tests after building
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--toot @bool # Emit a terminal beep after the deploy is complete
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+	completion # Output shell completion for the given shell (bash, fish or zsh)
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		bash
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		fish
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		zsh
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+	config # Interact with the global Skaffold config file (defaults to `$HOME/.skaffold/config`)
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		list # List all values set in the global Skaffold config
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			--all @bool # Show values for all kubecontexts
+			--config @bool # Path to Skaffold config
+			--kube-context @bool # Kubectl context to set values against
+		set # Set a value in the global Skaffold config
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			--config @bool # Path to Skaffold config
+			--global @bool # Set value for global config
+			--kube-context @bool # Kubectl context to set values against
+		unset # Unset a value in the global Skaffold config
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			--config @bool # Path to Skaffold config
+			--global @bool # Set value for global config
+			--kube-context @bool # Kubectl context to set values against
+	debug # Run a pipeline in debug mode
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--auto @bool # Run with an auto-generated skaffold configuration. This will create a temporary `skaffold.yaml` file and kubernetes manifests necessary to run the application
+		--auto-build @bool # When set to false, builds wait for API request instead of running automatically
+		--auto-create-config @bool # If true, skaffold will try to create a config for the user's run if it doesn't find one
+		--auto-deploy @bool # When set to false, deploys wait for API request instead of running automatically
+		--auto-sync @bool # When set to false, syncs wait for API request instead of running automatically
+		--build-concurrency @bool # Number of concurrently running builds. Set to 0 to run all builds in parallel. Doesn't violate build order among dependencies.
+		--cache-artifacts @bool # Set to false to disable default caching of artifacts
+		--cache-file @bool # Specify the location of the cache file (default $HOME/.skaffold/cache)
+		--check-cluster-node-platforms @bool # When set to true, images are built for the target platforms matching the active kubernetes cluster node platforms. Enabled by default for `dev`, `debug` and `run`
+		--cleanup @bool # Delete deployments after dev or debug mode is interrupted
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--disable-multi-platform-build @bool # When set to true, forces only single platform image builds even when multiple target platforms are specified. Enabled by default for `dev` and `debug` modes, to keep dev-loop fast
+		--enable-platform-node-affinity @bool # If true, when deploying to a mixed node cluster, skaffold will add platform (os/arch) node affinity definition to rendered manifests based on the image platforms
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!
+		--hydration-dir @bool # The directory to where the (kpt) hydration takes place. Default to a hidden directory .kpt-pipeline.
+		--insecure-registry @bool # Target registries for built images which are not secure
+		--iterative-status-check @bool # Run `status-check` iteratively after each deploy step, instead of all-together at the end of all deploys (default).
+		--keep-running-on-failure @bool # If true, the session will be suspended instead of ending if any errors occur, the user can fix the errors during the session suspension, the session can be restored and continued by pressing any key.
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--mute-logs @bool # mute logs for specified stages in pipeline (build, deploy, status-check, none, all)
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--no-prune @bool # Skip removing images and containers built by Skaffold during cleanup after dev or debug mode
+		--no-prune-children @bool # Skip removing layers reused by Skaffold
+		--platform @bool # The platform to target for the build artifacts
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--protocols @bool # Priority sorted order of debugger protocols to support.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--resource-selector-rules-file @bool # Path to JSON file specifying the deny list of yaml objects for skaffold to NOT transform with 'image' and 'label' field replacements.  NOTE: this list is additive to skaffold's default denylist and denylist has priority over allowlist
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--skip-tests @bool # Whether to skip the tests after building
+		--status-check @bool # Wait for deployed resources to stabilize
+		--status-check-selectors @bool # File containing resource selectors for kubernetes resources status check. A sample file looks like the following:
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--tail @bool # Stream logs from deployed objects
+		--tolerate-failures-until-deadline @bool # Configures `status-check` to tolerate failures until Skaffold's statusCheckDeadline duration or the deployments progressDeadlineSeconds  Otherwise deployment failures skaffold encounters will immediately fail the deployment.  Defaults to 'false'
+		--toot @bool # Emit a terminal beep after the deploy is complete
+		--trigger @bool # How is change detection triggered? (polling, notify, or manual)
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+		--wait-for-deletions @bool # Wait for pending deletions to complete before a deployment
+		--wait-for-deletions-delay @bool # Delay between two checks for pending deletions
+		--wait-for-deletions-max @bool # Max duration to wait for pending deletions
+		--watch-image @bool # Choose which artifacts to watch. Artifacts with image names that contain the expression will be watched only. Default is to watch sources for all artifacts
+		--watch-poll-interval @bool # Interval (in ms) between two checks for file changes
+	delete # Delete any resources deployed by Skaffold
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--dry-run @bool # Don't delete resources, just print them.
+		--filename @bool # Path or URL to the Skaffold config file
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+	deploy # Deploy pre-built artifacts
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-artifacts @bool # File containing pre-built images to use instead of rebuilding artifacts. A sample file looks like the following:
+		--build-concurrency @bool # Number of concurrently running builds. Set to 0 to run all builds in parallel. Doesn't violate build order among dependencies.
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--enable-platform-node-affinity @bool # If true, when deploying to a mixed node cluster, skaffold will add platform (os/arch) node affinity definition to rendered manifests based on the image platforms
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!
+		--hydration-dir @bool # The directory to where the (kpt) hydration takes place. Default to a hidden directory .kpt-pipeline.
+		--images @bool # A list of pre-built images to deploy, either tagged images or NAME=TAG pairs
+		--iterative-status-check @bool # Run `status-check` iteratively after each deploy step, instead of all-together at the end of all deploys (default).
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--load-images @bool # If true, skaffold will force load the container images into the local cluster.
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--mute-logs @bool # mute logs for specified stages in pipeline (build, deploy, status-check, none, all)
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--resource-selector-rules-file @bool # Path to JSON file specifying the deny list of yaml objects for skaffold to NOT transform with 'image' and 'label' field replacements.  NOTE: this list is additive to skaffold's default denylist and denylist has priority over allowlist
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--status-check @bool # Wait for deployed resources to stabilize
+		--status-check-selectors @bool # File containing resource selectors for kubernetes resources status check. A sample file looks like the following:
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--tail @bool # Stream logs from deployed objects
+		--tolerate-failures-until-deadline @bool # Configures `status-check` to tolerate failures until Skaffold's statusCheckDeadline duration or the deployments progressDeadlineSeconds  Otherwise deployment failures skaffold encounters will immediately fail the deployment.  Defaults to 'false'
+		--toot @bool # Emit a terminal beep after the deploy is complete
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+		--wait-for-deletions @bool # Wait for pending deletions to complete before a deployment
+		--wait-for-deletions-delay @bool # Delay between two checks for pending deletions
+		--wait-for-deletions-max @bool # Max duration to wait for pending deletions
+	dev # Run a pipeline in development mode
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--auto @bool # Run with an auto-generated skaffold configuration. This will create a temporary `skaffold.yaml` file and kubernetes manifests necessary to run the application
+		--auto-build @bool # When set to false, builds wait for API request instead of running automatically
+		--auto-create-config @bool # If true, skaffold will try to create a config for the user's run if it doesn't find one
+		--auto-deploy @bool # When set to false, deploys wait for API request instead of running automatically
+		--auto-sync @bool # When set to false, syncs wait for API request instead of running automatically
+		--build-concurrency @bool # Number of concurrently running builds. Set to 0 to run all builds in parallel. Doesn't violate build order among dependencies.
+		--cache-artifacts @bool # Set to false to disable default caching of artifacts
+		--cache-file @bool # Specify the location of the cache file (default $HOME/.skaffold/cache)
+		--check-cluster-node-platforms @bool # When set to true, images are built for the target platforms matching the active kubernetes cluster node platforms. Enabled by default for `dev`, `debug` and `run`
+		--cleanup @bool # Delete deployments after dev or debug mode is interrupted
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--digest-source @bool # Set to 'remote' to skip builds and resolve the digest of images by tag from the remote registry. Set to 'local' to build images locally and use digests from built images. Set to 'tag' to use tags directly from the build. Set to 'none' to use tags directly from the Kubernetes manifests. If unspecified, defaults to 'remote' for remote clusters, and 'tag' for local clusters like kind or minikube.
+		--disable-multi-platform-build @bool # When set to true, forces only single platform image builds even when multiple target platforms are specified. Enabled by default for `dev` and `debug` modes, to keep dev-loop fast
+		--enable-platform-node-affinity @bool # If true, when deploying to a mixed node cluster, skaffold will add platform (os/arch) node affinity definition to rendered manifests based on the image platforms
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!
+		--hydration-dir @bool # The directory to where the (kpt) hydration takes place. Default to a hidden directory .kpt-pipeline.
+		--insecure-registry @bool # Target registries for built images which are not secure
+		--iterative-status-check @bool # Run `status-check` iteratively after each deploy step, instead of all-together at the end of all deploys (default).
+		--keep-running-on-failure @bool # If true, the session will be suspended instead of ending if any errors occur, the user can fix the errors during the session suspension, the session can be restored and continued by pressing any key.
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--mute-logs @bool # mute logs for specified stages in pipeline (build, deploy, status-check, none, all)
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--no-prune @bool # Skip removing images and containers built by Skaffold during cleanup after dev or debug mode
+		--no-prune-children @bool # Skip removing layers reused by Skaffold
+		--platform @bool # The platform to target for the build artifacts
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--resource-selector-rules-file @bool # Path to JSON file specifying the deny list of yaml objects for skaffold to NOT transform with 'image' and 'label' field replacements.  NOTE: this list is additive to skaffold's default denylist and denylist has priority over allowlist
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--skip-tests @bool # Whether to skip the tests after building
+		--status-check @bool # Wait for deployed resources to stabilize
+		--status-check-selectors @bool # File containing resource selectors for kubernetes resources status check. A sample file looks like the following:
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--tail @bool # Stream logs from deployed objects
+		--tolerate-failures-until-deadline @bool # Configures `status-check` to tolerate failures until Skaffold's statusCheckDeadline duration or the deployments progressDeadlineSeconds  Otherwise deployment failures skaffold encounters will immediately fail the deployment.  Defaults to 'false'
+		--toot @bool # Emit a terminal beep after the deploy is complete
+		--trigger @bool # How is change detection triggered? (polling, notify, or manual)
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+		--wait-for-deletions @bool # Wait for pending deletions to complete before a deployment
+		--wait-for-deletions-delay @bool # Delay between two checks for pending deletions
+		--wait-for-deletions-max @bool # Max duration to wait for pending deletions
+		--watch-image @bool # Choose which artifacts to watch. Artifacts with image names that contain the expression will be watched only. Default is to watch sources for all artifacts
+		--watch-poll-interval @bool # Interval (in ms) between two checks for file changes
+	diagnose # Run a diagnostic on Skaffold
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--enable-templating @bool # Render supported templated fields with golang template engine
+		--filename @bool # Path or URL to the Skaffold config file
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--output @bool # File to write diagnose result
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--yaml-only @bool # Only prints the effective skaffold.yaml configuration
+	exec # Execute a custom action
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-artifacts @bool # File containing pre-built images to use instead of rebuilding artifacts. A sample file looks like the following:
+		--default-repo @bool # Default repository value (overrides global config)
+		--docker-network @bool # Name of an existing docker network to use when running the verify tests. If not specified, Skaffold will create a new network to use of the form 'skaffold-network-<uuid>'
+		--env-file @bool # File containing env var key-value pairs that will be set in all verify container envs
+		--filename @bool # Path or URL to the Skaffold config file
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+	fix # Update old configuration to a newer schema version
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--filename @bool # Path or URL to the Skaffold config file
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--output @bool # File to write the changed config (instead of standard output)
+		--overwrite @bool # Overwrite original config with fixed config
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+	help # Help about any command
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		apply # Apply hydrated manifests to a cluster
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		build # Build the artifacts
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		completion # Output shell completion for the given shell (bash, fish or zsh)
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		config # Interact with the global Skaffold config file (defaults to `$HOME/.skaffold/config`)
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			list # List all values set in the global Skaffold config
+				--color @bool # Specify the default output color in ANSI escape codes
+				--interactive @bool # Allow user prompts for more information
+				--timestamps @bool # Print timestamps in logs
+				--update-check @bool # Check for a more recent version of Skaffold
+				--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			set # Set a value in the global Skaffold config
+				--color @bool # Specify the default output color in ANSI escape codes
+				--interactive @bool # Allow user prompts for more information
+				--timestamps @bool # Print timestamps in logs
+				--update-check @bool # Check for a more recent version of Skaffold
+				--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			unset # Unset a value in the global Skaffold config
+				--color @bool # Specify the default output color in ANSI escape codes
+				--interactive @bool # Allow user prompts for more information
+				--timestamps @bool # Print timestamps in logs
+				--update-check @bool # Check for a more recent version of Skaffold
+				--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		debug # Run a pipeline in debug mode
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		delete # Delete any resources deployed by Skaffold
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		deploy # Deploy pre-built artifacts
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		dev # Run a pipeline in development mode
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		diagnose # Run a diagnostic on Skaffold
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		exec # Execute a custom action
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		fix # Update old configuration to a newer schema version
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		help # Help about any command
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		init # Generate configuration for deploying an application
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		options
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		render # Generate rendered Kubernetes manifests
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		run # Run a pipeline
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		schema # List JSON schemas used to validate skaffold.yaml configuration
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+			get # Print a given skaffold.yaml's json schema
+				--color @bool # Specify the default output color in ANSI escape codes
+				--interactive @bool # Allow user prompts for more information
+				--timestamps @bool # Print timestamps in logs
+				--update-check @bool # Check for a more recent version of Skaffold
+				--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		test # Run tests against your built application images
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		verify # Run verification tests against skaffold deployments
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		version # Print the version information
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+	init # Generate configuration for deploying an application
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--analyze @bool # Print all discoverable Dockerfiles and images in JSON format to stdout
+		--artifact @bool # '='-delimited Dockerfile/image pair, or JSON string, to generate build artifact
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--compose-file @bool # Initialize from a docker-compose file
+		--default-kustomization @bool # Default Kustomization overlay path (others will be added as profiles)
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Force the generation of the Skaffold config
+		--generate-manifests @bool # Allows skaffold to try and generate basic kubernetes resources to get your project started
+		--kubernetes-manifest @bool # A path or a glob pattern to kubernetes manifests (can be non-existent) to be added to the kubectl deployer (overrides detection of kubernetes manifests). Repeat the flag for multiple entries. E.g.: skaffold init -k pod.yaml -k k8s/*.yml
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--skip-build @bool # Skip generating build artifacts in Skaffold config
+		--skip-unreachable-dirs @bool # Instead of erroring, it will skip the directories that cannot be accessed due to permissions
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+	options
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+	render # Generate rendered Kubernetes manifests
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-artifacts @bool # File containing pre-built images to use instead of rebuilding artifacts. A sample file looks like the following:
+		--cache-artifacts @bool # Set to false to disable default caching of artifacts
+		--default-repo @bool # Default repository value (overrides global config)
+		--digest-source @bool # Set to 'remote' to skip builds and resolve the digest of images by tag from the remote registry. Set to 'local' to build images locally and use digests from built images. Set to 'tag' to use tags directly from the build. Set to 'none' to use tags directly from the Kubernetes manifests. If unspecified, defaults to 'remote' for remote clusters, and 'tag' for local clusters like kind or minikube.
+		--enable-platform-node-affinity @bool # If true, when deploying to a mixed node cluster, skaffold will add platform (os/arch) node affinity definition to rendered manifests based on the image platforms
+		--filename @bool # Path or URL to the Skaffold config file
+		--hydration-dir @bool # The directory to where the (kpt) hydration takes place. Default to a hidden directory .kpt-pipeline.
+		--images @bool # A list of pre-built images to deploy, either tagged images or NAME=TAG pairs
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--loud @bool # Show the build logs and output
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--offline @bool # Do not connect to Kubernetes API server for manifest creation and validation. This is helpful when no Kubernetes cluster is available (e.g. GitOps model). No metadata.namespace attribute is injected in this case - the manifest content does not get changed.
+		--output @bool # File to write rendered manifests to
+		--platform @bool # The platform to target for the build artifacts
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--resource-selector-rules-file @bool # Path to JSON file specifying the deny list of yaml objects for skaffold to NOT transform with 'image' and 'label' field replacements.  NOTE: this list is additive to skaffold's default denylist and denylist has priority over allowlist
+		--set @bool # overrides templated manifest fields by provided key-value pairs
+		--set-value-file @bool # overrides templated manifest fields by a file containing key-value pairs in .env file format
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+	run # Run a pipeline
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--auto @bool # Run with an auto-generated skaffold configuration. This will create a temporary `skaffold.yaml` file and kubernetes manifests necessary to run the application
+		--auto-create-config @bool # If true, skaffold will try to create a config for the user's run if it doesn't find one
+		--build-concurrency @bool # Number of concurrently running builds. Set to 0 to run all builds in parallel. Doesn't violate build order among dependencies.
+		--build-image @bool # Only build artifacts with image names that contain the given substring. Default is to build sources for all artifacts
+		--cache-artifacts @bool # Set to false to disable default caching of artifacts
+		--cache-file @bool # Specify the location of the cache file (default $HOME/.skaffold/cache)
+		--check-cluster-node-platforms @bool # When set to true, images are built for the target platforms matching the active kubernetes cluster node platforms. Enabled by default for `dev`, `debug` and `run`
+		--cleanup @bool # Delete deployments after dev or debug mode is interrupted
+		--cloud-run-location @bool # The GCP Region to deploy Cloud Run services to
+		--cloud-run-project @bool # The GCP Project ID or Project Number to deploy for Cloud Run
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--default-repo @bool # Default repository value (overrides global config)
+		--detect-minikube @bool # Use heuristics to detect a minikube cluster
+		--digest-source @bool # Set to 'remote' to skip builds and resolve the digest of images by tag from the remote registry. Set to 'local' to build images locally and use digests from built images. Set to 'tag' to use tags directly from the build. Set to 'none' to use tags directly from the Kubernetes manifests. If unspecified, defaults to 'remote' for remote clusters, and 'tag' for local clusters like kind or minikube.
+		--disable-multi-platform-build @bool # When set to true, forces only single platform image builds even when multiple target platforms are specified. Enabled by default for `dev` and `debug` modes, to keep dev-loop fast
+		--enable-platform-node-affinity @bool # If true, when deploying to a mixed node cluster, skaffold will add platform (os/arch) node affinity definition to rendered manifests based on the image platforms
+		--filename @bool # Path or URL to the Skaffold config file
+		--force @bool # Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!
+		--hydration-dir @bool # The directory to where the (kpt) hydration takes place. Default to a hidden directory .kpt-pipeline.
+		--insecure-registry @bool # Target registries for built images which are not secure
+		--iterative-status-check @bool # Run `status-check` iteratively after each deploy step, instead of all-together at the end of all deploys (default).
+		--kube-context @bool # Deploy to this Kubernetes context
+		--kubeconfig @bool # Path to the kubeconfig file to use for CLI requests.
+		--label @bool # Add custom labels to deployed objects. Set multiple times for multiple labels
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--mute-logs @bool # mute logs for specified stages in pipeline (build, deploy, status-check, none, all)
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--no-prune @bool # Skip removing images and containers built by Skaffold during cleanup after dev or debug mode
+		--no-prune-children @bool # Skip removing layers reused by Skaffold
+		--platform @bool # The platform to target for the build artifacts
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--resource-selector-rules-file @bool # Path to JSON file specifying the deny list of yaml objects for skaffold to NOT transform with 'image' and 'label' field replacements.  NOTE: this list is additive to skaffold's default denylist and denylist has priority over allowlist
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--skip-tests @bool # Whether to skip the tests after building
+		--status-check @bool # Wait for deployed resources to stabilize
+		--status-check-selectors @bool # File containing resource selectors for kubernetes resources status check. A sample file looks like the following:
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--tag @bool # The optional custom tag to use for images which overrides the current Tagger configuration
+		--tail @bool # Stream logs from deployed objects
+		--tolerate-failures-until-deadline @bool # Configures `status-check` to tolerate failures until Skaffold's statusCheckDeadline duration or the deployments progressDeadlineSeconds  Otherwise deployment failures skaffold encounters will immediately fail the deployment.  Defaults to 'false'
+		--toot @bool # Emit a terminal beep after the deploy is complete
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+		--wait-for-deletions @bool # Wait for pending deletions to complete before a deployment
+		--wait-for-deletions-delay @bool # Delay between two checks for pending deletions
+		--wait-for-deletions-max @bool # Max duration to wait for pending deletions
+	schema # List JSON schemas used to validate skaffold.yaml configuration
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		get # Print a given skaffold.yaml's json schema
+			--color @bool # Specify the default output color in ANSI escape codes
+			--interactive @bool # Allow user prompts for more information
+			--timestamps @bool # Print timestamps in logs
+			--update-check @bool # Check for a more recent version of Skaffold
+			--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+	test # Run tests against your built application images
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-artifacts @bool # File containing pre-built images to use instead of rebuilding artifacts. A sample file looks like the following:
+		--config @bool # File for global configurations (defaults to $HOME/.skaffold/config)
+		--filename @bool # Path or URL to the Skaffold config file
+		--images @bool # A list of pre-built images to deploy, either tagged images or NAME=TAG pairs
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+		--wait-for-connection @bool # Blocks ending execution of skaffold until the /v2/events gRPC/HTTP endpoint is hit
+	verify # Run verification tests against skaffold deployments
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--assume-yes @bool # If true, skaffold will skip yes/no confirmation from the user and default to yes
+		--build-artifacts @bool # File containing pre-built images to use instead of rebuilding artifacts. A sample file looks like the following:
+		--default-repo @bool # Default repository value (overrides global config)
+		--docker-network @bool # Name of an existing docker network to use when running the verify tests. If not specified, Skaffold will create a new network to use of the form 'skaffold-network-<uuid>'
+		--env-file @bool # File containing env var key-value pairs that will be set in all verify container envs
+		--filename @bool # Path or URL to the Skaffold config file
+		--module @bool # Filter Skaffold configs to only the provided named modules
+		--namespace @bool # Runs deployments in the specified namespace. When used with 'render' command, renders manifests contain the namespace
+		--port-forward @bool # Port-forward exposes service ports and container ports within pods and other resources (off, user, services, debug, pods)
+		--profile @bool # Activate profiles by name (prefixed with `-` to disable a profile)
+		--profile-auto-activation @bool # Set to false to disable profile auto activation
+		--propagate-profiles @bool # Setting '--propagate-profiles=false' disables propagating profiles set by the '--profile' flag across config dependencies. This mean that only profiles defined directly in the target 'skaffold.yaml' file are activated.
+		--remote-cache-dir @bool # Specify the location of the remote cache (default $HOME/.skaffold/remote-cache)
+		--rpc-http-port @bool # tcp port to expose the Skaffold API over HTTP REST
+		--rpc-port @bool # tcp port to expose the Skaffold API over gRPC
+		--status-check @bool # Wait for deployed resources to stabilize
+		--sync-remote-cache @bool # Controls how Skaffold manages the remote config cache (see `remote-cache-dir`). One of `always` (default), `missing`, or `never`. `always` syncs remote repositories to latest on access. `missing` only clones remote repositories if they do not exist locally. `never` means the user takes responsibility for updating remote repositories.
+	version # Print the version information
+		--color @bool # Specify the default output color in ANSI escape codes
+		--interactive @bool # Allow user prompts for more information
+		--timestamps @bool # Print timestamps in logs
+		--update-check @bool # Check for a more recent version of Skaffold
+		--verbosity @bool # Log level: one of [panic fatal error warning info debug trace]
+		--output @bool # Format output with go-template. For full struct documentation, see https://godoc.org/github.com/GoogleContainerTools/skaffold/v2/pkg/skaffold/version#Info

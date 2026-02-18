@@ -1,0 +1,2453 @@
+# Podman CLI schema for fast-completer
+# Generated from podman 5.8.0
+
+podman # Container management tool
+	--config # Path to directory containing authentication config file
+	--connection # Connection to use for remote Podman service (CONTAINER_CONNECTION)
+	--help @bool # Help for podman
+	--identity # path to SSH identity file, (CONTAINER_SSHKEY)
+	--log-level # Log messages above specified level (trace, debug, info, warn, warning, error, fatal, panic)
+	--out # Send output (stdout) from podman to a file
+	--ssh # define the ssh mode
+	--storage-opt # Used to pass an option to the storage driver
+	--tls-ca # path to TLS certificate Authority PEM file for remote.
+	--tls-cert # path to TLS client certificate PEM file for remote.
+	--tls-key # path to TLS client certificate private key PEM file for remote.
+	--url # URL to access Podman service (CONTAINER_HOST)
+	--version @bool # version for podman
+	artifact # Manage OCI artifacts
+		add # Add an OCI artifact to the local store
+			--annotation # set an `annotation` for the specified files of artifact
+			--append @bool # Append files to an existing artifact
+			--file-type # Set file type to use for the artifact (layer)
+			--replace @bool # Replace an existing artifact
+			--type # Use type to describe an artifact
+		extract # Extract an OCI artifact to a local path
+			--digest # Only extract blob with the given digest
+			--title # Only extract blob with the given title
+		inspect # Inspect an OCI artifact
+			--format # Format volume output using JSON or a Go template
+		ls # List OCI artifacts
+			--format # Format volume output using JSON or a Go template
+			--no-trunc @bool # Do not truncate output
+			--noheading @bool # Do not print column headings
+		pull # Pull an OCI artifact
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--quiet @bool # Suppress output information when pulling images
+			--retry # number of times to retry in case of failure when performing pull
+			--retry-delay # delay between retries in case of pull failures
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		push # Push an OCI artifact
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--digestfile # Write the digest of the pushed image to the specified file
+			--retry # number of times to retry in case of failure when performing push
+			--retry-delay # delay between retries in case of push failures
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		rm # Remove one or more OCI artifacts
+			--all @bool # Remove all artifacts
+			--ignore @bool # Ignore error if artifact does not exist
+	attach # Attach to a running container
+		--detach-keys # Select the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+		--no-stdin @bool # Do not attach STDIN. The default is false
+		--sig-proxy @bool # Proxy received signals to the process
+	build # Build an image using instructions from Containerfiles
+		--add-host # add a custom host-to-IP mapping (`host:ip`) (default [])
+		--all-platforms @bool # attempt to build for all base image platforms
+		--annotation # set metadata for an image (default [])
+		--arch # set the ARCH of the image to the provided value instead of the architecture of the host
+		--authfile # path of the authentication file.
+		--build-arg # `argument=value` to supply to the builder
+		--build-arg-file # `argfile.conf` containing lines of argument=value to supply to the builder
+		--build-context # `argument=value` to supply additional build context to the builder
+		--cache-from # remote repository list to utilise as potential cache source.
+		--cache-to # remote repository list to utilise as potential cache destination.
+		--cache-ttl # only consider cache images under specified duration.
+		--cap-add # add the specified capability when running (default [])
+		--cap-drop # drop the specified capability when running (default [])
+		--cert-dir # use certificates at the specified path to access the registry
+		--cgroup-parent # optional parent cgroup for the container
+		--cgroupns # 'private', or 'host'
+		--compat-volumes @bool # preserve the contents of VOLUMEs during RUN instructions
+		--cpp-flag # set additional flag to pass to C preprocessor (cpp)
+		--cpu-period # limit the CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # limit the CPU CFS (Completely Fair Scheduler) quota
+		--cpu-shares # CPU shares (relative weight)
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+		--created-annotation @bool # set an "org.opencontainers.image.created" annotation in the image
+		--creds # use `[username[:password]]` for accessing the registry
+		--decryption-key # key needed to decrypt the image
+		--device # additional devices to provide
+		--disable-compression @bool # don't compress layers by default
+		--dns # set custom DNS servers or disable it completely by setting it to 'none', which prevents the automatic creation of `/etc/resolv.conf`.
+		--dns-option # set custom DNS options
+		--dns-search # set custom DNS search domains
+		--env # set environment variable for the image
+		--file @bool # `pathname or URL` of a Dockerfile
+		--force-rm @bool # always remove intermediate containers after a build, even if the build is unsuccessful.
+		--format # `format` of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override.
+		--from # image name used to replace the value in the first FROM instruction in the Containerfile
+		--group-add # add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+		--hooks-dir # set the OCI hooks directory path (may be set multiple times)
+		--http-proxy @bool # pass through HTTP Proxy environment variables
+		--identity-label @bool # add default identity label
+		--ignorefile # path to an alternate .dockerignore file
+		--iidfile # `file` to write the image ID to
+		--inherit-annotations @bool # inherit the annotations from the base image or base stages.
+		--inherit-labels @bool # inherit the labels from the base image or base stages.
+		--ipc # 'private', `path` of IPC namespace to join, or 'host'
+		--isolation # `type` of process isolation to use. Use BUILDAH_ISOLATION environment variable to override.
+		--jobs # how many stages to run in parallel
+		--label # set metadata for an image (default [])
+		--layer-label # set metadata for an intermediate image (default [])
+		--layers @bool # use intermediate layers during build. Use BUILDAH_LAYERS environment variable to override.
+		--logfile # log to `file` instead of stdout/stderr
+		--manifest # add the image to the specified manifest list. Creates manifest list if it does not exist
+		--memory # memory limit (format: <number>[<unit>], where unit = b, k, m or g)
+		--memory-swap # swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--network # 'private', 'none', 'ns:path' of network namespace to join, or 'host'
+		--no-cache @bool # do not use existing cached images for the container build. Build from the start with a new set of cached layers.
+		--no-hostname @bool # do not create new /etc/hostname file for RUN instructions, use the one from the base image.
+		--no-hosts @bool # do not create new /etc/hosts file for RUN instructions, use the one from the base image.
+		--omit-history @bool # omit build history information from built image
+		--os # set the OS to the provided value instead of the current operating system of the host
+		--os-feature # set required OS `feature` for the target image in addition to values from the base image
+		--os-version # set required OS `version` for the target image instead of the value from the base image
+		--pid # private, `path` of PID namespace to join, or 'host'
+		--platform # set the `OS/ARCH[/VARIANT]` of the image to the provided value instead of the current operating system and architecture of the host (for example "linux/arm")
+		--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+		--quiet @bool # refrain from announcing build instructions and image read/write progress
+		--retry # number of times to retry in case of failure when performing push/pull
+		--retry-delay # delay between retries in case of push/pull failures
+		--rewrite-timestamp @bool # set timestamps in layers to no later than the value for --source-date-epoch
+		--rm @bool # remove intermediate containers after a successful build
+		--runtime-flag # add global flags for the container runtime
+		--sbom # scan working container using `preset` configuration
+		--sbom-image-output # add scan results to image as `path`
+		--sbom-image-purl-output # add scan results to image as `path`
+		--sbom-merge-strategy # merge scan results using `strategy`
+		--sbom-output # save scan results to `file`
+		--sbom-purl-output # save scan results to `file``
+		--sbom-scanner-command # scan working container using `command` in scanner image
+		--sbom-scanner-image # scan working container using scanner command from `image`
+		--secret # secret file to expose to the build
+		--security-opt # security options (default [])
+		--shm-size # size of '/dev/shm'. The format is `<number><unit>`.
+		--skip-unused-stages @bool # skips stages in multi-stage builds which do not affect the final target
+		--source-date-epoch # set new timestamps in image info to `seconds` after the epoch, defaults to current time
+		--squash @bool # squash all image layers into a single layer
+		--squash-all @bool # Squash all layers into a single layer
+		--ssh # SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])
+		--stdin @bool # pass stdin into containers
+		--tag # tagged `name` to apply to the built image
+		--target # set the target build stage to build
+		--timestamp # set new timestamps in image info and layer to `seconds` after the epoch, defaults to current times
+		--ulimit # ulimit options
+		--unsetannotation # unset annotation when inheriting annotations from base image
+		--unsetenv # unset environment variable from final image
+		--unsetlabel # unset label when inheriting labels from base image
+		--userns # 'container', `path` of user namespace to join, or 'host'
+		--userns-gid-map # `containerGID:hostGID:length` GID mapping to use in user namespace
+		--userns-gid-map-group # `name` of entries from /etc/subgid to use to set user namespace GID mapping
+		--userns-uid-map # `containerUID:hostUID:length` UID mapping to use in user namespace
+		--userns-uid-map-user # `name` of entries from /etc/subuid to use to set user namespace UID mapping
+		--uts # private, :`path` of UTS namespace to join, or 'host'
+		--variant # override the `variant` of the specified image
+		--volume # bind mount a volume into the container
+	commit # Create new image based on the changed container
+		--author # Set the author for the image committed
+		--change # Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR
+		--config # `file` containing a container configuration to merge into the image
+		--format # `Format` of the image manifest and metadata
+		--iidfile # `file` to write the image ID to
+		--include-volumes @bool # Include container volumes as image volumes
+		--message # Set commit message for imported image
+		--pause @bool # Pause container during commit
+		--quiet @bool # Suppress output
+		--squash @bool # squash newly built layers into a single new layer
+	compose # Run compose workloads via an external provider such as docker-compose or podman-compose
+		--all-resources @bool # Include all resources, even those not used by services
+		--ansi @bool # Control when to print ANSI control characters ("never"|"always"|"auto")
+		--compatibility @bool # Run compose in backward compatibility mode
+		--dry-run @bool # Execute command in dry run mode
+		--env-file @bool # Specify an alternate environment file
+		--file @bool # Compose configuration files
+		--parallel @bool # Control max parallelism, -1 for unlimited
+		--profile @bool # Specify a profile to enable
+		--progress @bool # Set type of progress output (auto, tty, plain, json, quiet)
+		--project-directory @bool # Specify an alternate working directory
+		--project-name @bool # Project name
+		attach # Attach local standard input, output, and error streams to a service's running container
+			--dry-run @bool # Execute command in dry run mode
+			--detach-keys @bool # Override the key sequence for detaching from a container.
+			--index @bool # index of the container if service has multiple replicas.
+			--no-stdin @bool # Do not attach STDIN
+			--sig-proxy @bool # Proxy all received signals to the process
+		bridge # Convert compose files into another model
+			--dry-run @bool # Execute command in dry run mode
+			convert # Convert compose files to Kubernetes manifests, Helm charts, or another model
+				--dry-run @bool # Execute command in dry run mode
+				--output @bool # The output directory for the Kubernetes resources
+				--templates @bool # Directory containing transformation templates
+				--transformation @bool # Transformation to apply to compose model (default: docker/compose-bridge-kubernetes)
+			transformations # Manage transformation images
+				--dry-run @bool # Execute command in dry run mode
+				create # Create a new transformation
+					--dry-run @bool # Execute command in dry run mode
+					--from @bool # Existing transformation to copy (default: docker/compose-bridge-kubernetes)
+				list # List available transformations
+					--dry-run @bool # Execute command in dry run mode
+					--format @bool # Format the output. Values: [table | json]
+					--quiet @bool # Only display transformer names
+		build # Build or rebuild services
+			--dry-run @bool # Execute command in dry run mode
+			--build-arg @bool # Set build-time variables for services
+			--builder @bool # Set builder to use
+			--check @bool # Check build configuration
+			--memory @bool # Set memory limit for the build container. Not supported by BuildKit.
+			--no-cache @bool # Do not use cache when building the image
+			--print @bool # Print equivalent bake file
+			--provenance @bool # Add a provenance attestation
+			--pull @bool # Always attempt to pull a newer version of the image
+			--push @bool # Push service images
+			--quiet @bool # Suppress the build output
+			--sbom @bool # Add a SBOM attestation
+			--ssh @bool # Set SSH authentications used when building service images. (use 'default' for using your default SSH Agent)
+			--with-dependencies @bool # Also build dependencies (transitively)
+		commit # Create a new image from a service container's changes
+			--dry-run @bool # Execute command in dry run mode
+			--author @bool # Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+			--change @bool # Apply Dockerfile instruction to the created image
+			--index @bool # index of the container if service has multiple replicas.
+			--message @bool # Commit message
+			--pause @bool # Pause container during commit
+		config # Parse, resolve and render compose file in canonical format
+			--dry-run @bool # Execute command in dry run mode
+			--environment @bool # Print environment used for interpolation.
+			--format @bool # Format the output. Values: [yaml | json]
+			--hash @bool # Print the service config hash, one per line.
+			--images @bool # Print the image names, one per line.
+			--lock-image-digests @bool # Produces an override file with image digests
+			--models @bool # Print the model names, one per line.
+			--networks @bool # Print the network names, one per line.
+			--no-consistency @bool # Don't check model consistency - warning: may produce invalid Compose output
+			--no-env-resolution @bool # Don't resolve service env files
+			--no-interpolate @bool # Don't interpolate environment variables
+			--no-normalize @bool # Don't normalize compose model
+			--no-path-resolution @bool # Don't resolve file paths
+			--output @bool # Save to file (default to stdout)
+			--profiles @bool # Print the profile names, one per line.
+			--quiet @bool # Only validate the configuration, don't print anything
+			--resolve-image-digests @bool # Pin image tags to digests
+			--services @bool # Print the service names, one per line.
+			--variables @bool # Print model variables and default values.
+			--volumes @bool # Print the volume names, one per line.
+		cp # Copy files/folders between a service container and the local filesystem
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Include containers created by the run command
+			--archive @bool # Archive mode (copy all uid/gid information)
+			--follow-link @bool # Always follow symbol link in SRC_PATH
+			--index @bool # Index of the container if service has multiple replicas
+		create # Creates containers for a service
+			--dry-run @bool # Execute command in dry run mode
+			--build @bool # Build images before starting containers
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed
+			--no-build @bool # Don't build an image, even if it's policy
+			--no-recreate @bool # If containers already exist, don't recreate them. Incompatible with --force-recreate.
+			--pull @bool # Pull image before running ("always"|"missing"|"never"|"build")
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--scale @bool # Scale SERVICE to NUM instances. Overrides the `scale` setting in the Compose file if present.
+			--yes @bool # Assume "yes" as answer to all prompts and run non-interactively
+		down # Stop and remove containers, networks
+			--dry-run @bool # Execute command in dry run mode
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--rmi @bool # Remove images used by services. "local" remove only images that don't have a custom tag ("local"|"all")
+			--timeout @bool # Specify a shutdown timeout in seconds
+			--volumes @bool # Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers
+		events # Receive real time events from containers
+			--dry-run @bool # Execute command in dry run mode
+			--json @bool # Output events as a stream of json objects
+			--since @bool # Show all events created since timestamp
+			--until @bool # Stream events until this timestamp
+		exec # Execute a command in a running container
+			--dry-run @bool # Execute command in dry run mode
+			--detach @bool # Detached mode: Run command in the background
+			--env @bool # Set environment variables
+			--index @bool # Index of the container if service has multiple replicas
+			--no-tty @bool # Disable pseudo-TTY allocation. By default 'docker compose exec' allocates a TTY.
+			--privileged @bool # Give extended privileges to the process
+			--user @bool # Run the command as this user
+			--workdir @bool # Path to workdir directory for this command
+		export # Export a service container's filesystem as a tar archive
+			--dry-run @bool # Execute command in dry run mode
+			--index @bool # index of the container if service has multiple replicas.
+			--output @bool # Write to a file, instead of STDOUT
+		images # List images used by the created containers
+			--dry-run @bool # Execute command in dry run mode
+			--format @bool # Format the output. Values: [table | json]
+			--quiet @bool # Only display IDs
+		kill # Force stop service containers
+			--dry-run @bool # Execute command in dry run mode
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--signal @bool # SIGNAL to send to the container
+		logs # View output from containers
+			--dry-run @bool # Execute command in dry run mode
+			--follow @bool # Follow log output
+			--index @bool # index of the container if service has multiple replicas
+			--no-color @bool # Produce monochrome output
+			--no-log-prefix @bool # Don't print prefix in logs
+			--since @bool # Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+			--tail @bool # Number of lines to show from the end of the logs for each container
+			--timestamps @bool # Show timestamps
+			--until @bool # Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+		ls # List running compose projects
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all stopped Compose projects
+			--filter @bool # Filter output based on conditions provided
+			--format @bool # Format the output. Values: [table | json]
+			--quiet @bool # Only display project names
+		pause # Pause services
+			--dry-run @bool # Execute command in dry run mode
+		port # Print the public port for a port binding
+			--dry-run @bool # Execute command in dry run mode
+			--index @bool # Index of the container if service has multiple replicas
+			--protocol @bool # tcp or udp
+		ps # List containers
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all stopped containers (including those created by the run command)
+			--filter @bool # Filter services by a property (supported filters: status)
+			--format @bool # Format output using a custom template:
+			--no-trunc @bool # Don't truncate output
+			--orphans @bool # Include orphaned services (not declared by project)
+			--quiet @bool # Only display IDs
+			--services @bool # Display services
+			--status @bool # Filter services by status. Values: [paused | restarting | removing | running | dead | created | exited]
+		publish # Publish compose application
+			--dry-run @bool # Execute command in dry run mode
+			--app @bool # Published compose application (includes referenced images)
+			--oci-version @bool # OCI image/artifact specification version (automatically determined by default)
+			--resolve-image-digests @bool # Pin image tags to digests
+			--with-env @bool # Include environment variables in the published OCI artifact
+			--yes @bool # Assume "yes" as answer to all prompts
+		pull # Pull service images
+			--dry-run @bool # Execute command in dry run mode
+			--ignore-buildable @bool # Ignore images that can be built
+			--ignore-pull-failures @bool # Pull what it can and ignores images with pull failures
+			--include-deps @bool # Also pull services declared as dependencies
+			--policy @bool # Apply pull policy ("missing"|"always")
+			--quiet @bool # Pull without printing progress information
+		push # Push service images
+			--dry-run @bool # Execute command in dry run mode
+			--ignore-push-failures @bool # Push what it can and ignores images with push failures
+			--include-deps @bool # Also push images of services declared as dependencies
+			--quiet @bool # Push without printing progress information
+		restart # Restart service containers
+			--dry-run @bool # Execute command in dry run mode
+			--no-deps @bool # Don't restart dependent services
+			--timeout @bool # Specify a shutdown timeout in seconds
+		rm # Removes stopped service containers
+			--dry-run @bool # Execute command in dry run mode
+			--force @bool # Don't ask to confirm removal
+			--stop @bool # Stop the containers, if required, before removing
+			--volumes @bool # Remove any anonymous volumes attached to containers
+		run # Run a one-off command on a service
+			--dry-run @bool # Execute command in dry run mode
+			--build @bool # Build image before starting container
+			--cap-add @bool # Add Linux capabilities
+			--cap-drop @bool # Drop Linux capabilities
+			--detach @bool # Run container in background and print container ID
+			--entrypoint @bool # Override the entrypoint of the image
+			--env @bool # Set environment variables
+			--env-from-file @bool # Set environment variables from file
+			--interactive @bool # Keep STDIN open even if not attached
+			--label @bool # Add or override a label
+			--name @bool # Assign a name to the container
+			--no-TTY @bool # Disable pseudo-TTY allocation (default: auto-detected)
+			--no-deps @bool # Don't start linked services
+			--publish @bool # Publish a container's port(s) to the host
+			--pull @bool # Pull image before running ("always"|"missing"|"never")
+			--quiet @bool # Don't print anything to STDOUT
+			--quiet-build @bool # Suppress progress output from the build process
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--rm @bool # Automatically remove the container when it exits
+			--service-ports @bool # Run command with all service's ports enabled and mapped to the host
+			--use-aliases @bool # Use the service's network useAliases in the network(s) the container connects to
+			--user @bool # Run as specified username or uid
+			--volume @bool # Bind mount a volume
+			--workdir @bool # Working directory inside the container
+		scale # Scale services
+			--dry-run @bool # Execute command in dry run mode
+			--no-deps @bool # Don't start linked services
+		start # Start services
+			--dry-run @bool # Execute command in dry run mode
+			--wait @bool # Wait for services to be running|healthy. Implies detached mode.
+			--wait-timeout @bool # Maximum duration in seconds to wait for the project to be running|healthy
+		stats # Display a live stream of container(s) resource usage statistics
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all containers (default shows just running)
+			--format @bool # Format output using a custom template:
+			--no-stream @bool # Disable streaming stats and only pull the first result
+			--no-trunc @bool # Do not truncate output
+		stop # Stop services
+			--dry-run @bool # Execute command in dry run mode
+			--timeout @bool # Specify a shutdown timeout in seconds
+		top # Display the running processes
+			--dry-run @bool # Execute command in dry run mode
+		unpause # Unpause services
+			--dry-run @bool # Execute command in dry run mode
+		up # Create and start containers
+			--dry-run @bool # Execute command in dry run mode
+			--abort-on-container-exit @bool # Stops all containers if any container was stopped. Incompatible with -d
+			--abort-on-container-failure @bool # Stops all containers if any container exited with failure. Incompatible with -d
+			--always-recreate-deps @bool # Recreate dependent containers. Incompatible with --no-recreate.
+			--attach @bool # Restrict attaching to the specified services. Incompatible with --attach-dependencies.
+			--attach-dependencies @bool # Automatically attach to log output of dependent services
+			--build @bool # Build images before starting containers
+			--detach @bool # Detached mode: Run containers in the background
+			--exit-code-from @bool # Return the exit code of the selected service container. Implies --abort-on-container-exit
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed
+			--menu @bool # Enable interactive shortcuts when running attached. Incompatible with --detach. Can also be enable/disable by setting COMPOSE_MENU environment var.
+			--no-attach @bool # Do not attach (stream logs) to the specified services
+			--no-build @bool # Don't build an image, even if it's policy
+			--no-color @bool # Produce monochrome output
+			--no-deps @bool # Don't start linked services
+			--no-log-prefix @bool # Don't print prefix in logs
+			--no-recreate @bool # If containers already exist, don't recreate them. Incompatible with --force-recreate.
+			--no-start @bool # Don't start the services after creating them
+			--pull @bool # Pull image before running ("always"|"missing"|"never")
+			--quiet-build @bool # Suppress the build output
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--renew-anon-volumes @bool # Recreate anonymous volumes instead of retrieving data from the previous containers
+			--scale @bool # Scale SERVICE to NUM instances. Overrides the `scale` setting in the Compose file if present.
+			--timeout @bool # Use this timeout in seconds for container shutdown when attached or when containers are already running
+			--timestamps @bool # Show timestamps
+			--wait @bool # Wait for services to be running|healthy. Implies detached mode.
+			--wait-timeout @bool # Maximum duration in seconds to wait for the project to be running|healthy
+			--watch @bool # Watch source code and rebuild/refresh containers when files are updated.
+			--yes @bool # Assume "yes" as answer to all prompts and run non-interactively
+		version # Show the Docker Compose version information
+			--dry-run @bool # Execute command in dry run mode
+			--format @bool # Format the output. Values: [pretty | json]. (Default: pretty)
+			--short @bool # Shows only Compose's version number
+		volumes # List volumes
+			--dry-run @bool # Execute command in dry run mode
+			--format @bool # Format output using a custom template:
+			--quiet @bool # Only display volume names
+		wait # Block until containers of all (or specified) services stop.
+			--dry-run @bool # Execute command in dry run mode
+			--down-project @bool # Drops project when the first container stops
+		watch # Watch build context for service and rebuild/refresh containers when files are updated
+			--dry-run @bool # Execute command in dry run mode
+			--no-up @bool # Do not build & start services before watching
+			--prune @bool # Prune dangling images on rebuild
+			--quiet @bool # hide build output
+	container # Manage containers
+		attach # Attach to a running container
+			--detach-keys # Select the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+			--no-stdin @bool # Do not attach STDIN. The default is false
+			--sig-proxy @bool # Proxy received signals to the process
+		checkpoint # Checkpoint one or more containers
+			--all @bool # Checkpoint all running containers
+			--compress # Select compression algorithm (gzip, none, zstd) for checkpoint archive.
+			--create-image # Create checkpoint image with specified name
+			--export # Export the checkpoint image to a tar.gz
+			--file-locks @bool # Checkpoint a container with file locks
+			--ignore-rootfs @bool # Do not include root file-system changes when exporting
+			--ignore-volumes @bool # Do not export volumes associated with container
+			--keep @bool # Keep all temporary checkpoint files
+			--leave-running @bool # Leave the container running after writing checkpoint to disk
+			--pre-checkpoint @bool # Dump container's memory information only, leave the container running
+			--print-stats @bool # Display checkpoint statistics
+			--tcp-established @bool # Checkpoint a container with established TCP connections
+			--with-previous @bool # Checkpoint container with pre-checkpoint images
+		clone # Clone an existing container
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit the CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--destroy @bool # destroy the original container
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--force @bool # force the existing container to be destroyed
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+			--name # Assign a name to the container
+			--pod # Run container in an existing pod
+			--run @bool # run the new container
+		commit # Create new image based on the changed container
+			--author # Set the author for the image committed
+			--change # Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR
+			--config # `file` containing a container configuration to merge into the image
+			--format # `Format` of the image manifest and metadata
+			--iidfile # `file` to write the image ID to
+			--include-volumes @bool # Include container volumes as image volumes
+			--message # Set commit message for imported image
+			--pause @bool # Pause container during commit
+			--quiet @bool # Suppress output
+			--squash @bool # squash newly built layers into a single new layer
+		cp # Copy files/folders between a container and the local filesystem
+			--archive @bool # Chown copied files to the primary uid/gid of the destination container.
+			--overwrite @bool # Allow to overwrite directories with non-directories and vice versa
+		create # Create but do not start a container
+			--add-host # Add a custom host-to-IP mapping (host:ip) (default [])
+			--annotation # Add annotations to container (key=value)
+			--arch # use `ARCH` instead of the architecture of the machine for choosing images
+			--attach # Attach to STDIN, STDOUT or STDERR
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cap-add # Add capabilities to the container
+			--cap-drop # Drop capabilities from the container
+			--cgroup-conf # Configure cgroup v2 (key=value)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # cgroup namespace to use
+			--cgroups # control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split")
+			--chrootdirs # Chroot directories inside the container
+			--cidfile # Write the container ID to the file
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit the CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--creds # `credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--device # Add a host device to the container
+			--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+			--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+			--dns # Set custom DNS servers
+			--dns-option # Set custom DNS options
+			--dns-search # Set custom DNS search domains
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env # Set environment variables in container
+			--env-file # Read in a file of environment variables
+			--env-merge # Preprocess environment variables from image before injecting them into the container
+			--expose # Expose a port or a range of ports
+			--gidmap # GID map to use for the user namespace
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+			--group-entry # Entry to write to /etc/group
+			--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+			--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup)
+			--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file)
+			--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+			--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+			--health-on-failure # action to take once the container turns unhealthy
+			--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+			--health-start-period # the initialization time needed for a container to bootstrap
+			--health-startup-cmd # Set a startup healthcheck command for the container
+			--health-startup-interval # Set an interval for the startup healthcheck.
+			--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+			--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+			--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+			--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+			--hostname # Set container hostname
+			--hosts-file # Base file to create the /etc/hosts file inside the container, or one of the special values. ("image"|"none")
+			--hostuser # Host user account to add to /etc/passwd within container
+			--http-proxy @bool # Set proxy environment variables in the container based on the host proxy vars
+			--image-volume # Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore")
+			--init @bool # Run an init binary inside the container that forwards signals and reaps processes
+			--init-ctr # Make this a pod init container.
+			--init-path # Path to the container-init binary
+			--interactive @bool # Make STDIN available to the contained process
+			--ip # Specify a static IPv4 address for the container
+			--ip6 # Specify a static IPv6 address for the container
+			--ipc # IPC namespace to use
+			--label # Set metadata on container
+			--label-file # Read in a line delimited file of labels
+			--log-driver # Logging driver for the container
+			--log-opt # Logging driver options
+			--mac-address # Container MAC address (e.g. 92:d0:c6:0a:29:33)
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--network # Connect a container to a network
+			--network-alias # Add network-scoped alias for the container
+			--no-healthcheck @bool # Disable healthchecks on container
+			--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+			--no-hosts @bool # Do not create /etc/hosts within the container, instead use the version from the image
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune the host's OOM preferences (-1000 to 1000)
+			--os # use `OS` instead of the running OS for choosing images
+			--passwd-entry # Entry to write to /etc/passwd
+			--personality # Configure execution domain using personality (e.g., LINUX/LINUX32)
+			--pid # PID namespace to use
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--platform # Specify the platform for selecting the image.  (Conflicts with --arch and --os)
+			--pod # Run container in an existing pod
+			--pod-id-file # Read the pod ID from the file
+			--privileged @bool # Give extended privileges to container
+			--publish # Publish a container's port, or a range of ports, to the host (default [])
+			--publish-all @bool # Publish all exposed ports to random ports on the host interface
+			--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+			--quiet @bool # Suppress output information when pulling images
+			--rdt-class # Class of Service (COS) that the container should be assigned to
+			--read-only @bool # Make containers root filesystem read-only
+			--read-only-tmpfs @bool # When running --read-only containers mount read-write tmpfs on /dev, /dev/shm, /run, /tmp and /var/tmp
+			--replace @bool # If a container with the same name exists, replace it
+			--requires # Add one or more requirement containers that must be started before this container will start
+			--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+			--retry # number of times to retry in case of failure when performing pull
+			--retry-delay # delay between retries in case of pull failures
+			--rm @bool # Remove container and any anonymous unnamed volume associated with the container after exit
+			--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+			--sdnotify # control sd-notify behavior ("container"|"conmon"|"healthy"|"ignore")
+			--seccomp-policy # Policy for selecting a seccomp profile (experimental)
+			--secret # Add secret to container
+			--security-opt # Security Options
+			--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--stop-signal # Signal to stop a container. Default is SIGTERM
+			--stop-timeout # Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL.
+			--subgidname # Name of range listed in /etc/subgid for use in user namespace
+			--subuidname # Name of range listed in /etc/subuid for use in user namespace
+			--sysctl # Sysctl options
+			--systemd # Run container in systemd mode ("true"|"false"|"always")
+			--timeout # Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries for pulling images
+			--tmpfs # Mount a temporary filesystem (`tmpfs`) into a container
+			--tty @bool # Allocate a pseudo-TTY for container
+			--tz # Set timezone in container
+			--uidmap # UID map to use for the user namespace
+			--ulimit # Ulimit options
+			--umask # Set umask in container
+			--unsetenv # Unset environment default variables in container
+			--unsetenv-all @bool # Unset all default environment variables in container
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--variant # Use `VARIANT` instead of the running architecture variant for choosing images
+			--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir # Working directory inside the container
+		diff # Inspect changes to the container's file systems
+			--format # Change the output format (json)
+		exec # Run a process in a running container
+			--cidfile # File to read the container ID from
+			--detach @bool # Run the exec session in detached mode (backgrounded)
+			--detach-keys # Select the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _
+			--env # Set environment variables
+			--env-file # Read in a file of environment variables
+			--interactive @bool # Make STDIN available to the contained process
+			--preserve-fd # Pass a list of additional file descriptors to the container
+			--privileged @bool # Give the process extended Linux capabilities inside the container.  The default is false
+			--tty @bool # Allocate a pseudo-TTY. The default is false
+			--user # Sets the username or UID used and optionally the groupname or GID for the specified command
+			--workdir # Working directory inside the container
+		exists # Check if a container exists in local storage
+			--external @bool # Check external storage containers as well as Podman containers
+		export # Export container's filesystem contents as a tar archive
+			--output # Write to a specified file (default: stdout, which must be redirected)
+		init # Initialize one or more containers
+			--all @bool # Initialize all containers
+		inspect # Display the configuration of a container
+			--format # Format the output to a Go template or json
+			--size @bool # Display total file size
+		kill # Kill one or more running containers with a specific signal
+			--all @bool # Signal all running containers
+			--cidfile # Read the container ID from the file
+			--signal # Signal to send to the container
+		list # List containers
+			--all @bool # Show all the containers, default is only running containers
+			--external @bool # Show containers in storage not controlled by Podman
+			--filter # Filter output based on conditions given
+			--format # Pretty-print containers to JSON or using a Go template
+			--last # Print the n last created containers (all states)
+			--no-trunc @bool # Display the extended information
+			--noheading @bool # Do not print headers
+			--ns @bool # Display namespace information
+			--pod @bool # Print the ID and name of the pod the containers are associated with
+			--quiet @bool # Print the numeric IDs of the containers only
+			--size @bool # Display the total file sizes
+			--sort # Sort output by: command, created, id, image, names, runningfor, size, status
+			--sync @bool # Sync container state with OCI runtime
+			--watch # Watch the ps output on an interval in seconds
+		logs # Fetch the logs of one or more containers
+			--color @bool # Output the containers with different colors in the log.
+			--follow @bool # Follow log output.  The default is false
+			--names @bool # Output the container name in the log
+			--since # Show logs since TIMESTAMP
+			--tail # Output the specified number of LINES at the end of the logs.  Defaults to -1, which prints all lines
+			--timestamps @bool # Output the timestamps in the log
+			--until # Show logs until TIMESTAMP
+		pause # Pause all the processes in one or more containers
+			--all @bool # Pause all running containers
+			--filter # Filter output based on conditions given
+		port # List port mappings or a specific mapping for the container
+			--all @bool # Display port information for all containers
+		prune # Remove all non running containers
+			--filter # Provide filter values (e.g. 'label=<key>=<value>')
+			--force @bool # Do not prompt for confirmation.  The default is false
+		ps # List containers
+			--all @bool # Show all the containers, default is only running containers
+			--external @bool # Show containers in storage not controlled by Podman
+			--filter # Filter output based on conditions given
+			--format # Pretty-print containers to JSON or using a Go template
+			--last # Print the n last created containers (all states)
+			--no-trunc @bool # Display the extended information
+			--noheading @bool # Do not print headers
+			--ns @bool # Display namespace information
+			--pod @bool # Print the ID and name of the pod the containers are associated with
+			--quiet @bool # Print the numeric IDs of the containers only
+			--size @bool # Display the total file sizes
+			--sort # Sort output by: command, created, id, image, names, runningfor, size, status
+			--sync @bool # Sync container state with OCI runtime
+			--watch # Watch the ps output on an interval in seconds
+		rename # Rename an existing container
+		restart # Restart one or more containers
+			--all @bool # Restart all non-running containers
+			--filter # Filter output based on conditions given
+			--running @bool # Restart only running containers
+			--time # Seconds to wait for stop before killing the container
+		restore # Restore one or more containers from a checkpoint
+			--all @bool # Restore all checkpointed containers
+			--file-locks @bool # Restore a container with file locks
+			--ignore-rootfs @bool # Do not apply root file-system changes when importing from exported checkpoint
+			--ignore-static-ip @bool # Ignore IP address set via --static-ip
+			--ignore-static-mac @bool # Ignore MAC address set via --mac-address
+			--ignore-volumes @bool # Do not export volumes associated with container
+			--import # Restore from exported checkpoint archive (tar.gz)
+			--import-previous # Restore from exported pre-checkpoint archive (tar.gz)
+			--keep @bool # Keep all temporary checkpoint files
+			--name # Specify new name for container restored from exported checkpoint (only works with image or --import)
+			--pod # Restore container into existing Pod (only works with image or --import)
+			--print-stats @bool # Display restore statistics
+			--publish # Publish a container's port, or a range of ports, to the host (default [])
+			--tcp-close @bool # Restore a container and close all TCP connections
+			--tcp-established @bool # Restore a container with established TCP connections
+		rm # Remove one or more containers
+			--all @bool # Remove all containers
+			--cidfile # Read the container ID from the file
+			--depend @bool # Remove container and all containers that depend on the selected container
+			--filter # Filter output based on conditions given
+			--force @bool # Force removal of a running or unusable container
+			--ignore @bool # Ignore errors when a specified container is missing
+			--time # Seconds to wait for stop before killing the container
+			--volumes @bool # Remove anonymous volumes associated with the container
+		run # Run a command in a new container
+			--add-host # Add a custom host-to-IP mapping (host:ip) (default [])
+			--annotation # Add annotations to container (key=value)
+			--arch # use `ARCH` instead of the architecture of the machine for choosing images
+			--attach # Attach to STDIN, STDOUT or STDERR
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cap-add # Add capabilities to the container
+			--cap-drop # Drop capabilities from the container
+			--cgroup-conf # Configure cgroup v2 (key=value)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # cgroup namespace to use
+			--cgroups # control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split")
+			--chrootdirs # Chroot directories inside the container
+			--cidfile # Write the container ID to the file
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit the CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--creds # `credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--detach @bool # Run container in background and print container ID
+			--detach-keys # Override the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-cf`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+			--device # Add a host device to the container
+			--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+			--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+			--dns # Set custom DNS servers
+			--dns-option # Set custom DNS options
+			--dns-search # Set custom DNS search domains
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env # Set environment variables in container
+			--env-file # Read in a file of environment variables
+			--env-merge # Preprocess environment variables from image before injecting them into the container
+			--expose # Expose a port or a range of ports
+			--gidmap # GID map to use for the user namespace
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+			--group-entry # Entry to write to /etc/group
+			--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+			--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup)
+			--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file)
+			--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+			--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+			--health-on-failure # action to take once the container turns unhealthy
+			--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+			--health-start-period # the initialization time needed for a container to bootstrap
+			--health-startup-cmd # Set a startup healthcheck command for the container
+			--health-startup-interval # Set an interval for the startup healthcheck.
+			--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+			--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+			--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+			--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+			--hostname # Set container hostname
+			--hosts-file # Base file to create the /etc/hosts file inside the container, or one of the special values. ("image"|"none")
+			--hostuser # Host user account to add to /etc/passwd within container
+			--http-proxy @bool # Set proxy environment variables in the container based on the host proxy vars
+			--image-volume # Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore")
+			--init @bool # Run an init binary inside the container that forwards signals and reaps processes
+			--init-path # Path to the container-init binary
+			--interactive @bool # Make STDIN available to the contained process
+			--ip # Specify a static IPv4 address for the container
+			--ip6 # Specify a static IPv6 address for the container
+			--ipc # IPC namespace to use
+			--label # Set metadata on container
+			--label-file # Read in a line delimited file of labels
+			--log-driver # Logging driver for the container
+			--log-opt # Logging driver options
+			--mac-address # Container MAC address (e.g. 92:d0:c6:0a:29:33)
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--network # Connect a container to a network
+			--network-alias # Add network-scoped alias for the container
+			--no-healthcheck @bool # Disable healthchecks on container
+			--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+			--no-hosts @bool # Do not create /etc/hosts within the container, instead use the version from the image
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune the host's OOM preferences (-1000 to 1000)
+			--os # use `OS` instead of the running OS for choosing images
+			--passwd @bool # add entries to /etc/passwd and /etc/group
+			--passwd-entry # Entry to write to /etc/passwd
+			--personality # Configure execution domain using personality (e.g., LINUX/LINUX32)
+			--pid # PID namespace to use
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--platform # Specify the platform for selecting the image.  (Conflicts with --arch and --os)
+			--pod # Run container in an existing pod
+			--pod-id-file # Read the pod ID from the file
+			--privileged @bool # Give extended privileges to container
+			--publish # Publish a container's port, or a range of ports, to the host (default [])
+			--publish-all @bool # Publish all exposed ports to random ports on the host interface
+			--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+			--quiet @bool # Suppress output information when pulling images
+			--rdt-class # Class of Service (COS) that the container should be assigned to
+			--read-only @bool # Make containers root filesystem read-only
+			--read-only-tmpfs @bool # When running --read-only containers mount read-write tmpfs on /dev, /dev/shm, /run, /tmp and /var/tmp
+			--replace @bool # If a container with the same name exists, replace it
+			--requires # Add one or more requirement containers that must be started before this container will start
+			--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+			--retry # number of times to retry in case of failure when performing pull
+			--retry-delay # delay between retries in case of pull failures
+			--rm @bool # Remove container and any anonymous unnamed volume associated with the container after exit
+			--rmi @bool # Remove image unless used by other containers, implies --rm
+			--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+			--sdnotify # control sd-notify behavior ("container"|"conmon"|"healthy"|"ignore")
+			--seccomp-policy # Policy for selecting a seccomp profile (experimental)
+			--secret # Add secret to container
+			--security-opt # Security Options
+			--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--sig-proxy @bool # Proxy received signals to the process
+			--stop-signal # Signal to stop a container. Default is SIGTERM
+			--stop-timeout # Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL.
+			--subgidname # Name of range listed in /etc/subgid for use in user namespace
+			--subuidname # Name of range listed in /etc/subuid for use in user namespace
+			--sysctl # Sysctl options
+			--systemd # Run container in systemd mode ("true"|"false"|"always")
+			--timeout # Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries for pulling images
+			--tmpfs # Mount a temporary filesystem (`tmpfs`) into a container
+			--tty @bool # Allocate a pseudo-TTY for container
+			--tz # Set timezone in container
+			--uidmap # UID map to use for the user namespace
+			--ulimit # Ulimit options
+			--umask # Set umask in container
+			--unsetenv # Unset environment default variables in container
+			--unsetenv-all @bool # Unset all default environment variables in container
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--variant # Use `VARIANT` instead of the running architecture variant for choosing images
+			--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir # Working directory inside the container
+		start # Start one or more containers
+			--all @bool # Start all containers regardless of their state or configuration
+			--attach @bool # Attach container's STDOUT and STDERR
+			--detach-keys # Select the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+			--filter # Filter output based on conditions given
+			--interactive @bool # Make STDIN available to the contained process
+		stats # Display a live stream of container resource usage statistics
+			--all @bool # Show all containers. Only running containers are shown by default. The default is false
+			--format # Pretty-print container statistics to JSON or using a Go template
+			--interval # Time in seconds between stats reports
+			--no-reset @bool # Disable resetting the screen between intervals
+			--no-stream @bool # Disable streaming stats and only pull the first result, default setting is false
+			--no-trunc @bool # Do not truncate output
+		stop # Stop one or more containers
+			--all @bool # Stop all running containers
+			--filter # Filter output based on conditions given
+			--time # Seconds to wait for stop before killing the container
+		top # Display the running processes of a container
+		unpause # Unpause the processes in one or more containers
+			--all @bool # Unpause all paused containers
+			--filter # Filter output based on conditions given
+		update # Update an existing container
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit the CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+			--env # Set environment variables in container
+			--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+			--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup) Changing this setting resets timer.
+			--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file) Warning: Changing this setting may cause the loss of previous logs!
+			--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+			--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+			--health-on-failure # action to take once the container turns unhealthy
+			--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+			--health-start-period # the initialization time needed for a container to bootstrap
+			--health-startup-cmd # Set a startup healthcheck command for the container
+			--health-startup-interval # Set an interval for the startup healthcheck. Changing this setting resets the timer, depending on the state of the container.
+			--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+			--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+			--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+			--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+			--no-healthcheck @bool # Disable healthchecks on container
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+			--ulimit # Ulimit options
+			--unsetenv # Unset environment default variables in container
+		wait # Block on one or more containers
+			--condition # Condition to wait on
+			--exit-first-match @bool # Wait for exit of first container which matches conditions, ignore other ones
+			--ignore @bool # Ignore if a container does not exist
+			--interval # Time Interval to wait before polling for completion
+	cp # Copy files/folders between a container and the local filesystem
+		--archive @bool # Chown copied files to the primary uid/gid of the destination container.
+		--overwrite @bool # Allow to overwrite directories with non-directories and vice versa
+	create # Create but do not start a container
+		--add-host # Add a custom host-to-IP mapping (host:ip) (default [])
+		--annotation # Add annotations to container (key=value)
+		--arch # use `ARCH` instead of the architecture of the machine for choosing images
+		--attach # Attach to STDIN, STDOUT or STDERR
+		--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+		--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+		--cap-add # Add capabilities to the container
+		--cap-drop # Drop capabilities from the container
+		--cgroup-conf # Configure cgroup v2 (key=value)
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # cgroup namespace to use
+		--cgroups # control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split")
+		--chrootdirs # Chroot directories inside the container
+		--cidfile # Write the container ID to the file
+		--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit the CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs. The default is 0.000 which means no limit
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+		--creds # `credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+		--device # Add a host device to the container
+		--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+		--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+		--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+		--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+		--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+		--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+		--dns # Set custom DNS servers
+		--dns-option # Set custom DNS options
+		--dns-search # Set custom DNS search domains
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env # Set environment variables in container
+		--env-file # Read in a file of environment variables
+		--env-merge # Preprocess environment variables from image before injecting them into the container
+		--expose # Expose a port or a range of ports
+		--gidmap # GID map to use for the user namespace
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+		--group-entry # Entry to write to /etc/group
+		--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+		--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup)
+		--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file)
+		--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+		--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+		--health-on-failure # action to take once the container turns unhealthy
+		--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+		--health-start-period # the initialization time needed for a container to bootstrap
+		--health-startup-cmd # Set a startup healthcheck command for the container
+		--health-startup-interval # Set an interval for the startup healthcheck.
+		--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+		--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+		--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+		--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+		--hostname # Set container hostname
+		--hosts-file # Base file to create the /etc/hosts file inside the container, or one of the special values. ("image"|"none")
+		--hostuser # Host user account to add to /etc/passwd within container
+		--http-proxy @bool # Set proxy environment variables in the container based on the host proxy vars
+		--image-volume # Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore")
+		--init @bool # Run an init binary inside the container that forwards signals and reaps processes
+		--init-ctr # Make this a pod init container.
+		--init-path # Path to the container-init binary
+		--interactive @bool # Make STDIN available to the contained process
+		--ip # Specify a static IPv4 address for the container
+		--ip6 # Specify a static IPv6 address for the container
+		--ipc # IPC namespace to use
+		--label # Set metadata on container
+		--label-file # Read in a line delimited file of labels
+		--log-driver # Logging driver for the container
+		--log-opt # Logging driver options
+		--mac-address # Container MAC address (e.g. 92:d0:c6:0a:29:33)
+		--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--network # Connect a container to a network
+		--network-alias # Add network-scoped alias for the container
+		--no-healthcheck @bool # Disable healthchecks on container
+		--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+		--no-hosts @bool # Do not create /etc/hosts within the container, instead use the version from the image
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune the host's OOM preferences (-1000 to 1000)
+		--os # use `OS` instead of the running OS for choosing images
+		--passwd-entry # Entry to write to /etc/passwd
+		--personality # Configure execution domain using personality (e.g., LINUX/LINUX32)
+		--pid # PID namespace to use
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--platform # Specify the platform for selecting the image.  (Conflicts with --arch and --os)
+		--pod # Run container in an existing pod
+		--pod-id-file # Read the pod ID from the file
+		--privileged @bool # Give extended privileges to container
+		--publish # Publish a container's port, or a range of ports, to the host (default [])
+		--publish-all @bool # Publish all exposed ports to random ports on the host interface
+		--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+		--quiet @bool # Suppress output information when pulling images
+		--rdt-class # Class of Service (COS) that the container should be assigned to
+		--read-only @bool # Make containers root filesystem read-only
+		--read-only-tmpfs @bool # When running --read-only containers mount read-write tmpfs on /dev, /dev/shm, /run, /tmp and /var/tmp
+		--replace @bool # If a container with the same name exists, replace it
+		--requires # Add one or more requirement containers that must be started before this container will start
+		--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+		--retry # number of times to retry in case of failure when performing pull
+		--retry-delay # delay between retries in case of pull failures
+		--rm @bool # Remove container and any anonymous unnamed volume associated with the container after exit
+		--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+		--sdnotify # control sd-notify behavior ("container"|"conmon"|"healthy"|"ignore")
+		--seccomp-policy # Policy for selecting a seccomp profile (experimental)
+		--secret # Add secret to container
+		--security-opt # Security Options
+		--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--stop-signal # Signal to stop a container. Default is SIGTERM
+		--stop-timeout # Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL.
+		--subgidname # Name of range listed in /etc/subgid for use in user namespace
+		--subuidname # Name of range listed in /etc/subuid for use in user namespace
+		--sysctl # Sysctl options
+		--systemd # Run container in systemd mode ("true"|"false"|"always")
+		--timeout # Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries for pulling images
+		--tmpfs # Mount a temporary filesystem (`tmpfs`) into a container
+		--tty @bool # Allocate a pseudo-TTY for container
+		--tz # Set timezone in container
+		--uidmap # UID map to use for the user namespace
+		--ulimit # Ulimit options
+		--umask # Set umask in container
+		--unsetenv # Unset environment default variables in container
+		--unsetenv-all @bool # Unset all default environment variables in container
+		--user # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # User namespace to use
+		--uts # UTS namespace to use
+		--variant # Use `VARIANT` instead of the running architecture variant for choosing images
+		--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir # Working directory inside the container
+	diff # Display the changes to the object's file system
+		--format # Change the output format (json)
+	events # Show podman system events
+		--filter # filter output
+		--format # format the output using a Go template
+		--no-trunc @bool # do not truncate the output
+		--since # show all events created since timestamp
+		--stream @bool # stream events and do not exit when returning the last known event
+		--until # show all events until timestamp
+	exec # Run a process in a running container
+		--cidfile # File to read the container ID from
+		--detach @bool # Run the exec session in detached mode (backgrounded)
+		--detach-keys # Select the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _
+		--env # Set environment variables
+		--env-file # Read in a file of environment variables
+		--interactive @bool # Make STDIN available to the contained process
+		--preserve-fd # Pass a list of additional file descriptors to the container
+		--privileged @bool # Give the process extended Linux capabilities inside the container.  The default is false
+		--tty @bool # Allocate a pseudo-TTY. The default is false
+		--user # Sets the username or UID used and optionally the groupname or GID for the specified command
+		--workdir # Working directory inside the container
+	export # Export container's filesystem contents as a tar archive
+		--output # Write to a specified file (default: stdout, which must be redirected)
+	farm # Farm out builds to remote machines
+		build # Build a container image for multiple architectures
+			--add-host # add a custom host-to-IP mapping (`host:ip`) (default [])
+			--annotation # set metadata for an image (default [])
+			--authfile # path of the authentication file.
+			--build-arg # `argument=value` to supply to the builder
+			--build-arg-file # `argfile.conf` containing lines of argument=value to supply to the builder
+			--build-context # `argument=value` to supply additional build context to the builder
+			--cache-from # remote repository list to utilise as potential cache source.
+			--cache-to # remote repository list to utilise as potential cache destination.
+			--cache-ttl # only consider cache images under specified duration.
+			--cap-add # add the specified capability when running (default [])
+			--cap-drop # drop the specified capability when running (default [])
+			--cert-dir # use certificates at the specified path to access the registry
+			--cgroup-parent # optional parent cgroup for the container
+			--cgroupns # 'private', or 'host'
+			--cleanup @bool # Remove built images from farm nodes on success
+			--compat-volumes @bool # preserve the contents of VOLUMEs during RUN instructions
+			--cpp-flag # set additional flag to pass to C preprocessor (cpp)
+			--cpu-period # limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-shares # CPU shares (relative weight)
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--created-annotation @bool # set an "org.opencontainers.image.created" annotation in the image
+			--creds # use `[username[:password]]` for accessing the registry
+			--decryption-key # key needed to decrypt the image
+			--device # additional devices to provide
+			--disable-compression @bool # don't compress layers by default
+			--dns # set custom DNS servers or disable it completely by setting it to 'none', which prevents the automatic creation of `/etc/resolv.conf`.
+			--dns-option # set custom DNS options
+			--dns-search # set custom DNS search domains
+			--env # set environment variable for the image
+			--farm # Farm to use for builds
+			--file @bool # `pathname or URL` of a Dockerfile
+			--force-rm @bool # always remove intermediate containers after a build, even if the build is unsuccessful.
+			--format # `format` of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override.
+			--from # image name used to replace the value in the first FROM instruction in the Containerfile
+			--group-add # add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+			--hooks-dir # set the OCI hooks directory path (may be set multiple times)
+			--http-proxy @bool # pass through HTTP Proxy environment variables
+			--identity-label @bool # add default identity label
+			--ignorefile # path to an alternate .dockerignore file
+			--iidfile # `file` to write the image ID to
+			--inherit-annotations @bool # inherit the annotations from the base image or base stages.
+			--inherit-labels @bool # inherit the labels from the base image or base stages.
+			--ipc # 'private', `path` of IPC namespace to join, or 'host'
+			--isolation # `type` of process isolation to use. Use BUILDAH_ISOLATION environment variable to override.
+			--jobs # how many stages to run in parallel
+			--label # set metadata for an image (default [])
+			--layer-label # set metadata for an intermediate image (default [])
+			--layers @bool # use intermediate layers during build. Use BUILDAH_LAYERS environment variable to override.
+			--local @bool # Build image on local machine as well as on farm nodes
+			--logfile # log to `file` instead of stdout/stderr
+			--memory # memory limit (format: <number>[<unit>], where unit = b, k, m or g)
+			--memory-swap # swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--network # 'private', 'none', 'ns:path' of network namespace to join, or 'host'
+			--no-cache @bool # do not use existing cached images for the container build. Build from the start with a new set of cached layers.
+			--no-hostname @bool # do not create new /etc/hostname file for RUN instructions, use the one from the base image.
+			--no-hosts @bool # do not create new /etc/hosts file for RUN instructions, use the one from the base image.
+			--omit-history @bool # omit build history information from built image
+			--os-feature # set required OS `feature` for the target image in addition to values from the base image
+			--os-version # set required OS `version` for the target image instead of the value from the base image
+			--pid # private, `path` of PID namespace to join, or 'host'
+			--platforms # Build only on farm nodes that match the given platforms
+			--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+			--quiet @bool # refrain from announcing build instructions and image read/write progress
+			--retry # number of times to retry in case of failure when performing push/pull
+			--retry-delay # delay between retries in case of push/pull failures
+			--rewrite-timestamp @bool # set timestamps in layers to no later than the value for --source-date-epoch
+			--rm @bool # remove intermediate containers after a successful build
+			--runtime-flag # add global flags for the container runtime
+			--sbom # scan working container using `preset` configuration
+			--sbom-image-output # add scan results to image as `path`
+			--sbom-image-purl-output # add scan results to image as `path`
+			--sbom-merge-strategy # merge scan results using `strategy`
+			--sbom-output # save scan results to `file`
+			--sbom-purl-output # save scan results to `file``
+			--sbom-scanner-command # scan working container using `command` in scanner image
+			--sbom-scanner-image # scan working container using scanner command from `image`
+			--secret # secret file to expose to the build
+			--security-opt # security options (default [])
+			--shm-size # size of '/dev/shm'. The format is `<number><unit>`.
+			--skip-unused-stages @bool # skips stages in multi-stage builds which do not affect the final target
+			--source-date-epoch # set new timestamps in image info to `seconds` after the epoch, defaults to current time
+			--squash @bool # squash all image layers into a single layer
+			--squash-all @bool # Squash all layers into a single layer
+			--ssh # SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])
+			--tag # tagged `name` to apply to the built image
+			--target # set the target build stage to build
+			--timestamp # set new timestamps in image info and layer to `seconds` after the epoch, defaults to current times
+			--tls-verify @bool # require HTTPS and verify certificates when accessing the registry
+			--ulimit # ulimit options
+			--unsetannotation # unset annotation when inheriting annotations from base image
+			--unsetenv # unset environment variable from final image
+			--unsetlabel # unset label when inheriting labels from base image
+			--userns # 'container', `path` of user namespace to join, or 'host'
+			--userns-gid-map # `containerGID:hostGID:length` GID mapping to use in user namespace
+			--userns-gid-map-group # `name` of entries from /etc/subgid to use to set user namespace GID mapping
+			--userns-uid-map # `containerUID:hostUID:length` UID mapping to use in user namespace
+			--userns-uid-map-user # `name` of entries from /etc/subuid to use to set user namespace UID mapping
+			--uts # private, :`path` of UTS namespace to join, or 'host'
+			--volume # bind mount a volume into the container
+		create # Create a new farm
+		list # List all existing farms
+			--format # Format farm output using Go template
+		remove # Remove one or more farms
+			--all @bool # Remove all farms
+		update # Update an existing farm
+			--add # add system connection(s) to farm
+			--default @bool # set the given farm as the default farm
+			--remove # remove system connection(s) from farm
+	generate # Generate structured data based on containers, pods or volumes
+		kube # Generate Kubernetes YAML from containers, pods or volumes.
+			--filename # Write output to the specified path
+			--podman-only @bool # Add podman-only reserved annotations to the generated YAML file (Cannot be used by Kubernetes)
+			--replicas # Set the replicas number for Deployment kind
+			--service @bool # Generate YAML for a Kubernetes service object
+			--type # Generate YAML for the given Kubernetes kind
+		spec # Generate Specgen JSON based on containers or pods
+			--compact @bool # Print the json in a compact format for consumption
+			--filename # Write output to the specified path
+			--name @bool # Specify a new name for the generated spec
+		systemd # [DEPRECATED] Generate systemd units
+			--after # Add dependencies order to the generated unit file
+			--container-prefix # Systemd unit name prefix for containers
+			--env # Set environment variables to the systemd unit files
+			--files @bool # Generate .service files instead of printing to stdout
+			--format # Print the created units in specified format (json)
+			--name @bool # Use container/pod names instead of IDs
+			--new @bool # Create a new container or pod instead of starting an existing one
+			--no-header @bool # Skip header generation
+			--pod-prefix # Systemd unit name prefix for pods
+			--requires # Similar to wants, but declares stronger requirement dependencies
+			--restart-policy # Systemd restart-policy
+			--restart-sec # Systemd restart-sec
+			--separator # Systemd unit name separator between name/id and prefix
+			--start-timeout # Start timeout override
+			--stop-timeout # Stop timeout override
+			--template @bool # Make it a template file and use %i and %I specifiers. Working only for containers
+			--wants # Add (weak) requirement dependencies to the generated unit file
+	healthcheck # Manage health checks on containers
+		run # Run the health check of a container
+	help # Help about any command
+		artifact # Manage OCI artifacts
+			add # Add an OCI artifact to the local store
+			extract # Extract an OCI artifact to a local path
+			inspect # Inspect an OCI artifact
+			ls # List OCI artifacts
+			pull # Pull an OCI artifact
+			push # Push an OCI artifact
+			rm # Remove one or more OCI artifacts
+		attach # Attach to a running container
+		build # Build an image using instructions from Containerfiles
+		commit # Create new image based on the changed container
+		compose # Run compose workloads via an external provider such as docker-compose or podman-compose
+		container # Manage containers
+			attach # Attach to a running container
+			checkpoint # Checkpoint one or more containers
+			clone # Clone an existing container
+			commit # Create new image based on the changed container
+			cp # Copy files/folders between a container and the local filesystem
+			create # Create but do not start a container
+			diff # Inspect changes to the container's file systems
+			exec # Run a process in a running container
+			exists # Check if a container exists in local storage
+			export # Export container's filesystem contents as a tar archive
+			init # Initialize one or more containers
+			inspect # Display the configuration of a container
+			kill # Kill one or more running containers with a specific signal
+			list # List containers
+			logs # Fetch the logs of one or more containers
+			pause # Pause all the processes in one or more containers
+			port # List port mappings or a specific mapping for the container
+			prune # Remove all non running containers
+			ps # List containers
+			rename # Rename an existing container
+			restart # Restart one or more containers
+			restore # Restore one or more containers from a checkpoint
+			rm # Remove one or more containers
+			run # Run a command in a new container
+			start # Start one or more containers
+			stats # Display a live stream of container resource usage statistics
+			stop # Stop one or more containers
+			top # Display the running processes of a container
+			unpause # Unpause the processes in one or more containers
+			update # Update an existing container
+			wait # Block on one or more containers
+		cp # Copy files/folders between a container and the local filesystem
+		create # Create but do not start a container
+		diff # Display the changes to the object's file system
+		events # Show podman system events
+		exec # Run a process in a running container
+		export # Export container's filesystem contents as a tar archive
+		farm # Farm out builds to remote machines
+			build # Build a container image for multiple architectures
+			create # Create a new farm
+			list # List all existing farms
+			remove # Remove one or more farms
+			update # Update an existing farm
+		generate # Generate structured data based on containers, pods or volumes
+			kube # Generate Kubernetes YAML from containers, pods or volumes.
+			spec # Generate Specgen JSON based on containers or pods
+			systemd # [DEPRECATED] Generate systemd units
+		healthcheck # Manage health checks on containers
+			run # Run the health check of a container
+		help # Help about any command
+		history # Show history of a specified image
+		image # Manage images
+			build # Build an image using instructions from Containerfiles
+			diff # Inspect changes to the image's file systems
+			exists # Check if an image exists in local storage
+			history # Show history of a specified image
+			import # Import a tarball to create a filesystem image
+			inspect # Display the configuration of an image
+			list # List images in local storage
+			load # Load image(s) from a tar archive
+			prune # Remove unused images
+			pull # Pull an image from a registry
+			push # Push an image to a specified destination
+			rm # Remove one or more images from local storage
+			save # Save image(s) to an archive
+			scp # Securely copy images
+			search # Search registry for image
+			tag # Add an additional name to a local image
+			tree # Print layer hierarchy of an image in a tree format
+			untag # Remove a name from a local image
+		images # List images in local storage
+		import # Import a tarball to create a filesystem image
+		info # Display podman system information
+		init # Initialize one or more containers
+		inspect # Display the configuration of object denoted by ID
+		kill # Kill one or more running containers with a specific signal
+		kube # Play containers, pods or volumes from a structured file
+			apply # Deploy a podman container, pod, volume, or Kubernetes yaml to a Kubernetes cluster
+			down # Remove pods based on Kubernetes YAML
+			generate # Generate Kubernetes YAML from containers, pods or volumes.
+			play # Play a pod or volume based on Kubernetes YAML
+		load # Load image(s) from a tar archive
+		login # Log in to a container registry
+		logout # Log out of a container registry
+		logs # Fetch the logs of one or more containers
+		machine # Manage a virtual machine
+			cp # Securely copy contents between the virtual machine
+			info # Display machine host info
+			init # Initialize a virtual machine
+			inspect # Inspect an existing machine
+			list # List machines
+			os # Manage a Podman virtual machine's OS
+				apply # Apply an OCI image to a Podman Machine's OS
+			reset # Remove all machines
+			rm # Remove an existing machine
+			set # Set a virtual machine setting
+			ssh # SSH into an existing machine
+			start # Start an existing machine
+			stop # Stop an existing machine
+		manifest # Manipulate manifest lists and image indexes
+			add # Add images or artifacts to a manifest list or image index
+			annotate # Add or update information about an entry in a manifest list or image index
+			create # Create manifest list or image index
+			exists # Check if a manifest list exists in local storage
+			inspect # Display the contents of a manifest list or image index
+			push # Push a manifest list or image index to a registry
+			remove # Remove an item from a manifest list or image index
+			rm # Remove manifest list or image index from local storage
+		network # Manage networks
+			connect # Add container to a network
+			create # Create networks for containers and pods
+			disconnect # Disconnect a container from a network
+			exists # Check if network exists
+			inspect # Inspect network
+			ls # List networks
+			prune # Prune unused networks
+			rm # Remove networks
+			update # Update an existing podman network
+		pause # Pause all the processes in one or more containers
+		pod # Manage pods
+			clone # Clone an existing pod
+			create # Create a new empty pod
+			exists # Check if a pod exists in local storage
+			inspect # Display a pod configuration
+			kill # Send the specified signal or SIGKILL to containers in pod
+			logs # Fetch logs for pod with one or more containers
+			pause # Pause one or more pods
+			prune # Remove all stopped pods and their containers
+			ps # List pods
+			restart # Restart one or more pods
+			rm # Remove one or more pods
+			start # Start one or more pods
+			stats # Display a live stream of resource usage statistics for the containers in one or more pods
+			stop # Stop one or more pods
+			top # Display the running processes of containers in a pod
+			unpause # Unpause one or more pods
+		port # List port mappings or a specific mapping for the container
+		ps # List containers
+		pull # Pull an image from a registry
+		push # Push an image to a specified destination
+		quadlet # Allows users to manage Quadlets
+			install # Install a quadlet file or quadlet application
+			list # List Quadlets
+			print # Display the contents of a quadlet
+			rm # Remove Quadlets
+		rename # Rename an existing container
+		restart # Restart one or more containers
+		rm # Remove one or more containers
+		rmi # Remove one or more images from local storage
+		run # Run a command in a new container
+		save # Save image(s) to an archive
+		search # Search registry for image
+		secret # Manage secrets
+			create # Create a new secret
+			exists # Check if a secret exists in local storage
+			inspect # Inspect a secret
+			ls # List secrets
+			rm # Remove one or more secrets
+		start # Start one or more containers
+		stats # Display a live stream of container resource usage statistics
+		stop # Stop one or more containers
+		system # Manage podman
+			check # Check storage consistency
+			connection # Manage remote API service destinations
+				add # Record destination for the Podman service
+				default # Set named destination as default
+				list # List destination for the Podman service(s)
+				remove # Delete named destination
+				rename # Rename "old" to "new"
+			df # Show podman disk usage
+			events # Show podman system events
+			info # Display podman system information
+			prune # Remove unused data
+		tag # Add an additional name to a local image
+		top # Display the running processes of a container
+		unpause # Unpause the processes in one or more containers
+		untag # Remove a name from a local image
+		update # Update an existing container
+		version # Display the Podman version information
+		volume # Manage volumes
+			create # Create a new volume
+			exists # Check if volume exists
+			export # Export volumes
+			import # Import a tarball contents into a podman volume
+			inspect # Display detailed information on one or more volumes
+			ls # List volumes
+			prune # Remove all unused volumes
+			reload # Reload all volumes from volume plugins
+			rm # Remove one or more volumes
+		wait # Block on one or more containers
+	history # Show history of a specified image
+		--format # Change the output to JSON or a Go template
+		--human @bool # Display sizes and dates in human readable format
+		--no-trunc @bool # Do not truncate the output
+		--quiet @bool # Display the numeric IDs only
+	image # Manage images
+		build # Build an image using instructions from Containerfiles
+			--add-host # add a custom host-to-IP mapping (`host:ip`) (default [])
+			--all-platforms @bool # attempt to build for all base image platforms
+			--annotation # set metadata for an image (default [])
+			--arch # set the ARCH of the image to the provided value instead of the architecture of the host
+			--authfile # path of the authentication file.
+			--build-arg # `argument=value` to supply to the builder
+			--build-arg-file # `argfile.conf` containing lines of argument=value to supply to the builder
+			--build-context # `argument=value` to supply additional build context to the builder
+			--cache-from # remote repository list to utilise as potential cache source.
+			--cache-to # remote repository list to utilise as potential cache destination.
+			--cache-ttl # only consider cache images under specified duration.
+			--cap-add # add the specified capability when running (default [])
+			--cap-drop # drop the specified capability when running (default [])
+			--cert-dir # use certificates at the specified path to access the registry
+			--cgroup-parent # optional parent cgroup for the container
+			--cgroupns # 'private', or 'host'
+			--compat-volumes @bool # preserve the contents of VOLUMEs during RUN instructions
+			--cpp-flag # set additional flag to pass to C preprocessor (cpp)
+			--cpu-period # limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-shares # CPU shares (relative weight)
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--created-annotation @bool # set an "org.opencontainers.image.created" annotation in the image
+			--creds # use `[username[:password]]` for accessing the registry
+			--decryption-key # key needed to decrypt the image
+			--device # additional devices to provide
+			--disable-compression @bool # don't compress layers by default
+			--dns # set custom DNS servers or disable it completely by setting it to 'none', which prevents the automatic creation of `/etc/resolv.conf`.
+			--dns-option # set custom DNS options
+			--dns-search # set custom DNS search domains
+			--env # set environment variable for the image
+			--file @bool # `pathname or URL` of a Dockerfile
+			--force-rm @bool # always remove intermediate containers after a build, even if the build is unsuccessful.
+			--format # `format` of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override.
+			--from # image name used to replace the value in the first FROM instruction in the Containerfile
+			--group-add # add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+			--hooks-dir # set the OCI hooks directory path (may be set multiple times)
+			--http-proxy @bool # pass through HTTP Proxy environment variables
+			--identity-label @bool # add default identity label
+			--ignorefile # path to an alternate .dockerignore file
+			--iidfile # `file` to write the image ID to
+			--inherit-annotations @bool # inherit the annotations from the base image or base stages.
+			--inherit-labels @bool # inherit the labels from the base image or base stages.
+			--ipc # 'private', `path` of IPC namespace to join, or 'host'
+			--isolation # `type` of process isolation to use. Use BUILDAH_ISOLATION environment variable to override.
+			--jobs # how many stages to run in parallel
+			--label # set metadata for an image (default [])
+			--layer-label # set metadata for an intermediate image (default [])
+			--layers @bool # use intermediate layers during build. Use BUILDAH_LAYERS environment variable to override.
+			--logfile # log to `file` instead of stdout/stderr
+			--manifest # add the image to the specified manifest list. Creates manifest list if it does not exist
+			--memory # memory limit (format: <number>[<unit>], where unit = b, k, m or g)
+			--memory-swap # swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--network # 'private', 'none', 'ns:path' of network namespace to join, or 'host'
+			--no-cache @bool # do not use existing cached images for the container build. Build from the start with a new set of cached layers.
+			--no-hostname @bool # do not create new /etc/hostname file for RUN instructions, use the one from the base image.
+			--no-hosts @bool # do not create new /etc/hosts file for RUN instructions, use the one from the base image.
+			--omit-history @bool # omit build history information from built image
+			--os # set the OS to the provided value instead of the current operating system of the host
+			--os-feature # set required OS `feature` for the target image in addition to values from the base image
+			--os-version # set required OS `version` for the target image instead of the value from the base image
+			--pid # private, `path` of PID namespace to join, or 'host'
+			--platform # set the `OS/ARCH[/VARIANT]` of the image to the provided value instead of the current operating system and architecture of the host (for example "linux/arm")
+			--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+			--quiet @bool # refrain from announcing build instructions and image read/write progress
+			--retry # number of times to retry in case of failure when performing push/pull
+			--retry-delay # delay between retries in case of push/pull failures
+			--rewrite-timestamp @bool # set timestamps in layers to no later than the value for --source-date-epoch
+			--rm @bool # remove intermediate containers after a successful build
+			--runtime-flag # add global flags for the container runtime
+			--sbom # scan working container using `preset` configuration
+			--sbom-image-output # add scan results to image as `path`
+			--sbom-image-purl-output # add scan results to image as `path`
+			--sbom-merge-strategy # merge scan results using `strategy`
+			--sbom-output # save scan results to `file`
+			--sbom-purl-output # save scan results to `file``
+			--sbom-scanner-command # scan working container using `command` in scanner image
+			--sbom-scanner-image # scan working container using scanner command from `image`
+			--secret # secret file to expose to the build
+			--security-opt # security options (default [])
+			--shm-size # size of '/dev/shm'. The format is `<number><unit>`.
+			--skip-unused-stages @bool # skips stages in multi-stage builds which do not affect the final target
+			--source-date-epoch # set new timestamps in image info to `seconds` after the epoch, defaults to current time
+			--squash @bool # squash all image layers into a single layer
+			--squash-all @bool # Squash all layers into a single layer
+			--ssh # SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])
+			--stdin @bool # pass stdin into containers
+			--tag # tagged `name` to apply to the built image
+			--target # set the target build stage to build
+			--timestamp # set new timestamps in image info and layer to `seconds` after the epoch, defaults to current times
+			--ulimit # ulimit options
+			--unsetannotation # unset annotation when inheriting annotations from base image
+			--unsetenv # unset environment variable from final image
+			--unsetlabel # unset label when inheriting labels from base image
+			--userns # 'container', `path` of user namespace to join, or 'host'
+			--userns-gid-map # `containerGID:hostGID:length` GID mapping to use in user namespace
+			--userns-gid-map-group # `name` of entries from /etc/subgid to use to set user namespace GID mapping
+			--userns-uid-map # `containerUID:hostUID:length` UID mapping to use in user namespace
+			--userns-uid-map-user # `name` of entries from /etc/subuid to use to set user namespace UID mapping
+			--uts # private, :`path` of UTS namespace to join, or 'host'
+			--variant # override the `variant` of the specified image
+			--volume # bind mount a volume into the container
+		diff # Inspect changes to the image's file systems
+			--format # Change the output format (json)
+		exists # Check if an image exists in local storage
+		history # Show history of a specified image
+			--format # Change the output to JSON or a Go template
+			--human @bool # Display sizes and dates in human readable format
+			--no-trunc @bool # Do not truncate the output
+			--quiet @bool # Display the numeric IDs only
+		import # Import a tarball to create a filesystem image
+			--arch # Set the architecture of the imported image
+			--change # Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR
+			--message # Set commit message for imported image
+			--os # Set the OS of the imported image
+			--quiet @bool # Suppress output
+			--variant # Set the variant of the imported image
+		inspect # Display the configuration of an image
+			--format # Format the output to a Go template or json
+		list # List images in local storage
+			--all @bool # Show all images (default hides intermediate images)
+			--digests @bool # Show digests
+			--filter # Filter output based on conditions provided (default [])
+			--format # Change the output format to JSON or a Go template
+			--history @bool # Display the image name history
+			--no-trunc @bool # Do not truncate output
+			--noheading @bool # Do not print column headings
+			--quiet @bool # Display only image IDs
+			--sort # Sort by created, id, repository, size, tag
+		load # Load image(s) from a tar archive
+			--input # Read from specified archive file (default: stdin)
+			--quiet @bool # Suppress the output
+		prune # Remove unused images
+			--all @bool # Remove all images not in use by containers, not just dangling ones
+			--build-cache @bool # Remove persistent build cache created by --mount=type=cache
+			--external @bool # Remove images even when they are used by external containers (e.g., by build containers)
+			--filter # Provide filter values (e.g. 'label=<key>=<value>')
+			--force @bool # Do not prompt for confirmation
+		pull # Pull an image from a registry
+			--all-tags @bool # All tagged images in the repository will be pulled
+			--arch # Use `ARCH` instead of the architecture of the machine for choosing images
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+			--os # Use `OS` instead of the running OS for choosing images
+			--platform # Specify the platform for selecting the image.  (Conflicts with arch and os)
+			--policy # Pull image policy ("always"|"missing"|"never"|"newer")
+			--quiet @bool # Suppress output information when pulling images
+			--retry # number of times to retry in case of failure when performing pull
+			--retry-delay # delay between retries in case of pull failures
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+			--variant # Use VARIANT instead of the running architecture variant for choosing images
+		push # Push an image to a specified destination
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--compression-format # compression format to use
+			--compression-level # compression level to use
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--digestfile # Write the digest of the pushed image to the specified file
+			--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+			--force-compression @bool # Use the specified compression algorithm even if the destination contains a differently-compressed variant already
+			--format # Manifest type (oci, v2s2, or v2s1) to use in the destination (default is manifest type of source, with fallbacks)
+			--remove-signatures @bool # Discard any pre-existing signatures in the image
+			--retry # number of times to retry in case of failure when performing push
+			--retry-delay # delay between retries in case of push failures
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		rm # Remove one or more images from local storage
+			--all @bool # Remove all images
+			--force @bool # Force Removal of the image
+			--ignore @bool # Ignore errors if a specified image does not exist
+			--no-prune @bool # Do not remove dangling images
+		save # Save image(s) to an archive
+			--compress @bool # Compress tarball image layers when saving to a directory using the 'dir' transport. (default is same compression type as source)
+			--format # Save image to oci-archive, oci-dir (directory with oci manifest type), docker-archive, docker-dir (directory with v2s2 manifest type)
+			--multi-image-archive @bool # Interpret additional arguments as images not tags and create a multi-image-archive (only for docker-archive)
+			--output # Write to a specified file (default: stdout, which must be redirected)
+			--quiet @bool # Suppress the output
+			--uncompressed @bool # Accept uncompressed layers when copying OCI images
+		scp # Securely copy images
+			--quiet @bool # Suppress the output
+		search # Search registry for image
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--compatible @bool # List stars, official and automated columns (Docker compatibility)
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--filter # Filter output based on conditions provided (default [])
+			--format # Change the output format to JSON or a Go template
+			--limit # Limit the number of results
+			--list-tags @bool # List the tags of the input registry
+			--no-trunc @bool # Do not truncate the output
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		tag # Add an additional name to a local image
+		tree # Print layer hierarchy of an image in a tree format
+			--whatrequires @bool # Show all child images and layers of the specified image
+		untag # Remove a name from a local image
+	images # List images in local storage
+		--all @bool # Show all images (default hides intermediate images)
+		--digests @bool # Show digests
+		--filter # Filter output based on conditions provided (default [])
+		--format # Change the output format to JSON or a Go template
+		--history @bool # Display the image name history
+		--no-trunc @bool # Do not truncate output
+		--noheading @bool # Do not print column headings
+		--quiet @bool # Display only image IDs
+		--sort # Sort by created, id, repository, size, tag
+	import # Import a tarball to create a filesystem image
+		--arch # Set the architecture of the imported image
+		--change # Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR
+		--message # Set commit message for imported image
+		--os # Set the OS of the imported image
+		--quiet @bool # Suppress output
+		--variant # Set the variant of the imported image
+	info # Display podman system information
+		--format # Change the output format to JSON or a Go template
+	init # Initialize one or more containers
+		--all @bool # Initialize all containers
+	inspect # Display the configuration of object denoted by ID
+		--format # Format the output to a Go template or json
+		--size @bool # Display total file size
+		--type # Specify inspect-object type
+	kill # Kill one or more running containers with a specific signal
+		--all @bool # Signal all running containers
+		--cidfile # Read the container ID from the file
+		--signal # Signal to send to the container
+	kube # Play containers, pods or volumes from a structured file
+		apply # Deploy a podman container, pod, volume, or Kubernetes yaml to a Kubernetes cluster
+			--ca-cert-file # Path to the CA cert file for the Kubernetes cluster.
+			--file # Path to the Kubernetes yaml file to deploy.
+			--kubeconfig # Path to the kubeconfig file for the Kubernetes cluster
+			--ns # The namespace to deploy the workload to on the Kubernetes cluster
+			--service @bool # Create a service object for the container being deployed.
+		down # Remove pods based on Kubernetes YAML
+			--force @bool # remove volumes
+		generate # Generate Kubernetes YAML from containers, pods or volumes.
+			--filename # Write output to the specified path
+			--podman-only @bool # Add podman-only reserved annotations to the generated YAML file (Cannot be used by Kubernetes)
+			--replicas # Set the replicas number for Deployment kind
+			--service @bool # Generate YAML for a Kubernetes service object
+			--type # Generate YAML for the given Kubernetes kind
+		play # Play a pod or volume based on Kubernetes YAML
+			--annotation # Add Podman-specific annotations to containers and pods created by Podman (key=value)
+			--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--configmap # `Pathname` of a YAML file containing a kubernetes configmap
+			--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+			--force @bool # Remove volumes as part of --down
+			--ip # Static IP addresses to assign to the pods
+			--log-driver # Logging driver for the container
+			--log-opt # Logging driver options
+			--mac-address # Static MAC addresses to assign to the pods
+			--network # Connect pod to network(s) or network mode
+			--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+			--no-hosts @bool # Do not create /etc/hosts within the pod's containers, instead use the version from the image
+			--no-pod-prefix @bool # Do not prefix container name with pod name
+			--publish # Publish a container's port, or a range of ports, to the host
+			--publish-all @bool # Whether to publish all ports defined in the K8S YAML file (containerPort, hostPort), if false only hostPort will be published
+			--quiet @bool # Suppress output information when pulling images
+			--replace @bool # Delete and recreate pods defined in the YAML file
+			--start @bool # Start the pod after creating it
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+			--userns # User namespace to use
+			--wait @bool # Clean up all objects created when a SIGTERM is received or pods exit
+	load # Load image(s) from a tar archive
+		--input # Read from specified archive file (default: stdin)
+		--quiet @bool # Suppress the output
+	login # Log in to a container registry
+		--authfile # path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--cert-dir # use certificates at the specified path to access the registry
+		--compat-auth-file # path of a Docker-compatible config file to update instead
+		--get-login @bool # Return the current login user for the registry
+		--password # Password for registry
+		--password-stdin @bool # Take the password from stdin
+		--secret # Retrieve password from a podman secret
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		--username # Username for registry
+		--verbose @bool # Write more detailed information to stdout
+	logout # Log out of a container registry
+		--all @bool # Remove the cached credentials for all registries in the auth file
+		--authfile # path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--compat-auth-file # path of a Docker-compatible config file to update instead
+	logs # Fetch the logs of one or more containers
+		--color @bool # Output the containers with different colors in the log.
+		--follow @bool # Follow log output.  The default is false
+		--names @bool # Output the container name in the log
+		--since # Show logs since TIMESTAMP
+		--tail # Output the specified number of LINES at the end of the logs.  Defaults to -1, which prints all lines
+		--timestamps @bool # Output the timestamps in the log
+		--until # Show logs until TIMESTAMP
+	machine # Manage a virtual machine
+		cp # Securely copy contents between the virtual machine
+			--quiet @bool # Suppress copy status output
+		info # Display machine host info
+			--format # Change the output format to JSON or a Go template
+		init # Initialize a virtual machine
+			--cpus # Number of CPUs
+			--disk-size # Disk size in GiB
+			--ignition-path # Path to ignition file
+			--image # Bootable image for machine
+			--memory # Memory in MiB
+			--now @bool # Start machine now
+			--playbook # Run an Ansible playbook after first boot
+			--rootful @bool # Whether this machine should prefer rootful container execution
+			--swap # Swap in MiB
+			--timezone # Set timezone
+			--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+			--usb # USB Host passthrough: bus=$1,devnum=$2 or vendor=$1,product=$2
+			--user-mode-networking @bool # Whether this machine should use user-mode networking, routing traffic through a host user-space process
+			--username # Username used in image
+			--volume # Volumes to mount, source:target
+		inspect # Inspect an existing machine
+			--format # Format volume output using JSON or a Go template
+		list # List machines
+			--all-providers @bool # Show machines from all providers
+			--format # Format volume output using JSON or a Go template
+			--noheading @bool # Do not print headers
+			--quiet @bool # Show only machine names
+		os # Manage a Podman virtual machine's OS
+			apply # Apply an OCI image to a Podman Machine's OS
+				--restart @bool # Restart VM to apply changes
+		reset # Remove all machines
+			--force @bool # Do not prompt before reset
+		rm # Remove an existing machine
+			--force @bool # Stop and do not prompt before rming
+			--save-ignition @bool # Do not delete ignition file
+			--save-image @bool # Do not delete the image file
+		set # Set a virtual machine setting
+			--cpus # Number of CPUs
+			--disk-size # Disk size in GiB
+			--memory # Memory in MiB
+			--rootful @bool # Whether this machine should prefer rootful container execution
+			--usb # USBs bus=$1,devnum=$2 or vendor=$1,product=$2
+			--user-mode-networking @bool # Whether this machine should use user-mode networking, routing traffic through a host user-space process
+		ssh # SSH into an existing machine
+			--username # Username to use when ssh-ing into the VM.
+		start # Start an existing machine
+			--no-info @bool # Suppress informational tips
+			--quiet @bool # Suppress machine starting status output
+		stop # Stop an existing machine
+	manifest # Manipulate manifest lists and image indexes
+		add # Add images or artifacts to a manifest list or image index
+			--all @bool # add all of the list's images if the image is a list
+			--annotation # set an `annotation` for the specified image
+			--arch # override the `architecture` of the specified image
+			--artifact @bool # add all arguments as artifact files rather than as images
+			--artifact-config # artifact configuration file
+			--artifact-config-type # artifact configuration media type
+			--artifact-exclude-titles @bool # refrain from setting "org.opencontainers.image.title" annotations on "layers"
+			--artifact-layer-type # artifact layer media type
+			--artifact-subject # artifact subject reference
+			--artifact-type # override the artifactType value
+			--authfile # path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--creds # use `[username[:password]]` for accessing the registry
+			--features # override the `features` of the specified image
+			--os # override the `OS` of the specified image
+			--os-version # override the OS `version` of the specified image
+			--tls-verify @bool # require HTTPS and verify certificates when accessing the registry
+			--variant # override the `Variant` of the specified image
+		annotate # Add or update information about an entry in a manifest list or image index
+			--annotation # set an `annotation` for the specified image or artifact
+			--arch # override the `architecture` of the specified image or artifact
+			--features # override the `features` of the specified image or artifact
+			--index @bool # apply --annotation values to the image index itself
+			--os # override the `OS` of the specified image or artifact
+			--os-features # override the OS `features` of the specified image or artifact
+			--os-version # override the OS `version` of the specified image or artifact
+			--subject # set the `subject` to which the image index refers
+			--variant # override the `Variant` of the specified image or artifact
+		create # Create manifest list or image index
+			--all @bool # add all of the lists' images if the images to add are lists
+			--amend @bool # modify an existing list if one with the desired name already exists
+			--annotation # set annotations on the new list
+			--tls-verify @bool # require HTTPS and verify certificates when accessing the registry
+		exists # Check if a manifest list exists in local storage
+		inspect # Display the contents of a manifest list or image index
+			--authfile # path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--tls-verify @bool # require HTTPS and verify certificates when accessing the registry
+		push # Push a manifest list or image index to a registry
+			--add-compression # add instances with selected compression while pushing
+			--all @bool # also push the images in the list
+			--authfile # path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+			--compression-format # compression format to use
+			--compression-level # compression level to use
+			--creds # use `[username[:password]]` for accessing the registry
+			--digestfile # after copying the image, write the digest of the resulting digest to the file
+			--force-compression @bool # Use the specified compression algorithm even if the destination contains a differently-compressed variant already
+			--format # manifest type (oci or v2s2) to attempt to use when pushing the manifest list (default is manifest type of source)
+			--quiet @bool # don't output progress information when pushing lists
+			--remove-signatures @bool # don't copy signatures when pushing images
+			--rm @bool # remove the manifest list if push succeeds
+			--tls-verify @bool # require HTTPS and verify certificates when accessing the registry
+		remove # Remove an item from a manifest list or image index
+		rm # Remove manifest list or image index from local storage
+			--ignore @bool # Ignore errors when a specified manifest is missing
+	network # Manage networks
+		connect # Add container to a network
+			--alias # network scoped alias for container
+			--ip # set a static ipv4 address for this container network
+			--ip6 # set a static ipv6 address for this container network
+			--mac-address # set a static mac address for this container network
+		create # Create networks for containers and pods
+			--disable-dns @bool # disable dns plugin
+			--dns # DNS servers this network will use
+			--driver # driver to manage the network
+			--gateway # IPv4 or IPv6 gateway for the subnet
+			--ignore @bool # Don't fail if network already exists
+			--interface-name # interface name which is used by the driver
+			--internal @bool # restrict external access from this network
+			--ip-range # allocate container IP from range
+			--ipam-driver # IP Address Management Driver
+			--ipv6 @bool # enable IPv6 networking
+			--label # set metadata on a network
+			--opt # Set driver specific options (default [])
+			--route # static routes
+			--subnet # subnets in CIDR format
+		disconnect # Disconnect a container from a network
+			--force @bool # force removal of container from network
+		exists # Check if network exists
+		inspect # Inspect network
+			--format # Pretty-print network to JSON or using a Go template
+		ls # List networks
+			--filter # Provide filter values (e.g. 'name=podman')
+			--format # Pretty-print networks to JSON or using a Go template
+			--no-trunc @bool # Do not truncate the network ID
+			--noheading @bool # Do not print headers
+			--quiet @bool # display only names
+		prune # Prune unused networks
+			--filter # Provide filter values (e.g. 'label=<key>=<value>')
+			--force @bool # do not prompt for confirmation
+		rm # Remove networks
+			--force @bool # remove any containers using network
+			--time # Seconds to wait for running containers to stop before killing the container
+		update # Update an existing podman network
+			--dns-add # add network level nameservers
+			--dns-drop # remove network level nameservers
+	pause # Pause all the processes in one or more containers
+		--all @bool # Pause all running containers
+		--filter # Filter output based on conditions given
+	pod # Manage pods
+		clone # Clone an existing pod
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--destroy @bool # destroy the original pod
+			--device # Add a host device to the container
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--gidmap # GID map to use for the user namespace
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--hostname # Set container hostname
+			--infra-command # Overwrite the default ENTRYPOINT of the image
+			--infra-conmon-pidfile # Path to the file that will receive the PID of conmon
+			--infra-name # Assign a name to the container
+			--label # Set metadata on container
+			--label-file # Read in a line delimited file of labels
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--name # name the new pod
+			--pid # PID namespace to use
+			--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+			--security-opt # Security Options
+			--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--start @bool # start the new pod
+			--subgidname # Name of range listed in /etc/subgid for use in user namespace
+			--subuidname # Name of range listed in /etc/subuid for use in user namespace
+			--sysctl # Sysctl options
+			--uidmap # UID map to use for the user namespace
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+			--volumes-from # Mount volumes from the specified container(s)
+		create # Create a new empty pod
+			--add-host # Add a custom host-to-IP mapping (host:ip) (default [])
+			--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+			--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs. The default is 0.000 which means no limit
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+			--device # Add a host device to the container
+			--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+			--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+			--dns # Set custom DNS servers
+			--dns-option # Set custom DNS options
+			--dns-search # Set custom DNS search domains
+			--exit-policy # Behaviour when the last container exits
+			--gidmap # GID map to use for the user namespace
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--hostname # Set container hostname
+			--hosts-file # Base file to create the /etc/hosts file inside the container, or one of the special values. ("image"|"none")
+			--infra @bool # Create an infra container associated with the pod to share namespaces with
+			--infra-command # Overwrite the default ENTRYPOINT of the image
+			--infra-conmon-pidfile # Path to the file that will receive the PID of conmon
+			--infra-image # Image to use to override builtin infra container
+			--infra-name # Assign a name to the container
+			--ip # Specify a static IPv4 address for the container
+			--ip6 # Specify a static IPv6 address for the container
+			--label # Set metadata on container
+			--label-file # Read in a line delimited file of labels
+			--mac-address # Container MAC address (e.g. 92:d0:c6:0a:29:33)
+			--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--name # Assign a name to the pod
+			--network # Connect a container to a network
+			--network-alias # Add network-scoped alias for the container
+			--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+			--no-hosts @bool # Do not create /etc/hosts within the container, instead use the version from the image
+			--pid # PID namespace to use
+			--pod-id-file # Write the pod ID to the file
+			--publish # Publish a container's port, or a range of ports, to the host (default [])
+			--replace @bool # If a pod with the same name exists, replace it
+			--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+			--security-opt # Security Options
+			--share # A comma delimited list of kernel namespaces the pod will share
+			--share-parent @bool # Set the pod's cgroup as the cgroup parent for all containers joining the pod
+			--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+			--subgidname # Name of range listed in /etc/subgid for use in user namespace
+			--subuidname # Name of range listed in /etc/subuid for use in user namespace
+			--sysctl # Sysctl options
+			--uidmap # UID map to use for the user namespace
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+			--volumes-from # Mount volumes from the specified container(s)
+		exists # Check if a pod exists in local storage
+		inspect # Display a pod configuration
+			--format # Format the output to a Go template or json
+		kill # Send the specified signal or SIGKILL to containers in pod
+			--all @bool # Kill all containers in all pods
+			--signal # Signal to send to the containers in the pod
+		logs # Fetch logs for pod with one or more containers
+			--color @bool # Output the containers within a pod with different colors in the log
+			--container # Filter logs by container name or id which belongs to pod
+			--follow @bool # Follow log output.
+			--names @bool # Output container names instead of container IDs in the log
+			--since # Show logs since TIMESTAMP
+			--tail # Output the specified number of LINES at the end of the logs.
+			--timestamps @bool # Output the timestamps in the log
+			--until # Show logs until TIMESTAMP
+		pause # Pause one or more pods
+			--all @bool # Pause all running pods
+		prune # Remove all stopped pods and their containers
+			--force @bool # Do not prompt for confirmation.  The default is false
+		ps # List pods
+			--ctr-ids @bool # Display the container UUIDs. If no-trunc is not set they will be truncated
+			--ctr-names @bool # Display the container names
+			--ctr-status @bool # Display the container status
+			--filter # Filter output based on conditions given
+			--format # Pretty-print pods to JSON or using a Go template
+			--no-trunc @bool # Do not truncate pod and container IDs
+			--noheading @bool # Do not print headers
+			--ns @bool # Display namespace information of the pod
+			--quiet @bool # Print the numeric IDs of the pods only
+			--sort # Sort output by created, id, name, or number
+		restart # Restart one or more pods
+			--all @bool # Restart all running pods
+		rm # Remove one or more pods
+			--all @bool # Remove all running pods
+			--force @bool # Force removal of a running pod by first stopping all containers, then removing all containers in the pod.  The default is false
+			--pod-id-file # Read the pod ID from the file
+			--time # Seconds to wait for pod stop before killing the container
+		start # Start one or more pods
+			--all @bool # Restart all running pods
+			--pod-id-file # Read the pod ID from the file
+		stats # Display a live stream of resource usage statistics for the containers in one or more pods
+			--all @bool # Provide stats for all pods
+			--format # Pretty-print container statistics to JSON or using a Go template
+			--no-reset @bool # Disable resetting the screen when streaming
+			--no-stream @bool # Disable streaming stats and only pull the first result
+		stop # Stop one or more pods
+			--all @bool # Stop all running pods
+			--pod-id-file # Write the pod ID to the file
+			--time # Seconds to wait for pod stop before killing the container
+		top # Display the running processes of containers in a pod
+		unpause # Unpause one or more pods
+			--all @bool # Unpause all running pods
+	port # List port mappings or a specific mapping for the container
+		--all @bool # Display port information for all containers
+	ps # List containers
+		--all @bool # Show all the containers, default is only running containers
+		--external @bool # Show containers in storage not controlled by Podman
+		--filter # Filter output based on conditions given
+		--format # Pretty-print containers to JSON or using a Go template
+		--last # Print the n last created containers (all states)
+		--no-trunc @bool # Display the extended information
+		--noheading @bool # Do not print headers
+		--ns @bool # Display namespace information
+		--pod @bool # Print the ID and name of the pod the containers are associated with
+		--quiet @bool # Print the numeric IDs of the containers only
+		--size @bool # Display the total file sizes
+		--sort # Sort output by: command, created, id, image, names, runningfor, size, status
+		--sync @bool # Sync container state with OCI runtime
+		--watch # Watch the ps output on an interval in seconds
+	pull # Pull an image from a registry
+		--all-tags @bool # All tagged images in the repository will be pulled
+		--arch # Use `ARCH` instead of the architecture of the machine for choosing images
+		--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+		--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+		--os # Use `OS` instead of the running OS for choosing images
+		--platform # Specify the platform for selecting the image.  (Conflicts with arch and os)
+		--policy # Pull image policy ("always"|"missing"|"never"|"newer")
+		--quiet @bool # Suppress output information when pulling images
+		--retry # number of times to retry in case of failure when performing pull
+		--retry-delay # delay between retries in case of pull failures
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+		--variant # Use VARIANT instead of the running architecture variant for choosing images
+	push # Push an image to a specified destination
+		--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--compression-format # compression format to use
+		--compression-level # compression level to use
+		--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+		--digestfile # Write the digest of the pushed image to the specified file
+		--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+		--force-compression @bool # Use the specified compression algorithm even if the destination contains a differently-compressed variant already
+		--format # Manifest type (oci, v2s2, or v2s1) to use in the destination (default is manifest type of source, with fallbacks)
+		--remove-signatures @bool # Discard any pre-existing signatures in the image
+		--retry # number of times to retry in case of failure when performing push
+		--retry-delay # delay between retries in case of push failures
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+	quadlet # Allows users to manage Quadlets
+		install # Install a quadlet file or quadlet application
+			--reload-systemd @bool # Reload systemd after installing Quadlets
+			--replace @bool # Replace the installation even if the quadlet already exists
+		list # List Quadlets
+			--filter # Filter output based on conditions given
+			--format # Pretty-print output to JSON or using a Go template
+		print # Display the contents of a quadlet
+		rm # Remove Quadlets
+			--all @bool # Remove all Quadlets for the current user
+			--force @bool # Remove running quadlets
+			--ignore @bool # Do not error for Quadlets that do not exist
+			--reload-systemd @bool # Reload systemd after removal
+	rename # Rename an existing container
+	restart # Restart one or more containers
+		--all @bool # Restart all non-running containers
+		--filter # Filter output based on conditions given
+		--running @bool # Restart only running containers
+		--time # Seconds to wait for stop before killing the container
+	rm # Remove one or more containers
+		--all @bool # Remove all containers
+		--cidfile # Read the container ID from the file
+		--depend @bool # Remove container and all containers that depend on the selected container
+		--filter # Filter output based on conditions given
+		--force @bool # Force removal of a running or unusable container
+		--ignore @bool # Ignore errors when a specified container is missing
+		--time # Seconds to wait for stop before killing the container
+		--volumes @bool # Remove anonymous volumes associated with the container
+	rmi # Remove one or more images from local storage
+		--all @bool # Remove all images
+		--force @bool # Force Removal of the image
+		--ignore @bool # Ignore errors if a specified image does not exist
+		--no-prune @bool # Do not remove dangling images
+	run # Run a command in a new container
+		--add-host # Add a custom host-to-IP mapping (host:ip) (default [])
+		--annotation # Add annotations to container (key=value)
+		--arch # use `ARCH` instead of the architecture of the machine for choosing images
+		--attach # Attach to STDIN, STDOUT or STDERR
+		--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+		--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+		--cap-add # Add capabilities to the container
+		--cap-drop # Drop capabilities from the container
+		--cgroup-conf # Configure cgroup v2 (key=value)
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # cgroup namespace to use
+		--cgroups # control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split")
+		--chrootdirs # Chroot directories inside the container
+		--cidfile # Write the container ID to the file
+		--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit the CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs. The default is 0.000 which means no limit
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+		--creds # `credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+		--detach @bool # Run container in background and print container ID
+		--detach-keys # Override the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-cf`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+		--device # Add a host device to the container
+		--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+		--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+		--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+		--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+		--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+		--disable-content-trust @bool # This is a Docker specific option and is a NOOP
+		--dns # Set custom DNS servers
+		--dns-option # Set custom DNS options
+		--dns-search # Set custom DNS search domains
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env # Set environment variables in container
+		--env-file # Read in a file of environment variables
+		--env-merge # Preprocess environment variables from image before injecting them into the container
+		--expose # Expose a port or a range of ports
+		--gidmap # GID map to use for the user namespace
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+		--group-entry # Entry to write to /etc/group
+		--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+		--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup)
+		--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file)
+		--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+		--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+		--health-on-failure # action to take once the container turns unhealthy
+		--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+		--health-start-period # the initialization time needed for a container to bootstrap
+		--health-startup-cmd # Set a startup healthcheck command for the container
+		--health-startup-interval # Set an interval for the startup healthcheck.
+		--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+		--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+		--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+		--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+		--hostname # Set container hostname
+		--hosts-file # Base file to create the /etc/hosts file inside the container, or one of the special values. ("image"|"none")
+		--hostuser # Host user account to add to /etc/passwd within container
+		--http-proxy @bool # Set proxy environment variables in the container based on the host proxy vars
+		--image-volume # Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore")
+		--init @bool # Run an init binary inside the container that forwards signals and reaps processes
+		--init-path # Path to the container-init binary
+		--interactive @bool # Make STDIN available to the contained process
+		--ip # Specify a static IPv4 address for the container
+		--ip6 # Specify a static IPv6 address for the container
+		--ipc # IPC namespace to use
+		--label # Set metadata on container
+		--label-file # Read in a line delimited file of labels
+		--log-driver # Logging driver for the container
+		--log-opt # Logging driver options
+		--mac-address # Container MAC address (e.g. 92:d0:c6:0a:29:33)
+		--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--network # Connect a container to a network
+		--network-alias # Add network-scoped alias for the container
+		--no-healthcheck @bool # Disable healthchecks on container
+		--no-hostname @bool # Do not create /etc/hostname within the container, instead use the version from the image
+		--no-hosts @bool # Do not create /etc/hosts within the container, instead use the version from the image
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune the host's OOM preferences (-1000 to 1000)
+		--os # use `OS` instead of the running OS for choosing images
+		--passwd @bool # add entries to /etc/passwd and /etc/group
+		--passwd-entry # Entry to write to /etc/passwd
+		--personality # Configure execution domain using personality (e.g., LINUX/LINUX32)
+		--pid # PID namespace to use
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--platform # Specify the platform for selecting the image.  (Conflicts with --arch and --os)
+		--pod # Run container in an existing pod
+		--pod-id-file # Read the pod ID from the file
+		--privileged @bool # Give extended privileges to container
+		--publish # Publish a container's port, or a range of ports, to the host (default [])
+		--publish-all @bool # Publish all exposed ports to random ports on the host interface
+		--pull # Pull image policy ("always"|"missing"|"never"|"newer")
+		--quiet @bool # Suppress output information when pulling images
+		--rdt-class # Class of Service (COS) that the container should be assigned to
+		--read-only @bool # Make containers root filesystem read-only
+		--read-only-tmpfs @bool # When running --read-only containers mount read-write tmpfs on /dev, /dev/shm, /run, /tmp and /var/tmp
+		--replace @bool # If a container with the same name exists, replace it
+		--requires # Add one or more requirement containers that must be started before this container will start
+		--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+		--retry # number of times to retry in case of failure when performing pull
+		--retry-delay # delay between retries in case of pull failures
+		--rm @bool # Remove container and any anonymous unnamed volume associated with the container after exit
+		--rmi @bool # Remove image unless used by other containers, implies --rm
+		--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+		--sdnotify # control sd-notify behavior ("container"|"conmon"|"healthy"|"ignore")
+		--seccomp-policy # Policy for selecting a seccomp profile (experimental)
+		--secret # Add secret to container
+		--security-opt # Security Options
+		--shm-size # Size of /dev/shm (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--shm-size-systemd # Size of systemd specific tmpfs mounts (/run, /run/lock) (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--sig-proxy @bool # Proxy received signals to the process
+		--stop-signal # Signal to stop a container. Default is SIGTERM
+		--stop-timeout # Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL.
+		--subgidname # Name of range listed in /etc/subgid for use in user namespace
+		--subuidname # Name of range listed in /etc/subuid for use in user namespace
+		--sysctl # Sysctl options
+		--systemd # Run container in systemd mode ("true"|"false"|"always")
+		--timeout # Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries for pulling images
+		--tmpfs # Mount a temporary filesystem (`tmpfs`) into a container
+		--tty @bool # Allocate a pseudo-TTY for container
+		--tz # Set timezone in container
+		--uidmap # UID map to use for the user namespace
+		--ulimit # Ulimit options
+		--umask # Set umask in container
+		--unsetenv # Unset environment default variables in container
+		--unsetenv-all @bool # Unset all default environment variables in container
+		--user # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # User namespace to use
+		--uts # UTS namespace to use
+		--variant # Use `VARIANT` instead of the running architecture variant for choosing images
+		--volume # Bind mount a volume into the container. Volume source will be on the server machine, not the client
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir # Working directory inside the container
+	save # Save image(s) to an archive
+		--compress @bool # Compress tarball image layers when saving to a directory using the 'dir' transport. (default is same compression type as source)
+		--format # Save image to oci-archive, oci-dir (directory with oci manifest type), docker-archive, docker-dir (directory with v2s2 manifest type)
+		--multi-image-archive @bool # Interpret additional arguments as images not tags and create a multi-image-archive (only for docker-archive)
+		--output # Write to a specified file (default: stdout, which must be redirected)
+		--quiet @bool # Suppress the output
+		--uncompressed @bool # Accept uncompressed layers when copying OCI images
+	search # Search registry for image
+		--authfile # Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+		--compatible @bool # List stars, official and automated columns (Docker compatibility)
+		--creds # `Credentials` (USERNAME:PASSWORD) to use for authenticating to a registry
+		--filter # Filter output based on conditions provided (default [])
+		--format # Change the output format to JSON or a Go template
+		--limit # Limit the number of results
+		--list-tags @bool # List the tags of the input registry
+		--no-trunc @bool # Do not truncate the output
+		--tls-verify @bool # Require HTTPS and verify certificates when contacting registries
+	secret # Manage secrets
+		create # Create a new secret
+			--driver # Specify secret driver
+			--driver-opts # Specify driver specific options
+			--env @bool # Read secret data from environment variable
+			--ignore @bool # If a secret with the same name exists, ignore and do not create a new secret
+			--label # Specify labels on the secret
+			--replace @bool # If a secret with the same name exists, replace it
+		exists # Check if a secret exists in local storage
+		inspect # Inspect a secret
+			--format # Format inspect output using Go template
+			--pretty @bool # Print inspect output in human-readable format
+			--showsecret @bool # Display the secret
+		ls # List secrets
+			--filter # Filter secret output
+			--format # Format secret output using Go template
+			--noheading @bool # Do not print headers
+			--quiet @bool # Print secret IDs only
+		rm # Remove one or more secrets
+			--all @bool # Remove all secrets
+			--ignore @bool # Ignore errors when a specified secret is missing
+	start # Start one or more containers
+		--all @bool # Start all containers regardless of their state or configuration
+		--attach @bool # Attach container's STDOUT and STDERR
+		--detach-keys # Select the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_`
+		--filter # Filter output based on conditions given
+		--interactive @bool # Make STDIN available to the contained process
+	stats # Display a live stream of container resource usage statistics
+		--all @bool # Show all containers. Only running containers are shown by default. The default is false
+		--format # Pretty-print container statistics to JSON or using a Go template
+		--interval # Time in seconds between stats reports
+		--no-reset @bool # Disable resetting the screen between intervals
+		--no-stream @bool # Disable streaming stats and only pull the first result, default setting is false
+		--no-trunc @bool # Do not truncate output
+	stop # Stop one or more containers
+		--all @bool # Stop all running containers
+		--filter # Filter output based on conditions given
+		--time # Seconds to wait for stop before killing the container
+	system # Manage podman
+		check # Check storage consistency
+			--force @bool # Remove inconsistent images and containers
+			--max # Maximum allowed age of unreferenced layers
+			--quick @bool # Skip time-consuming checks. The default is to include time-consuming checks
+			--repair @bool # Remove inconsistent images
+		connection # Manage remote API service destinations
+			add # Record destination for the Podman service
+				--default @bool # Set connection to be default
+				--identity # path to SSH identity file
+				--port # SSH port number for destination
+				--socket-path # path to podman socket on remote host. (default '/run/podman/podman.sock' or '/run/user/{uid}/podman/podman.sock)
+				--tls-ca # path to TLS certificate Authority PEM file
+				--tls-cert # path to TLS client certificate PEM file
+				--tls-key # path to TLS client certificate private key PEM file
+			default # Set named destination as default
+			list # List destination for the Podman service(s)
+				--format # Custom Go template for printing connections
+				--quiet @bool # Custom Go template for printing connections
+			remove # Delete named destination
+				--all @bool # Remove all connections
+			rename # Rename "old" to "new"
+		df # Show podman disk usage
+			--format # Pretty-print images using a Go template
+			--verbose @bool # Show detailed information on disk usage
+		events # Show podman system events
+			--filter # filter output
+			--format # format the output using a Go template
+			--no-trunc @bool # do not truncate the output
+			--since # show all events created since timestamp
+			--stream @bool # stream events and do not exit when returning the last known event
+			--until # show all events until timestamp
+		info # Display podman system information
+			--format # Change the output format to JSON or a Go template
+		prune # Remove unused data
+			--all @bool # Remove all unused data
+			--build @bool # Remove build containers
+			--external @bool # Remove container data in storage not controlled by podman
+			--filter # Provide filter values (e.g. 'label=<key>=<value>')
+			--force @bool # Do not prompt for confirmation.  The default is false
+			--volumes @bool # Prune volumes
+	tag # Add an additional name to a local image
+	top # Display the running processes of a container
+	unpause # Unpause the processes in one or more containers
+		--all @bool # Unpause all paused containers
+		--filter # Filter output based on conditions given
+	untag # Remove a name from a local image
+	update # Update an existing container
+		--blkio-weight # Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+		--blkio-weight-device # Block IO weight (relative device weight, format: `DEVICE_NAME:WEIGHT`)
+		--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit the CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs. The default is 0.000 which means no limit
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+		--device-read-bps # Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+		--device-read-iops # Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+		--device-write-bps # Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+		--device-write-iops # Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+		--env # Set environment variables in container
+		--health-cmd # set a healthcheck command for the container ('none' disables the existing healthcheck)
+		--health-interval # set an interval for the healthcheck. (a value of disable results in no automatic timer setup) Changing this setting resets timer.
+		--health-log-destination # set the destination of the HealthCheck log. Directory path, local or events_logger (local use container state file) Warning: Changing this setting may cause the loss of previous logs!
+		--health-max-log-count # set maximum number of attempts in the HealthCheck log file. ('0' value means an infinite number of attempts in the log file)
+		--health-max-log-size # set maximum length in characters of stored HealthCheck log. ('0' value means an infinite log length)
+		--health-on-failure # action to take once the container turns unhealthy
+		--health-retries # the number of retries allowed before a healthcheck is considered to be unhealthy
+		--health-start-period # the initialization time needed for a container to bootstrap
+		--health-startup-cmd # Set a startup healthcheck command for the container
+		--health-startup-interval # Set an interval for the startup healthcheck. Changing this setting resets the timer, depending on the state of the container.
+		--health-startup-retries # Set the maximum number of retries before the startup healthcheck will restart the container
+		--health-startup-success # Set the number of consecutive successes before the startup healthcheck is marked as successful and the normal healthcheck begins (0 indicates any success will start the regular healthcheck)
+		--health-startup-timeout # Set the maximum amount of time that the startup healthcheck may take before it is considered failed
+		--health-timeout # the maximum time allowed to complete the healthcheck before an interval is considered failed and SIGKILL is sent to the healthcheck process
+		--memory # Memory limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-reservation # Memory soft limit (format: `<number>[<unit>]`, where unit = b (bytes), k (kibibytes), m (mebibytes), or g (gibibytes))
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100, or -1 for system default)
+		--no-healthcheck @bool # Disable healthchecks on container
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--restart # Restart policy to apply when a container exits ("always"|"no"|"never"|"on-failure"|"unless-stopped")
+		--ulimit # Ulimit options
+		--unsetenv # Unset environment default variables in container
+	version # Display the Podman version information
+		--format # Change the output format to JSON or a Go template
+	volume # Manage volumes
+		create # Create a new volume
+			--driver # Specify volume driver name
+			--gid # Set the GID of the volume owner
+			--ignore @bool # Don't fail if volume already exists
+			--label # Set metadata for a volume (default [])
+			--opt # Set driver specific options (default [])
+			--uid # Set the UID of the volume owner
+		exists # Check if volume exists
+		export # Export volumes
+			--output # Write to a specified file (default: stdout, which must be redirected)
+		import # Import a tarball contents into a podman volume
+		inspect # Display detailed information on one or more volumes
+			--all @bool # Inspect all volumes
+			--format # Format volume output using Go template
+		ls # List volumes
+			--filter # Filter volume output
+			--format # Format volume output using Go template
+			--noheading @bool # Do not print headers
+			--quiet @bool # Print volume output in quiet mode
+		prune # Remove all unused volumes
+			--filter # Provide filter values (e.g. 'label=<key>=<value>')
+			--force @bool # Do not prompt for confirmation
+		reload # Reload all volumes from volume plugins
+		rm # Remove one or more volumes
+			--all @bool # Remove all volumes
+			--force @bool # Remove a volume by force, even if it is being used by a container
+			--time # Seconds to wait for running containers to stop before killing the container
+	wait # Block on one or more containers
+		--condition # Condition to wait on
+		--exit-first-match @bool # Wait for exit of first container which matches conditions, ignore other ones
+		--ignore @bool # Ignore if a container does not exist
+		--interval # Time Interval to wait before polling for completion

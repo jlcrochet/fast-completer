@@ -1,0 +1,142 @@
+# Tar CLI schema for fast-completer
+# Generated from tar unknown
+
+tar # GNU tape archiver
+	--create|-c @bool # create a new archive
+	--delete @bool # delete from the archive (not on mag tapes!)
+	--append|-r @bool # append files to the end of an archive
+	--test-label @bool # test the archive volume label and exit
+	--list|-t @bool # list the contents of an archive
+	--update|-u @bool # only append files newer than copy in archive
+	--check-device @bool # check device numbers when creating incremental
+	--listed-incremental|-g # handle new GNU-format incremental backup
+	--incremental|-G @bool # handle old GNU-format incremental backup
+	--hole-detection # technique to detect holes
+	--ignore-failed-read @bool # do not exit with nonzero on unreadable files
+	--level # dump level for created listed-incremental archive
+	--no-check-device @bool # do not check device numbers when creating
+	--no-seek @bool # archive is not seekable
+	--seek|-n @bool # archive is seekable
+	--occurrence # process only the NUMBERth occurrence of each file
+	--sparse-version # set version of the sparse format to use (implies
+	--sparse
+	--sparse|-S @bool # handle sparse files efficiently
+	--add-file # add given FILE to the archive (useful if its name
+	--directory|-C # change to directory DIR
+	--exclude # exclude files, given as a PATTERN
+	--exclude-backups @bool # exclude backup and lock files
+	--exclude-caches @bool # exclude contents of directories containing
+	--exclude-caches-all @bool # exclude directories containing CACHEDIR.TAG
+	--exclude-ignore # read exclude patterns for each directory from
+	--exclude-ignore-recursive # read exclude patterns for each directory and its
+	--exclude-tag # exclude contents of directories containing FILE,
+	--exclude-tag-under # exclude everything under directories
+	--exclude-vcs @bool # exclude version control system directories
+	--exclude-vcs-ignores @bool # read exclude patterns from the VCS ignore files
+	--no-null @bool # disable the effect of the previous --null option
+	--no-recursion @bool # avoid descending automatically in directories
+	--no-unquote @bool # do not unquote input file or member names
+	--no-verbatim-files-from @bool # -T treats file names starting with dash as
+	--null @bool # -T reads null-terminated names; implies
+	--verbatim-files-from @bool # --recursion            recurse into directories (default)
+	--recursion @bool # recurse into directories (default)
+	--files-from|-T # get names to extract or create from FILE
+	--unquote @bool # unquote input file or member names (default)
+	--verbatim-files-from @bool # -T reads file names verbatim (no escape or option
+	--exclude-from|-X # exclude patterns listed in FILE
+	--anchored @bool # patterns match file name start
+	--ignore-case @bool # ignore case
+	--no-anchored @bool # patterns match after any '/' (default for
+	--no-ignore-case @bool # case sensitive matching (default)
+	--no-wildcards @bool # verbatim string matching
+	--no-wildcards-match-slash @bool # wildcards do not match '/'
+	--wildcards @bool # use wildcards (default for exclusion)
+	--wildcards-match-slash @bool # wildcards match '/' (default for exclusion)
+	--keep-directory-symlink @bool # preserve existing symlinks to directories when
+	--keep-newer-files @bool # don't replace existing files that are newer than
+	--keep-old-files|-k @bool # don't replace existing files when extracting,
+	--no-overwrite-dir @bool # preserve metadata of existing directories
+	--one-top-level # create a subdirectory to avoid having loose files
+	--overwrite @bool # overwrite existing files when extracting
+	--overwrite-dir @bool # overwrite metadata of existing directories when
+	--recursive-unlink @bool # empty hierarchies prior to extracting directory
+	--remove-files @bool # remove files after adding them to the archive
+	--skip-old-files @bool # don't replace existing files when extracting,
+	--unlink-first|-U @bool # remove each file prior to extracting over it
+	--verify|-W @bool # attempt to verify the archive after writing it
+	--no-ignore-command-error @bool # treat non-zero exit codes of children as
+	--to-stdout|-O @bool # extract files to standard output
+	--to-command # pipe extracted files to another program
+	--atime-preserve # preserve access times on dumped files, either
+	--clamp-mtime @bool # only set time when the file is more recent than
+	--delay-directory-restore @bool # delay setting modification times and
+	--group # force NAME as group for added files
+	--group-map # use FILE to map file owner GIDs and names
+	--mode # force (symbolic) mode CHANGES for added files
+	--mtime # set mtime for added files from DATE-OR-FILE
+	--touch|-m @bool # don't extract file modified time
+	--no-delay-directory-restore @bool # cancel the effect of --delay-directory-restore
+	--no-same-owner @bool # extract files as yourself (default for ordinary
+	--no-same-permissions @bool # apply the user's umask when extracting permissions
+	--numeric-owner @bool # always use numbers for user/group names
+	--owner # force NAME as owner for added files
+	--owner-map # use FILE to map file owner UIDs and names
+	--same-owner @bool # try extracting files with the same ownership as
+	--sort # directory sorting order: none (default), name or
+	--acls @bool # Enable the POSIX ACLs support
+	--no-acls @bool # Disable the POSIX ACLs support
+	--no-selinux @bool # Disable the SELinux context support
+	--no-xattrs @bool # Disable extended attributes support
+	--selinux @bool # Enable the SELinux context support
+	--xattrs @bool # Enable extended attributes support
+	--xattrs-exclude # specify the exclude pattern for xattr keys
+	--xattrs-include # specify the include pattern for xattr keys
+	--force-local @bool # archive file is local even if it has a colon
+	--file|-f # use archive file or device ARCHIVE
+	--tape-length|-L # change tape after writing NUMBER x 1024 bytes
+	--multi-volume|-M @bool # create/list/extract multi-volume archive
+	--rmt-command # use given rmt COMMAND instead of rmt
+	--rsh-command # use remote COMMAND instead of rsh
+	--volno-file # use/update the volume number in FILE
+	--blocking-factor|-b # BLOCKS x 512 bytes per record
+	--read-full-records|-B @bool # reblock as we read (for 4.2BSD pipes)
+	--ignore-zeros|-i @bool # ignore zeroed blocks in archive (means EOF)
+	--record-size # NUMBER of bytes per record, multiple of 512
+	--format|-H # create archive of the given format
+	--pax-option # control pax keywords
+	--posix @bool # same as --format=posix
+	--auto-compress|-a @bool # use archive suffix to determine the compression
+	--use-compress-program|-I # filter through PROG (must accept -d)
+	--bzip2|-j @bool # filter the archive through bzip2
+	--xz|-J @bool # filter the archive through xz
+	--lzip @bool # filter the archive through lzip
+	--lzma @bool # filter the archive through lzma
+	--lzop @bool # filter the archive through lzop
+	--no-auto-compress @bool # do not use archive suffix to determine the
+	--zstd @bool # filter the archive through zstd
+	--backup # backup before removal, choose version CONTROL
+	--hard-dereference @bool # follow hard links; archive and dump the files they
+	--starting-file|-K # begin at member MEMBER-NAME when reading the
+	--newer-mtime # compare date and time when data changed only
+	--one-file-system @bool # stay in local file system when creating archive
+	--absolute-names|-P @bool # don't strip leading '/'s from file names
+	--suffix # backup before removal, override usual suffix ('~'
+	--strip-components # strip NUMBER leading components from file
+	--checkpoint # display progress messages every NUMBERth record
+	--checkpoint-action # execute ACTION on each checkpoint
+	--full-time @bool # print file time to its full resolution
+	--index-file # send verbose output to FILE
+	--check-links|-l @bool # print a message if not all links are dumped
+	--no-quote-chars # disable quoting for characters from STRING
+	--quote-chars # additionally quote characters from STRING
+	--quoting-style # set name quoting style; see below for valid STYLE
+	--block-number|-R @bool # show block number within archive with each message
+	--show-defaults @bool # show tar defaults
+	--show-omitted-dirs @bool # when listing or extracting, list each directory
+	--show-snapshot-field-ranges @bool # show valid ranges for snapshot-file fields
+	--totals # print total bytes after processing the archive;
+	--utc @bool # print file modification times in UTC
+	--verbose|-v @bool # verbosely list files processed
+	--warning # warning control
+	--restrict @bool # disable use of some potentially harmful options
+	--usage @bool # give a short usage message

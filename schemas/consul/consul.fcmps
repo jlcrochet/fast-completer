@@ -1,0 +1,192 @@
+# Consul CLI schema for fast-completer
+# Generated from consul 1.22.3
+
+consul # HashiCorp Consul
+	acl # Interact with Consul's ACLs
+		auth-method
+			create
+			delete
+			list
+			read
+			update
+		binding-rule
+			create
+			delete
+			list
+			read
+			update
+		bootstrap
+		policy
+			create
+			delete
+			list
+			read
+			update
+		role
+			create
+			delete
+			list
+			read
+			update
+		set-agent-token
+			agent
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+			config_file_service_registration
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+			default
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+			dns
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+			recovery
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+			replication
+				agent
+				config_file_service_registration
+				default
+				dns
+				recovery
+				replication
+		templated-policy
+			list
+			preview
+			read
+		token
+			clone
+			create
+			delete
+			list
+			read
+			update
+	agent # Runs a Consul agent
+	catalog # Interact with the catalog
+		datacenters
+		nodes
+		services
+	config # Interact with Consul's Centralized Configurations
+		delete
+		list
+		read
+		write
+	connect # Interact with Consul Connect
+		ca
+			get-config
+			set-config
+		envoy
+			pipe-bootstrap
+		expose
+		proxy
+		redirect-traffic
+	debug # Records a debugging archive for operators
+	event # Fire a new event
+	exec # Executes a command on Consul nodes
+	force-leave # Forces a member of the cluster to enter the "left" state
+		-prune @bool # Remove agent completely from list of members
+		-wan @bool # Exclusively leave the agent from the WAN serf pool.
+	info # Provides debugging information for operators.
+	intention # Interact with Connect service intentions
+		check
+		create
+			preserved.
+				preserved.
+		delete
+		get
+		list
+		match
+	join # Tell Consul agent to join cluster
+	keygen # Generates a new encryption key
+	keyring # Manages gossip layer encryption keys
+	kv # Interact with the key-value store
+		delete
+			existed.
+				existed.
+		export
+		get
+		import
+		put
+			encoded.
+				encoded.
+	leave # Gracefully leaves the Consul cluster and shuts down
+	lock # Execute a command holding a lock
+	login # Login to Consul using an auth method
+	logout # Destroy a Consul token created with login
+	maint # Controls node or service maintenance mode
+	members # Lists the members of a Consul cluster
+	monitor # Stream logs from a Consul agent
+	operator # Provides cluster-level tools for Consul operators
+		autopilot
+			get-config
+			set-config
+			state
+		raft
+			list-peers
+			remove-peer
+			transfer-leader
+		usage
+			instances
+		utilization
+	peering # Create and manage peering connections between Consul clusters
+		delete
+		establish
+		exported-services
+		generate-token
+		list
+		read
+	reload # Triggers the agent to reload configuration files
+	resource # Interact with Consul's resources
+		apply
+		apply-grpc
+		delete
+		delete-grpc
+		list
+		list-grpc
+		read
+		read-grpc
+	rtt # Estimates network round trip time between nodes
+	services # Interact with services
+		deregister
+		export
+		exported-services
+		imported-services
+		register
+	snapshot # Saves, restores and inspects snapshots of Consul server state
+		decode
+		inspect
+		restore
+		save
+	tls # Builtin helpers for creating CAs and certificates
+		ca
+			create
+		cert
+			create
+	troubleshoot # CLI tools for troubleshooting Consul service mesh
+		ports
+		proxy
+		upstreams
+	validate # Validate config files/directories
+	version # Prints the Consul version
+	watch # Watch for changes in Consul

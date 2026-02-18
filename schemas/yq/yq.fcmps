@@ -1,0 +1,590 @@
+# Yq CLI schema for fast-completer
+# Generated from yq .
+
+yq # YAML processor
+	--colors @bool # force print with colors
+	--csv-auto-parse @bool # parse CSV YAML/JSON values
+	--csv-separator # CSV Separator character
+	--debug-node-info @bool # debug node info
+	--exit-status @bool # set exit status if there are no matches or null or false is returned
+	--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+	--from-file # Load expression from specified file.
+	--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+	--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+	--help @bool # help for yq
+	--indent # sets indent level for output
+	--inplace @bool # update the file in place of first file given.
+	--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+	--lua-globals @bool # output keys as top-level global variables
+	--lua-prefix # prefix
+	--lua-suffix # suffix
+	--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+	--no-colors @bool # force print with no colors
+	--no-doc @bool # Don't print document separators (---)
+	--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+	--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+	--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+	--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+	--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+	--properties-separator # separator to use between keys and values
+	--security-disable-env-ops @bool # Disable env related operations.
+	--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+	--shell-key-separator # separator for shell variable key paths
+	--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+	--split-exp-file # Use a file to specify the split-exp expression.
+	--string-interpolation @bool # Toggles strings interpolation of \(exp)
+	--tsv-auto-parse @bool # parse TSV YAML/JSON values
+	--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+	--verbose @bool # verbose mode
+	--version @bool # Print version information and quit
+	--xml-attribute-prefix # prefix for xml attributes
+	--xml-content-name # name for xml content (if no attribute name is present).
+	--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+	--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+	--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+	--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+	--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+	--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+	--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+	--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+	--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+	completion # Generate the autocompletion script for the specified shell
+		--colors @bool # force print with colors
+		--csv-auto-parse @bool # parse CSV YAML/JSON values
+		--csv-separator # CSV Separator character
+		--debug-node-info @bool # debug node info
+		--exit-status @bool # set exit status if there are no matches or null or false is returned
+		--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+		--from-file # Load expression from specified file.
+		--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+		--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+		--indent # sets indent level for output
+		--inplace @bool # update the file in place of first file given.
+		--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+		--lua-globals @bool # output keys as top-level global variables
+		--lua-prefix # prefix
+		--lua-suffix # suffix
+		--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+		--no-colors @bool # force print with no colors
+		--no-doc @bool # Don't print document separators (---)
+		--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+		--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+		--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+		--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+		--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+		--properties-separator # separator to use between keys and values
+		--security-disable-env-ops @bool # Disable env related operations.
+		--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+		--shell-key-separator # separator for shell variable key paths
+		--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+		--split-exp-file # Use a file to specify the split-exp expression.
+		--string-interpolation @bool # Toggles strings interpolation of \(exp)
+		--tsv-auto-parse @bool # parse TSV YAML/JSON values
+		--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+		--verbose @bool # verbose mode
+		--xml-attribute-prefix # prefix for xml attributes
+		--xml-content-name # name for xml content (if no attribute name is present).
+		--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+		--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+		--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+		--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+		--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+		--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+		--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+		--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+		--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		bash
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		fish
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		powershell
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		zsh
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+	eval # (default) Apply the expression to each document in each yaml file in sequence
+		--colors @bool # force print with colors
+		--csv-auto-parse @bool # parse CSV YAML/JSON values
+		--csv-separator # CSV Separator character
+		--debug-node-info @bool # debug node info
+		--exit-status @bool # set exit status if there are no matches or null or false is returned
+		--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+		--from-file # Load expression from specified file.
+		--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+		--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+		--indent # sets indent level for output
+		--inplace @bool # update the file in place of first file given.
+		--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+		--lua-globals @bool # output keys as top-level global variables
+		--lua-prefix # prefix
+		--lua-suffix # suffix
+		--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+		--no-colors @bool # force print with no colors
+		--no-doc @bool # Don't print document separators (---)
+		--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+		--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+		--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+		--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+		--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+		--properties-separator # separator to use between keys and values
+		--security-disable-env-ops @bool # Disable env related operations.
+		--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+		--shell-key-separator # separator for shell variable key paths
+		--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+		--split-exp-file # Use a file to specify the split-exp expression.
+		--string-interpolation @bool # Toggles strings interpolation of \(exp)
+		--tsv-auto-parse @bool # parse TSV YAML/JSON values
+		--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+		--verbose @bool # verbose mode
+		--xml-attribute-prefix # prefix for xml attributes
+		--xml-content-name # name for xml content (if no attribute name is present).
+		--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+		--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+		--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+		--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+		--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+		--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+		--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+		--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+		--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+	eval-all # Loads _all_ yaml documents of _all_ yaml files and runs expression once
+		--colors @bool # force print with colors
+		--csv-auto-parse @bool # parse CSV YAML/JSON values
+		--csv-separator # CSV Separator character
+		--debug-node-info @bool # debug node info
+		--exit-status @bool # set exit status if there are no matches or null or false is returned
+		--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+		--from-file # Load expression from specified file.
+		--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+		--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+		--indent # sets indent level for output
+		--inplace @bool # update the file in place of first file given.
+		--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+		--lua-globals @bool # output keys as top-level global variables
+		--lua-prefix # prefix
+		--lua-suffix # suffix
+		--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+		--no-colors @bool # force print with no colors
+		--no-doc @bool # Don't print document separators (---)
+		--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+		--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+		--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+		--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+		--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+		--properties-separator # separator to use between keys and values
+		--security-disable-env-ops @bool # Disable env related operations.
+		--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+		--shell-key-separator # separator for shell variable key paths
+		--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+		--split-exp-file # Use a file to specify the split-exp expression.
+		--string-interpolation @bool # Toggles strings interpolation of \(exp)
+		--tsv-auto-parse @bool # parse TSV YAML/JSON values
+		--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+		--verbose @bool # verbose mode
+		--xml-attribute-prefix # prefix for xml attributes
+		--xml-content-name # name for xml content (if no attribute name is present).
+		--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+		--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+		--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+		--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+		--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+		--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+		--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+		--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+		--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+	help # Help about any command
+		--colors @bool # force print with colors
+		--csv-auto-parse @bool # parse CSV YAML/JSON values
+		--csv-separator # CSV Separator character
+		--debug-node-info @bool # debug node info
+		--exit-status @bool # set exit status if there are no matches or null or false is returned
+		--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+		--from-file # Load expression from specified file.
+		--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+		--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+		--indent # sets indent level for output
+		--inplace @bool # update the file in place of first file given.
+		--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+		--lua-globals @bool # output keys as top-level global variables
+		--lua-prefix # prefix
+		--lua-suffix # suffix
+		--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+		--no-colors @bool # force print with no colors
+		--no-doc @bool # Don't print document separators (---)
+		--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+		--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+		--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+		--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+		--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+		--properties-separator # separator to use between keys and values
+		--security-disable-env-ops @bool # Disable env related operations.
+		--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+		--shell-key-separator # separator for shell variable key paths
+		--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+		--split-exp-file # Use a file to specify the split-exp expression.
+		--string-interpolation @bool # Toggles strings interpolation of \(exp)
+		--tsv-auto-parse @bool # parse TSV YAML/JSON values
+		--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+		--verbose @bool # verbose mode
+		--xml-attribute-prefix # prefix for xml attributes
+		--xml-content-name # name for xml content (if no attribute name is present).
+		--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+		--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+		--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+		--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+		--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+		--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+		--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+		--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+		--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		completion # Generate the autocompletion script for the specified shell
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		eval # (default) Apply the expression to each document in each yaml file in sequence
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		eval-all # Loads _all_ yaml documents of _all_ yaml files and runs expression once
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025
+		help # Help about any command
+			--colors @bool # force print with colors
+			--csv-auto-parse @bool # parse CSV YAML/JSON values
+			--csv-separator # CSV Separator character
+			--debug-node-info @bool # debug node info
+			--exit-status @bool # set exit status if there are no matches or null or false is returned
+			--expression # forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+			--from-file # Load expression from specified file.
+			--front-matter # (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+			--header-preprocess @bool # Slurp any header comments and separators before processing expression.
+			--indent # sets indent level for output
+			--inplace @bool # update the file in place of first file given.
+			--input-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|lua|l|ini|i] parse format for input.
+			--lua-globals @bool # output keys as top-level global variables
+			--lua-prefix # prefix
+			--lua-suffix # suffix
+			--lua-unquoted @bool # output unquoted string keys (e.g. {foo="bar"})
+			--no-colors @bool # force print with no colors
+			--no-doc @bool # Don't print document separators (---)
+			--nul-output @bool # Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+			--null-input @bool # Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+			--output-format # [auto|a|yaml|y|kyaml|ky|json|j|props|p|csv|c|tsv|t|xml|x|base64|uri|toml|hcl|h|shell|s|lua|l|ini|i] output format type.
+			--prettyPrint @bool # pretty print, shorthand for '... style = ""'
+			--properties-array-brackets @bool # use [x] in array paths (e.g. for SpringBoot)
+			--properties-separator # separator to use between keys and values
+			--security-disable-env-ops @bool # Disable env related operations.
+			--security-disable-file-ops @bool # Disable file related operations (e.g. load)
+			--shell-key-separator # separator for shell variable key paths
+			--split-exp # print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+			--split-exp-file # Use a file to specify the split-exp expression.
+			--string-interpolation @bool # Toggles strings interpolation of \(exp)
+			--tsv-auto-parse @bool # parse TSV YAML/JSON values
+			--unwrapScalar @bool # unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml
+			--verbose @bool # verbose mode
+			--xml-attribute-prefix # prefix for xml attributes
+			--xml-content-name # name for xml content (if no attribute name is present).
+			--xml-directive-name # name for xml directives (e.g. <!DOCTYPE thing cat>)
+			--xml-keep-namespace @bool # enables keeping namespace after parsing attributes
+			--xml-proc-inst-prefix # prefix for xml processing instructions (e.g. <?xml version="1"?>)
+			--xml-raw-token @bool # enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details.
+			--xml-skip-directives @bool # skip over directives (e.g. <!DOCTYPE thing cat>)
+			--xml-skip-proc-inst @bool # skip over process instructions (e.g. <?xml version="1"?>)
+			--xml-strict-mode @bool # enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+			--yaml-compact-seq-indent @bool # Use compact sequence indentation where '- ' is considered part of the indentation.
+			--yaml-fix-merge-anchor-to-spec @bool # Fix merge anchor to match YAML spec. Will default to true in late 2025

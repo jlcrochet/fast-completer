@@ -1,0 +1,413 @@
+# npm CLI schema for fast-completer
+# Generated from npm 11.10.0
+
+npm # Node.js package manager
+	access # Set access level on published packages
+		--json @bool
+		--otp
+		--registry
+	adduser # Add a registry user account
+		--registry
+		--scope
+		--auth-type
+	audit # Run a security audit
+		--audit-level
+		--dry-run @bool
+		--force|-f @bool
+		--json @bool
+		--package-lock-only @bool
+		--no-package-lock @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	bugs # Report bugs for a package in a web browser
+		--registry
+		--workspaces @bool
+		--include-workspace-root @bool
+	cache # Manipulates packages and npx cache
+		--cache
+	ci # Clean install a project
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--allow-git
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	config # Manage the npm configuration files
+		--json @bool
+		--global|-g @bool
+		--editor
+		--location|-L
+		--long|-l @bool
+	dedupe # Reduce duplication in the package tree
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--no-package-lock @bool
+		--ignore-scripts @bool
+		--allow-git
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	deprecate # Deprecate a version of a package
+		--registry
+		--otp
+		--dry-run @bool
+	diff # The registry diff command
+		--diff-name-only @bool
+		--diff-unified
+		--diff-ignore-all-space @bool
+		--diff-no-prefix @bool
+		--diff-src-prefix
+		--diff-dst-prefix
+		--diff-text @bool
+		--global|-g @bool
+		--tag
+		--workspaces @bool
+		--include-workspace-root @bool
+	dist-tag # Modify package distribution tags
+		--workspaces @bool
+		--include-workspace-root @bool
+	docs # Open documentation for a package in a web browser
+		--registry
+		--workspaces @bool
+		--include-workspace-root @bool
+	doctor # Check the health of your npm environment
+		--registry
+	edit # Edit an installed package
+		--editor
+	exec # Run a command from a local or remote npm package
+		--call|-c
+		--workspaces @bool
+		--include-workspace-root @bool
+	explain # Explain installed packages
+		--json @bool
+	explore # Browse an installed package
+		--shell
+	find-dupes # Find duplication in the package tree
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--no-package-lock @bool
+		--ignore-scripts @bool
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	fund # Retrieve funding information
+		--json @bool
+		--no-unicode @bool
+		--which
+	get # Get a value from the npm configuration
+		--long|-l @bool
+	help-search # Search npm help documentation
+		--long|-l @bool
+	init # Create a package.json file
+		--init-author-name
+		--init-author-url
+		--init-license
+		--init-module
+		--init-type
+		--init-version
+		--init-private @bool
+		--yes|-y @bool
+		--force|-f @bool
+		--scope
+		--workspaces @bool
+		--no-workspaces-update @bool
+		--include-workspace-root @bool
+	install # Install a package
+		--save-exact|-E @bool
+		--global|-g @bool
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--prefer-dedupe @bool
+		--no-package-lock @bool
+		--package-lock-only @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--allow-git
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--cpu
+		--os
+		--libc
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	install-test # Install package(s) and run tests
+		--save-exact|-E @bool
+		--global|-g @bool
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--prefer-dedupe @bool
+		--no-package-lock @bool
+		--package-lock-only @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--allow-git
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--cpu
+		--os
+		--libc
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	link # Symlink a package folder
+		--save-exact|-E @bool
+		--global|-g @bool
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--no-package-lock @bool
+		--ignore-scripts @bool
+		--allow-git
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	ll # List installed packages
+		--all|-a @bool
+		--json @bool
+		--long|-l @bool
+		--parseable|-p @bool
+		--global|-g @bool
+		--depth
+		--link @bool
+		--package-lock-only @bool
+		--no-unicode @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	login # Login to a registry user account
+		--registry
+		--scope
+		--auth-type
+	logout # Log out of the registry
+		--registry
+		--scope
+	ls # List installed packages
+		--all|-a @bool
+		--json @bool
+		--long|-l @bool
+		--parseable|-p @bool
+		--global|-g @bool
+		--depth
+		--link @bool
+		--package-lock-only @bool
+		--no-unicode @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	org # Manage orgs
+		--registry
+		--otp
+		--json @bool
+		--parseable|-p @bool
+	outdated # Check for outdated packages
+		--all|-a @bool
+		--json @bool
+		--long|-l @bool
+		--parseable|-p @bool
+		--global|-g @bool
+	owner # Manage package owners
+		--registry
+		--otp
+		--workspaces @bool
+	pack # Create a tarball from a package
+		--dry-run @bool
+		--json @bool
+		--pack-destination
+		--workspaces @bool
+		--include-workspace-root @bool
+		--ignore-scripts @bool
+	ping # Ping npm registry
+		--registry
+	pkg # Manages your package.json
+		--force|-f @bool
+		--json @bool
+		--workspaces @bool
+	prefix # Display prefix
+		--global|-g @bool
+	profile # Change settings on your registry profile
+		--registry
+		--json @bool
+		--parseable|-p @bool
+		--otp
+	prune # Remove extraneous packages
+		--dry-run @bool
+		--json @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	publish # Publish a package
+		--tag
+		--access
+		--dry-run @bool
+		--otp
+		--workspaces @bool
+		--include-workspace-root @bool
+	query # Retrieve a filtered list of packages
+		--global|-g @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--package-lock-only @bool
+	rebuild # Rebuild a package
+		--global|-g @bool
+		--no-bin-links @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	repo # Open package repository page in the browser
+		--registry
+		--workspaces @bool
+		--include-workspace-root @bool
+	restart # Restart a package
+		--ignore-scripts @bool
+		--script-shell
+	root # Display npm root
+		--global|-g @bool
+	run # Run arbitrary package scripts
+		--workspaces @bool
+		--include-workspace-root @bool
+		--if-present @bool
+		--ignore-scripts @bool
+		--foreground-scripts @bool
+		--script-shell
+	sbom # Generate a Software Bill of Materials (SBOM)
+		--package-lock-only @bool
+		--sbom-format
+		--sbom-type
+		--workspaces @bool
+	search # Search for packages
+		--json @bool
+		--parseable|-p @bool
+		--no-description @bool
+		--searchlimit
+		--searchopts
+		--searchexclude
+		--registry
+		--prefer-online @bool
+		--prefer-offline @bool
+		--offline @bool
+	set # Set a value in the npm configuration
+		--global|-g @bool
+		--location|-L
+	shrinkwrap # Lock down dependency versions for publication
+	star # Mark your favorite packages
+		--registry
+		--no-unicode @bool
+		--otp
+	stars # View packages marked as favorites
+		--registry
+	start # Start a package
+		--ignore-scripts @bool
+		--script-shell
+	stop # Stop a package
+		--ignore-scripts @bool
+		--script-shell
+	team # Manage organization teams and team memberships
+		--otp
+		--registry
+		--parseable|-p @bool
+		--json @bool
+	test # Test a package
+		--ignore-scripts @bool
+		--script-shell
+	token # Manage your authentication tokens
+		--name
+		--token-description
+		--expires
+		--packages-all @bool
+		--packages-and-scopes-permission
+		--orgs-permission
+		--bypass-2fa @bool
+		--password
+		--registry
+		--otp
+		--read-only @bool
+	trust # Create a trusted relationship between a package and a OIDC provider
+	undeprecate # Undeprecate a version of a package
+		--registry
+		--otp
+		--dry-run @bool
+	uninstall # Remove a package
+		--global|-g @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	unpublish # Remove a package from the registry
+		--dry-run @bool
+		--force|-f @bool
+		--workspaces @bool
+	unstar # Remove an item from your favorite packages
+		--registry
+		--no-unicode @bool
+		--otp
+	update # Update packages
+		--global|-g @bool
+		--install-strategy
+		--legacy-bundling @bool
+		--global-style @bool
+		--strict-peer-deps @bool
+		--no-package-lock @bool
+		--foreground-scripts @bool
+		--ignore-scripts @bool
+		--no-audit @bool
+		--no-bin-links @bool
+		--no-fund @bool
+		--dry-run @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+		--install-links @bool
+	version # Bump a package version
+		--allow-same-version @bool
+		--no-commit-hooks @bool
+		--no-git-tag-version @bool
+		--json @bool
+		--sign-git-tag @bool
+		--workspaces @bool
+		--no-workspaces-update @bool
+		--include-workspace-root @bool
+		--ignore-scripts @bool
+	view # View registry info
+		--json @bool
+		--workspaces @bool
+		--include-workspace-root @bool
+	whoami # Display npm username
+		--registry

@@ -1,0 +1,2476 @@
+# MinIO Client CLI schema for fast-completer
+# Generated from mc 1.24.6
+
+mc # MinIO client
+	--autocompletion @bool # install auto-completion for your shell
+	--no-color @bool # disable color theme [$MC_NO_COLOR]
+	--json @bool # enable JSON lines formatted output [$MC_JSON]
+	--debug @bool # enable debug output [$MC_DEBUG]
+	--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+	--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+	--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+	--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	admin # manage MinIO servers
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		accesskey
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			create
+				--access-key # set an access key for the account
+				--secret-key # set a secret key for the  account
+				--policy # path to a JSON policy file
+				--name # friendly name for the account
+				--description # description for the account
+				--expiry-duration # duration before the access key expires
+				--expiry # expiry date for the access key
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			disable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			edit
+				--secret-key # set a secret key for the  account
+				--policy # path to a JSON policy file
+				--name # friendly name for the account
+				--description # description for the account
+				--expiry-duration # duration before the access key expires
+				--expiry # expiry date for the access key
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			enable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--users-only @bool # only list user DNs
+				--temp-only @bool # only list temporary access keys
+				--svcacc-only @bool # only list service account access keys
+				--self @bool # list access keys for the authenticated user
+				--all @bool # list all access keys for all builtin users
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			sts-revoke
+				--all @bool # revoke all STS accounts for the specified user
+				--self @bool # revoke all STS accounts for the authenticated user
+				--token-type # specify the token type to revoke
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		cluster
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			bucket
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				export
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				import
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			iam
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				export
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				import
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		config
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			export
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			get
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			history
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			import
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			reset
+				--env @bool # list all the env only help
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			restore
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			set
+				--env @bool # list all the env only help
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		decommission
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			cancel
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			start
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			status
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		group
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			disable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			enable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		heal
+			--force @bool # avoid showing a warning prompt
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--offline @bool # show only offline nodes/drives
+		kms
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			key
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				create
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				list
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				status
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		logs
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		policy
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			attach
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			create
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			detach
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			entities
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		prometheus
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			generate
+				--bucket # bucket name to list metrics for. only applicable with api version v3 for metric type 'api, replication'
+				--api-version # version of metrics api to use. valid values are ['v2', 'v3']. defaults to 'v2' if not specified. (default: "v2")
+				--public @bool # disable bearer token generation for scrape_configs
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			metrics
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--bucket # bucket name to list metrics for. only applicable with api version v3 for metric type 'api, replication'
+				--api-version # version of metrics api to use. valid values are ['v2', 'v3']. defaults to 'v2' if not specified. (default: "v2")
+		rebalance
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			start
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			status
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			stop
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		replicate
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--replicate-ilm-expiry @bool # replicate ILM expiry rules
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--all @bool # remove site replication from all participating sites
+				--force @bool # force removal of site(s) from site replication configuration
+			resync
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				cancel
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				start
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				status
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			status
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--buckets @bool # display only buckets
+				--policies @bool # display only policies
+				--users @bool # display only users
+				--groups @bool # display only groups
+				--ilm-expiry-rules @bool # display only ilm expiry rules
+				--all @bool # display all available site replication status
+				--bucket # display bucket sync status
+				--policy # display policy sync status
+				--user # display user sync status
+				--group # display group sync status
+				--ilm-expiry-rule # display ILM expiry rule sync status
+			update
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--deployment-id # deployment id of the site, should be a unique value
+				--endpoint # endpoint for the site
+				--mode # change mode of replication for this target, valid values are ['sync', 'async'].
+				--bucket-bandwidth # Set default bandwidth limit for bucket in bytes per second (K,B,G,T for metric and Ki,Bi,Gi,Ti for IEC units)
+				--disable-ilm-expiry-replication @bool # disable ILM expiry rules replication
+				--enable-ilm-expiry-replication @bool # enable ILM expiry rules replication
+		scanner
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			status
+				--nodes # show only on matching servers, comma separate multiple
+				--interval # interval between requests in seconds (default: 3)
+				--max-paths # maximum number of active paths to show. -1 for unlimited (default: -1)
+				--in # read previously saved json from file and replay
+				--bucket # show scan stats about a given bucket
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			trace
+				--funcname # trace only matching func name (eg 'scanner.ScanObject')
+				--node # trace only matching servers
+				--path # trace only matching path
+				--filter-request @bool # trace calls only with request bytes greater than this threshold, use with filter-size
+				--filter-response @bool # trace calls only with response bytes greater than this threshold, use with filter-size
+				--response-duration # trace calls only with response duration greater than this threshold (e.g. 5ms)
+				--filter-size # filter size, use with filter (see UNITS)
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		service
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			restart
+				--dry-run @bool # do not attempt a restart, however verify the peer status
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			unfreeze
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		top
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			locks
+		trace
+			--call # trace only matching call types. See CALL TYPES below for list. (default: s3)
+			--status-code # trace only matching status code
+			--method # trace only matching HTTP method
+			--funcname # trace only matching func name
+			--path # trace only matching path
+			--node # trace only matching servers
+			--request-header # trace only matching request headers
+			--request-query # trace only matching request queries
+			--stats @bool # print statistical summary of all the traced calls
+			--filter-request @bool # trace calls only with request bytes greater than this threshold, use with filter-size
+			--filter-response @bool # trace calls only with response bytes greater than this threshold, use with filter-size
+			--response-duration # trace calls only with response duration greater than this threshold (e.g. 5ms) (default: 0s)
+			--filter-size # filter size, use with filter (see UNITS)
+			--in # read previously saved json from file and replay
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		update
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		user
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			disable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			enable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			policy
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			sts
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				info
+					--policy @bool # print policy in JSON format
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			svcacct
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				add
+					--access-key # set an access key for the service account
+					--secret-key # set a secret key for the service account
+					--policy # path to a JSON policy file
+					--name # friendly name for the service account
+					--description # description for the service account
+					--expiry # time of expiration for the service account
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				disable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				edit
+					--secret-key # set a secret key for the service account
+					--policy # path to a JSON policy file
+					--name # name for the service account
+					--description # description for the service account
+					--expiry # time of expiration for the service account
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				enable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				info
+					--policy @bool # print policy in JSON format
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				list
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				remove
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	alias # manage server credentials in configuration file
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		export
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		import
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		remove
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--path # bucket path lookup supported by the server. Valid options are '[auto, on, off]' (default: "auto")
+			--api # API signature. Valid options are '[S3v4, S3v2]'
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	anonymous # manage anonymous access to buckets and objects
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	batch # manage batch jobs
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		cancel
+			--id # job id
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		describe
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		generate
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+			--type # list all current batch jobs via job type
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		start
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		status
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	cat # display object contents
+		--rewind # display an earlier object version
+		--zip @bool # extract from remote zip file (MinIO server source only)
+		--offset # start offset (default: 0)
+		--tail # tail number of bytes at ending of file (default: 0)
+		--part-number # download only a specific part number (default: 0)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	cors # manage bucket CORS configuration
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		get
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		remove
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	cp # copy objects
+		--rewind # roll back object(s) to current version at specified time
+		--older-than # copy objects older than value in duration string (e.g. 7d10h31s)
+		--newer-than # copy objects newer than value in duration string (e.g. 7d10h31s)
+		--attr # add custom metadata for the object
+		--disable-multipart @bool # disable multipart upload feature
+		--tags # apply one or more tags to the uploaded objects
+		--retention-mode # retention mode to be applied on the object (governance, compliance)
+		--retention-duration # retention duration for the object in d days or y years
+		--legal-hold # apply legal hold to the copied object (on, off)
+		--zip @bool # Extract from remote zip file (MinIO server source only)
+		--max-workers # maximum number of concurrent copies (default: autodetect) (default: 0)
+		--checksum # Add checksum to uploaded object. Values: CRC64NVME, CRC32, CRC32C, SHA1 or SHA256. Requires server trailing headers (AWS, MinIO)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--enc-kms # encrypt/decrypt objects using specific server-side encryption keys. (multiple keys can be provided) [$MC_ENC_KMS]
+		--enc-s3 # encrypt/decrypt objects using server-side default keys and configurations. (multiple keys can be provided). [$MC_ENC_S3]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	diff # list differences in object name, size, and date between two buckets
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	du # summarize disk usage recursively
+		--rewind # include all object versions no later than specified date
+		--versions @bool # include all object versions
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	encrypt # manage bucket encryption config
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		clear
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	event # manage object notifications
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		add
+			--event # filter specific type of event. Defaults to all event (default: "put,delete,get")
+			--prefix # filter event associated to the specified prefix
+			--suffix # filter event associated to the specified suffix
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		remove
+			--force @bool # force removing all bucket notifications
+			--event # filter specific type of event. Defaults to all event (default: "put,delete,get")
+			--prefix # filter event associated to the specified prefix
+			--suffix # filter event associated to the specified suffix
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	find # search for objects
+		--exec # spawn an external process for each matching object (see FORMAT)
+		--ignore # exclude objects matching the wildcard pattern
+		--versions @bool # include all objects versions
+		--name # find object names matching wildcard pattern
+		--newer-than # match all objects newer than value in duration string (e.g. 7d10h31s)
+		--older-than # match all objects older than value in duration string (e.g. 7d10h31s)
+		--path # match directory names matching wildcard pattern
+		--print # print in custom format to STDOUT (see FORMAT)
+		--regex # match directory and object name with RE2 regex pattern
+		--larger # match all objects larger than specified size in units (see UNITS)
+		--smaller # match all objects smaller than specified size in units (see UNITS)
+		--maxdepth # limit directory navigation to specified depth (default: 0)
+		--watch @bool # monitor a specified path for newly created object(s)
+		--metadata # match metadata with RE2 regex pattern. Specify each with key=regex. MinIO server only.
+		--tags # match tags with RE2 regex pattern. Specify each with key=regex. MinIO server only.
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	get # get s3 object to local
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+	head # display first 'n' lines of an object
+		--rewind # select an object version at specified time
+		--zip @bool # extract from remote zip file (MinIO server source only)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	idp # manage MinIO IDentity Provider server configuration
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		ldap
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			accesskey
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				create
+					--access-key # set an access key for the account
+					--secret-key # set a secret key for the  account
+					--policy # path to a JSON policy file
+					--name # friendly name for the account
+					--description # description for the account
+					--expiry-duration # duration before the access key expires
+					--expiry # expiry date for the access key
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				create-with-login
+					--access-key # set an access key for the account
+					--secret-key # set a secret key for the  account
+					--policy # path to a JSON policy file
+					--name # friendly name for the account
+					--description # description for the account
+					--expiry-duration # duration before the access key expires
+					--expiry # expiry date for the access key
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				disable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				edit
+					--secret-key # set a secret key for the  account
+					--policy # path to a JSON policy file
+					--name # friendly name for the account
+					--description # description for the account
+					--expiry-duration # duration before the access key expires
+					--expiry # expiry date for the access key
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				enable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				info
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				list
+					--users-only @bool # only list user DNs
+					--temp-only @bool # only list temporary access keys
+					--svcacc-only @bool # only list service account access keys
+					--self @bool # list access keys for the authenticated user
+					--all @bool # list all access keys for all LDAP users
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				remove
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				sts-revoke
+					--all @bool # revoke all STS accounts for the specified user
+					--self @bool # revoke all STS accounts for the authenticated user
+					--token-type # specify the token type to revoke
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			disable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			enable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			policy
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				attach
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				detach
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				entities
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+					--user
+					--group
+					--policy # --user 'uid=bobfisher,ou=people,ou=hwengg,dc=min,dc=io' \
+					--group
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			update
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		openid
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			accesskey
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				disable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				edit
+					--secret-key # set a secret key for the  account
+					--policy # path to a JSON policy file
+					--name # friendly name for the account
+					--description # description for the account
+					--expiry-duration # duration before the access key expires
+					--expiry # expiry date for the access key
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				enable
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				info
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				list
+					--users-only @bool # only list user DNs
+					--temp-only @bool # only list temporary access keys
+					--svcacc-only @bool # only list service account access keys
+					--self @bool # list access keys for the authenticated user
+					--all @bool # list all access keys for all OpenID users
+					--all-configs @bool # list access keys for all OpenID configurations
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				remove
+					--no-color @bool # disable color theme [$MC_NO_COLOR]
+					--json @bool # enable JSON lines formatted output [$MC_JSON]
+					--debug @bool # enable debug output [$MC_DEBUG]
+					--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+					--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+					--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+					--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			disable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			enable
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			update
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	ilm # manage bucket lifecycle
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		restore
+			--days # keep the restored copy for N days (default: 1)
+			--versions @bool # apply on versions
+			--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		rule
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--prefix # object prefix
+				--tags # key value pairs of the form '<key1>=<value1>&<key2>=<value2>&<key3>=<value3>'
+				--size-lt # objects with size less than this value will be selected for the lifecycle action
+				--size-gt # objects with size greater than this value will be selected for the lifecycle action
+				--expire-days # number of days to expire
+				--expire-delete-marker @bool # expire zombie delete markers
+				--transition-days # number of days to transition
+				--transition-tier # remote tier name to transition
+				--noncurrent-expire-days # number of days to expire noncurrent versions
+				--noncurrent-expire-newer # number of newer noncurrent versions to retain (default: 0)
+				--noncurrent-transition-days # number of days to transition noncurrent versions (default: 0)
+				--noncurrent-transition-tier # remote tier name to transition
+				--expire-all-object-versions @bool # expire all object versions
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			edit
+				--id # id of the rule to be modified
+				--disable @bool # disable the rule
+				--enable @bool # enable the rule
+				--prefix # object prefix
+				--tags # key value pairs of the form '<key1>=<value1>&<key2>=<value2>&<key3>=<value3>'
+				--size-lt # objects with size less than this value will be selected for the lifecycle action
+				--size-gt # objects with size greater than this value will be selected for the lifecycle action
+				--expire-days # number of days to expire
+				--expire-delete-marker @bool # expire zombie delete markers
+				--transition-days # number of days to transition
+				--transition-tier # remote tier name to transition
+				--noncurrent-expire-days # number of days to expire noncurrent versions
+				--noncurrent-expire-newer # number of newer noncurrent versions to retain (default: 0)
+				--noncurrent-transition-days # number of days to transition noncurrent versions (default: 0)
+				--noncurrent-transition-tier # remote tier name to transition
+				--expire-all-object-versions @bool # expire all object versions
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			export
+			import
+			list
+				--expiry @bool # display only expiration fields
+				--transition @bool # display only transition fields
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--id # id of the lifecycle rule
+				--force @bool # force flag is to be used when deleting all lifecycle configuration rules for the bucket
+				--all @bool # delete all lifecycle configuration rules of the bucket, force flag enforced
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		tier
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			add
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--endpoint # remote tier endpoint. e.g https://s3.amazonaws.com
+				--region # remote tier region. e.g us-west-2
+				--access-key # AWS S3 or compatible object storage access-key
+				--secret-key # AWS S3 or compatible object storage secret-key
+				--use-aws-role @bool # use AWS S3 role
+				--aws-role-arn # use AWS S3 role name
+				--aws-web-identity-file # use AWS S3 web identity file
+				--account-name # Azure Blob Storage account name
+				--account-key # Azure Blob Storage account key
+				--az-sp-tenant-id # Directory ID for the Azure service principal account
+				--az-sp-client-id # The client ID of the Azure service principal account
+				--az-sp-client-secret # The client secret of the Azure service principal account
+				--credentials-file # path to Google Cloud Storage credentials file
+				--bucket # remote tier bucket
+				--prefix # remote tier prefix
+				--storage-class # remote tier storage-class
+				--bucket # --prefix mygcsprefix/
+			check
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			info
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			list
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			update
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--access-key # AWS S3 or compatible object storage access-key
+				--secret-key # AWS S3 or compatible object storage secret-key
+				--use-aws-role @bool # use AWS S3 role
+				--account-key # Azure Blob Storage account key
+				--az-sp-tenant-id # Directory ID for the Azure service principal account
+				--az-sp-client-id # The client ID of the Azure service principal account
+				--az-sp-client-secret # The client secret of the Azure service principal account
+				--credentials-file # path to Google Cloud Storage credentials file
+	legalhold # manage legal hold for object(s)
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		clear
+			--rewind # clear legal hold on an object version at specified time
+			--versions @bool # clear legal hold on multiple versions of object(s)
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--rewind # show legal hold status of an object version at specified time
+			--versions @bool # show legal hold status of multiple versions of object(s)
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--rewind # apply legal hold on an object version at specified time
+			--versions @bool # apply legal hold on multiple versions of an object
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	license # license related commands
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+		register
+			--name # Specify the name to associate to this MinIO cluster in SUBNET
+			--license # license of the account on SUBNET
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+		update
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+	ls # list buckets and objects
+		--rewind # list all object versions no later than specified date
+		--versions @bool # list all versions
+		--summarize @bool # display summary information (number of objects, total size)
+		--zip @bool # list files inside zip archive (MinIO servers only)
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	mb # make a bucket
+		--region # specify bucket region; defaults to 'us-east-1' (default: "us-east-1")
+		--with-versioning @bool # enable versioned bucket
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	mirror # synchronize object(s) to a remote site
+		--overwrite @bool # overwrite object(s) on target if it differs from source
+		--dry-run @bool # perform a fake mirror operation
+		--remove @bool # remove extraneous object(s) on target
+		--region # specify region when creating new bucket(s) on target (default: "us-east-1")
+		--active-active @bool # enable active-active multi-site setup
+		--disable-multipart @bool # disable multipart upload feature
+		--exclude # exclude object(s) that match specified object name pattern
+		--exclude-bucket # exclude bucket(s) that match specified bucket name pattern
+		--exclude-storageclass # exclude object(s) that match the specified storage class
+		--older-than # filter object(s) older than value in duration string (e.g. 7d10h31s)
+		--newer-than # filter object(s) newer than value in duration string (e.g. 7d10h31s)
+		--attr # add custom metadata for all objects
+		--monitoring-address # if specified, a new prometheus endpoint will be created to report mirroring activity. (eg: localhost:8081)
+		--retry @bool # if specified, will enable retrying on a per object basis if errors occur
+		--summary @bool # print a summary of the mirror session
+		--skip-errors @bool # skip any errors when mirroring
+		--max-workers # maximum number of concurrent copies (default: autodetect) (default: 0)
+		--checksum # Add checksum to uploaded object. Values: CRC64NVME, CRC32, CRC32C, SHA1 or SHA256. Requires server trailing headers (AWS, MinIO)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--enc-kms # encrypt/decrypt objects using specific server-side encryption keys. (multiple keys can be provided) [$MC_ENC_KMS]
+		--enc-s3 # encrypt/decrypt objects using server-side default keys and configurations. (multiple keys can be provided). [$MC_ENC_S3]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	mv # move objects
+		--older-than # move objects older than value in duration string (e.g. 7d10h31s)
+		--newer-than # move objects newer than value in duration string (e.g. 7d10h31s)
+		--attr # add custom metadata for the object
+		--disable-multipart @bool # disable multipart upload feature
+		--tags # apply one or more tags to the uploaded objects
+		--checksum # Add checksum to uploaded object. Values: CRC64NVME, CRC32, CRC32C, SHA1 or SHA256. Requires server trailing headers (AWS, MinIO)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--enc-kms # encrypt/decrypt objects using specific server-side encryption keys. (multiple keys can be provided) [$MC_ENC_KMS]
+		--enc-s3 # encrypt/decrypt objects using server-side default keys and configurations. (multiple keys can be provided). [$MC_ENC_S3]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	od # measure single stream upload and download
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	ping # perform liveness check
+		--node # ping the specified node
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	pipe # stream STDIN to an object
+		--attr # add custom metadata for the object
+		--tags # apply one or more tags to the uploaded objects
+		--concurrent # allow N concurrent uploads [WARNING: will use more memory use it with caution] (default: 1)
+		--part-size # customize chunk size for each concurrent upload (default: "528 MiB")
+		--checksum # Add checksum to uploaded object. Values: CRC64NVME, CRC32, CRC32C, SHA1 or SHA256. Requires server trailing headers (AWS, MinIO)
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--enc-kms # encrypt/decrypt objects using specific server-side encryption keys. (multiple keys can be provided) [$MC_ENC_KMS]
+		--enc-s3 # encrypt/decrypt objects using server-side default keys and configurations. (multiple keys can be provided). [$MC_ENC_S3]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	put # upload an object to a bucket
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--enc-kms # encrypt/decrypt objects using specific server-side encryption keys. (multiple keys can be provided) [$MC_ENC_KMS]
+		--enc-s3 # encrypt/decrypt objects using server-side default keys and configurations. (multiple keys can be provided). [$MC_ENC_S3]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		--checksum # Add checksum to uploaded object. Values: CRC64NVME, CRC32, CRC32C, SHA1 or SHA256. Requires server trailing headers (AWS, MinIO)
+		--disable-multipart @bool # disable multipart upload feature
+	quota # manage bucket quota
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		clear
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--size # set a hard quota, disallowing writes after quota is reached
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	rb # remove a bucket
+		--force @bool # force a recursive remove operation on all object versions
+		--dangerous @bool # allow site-wide removal of objects
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	ready # checks if the cluster is ready or not
+		--cluster-read @bool # check if the cluster has enough read quorum
+		--maintenance @bool # check if the cluster is taken down for maintenance
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	replicate # configure server side bucket replication
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		add
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--id # id for the rule, should be a unique value
+			--tags # format '<key1>=<value1>&<key2>=<value2>&<key3>=<value3>', multiple values allowed for multiple key/value pairs
+			--storage-class # storage class for destination, valid values are either "STANDARD" or "REDUCED_REDUNDANCY"
+			--disable @bool # disable the rule
+			--priority # priority of the rule, should be unique and is a required field (default: 0)
+			--remote-bucket # remote bucket, should be a unique value for the configuration
+			--replicate # comma separated list to enable replication of soft deletes, permanent deletes, existing objects and metadata sync (default: "delete-marker,delete,existing-objects,metadata-sync")
+			--path # bucket path lookup supported by the server. Valid options are ['auto', 'on', 'off']' (default: "auto")
+			--region # region of the destination bucket (optional)
+			--bandwidth # set bandwidth limit in bytes per second (K,B,G,T for metric and Ki,Bi,Gi,Ti for IEC units)
+			--sync @bool # enable synchronous replication for this target. default is async
+			--healthcheck-seconds # health check interval in seconds (default: 60)
+			--disable-proxy @bool # disable proxying in active-active replication. If unset, default behavior is to proxy
+			--priority
+			--priority
+			--priority
+			--priority
+		backlog
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--arn # unique role ARN
+		export
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		import
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--status # show rules by status. Valid options are [enabled,disabled]
+		remove
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--id # id for the rule, should be a unique value
+			--force @bool # force remove all the replication configuration rules on the bucket
+			--all @bool # remove all replication configuration rules of the bucket, force flag enforced
+		resync
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			start
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--older-than # replicate back objects older than value in duration string (e.g. 7d10h31s)
+				--remote-bucket # remote bucket ARN
+			status
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--remote-bucket # remote bucket ARN
+		status
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		update
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--id # id for the rule, should be a unique value
+			--tags # format '<key1>=<value1>&<key2>=<value2>&<key3>=<value3>', multiple values allowed for multiple key/value pairs
+			--storage-class # storage class for destination, valid values are ['STANDARD', 'REDUCED_REDUNDANCY']
+			--state # change rule status, valid values are ['enable', 'disable']
+			--priority # priority of the rule, should be unique and is a required field (default: 0)
+			--remote-bucket # destination bucket, should be a unique value for the configuration
+			--replicate # comma separated list to enable replication of soft deletes, permanent deletes, existing objects and metadata sync. Valid options are "delete-marker","delete","existing-objects","metadata-sync" and ""'
+			--sync # enable synchronous replication for this target, valid values are ['enable', 'disable']. (default: "disable")
+			--proxy # enable proxying in active-active replication, valid values are ['enable', 'disable'] (default: "enable")
+			--bandwidth # Set bandwidth limit in bytes per second (K,B,G,T for metric and Ki,Bi,Gi,Ti for IEC units)
+			--healthcheck-seconds # health check duration in seconds (default: 60)
+			--path # bucket path lookup supported by the server, valid options are ['on', 'off', 'auto'] (default: "auto")
+	retention # set retention for object(s)
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		clear
+			--rewind # roll back object(s) to current version at specified time
+			--versions @bool # clear retention of object(s) and all its versions
+			--default @bool # set default bucket locking
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		info
+			--rewind # roll back object(s) to current version at specified time
+			--versions @bool # show retention info on object(s) and all its versions
+			--default @bool # show bucket default retention mode
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--bypass @bool # bypass governance
+			--rewind # roll back object(s) to current version at specified time
+			--versions @bool # apply retention object(s) and all its versions
+			--default @bool # set bucket default retention mode
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	rm # remove object(s)
+		--versions @bool # remove object(s) and all its versions
+		--force @bool # allow a recursive remove operation
+		--dangerous @bool # allow site-wide removal of objects
+		--rewind # roll back object(s) to current version at specified time
+		--dry-run @bool # perform a fake remove operation
+		--stdin @bool # read object names from STDIN
+		--older-than # remove objects older than value in duration string (e.g. 7d10h31s)
+		--newer-than # remove objects newer than value in duration string (e.g. 7d10h31s)
+		--bypass @bool # bypass governance
+		--non-current @bool # remove object(s) versions that are non-current
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	share # generate URL for temporary access to an object
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		download
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+		upload
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	sql # run sql queries on objects
+		--csv-input # csv input serialization option
+		--json-input # json input serialization option
+		--compression # input compression type
+		--csv-output # csv output serialization option
+		--csv-output-header # optional csv output header
+		--json-output # json output serialization option
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	stat # show object metadata
+		--rewind # stat on older version(s)
+		--versions @bool # stat all versions
+		--no-list @bool # disable all LIST operations for stat
+		--enc-c # encrypt/decrypt objects using client provided keys. (multiple keys can be provided) Formats: RawBase64 or Hex.
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	support # support related commands
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		callhome
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+		diagnostics
+			--anonymize # Data anonymization mode (standard|strict) (default: "standard")
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+		inspect
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+			--legacy @bool # use the older inspect format
+		perf
+			--size # size of the object used for uploads/downloads (default: "64MiB")
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+		profile
+			--duration # profile for the specified duration in seconds (default: 15)
+			--type # profiler type, possible values are 'cpu', 'cpuio', 'mem', 'block', 'mutex', 'trace', 'threads', 'goroutines' and 'runtime' (default: "cpu,mem,goroutines,runtime")
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			--api-key # API Key of the account on SUBNET [$_MC_SUBNET_API_KEY]
+		proxy
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			remove
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			set
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			show
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		register
+		top
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			api
+				--name # summarize current calls for matching API name
+				--path # summarize current API calls only on matching path
+				--node # summarize current API calls only on matching servers
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			drive
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			locks
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			net
+				--interval # interval between requests in seconds (default: 1)
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+			rpc
+				--nodes # collect only metrics from matching servers, comma separate multiple
+				--interval # interval between requests in seconds (default: 1)
+				--in # read previously saved json from file and replay
+				--no-color @bool # disable color theme [$MC_NO_COLOR]
+				--json @bool # enable JSON lines formatted output [$MC_JSON]
+				--debug @bool # enable debug output [$MC_DEBUG]
+				--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+				--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+				--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+				--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+				--airgap @bool # use in environments without network access to SUBNET (e.g. airgapped, firewalled, etc.)
+		upload
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--issue # SUBNET issue number to which the file is to be uploaded (default: 0)
+			--comment # comment to be posted on the issue along with the file
+			--enc @bool # encrypt content with key only accessible to minio employees
+	tag # manage tags for bucket and object(s)
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		list
+			--rewind # list tags of particular object version at specified time
+			--versions @bool # list tags on all versions for an object
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		remove
+			--rewind # remove tags on an object version at specified time
+			--versions @bool # remove tags on multiple versions of an object
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		set
+			--rewind # set tags on a specific object version at specific time
+			--versions @bool # set tags on multiple versions for an object
+			--exclude-folders @bool # exclude setting tags on folder objects
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	tree # list buckets and objects in a tree format
+		--rewind # display tree no later than specified date
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	undo # undo PUT/DELETE operations
+		--last # undo N last changes (default: 1)
+		--force @bool # force recursive operation
+		--dry-run @bool # fake an undo operation
+		--action # undo only if the latest version is of the following type [PUT/DELETE]
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	update # update mc to latest release
+		--json @bool # enable JSON lines formatted output
+	version # manage bucket versioning
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		enable
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+			--excluded-prefixes # exclude versioning on these prefix patterns
+			--exclude-folders @bool # exclude versioning on folder objects
+		info
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+		suspend
+			--no-color @bool # disable color theme [$MC_NO_COLOR]
+			--json @bool # enable JSON lines formatted output [$MC_JSON]
+			--debug @bool # enable debug output [$MC_DEBUG]
+			--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+			--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+			--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+			--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+	watch # listen for object notification events
+		--events # filter specific types of events; defaults to all events by default (default: "put,delete,get")
+		--prefix # filter events for a prefix
+		--suffix # filter events for a suffix
+		--recursive @bool # recursively watch for events
+		--no-color @bool # disable color theme [$MC_NO_COLOR]
+		--json @bool # enable JSON lines formatted output [$MC_JSON]
+		--debug @bool # enable debug output [$MC_DEBUG]
+		--resolve # resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+		--insecure @bool # disable SSL certificate verification [$MC_INSECURE]
+		--limit-upload # limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+		--limit-download # limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]

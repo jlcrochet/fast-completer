@@ -1,0 +1,317 @@
+# Kustomize CLI schema for fast-completer
+# Generated from kustomize unknown
+
+kustomize # Kubernetes customization tool
+	--help @bool # help for kustomize
+	--stack-trace # print a stack-trace on error
+	build # Build a kustomization target from a directory or URL
+		--stack-trace @bool # print a stack-trace on error
+		--as-current-user @bool # use the uid and gid of the command executor to run the function in the container
+		--enable-alpha-plugins @bool # enable kustomize plugins
+		--enable-exec @bool # enable support for exec functions (raw executables); do not use for untrusted configs! (Alpha)
+		--enable-helm @bool # Enable use of the Helm chart inflator generator.
+		--env # a list of environment variables to be used by functions
+		--helm-api-versions # Kubernetes api versions used by Helm for Capabilities.APIVersions
+		--helm-command # helm command (path to executable)
+		--helm-debug @bool # Enable debug output from the Helm chart inflator generator.
+		--helm-kube-version # Kubernetes version used by Helm for Capabilities.KubeVersion
+		--load-restrictor # if set to 'LoadRestrictionsNone', local kustomizations may load files from outside their root. This does, however, break the relocatability of the kustomization.
+		--mount # a list of storage options read from the filesystem
+		--network @bool # enable network access for functions that declare it
+		--network-name # the docker network to run the container in
+		--output # If specified, write output to this path.
+	cfg # Commands for reading and writing configuration
+		--stack-trace @bool # print a stack-trace on error
+		cat # [Alpha] Print Resource Config from a local directory.
+			--stack-trace @bool # print a stack-trace on error
+			--annotate @bool # annotate resources with their file origins.
+			--dest # if specified, write output to a file rather than stdout
+			--exclude-non-local @bool # if true, exclude non-local-config in the output.
+			--format @bool # format resource config yaml before printing.
+			--function-config # path to function config to put in ResourceList -- only if wrapped in a ResourceList.
+			--include-local @bool # if true, include local-config in the output.
+			--recurse-subpackages @bool # print resources recursively in all the nested subpackages
+			--strip-comments @bool # remove comments from yaml.
+			--style # yaml styles to apply.  may be 'TaggedStyle', 'DoubleQuotedStyle', 'LiteralStyle', 'FoldedStyle', 'FlowStyle'.
+			--wrap-kind # if set, wrap the output in this list type kind.
+			--wrap-version # if set, wrap the output in this list type apiVersion.
+		count # [Alpha] Count Resources Config from a local directory.
+			--stack-trace @bool # print a stack-trace on error
+			--kind @bool # count resources by kind.
+			--recurse-subpackages @bool # prints count of resources recursively in all the nested subpackages
+		grep # [Alpha] Search for matching Resources in a directory or from stdin
+			--stack-trace @bool # print a stack-trace on error
+			--annotate @bool # annotate resources with their file origins.
+			--invert-match @bool # Selected Resources are those not matching any of the specified patterns..
+			--recurse-subpackages @bool # also print resources recursively in all the nested subpackages
+		tree # [Alpha] Display Resource structure from a directory or stdin.
+			--stack-trace @bool # print a stack-trace on error
+			--all @bool # print all field infos
+			--args @bool # print args field
+			--command @bool # print command field
+			--env @bool # print env field
+			--exclude-non-local @bool # if true, exclude non-local-config in the output.
+			--field # print field
+			--graph-structure # Graph structure to use for printing the tree.  may be any of: owners,directory
+			--image @bool # print image field
+			--include-local @bool # if true, include local-config in the output.
+			--name @bool # print name field
+			--ports @bool # print ports field
+			--replicas @bool # print replicas field
+			--resources @bool # print resources field
+	completion # Generate shell completion script
+		--stack-trace @bool # print a stack-trace on error
+		bash
+			--stack-trace @bool # print a stack-trace on error
+		fish
+			--stack-trace @bool # print a stack-trace on error
+		powershell
+			--stack-trace @bool # print a stack-trace on error
+		zsh
+			--stack-trace @bool # print a stack-trace on error
+	create # Create a new kustomization in the current directory
+		--stack-trace @bool # print a stack-trace on error
+		--annotations # Add one or more common annotations.
+		--autodetect @bool # Search for kubernetes resources in the current directory to be added to the kustomization file.
+		--labels # Add one or more common labels.
+		--nameprefix # Sets the value of the namePrefix field in the kustomization file.
+		--namespace # Set the value of the namespace field in the kustomization file.
+		--namesuffix # Sets the value of the nameSuffix field in the kustomization file.
+		--recursive @bool # Enable recursive directory searching for resource auto-detection.
+		--resources # Name of a file containing a file to add to the kustomization file.
+	edit # Edits a kustomization file
+		--stack-trace @bool # print a stack-trace on error
+		add # Adds an item to the kustomization file
+			--stack-trace @bool # print a stack-trace on error
+			annotation # Adds one or more commonAnnotations to kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--force @bool # overwrite commonAnnotation if it already exists
+			base # Adds one or more bases to the kustomization.yaml in current directory
+				--stack-trace @bool # print a stack-trace on error
+			buildmetadata # Adds one or more buildMetadata options to the kustomization.yaml in the current directory
+				--stack-trace @bool # print a stack-trace on error
+			component # Add the name of a file containing a component to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			configmap # Adds a configmap to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+				--behavior # Specify the behavior for config map generation, i.e whether to create a new configmap (the default),  to merge with a previously defined one, or to replace an existing one. Merge and replace should be used only  when overriding an existing configmap defined in a base
+				--disableNameSuffixHash @bool # Disable the name suffix for the configmap
+				--from-env-file # Specify the path to a file to read lines of key=val pairs to create a configmap (i.e. a Docker .env file).
+				--from-file # Key file can be specified using its file path, in which case file basename will be used as configmap key, or optionally with a key and file path, in which case the given key will be used.  Specifying a directory will iterate each named file in the directory whose basename is a valid configmap key.
+				--from-literal # Specify a key and literal value to insert in configmap (i.e. mykey=somevalue)
+				--namespace # Specify the namespace of the ConfigMap
+			generator # Add the name of a file containing a generator configuration to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			label # Adds one or more commonLabels to kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--force @bool # overwrite commonLabel if it already exists
+				--include-templates @bool # include labels in templates (requires --without-selector)
+				--without-selector @bool # using add labels without selector option
+			patch # Add an item to patches field
+				--stack-trace @bool # print a stack-trace on error
+				--annotation-selector # annotationSelector in patch target
+				--group # API group in patch target
+				--kind # Resource kind in patch target
+				--label-selector # labelSelector in patch target
+				--name # Resource name in patch target
+				--namespace # Resource namespace in patch target
+				--patch # Literal string of patch content. Cannot be used with --path at the same time.
+				--path # Path to the patch file. Cannot be used with --patch at the same time.
+			resource # Add the name of a file containing a resource to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+				--no-verify @bool # skip validation for resources
+			secret # Adds a secret to the kustomization file.
+				--stack-trace @bool # print a stack-trace on error
+				--disableNameSuffixHash @bool # Disable the name suffix for the secret
+				--from-env-file # Specify the path to a file to read lines of key=val pairs to create a secret (i.e. a Docker .env file).
+				--from-file # Key file can be specified using its file path, in which case file basename will be used as secret key, or optionally with a key and file path, in which case the given key will be used.  Specifying a directory will iterate each named file in the directory whose basename is a valid secret key.
+				--from-literal # Specify a key and literal value to insert in secret (i.e. mykey=somevalue)
+				--namespace # Specify the namespace of the secret
+				--type # Specify the secret type this can be 'Opaque' (default), or 'kubernetes.io/tls'
+			transformer # Add the name of a file containing a transformer configuration to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+		alpha-list-builtin-plugin # [Alpha] List the builtin plugins
+			--stack-trace @bool # print a stack-trace on error
+		fix # Fix the missing fields in kustomization file
+			--stack-trace @bool # print a stack-trace on error
+			--vars @bool # If specified, kustomize will attempt to convert vars to replacements.
+		remove # Removes items from the kustomization file
+			--stack-trace @bool # print a stack-trace on error
+			annotation # Removes one or more commonAnnotations from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--ignore-non-existence @bool # ignore error if the given label doesn't exist
+			buildmetadata # Removes one or more buildMetadata options to the kustomization.yaml in the current directory
+				--stack-trace @bool # print a stack-trace on error
+			configmap # Removes the specified configmap(s) from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--namespace # Namespace to remove ConfigMap(s) from
+			label # Removes one or more commonLabels from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--ignore-non-existence @bool # ignore error if the given label doesn't exist
+			patch # Removes a patch from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--annotation-selector # annotationSelector in patch target
+				--group # API group in patch target
+				--kind # Resource kind in patch target
+				--label-selector # labelSelector in patch target
+				--name # Resource name in patch target
+				--namespace # Resource namespace in patch target
+				--patch # Literal string of patch content. Cannot be used with --path at the same time.
+				--path # Path to the patch file. Cannot be used with --patch at the same time.
+			resource # Removes one or more resource file paths from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+			secret # Removes the specified secret(s) from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+				--namespace # Namespace to remove Secret(s) from
+			transformer # Removes one or more transformers from kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+		set # Sets the value of different fields in kustomization file
+			--stack-trace @bool # print a stack-trace on error
+			annotation # Sets one or more commonAnnotations in kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+			buildmetadata # Sets one or more buildMetadata options to the kustomization.yaml in the current directory
+				--stack-trace @bool # print a stack-trace on error
+			configmap # Edits the value for an existing key for a ConfigMap in the kustomization.yaml file
+				--stack-trace @bool # print a stack-trace on error
+				--from-literal # Specify an existing key and a new value to update a ConfigMap (i.e. mykey=newvalue)
+				--namespace # Current namespace of the target ConfigMap
+				--new-namespace # New namespace value for the target ConfigMap
+			image # Sets images and their new names, new tags or digests in the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			label # Sets one or more commonLabels in kustomization.yaml
+				--stack-trace @bool # print a stack-trace on error
+			nameprefix # Sets the value of the namePrefix field in the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			namespace # Sets the value of the namespace field in the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			namesuffix # Sets the value of the nameSuffix field in the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			replicas # Sets replicas count for resources in the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			secret # Edits the value for an existing key for a Secret in the kustomization.yaml file
+				--stack-trace @bool # print a stack-trace on error
+				--from-literal # Specify an existing key and a new value to update a Secret (i.e. mykey=newvalue)
+				--namespace # Current namespace of the target Secret
+				--new-namespace # New namespace value for the target Secret
+	fn # Commands for running functions against configuration
+		--stack-trace @bool # print a stack-trace on error
+		run # [Alpha] Reoncile config functions to Resources.
+			--stack-trace @bool # print a stack-trace on error
+			--as-current-user @bool # use the uid and gid of the command executor to run the function in the container
+			--dry-run @bool # print results to stdout
+			--enable-exec @bool # enable support for exec functions -- note: exec functions run arbitrary code -- do not use for untrusted configs!!! (Alpha)
+			--env # a list of environment variables to be used by functions
+			--exec-path # run an executable as a function. (Alpha)
+			--fn-path # read functions from these directories instead of the configuration directory.
+			--global-scope @bool # set global scope for functions.
+			--image # run this image as a function instead of discovering them.
+			--include-subpackages @bool # also print resources from subpackages.
+			--log-steps @bool # log steps to stderr
+			--mount # a list of storage options read from the filesystem
+			--network @bool # enable network access for functions that declare it
+			--results-dir # write function results to this dir
+	help # Help about any command
+		--stack-trace @bool # print a stack-trace on error
+		build # Build a kustomization target from a directory or URL
+			--stack-trace @bool # print a stack-trace on error
+		cfg # Commands for reading and writing configuration
+			--stack-trace @bool # print a stack-trace on error
+			cat # [Alpha] Print Resource Config from a local directory.
+				--stack-trace @bool # print a stack-trace on error
+			count # [Alpha] Count Resources Config from a local directory.
+				--stack-trace @bool # print a stack-trace on error
+			grep # [Alpha] Search for matching Resources in a directory or from stdin
+				--stack-trace @bool # print a stack-trace on error
+			tree # [Alpha] Display Resource structure from a directory or stdin.
+				--stack-trace @bool # print a stack-trace on error
+		completion # Generate shell completion script
+			--stack-trace @bool # print a stack-trace on error
+		create # Create a new kustomization in the current directory
+			--stack-trace @bool # print a stack-trace on error
+		edit # Edits a kustomization file
+			--stack-trace @bool # print a stack-trace on error
+			add # Adds an item to the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+				annotation # Adds one or more commonAnnotations to kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				base # Adds one or more bases to the kustomization.yaml in current directory
+					--stack-trace @bool # print a stack-trace on error
+				buildmetadata # Adds one or more buildMetadata options to the kustomization.yaml in the current directory
+					--stack-trace @bool # print a stack-trace on error
+				component # Add the name of a file containing a component to the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				configmap # Adds a configmap to the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				generator # Add the name of a file containing a generator configuration to the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				label # Adds one or more commonLabels to kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				patch # Add an item to patches field
+					--stack-trace @bool # print a stack-trace on error
+				resource # Add the name of a file containing a resource to the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				secret # Adds a secret to the kustomization file.
+					--stack-trace @bool # print a stack-trace on error
+				transformer # Add the name of a file containing a transformer configuration to the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+			alpha-list-builtin-plugin # [Alpha] List the builtin plugins
+				--stack-trace @bool # print a stack-trace on error
+			fix # Fix the missing fields in kustomization file
+				--stack-trace @bool # print a stack-trace on error
+			remove # Removes items from the kustomization file
+				--stack-trace @bool # print a stack-trace on error
+				annotation # Removes one or more commonAnnotations from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				buildmetadata # Removes one or more buildMetadata options to the kustomization.yaml in the current directory
+					--stack-trace @bool # print a stack-trace on error
+				configmap # Removes the specified configmap(s) from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				label # Removes one or more commonLabels from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				patch # Removes a patch from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				resource # Removes one or more resource file paths from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				secret # Removes the specified secret(s) from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				transformer # Removes one or more transformers from kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+			set # Sets the value of different fields in kustomization file
+				--stack-trace @bool # print a stack-trace on error
+				annotation # Sets one or more commonAnnotations in kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				buildmetadata # Sets one or more buildMetadata options to the kustomization.yaml in the current directory
+					--stack-trace @bool # print a stack-trace on error
+				configmap # Edits the value for an existing key for a ConfigMap in the kustomization.yaml file
+					--stack-trace @bool # print a stack-trace on error
+				image # Sets images and their new names, new tags or digests in the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				label # Sets one or more commonLabels in kustomization.yaml
+					--stack-trace @bool # print a stack-trace on error
+				nameprefix # Sets the value of the namePrefix field in the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				namespace # Sets the value of the namespace field in the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				namesuffix # Sets the value of the nameSuffix field in the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				replicas # Sets replicas count for resources in the kustomization file
+					--stack-trace @bool # print a stack-trace on error
+				secret # Edits the value for an existing key for a Secret in the kustomization.yaml file
+					--stack-trace @bool # print a stack-trace on error
+		fn # Commands for running functions against configuration
+			--stack-trace @bool # print a stack-trace on error
+			run # [Alpha] Reoncile config functions to Resources.
+				--stack-trace @bool # print a stack-trace on error
+		help # Help about any command
+			--stack-trace @bool # print a stack-trace on error
+		localize # [Alpha] Creates localized copy of target kustomization root at destination
+			--stack-trace @bool # print a stack-trace on error
+		version # Prints the kustomize version
+			--stack-trace @bool # print a stack-trace on error
+	localize # [Alpha] Creates localized copy of target kustomization root at destination
+		--stack-trace @bool # print a stack-trace on error
+		--no-verify @bool # Does not verify that the outputs of kustomize build for target and newDir are the same after localization.
+		--scope # Path to directory inside of which localize is limited to running.
+	version # Prints the kustomize version
+		--stack-trace @bool # print a stack-trace on error
+		--output # One of 'yaml' or 'json'.

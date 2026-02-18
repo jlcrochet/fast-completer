@@ -1,0 +1,8 @@
+[project]
+name = "gpg-schema-export"
+version = "0.1.0"
+description = "Export Gpg command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-gpg = "export_command_tree:main"

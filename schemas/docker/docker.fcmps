@@ -1,0 +1,1568 @@
+# Docker CLI schema for fast-completer
+# Generated from docker 29.2.1
+
+docker # Docker CLI
+	--config # Location of client config files
+	--context # Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")
+	--debug @bool # Enable debug mode
+	--host # Daemon socket to connect to
+	--log-level # Set the logging level ("debug", "info", "warn", "error", "fatal")
+	--tls @bool # Use TLS; implied by --tlsverify
+	--tlscacert # Trust certs signed only by this CA
+	--tlscert # Path to TLS certificate file
+	--tlskey # Path to TLS key file
+	--tlsverify @bool # Use TLS and verify the remote
+	--version @bool # Print version information and quit
+	attach # Attach local standard input, output, and error streams to a running container
+		--detach-keys # Override the key sequence for detaching a container
+		--no-stdin @bool # Do not attach STDIN
+		--sig-proxy @bool # Proxy all received signals to the process
+	bake # Build from a file
+	build # Build an image from a Dockerfile
+		--add-host # Add a custom host-to-IP mapping ("host:ip")
+		--build-arg # Set build-time variables
+		--cache-from # Images to consider as cache sources
+		--cgroup-parent # Set the parent cgroup for the "RUN" instructions during build
+		--compress @bool # Compress the build context using gzip
+		--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+		--cpu-shares # CPU shares (relative weight)
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--file # Name of the Dockerfile (Default is "PATH/Dockerfile")
+		--force-rm @bool # Always remove intermediate containers
+		--iidfile # Write the image ID to the file
+		--isolation # Container isolation technology
+		--label # Set metadata for an image
+		--memory # Memory limit
+		--memory-swap # Swap limit equal to memory plus swap: -1 to enable unlimited swap
+		--network # Set the networking mode for the RUN instructions during build
+		--no-cache @bool # Do not use cache when building the image
+		--platform # Set platform if server is multi-platform capable
+		--pull @bool # Always attempt to pull a newer version of the image
+		--quiet @bool # Suppress the build output and print image ID on success
+		--rm @bool # Remove intermediate containers after a successful build
+		--security-opt # Security options
+		--shm-size # Size of "/dev/shm"
+		--squash @bool # Squash newly built layers into a single new layer
+		--tag # Name and optionally a tag in the "name:tag" format
+		--target # Set the target build stage to build.
+		--ulimit # Ulimit options
+	builder # Manage builds
+		build # Build an image from a Dockerfile
+			--add-host # Add a custom host-to-IP mapping ("host:ip")
+			--build-arg # Set build-time variables
+			--cache-from # Images to consider as cache sources
+			--cgroup-parent # Set the parent cgroup for the "RUN" instructions during build
+			--compress @bool # Compress the build context using gzip
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-shares # CPU shares (relative weight)
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--file # Name of the Dockerfile (Default is "PATH/Dockerfile")
+			--force-rm @bool # Always remove intermediate containers
+			--iidfile # Write the image ID to the file
+			--isolation # Container isolation technology
+			--label # Set metadata for an image
+			--memory # Memory limit
+			--memory-swap # Swap limit equal to memory plus swap: -1 to enable unlimited swap
+			--network # Set the networking mode for the RUN instructions during build
+			--no-cache @bool # Do not use cache when building the image
+			--platform # Set platform if server is multi-platform capable
+			--pull @bool # Always attempt to pull a newer version of the image
+			--quiet @bool # Suppress the build output and print image ID on success
+			--rm @bool # Remove intermediate containers after a successful build
+			--security-opt # Security options
+			--shm-size # Size of "/dev/shm"
+			--squash @bool # Squash newly built layers into a single new layer
+			--tag # Name and optionally a tag in the "name:tag" format
+			--target # Set the target build stage to build.
+			--ulimit # Ulimit options
+		prune # Remove build cache
+			--all @bool # Remove all unused build cache, not just dangling ones
+			--filter # Provide filter values (e.g. "until=24h")
+			--force @bool # Do not prompt for confirmation
+			--keep-storage # Amount of disk space to keep for cache
+	checkpoint # Manage checkpoints
+		create # Create a checkpoint from a running container
+			--checkpoint-dir # Use a custom checkpoint storage directory
+			--leave-running @bool # Leave the container running after checkpoint
+		ls # List checkpoints for a container
+			--checkpoint-dir # Use a custom checkpoint storage directory
+		rm # Remove a checkpoint
+			--checkpoint-dir # Use a custom checkpoint storage directory
+	commit # Create a new image from a container's changes
+		--author # Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+		--change # Apply Dockerfile instruction to the created image
+		--message # Commit message
+		--no-pause @bool # Disable pausing container during commit
+	compose # Docker Compose
+		--all-resources @bool # Include all resources, even those not used by services
+		--ansi # Control when to print ANSI control characters ("never"|"always"|"auto")
+		--compatibility @bool # Run compose in backward compatibility mode
+		--dry-run @bool # Execute command in dry run mode
+		--env-file # Specify an alternate environment file
+		--file # Compose configuration files
+		--parallel # Control max parallelism, -1 for unlimited
+		--profile # Specify a profile to enable
+		--progress # Set type of progress output (auto, tty, plain, json, quiet)
+		--project-directory # Specify an alternate working directory
+		--project-name # Project name
+		attach # Attach local standard input, output, and error streams to a service's running container
+			--dry-run @bool # Execute command in dry run mode
+			--detach-keys # Override the key sequence for detaching from a container.
+			--index # index of the container if service has multiple replicas.
+			--no-stdin @bool # Do not attach STDIN
+			--sig-proxy @bool # Proxy all received signals to the process
+		bridge # Convert compose files into another model
+			--dry-run @bool # Execute command in dry run mode
+			convert # Convert compose files to Kubernetes manifests, Helm charts, or another model
+				--dry-run @bool # Execute command in dry run mode
+				--output # The output directory for the Kubernetes resources
+				--templates # Directory containing transformation templates
+				--transformation # Transformation to apply to compose model (default: docker/compose-bridge-kubernetes)
+			transformations # Manage transformation images
+				--dry-run @bool # Execute command in dry run mode
+				create # Create a new transformation
+					--dry-run @bool # Execute command in dry run mode
+					--from # Existing transformation to copy (default: docker/compose-bridge-kubernetes)
+				list # List available transformations
+					--dry-run @bool # Execute command in dry run mode
+					--format # Format the output. Values: [table | json]
+					--quiet @bool # Only display transformer names
+		build # Build or rebuild services
+			--dry-run @bool # Execute command in dry run mode
+			--build-arg # Set build-time variables for services
+			--builder # Set builder to use
+			--check @bool # Check build configuration
+			--memory # Set memory limit for the build container. Not supported by BuildKit.
+			--no-cache @bool # Do not use cache when building the image
+			--print @bool # Print equivalent bake file
+			--provenance # Add a provenance attestation
+			--pull @bool # Always attempt to pull a newer version of the image
+			--push @bool # Push service images
+			--quiet @bool # Suppress the build output
+			--sbom # Add a SBOM attestation
+			--ssh # Set SSH authentications used when building service images. (use 'default' for using your default SSH Agent)
+			--with-dependencies @bool # Also build dependencies (transitively)
+		commit # Create a new image from a service container's changes
+			--dry-run @bool # Execute command in dry run mode
+			--author # Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+			--change # Apply Dockerfile instruction to the created image
+			--index # index of the container if service has multiple replicas.
+			--message # Commit message
+			--pause @bool # Pause container during commit
+		config # Parse, resolve and render compose file in canonical format
+			--dry-run @bool # Execute command in dry run mode
+			--environment @bool # Print environment used for interpolation.
+			--format # Format the output. Values: [yaml | json]
+			--hash # Print the service config hash, one per line.
+			--images @bool # Print the image names, one per line.
+			--lock-image-digests @bool # Produces an override file with image digests
+			--models @bool # Print the model names, one per line.
+			--networks @bool # Print the network names, one per line.
+			--no-consistency @bool # Don't check model consistency - warning: may produce invalid Compose output
+			--no-env-resolution @bool # Don't resolve service env files
+			--no-interpolate @bool # Don't interpolate environment variables
+			--no-normalize @bool # Don't normalize compose model
+			--no-path-resolution @bool # Don't resolve file paths
+			--output # Save to file (default to stdout)
+			--profiles @bool # Print the profile names, one per line.
+			--quiet @bool # Only validate the configuration, don't print anything
+			--resolve-image-digests @bool # Pin image tags to digests
+			--services @bool # Print the service names, one per line.
+			--variables @bool # Print model variables and default values.
+			--volumes @bool # Print the volume names, one per line.
+		cp # Copy files/folders between a service container and the local filesystem
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Include containers created by the run command
+			--archive @bool # Archive mode (copy all uid/gid information)
+			--follow-link @bool # Always follow symbol link in SRC_PATH
+			--index # Index of the container if service has multiple replicas
+		create # Creates containers for a service
+			--dry-run @bool # Execute command in dry run mode
+			--build @bool # Build images before starting containers
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed
+			--no-build @bool # Don't build an image, even if it's policy
+			--no-recreate @bool # If containers already exist, don't recreate them. Incompatible with --force-recreate.
+			--pull # Pull image before running ("always"|"missing"|"never"|"build")
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--scale # Scale SERVICE to NUM instances. Overrides the `scale` setting in the Compose file if present.
+			--yes @bool # Assume "yes" as answer to all prompts and run non-interactively
+		down # Stop and remove containers, networks
+			--dry-run @bool # Execute command in dry run mode
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--rmi # Remove images used by services. "local" remove only images that don't have a custom tag ("local"|"all")
+			--timeout # Specify a shutdown timeout in seconds
+			--volumes @bool # Remove named volumes declared in the "volumes" section of the Compose file and anonymous volumes attached to containers
+		events # Receive real time events from containers
+			--dry-run @bool # Execute command in dry run mode
+			--json @bool # Output events as a stream of json objects
+			--since # Show all events created since timestamp
+			--until # Stream events until this timestamp
+		exec # Execute a command in a running container
+			--dry-run @bool # Execute command in dry run mode
+			--detach @bool # Detached mode: Run command in the background
+			--env # Set environment variables
+			--index # Index of the container if service has multiple replicas
+			--no-tty @bool # Disable pseudo-TTY allocation. By default 'docker compose exec' allocates a TTY.
+			--privileged @bool # Give extended privileges to the process
+			--user # Run the command as this user
+			--workdir # Path to workdir directory for this command
+		export # Export a service container's filesystem as a tar archive
+			--dry-run @bool # Execute command in dry run mode
+			--index # index of the container if service has multiple replicas.
+			--output # Write to a file, instead of STDOUT
+		images # List images used by the created containers
+			--dry-run @bool # Execute command in dry run mode
+			--format # Format the output. Values: [table | json]
+			--quiet @bool # Only display IDs
+		kill # Force stop service containers
+			--dry-run @bool # Execute command in dry run mode
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--signal # SIGNAL to send to the container
+		logs # View output from containers
+			--dry-run @bool # Execute command in dry run mode
+			--follow @bool # Follow log output
+			--index # index of the container if service has multiple replicas
+			--no-color @bool # Produce monochrome output
+			--no-log-prefix @bool # Don't print prefix in logs
+			--since # Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+			--tail # Number of lines to show from the end of the logs for each container
+			--timestamps @bool # Show timestamps
+			--until # Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+		ls # List running compose projects
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all stopped Compose projects
+			--filter # Filter output based on conditions provided
+			--format # Format the output. Values: [table | json]
+			--quiet @bool # Only display project names
+		pause # Pause services
+			--dry-run @bool # Execute command in dry run mode
+		port # Print the public port for a port binding
+			--dry-run @bool # Execute command in dry run mode
+			--index # Index of the container if service has multiple replicas
+			--protocol # tcp or udp
+		ps # List containers
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all stopped containers (including those created by the run command)
+			--filter # Filter services by a property (supported filters: status)
+			--format # Format output using a custom template:
+			--no-trunc @bool # Don't truncate output
+			--orphans @bool # Include orphaned services (not declared by project)
+			--quiet @bool # Only display IDs
+			--services @bool # Display services
+			--status # Filter services by status. Values: [paused | restarting | removing | running | dead | created | exited]
+		publish # Publish compose application
+			--dry-run @bool # Execute command in dry run mode
+			--app @bool # Published compose application (includes referenced images)
+			--oci-version # OCI image/artifact specification version (automatically determined by default)
+			--resolve-image-digests @bool # Pin image tags to digests
+			--with-env @bool # Include environment variables in the published OCI artifact
+			--yes @bool # Assume "yes" as answer to all prompts
+		pull # Pull service images
+			--dry-run @bool # Execute command in dry run mode
+			--ignore-buildable @bool # Ignore images that can be built
+			--ignore-pull-failures @bool # Pull what it can and ignores images with pull failures
+			--include-deps @bool # Also pull services declared as dependencies
+			--policy # Apply pull policy ("missing"|"always")
+			--quiet @bool # Pull without printing progress information
+		push # Push service images
+			--dry-run @bool # Execute command in dry run mode
+			--ignore-push-failures @bool # Push what it can and ignores images with push failures
+			--include-deps @bool # Also push images of services declared as dependencies
+			--quiet @bool # Push without printing progress information
+		restart # Restart service containers
+			--dry-run @bool # Execute command in dry run mode
+			--no-deps @bool # Don't restart dependent services
+			--timeout # Specify a shutdown timeout in seconds
+		rm # Removes stopped service containers
+			--dry-run @bool # Execute command in dry run mode
+			--force @bool # Don't ask to confirm removal
+			--stop @bool # Stop the containers, if required, before removing
+			--volumes @bool # Remove any anonymous volumes attached to containers
+		run # Run a one-off command on a service
+			--dry-run @bool # Execute command in dry run mode
+			--build @bool # Build image before starting container
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--detach @bool # Run container in background and print container ID
+			--entrypoint # Override the entrypoint of the image
+			--env # Set environment variables
+			--env-from-file # Set environment variables from file
+			--interactive @bool # Keep STDIN open even if not attached
+			--label # Add or override a label
+			--name # Assign a name to the container
+			--no-TTY @bool # Disable pseudo-TTY allocation (default: auto-detected)
+			--no-deps @bool # Don't start linked services
+			--publish # Publish a container's port(s) to the host
+			--pull # Pull image before running ("always"|"missing"|"never")
+			--quiet @bool # Don't print anything to STDOUT
+			--quiet-build @bool # Suppress progress output from the build process
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--rm @bool # Automatically remove the container when it exits
+			--service-ports @bool # Run command with all service's ports enabled and mapped to the host
+			--use-aliases @bool # Use the service's network useAliases in the network(s) the container connects to
+			--user # Run as specified username or uid
+			--volume # Bind mount a volume
+			--workdir # Working directory inside the container
+		scale # Scale services
+			--dry-run @bool # Execute command in dry run mode
+			--no-deps @bool # Don't start linked services
+		start # Start services
+			--dry-run @bool # Execute command in dry run mode
+			--wait @bool # Wait for services to be running|healthy. Implies detached mode.
+			--wait-timeout # Maximum duration in seconds to wait for the project to be running|healthy
+		stats # Display a live stream of container(s) resource usage statistics
+			--dry-run @bool # Execute command in dry run mode
+			--all @bool # Show all containers (default shows just running)
+			--format # Format output using a custom template:
+			--no-stream @bool # Disable streaming stats and only pull the first result
+			--no-trunc @bool # Do not truncate output
+		stop # Stop services
+			--dry-run @bool # Execute command in dry run mode
+			--timeout # Specify a shutdown timeout in seconds
+		top # Display the running processes
+			--dry-run @bool # Execute command in dry run mode
+		unpause # Unpause services
+			--dry-run @bool # Execute command in dry run mode
+		up # Create and start containers
+			--dry-run @bool # Execute command in dry run mode
+			--abort-on-container-exit @bool # Stops all containers if any container was stopped. Incompatible with -d
+			--abort-on-container-failure @bool # Stops all containers if any container exited with failure. Incompatible with -d
+			--always-recreate-deps @bool # Recreate dependent containers. Incompatible with --no-recreate.
+			--attach # Restrict attaching to the specified services. Incompatible with --attach-dependencies.
+			--attach-dependencies @bool # Automatically attach to log output of dependent services
+			--build @bool # Build images before starting containers
+			--detach @bool # Detached mode: Run containers in the background
+			--exit-code-from # Return the exit code of the selected service container. Implies --abort-on-container-exit
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed
+			--menu @bool # Enable interactive shortcuts when running attached. Incompatible with --detach. Can also be enable/disable by setting COMPOSE_MENU environment var.
+			--no-attach # Do not attach (stream logs) to the specified services
+			--no-build @bool # Don't build an image, even if it's policy
+			--no-color @bool # Produce monochrome output
+			--no-deps @bool # Don't start linked services
+			--no-log-prefix @bool # Don't print prefix in logs
+			--no-recreate @bool # If containers already exist, don't recreate them. Incompatible with --force-recreate.
+			--no-start @bool # Don't start the services after creating them
+			--pull # Pull image before running ("always"|"missing"|"never")
+			--quiet-build @bool # Suppress the build output
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file
+			--renew-anon-volumes @bool # Recreate anonymous volumes instead of retrieving data from the previous containers
+			--scale # Scale SERVICE to NUM instances. Overrides the `scale` setting in the Compose file if present.
+			--timeout # Use this timeout in seconds for container shutdown when attached or when containers are already running
+			--timestamps @bool # Show timestamps
+			--wait @bool # Wait for services to be running|healthy. Implies detached mode.
+			--wait-timeout # Maximum duration in seconds to wait for the project to be running|healthy
+			--watch @bool # Watch source code and rebuild/refresh containers when files are updated.
+			--yes @bool # Assume "yes" as answer to all prompts and run non-interactively
+		version # Show the Docker Compose version information
+			--dry-run @bool # Execute command in dry run mode
+			--format # Format the output. Values: [pretty | json]. (Default: pretty)
+			--short @bool # Shows only Compose's version number
+		volumes # List volumes
+			--dry-run @bool # Execute command in dry run mode
+			--format # Format output using a custom template:
+			--quiet @bool # Only display volume names
+		wait # Block until containers of all (or specified) services stop.
+			--dry-run @bool # Execute command in dry run mode
+			--down-project @bool # Drops project when the first container stops
+		watch # Watch build context for service and rebuild/refresh containers when files are updated
+			--dry-run @bool # Execute command in dry run mode
+			--no-up @bool # Do not build & start services before watching
+			--prune @bool # Prune dangling images on rebuild
+			--quiet @bool # hide build output
+	config # Manage Swarm configs
+		create # Create a config from a file or STDIN
+			--label # Config labels
+			--template-driver # Template driver
+		inspect # Display detailed information on one or more configs
+			--format # Format output using a custom template:
+			--pretty @bool # Print the information in a human friendly format
+		ls # List configs
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--quiet @bool # Only display IDs
+		rm # Remove one or more configs
+	container # Manage containers
+		attach # Attach local standard input, output, and error streams to a running container
+			--detach-keys # Override the key sequence for detaching a container
+			--no-stdin @bool # Do not attach STDIN
+			--sig-proxy @bool # Proxy all received signals to the process
+		commit # Create a new image from a container's changes
+			--author # Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+			--change # Apply Dockerfile instruction to the created image
+			--message # Commit message
+			--no-pause @bool # Disable pausing container during commit
+		cp # Copy files/folders between a container and the local filesystem
+			--archive @bool # Archive mode (copy all uid/gid information)
+			--follow-link @bool # Always follow symbol link in SRC_PATH
+			--quiet @bool # Suppress progress output during copy. Progress output is automatically suppressed if no terminal is attached
+		create # Create a new container
+			--add-host # Add a custom host-to-IP mapping (host:ip)
+			--annotation # Add an annotation to the container (passed through to the OCI runtime)
+			--attach # Attach to STDIN, STDOUT or STDERR
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--blkio-weight-device # Block IO weight (relative device weight)
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # Cgroup namespace to use (host|private)
+			--cidfile # Write the container ID to the file
+			--cpu-count # CPU count (Windows only)
+			--cpu-percent # CPU percent (Windows only)
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--device # Add a host device to the container
+			--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+			--device-read-bps # Limit read rate (bytes per second) from a device
+			--device-read-iops # Limit read rate (IO per second) from a device
+			--device-write-bps # Limit write rate (bytes per second) to a device
+			--device-write-iops # Limit write rate (IO per second) to a device
+			--dns # Set custom DNS servers
+			--dns-option # Set DNS options
+			--dns-search # Set custom DNS search domains
+			--domainname # Container NIS domain name
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env # Set environment variables
+			--env-file # Read in a file of environment variables
+			--expose # Expose a port or a range of ports
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to join
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (ms|s|m|h) (default 0s)
+			--health-retries # Consecutive failures needed to report unhealthy
+			--health-start-interval # Time between running the check during the start period (ms|s|m|h) (default 0s)
+			--health-start-period # Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s)
+			--health-timeout # Maximum time to allow one check to run (ms|s|m|h) (default 0s)
+			--hostname # Container host name
+			--init @bool # Run an init inside the container that forwards signals and reaps processes
+			--interactive @bool # Keep STDIN open even if not attached
+			--io-maxbandwidth # Maximum IO bandwidth limit for the system drive (Windows only)
+			--io-maxiops # Maximum IOps limit for the system drive (Windows only)
+			--ip # IPv4 address (e.g., 172.30.100.104)
+			--ip6 # IPv6 address (e.g., 2001:db8::33)
+			--ipc # IPC mode to use
+			--isolation # Container isolation technology
+			--label # Set meta data on a container
+			--label-file # Read in a line delimited file of labels
+			--link # Add link to another container
+			--link-local-ip # Container IPv4/IPv6 link-local addresses
+			--log-driver # Logging driver for the container
+			--log-opt # Log driver options
+			--mac-address # Container MAC address (e.g., 92:d0:c6:0a:29:33)
+			--memory # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--network # Connect a container to a network
+			--network-alias # Add network-scoped alias for the container
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+			--pid # PID namespace to use
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--platform # Set platform if server is multi-platform capable
+			--privileged @bool # Give extended privileges to this container
+			--publish # Publish a container's port(s) to the host
+			--publish-all @bool # Publish all exposed ports to random ports
+			--pull # Pull image before creating ("always", "|missing", "never")
+			--quiet @bool # Suppress the pull output
+			--read-only @bool # Mount the container's root filesystem as read only
+			--restart # Restart policy to apply when a container exits
+			--rm @bool # Automatically remove the container and its associated anonymous volumes when it exits
+			--runtime # Runtime to use for this container
+			--security-opt # Security Options
+			--shm-size # Size of /dev/shm
+			--stop-signal # Signal to stop the container
+			--stop-timeout # Timeout (in seconds) to stop a container
+			--storage-opt # Storage driver options for the container
+			--sysctl # Sysctl options
+			--tmpfs # Mount a tmpfs directory
+			--tty @bool # Allocate a pseudo-TTY
+			--ulimit # Ulimit options
+			--use-api-socket @bool # Bind mount Docker API socket and required auth
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--volume # Bind mount a volume
+			--volume-driver # Optional volume driver for the container
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir # Working directory inside the container
+		diff # Inspect changes to files or directories on a container's filesystem
+		exec # Execute a command in a running container
+			--detach @bool # Detached mode: run command in the background
+			--detach-keys # Override the key sequence for detaching a container
+			--env # Set environment variables
+			--env-file # Read in a file of environment variables
+			--interactive @bool # Keep STDIN open even if not attached
+			--privileged @bool # Give extended privileges to the command
+			--tty @bool # Allocate a pseudo-TTY
+			--user # Username or UID (format: "<name|uid>[:<group|gid>]")
+			--workdir # Working directory inside the container
+		export # Export a container's filesystem as a tar archive
+			--output # Write to a file, instead of STDOUT
+		inspect # Display detailed information on one or more containers
+			--format # Format output using a custom template:
+			--size @bool # Display total file sizes
+		kill # Kill one or more running containers
+			--signal # Signal to send to the container
+		logs # Fetch the logs of a container
+			--details @bool # Show extra details provided to logs
+			--follow @bool # Follow log output
+			--since # Show logs since timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes)
+			--tail # Number of lines to show from the end of the logs
+			--timestamps @bool # Show timestamps
+			--until # Show logs before a timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes)
+		ls # List containers
+			--all @bool # Show all containers (default shows just running)
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--last # Show n last created containers (includes all states)
+			--latest @bool # Show the latest created container (includes all states)
+			--no-trunc @bool # Don't truncate output
+			--quiet @bool # Only display container IDs
+			--size @bool # Display total file sizes
+		pause # Pause all processes within one or more containers
+		port # List port mappings or a specific mapping for the container
+		prune # Remove all stopped containers
+			--filter # Provide filter values (e.g. "until=<timestamp>")
+			--force @bool # Do not prompt for confirmation
+		rename # Rename a container
+		restart # Restart one or more containers
+			--signal # Signal to send to the container
+			--timeout # Seconds to wait before killing the container
+		rm # Remove one or more containers
+			--force @bool # Force the removal of a running container (uses SIGKILL)
+			--link @bool # Remove the specified link
+			--volumes @bool # Remove anonymous volumes associated with the container
+		run # Create and run a new container from an image
+			--add-host # Add a custom host-to-IP mapping (host:ip)
+			--annotation # Add an annotation to the container (passed through to the OCI runtime)
+			--attach # Attach to STDIN, STDOUT or STDERR
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--blkio-weight-device # Block IO weight (relative device weight)
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # Cgroup namespace to use (host|private)
+			--cidfile # Write the container ID to the file
+			--cpu-count # CPU count (Windows only)
+			--cpu-percent # CPU percent (Windows only)
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--detach @bool # Run container in background and print container ID
+			--detach-keys # Override the key sequence for detaching a container
+			--device # Add a host device to the container
+			--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+			--device-read-bps # Limit read rate (bytes per second) from a device
+			--device-read-iops # Limit read rate (IO per second) from a device
+			--device-write-bps # Limit write rate (bytes per second) to a device
+			--device-write-iops # Limit write rate (IO per second) to a device
+			--dns # Set custom DNS servers
+			--dns-option # Set DNS options
+			--dns-search # Set custom DNS search domains
+			--domainname # Container NIS domain name
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env # Set environment variables
+			--env-file # Read in a file of environment variables
+			--expose # Expose a port or a range of ports
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to join
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (ms|s|m|h) (default 0s)
+			--health-retries # Consecutive failures needed to report unhealthy
+			--health-start-interval # Time between running the check during the start period (ms|s|m|h) (default 0s)
+			--health-start-period # Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s)
+			--health-timeout # Maximum time to allow one check to run (ms|s|m|h) (default 0s)
+			--hostname # Container host name
+			--init @bool # Run an init inside the container that forwards signals and reaps processes
+			--interactive @bool # Keep STDIN open even if not attached
+			--io-maxbandwidth # Maximum IO bandwidth limit for the system drive (Windows only)
+			--io-maxiops # Maximum IOps limit for the system drive (Windows only)
+			--ip # IPv4 address (e.g., 172.30.100.104)
+			--ip6 # IPv6 address (e.g., 2001:db8::33)
+			--ipc # IPC mode to use
+			--isolation # Container isolation technology
+			--label # Set meta data on a container
+			--label-file # Read in a line delimited file of labels
+			--link # Add link to another container
+			--link-local-ip # Container IPv4/IPv6 link-local addresses
+			--log-driver # Logging driver for the container
+			--log-opt # Log driver options
+			--mac-address # Container MAC address (e.g., 92:d0:c6:0a:29:33)
+			--memory # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--network # Connect a container to a network
+			--network-alias # Add network-scoped alias for the container
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+			--pid # PID namespace to use
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--platform # Set platform if server is multi-platform capable
+			--privileged @bool # Give extended privileges to this container
+			--publish # Publish a container's port(s) to the host
+			--publish-all @bool # Publish all exposed ports to random ports
+			--pull # Pull image before running ("always", "missing", "never")
+			--quiet @bool # Suppress the pull output
+			--read-only @bool # Mount the container's root filesystem as read only
+			--restart # Restart policy to apply when a container exits
+			--rm @bool # Automatically remove the container and its associated anonymous volumes when it exits
+			--runtime # Runtime to use for this container
+			--security-opt # Security Options
+			--shm-size # Size of /dev/shm
+			--sig-proxy @bool # Proxy received signals to the process
+			--stop-signal # Signal to stop the container
+			--stop-timeout # Timeout (in seconds) to stop a container
+			--storage-opt # Storage driver options for the container
+			--sysctl # Sysctl options
+			--tmpfs # Mount a tmpfs directory
+			--tty @bool # Allocate a pseudo-TTY
+			--ulimit # Ulimit options
+			--use-api-socket @bool # Bind mount Docker API socket and required auth
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # User namespace to use
+			--uts # UTS namespace to use
+			--volume # Bind mount a volume
+			--volume-driver # Optional volume driver for the container
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir # Working directory inside the container
+		start # Start one or more stopped containers
+			--attach @bool # Attach STDOUT/STDERR and forward signals
+			--checkpoint # Restore from this checkpoint
+			--checkpoint-dir # Use a custom checkpoint storage directory
+			--detach-keys # Override the key sequence for detaching a container
+			--interactive @bool # Attach container's STDIN
+		stats # Display a live stream of container(s) resource usage statistics
+			--all @bool # Show all containers (default shows just running)
+			--format # Format output using a custom template:
+			--no-stream @bool # Disable streaming stats and only pull the first result
+			--no-trunc @bool # Do not truncate output
+		stop # Stop one or more running containers
+			--signal # Signal to send to the container
+			--timeout # Seconds to wait before killing the container
+		top # Display the running processes of a container
+		unpause # Unpause all processes within one or more containers
+		update # Update configuration of one or more containers
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+			--cpu-rt-period # Limit the CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--memory # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: -1 to enable unlimited swap
+			--pids-limit # Tune container pids limit (set -1 for unlimited)
+			--restart # Restart policy to apply when a container exits
+		wait # Block until one or more containers stop, then print their exit codes
+	context # Manage contexts
+		create # Create a context
+			--description # Description of the context
+			--docker # set the docker endpoint
+			--from # create context from a named context
+		export # Export a context to a tar archive FILE or a tar stream on STDOUT.
+			default # current
+		import # Import a context from a tar or zip file
+		inspect # Display detailed information on one or more contexts
+			--format # Format output using a custom template:
+			default # current
+				--format # Format output using a custom template:
+		ls # List contexts
+			--format # Format output using a custom template:
+			--quiet @bool # Only show context names
+		rm # Remove one or more contexts
+			--force @bool # Force the removal of a context in use
+			default # current
+				--force @bool # Force the removal of a context in use
+		show # Print the name of the current context
+		update # Update a context
+			--description # Description of the context
+			--docker # set the docker endpoint
+			default # current
+				--description # Description of the context
+				--docker # set the docker endpoint
+		use # Set the current docker context
+			default # current
+	cp # Copy files/folders between a container and the local filesystem
+		--archive @bool # Archive mode (copy all uid/gid information)
+		--follow-link @bool # Always follow symbol link in SRC_PATH
+		--quiet @bool # Suppress progress output during copy. Progress output is automatically suppressed if no terminal is attached
+	create # Create a new container
+		--add-host # Add a custom host-to-IP mapping (host:ip)
+		--annotation # Add an annotation to the container (passed through to the OCI runtime)
+		--attach # Attach to STDIN, STDOUT or STDERR
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--blkio-weight-device # Block IO weight (relative device weight)
+		--cap-add # Add Linux capabilities
+		--cap-drop # Drop Linux capabilities
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # Cgroup namespace to use (host|private)
+		--cidfile # Write the container ID to the file
+		--cpu-count # CPU count (Windows only)
+		--cpu-percent # CPU percent (Windows only)
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--device # Add a host device to the container
+		--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+		--device-read-bps # Limit read rate (bytes per second) from a device
+		--device-read-iops # Limit read rate (IO per second) from a device
+		--device-write-bps # Limit write rate (bytes per second) to a device
+		--device-write-iops # Limit write rate (IO per second) to a device
+		--dns # Set custom DNS servers
+		--dns-option # Set DNS options
+		--dns-search # Set custom DNS search domains
+		--domainname # Container NIS domain name
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env # Set environment variables
+		--env-file # Read in a file of environment variables
+		--expose # Expose a port or a range of ports
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to join
+		--health-cmd # Command to run to check health
+		--health-interval # Time between running the check (ms|s|m|h) (default 0s)
+		--health-retries # Consecutive failures needed to report unhealthy
+		--health-start-interval # Time between running the check during the start period (ms|s|m|h) (default 0s)
+		--health-start-period # Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s)
+		--health-timeout # Maximum time to allow one check to run (ms|s|m|h) (default 0s)
+		--hostname # Container host name
+		--init @bool # Run an init inside the container that forwards signals and reaps processes
+		--interactive @bool # Keep STDIN open even if not attached
+		--io-maxbandwidth # Maximum IO bandwidth limit for the system drive (Windows only)
+		--io-maxiops # Maximum IOps limit for the system drive (Windows only)
+		--ip # IPv4 address (e.g., 172.30.100.104)
+		--ip6 # IPv6 address (e.g., 2001:db8::33)
+		--ipc # IPC mode to use
+		--isolation # Container isolation technology
+		--label # Set meta data on a container
+		--label-file # Read in a line delimited file of labels
+		--link # Add link to another container
+		--link-local-ip # Container IPv4/IPv6 link-local addresses
+		--log-driver # Logging driver for the container
+		--log-opt # Log driver options
+		--mac-address # Container MAC address (e.g., 92:d0:c6:0a:29:33)
+		--memory # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--network # Connect a container to a network
+		--network-alias # Add network-scoped alias for the container
+		--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+		--pid # PID namespace to use
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--platform # Set platform if server is multi-platform capable
+		--privileged @bool # Give extended privileges to this container
+		--publish # Publish a container's port(s) to the host
+		--publish-all @bool # Publish all exposed ports to random ports
+		--pull # Pull image before creating ("always", "|missing", "never")
+		--quiet @bool # Suppress the pull output
+		--read-only @bool # Mount the container's root filesystem as read only
+		--restart # Restart policy to apply when a container exits
+		--rm @bool # Automatically remove the container and its associated anonymous volumes when it exits
+		--runtime # Runtime to use for this container
+		--security-opt # Security Options
+		--shm-size # Size of /dev/shm
+		--stop-signal # Signal to stop the container
+		--stop-timeout # Timeout (in seconds) to stop a container
+		--storage-opt # Storage driver options for the container
+		--sysctl # Sysctl options
+		--tmpfs # Mount a tmpfs directory
+		--tty @bool # Allocate a pseudo-TTY
+		--ulimit # Ulimit options
+		--use-api-socket @bool # Bind mount Docker API socket and required auth
+		--user # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # User namespace to use
+		--uts # UTS namespace to use
+		--volume # Bind mount a volume
+		--volume-driver # Optional volume driver for the container
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir # Working directory inside the container
+	diff # Inspect changes to files or directories on a container's filesystem
+	events # Get real time events from the server
+		--filter # Filter output based on conditions provided
+		--format # Format output using a custom template:
+		--since # Show all events created since timestamp
+		--until # Stream events until this timestamp
+	exec # Execute a command in a running container
+		--detach @bool # Detached mode: run command in the background
+		--detach-keys # Override the key sequence for detaching a container
+		--env # Set environment variables
+		--env-file # Read in a file of environment variables
+		--interactive @bool # Keep STDIN open even if not attached
+		--privileged @bool # Give extended privileges to the command
+		--tty @bool # Allocate a pseudo-TTY
+		--user # Username or UID (format: "<name|uid>[:<group|gid>]")
+		--workdir # Working directory inside the container
+	export # Export a container's filesystem as a tar archive
+		--output # Write to a file, instead of STDOUT
+	help # Help about the command
+	history # Show the history of an image
+		--format # Format output using a custom template:
+		--human @bool # Print sizes and dates in human readable format
+		--no-trunc @bool # Don't truncate output
+		--platform # Show history for the given platform. Formatted as "os[/arch[/variant]]" (e.g., "linux/amd64")
+		--quiet @bool # Only show image IDs
+	image # Manage images
+		build # Build an image from a Dockerfile
+			--add-host # Add a custom host-to-IP mapping ("host:ip")
+			--build-arg # Set build-time variables
+			--cache-from # Images to consider as cache sources
+			--cgroup-parent # Set the parent cgroup for the "RUN" instructions during build
+			--compress @bool # Compress the build context using gzip
+			--cpu-period # Limit the CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit the CPU CFS (Completely Fair Scheduler) quota
+			--cpu-shares # CPU shares (relative weight)
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--file # Name of the Dockerfile (Default is "PATH/Dockerfile")
+			--force-rm @bool # Always remove intermediate containers
+			--iidfile # Write the image ID to the file
+			--isolation # Container isolation technology
+			--label # Set metadata for an image
+			--memory # Memory limit
+			--memory-swap # Swap limit equal to memory plus swap: -1 to enable unlimited swap
+			--network # Set the networking mode for the RUN instructions during build
+			--no-cache @bool # Do not use cache when building the image
+			--platform # Set platform if server is multi-platform capable
+			--pull @bool # Always attempt to pull a newer version of the image
+			--quiet @bool # Suppress the build output and print image ID on success
+			--rm @bool # Remove intermediate containers after a successful build
+			--security-opt # Security options
+			--shm-size # Size of "/dev/shm"
+			--squash @bool # Squash newly built layers into a single new layer
+			--tag # Name and optionally a tag in the "name:tag" format
+			--target # Set the target build stage to build.
+			--ulimit # Ulimit options
+		history # Show the history of an image
+			--format # Format output using a custom template:
+			--human @bool # Print sizes and dates in human readable format
+			--no-trunc @bool # Don't truncate output
+			--platform # Show history for the given platform. Formatted as "os[/arch[/variant]]" (e.g., "linux/amd64")
+			--quiet @bool # Only show image IDs
+		import # Import the contents from a tarball to create a filesystem image
+			--change # Apply Dockerfile instruction to the created image
+			--message # Set commit message for imported image
+			--platform # Set platform if server is multi-platform capable
+		inspect # Display detailed information on one or more images
+			--format # Format output using a custom template:
+			--platform # Inspect a specific platform of the multi-platform image.
+		load # Load an image from a tar archive or STDIN
+			--input # Read from tar archive file, instead of STDIN
+			--platform # Load only the given platform(s). Formatted as a comma-separated list of "os[/arch[/variant]]" (e.g., "linux/amd64,linux/arm64/v8").
+			--quiet @bool # Suppress the load output
+		ls # List images
+			--all @bool # Show all images (default hides intermediate and dangling images)
+			--digests @bool # Show digests
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--no-trunc @bool # Don't truncate output
+			--quiet @bool # Only show image IDs
+			--tree @bool # List multi-platform images as a tree (EXPERIMENTAL)
+		prune # Remove unused images
+			--all @bool # Remove all unused images, not just dangling ones
+			--filter # Provide filter values (e.g. "until=<timestamp>")
+			--force @bool # Do not prompt for confirmation
+		pull # Download an image from a registry
+			--all-tags @bool # Download all tagged images in the repository
+			--platform # Set platform if server is multi-platform capable
+			--quiet @bool # Suppress verbose output
+		push # Upload an image to a registry
+			--all-tags @bool # Push all tags of an image to the repository
+			--platform # Push a platform-specific manifest as a single-platform image to the registry.
+			--quiet @bool # Suppress verbose output
+		rm # Remove one or more images
+			--force @bool # Force removal of the image
+			--no-prune @bool # Do not delete untagged parents
+			--platform # Remove only the given platform variant. Formatted as "os[/arch[/variant]]" (e.g., "linux/amd64")
+		save # Save one or more images to a tar archive (streamed to STDOUT by default)
+			--output # Write to a file, instead of STDOUT
+			--platform # Save only the given platform(s). Formatted as a comma-separated list of "os[/arch[/variant]]" (e.g., "linux/amd64,linux/arm64/v8")
+		tag # Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+	images # List images
+		--all @bool # Show all images (default hides intermediate and dangling images)
+		--digests @bool # Show digests
+		--filter # Filter output based on conditions provided
+		--format # Format output using a custom template:
+		--no-trunc @bool # Don't truncate output
+		--quiet @bool # Only show image IDs
+		--tree @bool # List multi-platform images as a tree (EXPERIMENTAL)
+	import # Import the contents from a tarball to create a filesystem image
+		--change # Apply Dockerfile instruction to the created image
+		--message # Set commit message for imported image
+		--platform # Set platform if server is multi-platform capable
+	info # Display system-wide information
+		--format # Format output using a custom template:
+	inspect # Return low-level information on Docker objects
+		--format # Format output using a custom template:
+		--size @bool # Display total file sizes if the type is container
+		--type # Only inspect objects of the given type
+	kill # Kill one or more running containers
+		--signal # Signal to send to the container
+	load # Load an image from a tar archive or STDIN
+		--input # Read from tar archive file, instead of STDIN
+		--platform # Load only the given platform(s). Formatted as a comma-separated list of "os[/arch[/variant]]" (e.g., "linux/amd64,linux/arm64/v8").
+		--quiet @bool # Suppress the load output
+	login # Authenticate to a registry
+		--password # Password or Personal Access Token (PAT)
+		--password-stdin @bool # Take the Password or Personal Access Token (PAT) from stdin
+		--username # Username
+	logout # Log out from a registry
+	logs # Fetch the logs of a container
+		--details @bool # Show extra details provided to logs
+		--follow @bool # Follow log output
+		--since # Show logs since timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes)
+		--tail # Number of lines to show from the end of the logs
+		--timestamps @bool # Show timestamps
+		--until # Show logs before a timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes)
+	manifest # Manage Docker image manifests and manifest lists
+		annotate # Add additional information to a local image manifest
+			--arch # Set architecture
+			--os # Set operating system
+			--os-features # Set operating system feature
+			--os-version # Set operating system version
+			--variant # Set architecture variant
+		create # Create a local manifest list for annotating and pushing to a registry
+			--amend @bool # Amend an existing manifest list
+			--insecure @bool # Allow communication with an insecure registry
+		inspect # Display an image manifest, or manifest list
+			--insecure @bool # Allow communication with an insecure registry
+			--verbose @bool # Output additional info including layers and platform
+		push # Push a manifest list to a repository
+			--insecure @bool # Allow push to an insecure registry
+			--purge @bool # Remove the local manifest list after push
+		rm # Delete one or more manifest lists from local storage
+	network # Manage networks
+		connect # Connect a container to a network
+			--alias # Add network-scoped alias for the container
+			--driver-opt # driver options for the network
+			--gw-priority # Highest gw-priority provides the default gateway. Accepts positive and negative values.
+			--ip # IPv4 address (e.g., "172.30.100.104")
+			--ip6 # IPv6 address (e.g., "2001:db8::33")
+			--link # Add link to another container
+			--link-local-ip # Add a link-local address for the container
+		create # Create a network
+			--attachable @bool # Enable manual container attachment
+			--aux-address # Auxiliary IPv4 or IPv6 addresses used by Network driver
+			--config-from # The network from which to copy the configuration
+			--config-only @bool # Create a configuration only network
+			--driver # Driver to manage the Network
+			--gateway # IPv4 or IPv6 Gateway for the master subnet
+			--ingress @bool # Create swarm routing-mesh network
+			--internal @bool # Restrict external access to the network
+			--ip-range # Allocate container ip from a sub-range
+			--ipam-driver # IP Address Management Driver
+			--ipam-opt # Set IPAM driver specific options
+			--ipv4 @bool # Enable or disable IPv4 address assignment
+			--ipv6 @bool # Enable or disable IPv6 address assignment
+			--label # Set metadata on a network
+			--opt # Set driver specific options
+			--scope # Control the network's scope
+			--subnet # Subnet in CIDR format that represents a network segment
+		disconnect # Disconnect a container from a network
+			--force @bool # Force the container to disconnect from a network
+		inspect # Display detailed information on one or more networks
+			--format # Format output using a custom template:
+			--verbose @bool # Verbose output for diagnostics
+		ls # List networks
+			--filter # Provide filter values (e.g. "driver=bridge")
+			--format # Format output using a custom template:
+			--no-trunc @bool # Do not truncate the output
+			--quiet @bool # Only display network IDs
+		prune # Remove all unused networks
+			--filter # Provide filter values (e.g. "until=<timestamp>")
+			--force @bool # Do not prompt for confirmation
+		rm # Remove one or more networks
+			--force @bool # Do not error if the network does not exist
+	node # Manage Swarm nodes
+		demote # Demote one or more nodes from manager in the swarm
+		inspect # Display detailed information on one or more nodes
+			--format # Format output using a custom template:
+			--pretty @bool # Print the information in a human friendly format
+		ls # List nodes in the swarm
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--quiet @bool # Only display IDs
+		promote # Promote one or more nodes to manager in the swarm
+		ps # List tasks running on one or more nodes, defaults to current node
+			--filter # Filter output based on conditions provided
+			--format # Pretty-print tasks using a Go template
+			--no-resolve @bool # Do not map IDs to Names
+			--no-trunc @bool # Do not truncate output
+			--quiet @bool # Only display task IDs
+		rm # Remove one or more nodes from the swarm
+			--force @bool # Force remove a node from the swarm
+		update # Update a node
+			--availability # Availability of the node ("active", "pause", "drain")
+			--label-add # Add or update a node label ("key=value")
+			--label-rm # Remove a node label if exists
+			--role # Role of the node ("worker", "manager")
+	pause # Pause all processes within one or more containers
+	plugin # Manage plugins
+		create # Create a plugin from a rootfs and configuration. Plugin data directory must contain config.json and rootfs directory.
+			--compress @bool # Compress the context using gzip
+		disable # Disable a plugin
+			--force @bool # Force the disable of an active plugin
+		enable # Enable a plugin
+			--timeout # HTTP client timeout (in seconds)
+		inspect # Display detailed information on one or more plugins
+			--format # Format output using a custom template:
+		install # Install a plugin
+			--alias # Local name for plugin
+			--disable @bool # Do not enable the plugin on install
+			--grant-all-permissions @bool # Grant all permissions necessary to run the plugin
+		ls # List plugins
+			--filter # Provide filter values (e.g. "enabled=true")
+			--format # Format output using a custom template:
+			--no-trunc @bool # Don't truncate output
+			--quiet @bool # Only display plugin IDs
+		push # Push a plugin to a registry
+		rm # Remove one or more plugins
+			--force @bool # Force the removal of an active plugin
+		set # Change settings for a plugin
+		upgrade # Upgrade an existing plugin
+			--grant-all-permissions @bool # Grant all permissions necessary to run the plugin
+			--skip-remote-check @bool # Do not check if specified remote plugin matches existing plugin image
+	port # List port mappings or a specific mapping for the container
+	ps # List containers
+		--all @bool # Show all containers (default shows just running)
+		--filter # Filter output based on conditions provided
+		--format # Format output using a custom template:
+		--last # Show n last created containers (includes all states)
+		--latest @bool # Show the latest created container (includes all states)
+		--no-trunc @bool # Don't truncate output
+		--quiet @bool # Only display container IDs
+		--size @bool # Display total file sizes
+	pull # Download an image from a registry
+		--all-tags @bool # Download all tagged images in the repository
+		--platform # Set platform if server is multi-platform capable
+		--quiet @bool # Suppress verbose output
+	push # Upload an image to a registry
+		--all-tags @bool # Push all tags of an image to the repository
+		--platform # Push a platform-specific manifest as a single-platform image to the registry.
+		--quiet @bool # Suppress verbose output
+	rename # Rename a container
+	restart # Restart one or more containers
+		--signal # Signal to send to the container
+		--timeout # Seconds to wait before killing the container
+	rm # Remove one or more containers
+		--force @bool # Force the removal of a running container (uses SIGKILL)
+		--link @bool # Remove the specified link
+		--volumes @bool # Remove anonymous volumes associated with the container
+	rmi # Remove one or more images
+		--force @bool # Force removal of the image
+		--no-prune @bool # Do not delete untagged parents
+		--platform # Remove only the given platform variant. Formatted as "os[/arch[/variant]]" (e.g., "linux/amd64")
+	run # Create and run a new container from an image
+		--add-host # Add a custom host-to-IP mapping (host:ip)
+		--annotation # Add an annotation to the container (passed through to the OCI runtime)
+		--attach # Attach to STDIN, STDOUT or STDERR
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--blkio-weight-device # Block IO weight (relative device weight)
+		--cap-add # Add Linux capabilities
+		--cap-drop # Drop Linux capabilities
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # Cgroup namespace to use (host|private)
+		--cidfile # Write the container ID to the file
+		--cpu-count # CPU count (Windows only)
+		--cpu-percent # CPU percent (Windows only)
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--detach @bool # Run container in background and print container ID
+		--detach-keys # Override the key sequence for detaching a container
+		--device # Add a host device to the container
+		--device-cgroup-rule # Add a rule to the cgroup allowed devices list
+		--device-read-bps # Limit read rate (bytes per second) from a device
+		--device-read-iops # Limit read rate (IO per second) from a device
+		--device-write-bps # Limit write rate (bytes per second) to a device
+		--device-write-iops # Limit write rate (IO per second) to a device
+		--dns # Set custom DNS servers
+		--dns-option # Set DNS options
+		--dns-search # Set custom DNS search domains
+		--domainname # Container NIS domain name
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env # Set environment variables
+		--env-file # Read in a file of environment variables
+		--expose # Expose a port or a range of ports
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to join
+		--health-cmd # Command to run to check health
+		--health-interval # Time between running the check (ms|s|m|h) (default 0s)
+		--health-retries # Consecutive failures needed to report unhealthy
+		--health-start-interval # Time between running the check during the start period (ms|s|m|h) (default 0s)
+		--health-start-period # Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s)
+		--health-timeout # Maximum time to allow one check to run (ms|s|m|h) (default 0s)
+		--hostname # Container host name
+		--init @bool # Run an init inside the container that forwards signals and reaps processes
+		--interactive @bool # Keep STDIN open even if not attached
+		--io-maxbandwidth # Maximum IO bandwidth limit for the system drive (Windows only)
+		--io-maxiops # Maximum IOps limit for the system drive (Windows only)
+		--ip # IPv4 address (e.g., 172.30.100.104)
+		--ip6 # IPv6 address (e.g., 2001:db8::33)
+		--ipc # IPC mode to use
+		--isolation # Container isolation technology
+		--label # Set meta data on a container
+		--label-file # Read in a line delimited file of labels
+		--link # Add link to another container
+		--link-local-ip # Container IPv4/IPv6 link-local addresses
+		--log-driver # Logging driver for the container
+		--log-opt # Log driver options
+		--mac-address # Container MAC address (e.g., 92:d0:c6:0a:29:33)
+		--memory # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--network # Connect a container to a network
+		--network-alias # Add network-scoped alias for the container
+		--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+		--pid # PID namespace to use
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--platform # Set platform if server is multi-platform capable
+		--privileged @bool # Give extended privileges to this container
+		--publish # Publish a container's port(s) to the host
+		--publish-all @bool # Publish all exposed ports to random ports
+		--pull # Pull image before running ("always", "missing", "never")
+		--quiet @bool # Suppress the pull output
+		--read-only @bool # Mount the container's root filesystem as read only
+		--restart # Restart policy to apply when a container exits
+		--rm @bool # Automatically remove the container and its associated anonymous volumes when it exits
+		--runtime # Runtime to use for this container
+		--security-opt # Security Options
+		--shm-size # Size of /dev/shm
+		--sig-proxy @bool # Proxy received signals to the process
+		--stop-signal # Signal to stop the container
+		--stop-timeout # Timeout (in seconds) to stop a container
+		--storage-opt # Storage driver options for the container
+		--sysctl # Sysctl options
+		--tmpfs # Mount a tmpfs directory
+		--tty @bool # Allocate a pseudo-TTY
+		--ulimit # Ulimit options
+		--use-api-socket @bool # Bind mount Docker API socket and required auth
+		--user # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # User namespace to use
+		--uts # UTS namespace to use
+		--volume # Bind mount a volume
+		--volume-driver # Optional volume driver for the container
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir # Working directory inside the container
+	save # Save one or more images to a tar archive (streamed to STDOUT by default)
+		--output # Write to a file, instead of STDOUT
+		--platform # Save only the given platform(s). Formatted as a comma-separated list of "os[/arch[/variant]]" (e.g., "linux/amd64,linux/arm64/v8")
+	search # Search Docker Hub for images
+		--filter # Filter output based on conditions provided
+		--format # Pretty-print search using a Go template
+		--limit # Max number of search results
+		--no-trunc @bool # Don't truncate output
+	secret # Manage Swarm secrets
+		create # Create a secret from a file or STDIN as content
+			--driver # Secret driver
+			--label # Secret labels
+			--template-driver # Template driver
+		inspect # Display detailed information on one or more secrets
+			--format # Format output using a custom template:
+			--pretty @bool # Print the information in a human friendly format
+		ls # List secrets
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--quiet @bool # Only display IDs
+		rm # Remove one or more secrets
+	service # Manage Swarm services
+		create # Create a new service
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--config # Specify configurations to expose to the service
+			--constraint # Placement constraints
+			--container-label # Container labels
+			--credential-spec # Credential spec for managed service account (Windows only)
+			--detach @bool # Exit immediately instead of waiting for the service to converge
+			--dns # Set custom DNS servers
+			--dns-option # Set DNS options
+			--dns-search # Set custom DNS search domains
+			--endpoint-mode # Endpoint mode (vip or dnsrr)
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env # Set environment variables
+			--env-file # Read in a file of environment variables
+			--generic-resource # User defined resources
+			--group # Set one or more supplementary user groups for the container
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (ms|s|m|h)
+			--health-retries # Consecutive failures needed to report unhealthy
+			--health-start-interval # Time between running the check during the start period (ms|s|m|h)
+			--health-start-period # Start period for the container to initialize before counting retries towards unstable (ms|s|m|h)
+			--health-timeout # Maximum time to allow one check to run (ms|s|m|h)
+			--host # Set one or more custom host-to-IP mappings (host:ip)
+			--hostname # Container hostname
+			--init @bool # Use an init inside each service container to forward signals and reap processes
+			--isolation # Service container isolation mode
+			--label # Service labels
+			--limit-cpu # Limit CPUs
+			--limit-memory # Limit Memory
+			--limit-pids # Limit maximum number of processes (default 0 = unlimited)
+			--log-driver # Logging driver for service
+			--log-opt # Logging driver options
+			--max-concurrent # Number of job tasks to run concurrently (default equal to --replicas)
+			--memory-swap # Swap Bytes (-1 for unlimited)
+			--memory-swappiness # Tune memory swappiness (0-100), -1 to reset to default
+			--mode # Service mode ("replicated", "global", "replicated-job", "global-job")
+			--mount # Attach a filesystem mount to the service
+			--name # Service name
+			--network # Network attachments
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--no-resolve-image @bool # Do not query the registry to resolve image digest and supported platforms
+			--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+			--placement-pref # Add a placement preference
+			--publish # Publish a port as a node port
+			--quiet @bool # Suppress progress output
+			--read-only @bool # Mount the container's root filesystem as read only
+			--replicas # Number of tasks
+			--replicas-max-per-node # Maximum number of tasks per node (default 0 = unlimited)
+			--reserve-cpu # Reserve CPUs
+			--reserve-memory # Reserve Memory
+			--restart-condition # Restart when condition is met ("none", "on-failure", "any") (default "any")
+			--restart-delay # Delay between restart attempts (ns|us|ms|s|m|h) (default 5s)
+			--restart-max-attempts # Maximum number of restarts before giving up
+			--restart-window # Window used to evaluate the restart policy (ns|us|ms|s|m|h)
+			--rollback-delay # Delay between task rollbacks (ns|us|ms|s|m|h) (default 0s)
+			--rollback-failure-action # Action on rollback failure ("pause", "continue") (default "pause")
+			--rollback-max-failure-ratio # Failure rate to tolerate during a rollback (default 0)
+			--rollback-monitor # Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+			--rollback-order # Rollback order ("start-first", "stop-first") (default "stop-first")
+			--rollback-parallelism # Maximum number of tasks rolled back simultaneously (0 to roll back all at once)
+			--secret # Specify secrets to expose to the service
+			--stop-grace-period # Time to wait before force killing a container (ns|us|ms|s|m|h) (default 10s)
+			--stop-signal # Signal to stop the container
+			--sysctl # Sysctl options
+			--tty @bool # Allocate a pseudo-TTY
+			--ulimit # Ulimit options
+			--update-delay # Delay between updates (ns|us|ms|s|m|h) (default 0s)
+			--update-failure-action # Action on update failure ("pause", "continue", "rollback") (default "pause")
+			--update-max-failure-ratio # Failure rate to tolerate during an update (default 0)
+			--update-monitor # Duration after each task update to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+			--update-order # Update order ("start-first", "stop-first") (default "stop-first")
+			--update-parallelism # Maximum number of tasks updated simultaneously (0 to update all at once)
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--with-registry-auth @bool # Send registry authentication details to swarm agents
+			--workdir # Working directory inside the container
+		inspect # Display detailed information on one or more services
+			--format # Format output using a custom template:
+			--pretty @bool # Print the information in a human friendly format
+		logs # Fetch the logs of a service or task
+			--details @bool # Show extra details provided to logs
+			--follow @bool # Follow log output
+			--no-resolve @bool # Do not map IDs to Names in output
+			--no-task-ids @bool # Do not include task IDs in output
+			--no-trunc @bool # Do not truncate output
+			--raw @bool # Do not neatly format logs
+			--since # Show logs since timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes)
+			--tail # Number of lines to show from the end of the logs
+			--timestamps @bool # Show timestamps
+		ls # List services
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--quiet @bool # Only display IDs
+		ps # List the tasks of one or more services
+			--filter # Filter output based on conditions provided
+			--format # Pretty-print tasks using a Go template
+			--no-resolve @bool # Do not map IDs to Names
+			--no-trunc @bool # Do not truncate output
+			--quiet @bool # Only display task IDs
+		rm # Remove one or more services
+		rollback # Revert changes to a service's configuration
+			--detach @bool # Exit immediately instead of waiting for the service to converge
+			--quiet @bool # Suppress progress output
+		scale # Scale one or multiple replicated services
+			--detach @bool # Exit immediately instead of waiting for the service to converge
+		update # Update a service
+			--args # Service command args
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--config-add # Add or update a config file on a service
+			--config-rm # Remove a configuration file
+			--constraint-add # Add or update a placement constraint
+			--constraint-rm # Remove a constraint
+			--container-label-add # Add or update a container label
+			--container-label-rm # Remove a container label by its key
+			--credential-spec # Credential spec for managed service account (Windows only)
+			--detach @bool # Exit immediately instead of waiting for the service to converge
+			--dns-add # Add or update a custom DNS server
+			--dns-option-add # Add or update a DNS option
+			--dns-option-rm # Remove a DNS option
+			--dns-rm # Remove a custom DNS server
+			--dns-search-add # Add or update a custom DNS search domain
+			--dns-search-rm # Remove a DNS search domain
+			--endpoint-mode # Endpoint mode (vip or dnsrr)
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env-add # Add or update an environment variable
+			--env-rm # Remove an environment variable
+			--force @bool # Force update even if no changes require it
+			--generic-resource-add # Add a Generic resource
+			--generic-resource-rm # Remove a Generic resource
+			--group-add # Add an additional supplementary user group to the container
+			--group-rm # Remove a previously added supplementary user group from the container
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (ms|s|m|h)
+			--health-retries # Consecutive failures needed to report unhealthy
+			--health-start-interval # Time between running the check during the start period (ms|s|m|h)
+			--health-start-period # Start period for the container to initialize before counting retries towards unstable (ms|s|m|h)
+			--health-timeout # Maximum time to allow one check to run (ms|s|m|h)
+			--host-add # Add a custom host-to-IP mapping ("host:ip")
+			--host-rm # Remove a custom host-to-IP mapping ("host:ip")
+			--hostname # Container hostname
+			--image # Service image tag
+			--init @bool # Use an init inside each service container to forward signals and reap processes
+			--isolation # Service container isolation mode
+			--label-add # Add or update a service label
+			--label-rm # Remove a label by its key
+			--limit-cpu # Limit CPUs
+			--limit-memory # Limit Memory
+			--limit-pids # Limit maximum number of processes (default 0 = unlimited)
+			--log-driver # Logging driver for service
+			--log-opt # Logging driver options
+			--max-concurrent # Number of job tasks to run concurrently (default equal to --replicas)
+			--memory-swap # Swap Bytes (-1 for unlimited)
+			--memory-swappiness # Tune memory swappiness (0-100), -1 to reset to default
+			--mount-add # Add or update a mount on a service
+			--mount-rm # Remove a mount by its target path
+			--network-add # Add a network
+			--network-rm # Remove a network
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--no-resolve-image @bool # Do not query the registry to resolve image digest and supported platforms
+			--oom-score-adj # Tune host's OOM preferences (-1000 to 1000)
+			--placement-pref-add # Add a placement preference
+			--placement-pref-rm # Remove a placement preference
+			--publish-add # Add or update a published port
+			--publish-rm # Remove a published port by its target port
+			--quiet @bool # Suppress progress output
+			--read-only @bool # Mount the container's root filesystem as read only
+			--replicas # Number of tasks
+			--replicas-max-per-node # Maximum number of tasks per node (default 0 = unlimited)
+			--reserve-cpu # Reserve CPUs
+			--reserve-memory # Reserve Memory
+			--restart-condition # Restart when condition is met ("none", "on-failure", "any")
+			--restart-delay # Delay between restart attempts (ns|us|ms|s|m|h)
+			--restart-max-attempts # Maximum number of restarts before giving up
+			--restart-window # Window used to evaluate the restart policy (ns|us|ms|s|m|h)
+			--rollback @bool # Rollback to previous specification
+			--rollback-delay # Delay between task rollbacks (ns|us|ms|s|m|h)
+			--rollback-failure-action # Action on rollback failure ("pause", "continue")
+			--rollback-max-failure-ratio # Failure rate to tolerate during a rollback
+			--rollback-monitor # Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h)
+			--rollback-order # Rollback order ("start-first", "stop-first")
+			--rollback-parallelism # Maximum number of tasks rolled back simultaneously (0 to roll back all at once)
+			--secret-add # Add or update a secret on a service
+			--secret-rm # Remove a secret
+			--stop-grace-period # Time to wait before force killing a container (ns|us|ms|s|m|h)
+			--stop-signal # Signal to stop the container
+			--sysctl-add # Add or update a Sysctl option
+			--sysctl-rm # Remove a Sysctl option
+			--tty @bool # Allocate a pseudo-TTY
+			--ulimit-add # Add or update a ulimit option
+			--ulimit-rm # Remove a ulimit option
+			--update-delay # Delay between updates (ns|us|ms|s|m|h)
+			--update-failure-action # Action on update failure ("pause", "continue", "rollback")
+			--update-max-failure-ratio # Failure rate to tolerate during an update
+			--update-monitor # Duration after each task update to monitor for failure (ns|us|ms|s|m|h)
+			--update-order # Update order ("start-first", "stop-first")
+			--update-parallelism # Maximum number of tasks updated simultaneously (0 to update all at once)
+			--user # Username or UID (format: <name|uid>[:<group|gid>])
+			--with-registry-auth @bool # Send registry authentication details to swarm agents
+			--workdir # Working directory inside the container
+	stack # Manage Swarm stacks
+		config # Outputs the final config file, after doing merges and interpolations
+			--compose-file # Path to a Compose file, or "-" to read from stdin
+			--skip-interpolation @bool # Skip interpolation and output only merged config
+		deploy # Deploy a new stack or update an existing stack
+			--compose-file # Path to a Compose file, or "-" to read from stdin
+			--detach @bool # Exit immediately instead of waiting for the stack services to converge
+			--prune @bool # Prune services that are no longer referenced
+			--quiet @bool # Suppress progress output
+			--resolve-image # Query the registry to resolve image digest and supported platforms ("always", "changed", "never")
+			--with-registry-auth @bool # Send registry authentication details to Swarm agents
+		ls # List stacks
+			--format # Format output using a custom template:
+		ps # List the tasks in the stack
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--no-resolve @bool # Do not map IDs to Names
+			--no-trunc @bool # Do not truncate output
+			--quiet @bool # Only display task IDs
+		rm # Remove one or more stacks
+			--detach @bool # Do not wait for stack removal
+		services # List the services in the stack
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--quiet @bool # Only display IDs
+	start # Start one or more stopped containers
+		--attach @bool # Attach STDOUT/STDERR and forward signals
+		--checkpoint # Restore from this checkpoint
+		--checkpoint-dir # Use a custom checkpoint storage directory
+		--detach-keys # Override the key sequence for detaching a container
+		--interactive @bool # Attach container's STDIN
+	stats # Display a live stream of container(s) resource usage statistics
+		--all @bool # Show all containers (default shows just running)
+		--format # Format output using a custom template:
+		--no-stream @bool # Disable streaming stats and only pull the first result
+		--no-trunc @bool # Do not truncate output
+	stop # Stop one or more running containers
+		--signal # Signal to send to the container
+		--timeout # Seconds to wait before killing the container
+	swarm # Manage Swarm
+		ca # Display and rotate the root CA
+			--ca-cert # Path to the PEM-formatted root CA certificate to use for the new cluster
+			--ca-key # Path to the PEM-formatted root CA key to use for the new cluster
+			--cert-expiry # Validity period for node certificates (ns|us|ms|s|m|h)
+			--detach @bool # Exit immediately instead of waiting for the root rotation to converge
+			--external-ca # Specifications of one or more certificate signing endpoints
+			--quiet @bool # Suppress progress output
+			--rotate @bool # Rotate the swarm CA - if no certificate or key are provided, new ones will be generated
+		init # Initialize a swarm
+			--advertise-addr # Advertised address (format: "<ip|interface>[:port]")
+			--autolock @bool # Enable manager autolocking (requiring an unlock key to start a stopped manager)
+			--availability # Availability of the node ("active", "pause", "drain")
+			--cert-expiry # Validity period for node certificates (ns|us|ms|s|m|h)
+			--data-path-addr # Address or interface to use for data path traffic (format: "<ip|interface>")
+			--data-path-port # Port number to use for data path traffic (1024 - 49151). If no value is set or is set to 0, the default port (4789) is used.
+			--default-addr-pool # default address pool in CIDR format
+			--default-addr-pool-mask-length # default address pool subnet mask length
+			--dispatcher-heartbeat # Dispatcher heartbeat period (ns|us|ms|s|m|h)
+			--external-ca # Specifications of one or more certificate signing endpoints
+			--force-new-cluster @bool # Force create a new cluster from current state
+			--listen-addr # Listen address (format: "<ip|interface>[:port]")
+			--max-snapshots # Number of additional Raft snapshots to retain
+			--snapshot-interval # Number of log entries between Raft snapshots
+			--task-history-limit # Task history retention limit
+		join # Join a swarm as a node and/or manager
+			--advertise-addr # Advertised address (format: "<ip|interface>[:port]")
+			--availability # Availability of the node ("active", "pause", "drain")
+			--data-path-addr # Address or interface to use for data path traffic (format: "<ip|interface>")
+			--listen-addr # Listen address (format: "<ip|interface>[:port]")
+			--token # Token for entry into the swarm
+		join-token # Manage join tokens
+			--quiet @bool # Only display token
+			--rotate @bool # Rotate join token
+		leave # Leave the swarm
+			--force @bool # Force this node to leave the swarm, ignoring warnings
+		unlock # Unlock swarm
+		unlock-key # Manage the unlock key
+			--quiet @bool # Only display token
+			--rotate @bool # Rotate unlock key
+		update # Update the swarm
+			--autolock @bool # Change manager autolocking setting (true|false)
+			--cert-expiry # Validity period for node certificates (ns|us|ms|s|m|h)
+			--dispatcher-heartbeat # Dispatcher heartbeat period (ns|us|ms|s|m|h)
+			--external-ca # Specifications of one or more certificate signing endpoints
+			--max-snapshots # Number of additional Raft snapshots to retain
+			--snapshot-interval # Number of log entries between Raft snapshots
+			--task-history-limit # Task history retention limit
+	system # Manage Docker
+		df # Show docker disk usage
+			--format # Format output using a custom template:
+			--verbose @bool # Show detailed information on space usage
+		events # Get real time events from the server
+			--filter # Filter output based on conditions provided
+			--format # Format output using a custom template:
+			--since # Show all events created since timestamp
+			--until # Stream events until this timestamp
+		info # Display system-wide information
+			--format # Format output using a custom template:
+		prune # Remove unused data
+			--all @bool # Remove all unused images not just dangling ones
+			--filter # Provide filter values (e.g. "label=<key>=<value>")
+			--force @bool # Do not prompt for confirmation
+			--volumes @bool # Prune anonymous volumes
+	tag # Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+	top # Display the running processes of a container
+	unpause # Unpause all processes within one or more containers
+	update # Update configuration of one or more containers
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota
+		--cpu-rt-period # Limit the CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit the CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--memory # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: -1 to enable unlimited swap
+		--pids-limit # Tune container pids limit (set -1 for unlimited)
+		--restart # Restart policy to apply when a container exits
+	version # Show the Docker version information
+		--format # Format output using a custom template:
+	volume # Manage volumes
+		create # Create a volume
+			--availability # Cluster Volume availability ("active", "pause", "drain")
+			--driver # Specify volume driver name
+			--group # Cluster Volume group (cluster volumes)
+			--label # Set metadata for a volume
+			--limit-bytes # Minimum size of the Cluster Volume in bytes
+			--opt # Set driver specific options
+			--required-bytes # Maximum size of the Cluster Volume in bytes
+			--scope # Cluster Volume access scope ("single", "multi")
+			--secret # Cluster Volume secrets
+			--sharing # Cluster Volume access sharing ("none", "readonly", "onewriter", "all")
+			--topology-preferred # A topology that the Cluster Volume would be preferred in
+			--topology-required # A topology that the Cluster Volume must be accessible from
+			--type # Cluster Volume access type ("mount", "block")
+		inspect # Display detailed information on one or more volumes
+			--format # Format output using a custom template:
+		ls # List volumes
+			--cluster @bool # Display only cluster volumes, and use cluster volume list formatting
+			--filter # Provide filter values (e.g. "dangling=true")
+			--format # Format output using a custom template:
+			--quiet @bool # Only display volume names
+		prune # Remove unused local volumes
+			--all @bool # Remove all unused volumes, not just anonymous ones
+			--filter # Provide filter values (e.g. "label=<label>")
+			--force @bool # Do not prompt for confirmation
+		rm # Remove one or more volumes
+			--force @bool # Force the removal of one or more volumes
+		update # Update a volume (cluster volumes only)
+			--availability # Cluster Volume availability ("active", "pause", "drain")
+	wait # Block until one or more containers stop, then print their exit codes

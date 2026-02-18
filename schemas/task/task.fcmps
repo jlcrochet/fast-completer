@@ -1,0 +1,37 @@
+# Task CLI schema for fast-completer
+# Generated from task 3.48.0
+
+task # Task runner
+	--color|-c @bool # Colored output. Enabled by default. Set flag to false or use NO_COLOR=1 to disable. (default true)
+	--completion # Generates shell completion script.
+	--concurrency|-C # Limit number of tasks to run concurrently.
+	--dir|-d # Sets the directory in which Task will execute and look for a Taskfile.
+	--disable-fuzzy @bool # Disables fuzzy matching for task names.
+	--dry|-n @bool # Compiles and prints tasks in the order that they would be run, without executing them.
+	--exit-code|-x @bool # Pass-through the exit code of the task command.
+	--experiments @bool # Lists all the available experiments and whether or not they are enabled.
+	--failfast|-F @bool # When running tasks in parallel, stop all tasks if one fails.
+	--force|-f @bool # Forces execution even when the task is up-to-date.
+	--global|-g @bool # Runs global Taskfile, from $HOME/{T,t}askfile.{yml,yaml}.
+	--init|-i @bool # Creates a new Taskfile.yml in the current folder.
+	--insecure @bool # Forces Task to download Taskfiles over insecure connections.
+	--interactive @bool # Prompt for missing required variables.
+	--interval|-I # Interval to watch for changes.
+	--json|-j @bool # Formats task list as JSON.
+	--list|-l @bool # Lists tasks with description of current Taskfile.
+	--list-all|-a @bool # Lists tasks with or without a description.
+	--nested @bool # Nest namespaces when listing tasks as JSON
+	--no-status @bool # Ignore status when listing tasks as JSON
+	--output|-o # Sets output style: [interleaved|group|prefixed].
+	--output-group-begin # Message template to print before a task's grouped output.
+	--output-group-end # Message template to print after a task's grouped output.
+	--output-group-error-only @bool # Swallow output from successful tasks.
+	--parallel|-p @bool # Executes tasks provided on command line in parallel.
+	--silent|-s @bool # Disables echoing.
+	--sort # Changes the order of the tasks when listed. [default|alphanumeric|none].
+	--status @bool # Exits with non-zero exit code if any of the given tasks is not up-to-date.
+	--summary @bool # Show summary about a task.
+	--taskfile|-t # Choose which Taskfile to run. Defaults to "Taskfile.yml".
+	--verbose|-v @bool # Enables verbose mode.
+	--watch|-w @bool # Enables watch of the given task.
+	--yes|-y @bool # Assume "yes" as answer to all prompts.

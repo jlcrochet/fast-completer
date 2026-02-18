@@ -1,0 +1,381 @@
+# Terraform CLI schema for fast-completer
+# Generated from terraform 1.14.5
+
+terraform # Infrastructure as code
+	-chdir # Switch to a different working directory before executing the
+	apply # Create or update infrastructure
+		-auto-approve @bool # Skip interactive approval of plan before applying.
+		-backup # Path to backup the existing state file before
+		-compact-warnings @bool # If Terraform produces any warnings that are not
+		-destroy @bool # Destroy Terraform-managed infrastructure.
+		-lock # Don't hold a state lock during the operation. This is
+		-lock-timeout # Duration to retry a state lock.
+		-input # Ask for input for variables if not directly set.
+		-no-color @bool # If specified, output won't contain any color.
+		-parallelism # Limit the number of parallel resource operations.
+		-replace # Terraform will plan to replace this resource instance
+		-state # Path to read and save state (unless state-out
+		-state-out # Path to write state to that is different than
+		-var # Set a value for one of the input variables in the root
+		-var-file # Load variable values from the given file, in addition
+	console # Try Terraform expressions at an interactive command prompt
+		-state # Legacy option for the local backend only. See the local
+		-plan @bool # Create a new plan (as if running "terraform plan") and
+		-var # Set a variable in the Terraform configuration. This
+		-var-file # Set variables in the Terraform configuration from
+	destroy # Destroy previously-created infrastructure
+	fmt # Reformat your configuration in the standard style
+		-list # Don't list files whose formatting differs
+		-write # Don't write to source files
+		-diff @bool # Display diffs of formatting changes
+		-check @bool # Check if the input is formatted. Exit status will be 0 if all
+		-no-color @bool # If specified, output won't contain any color.
+		-recursive @bool # Also process files in subdirectories. By default, only the
+	force-unlock # Release a stuck lock on the current workspace
+		-force @bool # Don't ask for input for unlock confirmation.
+	get # Install or upgrade remote Terraform modules
+		-update @bool # Check already-downloaded modules for available updates
+		-no-color @bool # Disable text coloring in the output.
+	graph # Generate a Graphviz graph of the steps in an operation
+		-plan # Render graph using the specified plan file instead of the
+		-draw-cycles @bool # Highlight any cycles in the graph with colored edges.
+		-type # Type of operation graph to output. Can be: plan,
+		-module-depth # (deprecated) In prior versions of Terraform, specified the
+	import # Associate existing infrastructure with a Terraform resource
+		-config # Path to a directory of Terraform configuration files
+		-input # Disable interactive input prompts.
+		-lock # Don't hold a state lock during the operation. This is
+		-lock-timeout # Duration to retry a state lock.
+		-no-color @bool # If specified, output won't contain any color.
+		-var # Set a variable in the Terraform configuration. This
+		-var-file # Set variables in the Terraform configuration from
+		-ignore-remote-version @bool # A rare option used for the remote backend only. See
+	init # Prepare your working directory for other commands
+		-backend # Disable backend or HCP Terraform initialization
+		-backend-config # Configuration to be merged with what is in the
+		-force-copy @bool # Suppress prompts about copying state data when
+		-from-module # Copy the contents of the given module into the target
+		-get # Disable downloading modules for this configuration.
+		-input # Disable interactive prompts. Note that some actions may
+		-lock # Don't hold a state lock during backend migration.
+		-lock-timeout # Duration to retry a state lock.
+		-no-color @bool # If specified, output won't contain any color.
+		-json @bool # If specified, machine readable output will be
+		-plugin-dir @bool # Directory containing plugin binaries. This overrides all
+		-reconfigure @bool # Reconfigure a backend, ignoring any saved
+		-migrate-state @bool # Reconfigure a backend, and attempt to migrate any
+		-upgrade @bool # Install the latest module and provider versions
+		-lockfile # Set a dependency lockfile mode.
+		-ignore-remote-version @bool # A rare option used for HCP Terraform and the remote backend
+		-test-directory # Set the Terraform test directory, defaults to "tests".
+	login # Obtain and save credentials for a remote host
+	logout # Remove locally-stored credentials for a remote host
+	metadata # Metadata related commands
+		functions
+	modules # Show all declared modules in a working directory
+		-json @bool # If specified, output declared Terraform modules and
+	output # Show output values from your root module
+		-state # Path to the state file to read. Defaults to
+		-no-color @bool # If specified, output won't contain any color.
+		-json @bool # If specified, machine readable output will be
+		-raw @bool # For value types that can be automatically
+	plan # Show changes required by the current configuration
+		-destroy @bool # Select the "destroy" planning mode, which creates a plan
+		-refresh-only @bool # Select the "refresh only" planning mode, which checks
+		-refresh # Skip checking for external changes to remote objects
+		-replace # Force replacement of a particular resource instance using
+		-target # Limit the planning operation to only the given module,
+		-var # Set a value for one of the input variables in the root
+		-var-file # Load variable values from the given file, in addition
+		-compact-warnings @bool # If Terraform produces any warnings that are not
+		-detailed-exitcode @bool # Return detailed exit codes when the command exits.
+		-generate-config-out # (Experimental) If import blocks are present in
+		-input # Ask for input for variables if not directly set.
+		-lock # Don't hold a state lock during the operation. This
+		-lock-timeout # Duration to retry a state lock.
+		-no-color @bool # If specified, output won't contain any color.
+		-out # Write a plan file to the given path. This can be
+		-parallelism # Limit the number of concurrent operations. Defaults
+		-state # A legacy option used for the local backend only.
+	providers # Show the providers required for this configuration
+		lock
+			-fs-mirror # Consult the given filesystem mirror directory instead
+			-net-mirror # Consult the given network mirror (given as a base URL)
+			-platform # Choose a target platform to request package checksums
+			-enable-plugin-cache @bool # Enable the usage of the globally configured plugin cache.
+			-test-directory # Set the Terraform test directory, defaults to "tests".
+		mirror
+			-platform # Choose which target platform to build a mirror for.
+			-lock-file # Ignore the provider lock file when fetching providers.
+		schema
+	query # Search and list remote infrastructure with Terraform
+		-var # Set a value for one of the input variables in the query
+		-var-file # Load variable values from the given file, in addition
+		-generate-config-out # Instructs Terraform to generate import and resource
+		-json @bool # If specified, machine readable output will be
+		-no-color @bool # If specified, output won't contain any color.
+	refresh # Update the state to match remote systems
+		-compact-warnings @bool # If Terraform produces any warnings that are not
+		-input # Ask for input for variables if not directly set.
+		-lock # Don't hold a state lock during the operation. This is
+		-lock-timeout # Duration to retry a state lock.
+		-no-color @bool # If specified, output won't contain any color.
+		-parallelism # Limit the number of concurrent operations. Defaults to 10.
+		-target # Resource to target. Operation will be limited to this
+		-var # Set a variable in the Terraform configuration. This
+		-var-file # Set variables in the Terraform configuration from
+	show # Show the current state or a saved plan
+		-no-color @bool # If specified, output won't contain any color.
+		-json @bool # If specified, output the Terraform plan or state in
+	stacks # Manage HCP Terraform stack operations
+		-chdir # Switch to a different working directory before executing the
+		-plugin-cache-dir # Override the default directory where the stack plugin binary is cached.
+		-stacks-version @bool # An alias for the "version" subcommand.
+		-no-color # Disable color output. Must be explicitly set to true or false.
+		-usage @bool # Show this usage output or the usage for a specified subcommand.
+		configuration
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+			-usage @bool # Show usage output.
+			fetch
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-stack-id @bool # The ID of the stack to fetch for. Has precedence over the -stack-name.
+				-json @bool # Output results in JSON format.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			list
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-stack-id @bool # The ID of the stack to list configurations for. Has precedence over the -stack-name.
+				-json @bool # Output results in JSON format instead of the default human-readable text format.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			upload
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-stack-id @bool # The ID of the stack to upload to. Has precedence over the -stack-name.
+				-speculative @bool # If given, the upload will be speculative and will not trigger any deployments.
+				-json @bool # Output results in JSON format.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			watch
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-configuration-id @bool # The ID of the configuration to watch. Has precedence over the latest configuration of the stack provided in named args.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+		create
+			-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided. (required)
+			-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided. (required)
+			-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided. (required)
+			-with-template @bool # Generate boilerplate configuration
+			-json @bool # Output results in JSON format instead of the default
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		deployment-group
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+			-usage @bool # Show usage output.
+			approve-all-plans
+				-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided.
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-deployment-group-name @bool # The name of the deployment group to approve plans for within the latest configuration of the stack specified in -stack-name.
+				-deployment-group-id @bool # The ID of the deployment group to approve plans for. Has precedence over -deployment-group-name.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			list
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-configuration-id @bool # The id of the configuration to list the deployment groups of. Has precedence over the latest configuration of the stack provided in named args.
+				-json @bool # Output results in JSON format instead of the default
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			rerun
+				-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided.
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-deployment-group-name @bool # The name of the deployment group to approve plans for within the latest configuration of the stack specified in -stack-name.
+				-deployment-group-id @bool # The ID of the deployment group to rerun. Has precedence over -deployment-group-name.
+				-deployment-names @bool # A comma-separated list of deployment names to rerun within the deployment group (required).
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			watch
+				-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided.
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-deployment-group-name @bool # The name of the deployment group to approve plans for within the latest configuration of the stack specified in -stack-name.
+				-deployment-group-id @bool # The ID of the deployment group to watch. Has precedence over -deployment-group-name.
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+		deployment-run
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+			-usage @bool # Show usage output.
+			approve-all-plans
+				-deployment-run-id @bool # The ID of the deployment run (required).
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			cancel
+				-deployment-run-id @bool # The ID of the deployment run to watch (required).
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			list
+				-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided.
+				-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided.
+				-stack-name @bool # The name of the stack to target. Overrides the ENV VAR 'TF_STACKS_STACK_NAME' if provided.
+				-deployment-group-name @bool # The name of the deployment group to list the deployment runs of within the latest configuration of the stack specified in -stack-name.
+				-deployment-group-id @bool # The id of the deployment group to list the deployment runs of. Has precedence over -deployment-group-name.
+				-json @bool # Output results in JSON format instead of the default
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+			watch
+				-deployment-run-id @bool # The ID of the deployment run to watch (required).
+				-chdir @bool # Overwrite the current directory as the target for the
+				-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+				-stacks-version @bool # An alias for the "version" subcommand.
+				-no-color # Disable color output. Must be explicitly set to true or false.
+		fmt
+			-list # Don't list files whose formatting differs
+			-write # Don't write to source files
+			-diff @bool # Display diffs of formatting changes
+			-check @bool # Check if the input is formatted. Exit status will be 0 if all
+			-recursive @bool # Also process files in subdirectories. By default, only the
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		init
+			-upgrade @bool # Install the latest module and provider versions
+			-json @bool # Output results in JSON format instead of the default
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		list
+			-organization-name @bool # The name of the organization to target. Overrides the ENV VAR 'TF_STACKS_ORGANIZATION_NAME' if provided. (required)
+			-project-name @bool # The name of the project to target. Overrides the ENV VAR 'TF_STACKS_PROJECT_NAME' if provided. (optional)
+			-json @bool # Output results in JSON format instead of the default human-readable text format.
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		providers-lock
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		validate
+			-json @bool # Output results in JSON format instead of the default
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+		version
+			-json @bool # Output results in JSON format instead of the default
+			-chdir @bool # Overwrite the current directory as the target for the
+			-plugin-cache-dir @bool # Override the default directory where the stack plugin binary is cached.
+			-stacks-version @bool # An alias for the "version" subcommand.
+			-no-color # Disable color output. Must be explicitly set to true or false.
+	state # Advanced state management
+		identities
+			-state # Path to a Terraform state file to use to look
+			-id # Filters the results to include only instances whose
+		list
+			-state # Path to a Terraform state file to use to look
+			-id # Filters the results to include only instances whose
+		mv
+			-dry-run @bool # If set, prints out what would've been moved but doesn't
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+			-ignore-remote-version @bool # A rare option used for the remote backend only. See
+		pull
+		push
+			-force @bool # Write the state even if lineages don't match or the
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+		replace-provider
+			-auto-approve @bool # Skip interactive approval.
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+			-ignore-remote-version @bool # A rare option used for the remote backend only. See
+		rm
+			-dry-run @bool # If set, prints out what would've been removed but
+			-backup # Path where Terraform should write the backup
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+			-state # Path to the state file to update. Defaults to the
+			-ignore-remote-version @bool # Continue even if remote and local Terraform versions
+		show
+			-state # Path to a Terraform state file to use to look
+	taint # Mark a resource instance as not fully functional
+		-allow-missing @bool # If specified, the command will succeed (exit code 0)
+		-lock # Don't hold a state lock during the operation. This is
+		-lock-timeout # Duration to retry a state lock.
+		-ignore-remote-version @bool # A rare option used for the remote backend only. See
+	test # Execute integration tests for Terraform modules
+		-cloud-run # If specified, Terraform will execute this test run
+		-filter # If specified, Terraform will only execute the test files
+		-json @bool # If specified, machine readable output will be printed in
+		-junit-xml # Saves a test report in JUnit XML format to the specified
+		-no-color @bool # If specified, output won't contain any color.
+		-parallelism # Limit the number of concurrent operations within the
+		-var # Set a value for one of the input variables in the root
+		-var-file # Load variable values from the given file, in addition
+		-verbose @bool # Print the plan or state for each test run block as it
+	untaint # Remove the 'tainted' state from a resource instance
+		-allow-missing @bool # If specified, the command will succeed (exit code 0)
+		-lock # Don't hold a state lock during the operation. This is
+		-lock-timeout # Duration to retry a state lock.
+		-ignore-remote-version @bool # A rare option used for the remote backend only. See
+	validate # Check whether the configuration is valid
+		-json @bool # Produce output in a machine-readable JSON format,
+		-no-color @bool # If specified, output won't contain any color.
+		-no-tests @bool # If specified, Terraform will not validate test files.
+		-query @bool # If specified, the command will also validate .tfquery.hcl files.
+	version # Show the current Terraform version
+		-json @bool # Output the version information as a JSON object.
+	workspace # Workspace management
+		delete
+			-force @bool # Remove a workspace even if it is managing resources.
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+		list
+		new
+			-lock # Don't hold a state lock during the operation. This is
+			-lock-timeout # Duration to retry a state lock.
+			-state # Copy an existing state file into the new workspace.
+		select
+			-or-create # Create the Terraform workspace if it doesn't exist.
+		show

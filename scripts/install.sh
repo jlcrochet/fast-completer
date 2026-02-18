@@ -8,6 +8,8 @@ PATH_MARKER="# fast-completer PATH"
 # Parse arguments
 shells=""
 add_path=false
+only_blobs=""
+exclude_blobs=""
 while [ $# -gt 0 ]; do
     case "$1" in
         --shell)
@@ -22,6 +24,18 @@ while [ $# -gt 0 ]; do
             ;;
         --add-path)
             add_path=true
+            shift
+            ;;
+        --only)
+            shift
+            [ $# -gt 0 ] || { echo "Error: --only requires a blob name" >&2; exit 1; }
+            only_blobs="$only_blobs $1"
+            shift
+            ;;
+        --exclude)
+            shift
+            [ $# -gt 0 ] || { echo "Error: --exclude requires a blob name" >&2; exit 1; }
+            exclude_blobs="$exclude_blobs $1"
             shift
             ;;
         *)
@@ -59,7 +73,29 @@ chmod +x "$BINDIR/fast-completer"
 # Install blobs
 CACHE_DIR="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
 mkdir -p "$CACHE_DIR"
-cp "$TMPDIR/release/blobs/"*.fcmpb "$CACHE_DIR/"
+
+blob_src="$TMPDIR/release/blobs"
+if [ -n "$only_blobs" ]; then
+    for name in $only_blobs; do
+        if [ -f "$blob_src/${name}.fcmpb" ]; then
+            cp "$blob_src/${name}.fcmpb" "$CACHE_DIR/"
+        else
+            echo "Warning: blob not found: ${name}.fcmpb" >&2
+        fi
+    done
+elif [ -n "$exclude_blobs" ]; then
+    for blob in "$blob_src"/*.fcmpb; do
+        [ -f "$blob" ] || continue
+        name="$(basename "$blob" .fcmpb)"
+        skip=false
+        for ex in $exclude_blobs; do
+            [ "$name" = "$ex" ] && skip=true
+        done
+        [ "$skip" = false ] && cp "$blob" "$CACHE_DIR/"
+    done
+else
+    cp "$blob_src"/*.fcmpb "$CACHE_DIR/"
+fi
 
 # Shell completion setup
 add_path_bash() {

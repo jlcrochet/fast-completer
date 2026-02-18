@@ -1,0 +1,1168 @@
+# Heroku CLI schema for fast-completer
+# Generated from heroku 8.7.1
+
+heroku # Heroku CLI
+	access # list who has access to an app 
+		--app|-a # app to run command against
+		--json @bool # output in json format
+		--remote|-r # git remote of app to use
+		add # add new users to your app 
+			--app|-a # app to run command against
+			--permissions|-p # list of permissions comma separated
+			--privileges
+			--remote|-r # git remote of app to use
+		remove # remove users from a team app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		update # update existing collaborators on an team app 
+			--app|-a # app to run command against
+			--permissions|-p # comma-delimited list of permissions to update (deploy,manage,operate)
+			--privileges
+			--remote|-r # git remote of app to use
+	addons # lists your add-ons and attachments The default filter applied depends on whether you are in a Heroku app directory.
+		--all|-A @bool # show add-ons and attachments for all accessible apps
+		--app|-a # app to run command against
+		--json @bool # return add-ons in json format
+		--remote|-r # git remote of app to use
+		attach # attach an existing add-on resource to an app 
+			--app|-a # app to run command against
+			--as # name for add-on attachment
+			--confirm # overwrite existing add-on attachment with same name
+			--credential # credential name for scoped access to Heroku Postgres
+			--remote|-r # git remote of app to use
+		create # create a new add-on resource 
+			--app|-a # app to run command against
+			--as # name for the initial add-on attachment
+			--confirm # overwrite existing config vars or existing add-on attachments
+			--name # name for the add-on resource
+			--remote|-r # git remote of app to use
+			--wait @bool # watch add-on creation status and exit when complete
+		destroy # permanently destroy an add-on resource 
+			--app|-a # app to run command against
+			--confirm|-c
+			--force|-f @bool # allow destruction even if connected to other apps
+			--remote|-r # git remote of app to use
+			--wait @bool # watch add-on destruction status and exit when complete
+		detach # detach an existing add-on resource from an app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		docs # open an add-on's Dev Center documentation in your browser 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--show-url @bool # show URL, do not open browser
+		downgrade # change add-on plan See available plans with `heroku addons:plans SERVICE`.  Note that `heroku addons:upgrade` and `heroku addons:downgrade` are the same. Either one can be used to change an add-on plan up or down.  https://devcenter.heroku.com/articles/managing-add-ons
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # show detailed add-on resource and attachment information 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		open # open an add-on's dashboard in your browser 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--show-url @bool # show URL, do not open browser
+		plans # list all available plans for an add-on services 
+			--json @bool # output in json format
+		rename # rename an add-on 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		services # list all available add-on services 
+			--json @bool # output in json format
+		upgrade # change add-on plan See available plans with `heroku addons:plans SERVICE`.  Note that `heroku addons:upgrade` and `heroku addons:downgrade` are the same. Either one can be used to change an add-on plan up or down.  https://devcenter.heroku.com/articles/managing-add-ons
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		wait # show provisioning status of the add-ons on the app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--wait-interval # how frequently to poll in seconds
+	apps # list your apps 
+		--all|-A @bool # include apps in all teams
+		--internal-routing|-i @bool # filter to Internal Web Apps
+		--json @bool # output in json format
+		--org|-o # team to use
+		--personal|-p @bool # list apps in personal account when a default team is set
+		--space|-s # filter by space
+		--team|-t # team to use
+		create # creates a new app 
+			--addons # comma-delimited list of addons to install
+			--app|-a
+			--buildpack|-b # buildpack url to use for this app
+			--features
+			--internal-routing @bool # private space-only. create as an Internal Web App that is only routable in the local network.
+			--json @bool # output in json format
+			--kernel
+			--locked @bool
+			--manifest|-m @bool # use heroku.yml settings for this app
+			--no-remote|-n @bool # do not create a git remote
+			--org|-o # team to use
+			--region # specify region for the app to run in
+			--remote|-r # the git remote to create, default "heroku"
+			--space # the private space to create the app in
+			--stack|-s # the stack to create the app on
+			--team|-t # team to use
+		destroy # permanently destroy an app This will also destroy all add-ons on the app.
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+		errors # view app errors 
+			--app|-a # app to run command against
+			--dyno @bool # show only dyno errors
+			--hours # number of hours to look back (default 24)
+			--json @bool # output in json format
+			--remote|-r # git remote of app to use
+			--router @bool # show only router errors
+		favorites # list favorited apps 
+			--json @bool # output in json format
+			add # favorites an app 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			remove # unfavorites an app 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+		info # show detailed app information $ heroku apps:info === example Git URL:   https://git.heroku.com/example.git Repo Size: 5M ...  $ heroku apps:info --shell git_url=https://git.heroku.com/example.git repo_size=5000000 ...
+			--app|-a # app to run command against
+			--extended|-x @bool
+			--json|-j @bool
+			--remote|-r # git remote of app to use
+			--shell|-s @bool # output more shell friendly key/value pairs
+		join # add yourself to a team app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		leave # remove yourself from a team app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		lock # prevent team members from joining an app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		open # open the app in a web browser 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		rename # rename an app This will locally update the git remote if it is set to the old app.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		stacks # show the list of available stacks 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			set # set the stack of an app 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+		transfer # transfer applications to another user or team 
+			--app|-a # app to run command against
+			--bulk @bool # transfer applications in bulk
+			--locked|-l @bool # lock the app upon transfer
+			--remote|-r # git remote of app to use
+		unlock # unlock an app so any team member can join 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	auth
+		2fa # check 2fa status
+			disable # disables 2fa on account
+		login # login with your Heroku credentials
+			--browser # browser to open SSO with (example: "firefox", "safari")
+			--expires-in|-e # duration of token in seconds (default 30 days)
+			--interactive|-i @bool # login with username/password
+			--sso|-s @bool # login for enterprise users under SSO
+		logout # clears local login credentials and invalidates API session
+		token # outputs current CLI authentication token. By default, the CLI auth token is only valid for 1 year.
+		whoami # display the current logged in user
+	authorizations # list OAuth authorizations
+		--json|-j @bool # output in json format
+		create # create a new OAuth authorization
+			--description|-d # set a custom authorization
+			--expires-in|-e # set expiration in seconds (default no expiration)
+			--json|-j @bool # output in json format
+			--scope|-s # set custom OAuth scopes
+			--short|-S @bool # only output token
+		info # show an existing OAuth authorization
+			--json|-j @bool # output in json format
+		revoke # revoke OAuth authorization
+		rotate # updates an OAuth authorization token
+		update # updates an OAuth authorization
+			--client-id # identifier of OAuth client to set
+			--client-secret # secret of OAuth client to set
+			--description|-d # set a custom authorization description
+	autocomplete # display autocomplete installation instructions
+		--refresh-cache|-r @bool # refresh cache only (ignores displaying instructions)
+	buildpacks # display the buildpacks for an app
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+		add # add new app buildpack, inserting into list of buildpacks if necessary
+			--app|-a # app to run command against
+			--index|-i # the 1-based index of the URL in the list of URLs
+			--remote|-r # git remote of app to use
+		clear # clear all buildpacks set on the app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # fetch info about a buildpack
+		remove # remove a buildpack set on the app
+			--app|-a # app to run command against
+			--index|-i # the 1-based index of the URL to remove from the list of URLs
+			--remote|-r # git remote of app to use
+		search # search for buildpacks
+			--description # buildpack description to filter on
+			--name # buildpack names to filter on using a comma separated list 
+			--namespace # buildpack namespaces to filter on using a comma separated list
+		set
+			--app|-a # app to run command against
+			--index|-i # the 1-based index of the URL in the list of URLs
+			--remote|-r # git remote of app to use
+		versions # list versions of a buildpack
+	certs # list SSL certificates for an app 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+		add # add an SSL certificate to an app Note: certificates with PEM encoding are also valid
+			--app|-a # app to run command against
+			--bypass @bool # bypass the trust chain completion step
+			--remote|-r # git remote of app to use
+		auto # show ACM status for an app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--wait @bool # watch ACM status and display the status when complete
+			disable # disable ACM for an app 
+				--app|-a # app to run command against
+				--confirm
+				--remote|-r # git remote of app to use
+			enable # enable ACM status for an app 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+				--wait @bool # watch ACM status and exit when complete
+			refresh # refresh ACM for an app 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+		chain # print an ordered & complete chain for a certificate 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		generate # generate a key and a CSR or self-signed certificate Generate a key and certificate signing request (or self-signed certificate) for an app.
+			--app|-a # app to run command against
+			--area # sub-country area (state, province, etc.) of owner
+			--city # city of owner
+			--country # country of owner, as a two-letter ISO country code
+			--keysize # RSA key size in bits (default: 2048)
+			--now @bool # do not prompt for any owner information
+			--owner # name of organization certificate belongs to
+			--remote|-r # git remote of app to use
+			--selfsigned @bool # generate a self-signed certificate instead of a CSR
+			--subject # specify entire certificate subject
+		info # show certificate information for an SSL certificate 
+			--app|-a # app to run command against
+			--endpoint # endpoint to check info on
+			--name # name to check info on
+			--remote|-r # git remote of app to use
+			--show-domains @bool # show associated domains
+		key # print the correct key for the given certificate You must pass one single certificate, and one or more keys. The first key that signs the certificate will be printed back.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		remove # remove an SSL certificate from an app 
+			--app|-a # app to run command against
+			--confirm
+			--endpoint # endpoint to remove
+			--name # name to remove
+			--remote|-r # git remote of app to use
+		update # update an SSL certificate on an app Note: certificates with PEM encoding are also valid
+			--app|-a # app to run command against
+			--bypass @bool # bypass the trust chain completion step
+			--confirm
+			--endpoint # endpoint to update
+			--name # name to update
+			--remote|-r # git remote of app to use
+	ci # display the most recent CI runs for the given pipeline
+		--app|-a # app name
+		--json @bool # output in json format
+		--pipeline|-p # name of pipeline
+		--watch @bool # keep running and watch for new and update tests
+		config # display CI config vars Example:      $ heroku ci:config --app murmuring-headland-14719 --json
+			--app|-a # app to run command against
+			--json @bool # output config vars in json format
+			--pipeline|-p # pipeline
+			--remote|-r # git remote of app to use
+			--shell|-s @bool # output config vars in shell format
+			get # get a CI config var Examples:      $ heroku ci:config:get RAILS_ENV     test 
+				--app|-a # app to run command against
+				--pipeline|-p # pipeline
+				--remote|-r # git remote of app to use
+				--shell|-s @bool # output config var in shell format
+			set # set CI config vars Examples:      $ heroku ci:config:set RAILS_ENV=test     Setting test config vars...
+				--app|-a # app to run command against
+				--pipeline|-p # pipeline
+				--remote|-r # git remote of app to use
+			unset # unset CI config vars Examples:      $ heroku ci:config:uset RAILS_ENV     Unsetting RAILS_ENV...
+				--app|-a # app to run command against
+				--pipeline|-p # pipeline
+				--remote|-r # git remote of app to use
+		debug # opens an interactive test debugging session with the contents of the current directory Example:      $ heroku ci:debug     Preparing source...
+			--app|-a # app to run command against
+			--no-cache @bool # start test run with an empty cache
+			--no-setup @bool # start test dyno without running test-setup
+			--pipeline|-p # pipeline
+			--remote|-r # git remote of app to use
+		info # show the status of a specific test run
+			--app|-a # app name
+			--node # the node number to show its setup and output
+			--pipeline|-p # name of pipeline
+		last # looks for the most recent run and returns the output of that run
+			--app|-a # app name
+			--node # the node number to show its setup and output
+			--pipeline|-p # name of pipeline
+		migrate-manifest # app-ci.json is deprecated.
+		open # open the Dashboard version of Heroku CI opens a browser to view the Dashboard version of Heroku CI      Example:      $ heroku ci:open --app murmuring-headland-14719
+			--app|-a # app to run command against
+			--pipeline|-p # pipeline
+			--remote|-r # git remote of app to use
+		rerun # rerun tests against current directory
+			--app|-a # app name
+			--pipeline|-p # name of pipeline
+		run # run tests against current directory
+			--app|-a # app name
+			--pipeline|-p # name of pipeline
+	clients # list your OAuth clients
+		--json|-j @bool # output in json format
+		create # create a new OAuth client
+			--json|-j @bool # output in json format
+			--shell|-s @bool # output in shell format
+		destroy # delete client by ID
+		info # show details of an oauth client
+			--json|-j @bool # output in json format
+			--shell|-s @bool # output in shell format
+		rotate # rotate OAuth client secret
+			--json|-j @bool # output in json format
+			--shell|-s @bool # output in shell format
+		update # update OAuth client
+			--name|-n # change the client name
+			--url # change the client redirect URL
+	commands # list all the commands
+		--columns # only show provided columns (comma-separated)
+		--csv @bool # output is csv format [alias: --output=csv]
+		--extended|-x @bool # show extra columns
+		--filter # filter property by partial string matching, ex: name=foo
+		--hidden @bool # show hidden commands
+		--json @bool # Format output as json.
+		--no-header @bool # hide table header from output
+		--no-truncate @bool # do not truncate output to fit screen
+		--output (csv|json|yaml) # output in a more machine friendly format
+		--sort # property to sort by (prepend '-' for descending)
+		--tree @bool # show tree of commands
+	config # display the config vars for an app
+		--app|-a # app to run command against
+		--json|-j @bool # output config vars in json format
+		--remote|-r # git remote of app to use
+		--shell|-s @bool # output config vars in shell format
+		edit # interactively edit config vars This command opens the app config in a text editor set by $VISUAL or $EDITOR. Any variables added/removed/changed will be updated on the app after saving and closing the file.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		get # display a single config value for an app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--shell|-s @bool # output config vars in shell format
+		set # set one or more config vars 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		unset # unset one or more config vars
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	container # Use containers to build and deploy Heroku apps 
+		login # log in to Heroku Container Registry Usage:         heroku container:login
+			--verbose|-v @bool
+		logout # log out from Heroku Container Registry 
+			--verbose|-v @bool
+		pull # pulls an image from an app's process type      Usage:     heroku container:pull web        # Pulls the web image from the app     heroku container:pull web worker # Pulls both the web and worker images from the app     heroku container:pull web:latest # Pulls the latest tag from the web image
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+		push # builds, then pushes Docker images to deploy your Heroku app 
+			--app|-a # app to run command against
+			--arg # set build-time variables
+			--context-path # path to use as build context (defaults to Dockerfile dir)
+			--recursive|-R @bool # pushes Dockerfile.<process> found in current and subdirectories
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+		release # Releases previously pushed Docker images to your Heroku app      Usage:     heroku container:release web                       # Releases the previously pushed web process type     heroku container:release web worker                # Releases the previously pushed web and worker process types
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+		rm # remove the process type from your app      Usage:     heroku container:rm web        # Destroys the web container     heroku container:rm web worker # Destroys the web and worker containers
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		run # builds, then runs the docker image locally      Usage:     heroku container:run web bash # Runs bash on the local web docker container     heroku container:run worker   # Runs the container CMD on the local worker container
+			--app|-a # app to run command against
+			--port|-p # port the app will run on
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+	domains # list domains for an app
+		--app|-a # app to run command against
+		--columns # only show provided columns (comma-separated)
+		--csv @bool # output is csv format [alias: --output=csv]
+		--extended|-x @bool # show extra columns
+		--filter # filter property by partial string matching, ex: name=foo
+		--json|-j @bool # output in json format
+		--no-header @bool # hide table header from output
+		--output (csv|json|yaml) # output in a more machine friendly format
+		--remote|-r # git remote of app to use
+		--sort # property to sort by (prepend '-' for descending)
+		add # add a domain to an app
+			--app|-a # app to run command against
+			--cert|-c # the name of the SSL cert you want to use for this domain
+			--json|-j @bool # output in json format
+			--remote|-r # git remote of app to use
+			--wait @bool
+		clear # remove all domains from an app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # show detailed information for a domain on an app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		remove # remove a domain from an app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		update # update a domain to use a different SSL certificate on an app
+			--app|-a # app to run command against
+			--cert # the name or id of the certificate you want to use for this domain
+			--remote|-r # git remote of app to use
+		wait # wait for domain to be active for an app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	drains # display the log drains of an app 
+		--app|-a # app to run command against
+		--extended|-x @bool
+		--json @bool # output in json format
+		--remote|-r # git remote of app to use
+		add # adds a log drain to an app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		remove # removes a log drain from an app 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	dyno
+		kill # stop app dyno  stop app dyno or dyno type
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		resize # manage dyno sizes  Called with no arguments shows the current dyno size.  Called with one argument sets the size. Where SIZE is one of eco|basic|standard-1x|standard-2x|performance  Called with 1..n TYPE=SIZE arguments sets the quantity per type. 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		restart # restart app dynos if DYNO is not specified, restarts all dynos on app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		scale # scale dyno quantity up or down Appending a size (eg.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		stop # stop app dyno  stop app dyno or dyno type
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	features # list available app features 
+		--app|-a # app to run command against
+		--json @bool # output in json format
+		--remote|-r # git remote of app to use
+		disable # disables an app feature 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		enable # enables an app feature 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # display information about a feature 
+			--app|-a # app to run command against
+			--json @bool # output in json format
+			--remote|-r # git remote of app to use
+	git
+		clone # clones a heroku app to your local machine at DIRECTORY (defaults to app name)
+			--app|-a # the Heroku app to use
+			--remote|-r # the git remote to create, default "heroku"
+		remote # adds a git remote to an app repo extra arguments will be passed to git remote add 
+			--app|-a # the Heroku app to use
+			--remote|-r # the git remote to create
+	help # Display help for <%= config.bin %>.
+		--nested-commands|-n @bool # Include all nested commands in the output.
+	join # add yourself to a team app 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+	keys # display your SSH keys 
+		--json @bool # output in json format
+		--long|-l @bool # display full SSH keys
+		add # add an SSH key for a user if no KEY is specified, will try to find ~/.ssh/id_rsa.pub
+			--quiet @bool
+			--yes|-y @bool # automatically answer yes for all prompts
+		clear # remove all SSH keys for current user 
+		remove # remove an SSH key from the user 
+	labs # list experimental features 
+		--app|-a # app to run command against
+		--json @bool # display as json
+		--remote|-r # git remote of app to use
+		disable # disables an experimental feature
+			--app|-a # app to run command against
+			--confirm
+			--remote|-r # git remote of app to use
+		enable # enables an experimental feature 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # show feature info 
+			--app|-a # app to run command against
+			--json @bool # display as json
+			--remote|-r # git remote of app to use
+	leave # remove yourself from a team app 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+	local # run heroku app locally Start the application specified by a Procfile (defaults to ./Procfile)
+		--concurrency|-c # number of processes to start
+		--env|-e # location of env file (defaults to .env)
+		--port|-p # port to listen on
+		--procfile|-f # use a different Procfile
+		--restart|-r @bool # restart process if it dies
+		run # run a one-off command
+			--env|-e
+			--port|-p
+		version # display node-foreman version
+	lock # prevent team members from joining an app 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+	logs # display recent log output disable colors with --no-color, HEROKU_LOGS_COLOR=0, or HEROKU_COLOR=0
+		--app|-a # app to run command against
+		--dyno|-d # only show output from this dyno type (such as "web" or "worker")
+		--force-colors @bool # force use of colors (even on non-tty output)
+		--num|-n # number of lines to display
+		--ps|-p # hidden alias for dyno
+		--remote|-r # git remote of app to use
+		--source|-s # only show output from this source (such as "app" or "heroku")
+		--tail|-t @bool # continually stream logs
+	maintenance # display the current maintenance status of app 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+		off # take the app out of maintenance mode 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		on # put the app into maintenance mode 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	members # list members of a team 
+		--json @bool # output in json format
+		--org|-o # team to use
+		--pending @bool # filter by pending team invitations
+		--role|-r # filter by role
+		--team|-t # team to use
+		add # adds a user to a team 
+			--org|-o # team to use
+			--role|-r # member role (admin, collaborator, member, owner)
+			--team|-t # team to use
+		remove # removes a user from a team 
+			--org|-o # team to use
+			--team|-t # team to use
+		set # sets a members role in a team 
+			--org|-o # team to use
+			--role|-r # member role (admin, collaborator, member, owner)
+			--team|-t # team to use
+	notifications # display notifications 
+		--all @bool # view all notifications (not just the ones for the current app)
+		--app|-a # app to run command against
+		--json @bool # output in json format
+		--read @bool # show notifications already read
+		--remote|-r # git remote of app to use
+	orgs # list the teams that you are a member of 
+		--enterprise @bool # filter by enterprise teams
+		--json @bool # output in json format
+		--teams @bool # filter by teams
+		open # open the team interface in a browser window 
+			--org|-o # team to use
+			--team|-t # team to use
+	pg # show database information 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+		backups # list database backups 
+			--app|-a # app to run command against
+			--at
+			--confirm|-c
+			--output|-o
+			--quiet|-q @bool
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+			--wait-interval
+			cancel # cancel an in-progress backup or restore (default newest) 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			capture # capture a new backup 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+				--snapshot @bool
+				--verbose|-v @bool
+				--wait-interval
+			delete # delete a backup 
+				--app|-a # app to run command against
+				--confirm|-c
+				--remote|-r # git remote of app to use
+			download # downloads database backup 
+				--app|-a # app to run command against
+				--output|-o # location to download to. Defaults to latest.dump
+				--remote|-r # git remote of app to use
+			info # get information about a specific backup 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			restore # restore a backup (default latest) to a database defaults to saving the latest database to DATABASE_URL
+				--app|-a # app to run command against
+				--confirm|-c
+				--extensions|-e # comma-separated list of extensions to pre-install in the public schema
+				--remote|-r # git remote of app to use
+				--verbose|-v @bool
+				--wait-interval
+			schedule # schedule daily backups for given database 
+				--app|-a # app to run command against
+				--at # at a specific (24h) hour in the given timezone. Defaults to UTC. --at '[HOUR]:00 [TIMEZONE]'
+				--remote|-r # git remote of app to use
+			schedules # list backup schedule 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			unschedule # stop daily backups 
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			url # get secret but publicly accessible URL of a backup 
+				--app|-a # app to run command against
+				--quiet|-q @bool
+				--remote|-r # git remote of app to use
+		bloat # show table and index bloat in your database ordered by most wasteful 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		blocking # display queries holding locks other queries are waiting to be released 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		connection-pooling
+			attach # add an attachment to a database using connection pooling Example:    heroku pg:connection-pooling:attach postgresql-something-12345 
+				--app|-a # app to run command against
+				--as # name for add-on attachment
+				--remote|-r # git remote of app to use
+		copy # copy all data from source db to target at least one of the databases must be a Heroku PostgreSQL DB
+			--app|-a # app to run command against
+			--confirm
+			--remote|-r # git remote of app to use
+			--verbose @bool
+			--wait-interval
+		credentials # show information on credentials in the database 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			create # create credential within database Example:      heroku pg:credentials:create postgresql-something-12345 --name new-cred-name 
+				--app|-a # app to run command against
+				--name|-n # name of the new credential within the database
+				--remote|-r # git remote of app to use
+			destroy # destroy credential within database Example:      heroku pg:credentials:destroy postgresql-transparent-56874 --name cred-name -a woodstock-production 
+				--app|-a # app to run command against
+				--confirm|-c
+				--name|-n # unique identifier for the credential
+				--remote|-r # git remote of app to use
+			repair-default # repair the permissions of the default credential within database Example:      heroku pg:credentials:repair-default postgresql-something-12345 
+				--app|-a # app to run command against
+				--confirm|-c
+				--remote|-r # git remote of app to use
+			rotate # rotate the database credentials 
+				--all @bool # rotate all credentials
+				--app|-a # app to run command against
+				--confirm|-c
+				--force @bool # forces rotating the targeted credentials
+				--name|-n # which credential to rotate (default credentials if not specified)
+				--remote|-r # git remote of app to use
+			url # show information on a database credential 
+				--app|-a # app to run command against
+				--name|-n # which credential to show (default credentials if not specified)
+				--remote|-r # git remote of app to use
+		diagnose # run or view diagnostics report  defaults to DATABASE_URL database if no DATABASE is specified if REPORT_ID is specified instead, a previous report is displayed 
+			--app|-a # app to run command against
+			--json @bool # format output as JSON
+			--remote|-r # git remote of app to use
+		info # show database information 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		kill # kill a query 
+			--app|-a # app to run command against
+			--force|-f @bool
+			--remote|-r # git remote of app to use
+		killall # terminates all connections for all credentials 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		links # lists all databases and information on link 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			create # create a link between data stores Example:      heroku pg:links:create HEROKU_REDIS_RED HEROKU_POSTGRESQL_CERULEAN
+				--app|-a # app to run command against
+				--as # name of link to create
+				--remote|-r # git remote of app to use
+			destroy # destroys a link between data stores Example:      heroku pg:links:destroy HEROKU_POSTGRESQL_CERULEAN redis-symmetrical-100
+				--app|-a # app to run command against
+				--confirm|-c
+				--remote|-r # git remote of app to use
+		locks # display queries with active locks 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--truncate|-t @bool # truncates queries to 40 characters
+		maintenance # show current maintenance information 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			run # start maintenance 
+				--app|-a # app to run command against
+				--force|-f @bool
+				--remote|-r # git remote of app to use
+			window # set weekly maintenance window All times are in UTC.  Example:      heroku pg:maintenance:window postgres-slippery-100 "Sunday 06:00"
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+		outliers # show 10 queries that have longest execution time in aggregate 
+			--app|-a # app to run command against
+			--num|-n # the number of queries to display (default: 10)
+			--remote|-r # git remote of app to use
+			--reset @bool # resets statistics gathered by pg_stat_statements
+			--truncate|-t @bool # truncate queries to 40 characters
+		promote # sets DATABASE as your DATABASE_URL 
+			--app|-a # app to run command against
+			--force|-f @bool
+			--remote|-r # git remote of app to use
+		ps # view active queries with execution time 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--verbose|-v @bool
+		psql # open a psql shell to the database 
+			--app|-a # app to run command against
+			--command|-c # SQL command to run
+			--credential # credential to use
+			--file|-f # SQL file to run
+			--remote|-r # git remote of app to use
+		pull # pull Heroku database into local or remote database Pull from SOURCE into TARGET.  TARGET must be one of:   * a database name (i.e.
+			--app|-a # app to run command against
+			--exclude-table-data # tables for which data should be excluded (use ';' to split multiple names)
+			--remote|-r # git remote of app to use
+		push # push local or remote into Heroku database Push from SOURCE into TARGET.
+			--app|-a # app to run command against
+			--exclude-table-data # tables for which data should be excluded (use ';' to split multiple names)
+			--remote|-r # git remote of app to use
+		reset # delete all data in DATABASE 
+			--app|-a # app to run command against
+			--confirm|-c
+			--extensions|-e # comma-separated list of extensions to pre-install in the public schema
+			--remote|-r # git remote of app to use
+		settings # show your current database settings 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			auto-explain # Automatically log execution plans of queries without running EXPLAIN by hand. The auto_explain module is loaded at session-time so existing connections will not be logged. Restart your Heroku app and/or restart existing connections for logging to start taking place.
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+				log-analyze # Shows actual run times on the execution plan. This is equivalent to calling EXPLAIN ANALYZE.  WARNING: EXPLAIN ANALYZE will be run on ALL queries, not just logged queries.
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+				log-buffers # Includes buffer usage statistics when execution plans are logged. This is equivalent to calling EXPLAIN BUFFERS and can only be used in conjunction with pg:settings:auto-explain:log-analyze turned on.
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+				log-min-duration # Sets the minimum execution time in milliseconds for a statement's plan to be logged. Setting this value to 0 will log all queries.
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+				log-nested-statements # Nested statements are included in the execution plan's log. 
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+				log-triggers # Includes trigger execution statistics in execution plan logs. This parameter can only be used in conjunction with pg:settings:auto-explain:log-analyze turned on.
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+				log-verbose # Include verbose details in execution plans. This is equivalent to calling EXPLAIN VERBOSE.
+					--app|-a # app to run command against
+					--remote|-r # git remote of app to use
+			log-lock-waits # Controls whether a log message is produced when a session waits longer than the deadlock_timeout to acquire a lock.
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			log-min-duration-statement # The duration of each completed statement will be logged if the statement completes after the time specified by VALUE. VALUE needs to specified as a whole number, in milliseconds. Setting log_min_duration_statement to zero prints all statement durations and -1 will disable logging statement durations.
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			log-statement # log_statement controls which SQL statements are logged. Valid values for VALUE: none - No statements are logged ddl  - All data definition statements, such as CREATE, ALTER and DROP will be logged mod  - Includes all statements from ddl as well as data-modifying statements such as INSERT, UPDATE, DELETE, TRUNCATE, COPY all  - All statements are logged
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			track-functions # track_functions controls tracking of function call counts and time used.
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+		unfollow # stop a replica from following and make it a writeable database 
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+		upgrade # For an Essential-* plan, this command upgrades the database's PostgreSQL version.
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+			--version|-v # PostgreSQL version to upgrade to
+		vacuum-stats # show dead rows and whether an automatic vacuum is expected to be triggered 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		wait # blocks until database is available 
+			--app|-a # app to run command against
+			--no-notify @bool # do not show OS notification
+			--remote|-r # git remote of app to use
+			--wait-interval # how frequently to poll in seconds (to avoid rate limiting)
+	pipelines # list pipelines you have access to
+		--json @bool # output in json format
+		add # add this app to a pipeline The app and pipeline names must be specified. The stage of the app will be guessed based on its name if not specified.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--stage|-s # stage of first app in pipeline
+		connect # connect a github repo to an existing pipeline
+			--repo|-r # the GitHub repository to connect to
+		create # create a new pipeline   An existing app must be specified as the first app in the pipeline.   The pipeline name will be inferred from the app name if not specified.   The stage of the app will be guessed based on its name if not specified.   The pipeline owner will be the user creating the pipeline if not specified with -t for teams or -o for orgs.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--stage|-s # stage of first app in pipeline
+			--team|-t # the team which will own the apps
+		destroy # destroy a pipeline
+		diff # compares the latest release of this app to its downstream app(s)
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		info # show list of apps in a pipeline
+			--json @bool # output in json format
+			--with-owners @bool # shows owner of every app
+		open # open a pipeline in dashboard
+		promote # promote the latest release of this app to its downstream app(s)
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--to|-t # comma separated list of apps to promote to
+		remove # remove this app from its pipeline
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		rename # rename a pipeline
+		setup # bootstrap a new pipeline with common settings and create a production and staging app (requires a fully formed app.json in the repo)
+			--team|-t # the team to assign pipeline ownership to (defaults to current user)
+			--yes|-y @bool # accept all default settings without prompting
+		transfer # transfer ownership of a pipeline
+			--confirm|-c
+			--pipeline|-p # name of pipeline
+		update # update the app's stage in a pipeline
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--stage|-s # new stage of app
+	plugins # List installed plugins.
+		--core @bool # Show core plugins.
+		inspect # Displays installation properties of a plugin.
+			--json @bool # Format output as json.
+			--verbose|-v @bool
+		install # Installs a plugin into the CLI. Can be installed from npm or a git url.  Installation of a user-installed plugin will override a core plugin.  e.g.
+			--force|-f @bool # Run yarn install with force flag.
+			--verbose|-v @bool
+		link # Links a plugin into the CLI for development. Installation of a linked plugin will override a user-installed or core plugin.  e.g.
+			--verbose|-v @bool
+		uninstall # Removes a plugin from the CLI.
+			--verbose|-v @bool
+		update # Update installed plugins.
+			--verbose|-v @bool
+	ps # list dynos for an app 
+		--app|-a # app to run command against
+		--extended|-x @bool
+		--json @bool # display as json
+		--remote|-r # git remote of app to use
+		autoscale
+			disable # disable web dyno autoscaling
+				--app|-a # app to run command against
+				--remote|-r # git remote of app to use
+			enable # enable web dyno autoscaling
+				--app|-a # app to run command against
+				--max # maximum number of dynos
+				--min # minimum number of dynos
+				--notifications @bool # receive email notifications when the max dyno limit is reached
+				--p95 # desired p95 response time
+				--remote|-r # git remote of app to use
+		copy # Copy a file from a dyno to the local filesystem Example:      $ heroku ps:copy FILENAME --app murmuring-headland-14719
+			--app|-a # app to run command against
+			--dyno|-d # specify the dyno to connect to
+			--output|-o # the name of the output file
+			--remote|-r # git remote of app to use
+		exec # Create an SSH session to a dyno Example:      $ heroku ps:exec 'node -i' --app murmuring-headland-14719
+			--app|-a # app to run command against
+			--dyno|-d # specify the dyno to connect to
+			--remote|-r # git remote of app to use
+			--ssh @bool # use native ssh
+			--status @bool # lists the status of the SSH server in the dyno
+		forward # Forward traffic on a local port to a dyno Provide a port or comma-separated list of ports to forward.      For example, "4000,9000:9001" will forward port 4000 to port 4000 and     port 9000 to port 9001.      Example:      $ heroku ps:forward 8080 --app murmuring-headland-14719
+			--app|-a # app to run command against
+			--dyno|-d # specify the dyno to connect to
+			--localPort|-p # the local port to use
+			--remote|-r # git remote of app to use
+		kill # stop app dyno  stop app dyno or dyno type
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		resize # manage dyno sizes  Called with no arguments shows the current dyno size.  Called with one argument sets the size. Where SIZE is one of eco|basic|standard-1x|standard-2x|performance  Called with 1..n TYPE=SIZE arguments sets the quantity per type. 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		restart # restart app dynos if DYNO is not specified, restarts all dynos on app
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		scale # scale dyno quantity up or down Appending a size (eg.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		socks # Launch a SOCKS proxy into a dyno Example:      $ heroku ps:socks --app murmuring-headland-14719     Establishing credentials...
+			--app|-a # app to run command against
+			--dyno|-d # specify the dyno to connect to
+			--remote|-r # git remote of app to use
+		stop # stop app dyno  stop app dyno or dyno type
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		type # manage dyno sizes  Called with no arguments shows the current dyno size.  Called with one argument sets the size. Where SIZE is one of eco|basic|standard-1x|standard-2x|performance  Called with 1..n TYPE=SIZE arguments sets the quantity per type. 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		wait # wait for all dynos to be running latest version after a release
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--type|-t # wait for one specific dyno type
+			--wait-interval|-w # how frequently to poll in seconds (to avoid hitting Heroku API rate limits)
+			--with-run|-R @bool # whether to wait for one-off run dynos
+	psql # open a psql shell to the database 
+		--app|-a # app to run command against
+		--command|-c # SQL command to run
+		--credential # credential to use
+		--file|-f # SQL file to run
+		--remote|-r # git remote of app to use
+	redis # gets information about redis 
+		--app|-a # app to run command against
+		--json @bool # format output as JSON
+		--remote|-r # git remote of app to use
+		cli # opens a redis prompt 
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+		credentials # display credentials information 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--reset @bool # reset credentials
+		info # gets information about redis 
+			--app|-a # app to run command against
+			--json @bool # format output as JSON
+			--remote|-r # git remote of app to use
+		keyspace-notifications # set the keyspace notifications configuration Set the configuration to enable keyspace notification events:     K     Keyspace events, published with __keyspace@<db>__ prefix.     E     Keyevent events, published with __keyevent@<db>__ prefix.     g     Generic commands (non-type specific) like DEL, EXPIRE, RENAME, ...     $     String commands     l     List commands     s     Set commands     h     Hash commands     z     Sorted set commands     t     Stream commands     x     Expired events (events generated every time a key expires)     e     Evicted events (events generated when a key is evicted for maxmemory)     m     Key miss events (events generated when a key that doesn't exist is accessed)     A     Alias for "g$lshztxe", so that the "AKE" string means all the events except "m".      pass an empty string ('') to disable keyspace notifications   
+			--app|-a # app to run command against
+			--config|-c # set keyspace notifications configuration
+			--remote|-r # git remote of app to use
+		maintenance # manage maintenance windows Set or change the maintenance window for your Redis instance
+			--app|-a # app to run command against
+			--force|-f @bool # start maintenance without entering application maintenance mode
+			--remote|-r # git remote of app to use
+			--run @bool # start maintenance
+			--window|-w # set weekly UTC maintenance window
+		maxmemory # set the key eviction policy Set the key eviction policy when instance reaches its storage limit.
+			--app|-a # app to run command against
+			--policy|-p # set policy name
+			--remote|-r # git remote of app to use
+		promote # sets DATABASE as your REDIS_URL 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		stats-reset # reset all stats covered by RESETSTAT (https://redis.io/commands/config-resetstat) 
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+		timeout # set the number of seconds to wait before killing idle connections Sets the number of seconds to wait before killing idle connections.
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--seconds|-s # set timeout value
+		upgrade # perform in-place version upgrade 
+			--app|-a # app to run command against
+			--confirm|-c
+			--remote|-r # git remote of app to use
+			--version|-v
+		wait # wait for Redis instance to be available 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+			--wait-interval # how frequently to poll in seconds
+	regions # list available regions for deployment
+		--common @bool # show regions for common runtime
+		--json @bool # output in json format
+		--private @bool # show regions for private spaces
+	releases # display the releases for an app 
+		--app|-a # app to run command against
+		--extended|-x @bool
+		--json @bool # output releases in json format
+		--num|-n # number of releases to show
+		--remote|-r # git remote of app to use
+		info # view detailed information for a release 
+			--app|-a # app to run command against
+			--json @bool # output in json format
+			--remote|-r # git remote of app to use
+			--shell|-s @bool # output in shell format
+		output # View the release command output 
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+		rollback # rollback to a previous release If RELEASE is not specified, it will rollback one release
+			--app|-a # app to run command against
+			--remote|-r # git remote of app to use
+	reviewapps
+		disable # disable review apps and/or settings on an existing pipeline
+			--app|-a # parent app used by review apps
+			--autodeploy @bool # disable autodeployments
+			--autodestroy @bool # disable automatically destroying review apps
+			--no-autodeploy @bool # disable autodeployments
+			--no-autodestroy @bool # disable automatically destroying review apps
+			--no-wait-for-ci @bool # disable wait for CI
+			--pipeline|-p # name of pipeline
+			--remote|-r # git remote of app to use
+			--wait-for-ci @bool # disable wait for CI
+		enable # enable review apps and/or settings on an existing pipeline
+			--app|-a # parent app used by review apps
+			--autodeploy @bool # autodeploy the review app
+			--autodestroy @bool # autodestroy the review app
+			--pipeline|-p # name of pipeline
+			--remote|-r # git remote of app to use
+			--wait-for-ci @bool # wait for CI to pass before deploying
+	run # run a one-off process inside a heroku dyno Shows a notification if the dyno takes more than 20 seconds to start.
+		--app|-a # parent app used by review apps
+		--env|-e # environment variables to set (use ';' to split multiple vars)
+		--exit-code|-x @bool # passthrough the exit code of the remote command
+		--listen @bool # listen on a local port
+		--no-notify @bool # disables notification when dyno is up (alternatively use HEROKU_NOTIFICATIONS=0)
+		--no-tty @bool # force the command to not run in a tty
+		--remote|-r # git remote of app to use
+		--size|-s # dyno size
+		--type # process type
+		detached # run a detached dyno, where output is sent to your logs
+			--app|-a # app to run command against
+			--env|-e # environment variables to set (use ';' to split multiple vars)
+			--remote|-r # git remote of app to use
+			--size|-s # dyno size
+			--tail|-t @bool # continually stream logs
+			--type # process type
+	sessions # list your OAuth sessions
+		--json|-j @bool # output in json format
+		destroy # delete (logout) OAuth session by ID
+	spaces # list available spaces 
+		--json @bool # output in json format
+		--org|-o # team to use
+		--team|-t # team to use
+		create # create a new space Example:      $ heroku spaces:create --space my-space --team my-team --region oregon     Creating space my-space in team my-team...
+			--channel
+			--cidr # RFC-1918 CIDR the space will use
+			--data-cidr # RFC-1918 CIDR used by Heroku Data resources for the space
+			--features # a list of features separated by commas
+			--kpi-url # self-managed KPI endpoint to use
+			--log-drain-url # direct log drain url
+			--org|-o # team to use
+			--region # region name
+			--shield @bool # create a Shield space
+			--space|-s # name of space to create
+			--team|-t # team to use
+		destroy # destroy a space Example:      $ heroku spaces:destroy --space my-space     Destroying my-space...
+			--confirm # set to space name to bypass confirm prompt
+			--space|-s # space to destroy
+		info # show info about a space 
+			--json @bool # output in json format
+			--space|-s # space to get info of
+		peering
+			info # display the information necessary to initiate a peering connection Example:      $ heroku spaces:peering:info example-space     === example-space Peering Info     AWS Account ID:    012345678910     AWS Region:        us-west-2     AWS VPC ID:        vpc-baadf00d     AWS VPC CIDR:      10.0.0.0/16     Space CIDRs:       10.0.128.0/20, 10.0.144.0/20     Unavailable CIDRs: 10.1.0.0/16  You will use the information provided by this command to establish a peering connection request from your AWS VPC to your private space.  To start the peering process, go into your AWS console for the VPC you would like peered with your Private Space, navigate to the VPC service, choose the "Peering Connections" option and click the "Create peering connection" button.  - The AWS Account ID and VPC ID are necessary for the AWS VPC Peering connection wizard. - You will also need to configure your VPC route table to route the Dyno CIDRs through the peering connection.  Once you've established the peering connection request, you can use the spaces:peerings:accept command to accept and configure the peering connection for the space.   
+				--json @bool # output in json format
+				--space|-s # space to get peering info from
+		peerings # list peering connections for a space 
+			--json @bool # output in json format
+			--space|-s # space to get peer list from
+			accept # accepts a pending peering request for a private space Example:      $ heroku spaces:peerings:accept pcx-4bd27022 --space example-space     Accepting and configuring peering connection pcx-4bd27022   
+				--pcxid|-p # PCX ID of a pending peering
+				--space|-s # space to get peering info from
+			destroy # destroys an active peering connection in a private space Example:      $ heroku spaces:peerings:destroy pcx-4bd27022 --confirm pcx-4bd27022 --space example-space     Tearing down peering connection pcx-4bd27022   
+				--confirm # set to PCX ID to bypass confirm prompt
+				--pcxid|-p # PCX ID of a pending peering
+				--space|-s # space to get peering info from
+		ps # list dynos for a space 
+			--json @bool # output in json format
+			--space|-s # space to get dynos of
+		rename # renames a space Example:      $ heroku spaces:rename --from old-space-name --to new-space-name     Renaming space old-space-name to new-space-name...
+			--from # current name of space
+			--to # desired name of space
+		topology # show space topology 
+			--json @bool # output in json format
+			--space|-s # space to get topology of
+		transfer # transfer a space to another team Example:      $ heroku spaces:transfer --space=space-name --team=team-name     Transferring space-name to team-name...
+			--space # name of space
+			--team # desired owner of space
+		vpn
+			config # display the configuration information for VPN Example:      $ heroku spaces:vpn:config --space my-space vpn-connection-name     === vpn-connection-name VPN Tunnels     VPN Tunnel  Customer Gateway  VPN Gateway     Pre-shared Key  Routable Subnets  IKE Version     ──────────  ────────────────  ──────────────  ──────────────  ────────────────  ───────────     Tunnel 1    104.196.121.200   35.171.237.136  abcdef12345     10.0.0.0/16       1     Tunnel 2    104.196.121.200   52.44.7.216     fedcba54321     10.0.0.0/16       1  You will use the information provided by this command to establish a Private Space VPN Connection.  - You must configure your VPN Gateway to use both Tunnels provided by Heroku - The VPN Gateway values are the IP addresses of the Private Space Tunnels - The Customer Gateway value is the Public IP of your VPN Gateway - The VPN Gateway must use the IKE Version shown and the Pre-shared Keys as the authentication method 
+				--json @bool # output in json format
+				--name|-n # name or id of the VPN connection to retrieve config from
+				--space|-s # space the VPN connection belongs to
+			connect # create VPN Private Spaces can be connected to another private network via an IPSec VPN connection allowing dynos to connect to hosts on your private networks and vice versa. The connection is established over the public Internet but all traffic is encrypted using IPSec.
+				--cidrs|-c # a list of routable CIDRs separated by commas
+				--ip|-i # public IP of customer gateway
+				--name|-n # VPN name
+				--space|-s # space name
+			connections # list the VPN Connections for a space Example:    $ heroku spaces:vpn:connections --space my-space   === my-space VPN Connections   Name    Status  Tunnels   ──────  ──────  ───────   office  active  UP/UP   
+				--json @bool # output in json format
+				--space|-s # space to get VPN connections from
+			destroy # destroys VPN in a private space Example:      $ heroku spaces:vpn:destroy --space example-space vpn-connection-name --confirm vpn-connection-name     Tearing down VPN Connection vpn-connection-name in space example-space   
+				--confirm # set to VPN connection name to bypass confirm prompt
+				--name|-n # name or id of the VPN connection to retrieve config from
+				--space|-s # space to get peering info from
+			info # display the information for VPN Example:      $ heroku spaces:vpn:info --space my-space vpn-connection-name     === vpn-connection-name VPN Tunnel Info     Name:           vpn-connection-name     ID:             123456789012     Public IP:      35.161.69.30     Routable CIDRs: 172.16.0.0/16     Status:         failed     Status Message: supplied CIDR block already in use     === my-space Tunnel Info     VPN Tunnel  IP Address     Status  Status Last Changed   Details     ──────────  ─────────────  ──────  ────────────────────  ──────────────     Tunnel 1    52.44.146.197  UP      2016-10-25T22:09:05Z  status message     Tunnel 2    52.44.146.197  UP      2016-10-25T22:09:05Z  status message
+				--json @bool # output in json format
+				--name|-n # name or id of the VPN connection to get info from
+				--space|-s # space the vpn connection belongs to
+			update # update VPN Private Spaces can be connected to another private network via an IPSec VPN connection allowing dynos to connect to hosts on your private networks and vice versa. The connection is established over the public Internet but all traffic is encrypted using IPSec.
+				--cidrs|-c # a list of routable CIDRs separated by commas
+				--name|-n # VPN name
+				--space|-s # space name
+			wait # wait for VPN Connection to be created 
+				--interval|-i # seconds to wait between poll intervals
+				--json @bool # output in json format
+				--name|-n # name or id of the vpn connection to wait for
+				--space|-s # space the vpn connection belongs to
+				--timeout|-t # maximum number of seconds to wait
+		wait # wait for a space to be created 
+			--interval|-i # seconds to wait between poll intervals
+			--json @bool # output in json format
+			--space|-s # space to get info of
+			--timeout|-t # maximum number of seconds to wait
+	status # display current status of the Heroku platform
+		--json @bool # output in json format
+	teams # list the teams that you are a member of  Use heroku members:* to manage team members. 
+		--json @bool # output in json format
+	trusted-ips # list trusted IP ranges for a space  Trusted IP ranges are only available on Private Spaces.  The space name is a required parameter.
+		--json @bool # output in json format
+		--space|-s # space to get inbound rules from
+		add # Add one range to the list of trusted IP ranges  Uses CIDR notation.  Example:      $ heroku trusted-ips:add --space my-space 192.168.2.0/24     Added 192.168.0.1/24 to trusted IP ranges on my-space   
+			--confirm # set to space name to bypass confirm prompt
+			--space|-s # space to add rule to
+		remove # Remove a range from the list of trusted IP ranges  Uses CIDR notation.  Example:      $ heroku trusted-ips:remove --space my-space 192.168.2.0/24     Removed 192.168.2.0/24 from trusted IP ranges on my-space   
+			--confirm # set to space name to bypass confirm prompt
+			--space # space to remove rule from
+	unlock # unlock an app so any team member can join 
+		--app|-a # app to run command against
+		--remote|-r # git remote of app to use
+	update # update the <%= config.bin %> CLI
+		--autoupdate @bool
+		--available|-a @bool # Install a specific version.
+		--force @bool # Force a re-download of the requested version.
+		--interactive|-i @bool # Interactively select version to install. This is ignored if a channel is provided.
+		--version|-v # Install a specific version.
+	version
+		--json @bool # Format output as json.
+		--verbose @bool # Additionally shows the architecture, node version, operating system, and versions of plugins that the CLI is using.
+	webhooks # list webhooks on an app
+		--app|-a # app to run command against
+		--pipeline|-p # pipeline on which to list
+		--remote|-r # git remote of app to use
+		add # add a webhook to an app
+			--app|-a # app to run command against
+			--authorization|-t # authorization header to send with webhooks
+			--include|-i # comma delimited event types your server will receive 
+			--level|-l # notify does not retry, sync will retry until successful or timeout
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+			--secret|-s # value to sign delivery with in Heroku-Webhook-Hmac-SHA256 header
+			--url|-u # URL for receiver
+		deliveries # list webhook deliveries on an app
+			--app|-a # app to run command against
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+			--status|-s # filter deliveries by status
+			info # info for a webhook event on an app
+				--app|-a # app to run command against
+				--pipeline|-p # pipeline on which to list
+				--remote|-r # git remote of app to use
+		events # list webhook events on an app
+			--app|-a # app to run command against
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+			info # info for a webhook event on an app
+				--app|-a # app to run command against
+				--pipeline|-p # pipeline on which to list
+				--remote|-r # git remote of app to use
+		info # info for a webhook on an app
+			--app|-a # app to run command against
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+		remove # removes a webhook from an app
+			--app|-a # app to run command against
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+		update # updates a webhook in an app
+			--app|-a # app to run command against
+			--authorization|-t # authorization header to send with webhooks
+			--include|-i # comma delimited event types your server will receive 
+			--level|-l # notify does not retry, sync will retry until successful or timeout
+			--pipeline|-p # pipeline on which to list
+			--remote|-r # git remote of app to use
+			--secret|-s # value to sign delivery with in Heroku-Webhook-Hmac-SHA256 header
+			--url|-u # URL for receiver
+	which # Show which plugin a command is in.

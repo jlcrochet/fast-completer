@@ -1,0 +1,97 @@
+# Rustup CLI schema for fast-completer
+# Generated from rustup 1.28.2
+
+rustup # Rust toolchain manager
+	--verbose|-v @bool # Set log level to 'DEBUG' if 'RUSTUP_LOG' is unset
+	--quiet|-q @bool # Disable progress output, set log level to 'WARN' if 'RUSTUP_LOG' is unset
+	check # Check for updates to Rust toolchains and rustup
+	component # Modify a toolchain's installed components
+		add
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+			--target
+		list
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+			--installed @bool # List only installed components
+			--quiet|-q @bool # Force the output to be a single column
+		remove
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+			--target
+	default # Set the default toolchain
+		--force-non-host @bool # Install toolchains that require an emulator. See
+	doc # Open the documentation for the current toolchain
+		--path @bool # Only print the path to the documentation
+		--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+		--alloc @bool # The Rust core allocation and collections library
+		--book @bool # The Rust Programming Language book
+		--cargo @bool # The Cargo Book
+		--clippy @bool # The Clippy Documentation
+		--core @bool # The Rust Core Library
+		--edition-guide @bool # The Rust Edition Guide
+		--embedded-book @bool # The Embedded Rust Book
+		--error-codes @bool # The Rust Error Codes Index
+		--nomicon @bool # The Dark Arts of Advanced and Unsafe Rust Programming
+		--proc_macro @bool # A support library for macro authors when defining new macros
+		--reference @bool # The Rust Reference
+		--rust-by-example @bool # A collection of runnable examples that illustrate various Rust
+		--rustc @bool # The compiler for the Rust programming language
+		--rustdoc @bool # Documentation generator for Rust projects
+		--std @bool # Standard library API documentation
+		--style-guide @bool # The Rust Style Guide
+		--test @bool # Support code for rustc's built in unit-test and micro-benchmarking
+		--unstable-book @bool # The Unstable Book
+	man # View the man page for a given command
+		--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+	override # Modify toolchain overrides for directories
+		list
+		set
+			--path # Path to the directory
+		unset
+			--path # Path to the directory
+			--nonexistent @bool # Remove override toolchain for all nonexistent directories
+	run # Run a command with an environment configured for a given toolchain
+		--install @bool # Install the requested toolchain if needed
+	self # Modify the rustup installation
+		uninstall
+		update
+		upgrade-data
+	set # Alter rustup settings
+		auto-install
+		auto-self-update
+		default-host
+		profile
+	show # Show the active and installed toolchains or profiles
+		--verbose|-v @bool # Enable verbose output with rustc information for all installed toolchains
+		active-toolchain
+			--verbose|-v @bool # Enable verbose output with rustc information
+			scripts.
+		home
+		profile
+	target # Modify a toolchain's supported targets
+		add
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+		list
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+			--installed @bool # List only installed targets
+			--quiet|-q @bool # Force the output to be a single column
+		remove
+			--toolchain # Toolchain name, such as 'stable', 'nightly', or '1.8.0'. For more
+	toolchain # Install, uninstall, or list toolchains
+		install
+			--profile (minimal|default|complete) # [possible values: minimal, default, complete]
+			--component|-c # Comma-separated list of components to be added on installation
+			--target|-t # Comma-separated list of targets to be added on installation
+			--no-self-update @bool # Don't perform self update when running the `rustup toolchain install`
+			--force @bool # Force an update, even if some components are missing
+			--allow-downgrade @bool # Allow rustup to downgrade the toolchain to satisfy your component
+			--force-non-host @bool # Install toolchains that require an emulator. See
+		link
+		list
+			--verbose|-v @bool # Enable verbose output with toolchain information
+			--quiet|-q @bool # Force the output to be a single column
+		uninstall
+	update # Update Rust toolchains and rustup
+		--no-self-update @bool # Don't perform self update when running the `rustup update` command
+		--force @bool # Force an update, even if some components are missing
+		--force-non-host @bool # Install toolchains that require an emulator. See
+	which # Display which binary will be run for a given command
+		--toolchain # Toolchain name, such as 'stable', 'nightly', '1.8.0', or a custom

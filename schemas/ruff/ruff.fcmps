@@ -1,0 +1,140 @@
+# Ruff CLI schema for fast-completer
+# Generated from ruff 0.15.1
+
+ruff # Python linter and formatter
+	--verbose|-v @bool # Enable verbose logging
+	--quiet|-q @bool # Print diagnostics, but nothing else
+	--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+	--config # Either a path to a TOML configuration file (`pyproject.toml` or
+	--isolated @bool # Ignore all configuration files
+	--color # Control when colored output is used [possible values: auto, always,
+	analyze # Run analysis over Python source code
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+		graph
+			--direction # The direction of the import map. By default, generates a dependency map, i.e., a map from
+			--detect-string-imports @bool # Attempt to detect imports from string literals
+			--min-dots # The minimum number of dots in a string import to consider it a valid import
+			--preview @bool # Enable preview mode. Use `--no-preview` to disable
+			--target-version # The minimum Python version that should be supported [possible values: py37, py38, py39,
+			--python # Path to a virtual environment to use for resolving additional dependencies
+			--type-checking-imports @bool # Include imports that are only used for type checking (i.e., imports within `if
+			--verbose|-v @bool # Enable verbose logging
+			--quiet|-q @bool # Print diagnostics, but nothing else
+			--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+			--config # Either a path to a TOML configuration file (`pyproject.toml` or
+			--isolated @bool # Ignore all configuration files
+			--color # Control when colored output is used [possible values: auto, always,
+	check # Run Ruff on the given files or directories
+		--fix @bool # Apply fixes to resolve lint violations. Use `--no-fix` to disable or `--unsafe-fixes` to
+		--unsafe-fixes @bool # Include fixes that may not retain the original intent of the code. Use `--no-unsafe-fixes`
+		--show-fixes @bool # Show an enumeration of all fixed lint violations. Use `--no-show-fixes` to disable
+		--diff @bool # Avoid writing any fixed files back; instead, output a diff for each changed file to
+		--watch|-w @bool # Run in watch mode by re-running whenever files change
+		--fix-only @bool # Apply fixes to resolve lint violations, but don't report on, or exit non-zero for,
+		--ignore-noqa @bool # Ignore any `# noqa` comments
+		--output-format # Output serialization format for violations. The default serialization format is "full"
+		--output-file|-o # Specify file to write the linter output to (default: stdout) [env: RUFF_OUTPUT_FILE=]
+		--target-version # The minimum Python version that should be supported [possible values: py37, py38, py39,
+		--preview @bool # Enable preview mode; checks will include unstable rules and fixes. Use `--no-preview` to
+		--extension # List of mappings from file extension to language (one of `python`, `ipynb`, `pyi`). For
+		--statistics @bool # Show counts for every rule with at least one violation
+		--show-files @bool # See the files Ruff will be run against with the current settings
+		--show-settings @bool # See the settings Ruff will use to lint a given Python file
+		--select # Comma-separated list of rule codes to enable (or ALL, to enable all rules)
+		--ignore # Comma-separated list of rule codes to disable
+		--extend-select # Like --select, but adds additional rule codes on top of those already specified
+		--per-file-ignores # List of mappings from file pattern to code to exclude
+		--extend-per-file-ignores # Like `--per-file-ignores`, but adds additional ignores on top of those already specified
+		--fixable # List of rule codes to treat as eligible for fix. Only applicable when fix itself is
+		--unfixable # List of rule codes to treat as ineligible for fix. Only applicable when fix itself is
+		--extend-fixable # Like --fixable, but adds additional rule codes on top of those already specified
+		--exclude # List of paths, used to omit files and/or directories from
+		--extend-exclude # Like --exclude, but adds additional files and directories on
+		--respect-gitignore @bool # Respect file exclusions via `.gitignore` and other standard
+		--force-exclude @bool # Enforce exclusions, even for paths passed to Ruff directly on
+		--no-cache|-n @bool # Disable cache reads [env: RUFF_NO_CACHE=]
+		--cache-dir # Path to the cache directory [env: RUFF_CACHE_DIR=]
+		--stdin-filename # The name of the file when passing it through stdin
+		--exit-zero|-e @bool # Exit with status code "0", even upon detecting lint violations
+		--exit-non-zero-on-fix @bool # Exit with a non-zero status code if any files were modified via fix, even if no lint
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	clean # Clear any caches in the current directory and any subdirectories
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	config # List or describe the available configuration options
+		--output-format (text|json) # Output format [default: text] [possible values: text, json]
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	format # Run the Ruff formatter on the given files or directories
+		--check @bool # Avoid writing any formatted files back; instead, exit with a non-zero status code if any
+		--diff @bool # Avoid writing any formatted files back; instead, exit with a non-zero status code and the
+		--extension # List of mappings from file extension to language (one of `python`, `ipynb`, `pyi`). For
+		--target-version # The minimum Python version that should be supported [possible values: py37, py38, py39,
+		--preview @bool # Enable preview mode; enables unstable formatting. Use `--no-preview` to disable
+		--output-format # Output serialization format for violations, when used with `--check`. The default
+		--no-cache|-n @bool # Disable cache reads [env: RUFF_NO_CACHE=]
+		--cache-dir # Path to the cache directory [env: RUFF_CACHE_DIR=]
+		--stdin-filename # The name of the file when passing it through stdin
+		--exit-non-zero-on-format @bool # Exit with a non-zero status code if any files were modified via format, even if all files
+		--respect-gitignore @bool # Respect file exclusions via `.gitignore` and other standard ignore
+		--exclude # List of paths, used to omit files and/or directories from analysis
+		--force-exclude @bool # Enforce exclusions, even for paths passed to Ruff directly on the
+		--line-length # Set the line-length
+		--range # When specified, Ruff will try to only format the code in the given range.
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	linter # List all supported upstream linters
+		--output-format (text|json) # Output format [default: text] [possible values: text, json]
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	rule # Explain a rule (or all rules)
+		--all @bool # Explain all rules
+		--output-format (text|json) # Output format [default: text] [possible values: text, json]
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	server # Run the language server
+		--preview @bool # Enable preview mode. Use `--no-preview` to disable
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,
+	version # Display Ruff's version
+		--output-format (text|json) # [default: text] [possible values: text, json]
+		--verbose|-v @bool # Enable verbose logging
+		--quiet|-q @bool # Print diagnostics, but nothing else
+		--silent|-s @bool # Disable all logging (but still exit with status code "1" upon detecting
+		--config # Either a path to a TOML configuration file (`pyproject.toml` or
+		--isolated @bool # Ignore all configuration files
+		--color # Control when colored output is used [possible values: auto, always,

@@ -1,0 +1,46 @@
+# Yarn CLI schema for fast-completer
+# Generated from yarn 1.22.22
+
+yarn # JavaScript package manager
+	--cache-folder # specify a custom folder that must be used to store the yarn cache
+	--check-files @bool # install will verify file tree of packages for consistency
+	--cwd # working directory to use (default: /home/jeffrey/sync/programs/fast-completer)
+	--disable-pnp @bool # disable the Plug'n'Play installation
+	--emoji # enable emoji in output (default: false)
+	--flat @bool # only allow one version of a package
+	--focus @bool # Focus on a single workspace by installing remote copies of its sibling workspaces.
+	--force @bool # install and build packages even if they were built before, overwrite lockfile
+	--frozen-lockfile @bool # don't generate a lockfile and fail if an update is needed
+	--global-folder # specify a custom folder to store global packages
+	--har @bool # save HAR output of network traffic
+	--https-proxy
+	--ignore-engines @bool # ignore engines check
+	--ignore-optional @bool # ignore optional dependencies
+	--ignore-platform @bool # ignore platform checks
+	--ignore-scripts @bool # don't run lifecycle scripts
+	--json @bool # format Yarn log messages as lines of JSON (see jsonlines.org)
+	--link-duplicates @bool # create hardlinks to the repeated modules in node_modules
+	--link-folder # specify a custom folder to store global links
+	--modules-folder # rather than installing modules into the node_modules folder relative to the cwd, output them here
+	--network-concurrency # maximum number of concurrent network requests
+	--network-timeout # TCP timeout for network requests
+	--no-bin-links @bool # don't generate bin links when setting up packages
+	--no-default-rc @bool # prevent Yarn from automatically detecting yarnrc and npmrc files
+	--no-lockfile @bool # don't read or generate a lockfile
+	--non-interactive @bool # do not show interactive prompts
+	--no-node-version-check @bool # do not warn when using a potentially unsupported Node version
+	--no-progress @bool # disable progress bar
+	--offline @bool # trigger an error if any required dependencies are not available in local cache
+	--otp # one-time password for two factor authentication
+	--prefer-offline @bool # use network only if dependencies are not available in local cache
+	--preferred-cache-folder # specify a custom folder to store the yarn cache if possible
+	--proxy
+	--pure-lockfile @bool # don't generate a lockfile
+	--registry # override configuration registry
+	--silent|-s @bool # skip Yarn console logs, other types of logs (script output) will be printed
+	--scripts-prepend-node-path # prepend the node executable dir to the PATH in scripts
+	--skip-integrity-check @bool # run install without checking if node_modules is installed
+	--strict-semver @bool
+	--update-checksums @bool # update package checksums from current repository
+	--use-yarnrc # specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )
+	--verbose @bool # output verbose messages on internal operations

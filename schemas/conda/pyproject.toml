@@ -1,0 +1,8 @@
+[project]
+name = "conda-schema-export"
+version = "0.1.0"
+description = "Export Conda command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-conda = "export_command_tree:main"

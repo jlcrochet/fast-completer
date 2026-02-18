@@ -1,0 +1,389 @@
+# pip CLI schema for fast-completer
+# Generated from pip 26.0.1
+
+pip # Python package manager
+	--debug @bool # Let unhandled exceptions propagate outside the
+	--isolated @bool # Run pip in an isolated mode, ignoring
+	--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+	--python # Run pip with the specified Python interpreter.
+	--verbose|-v @bool # Give more output. Option is additive, and can be
+	--quiet|-q @bool # Give less output. Option is additive, and can be
+	--log # Path to a verbose appending log.
+	--no-input @bool # Disable prompting for input.
+	--keyring-provider # Enable the credential lookup via the keyring
+	--proxy # Specify a proxy in the form
+	--retries # Maximum attempts to establish a new HTTP
+	--timeout # Set the socket timeout (default 15 seconds).
+	--exists-action # Default action when a path already exists:
+	--trusted-host # Mark this host or host:port pair as trusted,
+	--cert # Path to PEM-encoded CA certificate bundle. If
+	--client-cert # Path to SSL client certificate, a single file
+	--cache-dir # Store the cache data in <dir>.
+	--no-cache-dir @bool # Disable the cache.
+	--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+	--no-color @bool # Suppress colored output.
+	--use-feature # Enable new functionality, that may be backward
+	--use-deprecated # Enable deprecated functionality, that will be
+	--resume-retries # Maximum attempts to resume or restart an
+	check # Verify installed packages have compatible
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	download # Download packages.
+		--constraint|-c # Constrain versions using the given constraints
+		--build-constraint # Constrain build dependencies using the given
+		--requirement|-r # Install from the given requirements file. This
+		--requirements-from-script # Install dependencies of the given script fileas
+		--no-deps @bool # Don't install package dependencies.
+		--src # Directory to check out editable projects into.
+		--require-hashes @bool # Require a hash to check each requirement
+		--progress-bar # Specify whether the progress bar should be used.
+		--no-build-isolation @bool # Disable isolation when building a modern source
+		--check-build-dependencies @bool # Check the build dependencies.
+		--ignore-requires-python @bool # Ignore the Requires-Python information.
+		--dest|-d # Download packages into <dir>.
+		--platform # Only use wheels compatible with <platform>.
+		--python-version # The Python interpreter version to use for wheel
+		--implementation # Only use wheels compatible with Python
+		--abi # Only use wheels compatible with Python abi
+		--implementation # --platform, and --python-
+		--group # Install a named dependency-group from a
+		--no-clean @bool # Don't clean up build directories.
+		--pre @bool # Include pre-release and development versions. By
+		--all-releases # Allow all release types (including pre-releases)
+		--only-final # Only allow final releases (no pre-releases) for
+		--no-binary # Do not use binary packages. Can be supplied
+		--only-binary # Do not use source packages. Can be supplied
+		--prefer-binary @bool # Prefer binary packages over source packages,
+		--index-url|-i # Base URL of the Python Package Index (default
+		--extra-index-url # Extra URLs of package indexes to use in addition
+		--index-url. @bool
+		--no-index @bool # Ignore package index (only looking
+		--find-links|-f # If a URL or path to an html file, then parse for
+		--uploaded-prior-to # Only consider packages uploaded prior to the
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	freeze # Output installed packages in requirements format.
+		--requirement|-r # Use the order in the given requirements file and
+		--local|-l @bool # If in a virtualenv that has global access, do
+		--user @bool # Only output packages installed in user-site.
+		--path # Restrict to the specified installation path for
+		--all @bool # Do not skip these packages in the output: pip
+		--exclude-editable @bool # Exclude editable package from output.
+		--exclude # Exclude specified package from the output
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	inspect # Inspect the python environment.
+		--local @bool # If in a virtualenv that has global access, do
+		--user @bool # Only output packages installed in user-site.
+		--path # Restrict to the specified installation path for
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	install # Install packages.
+		--requirement|-r # Install from the given requirements file. This
+		--constraint|-c # Constrain versions using the given constraints
+		--build-constraint # Constrain build dependencies using the given
+		--requirements-from-script # Install dependencies of the given script fileas
+		--no-deps @bool # Don't install package dependencies.
+		--editable|-e # Install a project in editable mode (i.e.
+		--dry-run @bool # Don't actually install anything, just print what
+		--target|-t # Install packages into <dir>. By default this
+		--platform # Only use wheels compatible with <platform>.
+		--python-version # The Python interpreter version to use for wheel
+		--implementation # Only use wheels compatible with Python
+		--abi # Only use wheels compatible with Python abi
+		--implementation # --platform, and --python-
+		--user @bool # Install to the Python user install directory for
+		--root # Install everything relative to this alternate
+		--prefix # Installation prefix where lib, bin and other
+		--src # Directory to check out editable projects into.
+		--upgrade|-U @bool # Upgrade all specified packages to the newest
+		--upgrade-strategy # Determines how dependency upgrading should be
+		--force-reinstall @bool # Reinstall all packages even if they are already
+		--ignore-installed|-I @bool # Ignore the installed packages, overwriting them.
+		--ignore-requires-python @bool # Ignore the Requires-Python information.
+		--no-build-isolation @bool # Disable isolation when building a modern source
+		--check-build-dependencies @bool # Check the build dependencies.
+		--break-system-packages @bool # Allow pip to modify an EXTERNALLY-MANAGED Python
+		--config-settings|-C # Configuration settings to be passed to the build
+		--compile @bool # Compile Python source files to bytecode
+		--no-compile @bool # Do not compile Python source files to bytecode
+		--no-warn-script-location @bool # Do not warn when installing scripts outside PATH
+		--no-warn-conflicts @bool # Do not warn about broken dependencies
+		--require-hashes @bool # Require a hash to check each requirement
+		--progress-bar # Specify whether the progress bar should be used.
+		--root-user-action # Action if pip is run as a root user [warn,
+		--report # Generate a JSON file describing what pip did to
+		--group # Install a named dependency-group from a
+		--no-clean @bool # Don't clean up build directories.
+		--pre @bool # Include pre-release and development versions. By
+		--all-releases # Allow all release types (including pre-releases)
+		--only-final # Only allow final releases (no pre-releases) for
+		--no-binary # Do not use binary packages. Can be supplied
+		--only-binary # Do not use source packages. Can be supplied
+		--prefer-binary @bool # Prefer binary packages over source packages,
+		--index-url|-i # Base URL of the Python Package Index (default
+		--extra-index-url # Extra URLs of package indexes to use in addition
+		--index-url. @bool
+		--no-index @bool # Ignore package index (only looking
+		--find-links|-f # If a URL or path to an html file, then parse for
+		--uploaded-prior-to # Only consider packages uploaded prior to the
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	list # List installed packages.
+		--outdated|-o @bool # List outdated packages
+		--uptodate|-u @bool # List uptodate packages
+		--editable|-e @bool # List editable projects.
+		--local|-l @bool # If in a virtualenv that has global access, do
+		--user @bool # Only output packages installed in user-site.
+		--path # Restrict to the specified installation path for
+		--format # Select the output format among: columns
+		--outdated
+		--not-required @bool # List packages that are not dependencies of
+		--exclude-editable @bool # Exclude editable package from output.
+		--include-editable @bool # Include editable package in output.
+		--exclude # Exclude specified package from the output
+		--pre @bool # Include pre-release and development versions. By
+		--all-releases # Allow all release types (including pre-releases)
+		--only-final # Only allow final releases (no pre-releases) for
+		--no-binary # Do not use binary packages. Can be supplied
+		--only-binary # Do not use source packages. Can be supplied
+		--prefer-binary @bool # Prefer binary packages over source packages,
+		--index-url|-i # Base URL of the Python Package Index (default
+		--extra-index-url # Extra URLs of package indexes to use in addition
+		--index-url. @bool
+		--no-index @bool # Ignore package index (only looking
+		--find-links|-f # If a URL or path to an html file, then parse for
+		--uploaded-prior-to # Only consider packages uploaded prior to the
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	lock # Generate a lock file.
+		--output|-o # Lock file name (default=pylock.toml). Use - for
+		--requirement|-r # Install from the given requirements file. This
+		--requirements-from-script # Install dependencies of the given script fileas
+		--constraint|-c # Constrain versions using the given constraints
+		--build-constraint # Constrain build dependencies using the given
+		--no-deps @bool # Don't install package dependencies.
+		--editable|-e # Install a project in editable mode (i.e.
+		--src # Directory to check out editable projects into.
+		--ignore-requires-python @bool # Ignore the Requires-Python information.
+		--no-build-isolation @bool # Disable isolation when building a modern source
+		--check-build-dependencies @bool # Check the build dependencies.
+		--config-settings|-C # Configuration settings to be passed to the build
+		--require-hashes @bool # Require a hash to check each requirement
+		--progress-bar # Specify whether the progress bar should be used.
+		--group # Install a named dependency-group from a
+		--no-clean @bool # Don't clean up build directories.
+		--pre @bool # Include pre-release and development versions. By
+		--all-releases # Allow all release types (including pre-releases)
+		--only-final # Only allow final releases (no pre-releases) for
+		--no-binary # Do not use binary packages. Can be supplied
+		--only-binary # Do not use source packages. Can be supplied
+		--prefer-binary @bool # Prefer binary packages over source packages,
+		--index-url|-i # Base URL of the Python Package Index (default
+		--extra-index-url # Extra URLs of package indexes to use in addition
+		--index-url. @bool
+		--no-index @bool # Ignore package index (only looking
+		--find-links|-f # If a URL or path to an html file, then parse for
+		--uploaded-prior-to # Only consider packages uploaded prior to the
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	show # Show information about installed packages.
+		--files|-f @bool # Show the full list of installed files for each
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an
+	uninstall # Uninstall packages.
+		--requirement|-r # Uninstall all the packages listed in the given
+		--yes|-y @bool # Don't ask for confirmation of uninstall
+		--root-user-action # Action if pip is run as a root user [warn,
+		--break-system-packages @bool # Allow pip to modify an EXTERNALLY-MANAGED Python
+		--debug @bool # Let unhandled exceptions propagate outside the
+		--isolated @bool # Run pip in an isolated mode, ignoring
+		--require-virtualenv @bool # Allow pip to only run in a virtual environment;
+		--python # Run pip with the specified Python interpreter.
+		--verbose|-v @bool # Give more output. Option is additive, and can be
+		--quiet|-q @bool # Give less output. Option is additive, and can be
+		--log # Path to a verbose appending log.
+		--no-input @bool # Disable prompting for input.
+		--keyring-provider # Enable the credential lookup via the keyring
+		--proxy # Specify a proxy in the form
+		--retries # Maximum attempts to establish a new HTTP
+		--timeout # Set the socket timeout (default 15 seconds).
+		--exists-action # Default action when a path already exists:
+		--trusted-host # Mark this host or host:port pair as trusted,
+		--cert # Path to PEM-encoded CA certificate bundle. If
+		--client-cert # Path to SSL client certificate, a single file
+		--cache-dir # Store the cache data in <dir>.
+		--no-cache-dir @bool # Disable the cache.
+		--disable-pip-version-check @bool # Don't periodically check PyPI to determine
+		--no-color @bool # Suppress colored output.
+		--use-feature # Enable new functionality, that may be backward
+		--use-deprecated # Enable deprecated functionality, that will be
+		--resume-retries # Maximum attempts to resume or restart an

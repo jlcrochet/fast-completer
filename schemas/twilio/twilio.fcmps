@@ -1,0 +1,26 @@
+# Twilio CLI schema for fast-completer
+# Generated from twilio 6.2.4
+
+twilio # Twilio CLI
+	autocomplete # display autocomplete installation instructions
+		--refresh-cache|-r @bool # Refresh cache (ignores displaying instructions)
+	feedback # provide feedback to the CLI team
+	login # create a new profile to store Twilio Account credentials and
+		--force|-f @bool # Force overwriting existing profile
+		--profile|-p # Shorthand identifier for your profile.
+		--auth-token # Your Twilio Auth Token for your Twilio
+		--edge # Twilio edge location to use. Auto-detected
+		--region # Twilio region to use.
+		--silent # output and logs. This is a
+	plugins # List installed plugins.
+		--core @bool # Show core plugins.
+	update # update the twilio CLI
+		--available|-a @bool # See available versions.
+		--verbose|-b @bool # Show more details about the available versions.
+		--interactive|-i @bool # Interactively select version to install. This is
+		--force @bool # Force a re-download of the requested version.
+	version
+		--json @bool # Format output as json.
+		--verbose @bool # Show additional information about the CLI.
+		--json @bool # Format output as json.
+		--verbose @bool # Show additional information about the CLI.

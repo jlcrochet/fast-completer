@@ -1,0 +1,37 @@
+# Strace CLI schema for fast-completer
+# Generated from strace unknown
+
+strace # Trace system calls and signals
+	--argv0 # set PROG argv[0] to NAME
+	--daemonize|-D # run tracer process as a grandchild, not as a parent
+	--follow-forks|-f @bool # follow forks
+	--trace # trace only specified syscalls.
+	--successful-only|-z @bool # print only syscalls that returned without an error code
+	--failed-only|-Z @bool # print only syscalls that returned with an error code
+	--instruction-pointer|-i @bool # print instruction pointer at time of syscall
+	--stack-trace|-k # obtain stack trace between each syscall
+	--stack-trace-frame-limit # obtain no more than this amount of frames
+	--syscall-number|-n @bool # print syscall number
+	--arg-names|-N @bool
+	--output-append-mode|-A @bool # open the file provided in the -o option in append mode
+	--output-separately @bool # output into separate files (by appending pid to file names)
+	--quiet|-q # suppress messages about attaching, detaching, etc.
+	--relative-timestamps|-r # print relative timestamp
+	--absolute-timestamps # set the format of absolute timestamps
+	--absolute-timestamps|-t # print absolute timestamp
+	--syscall-times|-T # print time spent in each syscall
+	--no-abbrev|-v @bool # verbose mode: print entities unabbreviated
+	--strings-in-hex # use hex instead of octal in escape sequences
+	--strings-in-hex|-x # print non-ASCII strings in hex
+	--decode-fds|-y # print paths associated with file descriptor arguments
+	--decode-pids # print PIDs in strace's namespace, too
+	--decode-pids|-Y # print command names associated with PIDs
+	--always-show-pid @bool # show PID prefix also for the process started by strace
+	--summary-only|-c @bool # count time, calls, and errors for each syscall and report
+	--summary|-C @bool # like -c, but also print the regular output
+	--summary-wall-clock|-w @bool # summarise syscall latency (default is system time)
+	--syscall-limit # Detach all tracees after tracing LIMIT syscalls
+	--inject # [:delay_enter=DELAY][:delay_exit=DELAY]
+	--debug|-d @bool # enable debug output to stderr
+	--seccomp-bpf @bool # enable seccomp-bpf filtering
+	--tips # show strace tips, tricks, and tweaks on exit

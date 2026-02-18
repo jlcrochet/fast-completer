@@ -1,0 +1,218 @@
+# Syft CLI schema for fast-completer
+# Generated from syft 1.42.0
+
+syft # SBOM generator
+	--base-path # base directory for scanning, no links will be followed above this directory, and all paths will be reported relative to this directory
+	--config # syft configuration file(s) to use
+	--enrich # enable package data enrichment from local and online sources (options: all, golang, java, javascript, python)
+	--exclude # exclude paths from being scanned using a glob expression
+	--from # specify the source behavior to use (e.g. docker, registry, oci-dir, ...)
+	--help @bool # help for syft
+	--output # report output format (<format>=<file> to output to a file), formats=[cyclonedx-json cyclonedx-xml github-json purls spdx-json spdx-tag-value syft-json syft-table syft-text template]
+	--override-default-catalogers # set the base set of catalogers to use (defaults to 'image' or 'directory' depending on the scan source)
+	--parallelism # number of cataloger workers to run in parallel
+	--platform # an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')
+	--profile # configuration profiles to use
+	--quiet @bool # suppress all logging output
+	--scope # selection of layers to catalog, options=[squashed all-layers deep-squashed]
+	--select-catalogers # add, remove, and filter the catalogers to be used
+	--source-name # set the name of the target being analyzed
+	--source-supplier # the organization that supplied the component, which often may be the manufacturer, distributor, or repackager
+	--source-version # set the version of the target being analyzed
+	--template # specify the path to a Go template file
+	--verbose # increase verbosity (-v = info, -vv = debug)
+	--version @bool # version for syft
+	attest # Generate an SBOM as an attestation for the given [SOURCE] container image
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--base-path # base directory for scanning, no links will be followed above this directory, and all paths will be reported relative to this directory
+		--enrich # enable package data enrichment from local and online sources (options: all, golang, java, javascript, python)
+		--exclude # exclude paths from being scanned using a glob expression
+		--from # specify the source behavior to use (e.g. docker, registry, oci-dir, ...)
+		--key # the key to use for the attestation
+		--output # report output format (<format>=<file> to output to a file), formats=[cyclonedx-json cyclonedx-xml github-json purls spdx-json spdx-tag-value syft-json syft-table syft-text template]
+		--override-default-catalogers # set the base set of catalogers to use (defaults to 'image' or 'directory' depending on the scan source)
+		--parallelism # number of cataloger workers to run in parallel
+		--platform # an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')
+		--scope # selection of layers to catalog, options=[squashed all-layers deep-squashed]
+		--select-catalogers # add, remove, and filter the catalogers to be used
+		--source-name # set the name of the target being analyzed
+		--source-supplier # the organization that supplied the component, which often may be the manufacturer, distributor, or repackager
+		--source-version # set the version of the target being analyzed
+	cataloger # Show available catalogers and configuration
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		list # List available catalogers
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--output # format to output the cataloger list (available: table, json)
+			--override-default-catalogers # set the base set of catalogers to use (defaults to 'image' or 'directory' depending on the scan source)
+			--select-catalogers # add, remove, and filter the catalogers to be used
+			--show-hidden @bool # show catalogers that have been de-selected
+	completion # Generate the autocompletion script for the specified shell
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		bash # Generate the autocompletion script for bash
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--no-descriptions @bool # disable completion descriptions
+	config # show the syft configuration
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--load @bool # load and validate the syft configuration
+		locations # shows all locations and the order in which syft will look for a configuration file
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			--all @bool # include every file extension supported
+	convert # Convert between SBOM formats
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--output # report output format (<format>=<file> to output to a file), formats=[cyclonedx-json cyclonedx-xml github-json purls spdx-json spdx-tag-value syft-json syft-table syft-text template]
+		--template # specify the path to a Go template file
+	help # Help about any command
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		attest # Generate an SBOM as an attestation for the given [SOURCE] container image
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+		cataloger # Show available catalogers and configuration
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			list # List available catalogers
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+		completion # Generate the autocompletion script for the specified shell
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			bash # Generate the autocompletion script for bash
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+			fish # Generate the autocompletion script for fish
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+			powershell # Generate the autocompletion script for powershell
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+			zsh # Generate the autocompletion script for zsh
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+		config # show the syft configuration
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+			locations # shows all locations and the order in which syft will look for a configuration file
+				--config # syft configuration file(s) to use
+				--profile # configuration profiles to use
+				--quiet @bool # suppress all logging output
+				--verbose # increase verbosity (-v = info, -vv = debug)
+		convert # Convert between SBOM formats
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+		help # Help about any command
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+		login # Log in to a registry
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+		scan # Generate an SBOM
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+		version # show version information
+			--config # syft configuration file(s) to use
+			--profile # configuration profiles to use
+			--quiet @bool # suppress all logging output
+			--verbose # increase verbosity (-v = info, -vv = debug)
+	login # Log in to a registry
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--password # Password
+		--password-stdin @bool # Take the password from stdin
+		--username # Username
+	scan # Generate an SBOM
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--base-path # base directory for scanning, no links will be followed above this directory, and all paths will be reported relative to this directory
+		--enrich # enable package data enrichment from local and online sources (options: all, golang, java, javascript, python)
+		--exclude # exclude paths from being scanned using a glob expression
+		--from # specify the source behavior to use (e.g. docker, registry, oci-dir, ...)
+		--output # report output format (<format>=<file> to output to a file), formats=[cyclonedx-json cyclonedx-xml github-json purls spdx-json spdx-tag-value syft-json syft-table syft-text template]
+		--override-default-catalogers # set the base set of catalogers to use (defaults to 'image' or 'directory' depending on the scan source)
+		--parallelism # number of cataloger workers to run in parallel
+		--platform # an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')
+		--scope # selection of layers to catalog, options=[squashed all-layers deep-squashed]
+		--select-catalogers # add, remove, and filter the catalogers to be used
+		--source-name # set the name of the target being analyzed
+		--source-supplier # the organization that supplied the component, which often may be the manufacturer, distributor, or repackager
+		--source-version # set the version of the target being analyzed
+		--template # specify the path to a Go template file
+	version # show version information
+		--config # syft configuration file(s) to use
+		--profile # configuration profiles to use
+		--quiet @bool # suppress all logging output
+		--verbose # increase verbosity (-v = info, -vv = debug)
+		--output # the format to show the results (allowable: [text json])

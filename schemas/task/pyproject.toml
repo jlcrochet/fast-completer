@@ -1,0 +1,8 @@
+[project]
+name = "task-schema-export"
+version = "0.1.0"
+description = "Export Task command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-task = "export_command_tree:main"

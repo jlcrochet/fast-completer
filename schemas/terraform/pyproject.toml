@@ -1,0 +1,8 @@
+[project]
+name = "terraform-schema-export"
+version = "0.1.0"
+description = "Export Terraform command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-terraform = "export_command_tree:main"

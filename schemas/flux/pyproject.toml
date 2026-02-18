@@ -1,0 +1,8 @@
+[project]
+name = "flux-schema-export"
+version = "0.1.0"
+description = "Export Flux command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-flux = "export_command_tree:main"

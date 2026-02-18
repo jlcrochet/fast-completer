@@ -1,0 +1,2896 @@
+# Supabase CLI schema for fast-completer
+# Generated from supabase 2.75.0
+
+supabase # Supabase CLI
+	--create-ticket @bool # create a support ticket for any CLI error
+	--debug @bool # output debug logs to stderr
+	--dns-resolver @bool # lookup domain names using the specified resolver
+	--experimental @bool # enable experimental features
+	--help @bool # help for supabase
+	--network-id # use the specified docker network instead of a generated one
+	--output @bool # output format of status variables
+	--profile # use a specific profile for connecting to Supabase API
+	--version @bool # version for supabase
+	--workdir # path to a Supabase project directory
+	--yes @bool # answer yes to all prompts
+	backups # Manage Supabase physical backups
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		list # Lists available physical backups
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		restore # Restore to a specific timestamp using PITR
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--timestamp # The recovery time target in seconds since epoch.
+	bootstrap # Bootstrap a Supabase project from a starter template
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--password # Password to your remote Postgres database.
+	branches # Manage Supabase preview branches
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		create # Create a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--notify-url # URL to notify when branch is active healthy.
+			--persistent @bool # Whether to create a persistent branch.
+			--region # Select a region to deploy the branch database.
+			--size # Select a desired instance size for the branch database.
+			--with-data @bool # Whether to clone production data to the branch database.
+		delete # Delete a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		get # Retrieve details of a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		list # List all preview branches
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		pause # Pause a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		unpause # Unpause a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		update # Update a preview branch
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--git-branch # Change the associated git branch.
+			--name # Rename the preview branch.
+			--notify-url # URL to notify when branch is active healthy.
+			--persistent @bool # Switch between ephemeral and persistent branch.
+			--status # Override the current branch status.
+	completion # Generate the autocompletion script for the specified shell
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		bash # Generate the autocompletion script for bash
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--no-descriptions @bool # disable completion descriptions
+	config # Manage Supabase project configurations
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		push # Pushes local config.toml to the linked project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	db # Manage Postgres databases
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		diff # Diffs the local database for schema changes
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Diffs against the database specified by the connection string (must be percent-encoded).
+			--file # Saves schema diff to a new migration file.
+			--linked @bool # Diffs local migration files against the linked project.
+			--local @bool # Diffs local migration files against the local database.
+			--schema # Comma separated list of schema to include.
+			--use-migra @bool # Use migra to generate schema diff.
+			--use-pg-delta @bool # Use pg-delta to generate schema diff.
+			--use-pg-schema @bool # Use pg-schema-diff to generate schema diff.
+			--use-pgadmin @bool # Use pgAdmin to generate schema diff.
+		dump # Dumps data or schemas from the remote database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--data-only @bool # Dumps only data records.
+			--db-url # Dumps from the database specified by the connection string (must be percent-encoded).
+			--dry-run @bool # Prints the pg_dump script that would be executed.
+			--exclude # List of schema.tables to exclude from data-only dump.
+			--file # File path to save the dumped contents.
+			--keep-comments @bool # Keeps commented lines from pg_dump output.
+			--linked @bool # Dumps from the linked project.
+			--local @bool # Dumps from the local database.
+			--password # Password to your remote Postgres database.
+			--role-only @bool # Dumps only cluster roles.
+			--schema # Comma separated list of schema to include.
+			--use-copy @bool # Use copy statements in place of inserts.
+		lint # Checks local database for typing error
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Lints the database specified by the connection string (must be percent-encoded).
+			--fail-on @bool # Error level to exit with non-zero status.
+			--level @bool # Error level to emit.
+			--linked @bool # Lints the linked project for schema errors.
+			--local @bool # Lints the local database for schema errors.
+			--schema # Comma separated list of schema to include.
+		pull # Pull schema from the remote database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Pulls from the database specified by the connection string (must be percent-encoded).
+			--linked @bool # Pulls from the linked project.
+			--local @bool # Pulls from the local database.
+			--password # Password to your remote Postgres database.
+			--schema # Comma separated list of schema to include.
+		push # Push new migrations to the remote database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Pushes to the database specified by the connection string (must be percent-encoded).
+			--dry-run @bool # Print the migrations that would be applied, but don't actually apply them.
+			--include-all @bool # Include all migrations not found on remote history table.
+			--include-roles @bool # Include custom roles from supabase/roles.sql.
+			--include-seed @bool # Include seed data from your config.
+			--linked @bool # Pushes to the linked project.
+			--local @bool # Pushes to the local database.
+			--password # Password to your remote Postgres database.
+		reset # Resets the local database to current migrations
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Resets the database specified by the connection string (must be percent-encoded).
+			--last # Reset up to the last n migration versions.
+			--linked @bool # Resets the linked project with local migrations.
+			--local @bool # Resets the local database with local migrations.
+			--no-seed @bool # Skip running the seed script after reset.
+		start # Starts local Postgres database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--from-backup # Path to a logical backup file.
+	domains # Manage custom domain names for Supabase projects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--include-raw-output @bool # Include raw output (useful for debugging).
+		--project-ref # Project ref of the Supabase project.
+		activate # Activate the custom hostname for a project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--include-raw-output @bool # Include raw output (useful for debugging).
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		create # Create a custom hostname
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--include-raw-output @bool # Include raw output (useful for debugging).
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--custom-hostname # The custom hostname to use for your Supabase project.
+		delete # Deletes the custom hostname config for your project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--include-raw-output @bool # Include raw output (useful for debugging).
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		get # Get the current custom hostname config
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--include-raw-output @bool # Include raw output (useful for debugging).
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		reverify # Re-verify the custom hostname config for your project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--include-raw-output @bool # Include raw output (useful for debugging).
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	encryption # Manage encryption keys of Supabase projects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		get-root-key # Get the root encryption key of a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		update-root-key # Update root encryption key of a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	functions # Manage Supabase Edge functions
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		delete # Delete a Function from Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--project-ref # Project ref of the Supabase project.
+		deploy # Deploy a Function to Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--import-map # Path to import map file.
+			--jobs # Maximum number of parallel jobs.
+			--no-verify-jwt @bool # Disable JWT verification for the Function.
+			--project-ref # Project ref of the Supabase project.
+			--prune @bool # Delete Functions that exist in Supabase project but not locally.
+			--use-api @bool # Bundle functions server-side without using Docker.
+		download # Download a Function from Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--project-ref # Project ref of the Supabase project.
+			--use-api @bool # Unbundle functions server-side without using Docker.
+		list # List all Functions in Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--project-ref # Project ref of the Supabase project.
+		new # Create a new Function locally
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		serve # Serve all Functions locally
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--env-file # Path to an env file to be populated to the Function environment.
+			--import-map # Path to import map file.
+			--inspect @bool # Alias of --inspect-mode brk.
+			--inspect-main @bool # Allow inspecting the main worker.
+			--inspect-mode @bool # Activate inspector capability for debugging.
+			--no-verify-jwt @bool # Disable JWT verification for the Function.
+	gen # Run code generation tools
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		bearer-jwt # Generate a Bearer Auth JWT for accessing Data API
+			--role # Postgres role to use.
+		signing-key # Generate a JWT signing key
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--algorithm @bool # Algorithm for signing key generation.
+			--append @bool # Append new key to existing keys file instead of overwriting.
+		types # Generate types from Postgres schema
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Generate types from a database url.
+			--lang @bool # Output language of the generated types.
+			--linked @bool # Generate types from the linked project.
+			--local @bool # Generate types from the local dev database.
+			--postgrest-v9-compat @bool # Generate types compatible with PostgREST v9 and below.
+			--project-id # Generate types from a project ID.
+			--query-timeout # Maximum timeout allowed for the database query.
+			--schema # Comma separated list of schema to include.
+			--swift-access-control @bool # Access control for Swift generated types.
+	help # Help about any command
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		backups # Manage Supabase physical backups
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			list # Lists available physical backups
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			restore # Restore to a specific timestamp using PITR
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		bootstrap # Bootstrap a Supabase project from a starter template
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		branches # Manage Supabase preview branches
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			create # Create a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			delete # Delete a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			get # Retrieve details of a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all preview branches
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			pause # Pause a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			unpause # Unpause a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update # Update a preview branch
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		completion # Generate the autocompletion script for the specified shell
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			bash # Generate the autocompletion script for bash
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			fish # Generate the autocompletion script for fish
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			powershell # Generate the autocompletion script for powershell
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			zsh # Generate the autocompletion script for zsh
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		config # Manage Supabase project configurations
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			push # Pushes local config.toml to the linked project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		db # Manage Postgres databases
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			diff # Diffs the local database for schema changes
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			dump # Dumps data or schemas from the remote database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			lint # Checks local database for typing error
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			pull # Pull schema from the remote database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			push # Push new migrations to the remote database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			reset # Resets the local database to current migrations
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			start # Starts local Postgres database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		domains # Manage custom domain names for Supabase projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			activate # Activate the custom hostname for a project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			create # Create a custom hostname
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			delete # Deletes the custom hostname config for your project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			get # Get the current custom hostname config
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			reverify # Re-verify the custom hostname config for your project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		encryption # Manage encryption keys of Supabase projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			get-root-key # Get the root encryption key of a Supabase project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update-root-key # Update root encryption key of a Supabase project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		functions # Manage Supabase Edge functions
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			delete # Delete a Function from Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			deploy # Deploy a Function to Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			download # Download a Function from Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all Functions in Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			new # Create a new Function locally
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			serve # Serve all Functions locally
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		gen # Run code generation tools
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			bearer-jwt # Generate a Bearer Auth JWT for accessing Data API
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			signing-key # Generate a JWT signing key
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			types # Generate types from Postgres schema
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		help # Help about any command
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		init # Initialize a local project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		inspect # Tools to inspect your Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			db # Tools to inspect your Supabase database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+				bloat # Estimates space allocated to a relation that is full of dead tuples
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				blocking # Show queries that are holding locks and the queries that are waiting for them to be released
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				calls # Show queries from pg_stat_statements ordered by total times called
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				db-stats # Show stats such as cache hit rates, total sizes, and WAL size
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				index-stats # Show combined index size, usage percent, scan counts, and unused status
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				locks # Show queries which have taken out an exclusive lock on a relation
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				long-running-queries # Show currently running queries running for longer than 5 minutes
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				outliers # Show queries from pg_stat_statements ordered by total execution time
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				replication-slots # Show information about replication slots on the database
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				role-stats # Show information about roles on the database
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				table-stats # Show combined table size, index size, and estimated row count
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				traffic-profile # Show read/write activity ratio for tables based on block I/O operations
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+				vacuum-stats # Show statistics related to vacuum operations per table
+					--create-ticket @bool # create a support ticket for any CLI error
+					--debug @bool # output debug logs to stderr
+					--dns-resolver @bool # lookup domain names using the specified resolver
+					--experimental @bool # enable experimental features
+					--network-id # use the specified docker network instead of a generated one
+					--output @bool # output format of status variables
+					--profile # use a specific profile for connecting to Supabase API
+					--workdir # path to a Supabase project directory
+					--yes @bool # answer yes to all prompts
+			report # Generate a CSV output for all inspect commands
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		link # Link to a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		login # Authenticate using an access token
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		logout # Log out and delete access tokens locally
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		migration # Manage database migration scripts
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			down # Resets applied migrations up to the last n versions
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			fetch # Fetch migration files from history table
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List local and remote migrations
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			new # Create an empty migration script
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			repair # Repair the migration history table
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			squash # Squash migrations to a single file
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			up # Apply pending migrations to local database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		network-bans # Manage network bans
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			get # Get the current network bans
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			remove # Remove a network ban
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		network-restrictions # Manage network restrictions
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			get # Get the current network restrictions
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update # Update network restrictions
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		orgs # Manage Supabase organizations
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			create # Create an organization
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all organizations
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		postgres-config # Manage Postgres database config
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			delete # Delete specific Postgres database config overrides
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			get # Get the current Postgres database config overrides
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update # Update Postgres database config
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		projects # Manage Supabase projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			api-keys # List all API keys for a Supabase project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			create # Create a project on Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			delete # Delete a Supabase project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all Supabase projects
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		secrets # Manage Supabase secrets
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			list # List all secrets on Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			set # Set a secret(s) on Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			unset # Unset a secret(s) on Supabase
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		seed # Seed a Supabase project from supabase/config.toml
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			buckets # Seed buckets declared in [storage.buckets]
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		services # Show versions of all Supabase services
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		snippets # Manage Supabase SQL snippets
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			download # Download contents of a SQL snippet
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all SQL snippets
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		ssl-enforcement # Manage SSL enforcement configuration
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			get # Get the current SSL enforcement configuration
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update # Update SSL enforcement configuration
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		sso # Manage Single Sign-On (SSO) authentication for projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			add # Add a new SSO identity provider
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			info # Returns the SAML SSO settings required for the identity provider
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			list # List all SSO identity providers for a project
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			remove # Remove an existing SSO identity provider
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			show # Show information about an SSO identity provider
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			update # Update information about an SSO identity provider
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		start # Start containers for Supabase local development
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		status # Show status of local Supabase containers
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		stop # Stop all local Supabase containers
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		storage # Manage Supabase Storage objects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			cp # Copy objects from src to dst path
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			ls # List objects by path prefix
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			mv # Move objects from src to dst path
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			rm # Remove objects by file path
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		test # Run tests on local Supabase containers
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			db # Tests local database with pgTAP
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			new # Create a new test file
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		unlink # Unlink a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		vanity-subdomains # Manage vanity subdomains for Supabase projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			activate # Activate a vanity subdomain
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			check-availability # Checks if a desired subdomain is available for use
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			delete # Deletes a project's vanity subdomain
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			get # Get the current vanity subdomain
+				--create-ticket @bool # create a support ticket for any CLI error
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+	init # Initialize a local project
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--force @bool # Overwrite existing supabase/config.toml.
+		--interactive @bool # Enables interactive mode to configure IDE settings.
+		--use-orioledb @bool # Use OrioleDB storage engine for Postgres.
+	inspect # Tools to inspect your Supabase project
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+		--linked @bool # Inspect the linked project.
+		--local @bool # Inspect the local database.
+		db # Tools to inspect your Supabase database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Inspect the linked project.
+			--local @bool # Inspect the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			bloat # Estimates space allocated to a relation that is full of dead tuples
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			blocking # Show queries that are holding locks and the queries that are waiting for them to be released
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			calls # Show queries from pg_stat_statements ordered by total times called
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			db-stats # Show stats such as cache hit rates, total sizes, and WAL size
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			index-stats # Show combined index size, usage percent, scan counts, and unused status
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			locks # Show queries which have taken out an exclusive lock on a relation
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			long-running-queries # Show currently running queries running for longer than 5 minutes
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			outliers # Show queries from pg_stat_statements ordered by total execution time
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			replication-slots # Show information about replication slots on the database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			role-stats # Show information about roles on the database
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			table-stats # Show combined table size, index size, and estimated row count
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			traffic-profile # Show read/write activity ratio for tables based on block I/O operations
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+			vacuum-stats # Show statistics related to vacuum operations per table
+				--create-ticket @bool # create a support ticket for any CLI error
+				--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+				--debug @bool # output debug logs to stderr
+				--dns-resolver @bool # lookup domain names using the specified resolver
+				--experimental @bool # enable experimental features
+				--linked @bool # Inspect the linked project.
+				--local @bool # Inspect the local database.
+				--network-id # use the specified docker network instead of a generated one
+				--output @bool # output format of status variables
+				--profile # use a specific profile for connecting to Supabase API
+				--workdir # path to a Supabase project directory
+				--yes @bool # answer yes to all prompts
+		report # Generate a CSV output for all inspect commands
+			--create-ticket @bool # create a support ticket for any CLI error
+			--db-url # Inspect the database specified by the connection string (must be percent-encoded).
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Inspect the linked project.
+			--local @bool # Inspect the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--output-dir # Path to save CSV files in
+	link # Link to a Supabase project
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--password # Password to your remote Postgres database.
+		--project-ref # Project ref of the Supabase project.
+		--skip-pooler @bool # Use direct connection instead of pooler.
+	login # Authenticate using an access token
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--name # Name that will be used to store token in your settings
+		--no-browser @bool # Do not open browser automatically
+		--token # Use provided token instead of automatic login flow
+	logout # Log out and delete access tokens locally
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+	migration # Manage database migration scripts
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		down # Resets applied migrations up to the last n versions
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Resets applied migrations on the database specified by the connection string (must be percent-encoded).
+			--last # Reset up to the last n migration versions.
+			--linked @bool # Resets applied migrations on the linked project.
+			--local @bool # Resets applied migrations on the local database.
+		fetch # Fetch migration files from history table
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Fetches migrations from the database specified by the connection string (must be percent-encoded).
+			--linked @bool # Fetches migration history from the linked project.
+			--local @bool # Fetches migration history from the local database.
+		list # List local and remote migrations
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Lists migrations of the database specified by the connection string (must be percent-encoded).
+			--linked @bool # Lists migrations applied to the linked project.
+			--local @bool # Lists migrations applied to the local database.
+			--password # Password to your remote Postgres database.
+		new # Create an empty migration script
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		repair # Repair the migration history table
+			--status @bool # Version status to update.
+		squash # Squash migrations to a single file
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Squashes migrations of the database specified by the connection string (must be percent-encoded).
+			--linked @bool # Squashes the migration history of the linked project.
+			--local @bool # Squashes the migration history of the local database.
+			--password # Password to your remote Postgres database.
+		up # Apply pending migrations to local database
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Applies migrations to the database specified by the connection string (must be percent-encoded).
+			--include-all @bool # Include all migrations not found on remote history table.
+			--linked @bool # Applies pending migrations to the linked project.
+			--local @bool # Applies pending migrations to the local database.
+	network-bans # Manage network bans
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		get # Get the current network bans
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		remove # Remove a network ban
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-unban-ip # IP to allow DB connections from.
+	network-restrictions # Manage network restrictions
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		get # Get the current network restrictions
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		update # Update network restrictions
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--append @bool # Append to existing restrictions instead of replacing them.
+			--bypass-cidr-checks @bool # Bypass some of the CIDR validation checks.
+			--db-allow-cidr # CIDR to allow DB connections from.
+	orgs # Manage Supabase organizations
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		create # Create an organization
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		list # List all organizations
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	postgres-config # Manage Postgres database config
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		delete # Delete specific Postgres database config overrides
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--config # Config keys to delete (comma-separated)
+			--no-restart @bool # Do not restart the database after deleting config.
+		get # Get the current Postgres database config overrides
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		update # Update Postgres database config
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--config # Config overrides specified as a 'key=value' pair
+			--no-restart @bool # Do not restart the database after updating config.
+			--replace-existing-overrides @bool # If true, replaces all existing overrides with the ones provided. If false (default), merges existing overrides with the ones provided.
+	projects # Manage Supabase projects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		api-keys # List all API keys for a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--project-ref # Project ref of the Supabase project.
+		create # Create a project on Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-password # Database password of the project.
+			--org-id # Organization ID to create the project in.
+			--region # Select a region close to you for the best performance.
+			--size # Select a desired instance size for your project.
+		delete # Delete a Supabase project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		list # List all Supabase projects
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	secrets # Manage Supabase secrets
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		list # List all secrets on Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		set # Set a secret(s) on Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--env-file # Read secrets from a .env file.
+		unset # Unset a secret(s) on Supabase
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	seed # Seed a Supabase project from supabase/config.toml
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--linked @bool # Seeds the linked project.
+		--local @bool # Seeds the local database.
+		buckets # Seed buckets declared in [storage.buckets]
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Seeds the linked project.
+			--local @bool # Seeds the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	services # Show versions of all Supabase services
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+	snippets # Manage Supabase SQL snippets
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		download # Download contents of a SQL snippet
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		list # List all SQL snippets
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+	ssl-enforcement # Manage SSL enforcement configuration
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		get # Get the current SSL enforcement configuration
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		update # Update SSL enforcement configuration
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--disable-db-ssl-enforcement @bool # Whether the DB should disable SSL enforcement for all external connections.
+			--enable-db-ssl-enforcement @bool # Whether the DB should enable SSL enforcement for all external connections.
+	sso # Manage Single Sign-On (SSO) authentication for projects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		add # Add a new SSO identity provider
+			--type @bool # Type of identity provider (according to supported protocol).
+		info # Returns the SAML SSO settings required for the identity provider
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		list # List all SSO identity providers for a project
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		remove # Remove an existing SSO identity provider
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		show # Show information about an SSO identity provider
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--metadata @bool # Show SAML 2.0 XML Metadata only
+		update # Update information about an SSO identity provider
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--add-domains # Add this comma separated list of email domains to the identity provider.
+			--attribute-mapping-file # File containing a JSON mapping between SAML attributes to custom JWT claims.
+			--domains # Replace domains with this comma separated list of email domains.
+			--metadata-file # File containing a SAML 2.0 Metadata XML document describing the identity provider.
+			--metadata-url # URL pointing to a SAML 2.0 Metadata XML document describing the identity provider.
+			--name-id-format # URI reference representing the classification of string-based identifier information.
+			--remove-domains # Remove this comma separated list of email domains from the identity provider.
+			--skip-url-validation @bool # Whether local validation of the SAML 2.0 Metadata URL should not be performed.
+	start # Start containers for Supabase local development
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--exclude # Names of containers to not start. [gotrue,realtime,storage-api,imgproxy,kong,mailpit,postgrest,postgres-meta,studio,edge-runtime,logflare,vector,supavisor]
+		--ignore-health-check @bool # Ignore unhealthy services and exit 0
+	status # Show status of local Supabase containers
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--override-name # Override specific variable names.
+	stop # Stop all local Supabase containers
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--all @bool # Stop all local Supabase instances from all projects across the machine.
+		--no-backup @bool # Deletes all data volumes after stopping.
+		--project-id # Local project ID to stop.
+	storage # Manage Supabase Storage objects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--linked @bool # Connects to Storage API of the linked project.
+		--local @bool # Connects to Storage API of the local database.
+		cp # Copy objects from src to dst path
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Connects to Storage API of the linked project.
+			--local @bool # Connects to Storage API of the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--cache-control # Custom Cache-Control header for HTTP upload.
+			--content-type # Custom Content-Type header for HTTP upload.
+			--jobs # Maximum number of parallel jobs.
+			--recursive @bool # Recursively copy a directory.
+		ls # List objects by path prefix
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Connects to Storage API of the linked project.
+			--local @bool # Connects to Storage API of the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--recursive @bool # Recursively list a directory.
+		mv # Move objects from src to dst path
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Connects to Storage API of the linked project.
+			--local @bool # Connects to Storage API of the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--recursive @bool # Recursively move a directory.
+		rm # Remove objects by file path
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--linked @bool # Connects to Storage API of the linked project.
+			--local @bool # Connects to Storage API of the local database.
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--recursive @bool # Recursively remove a directory.
+	test # Run tests on local Supabase containers
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		db # Tests local database with pgTAP
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--db-url # Tests the database specified by the connection string (must be percent-encoded).
+			--linked @bool # Runs pgTAP tests on the linked project.
+			--local @bool # Runs pgTAP tests on the local database.
+		new # Create a new test file
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--template @bool # Template framework to generate.
+	unlink # Unlink a Supabase project
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+	vanity-subdomains # Manage vanity subdomains for Supabase projects
+		--create-ticket @bool # create a support ticket for any CLI error
+		--debug @bool # output debug logs to stderr
+		--dns-resolver @bool # lookup domain names using the specified resolver
+		--experimental @bool # enable experimental features
+		--network-id # use the specified docker network instead of a generated one
+		--output @bool # output format of status variables
+		--profile # use a specific profile for connecting to Supabase API
+		--workdir # path to a Supabase project directory
+		--yes @bool # answer yes to all prompts
+		--project-ref # Project ref of the Supabase project.
+		activate # Activate a vanity subdomain
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--desired-subdomain # The desired vanity subdomain to use for your Supabase project.
+		check-availability # Checks if a desired subdomain is available for use
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+			--desired-subdomain # The desired vanity subdomain to use for your Supabase project.
+		delete # Deletes a project's vanity subdomain
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts
+		get # Get the current vanity subdomain
+			--create-ticket @bool # create a support ticket for any CLI error
+			--debug @bool # output debug logs to stderr
+			--dns-resolver @bool # lookup domain names using the specified resolver
+			--experimental @bool # enable experimental features
+			--network-id # use the specified docker network instead of a generated one
+			--output @bool # output format of status variables
+			--profile # use a specific profile for connecting to Supabase API
+			--project-ref # Project ref of the Supabase project.
+			--workdir # path to a Supabase project directory
+			--yes @bool # answer yes to all prompts

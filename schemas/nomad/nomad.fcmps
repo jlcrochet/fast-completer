@@ -1,0 +1,331 @@
+# Nomad CLI schema for fast-completer
+# Generated from nomad 1.11.2
+
+nomad # HashiCorp Nomad
+	acl # Interact with ACL policies and tokens
+		auth-method
+			create
+			delete
+			info
+			list
+			update
+		binding-rule
+			create
+				characters.
+			delete
+			info
+			list
+			update
+				characters.
+		bootstrap
+			token.
+				token.
+		policy
+			apply
+			delete
+			info
+			list
+			self
+		role
+			create
+				characters.
+			delete
+			info
+			list
+			update
+				characters.
+		token
+			create
+			delete
+			info
+			list
+			self
+			update
+	action # Run a pre-defined command from a given context
+	agent # Runs a Nomad agent
+		certificate.
+			certificate.
+				certificate.
+				directory.
+				indefinitely.
+			directory.
+				certificate.
+				directory.
+				indefinitely.
+			indefinitely.
+				certificate.
+				directory.
+				indefinitely.
+		directory.
+			certificate.
+				certificate.
+				directory.
+				indefinitely.
+			directory.
+				certificate.
+				directory.
+				indefinitely.
+			indefinitely.
+				certificate.
+				directory.
+				indefinitely.
+		indefinitely.
+			certificate.
+				certificate.
+				directory.
+				indefinitely.
+			directory.
+				certificate.
+				directory.
+				indefinitely.
+			indefinitely.
+				certificate.
+				directory.
+				indefinitely.
+	agent-info # Display status information about the local agent
+	alloc # Interact with allocations
+		checks
+		exec
+		fs
+		logs
+			default.
+				default.
+				followed.
+			followed.
+				default.
+				followed.
+		pause
+		restart
+			argument.
+				argument.
+		signal
+		status
+		stop
+	config # Interact with configurations
+		validate
+	deployment # Interact with deployments
+		fail
+		list
+		pause
+		promote
+		resume
+		status
+		unblock
+	eval # Interact with evaluations
+		delete
+		list
+		status
+	exec # Execute commands in task
+	fmt # Rewrites Nomad config and job files to canonical format
+	job # Interact with jobs
+		action
+		allocs
+		deployments
+		dispatch
+		eval
+		history
+		init
+		inspect
+		periodic
+			force
+		plan
+		promote
+		restart
+		revert
+		run
+			command.
+				command.
+		scale
+		scaling-events
+		start
+			command.
+				command.
+		status
+		stop
+			command.
+				command.
+				stopped.
+			stopped.
+				command.
+				stopped.
+		tag
+			apply
+			unset
+		validate
+	license # Interact with Nomad Enterprise License
+		get
+	login # Login to Nomad using an auth method
+	monitor # Stream logs from a Nomad agent
+		export
+	namespace # Interact with namespaces
+		apply
+		delete
+		inspect
+		list
+		status
+	node # Interact with nodes
+		config
+			capability.
+				capability.
+		drain
+		eligibility
+		identity
+			get
+			renew
+		intro
+			create
+		meta
+			apply
+			read
+		pool
+			apply
+			delete
+			info
+			init
+			jobs
+			list
+			nodes
+		status
+	operator # Provides cluster-level tools for Nomad operators
+		api
+			X-Nomad-Token.
+				X-Nomad-Token.
+				output.
+			output.
+				X-Nomad-Token.
+				output.
+		autopilot
+			get-config
+			health
+			set-config
+		client-state
+		debug
+			variable.
+				variable.
+		gossip
+			keyring
+				generate
+				install
+				list
+				remove
+				use
+		metrics
+		raft
+			info
+			list-peers
+			logs
+			remove-peer
+			state
+			transfer-leadership
+		root
+			keyring
+				list
+				remove
+				rotate
+		scheduler
+			get-config
+			set-config
+				nodes.
+				response.
+		snapshot
+			inspect
+			redact
+			restore
+			save
+			state
+		utilization
+	plugin # Inspect plugins
+		status
+	quota # Interact with quotas
+		apply
+		delete
+		init
+		inspect
+		list
+		status
+	recommendation # Interact with the Nomad recommendation endpoint
+		apply
+		dismiss
+		info
+		list
+	run # Run a new job or update an existing job
+		command.
+			command.
+				command.
+	scaling # Interact with the Nomad scaling endpoint
+		policy
+			info
+			list
+	sentinel # Interact with Sentinel policies
+		apply
+		delete
+		list
+		read
+	server # Interact with servers
+		force-leave
+		join
+		members
+	service # Interact with registered services
+		delete
+		info
+		list
+	setup # Interact with setup helpers
+		consul
+		vault
+	start # Start a stopped job
+		command.
+			command.
+				command.
+	status # Display the status output for a resource
+	stop # Stop a running job
+		command.
+			command.
+				command.
+				stopped.
+			stopped.
+				command.
+				stopped.
+		stopped.
+			command.
+				command.
+				stopped.
+			stopped.
+				command.
+				stopped.
+	system # Interact with the system API
+		gc
+		reconcile
+			summaries
+	tls # Generate Self Signed TLS Certificates for Nomad
+		ca
+			create
+			info
+		cert
+			create
+			info
+	ui # Open the Nomad Web UI
+	var # Interact with variables
+		get
+			redirected.
+				redirected.
+		init
+		list
+		lock
+		purge
+		put
+	version # Prints the Nomad version
+	volume # Interact with volumes
+		claim
+			delete
+			list
+		create
+		delete
+		deregister
+		detach
+		init
+		register
+		snapshot
+			create
+			delete
+			list
+		status

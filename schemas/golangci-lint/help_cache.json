@@ -1,0 +1,270 @@
+{
+  "golangci-lint --help": {
+    "returncode": 0,
+    "stdout": "Smart, fast linters runner.\n\nUsage:\n  golangci-lint [flags]\n  golangci-lint [command]\n\nAvailable Commands:\n  cache       Cache control and information.\n  completion  Generate the autocompletion script for the specified shell\n  config      Configuration file information and verification.\n  custom      Build a version of golangci-lint with custom linters.\n  fmt         Format Go source files.\n  formatters  List current formatters configuration.\n  help        Display extra help\n  linters     List current linters configuration.\n  migrate     Migrate configuration file from v1 to v2.\n  run         Lint the code.\n  version     Display the golangci-lint version.\n\nFlags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n      --version        Print version\n\nUse \"golangci-lint [command] --help\" for more information about a command.\n"
+  },
+  "golangci-lint --version": {
+    "returncode": 0,
+    "stdout": "golangci-lint has version 2.10.1 built with go1.26.0 from 5d1e709b on 2026-02-17T15:27:33Z\n"
+  },
+  "golangci-lint __complete ": {
+    "returncode": 0,
+    "stdout": "cache\tCache control and information.\ncompletion\tGenerate the autocompletion script for the specified shell\nconfig\tConfiguration file information and verification.\ncustom\tBuild a version of golangci-lint with custom linters.\nfmt\tFormat Go source files.\nformatters\tList current formatters configuration.\nhelp\tDisplay extra help\nlinters\tList current linters configuration.\nmigrate\tMigrate configuration file from v1 to v2.\nrun\tLint the code.\nversion\tDisplay the golangci-lint version.\n:4\n"
+  },
+  "golangci-lint __complete --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--version\tPrint version\n:4\n"
+  },
+  "golangci-lint __complete cache ": {
+    "returncode": 0,
+    "stdout": "clean\tClean cache\nstatus\tShow cache status\n:4\n"
+  },
+  "golangci-lint __complete cache --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete cache clean ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete cache clean --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete cache status ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete cache status --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "golangci-lint __complete completion --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "golangci-lint __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "golangci-lint __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "golangci-lint __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "golangci-lint __complete config ": {
+    "returncode": 0,
+    "stdout": "path\tPrint used configuration path.\nverify\tVerify configuration against JSON schema.\n:4\n"
+  },
+  "golangci-lint __complete config --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n:4\n"
+  },
+  "golangci-lint __complete config path ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete config path --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--config\tRead config from file path `PATH`\n--help\tHelp for a command\n--no-config\tDon't read config file\n--verbose\tVerbose output\n--json\tDisplay as JSON\n:4\n"
+  },
+  "golangci-lint __complete config verify ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete config verify --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--config\tRead config from file path `PATH`\n--help\tHelp for a command\n--no-config\tDon't read config file\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete custom ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "golangci-lint __complete custom --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--destination\tThe directory path used to store the custom binary\n--name\tThe name of the custom binary\n--version\tThe golangci-lint version used to build the custom binary\n:4\n"
+  },
+  "golangci-lint __complete fmt ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "golangci-lint __complete fmt --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n--enable\tEnable specific formatter\n--diff\tDisplay diffs instead of rewriting files\n--diff-colored\tDisplay diffs instead of rewriting files (with colors)\n--stdin\tUse standard input for piping source files\n:4\n"
+  },
+  "golangci-lint __complete formatters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete formatters --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n--enable\tEnable specific formatter\n--json\tDisplay as JSON\n:4\n"
+  },
+  "golangci-lint __complete help ": {
+    "returncode": 0,
+    "stdout": "formatters\tDisplay help for formatters.\nlinters\tDisplay help for linters.\n:4\n"
+  },
+  "golangci-lint __complete help --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n:4\n"
+  },
+  "golangci-lint __complete help formatters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete help formatters --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--json\tDisplay as JSON\n:4\n"
+  },
+  "golangci-lint __complete help linters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete help linters --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--json\tDisplay as JSON\n:4\n"
+  },
+  "golangci-lint __complete linters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete linters --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n--default\tDefault set of linters to enable\n--disable\tDisable specific linter\n--enable\tEnable specific linter\n--enable-only\tOverride linters configuration section to only run the specific linter(s)\n--fast-only\tFilter enabled linters to run only fast linters\n--json\tDisplay as JSON\n:4\n"
+  },
+  "golangci-lint __complete migrate ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "golangci-lint __complete migrate --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n--format\tOutput file format.\n--skip-validation\tSkip validation of the configuration file against the JSON Schema for v1.\n:4\n"
+  },
+  "golangci-lint __complete run ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "golangci-lint __complete run --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--config\tRead config from file path `PATH`\n--no-config\tDon't read config file\n--default\tDefault set of linters to enable\n--disable\tDisable specific linter\n--enable\tEnable specific linter\n--enable-only\tOverride linters configuration section to only run the specific linter(s)\n--fast-only\tFilter enabled linters to run only fast linters\n--concurrency\tNumber of CPUs to use (Default: Automatically set to match Linux container CPU quota and fall back to the number of logical CPUs in the machine)\n--modules-download-mode\tModules download mode. If not empty, passed as -mod=<mode> to go tools\n--issues-exit-code\tExit code when issues were found\n--build-tags\tBuild tags\n--timeout\tTimeout for total work. Disabled by default\n--tests\tAnalyze tests (*_test.go)\n--allow-parallel-runners\tAllow multiple parallel golangci-lint instances running.\n--allow-serial-runners\tAllow multiple golangci-lint instances running, but serialize them around a lock.\n--path-prefix\tPath prefix to add to output\n--path-mode\tPath mode to use (empty, or 'abs')\n--show-stats\tShow statistics per linter\n--output.text.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.text.print-linter-name\tPrint linter name in the end of issue text.\n--output.text.print-issued-lines\tPrint lines of code with issue.\n--output.text.colors\tUse colors.\n--output.json.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.tab.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.tab.print-linter-name\tPrint linter name in the end of issue text.\n--output.tab.colors\tUse colors.\n--output.html.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.checkstyle.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.code-climate.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.junit-xml.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.junit-xml.extended\tSupport extra JUnit XML fields.\n--output.teamcity.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--output.sarif.path\tOutput path can be either `stdout`, `stderr` or path to the file to write to.\n--max-issues-per-linter\tMaximum issues count per one linter. Set to 0 to disable\n--max-same-issues\tMaximum count of issues with the same text. Set to 0 to disable\n--uniq-by-line\tMake issues output unique by line\n--new\tShow only new issues: if there are unstaged changes or untracked files, only those changes are analyzed, else only changes in HEAD~ are analyzed.\n--new-from-rev\tShow only new issues created after git revision `REV`\n--new-from-patch\tShow only new issues created in git patch with file path `PATH`\n--new-from-merge-base\tShow only new issues created after the best common ancestor (merge-base against HEAD)\n--whole-files\tShow issues in any part of update files (requires new-from-rev or new-from-patch)\n--fix\tApply the fixes detected by the linters and formatters (if it's supported by the linter)\n--cpu-profile-path\tPath to CPU profile output file\n--mem-profile-path\tPath to memory profile output file\n--trace-path\tPath to trace output file\n:4\n"
+  },
+  "golangci-lint __complete version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "golangci-lint __complete version --": {
+    "returncode": 0,
+    "stdout": "--color\tUse color when printing; can be 'always', 'auto', or 'never'\n--help\tHelp for a command\n--verbose\tVerbose output\n--debug\tAdd build information\n--json\tDisplay as JSON\n--short\tDisplay only the version number\n:4\n"
+  },
+  "golangci-lint cache --help": {
+    "returncode": 0,
+    "stdout": "Cache control and information.\n\nUsage:\n  golangci-lint cache [flags]\n  golangci-lint cache [command]\n\nAvailable Commands:\n  clean       Clean cache\n  status      Show cache status\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n\nUse \"golangci-lint cache [command] --help\" for more information about a command.\n"
+  },
+  "golangci-lint cache clean --help": {
+    "returncode": 0,
+    "stdout": "Clean cache\n\nUsage:\n  golangci-lint cache clean [flags]\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint cache status --help": {
+    "returncode": 0,
+    "stdout": "Show cache status\n\nUsage:\n  golangci-lint cache status [flags]\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint completion --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for golangci-lint for the specified shell.\nSee each sub-command's help for details on how to use the generated script.\n\nUsage:\n  golangci-lint completion [command]\n\nAvailable Commands:\n  bash        Generate the autocompletion script for bash\n  fish        Generate the autocompletion script for fish\n  powershell  Generate the autocompletion script for powershell\n  zsh         Generate the autocompletion script for zsh\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n\nUse \"golangci-lint completion [command] --help\" for more information about a command.\n"
+  },
+  "golangci-lint completion bash --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the bash shell.\n\nThis script depends on the 'bash-completion' package.\nIf it is not installed already, you can install it via your OS's package manager.\n\nTo load completions in your current shell session:\n\n\tsource <(golangci-lint completion bash)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\tgolangci-lint completion bash > /etc/bash_completion.d/golangci-lint\n\n#### macOS:\n\n\tgolangci-lint completion bash > $(brew --prefix)/etc/bash_completion.d/golangci-lint\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  golangci-lint completion bash\n\nFlags:\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint completion fish --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the fish shell.\n\nTo load completions in your current shell session:\n\n\tgolangci-lint completion fish | source\n\nTo load completions for every new session, execute once:\n\n\tgolangci-lint completion fish > ~/.config/fish/completions/golangci-lint.fish\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  golangci-lint completion fish [flags]\n\nFlags:\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for powershell.\n\nTo load completions in your current shell session:\n\n\tgolangci-lint completion powershell | Out-String | Invoke-Expression\n\nTo load completions for every new session, add the output of the above command\nto your powershell profile.\n\nUsage:\n  golangci-lint completion powershell [flags]\n\nFlags:\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the zsh shell.\n\nIf shell completion is not already enabled in your environment you will need\nto enable it.  You can execute the following once:\n\n\techo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\nTo load completions in your current shell session:\n\n\tsource <(golangci-lint completion zsh)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\tgolangci-lint completion zsh > \"${fpath[1]}/_golangci-lint\"\n\n#### macOS:\n\n\tgolangci-lint completion zsh > $(brew --prefix)/share/zsh/site-functions/_golangci-lint\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  golangci-lint completion zsh [flags]\n\nFlags:\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint config --help": {
+    "returncode": 0,
+    "stdout": "Configuration file information and verification.\n\nUsage:\n  golangci-lint config [flags]\n  golangci-lint config [command]\n\nAvailable Commands:\n  path        Print used configuration path.\n  verify      Verify configuration against JSON schema.\n\nFlags:\n  -c, --config PATH   Read config from file path PATH\n      --no-config     Don't read config file\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n\nUse \"golangci-lint config [command] --help\" for more information about a command.\n"
+  },
+  "golangci-lint config path --help": {
+    "returncode": 0,
+    "stdout": "Print used configuration path.\n\nUsage:\n  golangci-lint config path [flags]\n\nFlags:\n      --json   Display as JSON\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -c, --config PATH    Read config from file path PATH\n  -h, --help           Help for a command\n      --no-config      Don't read config file\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint config verify --help": {
+    "returncode": 0,
+    "stdout": "Verify configuration against JSON schema.\n\nUsage:\n  golangci-lint config verify [flags]\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -c, --config PATH    Read config from file path PATH\n  -h, --help           Help for a command\n      --no-config      Don't read config file\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint custom --help": {
+    "returncode": 0,
+    "stdout": "Build a version of golangci-lint with custom linters.\n\nUsage:\n  golangci-lint custom [flags]\n\nFlags:\n      --destination string   The directory path used to store the custom binary\n      --name string          The name of the custom binary\n      --version string       The golangci-lint version used to build the custom binary\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint fmt --help": {
+    "returncode": 0,
+    "stdout": "Format Go source files.\n\nUsage:\n  golangci-lint fmt [flags]\n\nFlags:\n  -c, --config PATH      Read config from file path PATH\n      --no-config        Don't read config file\n  -E, --enable strings   Enable specific formatter\n  -d, --diff             Display diffs instead of rewriting files\n      --diff-colored     Display diffs instead of rewriting files (with colors)\n      --stdin            Use standard input for piping source files\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint formatters --help": {
+    "returncode": 0,
+    "stdout": "List current formatters configuration.\n\nUsage:\n  golangci-lint formatters [flags]\n\nFlags:\n  -c, --config PATH      Read config from file path PATH\n      --no-config        Don't read config file\n  -E, --enable strings   Enable specific formatter\n      --json             Display as JSON\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint help --help": {
+    "returncode": 0,
+    "stdout": "Display extra help\n\nUsage:\n  golangci-lint help [flags]\n  golangci-lint help [command]\n\nAvailable Commands:\n  formatters  Display help for formatters.\n  linters     Display help for linters.\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n\nUse \"golangci-lint help [command] --help\" for more information about a command.\n"
+  },
+  "golangci-lint help formatters --help": {
+    "returncode": 0,
+    "stdout": "Display help for formatters.\n\nUsage:\n  golangci-lint help formatters [flags]\n\nFlags:\n      --json   Display as JSON\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint help linters --help": {
+    "returncode": 0,
+    "stdout": "Display help for linters.\n\nUsage:\n  golangci-lint help linters [flags]\n\nFlags:\n      --json   Display as JSON\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint linters --help": {
+    "returncode": 0,
+    "stdout": "List current linters configuration.\n\nUsage:\n  golangci-lint linters [flags]\n\nFlags:\n  -c, --config PATH           Read config from file path PATH\n      --no-config             Don't read config file\n      --default string        Default set of linters to enable (default \"standard\")\n  -D, --disable strings       Disable specific linter\n  -E, --enable strings        Enable specific linter\n      --enable-only strings   Override linters configuration section to only run the specific linter(s)\n      --fast-only             Filter enabled linters to run only fast linters\n      --json                  Display as JSON\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint migrate --help": {
+    "returncode": 0,
+    "stdout": "Migrate configuration file from v1 to v2.\n\nUsage:\n  golangci-lint migrate [flags]\n\nFlags:\n  -c, --config PATH       Read config from file path PATH\n      --no-config         Don't read config file\n      --format string     Output file format.\n                          By default, the format of the input configuration file is used.\n                          It can be 'yml', 'yaml', 'toml', or 'json'.\n      --skip-validation   Skip validation of the configuration file against the JSON Schema for v1.\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint run --help": {
+    "returncode": 0,
+    "stdout": "Lint the code.\n\nUsage:\n  golangci-lint run [flags]\n\nFlags:\n  -c, --config PATH                       Read config from file path PATH\n      --no-config                         Don't read config file\n      --default string                    Default set of linters to enable (default \"standard\")\n  -D, --disable strings                   Disable specific linter\n  -E, --enable strings                    Enable specific linter\n      --enable-only strings               Override linters configuration section to only run the specific linter(s)\n      --fast-only                         Filter enabled linters to run only fast linters\n  -j, --concurrency int                   Number of CPUs to use (Default: Automatically set to match Linux container CPU quota and fall back to the number of logical CPUs in the machine)\n      --modules-download-mode string      Modules download mode. If not empty, passed as -mod=<mode> to go tools\n      --issues-exit-code int              Exit code when issues were found (default 1)\n      --build-tags strings                Build tags\n      --timeout duration                  Timeout for total work. Disabled by default\n      --tests                             Analyze tests (*_test.go) (default true)\n      --allow-parallel-runners            Allow multiple parallel golangci-lint instances running.\n                                          If false (default) - golangci-lint acquires file lock on start.\n      --allow-serial-runners              Allow multiple golangci-lint instances running, but serialize them around a lock.\n                                          If false (default) - golangci-lint exits with an error if it fails to acquire file lock on start.\n      --path-prefix string                Path prefix to add to output\n      --path-mode string                  Path mode to use (empty, or 'abs')\n      --show-stats                        Show statistics per linter (default true)\n      --output.text.path stdout           Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.text.print-linter-name     Print linter name in the end of issue text. (default true)\n      --output.text.print-issued-lines    Print lines of code with issue. (default true)\n      --output.text.colors                Use colors. (default true)\n      --output.json.path stdout           Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.tab.path stdout            Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.tab.print-linter-name      Print linter name in the end of issue text. (default true)\n      --output.tab.colors                 Use colors. (default true)\n      --output.html.path stdout           Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.checkstyle.path stdout     Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.code-climate.path stdout   Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.junit-xml.path stdout      Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.junit-xml.extended         Support extra JUnit XML fields.\n      --output.teamcity.path stdout       Output path can be either stdout, `stderr` or path to the file to write to.\n      --output.sarif.path stdout          Output path can be either stdout, `stderr` or path to the file to write to.\n      --max-issues-per-linter int         Maximum issues count per one linter. Set to 0 to disable (default 50)\n      --max-same-issues int               Maximum count of issues with the same text. Set to 0 to disable (default 3)\n      --uniq-by-line                      Make issues output unique by line (default true)\n  -n, --new                               Show only new issues: if there are unstaged changes or untracked files, only those changes are analyzed, else only changes in HEAD~ are analyzed.\n                                          It's a super-useful option for integration of golangci-lint into existing large codebase.\n                                          It's not practical to fix all existing issues at the moment of integration: much better to not allow issues in new code.\n                                          For CI setups, prefer --new-from-rev=HEAD~, as --new can skip linting the current patch if any scripts generate unstaged files before golangci-lint runs.\n      --new-from-rev REV                  Show only new issues created after git revision REV\n      --new-from-patch PATH               Show only new issues created in git patch with file path PATH\n      --new-from-merge-base string        Show only new issues created after the best common ancestor (merge-base against HEAD)\n      --whole-files                       Show issues in any part of update files (requires new-from-rev or new-from-patch)\n      --fix                               Apply the fixes detected by the linters and formatters (if it's supported by the linter)\n      --cpu-profile-path string           Path to CPU profile output file\n      --mem-profile-path string           Path to memory profile output file\n      --trace-path string                 Path to trace output file\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  },
+  "golangci-lint version --help": {
+    "returncode": 0,
+    "stdout": "Display the golangci-lint version.\n\nUsage:\n  golangci-lint version [flags]\n\nFlags:\n      --debug   Add build information\n      --json    Display as JSON\n      --short   Display only the version number\n\nGlobal Flags:\n      --color string   Use color when printing; can be 'always', 'auto', or 'never' (default \"auto\")\n  -h, --help           Help for a command\n  -v, --verbose        Verbose output\n"
+  }
+}

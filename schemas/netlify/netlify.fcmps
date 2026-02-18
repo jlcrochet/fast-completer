@@ -1,0 +1,58 @@
+# Netlify CLI schema for fast-completer
+# Generated from netlify 23.15.1
+
+netlify # Netlify CLI
+	agents # Manage Netlify AI agent tasks
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command
+		--filter # For monorepos, specify the name of the application to run
+	api # Run any Netlify API method
+		--debug @bool # Print debugging information
+		--list @bool # List out available API methods (default: false)
+	blobs # Manage objects in Netlify Blobs
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command without
+		--filter # For monorepos, specify the name of the application to run
+	build # Build on your local machine
+	clone # Clone a remote repository and link it to an existing project
+		--debug @bool # Print debugging information
+		--id # ID of existing Netlify project to link to
+	db # Provision a production ready Postgres database with a single
+	deploy # Deploy your project to Netlify
+		--create-site
+	dev # Local dev server
+		--no-open @bool # disables the automatic opening of a browser window
+		--debug @bool # Print debugging information
+	env # Control environment variables for the current project
+		--debug @bool # Print debugging information
+	functions # Manage netlify functions
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command
+		--filter # For monorepos, specify the name of the application to
+	init # Configure continuous deployment for a new or existing project.
+	link # Link a local repo or project folder to an existing project on
+	login # Login to your Netlify account
+	logs # Stream logs from your project
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command
+		--filter # For monorepos, specify the name of the application to run
+	open # Open settings for the project linked to the current folder
+		--admin @bool # Open Netlify project
+		--debug @bool # Print debugging information
+		--site @bool # Open project
+	recipes # Create and modify files in a project using pre-defined recipes
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command without
+	serve # Build the project for production and serve locally. This does
+	sites # Handle various project operations
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this
+		--filter # For monorepos, specify the name of the application
+	status # Print status information
+		--debug @bool # Print debugging information
+		--auth # Netlify auth token - can be used to run this command without
+		--json @bool # Output status information as JSON
+		--verbose @bool # Output system info
+	switch # Switch your active Netlify account
+	unlink # Unlink a local folder from a Netlify project
+	watch # Watch for project deploy to finish

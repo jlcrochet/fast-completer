@@ -1,0 +1,12 @@
+[project]
+name = "az-schema-generator"
+version = "0.1.0"
+description = "Export Azure CLI command tree to JSON"
+requires-python = ">=3.9"
+dependencies = [
+    "azure-cli>=2.60",
+    "setuptools",
+]
+
+[tool.uv]
+prerelease = "allow"

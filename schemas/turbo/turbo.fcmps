@@ -1,0 +1,623 @@
+# Turbo CLI schema for fast-completer
+# Generated from turbo 2.8.9
+
+turbo # Turborepo monorepo builds
+	--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+	--no-update-notifier @bool # Disable the turbo update notification
+	--api # Override the endpoint for API calls
+	--color @bool # Force color usage in the terminal
+	--cwd # The directory in which to run turbo
+	--heap # Specify a file to save a pprof heap profile
+	--ui # Specify whether to use the streaming UI or TUI
+	--login # Override the login endpoint
+	--no-color @bool # Suppress color usage in the terminal
+	--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+	--remote-cache-timeout # Set a timeout for all HTTP requests
+	--team # Set the team slug for API calls
+	--token # Set the auth token for API calls
+	--trace # Specify a file to save a pprof trace
+	--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+	--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+	--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	--cache # Set the cache behavior for this run. Pass a list of comma-separated key, value pairs to enable reading and writing to either the local or remote cache
+	--no-cache @bool # Avoid saving task results to the cache. Useful for development/watch tasks. Equivalent to `--cache=local:r,remote:r`
+	--cache-workers # Set the number of concurrent cache operations (default 10)
+	--daemon @bool # Force turbo to use the local daemon. If unset turbo will use the default detection logic
+	--no-daemon @bool # Force turbo to not use the local daemon. If unset turbo will use the default detection logic
+	--profile # File to write turbo's performance profile output into. You can load the file up in chrome://tracing to see which parts of your build were slow
+	--anon-profile # File to write turbo's performance profile output into. All identifying data omitted from the profile
+	--parallel @bool # Execute all tasks in parallel
+	--cache-dir # Override the filesystem cache directory
+	--concurrency # Limit the concurrency of task execution. Use 1 for serial (i.e. one-at-a-time) execution
+	--single-package @bool # Run turbo in single-package mode
+	--global-deps # Specify glob of global filesystem dependencies to be hashed. Useful for .env and files
+	--filter|-F # Use the given selector to specify package(s) to act as entry points. The syntax mirrors pnpm's syntax, and additional documentation and examples can be found in turbo's documentation https://turborepo.dev/docs/reference/command-line-reference/run#--filter
+	--affected @bool # Filter to only packages that are affected by changes between the current branch and `main`
+	--output-logs # Set type of process output logging. Use "full" to show all output. Use "hash-only" to show only turbo-computed task hashes. Use "new-only" to show only new output with only hashes for cached tasks. Use "none" to hide process output. (default full)
+	--log-order # Set type of task output order. Use "stream" to show output as soon as it is available. Use "grouped" to show output when a command has finished execution. Use "auto" to let turbo decide based on its own heuristics. (default auto)
+	--only @bool # Only executes the tasks specified, does not execute parent tasks
+	--log-prefix # Use "none" to remove prefixes from task logs. Use "task" to get task id prefixing. Use "auto" to let turbo decide how to prefix the logs based on the execution environment. In most cases this will be the same as "task". Note that tasks running in parallel interleave their logs, so removing prefixes can make it difficult to associate logs with tasks. Use --log-order=grouped to prevent interleaving. (default auto)
+	bin # Get the path to the Turbo binary
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	daemon # Runs the Turborepo background daemon
+		--idle-time # Set the idle timeout for turbod
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--turbo-json-path # Path to a custom turbo.json file to watch from --root-turbo-json
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		clean
+			--clean-logs @bool # Clean
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		logs
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		restart
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		start
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		status
+			--json @bool # Pass --json to report status in JSON format
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		stop
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	devtools # Visualize your monorepo's package graph in the browser
+		--port # Port for the WebSocket server
+		--no-open @bool # Don't automatically open the browser
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	docs # Search the Turborepo documentation
+		--docs-version # Override the docs version (minimum: 2.7.5)
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	generate # Generate a new app / package
+		--config|-c # Generator configuration file
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--root|-r # The root of your repository (default: directory with root turbo.json)
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		run
+			--config|-c # Generator configuration file
+			--root|-r # The root of your repository (default: directory with root turbo.json)
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		workspace
+			--name|-n # Name for the new workspace
+			--empty|-b @bool # Generate an empty workspace
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--destination|-d # Where the new workspace should be created
+			--color @bool # Force color usage in the terminal
+			--type|-t # The type of workspace to create
+			--cwd # The directory in which to run turbo
+			--root|-r # The root of your repository (default: directory with root turbo.json)
+			--heap # Specify a file to save a pprof heap profile
+			--example-path|-p # In a rare case, your GitHub URL might contain a branch name with a slash (e.g. bug/fix-1) and the path to the example (e.g. foo/bar). In this case, you must specify the path to the example separately: --example-path foo/bar
+			--show-all-dependencies @bool # Do not filter available dependencies by the workspace type
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	get-mfe-port # Get the port assigned to the current microfrontend
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	info # Print debugging information
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	link # Link your local directory to a Vercel organization and enable remote caching
+		--no-gitignore @bool # Do not create or modify .gitignore (default false)
+		--scope # The scope, i.e. Vercel team, to which you are linking
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--yes|-y @bool # Answer yes to all prompts (default false)
+		--api # Override the endpoint for API calls
+		--target # DEPRECATED: Specify what should be linked (default "remote cache")
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	login # Login to your Vercel account
+		--sso-team
+		--force|-f @bool # Force a login to receive a new token. Will overwrite any existing tokens for the given login url
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--manual @bool # Manually enter token instead of requesting one from the login service
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	logout # Logout to your Vercel account
+		--invalidate @bool # Invalidate the token on the server
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	ls # EXPERIMENTAL: List packages in your monorepo
+		--affected @bool # Show only packages that are affected by changes between the current branch and `main`
+		--filter|-F # Use the given selector to specify package(s) to act as entry points. The syntax mirrors pnpm's syntax, and additional documentation and examples can be found in turbo's documentation https://turborepo.dev/docs/reference/command-line-reference/run#--filter
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--output # Output format
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	prune # Prepare a subset of your monorepo
+		--docker @bool
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--out-dir # [default: out]
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	query # Query your monorepo using GraphQL. If no query is provided, spins up a GraphQL server with GraphiQL
+		--schema @bool
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	run # Run tasks across projects in your monorepo
+		--cache # Set the cache behavior for this run. Pass a list of comma-separated key, value pairs to enable reading and writing to either the local or remote cache
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--no-cache @bool # Avoid saving task results to the cache. Useful for development/watch tasks. Equivalent to `--cache=local:r,remote:r`
+		--cache-workers # Set the number of concurrent cache operations (default 10)
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--daemon @bool # Force turbo to use the local daemon. If unset turbo will use the default detection logic
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--no-daemon @bool # Force turbo to not use the local daemon. If unset turbo will use the default detection logic
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--profile # File to write turbo's performance profile output into. You can load the file up in chrome://tracing to see which parts of your build were slow
+		--anon-profile # File to write turbo's performance profile output into. All identifying data omitted from the profile
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--parallel @bool # Execute all tasks in parallel
+		--token # Set the auth token for API calls
+		--cache-dir # Override the filesystem cache directory
+		--trace # Specify a file to save a pprof trace
+		--concurrency # Limit the concurrency of task execution. Use 1 for serial (i.e. one-at-a-time) execution
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--single-package @bool # Run turbo in single-package mode
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--global-deps # Specify glob of global filesystem dependencies to be hashed. Useful for .env and files
+		--filter|-F # Use the given selector to specify package(s) to act as entry points. The syntax mirrors pnpm's syntax, and additional documentation and examples can be found in turbo's documentation https://turborepo.dev/docs/reference/command-line-reference/run#--filter
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		--affected @bool # Filter to only packages that are affected by changes between the current branch and `main`
+		--output-logs # Set type of process output logging. Use "full" to show all output. Use "hash-only" to show only turbo-computed task hashes. Use "new-only" to show only new output with only hashes for cached tasks. Use "none" to hide process output. (default full)
+		--log-order # Set type of task output order. Use "stream" to show output as soon as it is available. Use "grouped" to show output when a command has finished execution. Use "auto" to let turbo decide based on its own heuristics. (default auto)
+		--only @bool # Only executes the tasks specified, does not execute parent tasks
+		--log-prefix # Use "none" to remove prefixes from task logs. Use "task" to get task id prefixing. Use "auto" to let turbo decide how to prefix the logs based on the execution environment. In most cases this will be the same as "task". Note that tasks running in parallel interleave their logs, so removing prefixes can make it difficult to associate logs with tasks. Use --log-order=grouped to prevent interleaving. (default auto)
+	scan # Turbo your monorepo by running a number of 'repo lints' to identify common issues, suggest fixes, and improve performance
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	telemetry # Enable or disable anonymous telemetry
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		disable
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		enable
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+		status
+			--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+			--no-update-notifier @bool # Disable the turbo update notification
+			--api # Override the endpoint for API calls
+			--color @bool # Force color usage in the terminal
+			--cwd # The directory in which to run turbo
+			--heap # Specify a file to save a pprof heap profile
+			--ui # Specify whether to use the streaming UI or TUI
+			--login # Override the login endpoint
+			--no-color @bool # Suppress color usage in the terminal
+			--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+			--remote-cache-timeout # Set a timeout for all HTTP requests
+			--team # Set the team slug for API calls
+			--token # Set the auth token for API calls
+			--trace # Specify a file to save a pprof trace
+			--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+			--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+			--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	unlink # Unlink the current directory from your Vercel organization and disable Remote Caching
+		--target # DEPRECATED: Specify what should be unlinked (default "remote cache")
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--heap # Specify a file to save a pprof heap profile
+		--ui # Specify whether to use the streaming UI or TUI
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--token # Set the auth token for API calls
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository
+	watch # Arguments used in run and watch
+		--cache-dir # Override the filesystem cache directory
+		--concurrency # Limit the concurrency of task execution. Use 1 for serial (i.e. one-at-a-time) execution
+		--skip-infer @bool # Skip any attempts to infer which version of Turbo the project is configured to use
+		--no-update-notifier @bool # Disable the turbo update notification
+		--api # Override the endpoint for API calls
+		--single-package @bool # Run turbo in single-package mode
+		--color @bool # Force color usage in the terminal
+		--cwd # The directory in which to run turbo
+		--global-deps # Specify glob of global filesystem dependencies to be hashed. Useful for .env and files
+		--heap # Specify a file to save a pprof heap profile
+		--filter|-F # Use the given selector to specify package(s) to act as entry points. The syntax mirrors pnpm's syntax, and additional documentation and examples can be found in turbo's documentation https://turborepo.dev/docs/reference/command-line-reference/run#--filter
+		--ui # Specify whether to use the streaming UI or TUI
+		--affected @bool # Filter to only packages that are affected by changes between the current branch and `main`
+		--login # Override the login endpoint
+		--no-color @bool # Suppress color usage in the terminal
+		--output-logs # Set type of process output logging. Use "full" to show all output. Use "hash-only" to show only turbo-computed task hashes. Use "new-only" to show only new output with only hashes for cached tasks. Use "none" to hide process output. (default full)
+		--log-order # Set type of task output order. Use "stream" to show output as soon as it is available. Use "grouped" to show output when a command has finished execution. Use "auto" to let turbo decide based on its own heuristics. (default auto)
+		--preflight @bool # When enabled, turbo will precede HTTP requests with an OPTIONS request for authorization
+		--only @bool # Only executes the tasks specified, does not execute parent tasks
+		--remote-cache-timeout # Set a timeout for all HTTP requests
+		--team # Set the team slug for API calls
+		--log-prefix # Use "none" to remove prefixes from task logs. Use "task" to get task id prefixing. Use "auto" to let turbo decide how to prefix the logs based on the execution environment. In most cases this will be the same as "task". Note that tasks running in parallel interleave their logs, so removing prefixes can make it difficult to associate logs with tasks. Use --log-order=grouped to prevent interleaving. (default auto)
+		--token # Set the auth token for API calls
+		--experimental-write-cache @bool # EXPERIMENTAL: Write to cache in watch mode
+		--trace # Specify a file to save a pprof trace
+		--verbosity # Verbosity level. Useful when debugging Turborepo or creating logs for issue reports
+		--dangerously-disable-package-manager-check @bool # Allow for missing `packageManager` in `package.json`.
+		--root-turbo-json # Use the `turbo.json` located at the provided path instead of one at the root of the repository

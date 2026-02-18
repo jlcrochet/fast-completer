@@ -1,0 +1,826 @@
+# Kops CLI schema for fast-completer
+# Generated from kops unknown
+
+kops # Kubernetes operations
+	--config # yaml config file (default is $HOME/.kops.yaml)
+	--help @bool # help for kops
+	--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+	--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+	--v # number for the log level verbosity
+	completion # Generate the autocompletion script for the specified shell
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		bash # Generate the autocompletion script for bash
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--no-descriptions @bool # disable completion descriptions
+	create # Create a resource by command line, filename or stdin.
+		--filename # Filename to use to create the resource
+		cluster # Create a Kubernetes cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--admin-access # Restrict API access to this CIDR.  If not set, access will not be restricted by IP.
+			--api-loadbalancer-type # Type of load balancer for the Kubernetes API: public or internal
+			--api-public-name # Domain name of the public Kubernetes API
+			--api-ssl-certificate # ARN of the SSL Certificate to use for the Kubernetes API load balancer (AWS only)
+			--associate-public-ip @bool # Specify --associate-public-ip=[true|false] to enable/disable association of public IP for control-plane ASG and nodes. Default is 'true'.
+			--authorization # Authorization mode: AlwaysAllow or RBAC
+			--bastion @bool # Enable a bastion instance group. Only applies to private topology.
+			--bastion-image # Machine image for bastions. Takes precedence over --image
+			--channel # Channel for default versions and configuration to use
+			--cloud # Cloud provider to use - aws, digitalocean, gce, hetzner, openstack
+			--cloud-labels # A list of key/value pairs used to tag all instance groups (for example "Owner=John Doe,Team=Some Team").
+			--control-plane-count # Number of control-plane nodes. Defaults to one control-plane node per control-plane-zone
+			--control-plane-image # Machine image for control-plane nodes. Takes precedence over --image
+			--control-plane-security-groups # Additional pre-created security groups to add to control-plane nodes.
+			--control-plane-size # Machine type(s) for control-plane nodes
+			--control-plane-tenancy # Tenancy of the control-plane group (AWS only): default or dedicated
+			--control-plane-volume-size # Instance volume size (in GB) for control-plane nodes
+			--control-plane-zones # Zones in which to run control-plane nodes. (must be an odd number)
+			--disable-subnet-tags @bool # Disable automatic subnet tagging
+			--discovery-store # A public location where we publish OIDC-compatible discovery information under a cluster-specific directory. Enables IRSA in AWS.
+			--dns # DNS type to use: public, private, none
+			--dns-zone # DNS hosted zone (defaults to longest matching zone)
+			--dry-run @bool # If true, only print the object that would be sent, without sending it. This flag can be used to create a cluster YAML or JSON manifest.
+			--encrypt-etcd-storage @bool # Generate key in AWS KMS and use it for encrypt etcd volumes
+			--etcd-clusters # Names of the etcd clusters: main, events
+			--etcd-storage-type # The default storage type for etcd members
+			--gce-service-account # Service account with which the GCE VM runs. Warning: if not set, VMs will run as default compute service account.
+			--image # Machine image for all instances
+			--instance-manager # Instance manager to use (cloudgroups or karpenter. Default: cloudgroups)
+			--ipv6 @bool # Use IPv6 for the pod network (AWS only)
+			--kubernetes-feature-gates # List of Kubernetes feature gates to enable/disable
+			--kubernetes-version # Version of Kubernetes to run (defaults to version in channel)
+			--network-cidr # Network CIDR(s) to use
+			--network-id # Shared Network or VPC to use
+			--networking # Networking mode.  kubenet, external, flannel-vxlan (or flannel), flannel-udp, calico, kube-router, amazonvpc, cilium, cilium-etcd, kindnet, cni.
+			--node-count # Total number of worker nodes. Defaults to one node per zone
+			--node-image # Machine image for worker nodes. Takes precedence over --image
+			--node-security-groups # Additional pre-created security groups to add to worker nodes.
+			--node-size # Machine type(s) for worker nodes
+			--node-tenancy # Tenancy of the node group (AWS only): default or dedicated
+			--node-volume-size # Instance volume size (in GB) for worker nodes
+			--os-dns-servers # comma separated list of DNS Servers which is used in network
+			--os-ext-net # External network to use with the openstack router
+			--os-ext-subnet # External floating subnet to use with the openstack router
+			--os-kubelet-ignore-az @bool # Attach volumes across availability zones
+			--os-lb-floating-subnet # External subnet to use with the Kubernetes API
+			--os-network # ID of the existing OpenStack network to use
+			--os-octavia @bool # Use octavia load balancer API
+			--os-octavia-provider # Octavia provider to use
+			--out # Path to write any local output
+			--output # Output format. One of json or yaml. Used with the --dry-run flag.
+			--project # Project to use (must be set on GCE)
+			--set # Directly set values in the spec
+			--ssh-access # Restrict SSH access to this CIDR.  If not set, uses the value of the admin-access flag.
+			--ssh-public-key # SSH public key to use
+			--subnets # Shared subnets to use
+			--target # Valid targets: "direct", "terraform". Set this flag to "terraform" if you want kOps to generate terraform
+			--topology # Network topology for the cluster: 'public' or 'private'. Defaults to 'public' for IPv4 clusters and 'private' for IPv6 clusters.
+			--unset # Directly unset values in the spec
+			--utility-subnets # Shared utility subnets to use
+			--yes @bool # Specify --yes to immediately create the cluster
+			--zones # Zones in which to run the cluster
+		instancegroup # Create an instancegroup.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--dry-run @bool # Only print the object that would be created, without created it. This flag can be used to create an instance group YAML or JSON manifest.
+			--edit @bool # Open an editor to edit default values
+			--output # Output format. One of json or yaml
+			--role # Type of instance group to create (control-plane,node,bastion)
+			--subnet # Subnet in which to create instance group. One of Availability Zone like eu-west-1a or a comma-separated list of multiple Availability Zones.
+		keypair # Add a CA certificate and private key to a keyset.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--cert # Path to CA certificate
+			--key # Path to CA private key
+			--primary @bool # Make the keypair the one used to issue certificates
+		secret # Create a secret.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			ciliumpassword # Create a Cilium IPsec configuration.
+				--filename # Path to the Cilium IPsec configuration file
+			dockerconfig # Create a Docker config.
+				--filename # Path to Docker config JSON file
+			encryptionconfig # Create an encryption config.
+				--filename # Path to encryption config YAML file
+		sshpublickey # Create an SSH public key.
+			--ssh-public-key # Path to SSH public key
+	delete # Delete clusters, instancegroups, instances, and secrets.
+		--filename # Filename to use to delete the resource
+		cluster # Delete a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--count # Number of consecutive failures to make progress deleting the cluster resources
+			--external @bool # Delete an external cluster
+			--interval # Time in duration to wait between deletion attempts
+			--region # External cluster's cloud region
+			--unregister @bool # Don't delete cloud resources, just unregister the cluster
+			--wait # Amount of time to wait for the cluster resources to de deleted
+			--yes @bool # Specify --yes to delete the cluster
+		instance # Delete an instance.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--cloudonly @bool # Perform deletion update without confirming progress with Kubernetes
+			--fail-on-drain-error @bool # Fail if draining a node fails
+			--fail-on-validate-error @bool # Fail if the cluster fails to validate
+			--post-drain-delay # Time to wait after draining each node
+			--surge @bool # Surge by detaching the node from the ASG before deletion
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+			--validate-count # Number of times that a cluster needs to be validated after single node update
+			--validation-timeout # Maximum time to wait for a cluster to validate
+			--yes @bool # Specify --yes to immediately delete the instance
+		instancegroup # Delete instance group.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--yes @bool # Specify --yes to immediately delete the instance group
+		secret # Delete one or more secrets.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		sshpublickey # Delete an SSH public key.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	distrust # Distrust keypairs.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		keypair # Distrust a keypair.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	edit # Edit clusters and other resources.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Edit cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--set # Directly set values in the spec
+			--unset # Directly unset values in the spec
+		instancegroup # Edit instancegroup.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--set # Directly set values in the spec
+			--unset # Directly unset values in the spec
+	export # Export configuration.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		kubeconfig # Export kubeconfig.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--admin # Also export a cluster admin user credential with the specified lifetime and add it to the cluster context
+			--all @bool # Export all clusters from the kOps state store
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--auth-plugin @bool # Use the kOps authentication plugin
+			--internal @bool # Use the cluster's internal DNS name
+			--kubeconfig # Filename of the kubeconfig to create
+			--user # Existing user in kubeconfig file to use
+	get # Get one or many resources.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		--output # output format. One of: table, yaml, json
+		all # Display all resources for a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		assets # Display assets for cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--copy @bool # copy assets to local repository
+		clusters # Get one or many clusters.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--full @bool # Show fully populated configuration
+		instancegroups # Get one or many instance groups.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		instances # Display cluster instances.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+		keypairs # Get one or many keypairs.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--distrusted @bool # Include distrusted keypairs
+		secrets # Get one or many secrets.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		sshpublickeys # Get one or many secrets.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--output # output format. One of: table, yaml, json
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	help # Help about any command
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		completion # Generate the autocompletion script for the specified shell
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			bash # Generate the autocompletion script for bash
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			fish # Generate the autocompletion script for fish
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			powershell # Generate the autocompletion script for powershell
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			zsh # Generate the autocompletion script for zsh
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		create # Create a resource by command line, filename or stdin.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Create a Kubernetes cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instancegroup # Create an instancegroup.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			keypair # Add a CA certificate and private key to a keyset.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			secret # Create a secret.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+				ciliumpassword # Create a Cilium IPsec configuration.
+					--config # yaml config file (default is $HOME/.kops.yaml)
+					--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+					--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+					--v # number for the log level verbosity
+				dockerconfig # Create a Docker config.
+					--config # yaml config file (default is $HOME/.kops.yaml)
+					--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+					--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+					--v # number for the log level verbosity
+				encryptionconfig # Create an encryption config.
+					--config # yaml config file (default is $HOME/.kops.yaml)
+					--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+					--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+					--v # number for the log level verbosity
+			sshpublickey # Create an SSH public key.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		delete # Delete clusters, instancegroups, instances, and secrets.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Delete a cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instance # Delete an instance.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instancegroup # Delete instance group.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			secret # Delete one or more secrets.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			sshpublickey # Delete an SSH public key.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		distrust # Distrust keypairs.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			keypair # Distrust a keypair.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		edit # Edit clusters and other resources.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Edit cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instancegroup # Edit instancegroup.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		export # Export configuration.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			kubeconfig # Export kubeconfig.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		get # Get one or many resources.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			all # Display all resources for a cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			assets # Display assets for cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			clusters # Get one or many clusters.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instancegroups # Get one or many instance groups.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instances # Display cluster instances.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			keypairs # Get one or many keypairs.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			secrets # Get one or many secrets.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			sshpublickeys # Get one or many secrets.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		help # Help about any command
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		promote # Promote a resource.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			keypair # Promote a keypair to be the primary, used for signing.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		reconcile # Reconcile a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Reconcile a cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		replace # Replace cluster resources.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+		rolling-update # Rolling update a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Rolling update a cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		toolbox # Miscellaneous, experimental, or infrequently used commands.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			addons # Manage addons
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+				apply # Applies updates from the given channel
+					--config # yaml config file (default is $HOME/.kops.yaml)
+					--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+					--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+					--v # number for the log level verbosity
+				list # Lists installed addons
+					--config # yaml config file (default is $HOME/.kops.yaml)
+					--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+					--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+					--v # number for the log level verbosity
+			dump # Dump cluster information
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			enroll # Add machine to cluster
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			instance-selector # Generate instance-group specs by providing resource specs such as vcpus and memory.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+			template # Generate cluster.yaml from template
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		trust # Trust keypairs.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			keypair # Trust a keypair.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		update # Update a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Update a cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		upgrade # Upgrade a kubernetes cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Upgrade a kubernetes cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		validate # Validate a kOps cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			cluster # Validate a kOps cluster.
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		version # Print the kOps version information.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	promote # Promote a resource.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		keypair # Promote a keypair to be the primary, used for signing.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	reconcile # Reconcile a cluster.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Reconcile a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--allow-kops-downgrade @bool # Allow an older version of kOps to update the cluster than last used
+			--yes @bool # Create cloud resources, without --yes reconcile is in dry run mode
+	replace # Replace cluster resources.
+		--filename # A list of one or more files separated by a comma.
+	rolling-update # Rolling update a cluster.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Rolling update a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--admin # a cluster admin user credential with the specified lifetime
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--bastion-interval # Time to wait between restarting bastions
+			--cloudonly @bool # Perform rolling update without validating cluster status (will cause downtime)
+			--control-plane-interval # Time to wait between restarting control plane nodes
+			--drain-timeout # Maximum time to wait for a node to drain
+			--fail-on-drain-error @bool # Fail if draining a node fails
+			--fail-on-validate-error @bool # Fail if the cluster fails to validate
+			--force @bool # Force rolling update, even if no changes
+			--instance-group # Instance groups to update (defaults to all if not specified)
+			--instance-group-roles # Instance group roles to update (control-plane,apiserver,node,bastion)
+			--interactive @bool # Prompt to continue after each instance is updated
+			--node-interval # Time to wait between restarting worker nodes
+			--post-drain-delay # Time to wait after draining each node
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+			--validate-count # Number of times that a cluster needs to be validated after single node update
+			--validation-timeout # Maximum time to wait for a cluster to validate
+			--yes @bool # Perform rolling update immediately; without --yes rolling-update executes a dry-run
+	toolbox # Miscellaneous, experimental, or infrequently used commands.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		addons # Manage addons
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			apply # Applies updates from the given channel
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+				--yes @bool # Apply update
+			list # Lists installed addons
+				--config # yaml config file (default is $HOME/.kops.yaml)
+				--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+				--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+				--v # number for the log level verbosity
+		dump # Dump cluster information
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--cloud-resources @bool # Include cloud resources in the dump
+			--dir # Target directory; if specified will collect logs and other information.
+			--k8s-resources @bool # Include k8s resources in the dump
+			--max-nodes # The maximum number of nodes from which to dump logs
+			--output # Output format.  One of json or yaml
+			--private-key # File containing private key to use for SSH access to instances
+			--ssh-user # The remote user for SSH access to instances
+		enroll # Add machine to cluster
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--build-host @bool # only build the host resource, don't apply it or enroll the node
+			--cluster # Name of cluster to join
+			--host # IP/hostname for machine to add
+			--instance-group # Name of instance-group to join
+			--pod-cidr # IP Address range to use for pods that run on this node
+			--ssh-port # port for ssh
+			--ssh-user # user for ssh
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+		instance-selector # Generate instance-group specs by providing resource specs such as vcpus and memory.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--allow-list # List of allowed instance types to select from w/ regex syntax (Example: m[3-5]\.*)
+			--base-instance-type # Base instance type to retrieve similarly specified instance types
+			--burst-support @bool # Burstable instance types
+			--cluster-autoscaler @bool # Add auto-discovery tags for cluster-autoscaler to manage the instance-group
+			--cpu-architecture # CPU architecture [amd64, arm64]
+			--deny-list # List of instance types which should be excluded w/ regex syntax (Example: m[1-2]\.*)
+			--dry-run @bool # Only print the object that would be created, without creating it. This flag can be used to create a cluster YAML or JSON manifest.
+			--ena-support @bool # Instance types where ENA is supported or required
+			--flexible @bool # Retrieve a group of instance types spanning multiple generations based on opinionated defaults and user overridden resource filters
+			--gpu-memory # GPUs' total memory (Example: 4gb) (sets --gpu-memory-min and -max to the same value)
+			--gpu-memory-max # Maximum GPUs' total memory (Example: 4gb) If --gpu-memory-min is not specified, the lower bound will be 0
+			--gpu-memory-min # Minimum GPUs' total memory (Example: 4gb) If --gpu-memory-max is not specified, the upper bound will be infinity
+			--gpus # Number of GPUs (Example: 4) (sets --gpus-min and -max to the same value)
+			--gpus-max # Maximum Number of GPUs (Example: 4) If --gpus-min is not specified, the lower bound will be 0
+			--gpus-min # Minimum Number of GPUs (Example: 4) If --gpus-max is not specified, the upper bound will be infinity
+			--ig-count # Number of instance groups to create with different vcpus-to-memory ratios, starting at 1:2 and doubling
+			--max-results # Maximum number of instance types to return back
+			--memory # Amount of memory available (Example: 4gb) (sets --memory-min and -max to the same value)
+			--memory-max # Maximum Amount of memory available (Example: 4gb) If --memory-min is not specified, the lower bound will be 0
+			--memory-min # Minimum Amount of memory available (Example: 4gb) If --memory-max is not specified, the upper bound will be infinity
+			--network-interfaces # Number of network interfaces (ENIs) that can be attached to the instance (sets --network-interfaces-min and -max to the same value)
+			--network-interfaces-max # Maximum Number of network interfaces (ENIs) that can be attached to the instance If --network-interfaces-min is not specified, the lower bound will be 0
+			--network-interfaces-min # Minimum Number of network interfaces (ENIs) that can be attached to the instance If --network-interfaces-max is not specified, the upper bound will be infinity
+			--node-count-max # Maximum number of nodes
+			--node-count-min # Minimum number of nodes
+			--node-security-groups # Pre-created additional security groups for nodes
+			--node-volume-size # Instance volume size (in GiB) for nodes
+			--output # Output format. One of json or yaml. Used with the --dry-run flag.
+			--placement-group-strategy # Placement group strategy: [cluster, partition, spread]
+			--subnets # Subnet(s) in which to create the instance group. One of Availability Zone like eu-west-1a or utility-eu-west-1a,
+			--usage-class # Usage class: [spot, on-demand]
+			--vcpus # Number of vcpus available to the instance type (sets --vcpus-min and -max to the same value)
+			--vcpus-max # Maximum Number of vcpus available to the instance type If --vcpus-min is not specified, the lower bound will be 0
+			--vcpus-min # Minimum Number of vcpus available to the instance type If --vcpus-max is not specified, the upper bound will be infinity
+			--vcpus-to-memory-ratio # Ratio of vcpus to memory in MiB. (Example: 1:2)
+		template # Generate cluster.yaml from template
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--channel # Channel to use for the channel* functions
+			--config-value # Show the value of a specific configuration value
+			--fail-on-missing @bool # Fail on referencing unset variables in templates
+			--format-yaml @bool # Attempt to format the generated yaml content before output
+			--out # Path to output file. Defaults to stdout
+			--set # Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--set-string # Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--snippets # Path to directory containing snippets used for templating
+			--template # Path to template file or directory of templates to render
+			--values # Path to a configuration file containing values to include in template
+	trust # Trust keypairs.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		keypair # Trust a keypair.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+	update # Update a cluster.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Update a cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--admin # Also export a cluster admin user credential with the specified lifetime and add it to the cluster context
+			--allow-kops-downgrade @bool # Allow an older version of kOps to update the cluster than last used
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--create-kube-config @bool # Will control automatically creating the kube config file on your local filesystem
+			--ignore-kubelet-version-skew @bool # Setting this to true will force updating the kubernetes version on all instance groups, regardles of which control plane version is running
+			--instance-group # Instance groups to update (defaults to all if not specified)
+			--instance-group-roles # Instance group roles to update (control-plane,apiserver,node,bastion)
+			--internal @bool # Use the cluster's internal DNS name. Implies --create-kube-config
+			--lifecycle-overrides # comma separated list of phase overrides, example: SecurityGroups=Ignore,InternetGateway=ExistsAndWarnIfChanges
+			--out # Path to write any local output
+			--phase # Subset of tasks to run: cluster, network, security
+			--prune @bool # Delete old revisions of cloud resources that were needed during an upgrade
+			--ssh-public-key # SSH public key to use (deprecated: use kops create secret instead)
+			--target # Target - "direct", "terraform"
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+			--user # Existing user in kubeconfig file to use.  Implies --create-kube-config
+			--yes @bool # Create cloud resources, without --yes update is in dry run mode
+	upgrade # Upgrade a kubernetes cluster.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Upgrade a kubernetes cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--channel # Channel to use for upgrade
+			--kubernetes-version # Kubernetes version to use for upgrade
+			--yes @bool # Apply update
+	validate # Validate a kOps cluster.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		cluster # Validate a kOps cluster.
+			--config # yaml config file (default is $HOME/.kops.yaml)
+			--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+			--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+			--v # number for the log level verbosity
+			--api-server # Override the API server used when communicating with the cluster kube-apiserver
+			--count # Number of consecutive successful validations required
+			--interval # Time in duration to wait between validation attempts
+			--kubeconfig # Path to the kubeconfig file
+			--output # Output format. One of json|yaml|table.
+			--use-kubeconfig @bool # Use the server endpoint from the local kubeconfig instead of inferring from cluster name
+			--wait # Amount of time to wait for the cluster to become ready
+	version # Print the kOps version information.
+		--config # yaml config file (default is $HOME/.kops.yaml)
+		--name # Name of cluster. Overrides KOPS_CLUSTER_NAME environment variable
+		--state # Location of state storage (kops 'config' file). Overrides KOPS_STATE_STORE environment variable
+		--v # number for the log level verbosity
+		--server @bool # show the kOps version that made the last change to the state store.
+		--short @bool # only print the main kOps version. Useful for scripting.

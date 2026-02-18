@@ -1,0 +1,54 @@
+{
+  "starship --version": {
+    "returncode": 0,
+    "stdout": "starship 1.24.2\nbranch:master\ncommit_hash:33f7077\nbuild_time:2025-12-30 19:14:06 +00:00\nbuild_env:rustc 1.92.0 (ded5c06cf 2025-12-08),\n"
+  },
+  "starship -h": {
+    "returncode": 0,
+    "stdout": "The cross-shell prompt for astronauts. \u2604\ud83c\udf0c\ufe0f\n\nUsage: starship <COMMAND>\n\nCommands:\n  bug-report    Create a pre-populated GitHub issue with information about your configuration\n  completions   Generate starship shell completions for your shell to stdout\n  config        Edit the starship configuration\n  explain       Explains the currently showing modules\n  init          Prints the shell function used to execute starship\n  module        Prints a specific prompt module\n  preset        Prints a preset config\n  print-config  Prints the computed starship configuration\n  prompt        Prints the full starship prompt\n  session       Generate random session key\n  timings       Prints timings of all active modules\n  toggle        Toggle a given starship module\n  help          Print this message or the help of the given subcommand(s)\n\nOptions:\n  -h, --help     Print help\n  -V, --version  Print version\n"
+  },
+  "starship bug-report -h": {
+    "returncode": 0,
+    "stdout": "Create a pre-populated GitHub issue with information about your configuration\n\nUsage: starship bug-report\n\nOptions:\n  -h, --help  Print help\n"
+  },
+  "starship config -h": {
+    "returncode": 0,
+    "stdout": "Edit the starship configuration\n\nUsage: starship config [NAME] [VALUE]\n\nArguments:\n  [NAME]   Configuration key to edit\n  [VALUE]  Value to place into that key\n\nOptions:\n  -h, --help  Print help\n"
+  },
+  "starship explain -h": {
+    "returncode": 0,
+    "stdout": "Explains the currently showing modules\n\nUsage: starship explain [OPTIONS]\n\nOptions:\n  -s, --status <STATUS_CODE>\n          The status code of the previously run command as an unsigned or signed 32bit integer\n      --pipestatus <PIPESTATUS>\n          Bash, Fish and Zsh support returning codes for each process in a pipeline\n  -w, --terminal-width <TERMINAL_WIDTH>\n          The width of the current interactive terminal [default: 80]\n  -p, --path <PATH>\n          The path that the prompt should render for\n  -P, --logical-path <LOGICAL_PATH>\n          The logical path that the prompt should render for. This path should be a virtual/logical representation of the PATH argument\n  -d, --cmd-duration <CMD_DURATION>\n          The execution duration of the last command, in milliseconds\n  -k, --keymap <KEYMAP>\n          The keymap of fish/zsh/cmd [default: viins]\n  -j, --jobs <JOBS>\n          The number of currently running jobs [default: 0]\n      --shlvl <SHLVL>\n          The current value of SHLVL, for shells that mis-handle it in $()\n  -h, --help\n          Print help\n"
+  },
+  "starship init -h": {
+    "returncode": 0,
+    "stdout": "Prints the shell function used to execute starship\n\nUsage: starship init [OPTIONS] <SHELL>\n\nArguments:\n  <SHELL>  \n\nOptions:\n      --print-full-init  \n  -h, --help             Print help\n"
+  },
+  "starship module -h": {
+    "returncode": 0,
+    "stdout": "Prints a specific prompt module\n\nUsage: starship module [OPTIONS] [NAME]\n\nArguments:\n  [NAME]  The name of the module to be printed\n\nOptions:\n  -l, --list\n          List out all supported modules\n  -s, --status <STATUS_CODE>\n          The status code of the previously run command as an unsigned or signed 32bit integer\n      --pipestatus <PIPESTATUS>\n          Bash, Fish and Zsh support returning codes for each process in a pipeline\n  -w, --terminal-width <TERMINAL_WIDTH>\n          The width of the current interactive terminal [default: 80]\n  -p, --path <PATH>\n          The path that the prompt should render for\n  -P, --logical-path <LOGICAL_PATH>\n          The logical path that the prompt should render for. This path should be a virtual/logical representation of the PATH argument\n  -d, --cmd-duration <CMD_DURATION>\n          The execution duration of the last command, in milliseconds\n  -k, --keymap <KEYMAP>\n          The keymap of fish/zsh/cmd [default: viins]\n  -j, --jobs <JOBS>\n          The number of currently running jobs [default: 0]\n      --shlvl <SHLVL>\n          The current value of SHLVL, for shells that mis-handle it in $()\n  -h, --help\n          Print help\n"
+  },
+  "starship preset -h": {
+    "returncode": 0,
+    "stdout": "Prints a preset config\n\nUsage: starship preset [OPTIONS] [NAME]\n\nArguments:\n  [NAME]  The name of preset to be printed [possible values: bracketed-segments, catppuccin-powerline, gruvbox-rainbow, jetpack, nerd-font-symbols, no-empty-icons, no-nerd-font, no-runtime-versions, pastel-powerline, plain-text-symbols, pure-preset, tokyo-night]\n\nOptions:\n  -o, --output <OUTPUT>  Output the preset to a file instead of stdout\n  -l, --list             List out all preset names\n  -h, --help             Print help\n"
+  },
+  "starship print-config -h": {
+    "returncode": 0,
+    "stdout": "Prints the computed starship configuration\n\nUsage: starship print-config [OPTIONS] [NAME]...\n\nArguments:\n  [NAME]...  Configuration keys to print\n\nOptions:\n  -d, --default  Print the default instead of the computed config\n  -h, --help     Print help\n"
+  },
+  "starship prompt -h": {
+    "returncode": 0,
+    "stdout": "Prints the full starship prompt\n\nUsage: starship prompt [OPTIONS]\n\nOptions:\n      --right\n          Print the right prompt (instead of the standard left prompt)\n      --profile <PROFILE>\n          Print the prompt with the specified profile name (instead of the standard left prompt)\n      --continuation\n          Print the continuation prompt (instead of the standard left prompt)\n  -s, --status <STATUS_CODE>\n          The status code of the previously run command as an unsigned or signed 32bit integer\n      --pipestatus <PIPESTATUS>\n          Bash, Fish and Zsh support returning codes for each process in a pipeline\n  -w, --terminal-width <TERMINAL_WIDTH>\n          The width of the current interactive terminal [default: 80]\n  -p, --path <PATH>\n          The path that the prompt should render for\n  -P, --logical-path <LOGICAL_PATH>\n          The logical path that the prompt should render for. This path should be a virtual/logical representation of the PATH argument\n  -d, --cmd-duration <CMD_DURATION>\n          The execution duration of the last command, in milliseconds\n  -k, --keymap <KEYMAP>\n          The keymap of fish/zsh/cmd [default: viins]\n  -j, --jobs <JOBS>\n          The number of currently running jobs [default: 0]\n      --shlvl <SHLVL>\n          The current value of SHLVL, for shells that mis-handle it in $()\n  -h, --help\n          Print help\n"
+  },
+  "starship session -h": {
+    "returncode": 0,
+    "stdout": "Generate random session key\n\nUsage: starship session\n\nOptions:\n  -h, --help  Print help\n"
+  },
+  "starship timings -h": {
+    "returncode": 0,
+    "stdout": "Prints timings of all active modules\n\nUsage: starship timings [OPTIONS]\n\nOptions:\n  -s, --status <STATUS_CODE>\n          The status code of the previously run command as an unsigned or signed 32bit integer\n      --pipestatus <PIPESTATUS>\n          Bash, Fish and Zsh support returning codes for each process in a pipeline\n  -w, --terminal-width <TERMINAL_WIDTH>\n          The width of the current interactive terminal [default: 80]\n  -p, --path <PATH>\n          The path that the prompt should render for\n  -P, --logical-path <LOGICAL_PATH>\n          The logical path that the prompt should render for. This path should be a virtual/logical representation of the PATH argument\n  -d, --cmd-duration <CMD_DURATION>\n          The execution duration of the last command, in milliseconds\n  -k, --keymap <KEYMAP>\n          The keymap of fish/zsh/cmd [default: viins]\n  -j, --jobs <JOBS>\n          The number of currently running jobs [default: 0]\n      --shlvl <SHLVL>\n          The current value of SHLVL, for shells that mis-handle it in $()\n  -h, --help\n          Print help\n"
+  },
+  "starship toggle -h": {
+    "returncode": 0,
+    "stdout": "Toggle a given starship module\n\nUsage: starship toggle <NAME> [VALUE]\n\nArguments:\n  <NAME>   The name of the module to be toggled\n  [VALUE]  The key of the config to be toggled [default: disabled]\n\nOptions:\n  -h, --help  Print help\n"
+  }
+}

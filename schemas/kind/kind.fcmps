@@ -1,0 +1,178 @@
+# kind CLI schema for fast-completer
+# Generated from kind 0.31.0
+
+kind # Kubernetes in Docker
+	--help @bool # help for kind
+	--quiet @bool # silence all stderr output
+	--verbosity # info log verbosity, higher value produces more output
+	--version @bool # version for kind
+	build # Build one of [node-image]
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		node-image # Build the node image
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--arch # architecture to build for, defaults to the host architecture
+			--base-image # name:tag of the base image to use for the build
+			--image # name:tag of the resulting image to be built
+			--type # optionally specify one of 'url', 'file', 'release' or 'source' as the type of build
+	completion # Output shell completion code for the specified shell (bash, zsh or fish)
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		bash # Output shell completions for bash
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+		fish # Output shell completions for fish
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+		powershell # Output shell completions for powershell
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+		zsh # Output shell completions for zsh
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+	create # Creates one of [cluster]
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		cluster # Creates a local Kubernetes cluster
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--config # path to a kind config file
+			--image # node docker image to use for booting the cluster
+			--kubeconfig # sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config
+			--name # cluster name, overrides KIND_CLUSTER_NAME, config (default kind)
+			--retain @bool # retain nodes for debugging when cluster creation fails
+			--wait # wait for control plane node to be ready (default 0s)
+	delete # Deletes one of [cluster]
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		cluster # Deletes a cluster
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--kubeconfig # sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config
+			--name # the cluster name
+		clusters # Deletes one or more clusters
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--all @bool # delete all clusters
+			--kubeconfig # sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config
+	export # Exports one of [kubeconfig, logs]
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		kubeconfig # Exports cluster kubeconfig
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--internal @bool # use internal address instead of external
+			--kubeconfig # sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config
+			--name # the cluster context name
+		logs # Exports logs to a tempdir or [output-dir] if specified
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--name # the cluster context name
+	get # Gets one of [clusters, nodes, kubeconfig]
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		clusters # Lists existing kind clusters by their name
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+		kubeconfig # Prints cluster kubeconfig
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--internal @bool # use internal address instead of external
+			--name # the cluster context name
+		nodes # Lists existing kind nodes by their name
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--all-clusters @bool # If present, list all the available nodes across all cluster contexts. Current context is ignored even if specified with --name.
+			--name # the cluster context name
+	help # Help about any command
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		build # Build one of [node-image]
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			node-image # Build the node image
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		completion # Output shell completion code for the specified shell (bash, zsh or fish)
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			bash # Output shell completions for bash
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			fish # Output shell completions for fish
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			powershell # Output shell completions for powershell
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			zsh # Output shell completions for zsh
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		create # Creates one of [cluster]
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			cluster # Creates a local Kubernetes cluster
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		delete # Deletes one of [cluster]
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			cluster # Deletes a cluster
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			clusters # Deletes one or more clusters
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		export # Exports one of [kubeconfig, logs]
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			kubeconfig # Exports cluster kubeconfig
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			logs # Exports logs to a tempdir or [output-dir] if specified
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		get # Gets one of [clusters, nodes, kubeconfig]
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			clusters # Lists existing kind clusters by their name
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			kubeconfig # Prints cluster kubeconfig
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			nodes # Lists existing kind nodes by their name
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		help # Help about any command
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+		load # Loads images into nodes
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			docker-image # Loads docker images from host into nodes
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+			image-archive # Loads docker image from archive into nodes
+				--quiet @bool # silence all stderr output
+				--verbosity # info log verbosity, higher value produces more output
+		version # Prints the kind CLI version
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+	load # Loads images into nodes
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output
+		docker-image # Loads docker images from host into nodes
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--name # the cluster context name
+			--nodes # comma separated list of nodes to load images into
+		image-archive # Loads docker image from archive into nodes
+			--quiet @bool # silence all stderr output
+			--verbosity # info log verbosity, higher value produces more output
+			--name # the cluster context name
+			--nodes # comma separated list of nodes to load images into
+	version # Prints the kind CLI version
+		--quiet @bool # silence all stderr output
+		--verbosity # info log verbosity, higher value produces more output

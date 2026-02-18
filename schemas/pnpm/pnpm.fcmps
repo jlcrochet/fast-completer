@@ -1,0 +1,689 @@
+# pnpm CLI schema for fast-completer
+# Generated from pnpm 10.28.2
+
+pnpm # Fast Node.js package manager
+	--recursive|-r @bool # Run the command for each project in the workspace.
+	add # Installs a package and any packages that it depends
+		--aggregate-output @bool # Aggregate output from child processes that
+		--allow-build @bool # A list of package names that are allowed
+		--config @bool # Save the dependency to configurational
+		--dir|-C # Change to directory <dir> (default:
+		--global|-g @bool # Install as a global package
+		--global-dir @bool # Specify a custom directory to store global
+		--ignore-scripts @bool # Don't run lifecycle scripts
+		--loglevel # What level of logs to report. Any logs at
+		--offline @bool # Trigger an error if any required
+		--prefer-offline @bool # Skip staleness checks for cached data, but
+		--recursive|-r @bool # Run installation recursively in every
+		--save-catalog @bool # Save package to the default catalog
+		--save-catalog-name # Save package to the specified catalog
+		--save-dev|-D @bool # Save package to your `devDependencies`
+		--save-optional|-O @bool # Save package to your
+		--save-peer @bool # Save package to your `peerDependencies`
+		--save-prod|-P @bool # Save package to your `dependencies`. The
+		--store-dir # The directory in which all the packages
+		--stream @bool # Stream output from child processes
+		--use-stderr @bool # Divert all output to stderr
+		--virtual-store-dir # The directory with links to the store
+		--workspace @bool # Only adds the new dependency if it is
+		--workspace-root|-w @bool # Run the command on the root workspace
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	audit # Checks for known security issues with the installed
+		--audit-level # Only print advisories with severity greater than
+		--dev|-D @bool # Only audit "devDependencies"
+		--fix @bool # Add overrides to the package.json file in order
+		--ignore # Ignore a vulnerability by CVE
+		--ignore-registry-errors @bool # Use exit code 0 if the registry responds with an
+		--ignore-unfixable @bool # Ignore all CVEs with no resolution
+		--json @bool # Output audit report in JSON format
+		--no-optional @bool # Don't audit "optionalDependencies"
+		--prod|-P @bool # Only audit "dependencies" and
+	config # Manage the pnpm configuration files
+		--global|-g @bool # Sets the configuration in the global config
+		--json @bool # Show all the config settings in JSON format
+		--location # When set to "project", the
+		delete
+			--global|-g @bool # Sets the configuration in the global config
+			--json @bool # Show all the config settings in JSON format
+			--location # When set to "project", the
+			delete
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			get
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			list
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			set
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+		get
+			--global|-g @bool # Sets the configuration in the global config
+			--json @bool # Show all the config settings in JSON format
+			--location # When set to "project", the
+			delete
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			get
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			list
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			set
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+		list
+			--global|-g @bool # Sets the configuration in the global config
+			--json @bool # Show all the config settings in JSON format
+			--location # When set to "project", the
+			delete
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			get
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			list
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			set
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+		set
+			--global|-g @bool # Sets the configuration in the global config
+			--json @bool # Show all the config settings in JSON format
+			--location # When set to "project", the
+			delete
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			get
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			list
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+			set
+				--global|-g @bool # Sets the configuration in the global config
+				--json @bool # Show all the config settings in JSON format
+				--location # When set to "project", the
+				delete
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				get
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				list
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+				set
+					--global|-g @bool # Sets the configuration in the global config
+					--json @bool # Show all the config settings in JSON format
+					--location # When set to "project", the
+	create # Create a project from a "create-*" or "@foo/create-*"
+		--allow-build @bool # A list of package names that are allowed to run
+	dlx # Fetches a package from the registry without
+		--allow-build @bool # A list of package names that are allowed to run
+		--package @bool # The package to install before running the command
+		--shell-mode|-c @bool # Runs the script inside of a shell. Uses /bin/sh on
+		--reporter # The output is always appended to the end. No
+		--reporter # The default reporter when the stdout is TTY
+		--reporter # The most verbose reporter. Prints all logs in
+	exec # Executes a shell command in scope of a project
+	init # Create a package.json file
+		--bare @bool # Create a package.json file with the bare
+		--init-package-manager @bool # Pin the project to the current pnpm version
+		--init-type # Set the module system for the package.
+	install # Install all dependencies for a project
+		--aggregate-output @bool # Aggregate output from child
+		--child-concurrency # Controls the number of child
+		--dev|-D @bool # Only `devDependencies` are
+		--dir|-C # Change to directory <dir> (default:
+		--fix-lockfile @bool # Fix broken lockfile entries
+		--force @bool # Force reinstall dependencies:
+		--global-dir @bool # Specify a custom directory to store
+		--hoist-pattern # Hoist all dependencies matching the
+		--ignore-pnpmfile @bool # Disable pnpm hooks defined in
+		--ignore-scripts @bool # Don't run lifecycle scripts
+		--ignore-workspace @bool # Ignore pnpm-workspace.yaml if
+		--lockfile-dir # The directory in which the
+		--lockfile-only @bool # Dependencies are not downloaded.
+		--loglevel # What level of logs to report. Any
+		--merge-git-branch-lockfiles @bool # Merge lockfiles were generated on
+		--modules-dir # The directory in which dependencies
+		--network-concurrency # Maximum number of concurrent
+		--no-hoist @bool # Dependencies inside the modules
+		--no-lockfile @bool # Don't read or generate a
+		--no-optional @bool # `optionalDependencies` are not
+		--offline @bool # Trigger an error if any required
+		--optimistic-repeat-install @bool # Skip reinstall if the workspace
+		--package-import-method # Clones/hardlinks or copies
+		--package-import-method # Clone (aka copy-on-write) packages
+		--package-import-method # Copy packages from the store
+		--package-import-method # Hardlink packages from the store
+		--prefer-frozen-lockfile @bool # If the available `pnpm-lock.yaml`
+		--prefer-offline @bool # Skip staleness checks for cached
+		--prod|-P @bool # Packages in `devDependencies` won't
+		--public-hoist-pattern # Hoist all dependencies matching the
+		--recursive|-r @bool # Run installation recursively in
+		--resolution-only @bool # Re-runs resolution: useful for
+		--shamefully-hoist @bool # All the subdeps will be hoisted
+		--side-effects-cache @bool # Use or cache the results of
+		--side-effects-cache-readonly @bool # Only use the side effects cache if
+		--store-dir # The directory in which all the
+		--stream @bool # Stream output from child processes
+		--strict-peer-dependencies @bool # Fail on missing or invalid peer
+		--trust-policy # Fail when a package's trust level
+		--trust-policy-exclude # Exclude specific packages from
+		--trust-policy-ignore-after # Ignore trust downgrades for
+		--use-running-store-server @bool # Only allows installation with a
+		--use-stderr @bool # Divert all output to stderr
+		--use-store-server @bool # Starts a store server in the
+		--virtual-store-dir # The directory with links to the
+		--workspace-root|-w @bool # Run the command on the root
+		--reporter # The output is always appended to the end. No
+		--reporter # The default reporter when the stdout is TTY
+		--reporter # The most verbose reporter. Prints all logs in
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	link # Connect the local project to another one
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--dir|-C # Change to directory <dir> (default:
+		--loglevel # What level of logs to report. Any logs at or higher
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+	list # Print all the versions of packages that are
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--depth # Display only projects. Useful in a monorepo. `pnpm ls
+		--depth # Max display depth of the dependency tree
+		--depth # Display only direct dependencies
+		--dev|-D @bool # Display only the dependency graph for packages in
+		--dir|-C # Change to directory <dir> (default:
+		--exclude-peers @bool # Exclude peer dependencies
+		--global|-g @bool # List packages in the global install prefix instead of
+		--global-dir @bool # Specify a custom directory to store global packages
+		--json @bool # Show information in JSON format
+		--lockfile-only @bool # List packages from the lockfile only, without
+		--loglevel # What level of logs to report. Any logs at or higher
+		--long @bool # Show extended information
+		--no-optional @bool # Don't display packages from `optionalDependencies`
+		--only-projects @bool # Display only dependencies that are also projects
+		--parseable @bool # Show parseable output instead of tree view
+		--prod|-P @bool # Display only the dependency graph for packages in
+		--recursive|-r @bool # Perform command on every package in subdirectories or
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	outdated # Check for outdated packages
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--compatible @bool # Print only versions that satisfy specs in
+		--dev|-D @bool # Check only "devDependencies"
+		--dir|-C # Change to directory <dir> (default:
+		--format # Prints the outdated dependencies in the given format.
+		--global-dir @bool # Specify a custom directory to store global packages
+		--loglevel # What level of logs to report. Any logs at or higher
+		--long @bool # By default, details about the outdated packages (such
+		--no-optional @bool # Don't check "optionalDependencies"
+		--no-table @bool # Prints the outdated packages in a list. Good for
+		--prod|-P @bool # Check only "dependencies" and "optionalDependencies"
+		--recursive|-r @bool # Check for outdated dependencies in every package
+		--sort-by @bool # Specify the sorting method. Currently only `name` is
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	publish # Publishes a package to the registry
+		--access # Tells the registry whether this package
+		--dry-run @bool # Does everything a publish would do except
+		--force @bool # Packages are proceeded to be published even
+		--ignore-scripts @bool # Ignores any publish related lifecycle
+		--json @bool # Show information in JSON format
+		--no-git-checks @bool # Don't check if current branch is your
+		--otp @bool # When publishing packages that require
+		--publish-branch @bool # Sets branch name to publish. Default is
+		--recursive|-r @bool # Publish all packages from the workspace
+		--report-summary @bool # Save the list of the newly published
+		--tag # Registers the published package with the
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	remove # Removes packages from node_modules and from the
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--dir|-C # Change to directory <dir> (default:
+		--global-dir @bool # Specify a custom directory to store global packages
+		--loglevel # What level of logs to report. Any logs at or higher
+		--recursive|-r @bool # Remove from every package found in subdirectories or
+		--save-dev|-D @bool # Remove the dependency only from "devDependencies"
+		--save-optional|-O @bool # Remove the dependency only from
+		--save-prod|-P @bool # Remove the dependency only from "dependencies"
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	run # Runs a defined package script
+		--aggregate-output @bool # Aggregate output from child processes that are run
+		--dir|-C # Change to directory <dir> (default:
+		--if-present @bool # Avoid exiting with a non-zero exit code when the
+		--loglevel # What level of logs to report. Any logs at or
+		--no-bail @bool # The command will exit with a 0 exit code even if
+		--parallel @bool # Completely disregard concurrency and topological
+		--recursive|-r @bool # Run the defined package script in every package
+		--report-summary @bool # Save the execution results of every package to
+		--reporter-hide-prefix @bool # Hide project name prefix from output of running
+		--resume-from @bool # Command executed from given package
+		--sequential @bool # Run the specified scripts one by one
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	self-update # Updates pnpm to the latest version
+	unlink # Unlinks a package. Like yarn unlink but pnpm
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--dir|-C # Change to directory <dir> (default:
+		--loglevel # What level of logs to report. Any logs at or higher
+		--recursive|-r @bool # Unlink in every package found in subdirectories or in
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+	update # Updates packages to their latest version based on the
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--depth # How deep should levels of dependencies be inspected.
+		--dev|-D @bool # Update packages only in "devDependencies"
+		--dir|-C # Change to directory <dir> (default:
+		--global|-g @bool # Update globally installed packages
+		--global-dir @bool # Specify a custom directory to store global packages
+		--interactive|-i @bool # Show outdated dependencies and select which ones to
+		--latest|-L @bool # Ignore version ranges in package.json
+		--loglevel # What level of logs to report. Any logs at or higher
+		--no-optional @bool # Don't update packages in "optionalDependencies"
+		--prod|-P @bool # Update packages only in "dependencies" and
+		--recursive|-r @bool # Update in every package found in subdirectories or
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace @bool # Tries to link all packages from the workspace.
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test
+	why # Shows all packages that depend on the specified
+		--aggregate-output @bool # Aggregate output from child processes that are run in
+		--depth # Max display depth of the dependency graph
+		--dev|-D @bool # Display only the dependency graph for packages in
+		--dir|-C # Change to directory <dir> (default:
+		--exclude-peers @bool # Exclude peer dependencies
+		--global|-g @bool # List packages in the global install prefix instead of
+		--global-dir @bool # Specify a custom directory to store global packages
+		--json @bool # Show information in JSON format
+		--loglevel # What level of logs to report. Any logs at or higher
+		--long @bool # Show extended information
+		--no-optional @bool # Don't display packages from `optionalDependencies`
+		--parseable @bool # Show parseable output instead of tree view
+		--prod|-P @bool # Display only the dependency graph for packages in
+		--recursive|-r @bool # Perform command on every package in subdirectories or
+		--stream @bool # Stream output from child processes immediately,
+		--use-stderr @bool # Divert all output to stderr
+		--workspace-root|-w @bool # Run the command on the root workspace project
+		--changed-files-ignore-pattern # Defines files to ignore when
+		--filter # --changed-files-ignore-
+		--changed-files-ignore- @bool # pattern="**/README.md" build
+		--fail-if-no-match @bool # If no projects are matched by
+		--filter # If a selector starts with ! (or
+		--filter # Includes all packages that are
+		--filter # Includes only the direct and
+		--filter # Includes all direct and indirect
+		--filter # Includes all packages that are
+		--filter # Restricts the scope to package
+		--filter-prod # Restricts the scope to package
+		--test-pattern # Defines files related to tests.
+		--filter # --test-pattern="test/*" test

@@ -1,0 +1,465 @@
+# Oras CLI schema for fast-completer
+# Generated from oras unknown
+
+oras # OCI registry client
+	--help @bool # help for oras
+	attach # Attach files to an existing artifact
+		--artifact-type # artifact type
+	backup # [Experimental] Back up artifacts from a registry into an OCI image layout
+		--output # path to the target output, either a tar archive (*.tar) or a directory
+	blob # Blob operations
+		delete # Delete a blob from a remote registry
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--force @bool # ignore nonexistent references, never prompt
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--username # registry username
+		fetch # Fetch a blob from a registry or an OCI image layout
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--no-tty @bool # [Preview] disable progress bars
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--output # output file `path`, use - for stdout
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--username # registry username
+		push # Push a blob to a registry or an OCI image layout
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--media-type # specify the returned media type in the descriptor if --descriptor is used
+			--no-tty @bool # [Preview] disable progress bars
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--size # provide the blob size
+			--username # registry username
+	completion # Generate the autocompletion script for the specified shell
+		bash # Generate the autocompletion script for bash
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--no-descriptions @bool # disable completion descriptions
+	cp # Copy artifacts from one target to another
+		--concurrency # concurrency level
+		--debug @bool # output debug logs (implies --no-tty)
+		--from-ca-file # server certificate authority file for the remote source registry
+		--from-cert-file # client certificate file for the remote source registry
+		--from-distribution-spec # [Preview] set OCI distribution spec version and API option for source target. Options: v1.1-referrers-tag, v1.1-referrers-api
+		--from-header # add custom headers to source requests
+		--from-identity-token # source registry identity token
+		--from-insecure @bool # allow connections to source SSL registry without certs
+		--from-key-file # client private key file for the remote source registry
+		--from-oci-layout @bool # set source target as an OCI image layout
+		--from-oci-layout-path # [Experimental] set the path for the source OCI image layout target
+		--from-password # source registry password or identity token
+		--from-plain-http @bool # allow insecure connections to source registry without SSL check
+		--from-registry-config # `path` of the authentication file for source registry
+		--from-resolve # customized DNS for source registry, formatted in `host:port:address[:address_port]`
+		--from-username # source registry username
+		--no-tty @bool # [Preview] disable progress bars
+		--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+		--recursive @bool # [Preview] recursively copy the artifact and its referrer artifacts
+		--resolve # base DNS rules formatted in `host:port:address[:address_port]` for --from-resolve and --to-resolve
+		--to-ca-file # server certificate authority file for the remote destination registry
+		--to-cert-file # client certificate file for the remote destination registry
+		--to-distribution-spec # [Preview] set OCI distribution spec version and API option for destination target. Options: v1.1-referrers-tag, v1.1-referrers-api
+		--to-header # add custom headers to destination requests
+		--to-identity-token # destination registry identity token
+		--to-insecure @bool # allow connections to destination SSL registry without certs
+		--to-key-file # client private key file for the remote destination registry
+		--to-oci-layout @bool # set destination target as an OCI image layout
+		--to-oci-layout-path # [Experimental] set the path for the destination OCI image layout target
+		--to-password # destination registry password or identity token
+		--to-plain-http @bool # allow insecure connections to destination registry without SSL check
+		--to-registry-config # `path` of the authentication file for destination registry
+		--to-resolve # customized DNS for destination registry, formatted in `host:port:address[:address_port]`
+		--to-username # destination registry username
+	discover # [Preview] Discover referrers of a manifest in a registry or an OCI image layout
+		--artifact-type # artifact type
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--debug @bool # output debug logs (implies --no-tty)
+		--depth # [Experimental] level of referrers to display, if unused shows referrers of all levels
+		--distribution-spec # [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+		--format # [Experimental] format output using a custom template:
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--insecure @bool # allow connections to SSL registry without certs
+		--key-file # client private key file for the remote registry
+		--no-tty @bool # [Preview] disable colors
+		--oci-layout @bool # set target as an OCI image layout
+		--oci-layout-path # [Experimental] set the path for the OCI image layout target
+		--output # [Deprecated] format in which to display referrers (table, json, or tree).
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--template # [Experimental] template string used to format output
+		--username # registry username
+	help # Help about any command
+		attach # Attach files to an existing artifact
+		backup # [Experimental] Back up artifacts from a registry into an OCI image layout
+		blob # Blob operations
+			delete # Delete a blob from a remote registry
+			fetch # Fetch a blob from a registry or an OCI image layout
+			push # Push a blob to a registry or an OCI image layout
+		completion # Generate the autocompletion script for the specified shell
+			bash # Generate the autocompletion script for bash
+			fish # Generate the autocompletion script for fish
+			powershell # Generate the autocompletion script for powershell
+			zsh # Generate the autocompletion script for zsh
+		cp # Copy artifacts from one target to another
+		discover # [Preview] Discover referrers of a manifest in a registry or an OCI image layout
+		help # Help about any command
+		login # Log in to a remote registry
+		logout # Log out from a remote registry
+		manifest # Manifest operations
+			delete # Delete a manifest from remote registry
+			fetch # Fetch manifest of the target artifact
+			fetch-config # Fetch the config of a manifest from a registry or an OCI image layout
+			index # [Experimental] Index operations
+				create # [Experimental] Create and push an index from provided manifests
+				update # [Experimental] Update and push an image index
+			push # Push a manifest to a registry or an OCI image layout
+		pull # Pull files from a registry or an OCI image layout
+		push # Push files to a registry or an OCI image layout
+		repo # Repository operations
+			ls # List the repositories under the registry
+			tags # Show tags of the target repository
+		resolve # [Preview] Resolves digest of the target artifact
+		restore # [Experimental] Restore artifacts to a registry from an OCI image layout
+		tag # Tag a manifest in a registry or an OCI image layout
+		version # Show the oras version information
+	login # Log in to a remote registry
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--debug @bool # output debug logs (implies --no-tty)
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--insecure @bool # allow connections to SSL registry without certs
+		--key-file # client private key file for the remote registry
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--username # registry username
+	logout # Log out from a remote registry
+		--debug @bool # debug mode
+		--registry-config # auth config path
+	manifest # Manifest operations
+		delete # Delete a manifest from remote registry
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--distribution-spec # [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+			--force @bool # ignore nonexistent references, never prompt
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--username # registry username
+		fetch # Fetch manifest of the target artifact
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--format # [Experimental] format output using a custom template:
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--media-type # accepted media types
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--output # file `path` to write the fetched manifest to, use - for stdout
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--template # [Experimental] template string used to format output
+			--username # registry username
+		fetch-config # Fetch the config of a manifest from a registry or an OCI image layout
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--output # file `path` to write the fetched config to, use - for stdout
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--username # registry username
+		index # [Experimental] Index operations
+			create # [Experimental] Create and push an index from provided manifests
+				--annotation # manifest annotations
+				--artifact-type # artifact type for overall index
+				--ca-file # server certificate authority file for the remote registry
+				--cert-file # client certificate file for the remote registry
+				--debug @bool # output debug logs (implies --no-tty)
+				--header # add custom headers to requests
+				--identity-token # registry identity token
+				--identity-token-stdin @bool # read identity token from stdin
+				--insecure @bool # allow connections to SSL registry without certs
+				--key-file # client private key file for the remote registry
+				--oci-layout @bool # set target as an OCI image layout
+				--oci-layout-path # [Experimental] set the path for the OCI image layout target
+				--output # file `path` to write the created index to, use - for stdout
+				--password # registry password or identity token
+				--password-stdin @bool # read password from stdin
+				--plain-http @bool # allow insecure connections to registry without SSL check
+				--pretty @bool # prettify JSON objects printed to stdout
+				--registry-config # `path` of the authentication file for registry
+				--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+				--username # registry username
+			update # [Experimental] Update and push an image index
+				--add # manifests to add to the index
+				--artifact-type # new artifact type for overall index
+				--ca-file # server certificate authority file for the remote registry
+				--cert-file # client certificate file for the remote registry
+				--debug @bool # output debug logs (implies --no-tty)
+				--header # add custom headers to requests
+				--identity-token # registry identity token
+				--identity-token-stdin @bool # read identity token from stdin
+				--insecure @bool # allow connections to SSL registry without certs
+				--key-file # client private key file for the remote registry
+				--merge # indexes to be merged into the index
+				--oci-layout @bool # set target as an OCI image layout
+				--oci-layout-path # [Experimental] set the path for the OCI image layout target
+				--output # file `path` to write the created index to, use - for stdout
+				--password # registry password or identity token
+				--password-stdin @bool # read password from stdin
+				--plain-http @bool # allow insecure connections to registry without SSL check
+				--pretty @bool # prettify JSON objects printed to stdout
+				--registry-config # `path` of the authentication file for registry
+				--remove # manifests to remove from the index, must be digests
+				--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+				--tag # extra tags for the updated index
+				--username # registry username
+		push # Push a manifest to a registry or an OCI image layout
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--concurrency # concurrency level
+			--debug @bool # output debug logs (implies --no-tty)
+			--descriptor @bool # output the descriptor
+			--distribution-spec # [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--media-type # media type of manifest
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--pretty @bool # prettify JSON objects printed to stdout
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--username # registry username
+	pull # Pull files from a registry or an OCI image layout
+		--allow-path-traversal @bool # allow storing files out of the output directory
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--concurrency # concurrency level
+		--config # output manifest config file
+		--debug @bool # output debug logs (implies --no-tty)
+		--format # [Experimental] format output using a custom template:
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--include-subject @bool # recursively pull the subject of artifacts
+		--insecure @bool # allow connections to SSL registry without certs
+		--keep-old-files @bool # do not replace existing files when pulling, treat them as errors
+		--key-file # client private key file for the remote registry
+		--no-tty @bool # [Preview] disable progress bars
+		--oci-layout @bool # set target as an OCI image layout
+		--oci-layout-path # [Experimental] set the path for the OCI image layout target
+		--output # output directory
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--template # [Experimental] template string used to format output
+		--username # registry username
+	push # Push files to a registry or an OCI image layout
+		--annotation # manifest annotations
+		--annotation-file # path of the annotation file
+		--artifact-platform # [Experimental] set artifact platform in the form of `os[/arch][/variant][:os_version]`
+		--artifact-type # artifact type
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--concurrency # concurrency level
+		--config # `path` of image config file
+		--debug @bool # output debug logs (implies --no-tty)
+		--disable-path-validation @bool # skip path validation
+		--export-manifest # `path` of the pushed manifest
+		--format # [Experimental] format output using a custom template:
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--image-spec # [Preview] specify manifest type for building artifact. Options: v1.1, v1.0 (default v1.1, overridden to v1.0 if --config is used without --artifact-type)
+		--insecure @bool # allow connections to SSL registry without certs
+		--key-file # client private key file for the remote registry
+		--no-tty @bool # [Preview] disable progress bars
+		--oci-layout @bool # set target as an OCI image layout
+		--oci-layout-path # [Experimental] set the path for the OCI image layout target
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--template # [Experimental] template string used to format output
+		--username # registry username
+	repo # Repository operations
+		ls # List the repositories under the registry
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--format # [Experimental] format output using a custom template:
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--last # start after the repository specified by `last`
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--template # [Experimental] template string used to format output
+			--username # registry username
+		tags # Show tags of the target repository
+			--ca-file # server certificate authority file for the remote registry
+			--cert-file # client certificate file for the remote registry
+			--debug @bool # output debug logs (implies --no-tty)
+			--exclude-digest-tags @bool # [Preview] exclude all digest-like tags such as 'sha256-aaaa...'
+			--format # [Experimental] format output using a custom template:
+			--header # add custom headers to requests
+			--identity-token # registry identity token
+			--identity-token-stdin @bool # read identity token from stdin
+			--insecure @bool # allow connections to SSL registry without certs
+			--key-file # client private key file for the remote registry
+			--last # start after the tag specified by `last`
+			--oci-layout @bool # set target as an OCI image layout
+			--oci-layout-path # [Experimental] set the path for the OCI image layout target
+			--password # registry password or identity token
+			--password-stdin @bool # read password from stdin
+			--plain-http @bool # allow insecure connections to registry without SSL check
+			--registry-config # `path` of the authentication file for registry
+			--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+			--template # [Experimental] template string used to format output
+			--username # registry username
+	resolve # [Preview] Resolves digest of the target artifact
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--debug @bool # output debug logs (implies --no-tty)
+		--full-reference @bool # print the full artifact reference with digest
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--insecure @bool # allow connections to SSL registry without certs
+		--key-file # client private key file for the remote registry
+		--oci-layout @bool # set target as an OCI image layout
+		--oci-layout-path # [Experimental] set the path for the OCI image layout target
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--platform # request platform in the form of `os[/arch][/variant][:os_version]`
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--username # registry username
+	restore # [Experimental] Restore artifacts to a registry from an OCI image layout
+		--input # path to the OCI layout, either a tar archive (*.tar) or a directory
+	tag # Tag a manifest in a registry or an OCI image layout
+		--ca-file # server certificate authority file for the remote registry
+		--cert-file # client certificate file for the remote registry
+		--concurrency # concurrency level
+		--debug @bool # output debug logs (implies --no-tty)
+		--header # add custom headers to requests
+		--identity-token # registry identity token
+		--identity-token-stdin @bool # read identity token from stdin
+		--insecure @bool # allow connections to SSL registry without certs
+		--key-file # client private key file for the remote registry
+		--oci-layout @bool # set target as an OCI image layout
+		--oci-layout-path # [Experimental] set the path for the OCI image layout target
+		--password # registry password or identity token
+		--password-stdin @bool # read password from stdin
+		--plain-http @bool # allow insecure connections to registry without SSL check
+		--registry-config # `path` of the authentication file for registry
+		--resolve # customized DNS for registry, formatted in `host:port:address[:address_port]`
+		--username # registry username
+	version # Show the oras version information

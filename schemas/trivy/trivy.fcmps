@@ -1,0 +1,1366 @@
+# Trivy CLI schema for fast-completer
+# Generated from trivy 0.69.1
+
+trivy # Security scanner
+	--cacert # Path to PEM-encoded CA certificate file
+	--cache-dir # cache directory
+	--config # config path
+	--debug @bool # debug mode
+	--format # version format (json)
+	--generate-default-config @bool # write the default config to trivy-default.yaml
+	--help @bool # help for trivy
+	--insecure @bool # allow insecure server connections
+	--quiet @bool # suppress progress bar and log output
+	--timeout # timeout
+	--version @bool # show version
+	clean # Remove cached files
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--all @bool # remove all caches
+		--checks-bundle @bool # remove checks bundle
+		--java-db @bool # remove Java database
+		--scan-cache @bool # remove scan cache (container and VM image analysis results)
+		--vex-repo @bool # remove VEX repositories
+		--vuln-db @bool # remove vulnerability database
+	completion # Generate the autocompletion script for the specified shell
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		bash # Generate the autocompletion script for bash
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			--no-descriptions @bool # disable completion descriptions
+	config # Scan config files for misconfigurations
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--cf-params # specify paths to override the CloudFormation parameters files
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--compliance # compliance report to generate
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignorefile # specify .trivyignore file
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--k8s-version # specify k8s version to validate outdated api by it (example: 1.21.0)
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--report # specify a compliance report format for the output (allowed values: all,summary)
+		--severity # severities of security issues to be displayed
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--tf-vars # specify paths to override the Terraform tfvars files
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+	convert # Convert Trivy JSON report into a different format
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--compliance # compliance report to generate
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--exit-code # specify exit code when any security issues are found
+		--exit-on-eol # exit with the specified code when the OS reaches end of service/life
+		--format # format
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignorefile # specify .trivyignore file
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--report # specify a report format for the output (allowed values: all,summary)
+		--scanners # List of scanners included when generating the json report. Used only for rendering the summary table. (allowed values: vuln,misconfig,secret,license)
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+	filesystem # Scan local filesystem
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--cf-params # specify paths to override the CloudFormation parameters files
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--compliance # compliance report to generate
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignored-licenses # specify a list of license to ignore
+		--ignorefile # specify .trivyignore file
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-dev-deps @bool # include development dependencies in the report (supported: npm, yarn, gradle)
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--license-confidence-level # specify license classifier's confidence level
+		--license-full @bool # eagerly look for licenses in source code headers and license files
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--report # specify a compliance report format for the output (allowed values: all,summary)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,license)
+		--secret-config # specify a path to config file for secret scanning
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--tf-vars # specify paths to override the Terraform tfvars files
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	help # Help about any command
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		clean # Remove cached files
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		completion # Generate the autocompletion script for the specified shell
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			bash # Generate the autocompletion script for bash
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			fish # Generate the autocompletion script for fish
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			powershell # Generate the autocompletion script for powershell
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			zsh # Generate the autocompletion script for zsh
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+		config # Scan config files for misconfigurations
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		convert # Convert Trivy JSON report into a different format
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		filesystem # Scan local filesystem
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		help # Help about any command
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		image # Scan a container image
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		kubernetes # [EXPERIMENTAL] Scan kubernetes cluster
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		module # Manage modules
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			install # Install a module
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			uninstall # Uninstall a module
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+		plugin # Manage plugins
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			info # Show information about the specified plugin
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			install # Install a plugin
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			list # List installed plugin
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			run # Run a plugin on the fly
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			search # List Trivy plugins available on the plugin index and search among them
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			uninstall # Uninstall a plugin
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			update # Update the local copy of the plugin index
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			upgrade # Upgrade installed plugins to newer versions
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+		registry # Manage registry authentication
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			login # Log in to a registry
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			logout # Log out of a registry
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+		repository # Scan a repository
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		rootfs # Scan rootfs
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		sbom # Scan SBOM for vulnerabilities and licenses
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		server # Server mode
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		version # Print the version
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		vex # [EXPERIMENTAL] VEX utilities
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			repo # Manage VEX repositories
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+				download # Download the VEX repositories
+					--cacert # Path to PEM-encoded CA certificate file
+					--cache-dir # cache directory
+					--config # config path
+					--debug @bool # debug mode
+					--generate-default-config @bool # write the default config to trivy-default.yaml
+					--insecure @bool # allow insecure server connections
+					--quiet @bool # suppress progress bar and log output
+					--timeout # timeout
+				init # Initialize a configuration file
+					--cacert # Path to PEM-encoded CA certificate file
+					--cache-dir # cache directory
+					--config # config path
+					--debug @bool # debug mode
+					--generate-default-config @bool # write the default config to trivy-default.yaml
+					--insecure @bool # allow insecure server connections
+					--quiet @bool # suppress progress bar and log output
+					--timeout # timeout
+				list # List VEX repositories
+					--cacert # Path to PEM-encoded CA certificate file
+					--cache-dir # cache directory
+					--config # config path
+					--debug @bool # debug mode
+					--generate-default-config @bool # write the default config to trivy-default.yaml
+					--insecure @bool # allow insecure server connections
+					--quiet @bool # suppress progress bar and log output
+					--timeout # timeout
+		vm # [EXPERIMENTAL] Scan a virtual machine image
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+	image # Scan a container image
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--compliance # compliance report to generate (built-in compliance's: docker-cis-1.6.0)
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--docker-host # unix domain socket path to use for docker scanning
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--exit-on-eol # exit with the specified code when the OS reaches end of service/life
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignored-licenses # specify a list of license to ignore
+		--ignorefile # specify .trivyignore file
+		--image-config-scanners # comma-separated list of what security issues to detect on container image configurations (allowed values: misconfig,secret)
+		--image-src # image source(s) to use, in priority order (allowed values: docker,containerd,podman,remote)
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--input # input file path instead of image name
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--license-confidence-level # specify license classifier's confidence level
+		--license-full @bool # eagerly look for licenses in source code headers and license files
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--max-image-size # [EXPERIMENTAL] maximum image size to process, specified in a human-readable format (e.g., '44kB', '17MB'); an error will be returned if the image exceeds this size
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--platform # set platform in the form os/arch if image is multi-platform capable
+		--podman-host # unix podman socket path to use for podman scanning
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--removed-pkgs @bool # detect vulnerabilities of removed packages (only for Alpine)
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--report # specify a format for the compliance report. (allowed values: all,summary)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,license)
+		--secret-config # specify a path to config file for secret scanning
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	kubernetes # [EXPERIMENTAL] Scan kubernetes cluster
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--burst # specify the maximum burst for throttle
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--compliance # compliance report to generate
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-node-collector @bool # When the flag is activated, the node-collector job will not be executed, thus skipping misconfiguration findings on the node.
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--exclude-kinds # indicate the kinds exclude from scanning (example: node)
+		--exclude-namespaces # indicate the namespaces excluded from scanning (example: kube-system)
+		--exclude-nodes # indicate the node labels that the node-collector job should exclude from scanning (example: kubernetes.io/arch:arm64,team:dev)
+		--exclude-owned @bool # exclude resources that have an owner reference
+		--exit-code # specify exit code when any security issues are found
+		--file-patterns # specify config file patterns
+		--format # format (allowed values: table,json,cyclonedx)
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignorefile # specify .trivyignore file
+		--image-src # image source(s) to use, in priority order (allowed values: docker,containerd,podman,remote)
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-kinds # indicate the kinds included in scanning (example: node)
+		--include-namespaces # indicate the namespaces included in scanning (example: kube-system)
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--k8s-version # specify k8s version to validate outdated api by it (example: 1.21.0)
+		--kubeconfig # specify the kubeconfig file path to use
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--no-progress @bool # suppress progress bar
+		--node-collector-imageref # indicate the image reference for the node-collector scan job
+		--node-collector-namespace # specify the namespace in which the node-collector job should be deployed
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--qps # specify the maximum QPS to the master from this client
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--report # specify a report format for the output (allowed values: all,summary)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,rbac)
+		--secret-config # specify a path to config file for secret scanning
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-images @bool # skip the downloading and scanning of images (vulnerabilities and secrets) in the cluster resources
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--tolerations # specify node-collector job tolerations (example: key1=value1:NoExecute,key2=value2:NoSchedule)
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	module # Manage modules
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--module-dir # specify directory to the wasm modules that will be loaded
+		install # Install a module
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--enable-modules # [EXPERIMENTAL] module names to enable
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--module-dir # specify directory to the wasm modules that will be loaded
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		uninstall # Uninstall a module
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--enable-modules # [EXPERIMENTAL] module names to enable
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--module-dir # specify directory to the wasm modules that will be loaded
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+	plugin # Manage plugins
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		info # Show information about the specified plugin
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		install # Install a plugin
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		list # List installed plugin
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		run # Run a plugin on the fly
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		search # List Trivy plugins available on the plugin index and search among them
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		uninstall # Uninstall a plugin
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		update # Update the local copy of the plugin index
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+		upgrade # Upgrade installed plugins to newer versions
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+	registry # Manage registry authentication
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		login # Log in to a registry
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+			--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+			--username # username. Comma-separated usernames allowed.
+		logout # Log out of a registry
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+	repository # Scan a repository
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--branch # pass the branch name to be scanned
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--cf-params # specify paths to override the CloudFormation parameters files
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--commit # pass the commit hash to be scanned
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignored-licenses # specify a list of license to ignore
+		--ignorefile # specify .trivyignore file
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-dev-deps @bool # include development dependencies in the report (supported: npm, yarn, gradle)
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--license-confidence-level # specify license classifier's confidence level
+		--license-full @bool # eagerly look for licenses in source code headers and license files
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,license)
+		--secret-config # specify a path to config file for secret scanning
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--tag # pass the tag name to be scanned
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--tf-vars # specify paths to override the Terraform tfvars files
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	rootfs # Scan rootfs
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--cf-params # specify paths to override the CloudFormation parameters files
+		--check-namespaces # Rego namespaces
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--config-check # specify the paths to the Rego check files or to the directories containing them, applying config files
+		--config-data # specify paths from which data for the Rego checks will be recursively loaded
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--exit-on-eol # exit with the specified code when the OS reaches end of service/life
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignored-licenses # specify a list of license to ignore
+		--ignorefile # specify .trivyignore file
+		--include-deprecated-checks @bool # include deprecated checks
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--license-confidence-level # specify license classifier's confidence level
+		--license-full @bool # eagerly look for licenses in source code headers and license files
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rego-error-limit # maximum number of compile errors allowed during Rego policy evaluation
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,license)
+		--secret-config # specify a path to config file for secret scanning
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-check-update @bool # skip fetching rego check updates
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--tf-vars # specify paths to override the Terraform tfvars files
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--trace-rego @bool # enable more verbose trace output for custom queries
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	sbom # Scan SBOM for vulnerabilities and licenses
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--compliance # compliance report to generate
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--exit-code # specify exit code when any security issues are found
+		--exit-on-eol # exit with the specified code when the OS reaches end of service/life
+		--file-patterns # specify config file patterns
+		--format # format
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignored-licenses # specify a list of license to ignore
+		--ignorefile # specify .trivyignore file
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,license)
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--username # username. Comma-separated usernames allowed.
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level
+	server # Server mode
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--listen # listen address in server mode
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--password # password. Comma-separated passwords allowed. TRIVY_PASSWORD should be used for security reasons.
+		--password-stdin @bool # password from stdin. Comma-separated passwords are not supported.
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--registry-token # registry token
+		--skip-db-update @bool # skip updating vulnerability database
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--username # username. Comma-separated usernames allowed.
+	version # Print the version
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--format # version format (json)
+	vex # [EXPERIMENTAL] VEX utilities
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		repo # Manage VEX repositories
+			--cacert # Path to PEM-encoded CA certificate file
+			--cache-dir # cache directory
+			--config # config path
+			--debug @bool # debug mode
+			--generate-default-config @bool # write the default config to trivy-default.yaml
+			--insecure @bool # allow insecure server connections
+			--quiet @bool # suppress progress bar and log output
+			--timeout # timeout
+			download # Download the VEX repositories
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			init # Initialize a configuration file
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+			list # List VEX repositories
+				--cacert # Path to PEM-encoded CA certificate file
+				--cache-dir # cache directory
+				--config # config path
+				--debug @bool # debug mode
+				--generate-default-config @bool # write the default config to trivy-default.yaml
+				--insecure @bool # allow insecure server connections
+				--quiet @bool # suppress progress bar and log output
+				--timeout # timeout
+	vm # [EXPERIMENTAL] Scan a virtual machine image
+		--cacert # Path to PEM-encoded CA certificate file
+		--cache-dir # cache directory
+		--config # config path
+		--debug @bool # debug mode
+		--generate-default-config @bool # write the default config to trivy-default.yaml
+		--insecure @bool # allow insecure server connections
+		--quiet @bool # suppress progress bar and log output
+		--timeout # timeout
+		--ansible-extra-vars # set additional variables as key=value or @file (YAML/JSON)
+		--ansible-inventory # specify inventory host path or comma separated host list
+		--ansible-playbook # specify playbook file path(s) to scan
+		--aws-region # AWS region to scan
+		--cache-backend # [EXPERIMENTAL] cache backend (e.g. redis://localhost:6379)
+		--cache-ttl # cache TTL when using redis as cache backend
+		--checks-bundle-repository # OCI registry URL to retrieve checks bundle from
+		--compliance # compliance report to generate
+		--config-file-schemas # specify paths to JSON configuration file schemas to determine that a file matches some configuration and pass the schema to Rego checks for type checking
+		--custom-headers # custom headers in client mode
+		--db-repository # OCI repository(ies) to retrieve trivy-db in order of priority
+		--dependency-tree @bool # [EXPERIMENTAL] show dependency origin tree of vulnerable packages
+		--detection-priority # specify the detection priority:
+		--disable-telemetry @bool # disable sending anonymous usage data to Aqua
+		--distro # [EXPERIMENTAL] specify a distribution, <family>/<version>
+		--download-db-only @bool # download/update vulnerability database but don't run a scan
+		--download-java-db-only @bool # download/update Java index database but don't run a scan
+		--enable-modules # [EXPERIMENTAL] module names to enable
+		--exit-code # specify exit code when any security issues are found
+		--exit-on-eol # exit with the specified code when the OS reaches end of service/life
+		--file-patterns # specify config file patterns
+		--format # format
+		--helm-api-versions # Available API versions used for Capabilities.APIVersions. This flag is the same as the api-versions flag of the helm template command. (can specify multiple or separate values with commas: policy/v1/PodDisruptionBudget,apps/v1/Deployment)
+		--helm-kube-version # Kubernetes version used for Capabilities.KubeVersion. This flag is the same as the kube-version flag of the helm template command.
+		--helm-set # specify Helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-set-file # specify Helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--helm-set-string # specify Helm string values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--helm-values # specify paths to override the Helm values.yaml files
+		--ignore-policy # specify the Rego file path to evaluate each vulnerability
+		--ignore-status # comma-separated list of vulnerability status to ignore
+		--ignore-unfixed @bool # display only fixed vulnerabilities
+		--ignorefile # specify .trivyignore file
+		--include-non-failures @bool # include successes, available with '--scanners misconfig'
+		--java-db-repository # OCI repository(ies) to retrieve trivy-java-db in order of priority
+		--list-all-pkgs @bool # output all packages in the JSON report regardless of vulnerability
+		--misconfig-scanners # comma-separated list of misconfig scanners to use for misconfiguration scanning
+		--module-dir # specify directory to the wasm modules that will be loaded
+		--no-progress @bool # suppress progress bar
+		--offline-scan @bool # do not issue API requests to identify dependencies
+		--output # output file name
+		--output-plugin-arg # [EXPERIMENTAL] output plugin arguments
+		--parallel # number of goroutines enabled for parallel scanning, set 0 to auto-detect parallelism
+		--pkg-relationships # list of package relationships
+		--pkg-types # list of package types (allowed values: os,library)
+		--raw-config-scanners # specify the types of scanners that will also scan raw configurations. For example, scanners will scan a non-adapted configuration into a shared state (allowed values: terraform)
+		--redis-ca # redis ca file location, if using redis as cache backend
+		--redis-cert # redis certificate file location, if using redis as cache backend
+		--redis-key # redis key file location, if using redis as cache backend
+		--redis-tls @bool # enable redis TLS with public certificates, if using redis as cache backend
+		--rekor-url # [EXPERIMENTAL] address of rekor STL server
+		--render-cause # specify configuration types for which the rendered causes will be shown in the table report (allowed values: terraform,ansible)
+		--sbom-sources # [EXPERIMENTAL] try to retrieve SBOM from the specified sources (allowed values: oci,rekor)
+		--scanners # comma-separated list of what security issues to detect (allowed values: vuln,misconfig,secret,license)
+		--secret-config # specify a path to config file for secret scanning
+		--server # server address in client mode
+		--severity # severities of security issues to be displayed
+		--show-suppressed @bool # [EXPERIMENTAL] show suppressed vulnerabilities
+		--skip-db-update @bool # skip updating vulnerability database
+		--skip-dirs # specify the directories or glob patterns to skip
+		--skip-files # specify the files or glob patterns to skip
+		--skip-java-db-update @bool # skip updating Java index database
+		--skip-version-check @bool # suppress notices about version updates and Trivy announcements
+		--skip-vex-repo-update @bool # [EXPERIMENTAL] Skip VEX Repository update
+		--table-mode # [EXPERIMENTAL] tables that will be displayed in 'table' format (allowed values: summary,detailed)
+		--template # output template
+		--tf-exclude-downloaded-modules @bool # exclude misconfigurations for downloaded terraform modules
+		--token # for authentication in client/server mode
+		--token-header # specify a header name for token in client/server mode
+		--vex # [EXPERIMENTAL] VEX sources ("repo", "oci" or file path)
+		--vuln-severity-source # order of data sources for selecting vulnerability severity level

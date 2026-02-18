@@ -1,0 +1,306 @@
+# Operator-sdk CLI schema for fast-completer
+# Generated from operator-sdk .
+
+operator-sdk # Kubernetes operator SDK
+	--help @bool # help for operator-sdk
+	--plugins # plugin keys to be used for this subcommand execution
+	--project-version # project version
+	--verbose @bool # Enable verbose logging
+	alpha # Alpha-stage subcommands
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		config-3alpha-to-3 # Convert your PROJECT config file from version 3-alpha to 3
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		generate # Re-scaffold an existing Kuberbuilder project
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--input-dir @bool # Specifies the full path to a Kubebuilder project file. If not provided, the current working directory is used.
+			--output-dir @bool # Specifies the full path where the scaffolded files will be output. Defaults to a directory within the current working directory.
+	bundle # Manage operator bundle metadata
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		validate # Validate an operator bundle
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--alpha-select-external # Selector to select external validators to run. It should be set to a Unix path list ("/path/to/e1.sh:/path/to/e2")
+			--image-builder # Tool to pull and unpack bundle images. Only used when validating a bundle image. One of: [docker, podman, none]
+			--list-optional @bool # List all optional validators available. When set, no validators will be run
+			--optional-values # Inform a []string map of key=values which can be used by the validator. e.g. to check the operator bundle against an Kubernetes version that it is intended to be distributed use `--optional-values=k8s-version=1.22`
+			--output # Result format for results. One of: [text, json-alpha1]. Note: output format types containing "alphaX" are subject to change and not covered by guarantees of stable APIs.
+			--select-optional # Label selector to select optional validators to run. Run this command with '--list-optional' to list available optional validators
+	cleanup # Clean up an Operator deployed with the 'run' subcommand
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		--delete-all @bool # If set to true, all other delete options will be enabled
+		--delete-crds @bool # If set to true, owned CRDs and CRs will be deleted
+		--delete-operator-groups @bool # If set to true, operator groups will be deleted
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests.
+		--namespace # If present, namespace scope for this CLI request
+		--timeout # Duration to wait for the command to complete before failing
+	completion # Load completions for the specified shell
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		bash # Load bash completions
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		fish # Load fish completions
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		powershell # Load powershell completions
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		zsh # Load zsh completions
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+	create # Scaffold a Kubernetes API or webhook
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		api # Scaffold a Kubernetes API
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--controller @bool # if set, generate the controller without prompting the user
+			--external-api-domain # Specify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).
+			--external-api-path # Specify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).
+			--force @bool # attempt to create resource even if it already exists
+			--group # resource Group
+			--kind # resource Kind
+			--make @bool # if true, run `make generate` after generating files
+			--namespaced @bool # resource is namespaced
+			--plural # resource irregular plural form
+			--resource @bool # if set, generate the resource without prompting the user
+		webhook # Scaffold a webhook for an API resource
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--conversion @bool # if set, scaffold the conversion webhook
+			--defaulting @bool # if set, scaffold the defaulting webhook
+			--external-api-domain # Specify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).
+			--external-api-path # Specify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).
+			--force @bool # attempt to create resource even if it already exists
+			--group # resource Group
+			--kind # resource Kind
+			--legacy @bool # [DEPRECATED] Attempts to create resource under the API directory (legacy path). This option will be removed in future versions.
+			--make @bool # if true, run `make generate` after generating files
+			--plural # resource irregular plural form
+			--programmatic-validation @bool # if set, scaffold the validating webhook
+			--spoke # Comma-separated list of spoke versions to be added to the conversion webhook (e.g., --spoke v1,v2)
+	edit # Update the project configuration
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		--multigroup @bool # enable or disable multigroup layout
+	generate # Invokes a specific generator
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		bundle # Generates bundle data for the operator
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--channels # A comma-separated list of channels the bundle belongs to
+			--crds-dir # Directory to read cluster-ready CustomResoureDefinition manifests from. This option can only be used if --deploy-dir is set
+			--default-channel # The default channel for the bundle
+			--deploy-dir # Directory to read cluster-ready operator manifests from. If --crds-dir is not set, CRDs are ready from this directory. This option is mutually exclusive with --input-dir and piping to stdin
+			--extra-service-accounts # Names of service accounts, outside of the operator's Deployment account, that have bindings to {Cluster}Roles that should be added to the CSV
+			--input-dir # Directory to read cluster-ready operator manifests from. This option is mutually exclusive with --deploy-dir/--crds-dir and piping to stdin. This option should not be passed an existing bundle directory, as this bundle will not contain the correct set of manifests required to generate a CSV. Use --kustomize-dir to pass a base CSV
+			--kustomize-dir # Directory containing kustomize bases in a "bases" dir and a kustomization.yaml for operator-framework manifests
+			--manifests @bool # Generate bundle manifests
+			--metadata @bool # Generate bundle metadata and Dockerfile
+			--output-dir # Directory to write the bundle to
+			--overwrite @bool # Overwrite the bundle's metadata and Dockerfile if they exist
+			--package # Bundle's package name
+			--quiet @bool # Run in quiet mode
+			--stdout @bool # Write bundle manifest to stdout
+			--use-image-digests @bool # Use SHA Digest for images
+		kustomize # Contains subcommands that generate operator-framework kustomize data for the operator
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			manifests # Generates kustomize bases and a kustomization.yaml for operator-framework manifests
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+				--apis-dir # Root directory for API type defintions
+				--input-dir # Directory containing existing kustomize files
+				--interactive @bool # When set to false, if no kustomize base exists, an interactive command prompt will be presented to accept non-inferrable metadata
+				--output-dir # Directory to write kustomize files
+				--package # Package name
+				--quiet @bool # Run in quiet mode
+	help # Help about any command
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		alpha # Alpha-stage subcommands
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			config-3alpha-to-3 # Convert your PROJECT config file from version 3-alpha to 3
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			generate # Re-scaffold an existing Kuberbuilder project
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		bundle # Manage operator bundle metadata
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			validate # Validate an operator bundle
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		cleanup # Clean up an Operator deployed with the 'run' subcommand
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		completion # Load completions for the specified shell
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			bash # Load bash completions
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			fish # Load fish completions
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			powershell # Load powershell completions
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			zsh # Load zsh completions
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		create # Scaffold a Kubernetes API or webhook
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			api # Scaffold a Kubernetes API
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			webhook # Scaffold a webhook for an API resource
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		edit # Update the project configuration
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		generate # Invokes a specific generator
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			bundle # Generates bundle data for the operator
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			kustomize # Contains subcommands that generate operator-framework kustomize data for the operator
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+				manifests # Generates kustomize bases and a kustomization.yaml for operator-framework manifests
+					--plugins # plugin keys to be used for this subcommand execution
+					--verbose @bool # Enable verbose logging
+		help # Help about any command
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		init # Initialize a new project
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		olm # Manage the Operator Lifecycle Manager installation in your cluster
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			install # Install Operator Lifecycle Manager in your cluster
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			status # Get the status of the Operator Lifecycle Manager installation in your cluster
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			uninstall # Uninstall Operator Lifecycle Manager from your cluster
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		pkgman-to-bundle # Migrates packagemanifests to bundles
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		run # Run an Operator in a variety of environments
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			bundle # Deploy an Operator in the bundle format with OLM
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+			bundle-upgrade # Upgrade an Operator previously installed in the bundle format with OLM
+				--plugins # plugin keys to be used for this subcommand execution
+				--verbose @bool # Enable verbose logging
+		scorecard # Runs scorecard
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+		version # Print the operator-sdk version
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+	init # Initialize a new project
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		--domain # domain for groups
+		--fetch-deps @bool # ensure dependencies are downloaded
+		--license # license to use to boilerplate, may be one of 'apache2', 'none'
+		--owner # owner to add to the copyright
+		--project-name # name of this project
+		--project-version # project version
+		--repo # name to use for go module (e.g., github.com/user/repo), defaults to the go package of the current working directory.
+		--skip-go-version-check @bool # if specified, skip checking the Go version
+	olm # Manage the Operator Lifecycle Manager installation in your cluster
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		install # Install Operator Lifecycle Manager in your cluster
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--timeout # time to wait for the command to complete before failing
+		status # Get the status of the Operator Lifecycle Manager installation in your cluster
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--olm-namespace # namespace where OLM is installed
+			--timeout # time to wait for the command to complete before failing
+		uninstall # Uninstall Operator Lifecycle Manager from your cluster
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--olm-namespace # namespace from where OLM is to be uninstalled.
+			--timeout # time to wait for the command to complete before failing
+	pkgman-to-bundle # Migrates packagemanifests to bundles
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		--build-cmd # Build command to be run for building images. By default 'docker build' is run.
+		--image-tag-base # Base container image name for bundle image tags, ex. my.reg/foo/bar-operator-bundle will become my.reg/foo/bar-operator-bundle:${package-dir-name} for each child directory name in the packagemanifests directory
+		--output-dir # Directory to write bundle to.
+	run # Run an Operator in a variety of environments
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		bundle # Deploy an Operator in the bundle format with OLM
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--ca-secret-name # Name of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key "cert.pem"
+			--decompression-image # image used in an init container in the registry pod to decompress the compressed catalog contents. cat and gzip binaries are expected to exist in the PATH
+			--image-pull-policy # image pull policy for the registry pod
+			--index-image # index image in which to inject bundle
+			--install-mode # install mode
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests.
+			--namespace # If present, namespace scope for this CLI request
+			--pull-secret-name # Name of image pull secret ("type: kubernetes.io/dockerconfigjson") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in
+			--security-context-config # specifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'.
+			--service-account # Service account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account
+			--skip-tls @bool # skip authentication of image registry TLS certificate when pulling a bundle image in-cluster
+			--skip-tls-verify @bool # skip TLS certificate verification for container image registries while pulling bundles
+			--timeout # Duration to wait for the command to complete before failing
+			--use-http @bool # use plain HTTP for container image registries while pulling bundles
+		bundle-upgrade # Upgrade an Operator previously installed in the bundle format with OLM
+			--plugins # plugin keys to be used for this subcommand execution
+			--verbose @bool # Enable verbose logging
+			--ca-secret-name # Name of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key "cert.pem"
+			--image-pull-policy # image pull policy for the registry pod
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests.
+			--namespace # If present, namespace scope for this CLI request
+			--pull-secret-name # Name of image pull secret ("type: kubernetes.io/dockerconfigjson") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in
+			--security-context-config # specifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'.
+			--service-account # Service account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account
+			--skip-tls @bool # skip authentication of image registry TLS certificate when pulling a bundle image in-cluster
+			--skip-tls-verify @bool # skip TLS certificate verification for container image registries while pulling bundles
+			--timeout # Duration to wait for the command to complete before failing
+			--use-http @bool # use plain HTTP for container image registries while pulling bundles
+	scorecard # Runs scorecard
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging
+		--config # path to scorecard config file
+		--kubeconfig # kubeconfig path
+		--list @bool # Option to enable listing which tests are run
+		--namespace # namespace to run the test images in
+		--output # Output format for results. Valid values: text, json, xunit
+		--pod-security # option to run scorecard with legacy pod security context
+		--selector # label selector to determine which tests are run
+		--service-account # Service account to use for tests
+		--skip-cleanup @bool # Disable resource cleanup after tests are run
+		--storage-image # Storage image to be used by the Scorecard pod
+		--test-output # Test output directory.
+		--untar-image # Untar image to be used by the Scorecard pod
+		--wait-time # seconds to wait for tests to complete. Example: 35s
+	version # Print the operator-sdk version
+		--plugins # plugin keys to be used for this subcommand execution
+		--verbose @bool # Enable verbose logging

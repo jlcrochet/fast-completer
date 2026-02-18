@@ -1,0 +1,8 @@
+[project]
+name = "strace-schema-export"
+version = "0.1.0"
+description = "Export Strace command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-strace = "export_command_tree:main"

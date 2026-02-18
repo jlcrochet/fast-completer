@@ -1,0 +1,8 @@
+[project]
+name = "mdbook-schema-export"
+version = "0.1.0"
+description = "Export Mdbook command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-mdbook = "export_command_tree:main"

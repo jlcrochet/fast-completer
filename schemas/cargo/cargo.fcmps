@@ -1,0 +1,371 @@
+# Cargo CLI schema for fast-completer
+# Generated from cargo 1.93.1
+
+cargo # Rust package manager
+	--list @bool # List installed commands
+	--explain # Provide a detailed explanation of a rustc error message
+	--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+	--quiet|-q @bool # Do not print cargo log messages
+	--color (auto|always|never) # Coloring [possible values: auto, always, never]
+	--locked @bool # Assert that `Cargo.lock` will remain unchanged
+	--offline @bool # Run without accessing the network
+	--frozen @bool # Equivalent to specifying both --locked and --offline
+	--config # Override a configuration value
+	add # Add dependencies to a manifest file
+		--no-default-features @bool # Disable the default features
+		--default-features @bool # Re-enable the default features
+		--features|-F # Space or comma separated list of features to activate
+		--optional @bool # Mark the dependency as optional
+		--no-optional @bool # Mark the dependency as required
+		--public @bool # Mark the dependency as public (unstable)
+		--no-public @bool # Mark the dependency as private (unstable)
+		--rename # Rename the dependency
+		--dry-run|-n @bool # Don't actually write the manifest
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+		--path # Filesystem path to local crate to add
+		--base # The path base to use when adding from a local crate (unstable).
+		--git # Git repository location
+		--branch # Git branch to download the crate from
+		--tag # Git tag to download the crate from
+		--rev # Git reference to download the crate from
+		--registry # Package registry for this dependency
+		--dev @bool # Add as development dependency
+		--build @bool # Add as build dependency
+		--target # Add as dependency to the given target platform
+	bench # Run the benchmarks
+		--no-run @bool # Compile, but don't run benchmarks
+		--no-fail-fast @bool # Run all benchmarks regardless of failure
+		--message-format # Error format [possible values: human, short, json,
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Benchmark all packages in the workspace
+		--exclude # Exclude packages from the benchmark
+		--all @bool # Alias for --workspace (deprecated)
+		--lib @bool # Benchmark only this package's library
+		--bins @bool # Benchmark all binaries
+		--examples @bool # Benchmark all examples
+		--tests @bool # Benchmark all targets that have `test = true` set
+		--benches @bool # Benchmark all targets that have `bench = true` set
+		--all-targets @bool # Benchmark all targets
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--profile # Build artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	build # Compile the current package
+		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
+		--message-format # Error format [possible values: human, short, json,
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Build all packages in the workspace
+		--exclude # Exclude packages from the build
+		--all @bool # Alias for --workspace (deprecated)
+		--lib @bool # Build only this package's library
+		--bins @bool # Build all binaries
+		--examples @bool # Build all examples
+		--tests @bool # Build all targets that have `test = true` set
+		--benches @bool # Build all targets that have `bench = true` set
+		--all-targets @bool # Build all targets
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--release|-r @bool # Build artifacts in release mode, with optimizations
+		--profile # Build artifacts with the specified profile
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--target-dir # Directory for all generated artifacts
+		--artifact-dir # Copy final artifacts to this directory (unstable)
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	check # Analyze the current package and report errors, but don't build object files
+		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
+		--message-format # Error format [possible values: human, short, json,
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Check all packages in the workspace
+		--exclude # Exclude packages from the check
+		--all @bool # Alias for --workspace (deprecated)
+		--lib @bool # Check only this package's library
+		--bins @bool # Check all binaries
+		--examples @bool # Check all examples
+		--tests @bool # Check all targets that have `test = true` set
+		--benches @bool # Check all targets that have `bench = true` set
+		--all-targets @bool # Check all targets
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--release|-r @bool # Check artifacts in release mode, with optimizations
+		--profile # Check artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	clean # Remove the target directory
+		--doc @bool # Whether or not to clean just the documentation directory
+		--dry-run|-n @bool # Display what would be deleted without deleting anything
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Clean artifacts of the workspace members
+		--release|-r @bool # Whether or not to clean release artifacts
+		--profile # Clean artifacts of the specified profile
+		--target-dir # Directory for all generated artifacts
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	doc # Build this package's and its dependencies' documentation
+		--open @bool # Opens the docs in a browser after the operation
+		--no-deps @bool # Don't build documentation for dependencies
+		--document-private-items @bool # Document private items
+		--message-format # Error format [possible values: human, short, json,
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Document all packages in the workspace
+		--exclude # Exclude packages from the build
+		--all @bool # Alias for --workspace (deprecated)
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--lib @bool # Document only this package's library
+		--bins @bool # Document all binaries
+		--examples @bool # Document all examples
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--release|-r @bool # Build artifacts in release mode, with optimizations
+		--profile # Build artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	init # Create a new cargo package in an existing directory
+		--vcs # Initialize a new repository for the given version control system,
+		--bin @bool # Use a binary (application) template [default]
+		--lib @bool # Use a library template
+		--edition # Edition to set for the crate generated [possible values: 2015,
+		--name # Set the resulting package name, defaults to the directory name
+		--registry # Registry to use
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	install # Install a Rust binary
+		--index # Registry index to install from
+		--registry # Registry to use
+		--git # Git URL to install the specified crate from
+		--branch # Branch to use when installing from git
+		--tag # Tag to use when installing from git
+		--rev # Specific commit to use when installing from git
+		--path # Filesystem path to local crate to install from
+		--root # Directory to install packages into
+		--force|-f @bool # Force overwriting existing crates or binaries
+		--dry-run|-n @bool # Perform all checks without installing (unstable)
+		--no-track @bool # Do not save tracking information
+		--list @bool # List all installed packages and their versions
+		--message-format # Error format [possible values: human, short, json,
+		--debug @bool # Build in debug mode (with the 'dev' profile) instead of release
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+		--bins @bool # Install all binaries
+		--examples @bool # Install all examples
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--profile # Install artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+	new # Create a new cargo package
+		--vcs # Initialize a new repository for the given version control system,
+		--bin @bool # Use a binary (application) template [default]
+		--lib @bool # Use a library template
+		--edition # Edition to set for the crate generated [possible values: 2015,
+		--name # Set the resulting package name, defaults to the directory name
+		--registry # Registry to use
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	publish # Package and upload this package to the registry
+		--dry-run|-n @bool # Perform all checks without uploading
+		--index # Registry index URL to upload the package to
+		--registry # Registry to upload the package to
+		--no-verify @bool # Don't verify the contents by building them
+		--allow-dirty @bool # Allow dirty working directories to be packaged
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Publish all packages in the workspace
+		--exclude # Don't publish specified packages
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--target-dir # Directory for all generated artifacts
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	remove # Remove dependencies from a manifest file
+		--dry-run|-n @bool # Don't actually write the manifest
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--dev @bool # Remove from dev-dependencies
+		--build @bool # Remove from build-dependencies
+		--target # Remove from target-dependencies
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	run # Run a binary or example of the local package
+		--message-format # Error format [possible values: human, short, json,
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--keep-going @bool # Do not abort the build as soon as there is an error
+		--release|-r @bool # Build artifacts in release mode, with optimizations
+		--profile # Build artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	search # Search registry for crates
+		--limit # Limit the number of results (default: 10, max: 100)
+		--index # Registry index URL to search packages in
+		--registry # Registry to search packages in
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	test # Run the tests
+		--no-run @bool # Compile, but don't run tests
+		--no-fail-fast @bool # Run all tests regardless of failure
+		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
+		--message-format # Error format [possible values: human, short, json,
+		--quiet|-q @bool # Display one character per test instead of one line
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace @bool # Test all packages in the workspace
+		--exclude # Exclude packages from the test
+		--all @bool # Alias for --workspace (deprecated)
+		--lib @bool # Test only this package's library
+		--bins @bool # Test all binaries
+		--examples @bool # Test all examples
+		--tests @bool # Test all targets that have `test = true` set
+		--benches @bool # Test all targets that have `bench = true` set
+		--all-targets @bool # Test all targets (does not include doctests)
+		--doc @bool # Test only this library's documentation
+		--features|-F # Space or comma separated list of features to activate
+		--all-features @bool # Activate all available features
+		--no-default-features @bool # Do not activate the `default` feature
+		--jobs|-j # Number of parallel jobs, defaults to # of CPUs.
+		--release|-r @bool # Build artifacts in release mode, with optimizations
+		--profile # Build artifacts with the specified profile
+		--target-dir # Directory for all generated artifacts
+		--unit-graph @bool # Output build graph in JSON (unstable)
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	uninstall # Uninstall a Rust binary
+		--root # Directory to uninstall packages from
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--bin # Only uninstall the binary NAME
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline
+	update # Update dependencies listed in Cargo.lock
+		--dry-run|-n @bool # Don't actually write the lockfile
+		--recursive @bool # Force updating all dependencies of [SPEC]... as well
+		--precise # Update [SPEC] to exactly PRECISE
+		--breaking|-b @bool # Update [SPEC] to latest SemVer-breaking version (unstable)
+		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--quiet|-q @bool # Do not print cargo log messages
+		--color (auto|always|never) # Coloring [possible values: auto, always, never]
+		--config # Override a configuration value
+		--workspace|-w @bool # Only update the workspace packages
+		--manifest-path # Path to Cargo.toml
+		--lockfile-path # Path to Cargo.lock (unstable)
+		--ignore-rust-version @bool # Ignore `rust-version` specification in packages
+		--locked @bool # Assert that `Cargo.lock` will remain unchanged
+		--offline @bool # Run without accessing the network
+		--frozen @bool # Equivalent to specifying both --locked and --offline

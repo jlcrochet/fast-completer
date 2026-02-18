@@ -1,0 +1,8 @@
+[project]
+name = "heroku-schema-export"
+version = "0.1.0"
+description = "Export Heroku CLI command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-heroku = "export_command_tree:main"

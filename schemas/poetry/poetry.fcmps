@@ -1,0 +1,186 @@
+# Poetry CLI schema for fast-completer
+# Generated from poetry 2.3.2
+
+poetry # Python package manager
+	about # Shows information about Poetry.
+	add # Adds a new dependency to pyproject.toml and installs it.
+		--group|-G # The group to add the dependency to. [default: "main"]
+		--dev|-D @bool # Add as a development dependency. (shortcut for '-G dev')
+		--editable|-e @bool # Add vcs/path dependencies as editable.
+		--extras|-E # Extras to activate for the dependency. (multiple values allowed)
+		--optional # Add as an optional dependency to an extra.
+		--python # Python version for which the dependency must be installed.
+		--platform # Platforms for which the dependency must be installed.
+		--markers # Environment markers which describe when the dependency should be installed.
+		--source # Name of the source to use to install the package.
+		--allow-prereleases @bool # Accept prereleases.
+		--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		--lock @bool # Do not perform operations (only update the lockfile).
+	build # Builds a package, as a tarball and a wheel by default.
+		--format|-f # Limit the format to either sdist or wheel.
+		--clean @bool # Clean output directory before building.
+		--local-version|-l # Add or replace a local version label to the build. (Deprecated)
+		--output|-o # Set output directory for build artifacts. Default is `dist`. [default: "dist"]
+		--config-settings|-c # Provide config settings that should be passed to backend in <key>=<value> format. (multiple values allowed)
+	cache
+		clear # Clear Poetry's caches.
+			--all @bool # Clear all entries in the cache.
+		list # List Poetry's caches.
+	check # Validates the content of the pyproject.toml file and its consistency with the poetry.lock file.
+		--lock @bool # Checks that poetry.lock exists for the current version of pyproject.toml.
+		--strict @bool # Fail if check reports warnings.
+	config # Manages configuration settings.
+		--list @bool # List configuration settings.
+		--unset @bool # Unset configuration setting.
+		--local @bool # Set/Get from the project's local configuration.
+		--migrate @bool # Migrate outdated configuration settings.
+	debug
+		info # Shows debug information.
+		resolve # Debugs dependency resolution.
+			--extras|-E # Extras to activate for the dependency. (multiple values allowed)
+			--python # Python version(s) to use for resolution.
+			--tree @bool # Display the dependency tree.
+			--install @bool # Show what would be installed for the current system.
+		tags # Shows compatible tags for your project's current active environment.
+	env
+		activate # Print the command to activate a virtual environment.
+		info # Displays information about the current environment.
+			--path|-p @bool # Only display the environment's path.
+			--executable|-e @bool # Only display the environment's python executable path.
+		list # Lists all virtualenvs associated with the current project.
+			--full-path @bool # Output the full paths of the virtualenvs.
+		remove # Remove virtual environments associated with the project.
+			--all @bool # Remove all managed virtual environments associated with the project.
+		use # Activates or creates a new virtualenv for the current project.
+	init # Creates a basic pyproject.toml file in the current directory.
+		--name # Name of the package.
+		--description # Description of the package.
+		--author # Author name of the package.
+		--python # Compatible Python versions.
+		--dependency # Package to require, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
+		--dev-dependency # Package to require for development, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
+		--license|-l # License of the package.
+	install # Installs the project dependencies.
+		--without # The dependency groups to ignore. (multiple values allowed)
+		--with # The optional dependency groups to include. (multiple values allowed)
+		--only # The only dependency groups to include. (multiple values allowed)
+		--sync @bool # Synchronize the environment with the locked packages and the specified groups. (Deprecated)
+		--no-root @bool # Do not install the root package (the current project).
+		--no-directory @bool # Do not install any directory path dependencies; useful to install dependencies without source code, e.g. for caching of Docker layers)
+		--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		--extras|-E # Extra sets of dependencies to install. (multiple values allowed)
+		--all-extras @bool # Install all extra dependencies.
+		--all-groups @bool # Install dependencies from all groups.
+		--only-root @bool # Exclude all dependencies.
+		--compile @bool # Compile Python source files to bytecode.
+	lock # Locks the project dependencies.
+		--regenerate @bool # Ignore existing lock file and overwrite it with a new lock file created from scratch.
+	new # Creates a new Python project at <path>.
+		--interactive|-i @bool # Allow interactive specification of project configuration.
+		--name # Set the resulting package name.
+		--src @bool # Use the src layout for the project. Deprecated: This is the default option now.
+		--flat @bool # Use the flat layout for the project.
+		--readme # Specify the readme file format. Default is md.
+		--description # Description of the package.
+		--author # Author name of the package.
+		--python # Compatible Python versions.
+		--dependency # Package to require, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
+		--dev-dependency # Package to require for development, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
+		--license|-l # License of the package.
+	publish # Publishes a package to a remote repository.
+		--repository|-r # The repository to publish the package to.
+		--username|-u # The username to access the repository.
+		--password|-p # The password to access the repository.
+		--cert # Certificate authority to access the repository.
+		--client-cert # Client certificate to access the repository.
+		--dist-dir # Dist directory where built artifact are stored. Default is `dist`. [default: "dist"]
+		--build @bool # Build the package before publishing.
+		--dry-run @bool # Perform all actions except upload the package.
+		--skip-existing @bool # Ignore errors from files already existing in the repository.
+	python
+		install # Install the specified Python version from the Python Standalone Builds project. (experimental feature)
+			--clean|-c @bool # Clean up installation if check fails.
+			--free-threaded|-t @bool # Use free-threaded version if available.
+			--implementation|-i # Python implementation to use. (cpython, pypy) [default: "cpython"]
+			--reinstall|-r @bool # Reinstall if installation already exists.
+		list # Shows Python versions available for this environment. (experimental feature)
+			--all|-a @bool # List all versions, including those available for download.
+			--free-threaded|-t @bool # List only free-threaded Python versions.
+			--implementation|-i # Python implementation to search for.
+			--managed|-m @bool # List only Poetry managed Python versions.
+		remove # Remove the specified Python version if managed by Poetry. (experimental feature)
+			--free-threaded|-t @bool # Use free-threaded version if available.
+			--implementation|-i # Python implementation to use. (cpython, pypy) [default: "cpython"]
+	remove # Removes a package from the project dependencies.
+		--group|-G # The group to remove the dependency from.
+		--dev|-D @bool # Remove a package from the development dependencies. (shortcut for '-G dev')
+		--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		--lock @bool # Do not perform operations (only update the lockfile).
+	run # Runs a command in the appropriate environment.
+	search # Searches for packages on remote repositories.
+	self
+		add # Add additional packages to Poetry's runtime environment.
+			--editable|-e @bool # Add vcs/path dependencies as editable.
+			--extras|-E # Extras to activate for the dependency. (multiple values allowed)
+			--source # Name of the source to use to install the package.
+			--allow-prereleases @bool # Accept prereleases.
+			--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		install # Install locked packages (incl. addons) required by this Poetry installation.
+			--sync @bool # Synchronize the environment with the locked packages and the specified groups. (Deprecated)
+			--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		lock # Lock the Poetry installation's system requirements.
+			--regenerate @bool # Ignore existing lock file and overwrite it with a new lock file created from scratch.
+		remove # Remove additional packages from Poetry's runtime environment.
+			--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		show # Show packages from Poetry's runtime environment.
+			--addons @bool # List only add-on packages installed.
+			--tree|-t @bool # List the dependencies as a tree.
+			--latest|-l @bool # Show the latest version.
+			--outdated|-o @bool # Show the latest version but only for packages that are outdated.
+			--format|-f # Specify the output format (`json` or `text`). Default is `text`. `json` cannot be combined with the --tree option. [default: "text"]
+			plugins # Shows information about the currently installed plugins.
+		sync # Sync Poetry's own environment according to the locked packages (incl. addons) required by this Poetry installation.
+			--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		update # Updates Poetry to the latest version.
+			--preview @bool # Allow the installation of pre-release versions.
+			--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+	show # Shows information about packages.
+		--without # The dependency groups to ignore. (multiple values allowed)
+		--with # The optional dependency groups to include. (multiple values allowed)
+		--only # The only dependency groups to include. (multiple values allowed)
+		--tree|-t @bool # List the dependencies as a tree.
+		--why @bool # When showing the full list, or a --tree for a single package, display whether they are a direct dependency or required by other packages
+		--latest|-l @bool # Show the latest version.
+		--outdated|-o @bool # Show the latest version but only for packages that are outdated.
+		--all|-a @bool # Show all packages (even those not compatible with current system).
+		--top-level|-T @bool # Show only top-level dependencies.
+		--no-truncate @bool # Do not truncate the output based on the terminal width.
+		--format|-f # Specify the output format (`json` or `text`). Default is `text`. `json` cannot be combined with the --tree option. [default: "text"]
+	source
+		add # Add source configuration for project.
+			--priority|-p # Set the priority of this source. One of: primary, supplemental, explicit. Defaults to primary, but will switch to supplemental in a later release.
+		remove # Remove source configured for the project.
+		show # Show information about sources configured for the project.
+	sync # Update the project's environment according to the lockfile.
+		--without # The dependency groups to ignore. (multiple values allowed)
+		--with # The optional dependency groups to include. (multiple values allowed)
+		--only # The only dependency groups to include. (multiple values allowed)
+		--no-root @bool # Do not install the root package (the current project).
+		--no-directory @bool # Do not install any directory path dependencies; useful to install dependencies without source code, e.g. for caching of Docker layers)
+		--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		--extras|-E # Extra sets of dependencies to install. (multiple values allowed)
+		--all-extras @bool # Install all extra dependencies.
+		--all-groups @bool # Install dependencies from all groups.
+		--only-root @bool # Exclude all dependencies.
+		--compile @bool # Compile Python source files to bytecode.
+	update # Update the dependencies as according to the pyproject.toml file.
+		--without # The dependency groups to ignore. (multiple values allowed)
+		--with # The optional dependency groups to include. (multiple values allowed)
+		--only # The only dependency groups to include. (multiple values allowed)
+		--sync @bool # Synchronize the environment with the locked packages and the specified groups.
+		--dry-run @bool # Output the operations but do not execute anything (implicitly enables --verbose).
+		--lock @bool # Do not perform operations (only update the lockfile).
+	version # Shows the version of the project or bumps it when a valid bump rule is provided.
+		--short|-s @bool # Output the version number only
+		--dry-run @bool # Do not update pyproject.toml file
+		--next-phase @bool # Increment the phase of the current version

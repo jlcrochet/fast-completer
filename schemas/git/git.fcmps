@@ -1,0 +1,601 @@
+# git CLI schema for fast-completer
+# Generated from git 2.53.0
+
+git # Distributed version control
+	add # Add file contents to the index
+		--unified|-U # generate diffs with <n> lines context
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+	am # Apply a series of patches from a mailbox
+		--no-verify|-n @bool # bypass pre-applypatch and applypatch-msg hooks
+		--verify @bool # opposite of --no-verify
+		--quoted-cr # pass it through git-mailinfo
+		--continue @bool # continue applying patches after resolving a conflict
+		--resolved|-r @bool # synonyms for --continue
+		--skip @bool # skip the current patch
+		--abort @bool # restore the original branch and abort the patching operation
+		--quit @bool # abort the patching operation but keep HEAD where it is
+		--show-current-patch # show the patch being applied
+		--retry @bool # try to apply current patch again
+		--allow-empty @bool # record the empty patch as an empty commit
+		--empty # how to handle empty patches
+	annotate # Annotate file lines with commit information
+		--diff-algorithm # choose a diff algorithm
+	apply # Apply a patch to files and/or to the index
+		--exclude # don't apply changes matching the given path
+		--include # apply changes matching the given path
+		--no-add @bool # ignore additions made by the patch
+		--add @bool # opposite of --no-add
+		--ours @bool # for conflicts, use our version
+		--theirs @bool # for conflicts, use their version
+		--union @bool # for conflicts, use a union version
+	archimport # Import a GNU Arch repository into Git
+	archive # Create an archive of files from a named tree
+		--mtime # set modification time of archive entries
+	attributes # Defining attributes per path
+	backfill # Download missing objects in a partial clone
+		--min-batch-size # Minimum number of objects to request at a time
+	bisect # Use binary search to find the commit that introduced a bug
+	blame # Show what revision and author last modified each line of a file
+		--diff-algorithm # choose a diff algorithm
+	branch # List, create, or delete branches
+		--remotes|-r @bool # act on remote-tracking branches
+		--contains # print only branches that contain the commit
+		--no-contains # print only branches that don't contain the commit
+		--all|-a @bool # list both remote-tracking and local branches
+		--merged # print only branches that are merged
+		--no-merged # print only branches that are not merged
+	bugreport # Collect information for user to file a bug report
+	bundle # Move objects and refs by archive
+	cat-file # Provide contents or details of repository objects
+		--batch-all-objects @bool # with --batch[-check]: ignores stdin, batches all known objects
+		--textconv @bool # run textconv on object's content
+		--filters @bool # run filters on object's content
+	check-attr # Display gitattributes information
+	check-ignore # Debug gitignore / exclude files
+		--no-index @bool # ignore index when checking
+		--index @bool # opposite of --no-index
+	check-mailmap # Show canonical names and email addresses of contacts
+	check-ref-format # Ensures that a reference name is well formed
+	checkout # Switch branches or restore working tree files
+		--ours|-2 @bool # checkout our version for unmerged files
+		--theirs|-3 @bool # checkout their version for unmerged files
+		--unified|-U # generate diffs with <n> lines context
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+	checkout-index # Copy files from the index to the working tree
+		--no-create|-n @bool # don't checkout new files
+		--create @bool # opposite of --no-create
+		--stage # copy out the files from named stage
+	cherry # Find commits yet to be applied to upstream
+	cherry-pick # Apply the changes introduced by some existing commits
+		--quit @bool # end revert or cherry-pick sequence
+		--continue @bool # resume revert or cherry-pick sequence
+		--abort @bool # cancel revert or cherry-pick sequence
+		--skip @bool # skip current commit and continue
+		--no-commit|-n @bool # don't automatically commit
+		--commit @bool # opposite of --no-commit
+		--empty # how to handle commits that become empty
+	citool # Graphical alternative to git-commit
+	clean # Remove untracked files from the working tree
+		--exclude|-e # add <pattern> to ignore rules
+	cli # Git command-line interface and conventions
+	clone # Clone a repository into a new directory
+		--no-checkout|-n @bool # don't create a checkout
+		--checkout @bool # opposite of --no-checkout
+		--no-hardlinks @bool # don't use local hardlinks, always copy
+		--hardlinks @bool # opposite of --no-hardlinks
+		--ipv4|-4 @bool # use IPv4 addresses only
+		--ipv6|-6 @bool # use IPv6 addresses only
+	column # Display data in columns
+		--raw-mode # layout to use
+	commit # Record changes to the repository
+		--trailer # add custom trailer(s)
+		--unified|-U # generate diffs with <n> lines context
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+		--no-verify|-n @bool # bypass pre-commit and commit-msg hooks
+		--verify @bool # opposite of --no-verify
+		--no-post-rewrite @bool # bypass post-rewrite hook
+		--post-rewrite @bool # opposite of --no-post-rewrite
+	commit-graph # Write and verify Git commit-graph files
+	commit-tree # Create a new commit object
+	config # Get and set repository or global options
+	count-objects # Count unpacked number of objects and their disk consumption
+	credential # Retrieve and store user credentials
+	credential-cache # Helper to temporarily store passwords in memory
+	credential-store # Helper to store credentials on disk
+	cvsexportcommit # Export a single commit to a CVS checkout
+	cvsimport # Salvage your data out of another SCM people love to hate
+	cvsserver # A CVS server emulator for Git
+	daemon # A really simple server for Git repositories
+	describe # Give an object a human readable name based on an available ref
+	diagnose # Generate a zip archive of diagnostic information
+		--mode # specify the content of the diagnostic archive
+	diff # Show changes between commits, commit and working tree, etc
+		--patch-with-raw @bool # output both a patch and the diff-raw format.
+		--stat @bool # show diffstat instead of patch.
+		--numstat @bool # show numeric diffstat instead of patch.
+		--patch-with-stat @bool # output a patch and prepend its diffstat.
+		--name-only @bool # show only names of changed files.
+		--full-index @bool # show full object name on index lines.
+		--abbrev # abbreviate object names in diff-tree header and diff-raw.
+		--find-copies-harder @bool # try unchanged files as candidate for copy detection.
+		--pickaxe-all @bool # show all files diff when -S is used and hit is found.
+	diff-files # Compares files in the working tree and the index
+		--patch-with-raw @bool # output both a patch and the diff-raw format.
+		--stat @bool # show diffstat instead of patch.
+		--numstat @bool # show numeric diffstat instead of patch.
+		--patch-with-stat @bool # output a patch and prepend its diffstat.
+		--name-only @bool # show only names of changed files.
+		--full-index @bool # show full object name on index lines.
+		--abbrev # abbreviate object names in diff-tree header and diff-raw.
+		--find-copies-harder @bool # try unchanged files as candidate for copy detection.
+		--pickaxe-all @bool # show all files diff when -S is used and hit is found.
+	diff-index # Compare a tree to the working tree or index
+		--patch-with-raw @bool # output both a patch and the diff-raw format.
+		--stat @bool # show diffstat instead of patch.
+		--numstat @bool # show numeric diffstat instead of patch.
+		--patch-with-stat @bool # output a patch and prepend its diffstat.
+		--name-only @bool # show only names of changed files.
+		--full-index @bool # show full object name on index lines.
+		--abbrev # abbreviate object names in diff-tree header and diff-raw.
+		--find-copies-harder @bool # try unchanged files as candidate for copy detection.
+		--pickaxe-all @bool # show all files diff when -S is used and hit is found.
+	diff-pairs # Compare the content and mode of provided blob pairs
+		--patch|-p @bool # generate patch
+		--no-patch|-s @bool # suppress diff output
+		--raw @bool # generate the diff in raw format
+		--patch-with-raw @bool # synonym for '-p --raw'
+		--patch-with-stat @bool # synonym for '-p --stat'
+		--numstat @bool # machine friendly --stat
+		--shortstat @bool # output only the last line of --stat
+		--cumulative @bool # synonym for --dirstat=cumulative
+		--check @bool # warn if changes introduce conflict markers or whitespace errors
+		--summary @bool # condensed summary such as creations, renames and mode changes
+		--name-only @bool # show only names of changed files
+		--name-status @bool # show only names and status of changed files
+		--stat-width # generate diffstat with a given width
+		--stat-name-width # generate diffstat with a given name width
+		--stat-graph-width # generate diffstat with a given graph width
+		--stat-count # generate diffstat with limited lines
+		--binary @bool # output a binary diff that can be applied
+		--ws-error-highlight # highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+		--line-prefix # prepend an additional prefix to every line of output
+		--no-prefix @bool # do not show any source or destination prefix
+		--default-prefix @bool # use default prefixes a/ and b/
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+		--output-indicator-new # specify the character to indicate a new line instead of '+'
+		--output-indicator-old # specify the character to indicate an old line instead of '-'
+		--output-indicator-context # specify the character to indicate a context instead of ' '
+		--irreversible-delete|-D @bool # omit the preimage for deletes
+		--no-renames @bool # disable rename detection
+		--minimal @bool # produce the smallest possible diff
+		--ignore-all-space|-w @bool # ignore whitespace when comparing lines
+		--ignore-space-change|-b @bool # ignore changes in amount of whitespace
+		--ignore-cr-at-eol @bool # ignore carrier-return at the end of line
+		--ignore-blank-lines @bool # ignore changes whose lines are all blank
+		--patience @bool # generate diff using the "patience diff" algorithm
+		--histogram @bool # generate diff using the "histogram diff" algorithm
+		--diff-algorithm # choose a diff algorithm
+		--anchored # generate diff using the "anchored diff" algorithm
+		--word-diff-regex # use <regex> to decide what a word is
+		--ita-invisible-in-index @bool # hide 'git add -N' entries from the index
+		--ita-visible-in-index @bool # treat 'git add -N' entries as real in the index
+		--pickaxe-all @bool # show all changes in the changeset with -S or -G
+		--pickaxe-regex @bool # treat <string> in -S as extended POSIX regular expression
+		--rotate-to # show the change in the specified path first
+		--skip-to # skip the output to the specified path
+		--find-object # look for differences that change the number of occurrences of the specified object
+		--diff-filter # select files by diff type
+		--max-depth # maximum tree depth to recurse
+		--output # output to a specific file
+	diff-tree # Compares the content and mode of blobs found via two tree objects
+		--cc @bool # show combined diff for merge commits removing uninteresting hunks
+		--combined-all-paths @bool # show name of file in all parents for combined diffs
+		--root @bool # include the initial commit as diff against /dev/null
+		--patch-with-raw @bool # output both a patch and the diff-raw format.
+		--stat @bool # show diffstat instead of patch.
+		--numstat @bool # show numeric diffstat instead of patch.
+		--patch-with-stat @bool # output a patch and prepend its diffstat.
+		--name-only @bool # show only names of changed files.
+		--full-index @bool # show full object name on index lines.
+		--abbrev # abbreviate object names in diff-tree header and diff-raw.
+		--find-copies-harder @bool # try unchanged files as candidate for copy detection.
+		--pickaxe-all @bool # show all files diff when -S is used and hit is found.
+	difftool # Show changes using common diff tools
+		--no-prompt|-y @bool # do not prompt before launching a diff tool
+		--no-index @bool # passed to `diff`
+		--index @bool # opposite of --no-index
+	fast-export # Git data exporter
+		--no-data @bool # skip output of blob data
+		--data @bool # opposite of --no-data
+		--anonymize-map # convert <from> to <to> in anonymized output
+	fast-import # Backend for fast Git data importers
+	fetch # Download objects and refs from another repository
+		--unshallow @bool # convert to a complete repository
+		--refetch @bool # re-fetch without negotiating common commits
+		--refmap # specify fetch refmap
+		--ipv4|-4 @bool # use IPv4 addresses only
+		--ipv6|-6 @bool # use IPv6 addresses only
+	fetch-pack # Receive missing objects from another repository
+	filter-branch # Rewrite branches
+	fmt-merge-msg # Produce a merge commit message
+	for-each-ref # Output information on each ref
+		--merged # print only refs that are merged
+		--no-merged # print only refs that are not merged
+		--contains # print only refs which contain the commit
+		--no-contains # print only refs which don't contain the commit
+	for-each-repo # Run a Git command on a list of repositories
+	format-bundle # The bundle file format
+	format-chunk # Chunk-based file formats
+	format-commit-graph # Git commit-graph format
+	format-index # Git index format
+	format-pack # Git pack format
+	format-patch # Prepare patches for e-mail submission
+		--no-numbered|-N @bool # use [PATCH] even with multiple patches
+		--subject-prefix # use [<prefix>] instead of [PATCH]
+		--output-directory|-o # store resulting files in <dir>
+		--keep-subject|-k @bool # don't strip/add [PATCH]
+		--no-binary @bool # don't output binary diffs
+		--binary @bool # opposite of --no-binary
+		--no-stat|-p @bool # show patch format instead of default (patch + stat)
+	format-signature # Git cryptographic signature formats
+	fsck # Verifies the connectivity and validity of the objects in the database
+	gc # Cleanup unnecessary files and optimize the local repository
+		--max-cruft-size # with --cruft, limit the size of new cruft packs
+	get-tar-commit-id # Extract commit ID from an archive created using git-archive
+	gitk # The Git repository browser
+	gitweb # Git web interface (web frontend to Git repositories)
+	grep # Print lines matching a pattern
+		--no-index @bool # find in contents not managed by git
+		--index @bool # opposite of --no-index
+		--max-depth # descend at most <n> levels
+		--before-context|-B # show <n> context lines before matches
+		--after-context|-A # show <n> context lines after matches
+		--and @bool # combine patterns specified with -e
+		--or @bool # --not
+		--not @bool # (
+	gui # A portable graphical interface to Git
+	hash-object # Compute object ID and optionally create an object from a file
+		--no-filters @bool # store file as is without filters
+		--filters @bool # opposite of --no-filters
+	hook # Run git hooks
+	hooks # Hooks used by Git
+	http-backend # Server side implementation of Git over HTTP
+	ignore # Specifies intentionally untracked files to ignore
+	imap-send # Send a collection of patches from stdin to an IMAP folder
+	index-pack # Build pack index file for an existing packed archive
+	init # Create an empty Git repository or reinitialize an existing one
+	instaweb # Instantly browse your working repository in gitweb
+	interpret-trailers # Add or parse structured information in commit messages
+		--parse @bool # alias for --only-trailers --only-input --unfold
+		--no-divider @bool # do not treat "---" as the end of input
+		--divider @bool # opposite of --no-divider
+	last-modified # EXPERIMENTAL: Show when files were last modified
+	log # Show commit logs
+		--clear-decorations @bool # clear all previously-defined decoration filters
+	ls-files # Show information about files in the index and the working tree
+		--exclude|-x # skip files matching pattern
+		--exclude-from|-X # read exclude patterns from <file>
+		--exclude-standard @bool # add the standard git exclusions
+		--full-name @bool # make the output relative to the project top directory
+		--format # format to use for the output
+	ls-remote # List references in a remote repository
+	ls-tree # List the contents of a tree object
+		--long|-l @bool # include object size
+		--name-only @bool # list only filenames
+		--name-status @bool # list only filenames
+		--object-only @bool # list only objects
+		--format # format to use for the output
+	mailinfo # Extracts patch and authorship from a single e-mail message
+		--quoted-cr # action when quoted CR is found
+	mailmap # Map author/committer names and/or E-Mail addresses
+	mailsplit # Simple UNIX mbox splitter program
+	maintenance # Run tasks to optimize Git repository data
+	merge # Join two or more development histories together
+		--ff-only @bool # abort if fast-forward is not possible
+		--file|-F # read message from file
+		--no-verify @bool # bypass pre-merge-commit and commit-msg hooks
+		--verify @bool # opposite of --no-verify
+	merge-base # Find as good common ancestors as possible for a merge
+		--octopus @bool # find ancestors for a single n-way merge
+		--independent @bool # list revs not reachable from others
+		--is-ancestor @bool # is the first one ancestor of the other?
+		--fork-point @bool # find where <commit> forked from reflog of <ref>
+	merge-file # Run a three-way file merge
+		--diff-algorithm # choose a diff algorithm
+	merge-index # Run a merge for files needing merging
+	merge-one-file # The standard helper program to use with git-merge-index
+	merge-tree # Perform merge without touching index or working tree
+		--write-tree @bool # do a real merge instead of a trivial merge
+		--trivial-merge @bool # do a trivial merge only
+		--quiet @bool # suppress all output; only exit status wanted
+		--name-only @bool # list filenames without modes/oids/stages
+		--allow-unrelated-histories @bool # allow merging unrelated histories
+		--stdin @bool # perform multiple merges, one per line of input
+	mergetool # Run merge conflict resolution tools to resolve merge conflicts
+	mktag # Creates a tag object with extra validation
+	mktree # Build a tree-object from ls-tree formatted text
+	modules # Defining submodule properties
+	multi-pack-index # Write and verify multi-pack-indexes
+	mv # Move or rename a file, a directory, or a symlink
+	name-rev # Find symbolic names for given revs
+	notes # Add or inspect object notes
+	p4 # Import from and submit to Perforce repositories
+	pack-objects # Create a packed archive of objects
+		--max-pack-size # maximum size of each output pack file
+		--window-memory # limit pack window by memory in addition to object limit
+		--unpacked @bool # limit the objects to those that are not yet packed
+		--all @bool # include objects reachable from any reference
+		--reflog @bool # include objects referred by reflog entries
+		--indexed-objects @bool # include objects referred to by the index
+		--missing # handling for missing objects
+	pack-redundant # Find redundant pack files
+	pack-refs # Pack heads and tags for efficient repository access
+	patch-id # Compute unique ID for a patch
+		--unstable @bool # use the unstable patch ID algorithm
+		--stable @bool # use the stable patch ID algorithm
+		--verbatim @bool # don't strip whitespace from the patch
+	protocol-capabilities # Protocol v0 and v1 capabilities
+	protocol-common # Things common to various protocols
+	protocol-http # Git HTTP-based protocols
+	protocol-pack # How packs are transferred over-the-wire
+	protocol-v2 # Git Wire Protocol, Version 2
+	prune # Prune all unreachable objects from the object database
+	prune-packed # Remove extra objects that are already in pack files
+	pull # Fetch from and integrate with another repository or a local branch
+		--ff-only @bool # abort if fast-forward is not possible
+		--unshallow @bool # convert to a complete repository
+		--refmap # specify fetch refmap
+	push # Update remote refs along with associated objects
+		--no-verify @bool # bypass pre-push hook
+		--verify @bool # opposite of --no-verify
+		--ipv4|-4 @bool # use IPv4 addresses only
+		--ipv6|-6 @bool # use IPv6 addresses only
+	quiltimport # Applies a quilt patchset onto the current branch
+	range-diff # Compare two commit ranges (e.g. two versions of a branch)
+		--no-dual-color @bool # use simple diff colors
+		--dual-color @bool # opposite of --no-dual-color
+		--patch|-p @bool # generate patch
+		--no-patch|-s @bool # suppress diff output
+		--raw @bool # generate the diff in raw format
+		--patch-with-raw @bool # synonym for '-p --raw'
+		--patch-with-stat @bool # synonym for '-p --stat'
+		--numstat @bool # machine friendly --stat
+		--shortstat @bool # output only the last line of --stat
+		--cumulative @bool # synonym for --dirstat=cumulative
+		--check @bool # warn if changes introduce conflict markers or whitespace errors
+		--summary @bool # condensed summary such as creations, renames and mode changes
+		--name-only @bool # show only names of changed files
+		--name-status @bool # show only names and status of changed files
+		--stat-width # generate diffstat with a given width
+		--stat-name-width # generate diffstat with a given name width
+		--stat-graph-width # generate diffstat with a given graph width
+		--stat-count # generate diffstat with limited lines
+		--binary @bool # output a binary diff that can be applied
+		--ws-error-highlight # highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+		--line-prefix # prepend an additional prefix to every line of output
+		--no-prefix @bool # do not show any source or destination prefix
+		--default-prefix @bool # use default prefixes a/ and b/
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+		--output-indicator-new # specify the character to indicate a new line instead of '+'
+		--output-indicator-old # specify the character to indicate an old line instead of '-'
+		--output-indicator-context # specify the character to indicate a context instead of ' '
+		--irreversible-delete|-D @bool # omit the preimage for deletes
+		--no-renames @bool # disable rename detection
+		--minimal @bool # produce the smallest possible diff
+		--ignore-all-space|-w @bool # ignore whitespace when comparing lines
+		--ignore-space-change|-b @bool # ignore changes in amount of whitespace
+		--ignore-cr-at-eol @bool # ignore carrier-return at the end of line
+		--ignore-blank-lines @bool # ignore changes whose lines are all blank
+		--patience @bool # generate diff using the "patience diff" algorithm
+		--histogram @bool # generate diff using the "histogram diff" algorithm
+		--diff-algorithm # choose a diff algorithm
+		--anchored # generate diff using the "anchored diff" algorithm
+		--word-diff-regex # use <regex> to decide what a word is
+		--ita-invisible-in-index @bool # hide 'git add -N' entries from the index
+		--ita-visible-in-index @bool # treat 'git add -N' entries as real in the index
+		--pickaxe-all @bool # show all changes in the changeset with -S or -G
+		--pickaxe-regex @bool # treat <string> in -S as extended POSIX regular expression
+		--rotate-to # show the change in the specified path first
+		--skip-to # skip the output to the specified path
+		--find-object # look for differences that change the number of occurrences of the specified object
+		--diff-filter # select files by diff type
+		--max-depth # maximum tree depth to recurse
+		--output # output to a specific file
+	read-tree # Reads tree information into the index
+		--exclude-per-directory # allow explicitly ignored files to be overwritten
+		--no-sparse-checkout @bool # skip applying sparse checkout filter
+		--sparse-checkout @bool # opposite of --no-sparse-checkout
+	rebase # Reapply commits on top of another base tip
+		--no-verify @bool # allow pre-rebase hook to run
+		--verify @bool # opposite of --no-verify
+		--no-stat|-n @bool # do not show diffstat of what changed upstream
+		--stat @bool # opposite of --no-stat
+		--no-ff @bool # cherry-pick all commits, even if unchanged
+		--ff @bool # opposite of --no-ff
+		--continue @bool # continue
+		--skip @bool # skip current patch and continue
+		--abort @bool # abort and check out the original branch
+		--quit @bool # abort but keep HEAD where it is
+		--edit-todo @bool # edit the todo list during an interactive rebase
+		--show-current-patch @bool # show the patch file being applied or merged
+		--apply @bool # use apply strategies to rebase
+		--merge|-m @bool # use merging strategies to rebase
+		--interactive|-i @bool # let the user edit the list of commits to rebase
+		--empty # how to handle commits that become empty
+	reflog # Manage reflog information
+	refs # Low-level access to refs
+	remote # Manage set of tracked repositories
+	repack # Pack unpacked objects in a repository
+		--combine-cruft-below-size # with --cruft, only repack cruft packs smaller than this
+		--max-cruft-size # with --cruft, limit the size of new cruft packs
+		--max-pack-size # maximum size of each packfile
+	replace # Create, list, delete refs to replace objects
+		--list|-l @bool # list replace refs
+		--delete|-d @bool # delete replace refs
+		--edit|-e @bool # edit existing object
+		--graft|-g @bool # change a commit's parents
+		--convert-graft-file @bool # convert existing graft file
+	replay # EXPERIMENTAL: Replay commits on a new base, works with bare repos too
+	repo # Retrieve information about the repository
+	repository-layout # Git Repository Layout
+	request-pull # Generates a summary of pending changes
+	rerere # Reuse recorded resolution of conflicted merges
+	reset # Set `HEAD` or the index to a known state
+		--no-refresh @bool # skip refreshing the index after reset
+		--refresh @bool # opposite of --no-refresh
+		--mixed @bool # reset HEAD and index
+		--soft @bool # reset only HEAD
+		--hard @bool # reset HEAD, index and working tree
+		--merge @bool # reset HEAD, index and working tree
+		--keep @bool # reset HEAD but keep local changes
+		--unified|-U # generate diffs with <n> lines context
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+	restore # Restore working tree files
+		--ours|-2 @bool # checkout our version for unmerged files
+		--theirs|-3 @bool # checkout their version for unmerged files
+		--unified|-U # generate diffs with <n> lines context
+		--inter-hunk-context # show context between diff hunks up to the specified number of lines
+	rev-list # Lists commit objects in reverse chronological order
+		--max-count # --max-age=<epoch>
+		--max-age # --min-age=<epoch>
+		--min-age # --sparse
+		--sparse @bool # --no-merges
+		--no-merges @bool # --min-parents=<n>
+		--min-parents # --no-min-parents
+		--no-min-parents @bool # --max-parents=<n>
+		--max-parents # --no-max-parents
+		--no-max-parents @bool # --remove-empty
+		--remove-empty @bool # --all
+		--all @bool # --branches
+		--branches @bool # --tags
+		--tags @bool # --remotes
+		--remotes @bool # --stdin
+		--stdin @bool # --exclude-hidden=[fetch|receive|uploadpack]
+		--exclude-hidden # --quiet
+		--quiet @bool
+		--topo-order @bool # --date-order
+		--date-order @bool # --reverse
+		--reverse @bool
+		--parents @bool # --children
+		--children @bool # --objects | --objects-edge
+		--disk-usage # --unpacked
+		--unpacked @bool # --header | --pretty
+		--abbrev-commit @bool # --left-right
+		--left-right @bool # --count
+		--count @bool # -z
+		--bisect @bool # --bisect-vars
+		--bisect-vars @bool # --bisect-all
+		--bisect-all @bool
+	rev-parse # Pick out and massage parameters
+	revert # Revert some existing commits
+		--quit @bool # end revert or cherry-pick sequence
+		--continue @bool # resume revert or cherry-pick sequence
+		--abort @bool # cancel revert or cherry-pick sequence
+		--skip @bool # skip current commit and continue
+		--no-commit|-n @bool # don't automatically commit
+		--commit @bool # opposite of --no-commit
+	revisions # Specifying revisions and ranges for Git
+	rm # Remove files from the working tree and from the index
+	scalar # A tool for managing large Git repositories
+	send-email # Send a collection of patches as emails
+		--from # * Email From:
+		--subject # * Email "Subject:"
+		--reply-to # * Email "Reply-To:"
+		--in-reply-to # * Email "In-Reply-To:"
+		--compose @bool # * Open an editor for introduction.
+		--compose-encoding # * Encoding to assume for introduction.
+		--8bit-encoding # * Encoding to assume 8bit mails if undeclared
+		--transfer-encoding # * Transfer encoding to use (quoted-printable, 8bit, base64)
+		--envelope-sender # * Email envelope sender.
+		--sendmail-cmd # * Command to run to send email.
+		--smtp-server # * Outgoing SMTP server to use. The port
+		--smtp-server-option # * Outgoing SMTP server option to use.
+		--smtp-server-port # * Outgoing SMTP server port.
+		--smtp-user # * Username for SMTP-AUTH.
+		--smtp-pass # * Password for SMTP-AUTH; not necessary.
+		--smtp-encryption # * tls or ssl; anything else disables.
+		--smtp-ssl @bool # * Deprecated. Use `--smtp-encryption ssl`.
+		--smtp-ssl-cert-path # * Path to ca-certificates (either directory or file).
+		--smtp-domain # * The domain name sent to HELO/EHLO handshake
+		--smtp-auth # * Space-separated list of allowed AUTH mechanisms, or
+		--no-smtp-auth @bool # * Disable SMTP authentication. Shorthand for
+		--smtp-debug # * Disable, enable Net::SMTP debug.
+		--imap-sent-folder # * IMAP folder where a copy of the emails should be sent.
+		--batch-size # * send max <int> message per connection.
+		--relogin-delay # * delay <int> seconds between two successive login.
+		--identity # * Use the sendemail.<id> options.
+		--to-cmd # * Email To: via `<str> $patch_path`.
+		--cc-cmd # * Email Cc: via `<str> $patch_path`.
+		--header-cmd # * Add headers via `<str> $patch_path`.
+		--no-header-cmd @bool # * Disable any header command in use.
+		--suppress-cc # * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
+		--confirm # * Confirm recipients before sending;
+		--quiet @bool # * Output one line of info per email.
+		--dry-run @bool # * Don't actually send the emails.
+		--force @bool # * Send even if safety checks would prevent it.
+		--dump-aliases @bool # * Dump configured aliases and exit.
+		--translate-aliases @bool # * Translate aliases read from standard
+	send-pack # Push objects over Git protocol to another repository
+	sh-i18n # Git's i18n setup code for shell scripts
+	sh-setup # Common Git shell script setup code
+	shortlog # Summarize 'git log' output
+	show # Show various types of objects
+		--clear-decorations @bool # clear all previously-defined decoration filters
+	show-branch # Show branches and their commits
+		--no-name @bool # suppress naming strings
+		--name @bool # opposite of --no-name
+		--topo-order @bool # show commits in topological order
+		--date-order @bool # topologically sort, maintaining date order where possible
+	show-index # Show packed archive index
+	show-ref # List references in a local repository
+	sparse-checkout # Reduce your working tree to a subset of tracked files
+	stash # Stash the changes in a dirty working directory away
+	status # Show the working tree status
+		--no-renames @bool # do not detect renames
+		--renames @bool # opposite of --no-renames
+	stripspace # Remove unnecessary whitespace
+		--strip-comments|-s @bool # skip and remove all lines starting with comment character
+		--comment-lines|-c @bool # prepend comment character and space to each line
+	submodule # Initialize, update or inspect submodules
+	svn # Bidirectional operation between a Subversion repository and Git
+	switch # Switch branches
+	symbolic-ref # Read, modify and delete symbolic refs
+	tag # Create, list, delete or verify tags
+		--list|-l @bool # list tag names
+		--delete|-d @bool # delete tags
+		--verify|-v @bool # verify tags
+		--message|-m # tag message
+		--trailer # add custom trailer(s)
+		--contains # print only tags that contain the commit
+		--no-contains # print only tags that don't contain the commit
+		--merged # print only tags that are merged
+		--no-merged # print only tags that are not merged
+	unpack-file # Creates a temporary file with a blob's contents
+	unpack-objects # Unpack objects from a packed archive
+	update-index # Register file contents in the working tree to the index
+		--refresh @bool # refresh stat information
+		--really-refresh @bool # like --refresh, but ignore assume-unchanged setting
+		--chmod # override the executable bit of the listed files
+		--assume-unchanged @bool # mark files as "not changing"
+		--skip-worktree @bool # mark files as "index-only"
+		--no-skip-worktree @bool # clear skip-worktree bit
+		--stdin @bool # read list of paths to be updated from standard input
+		--index-info @bool # add entries from standard input to the index
+		--unresolve @bool # repopulate stages #2 and #3 for the listed paths
+		--again|-g @bool # only update entries that differ from HEAD
+		--clear-resolve-undo @bool # (for porcelains) forget saved unresolved conflicts
+		--fsmonitor-valid @bool # mark files as fsmonitor valid
+		--no-fsmonitor-valid @bool # clear fsmonitor valid bit
+	update-ref # Update the object name stored in a ref safely
+		--no-deref @bool # update <refname> not the one it points to
+		--deref @bool # opposite of --no-deref
+	update-server-info # Update auxiliary info file to help dumb servers
+	var # Show a Git logical variable
+	verify-commit # Check the GPG signature of commits
+	verify-pack # Validate packed Git archive files
+	verify-tag # Check the GPG signature of tags
+	version # Display version information about Git
+	whatchanged # Show logs with differences each commit introduces
+		--clear-decorations @bool # clear all previously-defined decoration filters
+	worktree # Manage multiple working trees
+	write-tree # Create a tree object from the current index

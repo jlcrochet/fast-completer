@@ -1,0 +1,8 @@
+[project]
+name = "curl-schema-export"
+version = "0.1.0"
+description = "Export Curl command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-curl = "export_command_tree:main"

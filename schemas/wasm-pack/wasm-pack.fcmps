@@ -1,0 +1,48 @@
+# Wasm-pack CLI schema for fast-completer
+# Generated from wasm-pack 0.14.0
+
+wasm-pack # WebAssembly packaging
+	--verbose...|-v @bool # Log verbosity is based off the number of v used
+	--quiet|-q @bool # No output printed to stdout
+	--log-level (info|warn|error) # The maximum level of messages that should be logged by wasm-pack. [possible values: info, warn, error] [default: info]
+	build # 🏗️  build your npm package!
+		--scope|-s # The npm scope to use in package.json, if any
+		--mode|-m (no-install|normal|force) # Sets steps to be run. [possible values: no-install, normal, force] [default: normal]
+		--no-typescript @bool # By default a *.d.ts file is generated for the generated JS file, but this flag will disable generating this TypeScript file
+		--weak-refs @bool # Enable usage of the JS weak references proposal
+		--reference-types @bool # Enable usage of WebAssembly reference types
+		--target|-t (bundler|nodejs|web|no-modules|deno) # Sets the target environment. [possible values: bundler, nodejs, web, no-modules, deno] [default: bundler]
+		--debug @bool # Deprecated. Renamed to `--dev`
+		--dev @bool # Create a development build. Enable debug info, and disable optimizations
+		--release @bool # Create a release build. Enable optimizations and disable debug info
+		--profiling @bool # Create a profiling build. Enable optimizations and debug info
+		--profile # User-defined profile with --profile flag
+		--out-dir|-d # Sets the output directory with a relative path [default: pkg]
+		--out-name # Sets the output file names. Defaults to package name
+		--no-pack @bool # Option to not generate a package.json
+		--no-opt @bool # Option to skip optimization with wasm-opt
+	login # 👤  Add an npm registry user account! (aliases: adduser, add-user)
+		--registry|-r # Default: 'https://registry.npmjs.org/'. The base URL of the npm package registry. If scope is also specified, this registry will only be used for packages with that scope. scope defaults to the scope of the project directory you're currently in, if any
+		--scope|-s # Default: none. If specified, the user and login credentials given will be associated with the specified scope
+		--auth-type|-t # Default: 'legacy'. Type: 'legacy', 'sso', 'saml', 'oauth'. What authentication strategy to use with adduser/login. Some npm registries (for example, npmE) might support alternative auth strategies besides classic username/password entry in legacy npm
+	new # 🐑 create a new project with a template
+		--template # The URL to the template [default: https://github.com/drager/wasm-pack-template]
+		--mode|-m (no-install|normal|force) # Should we install or check the presence of binary tools. [possible values: no-install, normal, force] [default: normal]
+	pack # 🍱  create a tar of your npm package but don't publish!
+		--pkg-dir|-d # The name of the output directory where the npm package is stored [default: pkg]
+	publish # 🎆  pack up your npm package and publish!
+		--target|-t (bundler|nodejs|web|no-modules) # Sets the target environment. [possible values: bundler, nodejs, web, no-modules] [default: bundler]
+		--access|-a # The access level for the package to be published
+		--tag # The distribution tag being used for publishing. See https://docs.npmjs.com/cli/dist-tag
+		--pkg-dir|-d # The name of the output directory where the npm package is stored [default: pkg]
+	test # 👩‍🔬  test your wasm!
+		--node @bool # Run the tests in Node.js
+		--firefox @bool # Run the tests in Firefox. This machine must have a Firefox installation. If the `geckodriver` WebDriver client is not on the `$PATH`, and not specified with `--geckodriver`, then `wasm-pack` will download a local copy
+		--geckodriver # The path to the `geckodriver` WebDriver client for testing in Firefox. Implies `--firefox`
+		--chrome @bool # Run the tests in Chrome. This machine must have a Chrome installation. If the `chromedriver` WebDriver client is not on the `$PATH`, and not specified with `--chromedriver`, then `wasm-pack` will download a local copy
+		--chromedriver # The path to the `chromedriver` WebDriver client for testing in Chrome. Implies `--chrome`
+		--safari @bool # Run the tests in Safari. This machine must have a Safari installation, and the `safaridriver` WebDriver client must either be on the `$PATH` or specified explicitly with the `--safaridriver` flag. `wasm-pack` cannot download the `safaridriver` WebDriver client for you
+		--safaridriver # The path to the `safaridriver` WebDriver client for testing in Safari. Implies `--safari`
+		--headless @bool # When running browser tests, run the browser in headless mode without any UI or windows
+		--mode|-m (no-install|normal) # Sets steps to be run. [possible values: no-install, normal] [default: normal]
+		--release|-r @bool # Build with the release profile

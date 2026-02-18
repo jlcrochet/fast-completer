@@ -1,0 +1,29 @@
+# Bacon CLI schema for fast-completer
+# Generated from bacon 3.22.0
+
+bacon # Rust background checker
+	--prefs @bool # Print the path to the prefs file
+	--headless @bool # Run without user interface
+	-s|--summary @bool # Start in summary mode
+	-S|--no-summary @bool # Start in full mode
+	-w|--wrap @bool # Start with lines wrapped
+	-W|--no-wrap @bool # Start with lines not wrapped
+	--reverse @bool # Start with GUI vertical order reversed
+	--no-reverse @bool # Start with standard GUI order
+	--help-line @bool # Display a help line
+	--no-help-line @bool # Do not display a help line
+	-l|--list-jobs @bool # List available jobs
+	--offline @bool # Don't access the network
+	--init @bool # Create a bacon.toml file
+	--listen @bool # Listen on a unix socket for commands
+	--no-listen @bool # Don't listen on a unix socket
+	--send # Send a command on bacon's unix socket
+	-j|--job # Job to launch
+	--no-default-features @bool # Ignore features of both the package and the bacon job
+	--features # Comma separated list of features
+	--all-features @bool # Activate all available features
+	-e|--export-locations @bool # Export locations in .bacon-locations file
+	-E|--no-export-locations @bool # Don't export locations
+	--watch # Path to watch
+	--project # Project to run jobs on
+	--config-toml # Configuration passed as a TOML string

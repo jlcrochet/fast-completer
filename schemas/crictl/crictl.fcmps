@@ -1,0 +1,113 @@
+# Crictl CLI schema for fast-completer
+# Generated from crictl 1.35.0
+
+crictl # Container runtime interface CLI
+	--enable-tracing @bool # Enable OpenTelemetry tracing. (default: false)
+	--profile-cpu # Write a pprof CPU profile to the provided path.
+	--profile-mem # Write a pprof memory profile to the provided path.
+	--tracing-endpoint # Address to which the gRPC tracing collector will send spans to. (default: "127.0.0.1:4317")
+	--tracing-sampling-rate-per-million # Number of samples to collect per million OpenTelemetry spans. Set to 1000000 or -1 to always sample. (default: -1)
+	attach # Attach to a running container
+		--tls-ca # Path to the streaming TLS CA certificate
+		--tls-cert # Path to the streaming TLS certificate
+		--tls-key # Path to the streaming TLS key
+	checkpoint # Checkpoint one or more running containers
+	config # Get, set and list crictl configuration options
+		--get # Show the option value
+		--list @bool # Show all option value (default: false)
+	create # Create a new container
+		--auth # Use AUTH_STRING for accessing the registry. AUTH_STRING is a base64 encoded 'USERNAME[:PASSWORD]'
+		--creds # Use USERNAME[:PASSWORD] for accessing the registry
+		--no-pull @bool # Do not pull the image on container creation (overrides pull-image-on-create=true in config) (default: false)
+		--username # Use USERNAME for accessing the registry. The password will be requested on the command line
+		--with-pull @bool # Pull the image on container creation (overrides pull-image-on-create=false in config) (default: false)
+		jsonschema
+	events # Stream the events of containers
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	exec # Run a command in a running container
+		--image # Exec command for all containers matching this container image filter
+		--name # Exec command for all containers matching this name filter regular expression pattern
+		--state # Exec command for all containers matching this container state filter
+		--timeout # Timeout in seconds (default: 0)
+		--tls-ca # Path to the streaming TLS CA certificate
+		--tls-cert # Path to the streaming TLS certificate
+		--tls-key # Path to the streaming TLS key
+	imagefsinfo # Return image filesystem info
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	images # List images
+		--digests @bool # Show digests (default: false)
+		--no-trunc @bool # Show output without truncating the ID (default: false)
+		--pinned @bool # Show whether the image is pinned or not (default: false)
+	info # Display information of the container runtime
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	inspect # Display the status of one or more containers
+		--image # Filter by container image
+		--name # Filter by container name regular expression pattern
+		--namespace # Filter by pod namespace regular expression pattern
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	inspecti # Return the status of one or more images
+		--name # Filter by image name
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	inspectp # Display the status of one or more pods
+		--name # Filter by pod name regular expression pattern
+		--namespace # Filter by pod namespace regular expression pattern
+		--template # The template string is only used when output is go-template; The Template format is golang template
+	logs # Fetch the logs of a container
+		--limit-bytes # Maximum bytes of logs to return. Defaults to no limit (default: -1)
+		--since # Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
+		--tail # Number of lines to show from the end of the logs. Defaults to all (default: -1)
+	metricdescs # List metric descriptors. Returns information about the metrics available through the CRI.
+	metricsp # List pod metrics. Metrics are unstructured key/value pairs gathered by CRI meant to replace cAdvisor's /metrics/cadvisor endpoint.
+	pods # List pods
+		--id # filter by pod id
+		--name # Filter by pod name regular expression pattern
+		--namespace # Filter by pod namespace regular expression pattern
+		--no-trunc @bool # Show output without truncating the ID (default: false)
+	port-forward # Forward local port to a pod
+		--tls-ca # Path to the streaming TLS CA certificate
+		--tls-cert # Path to the streaming TLS certificate
+		--tls-key # Path to the streaming TLS key
+	ps # List containers
+		--id # Filter by container id
+		--image # Filter by container image
+		--name # Filter by container name regular expression pattern
+		--namespace # Filter by pod namespace regular expression pattern
+		--no-trunc @bool # Show output without truncating the ID (default: false)
+	pull # Pull an image from a registry
+		--auth # Use AUTH_STRING for accessing the registry. AUTH_STRING is a base64 encoded 'USERNAME[:PASSWORD]' [$CRICTL_AUTH]
+		--creds # Use USERNAME[:PASSWORD] for accessing the registry [$CRICTL_CREDS]
+		--pod-config # Use pod-config.[json|yaml] to override the pull c
+		jsonschema
+	rm # Remove one or more containers
+	rmi # Remove one or more images
+	rmp # Remove one or more pods
+	run # Run a new container inside a sandbox
+		--auth # Use AUTH_STRING for accessing the registry. AUTH_STRING is a base64 encoded 'USERNAME[:PASSWORD]'
+		--creds # Use USERNAME[:PASSWORD] for accessing the registry
+		--no-pull @bool # Do not pull the image (overrides disable-pull-on-run=false in config) (default: false)
+		--username # Use USERNAME for accessing the registry. password will be requested
+		--with-pull @bool # Pull the image (overrides disable-pull-on-run=true in config) (default: false)
+		jsonschema
+	runp # Run a new pod
+		jsonschema
+	runtime-config # Retrieve the container runtime configuration
+	start # Start one or more created containers
+	stats # List container(s) resource usage statistics
+		--id # Filter by container id
+	statsp # List pod statistics. Stats represent a structured API that will fulfill the Kubelet's /stats/summary endpoint.
+		--id # Filter by pod id
+	stop # Stop one or more running containers
+	stopp # Stop one or more running pods
+	update # Update one or more running containers
+		--cpu-count # (Windows only) Number of CPUs available to the container (default: 0)
+		--cpu-maximum # (Windows only) Portion of CPU cycles specified as a percentage * 100 (default: 0)
+		--cpu-period # CPU CFS period to be used for hardcapping (in usecs). 0 to use system default (default: 0)
+		--cpu-quota # CPU CFS hardcap limit (in usecs). Allowed cpu time in a given period (default: 0)
+		--cpu-share # CPU shares (relative weight vs. other containers) (default: 0)
+		--cpuset-cpus # CPU(s) to use
+		--cpuset-mems # Memory node(s) to use
+		--memory # Memory limit (in bytes) (default: 0)
+		--oom-score-adj # OOM Killer score to use
+	update-runtime-config # Update the runtime configuration
+	v1.35.0
+	version # Display runtime version information

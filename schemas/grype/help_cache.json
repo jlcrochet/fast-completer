@@ -1,0 +1,510 @@
+{
+  "grype --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype --version": {
+    "returncode": 0,
+    "stdout": "grype 0.108.0\n"
+  },
+  "grype __complete ": {
+    "returncode": 0,
+    "stdout": "completion\tGenerate a shell completion for Grype (listing local docker images)\nconfig\tshow the grype configuration\ndb\tvulnerability database operations\nexplain\tAsk grype to explain a set of findings\nhelp\tHelp about any command\nversion\tshow version information\ncompletion failed\n:1\n"
+  },
+  "grype __complete --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\nfish\nzsh\n:4\n"
+  },
+  "grype __complete completion --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for completion\n:4\n"
+  },
+  "grype __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for completion\n:4\n"
+  },
+  "grype __complete completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion failed completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion failed completion failed completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed completion failed completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed completion failed completion failed ": {
+    "returncode": 0,
+    "stdout": "completion failed\n:1\n"
+  },
+  "grype __complete completion failed completion failed completion failed completion failed completion failed completion failed --": {
+    "returncode": 0,
+    "stdout": "--add-cpes-if-none\tgenerate CPEs for packages with no CPE data\n--by-cve\torient results by CVE instead of the original vulnerability ID when possible\n--config\tgrype configuration file(s) to use\n--distro\tdistro to match against in the format: <distro>[-:@]<version>\n--exclude\texclude paths from being scanned using a glob expression\n--fail-on\tset the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n--file\tfile to write the default report output to (default is STDOUT)\n--from\tspecify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n--help\thelp for grype\n--ignore-states\tignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n--name\tset the name of the target being analyzed\n--only-fixed\tignore matches for vulnerabilities that are not fixed\n--only-notfixed\tignore matches for vulnerabilities that are fixed\n--output\treport output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n--platform\tan optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--scope\tselection of layers to analyze, options=[squashed all-layers deep-squashed]\n--show-suppressed\tshow suppressed/ignored vulnerabilities in the output (only supported with table output format)\n--sort-by\tsort the match results with the given strategy, options=[package severity epss risk kev vulnerability]\n--template\tspecify the path to a Go template file (requires 'template' output to be selected)\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--version\tversion for grype\n--vex\ta list of VEX documents to consider when producing scanning results\n:4\n"
+  },
+  "grype __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for completion\n:4\n"
+  },
+  "grype __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for completion\n:4\n"
+  },
+  "grype __complete config ": {
+    "returncode": 0,
+    "stdout": "locations\tshows all locations and the order in which grype will look for a configuration file\n:4\n"
+  },
+  "grype __complete config --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for config\n--load\tload and validate the grype configuration\n:4\n"
+  },
+  "grype __complete config locations ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete config locations --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--all\tinclude every file extension supported\n--help\thelp for locations\n:4\n"
+  },
+  "grype __complete db ": {
+    "returncode": 0,
+    "stdout": "check\tCheck to see if there is a database update available\ndelete\tDelete the vulnerability database\nimport\tImport a vulnerability database or archive from a local file or URL\nlist\tList all DBs available according to the listing URL\nproviders\tList vulnerability providers that are in the database\nsearch\tSearch the DB for vulnerabilities or affected packages\nstatus\tDisplay database status and metadata\nupdate\tDownload and install the latest vulnerability database\n:4\n"
+  },
+  "grype __complete db --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for db\n:4\n"
+  },
+  "grype __complete db check ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db check --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for check\n--output\tformat to display results (available=[text, json])\n:4\n"
+  },
+  "grype __complete db delete ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db delete --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for delete\n:4\n"
+  },
+  "grype __complete db import ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db import --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for import\n:4\n"
+  },
+  "grype __complete db list ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db list --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for list\n--output\tformat to display results (available=[text, raw, json])\n:4\n"
+  },
+  "grype __complete db providers ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db providers --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for providers\n--output\tformat to display results (available=[table, json])\n:4\n"
+  },
+  "grype __complete db search ": {
+    "returncode": 0,
+    "stdout": "vuln\tSearch for vulnerabilities within the DB (supports DB schema v6+ only)\n:4\n"
+  },
+  "grype __complete db search --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--broad-cpe-matching\tallow for specific package CPE attributes to match with '*' values on the vulnerability\n--distro\trefine to results with the given operating system (format: 'name', 'name[-:@]version', 'name[-:@]maj.min', 'name[-:@]codename')\n--ecosystem\tecosystem of the package to search within\n--fixed-state\tonly show vulnerabilities with the given fix state (fixed, not-fixed, unknown, wont-fix)\n--help\thelp for search\n--limit\tlimit the number of results returned, use 0 for no limit\n--modified-after\tonly show vulnerabilities originally published or modified since the given date (format: YYYY-MM-DD)\n--output\tformat to display results (available=[table, json])\n--pkg\tpackage name/CPE/PURL to search for\n--provider\tonly show vulnerabilities from the given provider\n--published-after\tonly show vulnerabilities originally published after the given date (format: YYYY-MM-DD)\n--vuln\tonly show results for the given vulnerability ID\n:4\n"
+  },
+  "grype __complete db search vuln ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db search vuln --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--fixed-state\tonly show vulnerabilities with the given fix state (fixed, not-fixed, unknown, wont-fix)\n--help\thelp for vuln\n--limit\tlimit the number of results returned, use 0 for no limit\n--modified-after\tonly show vulnerabilities originally published or modified since the given date (format: YYYY-MM-DD)\n--output\tformat to display results (available=[table, json])\n--provider\tonly show vulnerabilities from the given provider\n--published-after\tonly show vulnerabilities originally published after the given date (format: YYYY-MM-DD)\n:4\n"
+  },
+  "grype __complete db status ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db status --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for status\n--output\tformat to display results (available=[text, json])\n:4\n"
+  },
+  "grype __complete db update ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete db update --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for update\n:4\n"
+  },
+  "grype __complete explain ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete explain --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for explain\n--id\tCVE IDs to explain\n:4\n"
+  },
+  "grype __complete help ": {
+    "returncode": 0,
+    "stdout": "completion\tGenerate a shell completion for Grype (listing local docker images)\nconfig\tshow the grype configuration\ndb\tvulnerability database operations\nexplain\tAsk grype to explain a set of findings\nhelp\tHelp about any command\nversion\tshow version information\n:4\n"
+  },
+  "grype __complete help --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help completion ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help config ": {
+    "returncode": 0,
+    "stdout": "locations\tshows all locations and the order in which grype will look for a configuration file\n:4\n"
+  },
+  "grype __complete help config --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help config locations ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help config locations --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db ": {
+    "returncode": 0,
+    "stdout": "check\tCheck to see if there is a database update available\ndelete\tDelete the vulnerability database\nimport\tImport a vulnerability database or archive from a local file or URL\nlist\tList all DBs available according to the listing URL\nproviders\tList vulnerability providers that are in the database\nsearch\tSearch the DB for vulnerabilities or affected packages\nstatus\tDisplay database status and metadata\nupdate\tDownload and install the latest vulnerability database\n:4\n"
+  },
+  "grype __complete help db --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db check ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db check --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db delete --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db import ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db import --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db list ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db list --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db providers ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db providers --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db search ": {
+    "returncode": 0,
+    "stdout": "vuln\tSearch for vulnerabilities within the DB (supports DB schema v6+ only)\n:4\n"
+  },
+  "grype __complete help db search --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db search vuln ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db search vuln --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db status ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db status --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help db update ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help db update --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help explain ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help explain --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help help --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete help version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "grype __complete help version --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for help\n:4\n"
+  },
+  "grype __complete version ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "grype __complete version --": {
+    "returncode": 0,
+    "stdout": "--config\tgrype configuration file(s) to use\n--profile\tconfiguration profiles to use\n--quiet\tsuppress all logging output\n--verbose\tincrease verbosity (-v = info, -vv = debug)\n--help\thelp for version\n--output\tthe format to show the results (allowable: [text json])\n:4\n"
+  },
+  "grype completion --help": {
+    "returncode": 0,
+    "stdout": "To load completions (docker image list):\n\nBash:\n\n$ source <(grype completion bash)\n\n# To load completions for each session, execute once:\nLinux:\n  $ grype completion bash > /etc/bash_completion.d/grype\nMacOS:\n  $ grype completion bash > /usr/local/etc/bash_completion.d/grype\n\nZsh:\n\n# If shell completion is not already enabled in your environment you will need\n# to enable it.  You can execute the following once:\n\n$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n# To load completions for each session, execute once:\n$ grype completion zsh > \"${fpath[1]}/_grype\"\n\n# You will need to start a new shell for this setup to take effect.\n\nFish:\n\n$ grype completion fish | source\n\n# To load completions for each session, execute once:\n$ grype completion fish > ~/.config/fish/completions/grype.fish\n\nUsage:\n  grype completion [bash|zsh|fish]\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype completion bash --help": {
+    "returncode": 0,
+    "stdout": "To load completions (docker image list):\n\nBash:\n\n$ source <(grype completion bash)\n\n# To load completions for each session, execute once:\nLinux:\n  $ grype completion bash > /etc/bash_completion.d/grype\nMacOS:\n  $ grype completion bash > /usr/local/etc/bash_completion.d/grype\n\nZsh:\n\n# If shell completion is not already enabled in your environment you will need\n# to enable it.  You can execute the following once:\n\n$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n# To load completions for each session, execute once:\n$ grype completion zsh > \"${fpath[1]}/_grype\"\n\n# You will need to start a new shell for this setup to take effect.\n\nFish:\n\n$ grype completion fish | source\n\n# To load completions for each session, execute once:\n$ grype completion fish > ~/.config/fish/completions/grype.fish\n\nUsage:\n  grype completion [bash|zsh|fish]\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion failed completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion failed completion failed completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion failed completion failed completion failed completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion failed completion failed completion failed completion failed completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion failed completion failed completion failed completion failed completion failed completion failed --help": {
+    "returncode": 0,
+    "stdout": "A vulnerability scanner for container images, filesystems, and SBOMs.\n\nSupports the following image sources:\n    grype yourrepo/yourimage:tag             defaults to using images from a Docker daemon\n    grype path/to/yourproject                a Docker tar, OCI tar, OCI directory, SIF container, or generic filesystem directory\n\nYou can also explicitly specify the scheme to use:\n    grype podman:yourrepo/yourimage:tag          explicitly use the Podman daemon\n    grype docker:yourrepo/yourimage:tag          explicitly use the Docker daemon\n    grype docker-archive:path/to/yourimage.tar   use a tarball from disk for archives created from \"docker save\"\n    grype oci-archive:path/to/yourimage.tar      use a tarball from disk for OCI archives (from Podman or otherwise)\n    grype oci-dir:path/to/yourimage              read directly from a path on disk for OCI layout directories (from Skopeo or otherwise)\n    grype singularity:path/to/yourimage.sif      read directly from a Singularity Image Format (SIF) container on disk\n    grype dir:path/to/yourproject                read directly from a path on disk (any directory)\n    grype file:path/to/yourfile                  read directly from a file on disk\n    grype sbom:path/to/syft.json                 read Syft JSON from path on disk\n    grype registry:yourrepo/yourimage:tag        pull image directly from a registry (no container runtime required)\n    grype purl:path/to/purl/file                 read a newline separated file of package URLs from a path on disk\n    grype PURL                                   read a single package PURL directly (e.g. pkg:apk/openssl@3.2.1?distro=alpine-3.20.3)\n    grype CPE                                    read a single CPE directly (e.g. cpe:2.3:a:openssl:openssl:3.0.14:*:*:*:*:*)\n\nYou can also pipe in Syft JSON directly:\n\tsyft yourimage:tag -o json | grype\n\nUsage:\n  grype [IMAGE] [flags]\n  grype [command]\n\nAvailable Commands:\n  completion  Generate a shell completion for Grype (listing local docker images)\n  config      show the grype configuration\n  db          vulnerability database operations\n  explain     Ask grype to explain a set of findings\n  help        Help about any command\n  version     show version information\n\nFlags:\n      --add-cpes-if-none       generate CPEs for packages with no CPE data\n      --by-cve                 orient results by CVE instead of the original vulnerability ID when possible\n  -c, --config stringArray     grype configuration file(s) to use\n      --distro string          distro to match against in the format: <distro>[-:@]<version>\n      --exclude stringArray    exclude paths from being scanned using a glob expression\n  -f, --fail-on string         set the return code to 2 if a vulnerability is found with a severity >= the given severity, options=[negligible low medium high critical]\n      --file string            file to write the default report output to (default is STDOUT)\n      --from stringArray       specify the source behavior to use (e.g. docker, registry, podman, oci-dir, ...)\n  -h, --help                   help for grype\n      --ignore-states string   ignore matches for vulnerabilities with specified comma separated fix states, options=[fixed not-fixed unknown wont-fix]\n      --name string            set the name of the target being analyzed\n      --only-fixed             ignore matches for vulnerabilities that are not fixed\n      --only-notfixed          ignore matches for vulnerabilities that are fixed\n  -o, --output stringArray     report output formatter, formats=[json table cyclonedx cyclonedx-json sarif template], deprecated formats=[embedded-cyclonedx-vex-json embedded-cyclonedx-vex-xml]\n      --platform string        an optional platform specifier for container image sources (e.g. 'linux/arm64', 'linux/arm64/v8', 'arm64', 'linux')\n      --profile stringArray    configuration profiles to use\n  -q, --quiet                  suppress all logging output\n  -s, --scope string           selection of layers to analyze, options=[squashed all-layers deep-squashed] (default \"squashed\")\n      --show-suppressed        show suppressed/ignored vulnerabilities in the output (only supported with table output format)\n      --sort-by string         sort the match results with the given strategy, options=[package severity epss risk kev vulnerability] (default \"risk\")\n  -t, --template string        specify the path to a Go template file (requires 'template' output to be selected)\n  -v, --verbose count          increase verbosity (-v = info, -vv = debug)\n      --version                version for grype\n      --vex stringArray        a list of VEX documents to consider when producing scanning results\n\nUse \"grype [command] --help\" for more information about a command.\n"
+  },
+  "grype completion fish --help": {
+    "returncode": 0,
+    "stdout": "To load completions (docker image list):\n\nBash:\n\n$ source <(grype completion bash)\n\n# To load completions for each session, execute once:\nLinux:\n  $ grype completion bash > /etc/bash_completion.d/grype\nMacOS:\n  $ grype completion bash > /usr/local/etc/bash_completion.d/grype\n\nZsh:\n\n# If shell completion is not already enabled in your environment you will need\n# to enable it.  You can execute the following once:\n\n$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n# To load completions for each session, execute once:\n$ grype completion zsh > \"${fpath[1]}/_grype\"\n\n# You will need to start a new shell for this setup to take effect.\n\nFish:\n\n$ grype completion fish | source\n\n# To load completions for each session, execute once:\n$ grype completion fish > ~/.config/fish/completions/grype.fish\n\nUsage:\n  grype completion [bash|zsh|fish]\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype completion zsh --help": {
+    "returncode": 0,
+    "stdout": "To load completions (docker image list):\n\nBash:\n\n$ source <(grype completion bash)\n\n# To load completions for each session, execute once:\nLinux:\n  $ grype completion bash > /etc/bash_completion.d/grype\nMacOS:\n  $ grype completion bash > /usr/local/etc/bash_completion.d/grype\n\nZsh:\n\n# If shell completion is not already enabled in your environment you will need\n# to enable it.  You can execute the following once:\n\n$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n# To load completions for each session, execute once:\n$ grype completion zsh > \"${fpath[1]}/_grype\"\n\n# You will need to start a new shell for this setup to take effect.\n\nFish:\n\n$ grype completion fish | source\n\n# To load completions for each session, execute once:\n$ grype completion fish > ~/.config/fish/completions/grype.fish\n\nUsage:\n  grype completion [bash|zsh|fish]\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype config --help": {
+    "returncode": 0,
+    "stdout": "show the grype configuration\n\nUsage:\n  grype config [flags]\n  grype config [command]\n\nAvailable Commands:\n  locations   shows all locations and the order in which grype will look for a configuration file\n\nFlags:\n  -h, --help   help for config\n      --load   load and validate the grype configuration\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n\nUse \"grype config [command] --help\" for more information about a command.\n"
+  },
+  "grype config locations --help": {
+    "returncode": 0,
+    "stdout": "shows all locations and the order in which grype will look for a configuration file\n\nUsage:\n  grype config locations [flags]\n\nFlags:\n      --all    include every file extension supported\n  -h, --help   help for locations\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db --help": {
+    "returncode": 0,
+    "stdout": "vulnerability database operations\n\nUsage:\n  grype db [command]\n\nAvailable Commands:\n  check       Check to see if there is a database update available\n  delete      Delete the vulnerability database\n  import      Import a vulnerability database or archive from a local file or URL\n  list        List all DBs available according to the listing URL\n  providers   List vulnerability providers that are in the database\n  search      Search the DB for vulnerabilities or affected packages\n  status      Display database status and metadata\n  update      Download and install the latest vulnerability database\n\nFlags:\n  -h, --help   help for db\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n\nUse \"grype db [command] --help\" for more information about a command.\n"
+  },
+  "grype db check --help": {
+    "returncode": 0,
+    "stdout": "Check to see if there is a database update available\n\nUsage:\n  grype db check [flags]\n\nFlags:\n  -h, --help            help for check\n  -o, --output string   format to display results (available=[text, json]) (default \"text\")\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db delete --help": {
+    "returncode": 0,
+    "stdout": "Delete the vulnerability database\n\nUsage:\n  grype db delete [flags]\n\nFlags:\n  -h, --help   help for delete\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db import --help": {
+    "returncode": 0,
+    "stdout": "import a vulnerability database archive from a local FILE or URL.\nDB archives can be obtained from \"https://grype.anchore.io/databases\" (or running `db list`). If the URL has a `checksum` query parameter with a fully qualified digest (e.g. 'sha256:abc728...') then the archive/DB will be verified against this value.\n\nUsage:\n  grype db import FILE | URL [flags]\n\nFlags:\n  -h, --help   help for import\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db list --help": {
+    "returncode": 0,
+    "stdout": "List all DBs available according to the listing URL\n\nUsage:\n  grype db list [flags]\n\nFlags:\n  -h, --help            help for list\n  -o, --output string   format to display results (available=[text, raw, json]) (default \"text\")\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db providers --help": {
+    "returncode": 0,
+    "stdout": "List vulnerability providers that are in the database\n\nUsage:\n  grype db providers [flags]\n\nFlags:\n  -h, --help            help for providers\n  -o, --output string   format to display results (available=[table, json]) (default \"table\")\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db search --help": {
+    "returncode": 0,
+    "stdout": "Search the DB for vulnerabilities or affected packages\n\nUsage:\n  grype db search [flags]\n  grype db search [command]\n\nExamples:\n\n  Search for affected packages by vulnerability ID:\n\n    $ grype db search --vuln ELSA-2023-12205\n\n  Search for affected packages by package name:\n\n    $ grype db search --pkg log4j\n\n  Search for affected packages by package name, filtering down to a specific vulnerability:\n\n    $ grype db search --pkg log4j --vuln CVE-2021-44228\n\n  Search for affected packages by PURL (note: version is not considered):\n\n    $ grype db search --pkg 'pkg:rpm/redhat/openssl' # or: '--ecosystem rpm --pkg openssl\n\n  Search for affected packages by CPE (note: version/update is not considered):\n\n    $ grype db search --pkg 'cpe:2.3:a:jetty:jetty_http_server:*:*:*:*:*:*:*:*'\n    $ grype db search --pkg 'cpe:/a:jetty:jetty_http_server'\n\nAvailable Commands:\n  vuln        Search for vulnerabilities within the DB (supports DB schema v6+ only)\n\nFlags:\n      --broad-cpe-matching        allow for specific package CPE attributes to match with '*' values on the vulnerability\n      --distro stringArray        refine to results with the given operating system (format: 'name', 'name[-:@]version', 'name[-:@]maj.min', 'name[-:@]codename')\n      --ecosystem string          ecosystem of the package to search within\n      --fixed-state stringArray   only show vulnerabilities with the given fix state (fixed, not-fixed, unknown, wont-fix)\n  -h, --help                      help for search\n      --limit int                 limit the number of results returned, use 0 for no limit (default 5000)\n      --modified-after string     only show vulnerabilities originally published or modified since the given date (format: YYYY-MM-DD)\n  -o, --output string             format to display results (available=[table, json]) (default \"table\")\n      --pkg stringArray           package name/CPE/PURL to search for\n      --provider stringArray      only show vulnerabilities from the given provider\n      --published-after string    only show vulnerabilities originally published after the given date (format: YYYY-MM-DD)\n      --vuln stringArray          only show results for the given vulnerability ID\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n\nUse \"grype db search [command] --help\" for more information about a command.\n"
+  },
+  "grype db search vuln --help": {
+    "returncode": 0,
+    "stdout": "Search for vulnerabilities within the DB (supports DB schema v6+ only)\n\nUsage:\n  grype db search vuln ID... [flags]\n\nAliases:\n  vuln, vulnerability, vulnerabilities, vulns\n\nFlags:\n      --fixed-state stringArray   only show vulnerabilities with the given fix state (fixed, not-fixed, unknown, wont-fix)\n  -h, --help                      help for vuln\n      --limit int                 limit the number of results returned, use 0 for no limit (default 5000)\n      --modified-after string     only show vulnerabilities originally published or modified since the given date (format: YYYY-MM-DD)\n  -o, --output string             format to display results (available=[table, json]) (default \"table\")\n      --provider stringArray      only show vulnerabilities from the given provider\n      --published-after string    only show vulnerabilities originally published after the given date (format: YYYY-MM-DD)\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db status --help": {
+    "returncode": 0,
+    "stdout": "Display database status and metadata\n\nUsage:\n  grype db status [flags]\n\nFlags:\n  -h, --help            help for status\n  -o, --output string   format to display results (available=[text, json]) (default \"text\")\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype db update --help": {
+    "returncode": 0,
+    "stdout": "Download and install the latest vulnerability database\n\nUsage:\n  grype db update [flags]\n\nFlags:\n  -h, --help   help for update\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype explain --help": {
+    "returncode": 0,
+    "stdout": "Ask grype to explain a set of findings\n\nUsage:\n  grype explain --id [VULNERABILITY ID] [flags]\n\nFlags:\n  -h, --help             help for explain\n      --id stringArray   CVE IDs to explain\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help config --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help config locations --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db check --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db import --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db list --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db providers --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db search --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db search vuln --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db status --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help db update --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help explain --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type grype help [path to command] for full details.\n\nUsage:\n  grype help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  },
+  "grype version --help": {
+    "returncode": 0,
+    "stdout": "show version information\n\nUsage:\n  grype version [flags]\n\nFlags:\n  -h, --help            help for version\n  -o, --output string   the format to show the results (allowable: [text json]) (default \"text\")\n\nGlobal Flags:\n  -c, --config stringArray    grype configuration file(s) to use\n      --profile stringArray   configuration profiles to use\n  -q, --quiet                 suppress all logging output\n  -v, --verbose count         increase verbosity (-v = info, -vv = debug)\n"
+  }
+}

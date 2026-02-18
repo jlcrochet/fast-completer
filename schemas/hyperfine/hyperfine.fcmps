@@ -1,0 +1,29 @@
+# Hyperfine CLI schema for fast-completer
+# Generated from hyperfine 1.20.0
+
+hyperfine # Benchmarking tool
+	--warmup|-w # Perform NUM warmup runs before the actual benchmark. This can be used
+	--min-runs|-m # Perform at least NUM runs for each command (default: 10).
+	--max-runs|-M # Perform at most NUM runs for each command. By default, there is no
+	--runs|-r # Perform exactly NUM runs for each command. If this option is not
+	--setup|-s # Execute CMD before each set of timing runs. This is useful for
+	--reference # The reference command for the relative comparison of results. If this
+	--reference-name # Give a meaningful name to the reference command.
+	--prepare|-p # Execute CMD before each timing run. This is useful for clearing disk
+	--conclude|-C # Execute CMD after each timing run. This is useful for killing
+	--cleanup|-c # Execute CMD after the completion of all benchmarking runs for each
+	--parameter-step-size|-D # This argument requires --parameter-scan to be specified as well.
+	--shell|-S # Set the shell to use for executing benchmarked commands. This can be
+	--ignore-failure # --style <TYPE>
+	--style # Set output style type (default: auto). Set this to 'basic' to disable
+	--sort # Specify the sort order of the speed comparison summary and the
+	--time-unit|-u # Set the time unit to be used. Possible values: microsecond,
+	--export-asciidoc # Export the timing summary statistics as an AsciiDoc table to the given
+	--export-csv # Export the timing summary statistics as CSV to the given FILE. If you
+	--export-json # Export the timing summary statistics and timings of individual runs as
+	--export-markdown # Export the timing summary statistics as a Markdown table to the given
+	--export-orgmode # Export the timing summary statistics as an Emacs org-mode table to the
+	--show-output @bool # Print the stdout and stderr of the benchmark instead of suppressing
+	--output # Control where the output of the benchmark is redirected. Note that
+	--input # Control where the input of the benchmark comes from.
+	--command-name|-n # Give a meaningful name to a command. This can be specified multiple

@@ -9,6 +9,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 /*
  * Blob format constants - shared between generator and reader.
@@ -47,6 +48,22 @@
 
 /* Header flags */
 #define HEADER_FLAG_NO_DESCRIPTIONS 0x01
+
+/* Shared structs used by both generator and runtime */
+typedef struct {
+    uint32_t start;
+    uint32_t count;
+} Slice32;
+
+typedef struct {
+    uint32_t param_idx;
+} LongIndexEntry;
+
+typedef struct {
+    uint8_t short_ch;
+    uint8_t _pad[3];
+    uint32_t param_idx;
+} ShortIndexEntry;
 
 /* Description mode for blob generation */
 typedef enum {

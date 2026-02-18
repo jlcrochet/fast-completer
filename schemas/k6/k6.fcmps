@@ -1,0 +1,552 @@
+# K6 CLI schema for fast-completer
+# Generated from k6 1.6.1
+
+k6 # Load testing tool
+	--address @bool # address for the REST API server
+	--config # JSON config file
+	--log-format @bool # log output format
+	--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+	--no-color @bool # disable colored output
+	--profiling-enabled # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+	--quiet @bool # disable progress updates
+	--secret-source # setting secret sources for k6 file[=./path.fileformat],
+	--verbose @bool # enable verbose logging
+	archive # Create an archive
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--vus # number of virtual users
+		--duration # test duration limit
+		--iterations # script total iteration limit (among all VUs)
+		--stage # add a `stage`, as `[duration]:[target]`
+		--execution-segment # limit execution to the specified segment, e.g. 10%, 1/3, 0.2:2/3
+		--execution-segment-sequence # the execution segment sequence
+		--paused @bool # start the test in a paused state
+		--no-setup @bool # don't run setup()
+		--no-teardown @bool # don't run teardown()
+		--max-redirects # follow at most n redirects
+		--batch # max parallel batch reqs
+		--batch-per-host # max parallel batch reqs per host
+		--rps # limit requests per second
+		--user-agent # user agent for http requests
+		--http-debug # log all HTTP requests and responses. Excludes body by default. To include body use '--http-debug=full'
+		--insecure-skip-tls-verify @bool # skip verification of TLS certificates
+		--no-connection-reuse @bool # disable keep-alive connections
+		--no-vu-connection-reuse @bool # don't reuse connections between iterations
+		--min-iteration-duration # minimum amount of time k6 will take executing a single iteration
+		--throw @bool # throw warnings (like failed http requests) as errors
+		--blacklist-ip @bool # blacklist an `ip range` from being called
+		--block-hostnames # block a case-insensitive hostname `pattern`, with optional leading wildcard, from being called
+		--summary-trend-stats # define `stats` for trend metrics (response times), one or more as 'avg,p(95),...' (default 'avg, min, med, max, p(90), p(95)')
+		--summary-time-unit # define the time unit used to display the trend stats. Possible units are: 's', 'ms' and 'us'
+		--system-tags # only include these system tags in metrics (default "proto, subproto, status, method, url, name, group, check, error, error_code, tls_version, scenario, service, expected_response")
+		--tag # add a `tag` to be applied to all samples, as `[name]=[value]`
+		--console-output # redirects the console logging to the provided output file
+		--discard-response-bodies @bool # Read but don't process or save HTTP response bodies
+		--local-ips # Client IP Ranges and/or CIDRs from which each VU will be making requests, e.g. '192.168.220.1,192.168.0.10-192.168.0.25', 'fd:1::0/120', etc.
+		--dns # DNS resolver configuration. Possible ttl values are: 'inf' for a persistent cache, '0' to disable the cache, or a positive duration, e.g. '1s', '1m', etc. Milliseconds are assumed if no unit is provided. Possible select values to return a single IP are: 'first', 'random' or 'roundRobin'. Possible policy values are: 'preferIPv4', 'preferIPv6', 'onlyIPv4', 'onlyIPv6' or 'any'.
+		--include-system-env-vars @bool # pass the real system environment variables to the runtime
+		--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+		--type # override test type, "js" or "archive"
+		--env # add/override environment variable with `VAR=value`
+		--no-thresholds @bool # don't run thresholds
+		--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+		--summary-export # output the end-of-test summary report to JSON file
+		--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+		--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+		--archive-out # archive output filename. Dash (-) is a reserved value that causes the archive to be output to stdout.
+		--exclude-env-vars @bool # do not embed any environment variables (either from --env or the actual environment) in the archive metadata
+	cloud # Run and manage Grafana Cloud tests
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--vus # number of virtual users
+		--duration # test duration limit
+		--iterations # script total iteration limit (among all VUs)
+		--stage # add a `stage`, as `[duration]:[target]`
+		--execution-segment # limit execution to the specified segment, e.g. 10%, 1/3, 0.2:2/3
+		--execution-segment-sequence # the execution segment sequence
+		--paused @bool # start the test in a paused state
+		--no-setup @bool # don't run setup()
+		--no-teardown @bool # don't run teardown()
+		--max-redirects # follow at most n redirects
+		--batch # max parallel batch reqs
+		--batch-per-host # max parallel batch reqs per host
+		--rps # limit requests per second
+		--user-agent # user agent for http requests
+		--http-debug # log all HTTP requests and responses. Excludes body by default. To include body use '--http-debug=full'
+		--insecure-skip-tls-verify @bool # skip verification of TLS certificates
+		--no-connection-reuse @bool # disable keep-alive connections
+		--no-vu-connection-reuse @bool # don't reuse connections between iterations
+		--min-iteration-duration # minimum amount of time k6 will take executing a single iteration
+		--throw @bool # throw warnings (like failed http requests) as errors
+		--blacklist-ip @bool # blacklist an `ip range` from being called
+		--block-hostnames # block a case-insensitive hostname `pattern`, with optional leading wildcard, from being called
+		--summary-trend-stats # define `stats` for trend metrics (response times), one or more as 'avg,p(95),...' (default 'avg, min, med, max, p(90), p(95)')
+		--summary-time-unit # define the time unit used to display the trend stats. Possible units are: 's', 'ms' and 'us'
+		--system-tags # only include these system tags in metrics (default "proto, subproto, status, method, url, name, group, check, error, error_code, tls_version, scenario, service, expected_response")
+		--tag # add a `tag` to be applied to all samples, as `[name]=[value]`
+		--console-output # redirects the console logging to the provided output file
+		--discard-response-bodies @bool # Read but don't process or save HTTP response bodies
+		--local-ips # Client IP Ranges and/or CIDRs from which each VU will be making requests, e.g. '192.168.220.1,192.168.0.10-192.168.0.25', 'fd:1::0/120', etc.
+		--dns # DNS resolver configuration. Possible ttl values are: 'inf' for a persistent cache, '0' to disable the cache, or a positive duration, e.g. '1s', '1m', etc. Milliseconds are assumed if no unit is provided. Possible select values to return a single IP are: 'first', 'random' or 'roundRobin'. Possible policy values are: 'preferIPv4', 'preferIPv6', 'onlyIPv4', 'onlyIPv6' or 'any'.
+		--include-system-env-vars @bool # pass the real system environment variables to the runtime
+		--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+		--type # override test type, "js" or "archive"
+		--env # add/override environment variable with `VAR=value`
+		--no-thresholds @bool # don't run thresholds
+		--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+		--summary-export # output the end-of-test summary report to JSON file
+		--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+		--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+		--exit-on-running @bool # exits when test reaches the running status
+		--show-logs @bool # enable showing of logs when a test is executed in the cloud
+		login # Authenticate with Grafana Cloud
+			--address # address for the REST API server
+			--config # JSON config file
+			--log-format # log output format
+			--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--reset @bool # reset stored token and stack info
+			--show @bool # display saved token, stack info and exit
+			--stack # specify the stack (URL or slug) where commands will run by default
+			--token # specify `token` to use
+		run # Run a test in Grafana Cloud
+			--address # address for the REST API server
+			--config # JSON config file
+			--log-format # log output format
+			--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--local-execution @bool # executes the test locally instead of in the cloud
+			--linger @bool # only when using the local-execution mode, keeps the API server alive past the test end
+			--no-usage-report @bool # only when using the local-execution mode, don't send anonymous usage stats (https://grafana.com/docs/k6/latest/set-up/usage-collection/)
+			--no-archive-upload @bool # only when using the local-execution mode, don't upload the test archive to the cloud service
+			--vus # number of virtual users
+			--duration # test duration limit
+			--iterations # script total iteration limit (among all VUs)
+			--stage # add a `stage`, as `[duration]:[target]`
+			--execution-segment # limit execution to the specified segment, e.g. 10%, 1/3, 0.2:2/3
+			--execution-segment-sequence # the execution segment sequence
+			--paused @bool # start the test in a paused state
+			--no-setup @bool # don't run setup()
+			--no-teardown @bool # don't run teardown()
+			--max-redirects # follow at most n redirects
+			--batch # max parallel batch reqs
+			--batch-per-host # max parallel batch reqs per host
+			--rps # limit requests per second
+			--user-agent # user agent for http requests
+			--http-debug # log all HTTP requests and responses. Excludes body by default. To include body use '--http-debug=full'
+			--insecure-skip-tls-verify @bool # skip verification of TLS certificates
+			--no-connection-reuse @bool # disable keep-alive connections
+			--no-vu-connection-reuse @bool # don't reuse connections between iterations
+			--min-iteration-duration # minimum amount of time k6 will take executing a single iteration
+			--throw @bool # throw warnings (like failed http requests) as errors
+			--blacklist-ip @bool # blacklist an `ip range` from being called
+			--block-hostnames # block a case-insensitive hostname `pattern`, with optional leading wildcard, from being called
+			--summary-trend-stats # define `stats` for trend metrics (response times), one or more as 'avg,p(95),...' (default 'avg, min, med, max, p(90), p(95)')
+			--summary-time-unit # define the time unit used to display the trend stats. Possible units are: 's', 'ms' and 'us'
+			--system-tags # only include these system tags in metrics (default "proto, subproto, status, method, url, name, group, check, error, error_code, tls_version, scenario, service, expected_response")
+			--tag # add a `tag` to be applied to all samples, as `[name]=[value]`
+			--console-output # redirects the console logging to the provided output file
+			--discard-response-bodies @bool # Read but don't process or save HTTP response bodies
+			--local-ips # Client IP Ranges and/or CIDRs from which each VU will be making requests, e.g. '192.168.220.1,192.168.0.10-192.168.0.25', 'fd:1::0/120', etc.
+			--dns # DNS resolver configuration. Possible ttl values are: 'inf' for a persistent cache, '0' to disable the cache, or a positive duration, e.g. '1s', '1m', etc. Milliseconds are assumed if no unit is provided. Possible select values to return a single IP are: 'first', 'random' or 'roundRobin'. Possible policy values are: 'preferIPv4', 'preferIPv6', 'onlyIPv4', 'onlyIPv6' or 'any'.
+			--include-system-env-vars @bool # pass the real system environment variables to the runtime
+			--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+			--type # override test type, "js" or "archive"
+			--env # add/override environment variable with `VAR=value`
+			--no-thresholds @bool # don't run thresholds
+			--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+			--summary-export # output the end-of-test summary report to JSON file
+			--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+			--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+			--exit-on-running @bool # exits when test reaches the running status
+			--show-logs @bool # enable showing of logs when a test is executed in the cloud
+		upload # Upload a test to Grafana Cloud
+			--address # address for the REST API server
+			--config # JSON config file
+			--log-format # log output format
+			--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--batch # max parallel batch reqs
+			--batch-per-host # max parallel batch reqs per host
+			--blacklist-ip @bool # blacklist an `ip range` from being called
+			--block-hostnames # block a case-insensitive hostname `pattern`, with optional leading wildcard, from being called
+			--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+			--console-output # redirects the console logging to the provided output file
+			--discard-response-bodies @bool # Read but don't process or save HTTP response bodies
+			--dns # DNS resolver configuration. Possible ttl values are: 'inf' for a persistent cache, '0' to disable the cache, or a positive duration, e.g. '1s', '1m', etc. Milliseconds are assumed if no unit is provided. Possible select values to return a single IP are: 'first', 'random' or 'roundRobin'. Possible policy values are: 'preferIPv4', 'preferIPv6', 'onlyIPv4', 'onlyIPv6' or 'any'.
+			--duration # test duration limit
+			--env # add/override environment variable with `VAR=value`
+			--execution-segment # limit execution to the specified segment, e.g. 10%, 1/3, 0.2:2/3
+			--execution-segment-sequence # the execution segment sequence
+			--http-debug # log all HTTP requests and responses. Excludes body by default. To include body use '--http-debug=full'
+			--include-system-env-vars @bool # pass the real system environment variables to the runtime
+			--insecure-skip-tls-verify @bool # skip verification of TLS certificates
+			--iterations # script total iteration limit (among all VUs)
+			--local-ips # Client IP Ranges and/or CIDRs from which each VU will be making requests, e.g. '192.168.220.1,192.168.0.10-192.168.0.25', 'fd:1::0/120', etc.
+			--max-redirects # follow at most n redirects
+			--min-iteration-duration # minimum amount of time k6 will take executing a single iteration
+			--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+			--no-connection-reuse @bool # disable keep-alive connections
+			--no-setup @bool # don't run setup()
+			--no-teardown @bool # don't run teardown()
+			--no-thresholds @bool # don't run thresholds
+			--no-vu-connection-reuse @bool # don't reuse connections between iterations
+			--paused @bool # start the test in a paused state
+			--rps # limit requests per second
+			--stage # add a `stage`, as `[duration]:[target]`
+			--summary-export # output the end-of-test summary report to JSON file
+			--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+			--summary-time-unit # define the time unit used to display the trend stats. Possible units are: 's', 'ms' and 'us'
+			--summary-trend-stats # define `stats` for trend metrics (response times), one or more as 'avg,p(95),...' (default 'avg, min, med, max, p(90), p(95)')
+			--system-tags # only include these system tags in metrics (default "proto, subproto, status, method, url, name, group, check, error, error_code, tls_version, scenario, service, expected_response")
+			--tag # add a `tag` to be applied to all samples, as `[name]=[value]`
+			--throw @bool # throw warnings (like failed http requests) as errors
+			--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+			--type # override test type, "js" or "archive"
+			--user-agent # user agent for http requests
+			--vus # number of virtual users
+	completion # Generate the autocompletion script for the specified shell
+		--address @bool # address for the REST API server
+		--config @bool # JSON config file
+		--log-format @bool # log output format
+		--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		bash # Generate the autocompletion script for bash
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			--no-descriptions @bool # disable completion descriptions
+	deps # Resolve and list the dependencies of a test
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--json @bool # if set, output dependencies information will be in JSON format
+		--include-system-env-vars @bool # pass the real system environment variables to the runtime
+		--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+		--type # override test type, "js" or "archive"
+		--env # add/override environment variable with `VAR=value`
+		--no-thresholds @bool # don't run thresholds
+		--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+		--summary-export # output the end-of-test summary report to JSON file
+		--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+		--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+	help # Help about any command
+		--address @bool # address for the REST API server
+		--config @bool # JSON config file
+		--log-format @bool # log output format
+		--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		archive # Create an archive
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+		cloud # Run and manage Grafana Cloud tests
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			login # Authenticate with Grafana Cloud
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+			run # Run a test in Grafana Cloud
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+			upload # Upload a test to Grafana Cloud
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+		completion # Generate the autocompletion script for the specified shell
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+			bash # Generate the autocompletion script for bash
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+			fish # Generate the autocompletion script for fish
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+			powershell # Generate the autocompletion script for powershell
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+			zsh # Generate the autocompletion script for zsh
+				--address @bool # address for the REST API server
+				--config @bool # JSON config file
+				--log-format @bool # log output format
+				--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+				--no-color @bool # disable colored output
+				--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+				--quiet @bool # disable progress updates
+				--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+				--verbose @bool # enable verbose logging
+		deps # Resolve and list the dependencies of a test
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+		help # Help about any command
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+		inspect # Inspect a script or archive
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+		new # Create a test
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+		run # Run a test
+			--address @bool # address for the REST API server
+			--config @bool # JSON config file
+			--log-format @bool # log output format
+			--log-output @bool # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+			--no-color @bool # disable colored output
+			--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+			--quiet @bool # disable progress updates
+			--secret-source @bool # setting secret sources for k6 file[=./path.fileformat],
+			--verbose @bool # enable verbose logging
+	inspect # Inspect a script or archive
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--include-system-env-vars @bool # pass the real system environment variables to the runtime
+		--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+		--type # override test type, "js" or "archive"
+		--env # add/override environment variable with `VAR=value`
+		--no-thresholds @bool # don't run thresholds
+		--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+		--summary-export # output the end-of-test summary report to JSON file
+		--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+		--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+		--execution-requirements @bool # include calculations of execution requirements for the test
+	new # Create a test
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--force @bool # overwrite existing files
+		--project-id # specify the Grafana Cloud project ID for the test
+		--template # template type (choices: minimal, protocol, browser) or relative/absolute path to a custom template file
+	run # Run a test
+		--address # address for the REST API server
+		--config # JSON config file
+		--log-format # log output format
+		--log-output # change the output for k6 logs, possible values are: 'stderr', 'stdout', 'none', 'loki[=host:port]', 'file[=./path.fileformat]'
+		--no-color @bool # disable colored output
+		--profiling-enabled @bool # enable profiling (pprof) endpoints, k6's REST API should be enabled as well
+		--quiet @bool # disable progress updates
+		--secret-source # setting secret sources for k6 file[=./path.fileformat],
+		--verbose @bool # enable verbose logging
+		--vus # number of virtual users
+		--duration # test duration limit
+		--iterations # script total iteration limit (among all VUs)
+		--stage # add a `stage`, as `[duration]:[target]`
+		--execution-segment # limit execution to the specified segment, e.g. 10%, 1/3, 0.2:2/3
+		--execution-segment-sequence # the execution segment sequence
+		--paused @bool # start the test in a paused state
+		--no-setup @bool # don't run setup()
+		--no-teardown @bool # don't run teardown()
+		--max-redirects # follow at most n redirects
+		--batch # max parallel batch reqs
+		--batch-per-host # max parallel batch reqs per host
+		--rps # limit requests per second
+		--user-agent # user agent for http requests
+		--http-debug # log all HTTP requests and responses. Excludes body by default. To include body use '--http-debug=full'
+		--insecure-skip-tls-verify @bool # skip verification of TLS certificates
+		--no-connection-reuse @bool # disable keep-alive connections
+		--no-vu-connection-reuse @bool # don't reuse connections between iterations
+		--min-iteration-duration # minimum amount of time k6 will take executing a single iteration
+		--throw @bool # throw warnings (like failed http requests) as errors
+		--blacklist-ip @bool # blacklist an `ip range` from being called
+		--block-hostnames # block a case-insensitive hostname `pattern`, with optional leading wildcard, from being called
+		--summary-trend-stats # define `stats` for trend metrics (response times), one or more as 'avg,p(95),...' (default 'avg, min, med, max, p(90), p(95)')
+		--summary-time-unit # define the time unit used to display the trend stats. Possible units are: 's', 'ms' and 'us'
+		--system-tags # only include these system tags in metrics (default "proto, subproto, status, method, url, name, group, check, error, error_code, tls_version, scenario, service, expected_response")
+		--tag # add a `tag` to be applied to all samples, as `[name]=[value]`
+		--console-output # redirects the console logging to the provided output file
+		--discard-response-bodies @bool # Read but don't process or save HTTP response bodies
+		--local-ips # Client IP Ranges and/or CIDRs from which each VU will be making requests, e.g. '192.168.220.1,192.168.0.10-192.168.0.25', 'fd:1::0/120', etc.
+		--dns # DNS resolver configuration. Possible ttl values are: 'inf' for a persistent cache, '0' to disable the cache, or a positive duration, e.g. '1s', '1m', etc. Milliseconds are assumed if no unit is provided. Possible select values to return a single IP are: 'first', 'random' or 'roundRobin'. Possible policy values are: 'preferIPv4', 'preferIPv6', 'onlyIPv4', 'onlyIPv6' or 'any'.
+		--include-system-env-vars @bool # pass the real system environment variables to the runtime
+		--compatibility-mode # JavaScript compiler compatibility mode, "extended" or "base"
+		--type # override test type, "js" or "archive"
+		--env # add/override environment variable with `VAR=value`
+		--no-thresholds @bool # don't run thresholds
+		--summary-mode # determine the summary mode, "compact", "full" or "disabled"
+		--summary-export # output the end-of-test summary report to JSON file
+		--new-machine-readable-summary @bool # enables the new machine-readable summary, which is used for summary exports and as handleSummary() argument
+		--traces-output # set the output for k6 traces, possible values are none,otel[=host:port]
+		--out # `uri` for an external metrics database
+		--linger @bool # keep the API server alive past test end
+		--no-usage-report @bool # don't send anonymous usagestats (https://grafana.com/docs/k6/latest/set-up/usage-collection/)

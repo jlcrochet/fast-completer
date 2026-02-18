@@ -1,0 +1,2674 @@
+# zoxide CLI schema for fast-completer
+# Generated from zoxide 0.9.9
+
+zoxide # A smarter cd command
+	_ZO_DATA_DIR # Path for zoxide data files
+	_ZO_ECHO # Print the matched directory before navigating to it when set to 1
+	_ZO_EXCLUDE_DIRS # List of directory globs to be excluded
+	_ZO_FZF_OPTS # Custom flags to pass to fzf
+	_ZO_MAXAGE # Maximum total age after which entries start getting deleted
+	_ZO_RESOLVE_SYMLINKS # Resolve symlinks when storing paths
+	add # Add a new directory or increment its rank
+		--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_DATA_DIR
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_ECHO
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_EXCLUDE_DIRS
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_FZF_OPTS
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_MAXAGE
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+		_ZO_RESOLVE_SYMLINKS
+			--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_DATA_DIR
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_ECHO
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_EXCLUDE_DIRS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_FZF_OPTS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_MAXAGE
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+			_ZO_RESOLVE_SYMLINKS
+				--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_DATA_DIR
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_ECHO
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_EXCLUDE_DIRS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_FZF_OPTS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_MAXAGE
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+				_ZO_RESOLVE_SYMLINKS
+					--score|-s # The rank to increment the entry if it exists or initialize it with if it doesn't
+	edit # Edit the database
+		_ZO_DATA_DIR
+		_ZO_ECHO
+		_ZO_EXCLUDE_DIRS
+		_ZO_FZF_OPTS
+		_ZO_MAXAGE
+		_ZO_RESOLVE_SYMLINKS
+	import # Import entries from another application
+		--from (autojump|z) # Application to import from [possible values: autojump, z]
+		--merge @bool # Merge into existing database
+		_ZO_DATA_DIR
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+		_ZO_ECHO
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+		_ZO_EXCLUDE_DIRS
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+		_ZO_FZF_OPTS
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+		_ZO_MAXAGE
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+		_ZO_RESOLVE_SYMLINKS
+			--from (autojump|z) # Application to import from [possible values: autojump, z]
+			--merge @bool # Merge into existing database
+			_ZO_DATA_DIR
+			_ZO_ECHO
+			_ZO_EXCLUDE_DIRS
+			_ZO_FZF_OPTS
+			_ZO_MAXAGE
+			_ZO_RESOLVE_SYMLINKS
+	init # Generate shell configuration
+		--no-cmd @bool # Prevents zoxide from defining the `z` and `zi` commands
+		--cmd # Changes the prefix of the `z` and `zi` commands [default: z]
+		--hook (none|prompt|pwd) # Changes how often zoxide increments a directory's score [default: pwd] [possible values: none, prompt, pwd]
+		_ZO_DATA_DIR
+		_ZO_ECHO
+		_ZO_EXCLUDE_DIRS
+		_ZO_FZF_OPTS
+		_ZO_MAXAGE
+		_ZO_RESOLVE_SYMLINKS
+	query # Search for a directory in the database
+		--all|-a @bool # Show unavailable directories
+		--interactive|-i @bool # Use interactive selection
+		--list|-l @bool # List all matching directories
+		--score|-s @bool # Print score with results
+		--exclude # Exclude the current directory
+		--base-dir # Only search within this directory
+		_ZO_DATA_DIR
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+		_ZO_ECHO
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+		_ZO_EXCLUDE_DIRS
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+		_ZO_FZF_OPTS
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+		_ZO_MAXAGE
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+		_ZO_RESOLVE_SYMLINKS
+			--all|-a @bool # Show unavailable directories
+			--interactive|-i @bool # Use interactive selection
+			--list|-l @bool # List all matching directories
+			--score|-s @bool # Print score with results
+			--exclude # Exclude the current directory
+			--base-dir # Only search within this directory
+			_ZO_DATA_DIR
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_ECHO
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_EXCLUDE_DIRS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_FZF_OPTS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_MAXAGE
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+			_ZO_RESOLVE_SYMLINKS
+				--all|-a @bool # Show unavailable directories
+				--interactive|-i @bool # Use interactive selection
+				--list|-l @bool # List all matching directories
+				--score|-s @bool # Print score with results
+				--exclude # Exclude the current directory
+				--base-dir # Only search within this directory
+				_ZO_DATA_DIR
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_ECHO
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_EXCLUDE_DIRS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_FZF_OPTS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_MAXAGE
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+				_ZO_RESOLVE_SYMLINKS
+					--all|-a @bool # Show unavailable directories
+					--interactive|-i @bool # Use interactive selection
+					--list|-l @bool # List all matching directories
+					--score|-s @bool # Print score with results
+					--exclude # Exclude the current directory
+					--base-dir # Only search within this directory
+	remove # Remove a directory from the database
+		_ZO_DATA_DIR
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+		_ZO_ECHO
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+		_ZO_EXCLUDE_DIRS
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+		_ZO_FZF_OPTS
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+		_ZO_MAXAGE
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+		_ZO_RESOLVE_SYMLINKS
+			_ZO_DATA_DIR
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_ECHO
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_EXCLUDE_DIRS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_FZF_OPTS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_MAXAGE
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS
+			_ZO_RESOLVE_SYMLINKS
+				_ZO_DATA_DIR
+				_ZO_ECHO
+				_ZO_EXCLUDE_DIRS
+				_ZO_FZF_OPTS
+				_ZO_MAXAGE
+				_ZO_RESOLVE_SYMLINKS

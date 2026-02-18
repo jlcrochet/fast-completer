@@ -1,0 +1,64 @@
+# Krew CLI schema for fast-completer
+# Generated from krew unknown
+
+krew # kubectl plugin manager
+	--help @bool # help for krew
+	--v # number for the log level verbosity
+	help # Help about any command
+		--v # number for the log level verbosity
+		help # Help about any command
+			--v # number for the log level verbosity
+		index # Manage custom plugin indexes
+			--v # number for the log level verbosity
+			add # Add a new index
+				--v # number for the log level verbosity
+			list # List configured indexes
+				--v # number for the log level verbosity
+			remove # Remove a configured index
+				--v # number for the log level verbosity
+		info # Show information about an available plugin
+			--v # number for the log level verbosity
+		install # Install kubectl plugins
+			--v # number for the log level verbosity
+		list # List installed kubectl plugins
+			--v # number for the log level verbosity
+		search # Discover kubectl plugins
+			--v # number for the log level verbosity
+		uninstall # Uninstall plugins
+			--v # number for the log level verbosity
+		update # Update the local copy of the plugin index
+			--v # number for the log level verbosity
+		upgrade # Upgrade installed plugins to newer versions
+			--v # number for the log level verbosity
+		version # Show krew version and diagnostics
+			--v # number for the log level verbosity
+	index # Manage custom plugin indexes
+		--v # number for the log level verbosity
+		add # Add a new index
+			--v # number for the log level verbosity
+		list # List configured indexes
+			--v # number for the log level verbosity
+		remove # Remove a configured index
+			--v # number for the log level verbosity
+			--force @bool # Remove index even if it has plugins currently installed (may result in unsupported behavior)
+	info # Show information about an available plugin
+		--v # number for the log level verbosity
+	install # Install kubectl plugins
+		--v # number for the log level verbosity
+		--archive # (Development-only) force all downloads to use the specified file
+		--manifest # (Development-only) specify local plugin manifest file
+		--manifest-url # (Development-only) specify plugin manifest file from url
+		--no-update-index @bool # (Experimental) do not update local copy of plugin index before installing
+	list # List installed kubectl plugins
+		--v # number for the log level verbosity
+	search # Discover kubectl plugins
+		--v # number for the log level verbosity
+	uninstall # Uninstall plugins
+		--v # number for the log level verbosity
+	update # Update the local copy of the plugin index
+		--v # number for the log level verbosity
+	upgrade # Upgrade installed plugins to newer versions
+		--v # number for the log level verbosity
+		--no-update-index @bool # (Experimental) do not update local copy of plugin index before upgrading
+	version # Show krew version and diagnostics
+		--v # number for the log level verbosity

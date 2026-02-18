@@ -1,0 +1,42 @@
+# Dust CLI schema for fast-completer
+# Generated from dust 1.2.4
+
+dust # Disk usage analyzer
+	--depth|-d # Depth to show
+	--threads|-T # Number of threads to use
+	--config # Specify a config file to use
+	--number-of-lines|-n # Display the 'n' largest entries. (Default is terminal_height)
+	--full-paths|-p @bool # Subdirectories will not have their path shortened
+	--ignore-directory|-X # Exclude any file or directory with this path
+	--ignore-all-in-file|-I # Exclude any file or directory with a regex matching that listed in this file, the file entries will be added to the ignore regexs provided by --invert_filter
+	--dereference-links|-L @bool # dereference sym links - Treat sym links as directories and go into them
+	--limit-filesystem|-x @bool # Only count the files and directories on the same filesystem as the supplied directory
+	--apparent-size|-s @bool # Use file length instead of blocks
+	--reverse|-r @bool # Print tree upside down (biggest highest)
+	--no-colors|-c @bool # No colors will be printed (Useful for commands like: watch)
+	--force-colors|-C @bool # Force colors print
+	--no-percent-bars|-b @bool # No percent bars or percentages will be displayed
+	--bars-on-right|-B @bool # percent bars moved to right side of screen
+	--min-size|-z # Minimum size file to include in output
+	--screen-reader|-R @bool # For screen readers. Removes bars. Adds new column: depth level (May want to use -p too for full path)
+	--skip-total @bool # No total row will be displayed
+	--filecount|-f @bool # Directory 'size' is number of child files instead of disk size
+	--ignore-hidden|-i @bool # Do not display hidden files
+	--invert-filter|-v # Exclude filepaths matching this regex. To ignore png files type: -v "\.png$"
+	--filter|-e # Only include filepaths matching this regex. For png files type: -e "\.png$"
+	--file-types|-t @bool # show only these file types
+	--terminal-width|-w # Specify width of output overriding the auto detection of terminal width
+	--no-progress|-P @bool # Disable the progress indication
+	--print-errors @bool # Print path with errors
+	--only-dir|-D @bool # Only directories will be displayed
+	--only-file|-F @bool # Only files will be displayed. (Finds your largest files)
+	--output-format|-o (si|b|k|m|g|t|kb|mb|gb|tb) # Changes output display size. si will print sizes in powers of 1000. b k m g t kb mb gb tb will print the whole tree in that size [possible values: si, b, k, m, g, t, kb, mb, gb, tb]
+	--stack-size|-S # Specify memory to use as stack size - use if you see: 'fatal runtime error: stack overflow' (default low memory=1048576, high memory=1073741824)
+	--output-json|-j @bool # Output the directory tree as json to the current directory
+	--mtime|-M # +/-n matches files modified more/less than n days ago , and n matches files modified exactly n days ago, days are rounded down.That is +n => (−∞, curr−(n+1)), n => [curr−(n+1), curr−n), and -n => (𝑐𝑢𝑟𝑟−𝑛, +∞)
+	--atime|-A # just like -mtime, but based on file access time
+	--ctime|-y # just like -mtime, but based on file change time
+	--files0-from # Read NUL-terminated paths from FILE (use `-` for stdin)
+	--files-from # Read newline-terminated paths from FILE (use `-` for stdin)
+	--collapse # Keep these directories collapsed
+	--filetime|-m (a|c|m) # Directory 'size' is max filetime of child files instead of disk size. while a/c/m for last accessed/changed/modified time [possible values: a, c, m]

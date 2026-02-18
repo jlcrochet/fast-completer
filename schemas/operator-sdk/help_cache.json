@@ -1,0 +1,762 @@
+{
+  "operator-sdk --help": {
+    "returncode": 0,
+    "stdout": "CLI tool for building Kubernetes extensions and tools.\n\nUsage:\n  operator-sdk [flags]\n  operator-sdk [command]\n\nExamples:\nThe first step is to initialize your project:\n    operator-sdk init [--plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]]\n\n<PLUGIN KEYS> is a comma-separated list of plugin keys from the following table\nand <PROJECT VERSION> a supported project version for these plugins.\n\n                             Plugin keys | Supported project versions\n-----------------------------------------+----------------------------\n     ansible.sdk.operatorframework.io/v1 |                          3\n deploy-image.go.kubebuilder.io/v1-alpha |                          3\n                    go.kubebuilder.io/v4 |                          3\n         grafana.kubebuilder.io/v1-alpha |                          3\n        helm.sdk.operatorframework.io/v1 |                          3\n\nFor more specific help for the init command of a certain plugins and project version\nconfiguration please run:\n    operator-sdk init --help --plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]\n\nDefault plugin keys: \"go.kubebuilder.io/v4\"\nDefault project version: \"3\"\n\n\nAvailable Commands:\n  alpha            Alpha-stage subcommands\n  bundle           Manage operator bundle metadata\n  cleanup          Clean up an Operator deployed with the 'run' subcommand\n  completion       Load completions for the specified shell\n  create           Scaffold a Kubernetes API or webhook\n  edit             Update the project configuration\n  generate         Invokes a specific generator\n  help             Help about any command\n  init             Initialize a new project\n  olm              Manage the Operator Lifecycle Manager installation in your cluster\n  pkgman-to-bundle Migrates packagemanifests to bundles\n  run              Run an Operator in a variety of environments\n  scorecard        Runs scorecard\n  version          Print the operator-sdk version\n\nFlags:\n  -h, --help                     help for operator-sdk\n      --plugins strings          plugin keys to be used for this subcommand execution\n      --project-version string   project version (default \"3\")\n      --verbose                  Enable verbose logging\n\nUse \"operator-sdk [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk --version": {
+    "returncode": 0,
+    "stdout": "CLI tool for building Kubernetes extensions and tools.\n\nUsage:\n  operator-sdk [flags]\n  operator-sdk [command]\n\nExamples:\nThe first step is to initialize your project:\n    operator-sdk init [--plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]]\n\n<PLUGIN KEYS> is a comma-separated list of plugin keys from the following table\nand <PROJECT VERSION> a supported project version for these plugins.\n\n                             Plugin keys | Supported project versions\n-----------------------------------------+----------------------------\n     ansible.sdk.operatorframework.io/v1 |                          3\n deploy-image.go.kubebuilder.io/v1-alpha |                          3\n                    go.kubebuilder.io/v4 |                          3\n         grafana.kubebuilder.io/v1-alpha |                          3\n        helm.sdk.operatorframework.io/v1 |                          3\n\nFor more specific help for the init command of a certain plugins and project version\nconfiguration please run:\n    operator-sdk init --help --plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]\n\nDefault plugin keys: \"go.kubebuilder.io/v4\"\nDefault project version: \"3\"\n\n\nAvailable Commands:\n  alpha            Alpha-stage subcommands\n  bundle           Manage operator bundle metadata\n  cleanup          Clean up an Operator deployed with the 'run' subcommand\n  completion       Load completions for the specified shell\n  create           Scaffold a Kubernetes API or webhook\n  edit             Update the project configuration\n  generate         Invokes a specific generator\n  help             Help about any command\n  init             Initialize a new project\n  olm              Manage the Operator Lifecycle Manager installation in your cluster\n  pkgman-to-bundle Migrates packagemanifests to bundles\n  run              Run an Operator in a variety of environments\n  scorecard        Runs scorecard\n  version          Print the operator-sdk version\n\nFlags:\n  -h, --help                     help for operator-sdk\n      --plugins strings          plugin keys to be used for this subcommand execution\n      --project-version string   project version (default \"3\")\n      --verbose                  Enable verbose logging\n\nUse \"operator-sdk [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk __complete ": {
+    "returncode": 0,
+    "stdout": "alpha\tAlpha-stage subcommands\nbundle\tManage operator bundle metadata\ncleanup\tClean up an Operator deployed with the 'run' subcommand\ncompletion\tLoad completions for the specified shell\ncreate\tScaffold a Kubernetes API or webhook\nedit\tUpdate the project configuration\ngenerate\tInvokes a specific generator\nhelp\tHelp about any command\ninit\tInitialize a new project\nolm\tManage the Operator Lifecycle Manager installation in your cluster\npkgman-to-bundle\tMigrates packagemanifests to bundles\nrun\tRun an Operator in a variety of environments\nscorecard\tRuns scorecard\nversion\tPrint the operator-sdk version\n:4\n"
+  },
+  "operator-sdk __complete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for operator-sdk\n--plugins\tplugin keys to be used for this subcommand execution\n--project-version\tproject version\n--verbose\tEnable verbose logging\n:4\n"
+  },
+  "operator-sdk __complete alpha ": {
+    "returncode": 0,
+    "stdout": "config-3alpha-to-3\tConvert your PROJECT config file from version 3-alpha to 3\ngenerate\tRe-scaffold an existing Kuberbuilder project\n:4\n"
+  },
+  "operator-sdk __complete alpha --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for alpha\n:4\n"
+  },
+  "operator-sdk __complete alpha config-3alpha-to-3 ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete alpha config-3alpha-to-3 --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for config-3alpha-to-3\n:4\n"
+  },
+  "operator-sdk __complete alpha generate ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete alpha generate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for generate\n--input-dir\tSpecifies the full path to a Kubebuilder project file. If not provided, the current working directory is used.\n--output-dir\tSpecifies the full path where the scaffolded files will be output. Defaults to a directory within the current working directory.\n:4\n"
+  },
+  "operator-sdk __complete bundle ": {
+    "returncode": 0,
+    "stdout": "validate\tValidate an operator bundle\n:4\n"
+  },
+  "operator-sdk __complete bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for bundle\n:4\n"
+  },
+  "operator-sdk __complete bundle validate ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete bundle validate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--alpha-select-external\tSelector to select external validators to run. It should be set to a Unix path list (\"/path/to/e1.sh:/path/to/e2\")\n--help\thelp for validate\n--image-builder\tTool to pull and unpack bundle images. Only used when validating a bundle image. One of: [docker, podman, none]\n--list-optional\tList all optional validators available. When set, no validators will be run\n--optional-values\tInform a []string map of key=values which can be used by the validator. e.g. to check the operator bundle against an Kubernetes version that it is intended to be distributed use `--optional-values=k8s-version=1.22`\n--output\tResult format for results. One of: [text, json-alpha1]. Note: output format types containing \"alphaX\" are subject to change and not covered by guarantees of stable APIs.\n--select-optional\tLabel selector to select optional validators to run. Run this command with '--list-optional' to list available optional validators\n:4\n"
+  },
+  "operator-sdk __complete cleanup ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete cleanup --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--delete-all\tIf set to true, all other delete options will be enabled\n--delete-crds\tIf set to true, owned CRDs and CRs will be deleted\n--delete-operator-groups\tIf set to true, operator groups will be deleted\n--help\thelp for cleanup\n--kubeconfig\tPath to the kubeconfig file to use for CLI requests.\n--namespace\tIf present, namespace scope for this CLI request\n--timeout\tDuration to wait for the command to complete before failing\n:4\n"
+  },
+  "operator-sdk __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tLoad bash completions\nfish\tLoad fish completions\npowershell\tLoad powershell completions\nzsh\tLoad zsh completions\n:4\n"
+  },
+  "operator-sdk __complete completion --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for completion\n:4\n"
+  },
+  "operator-sdk __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for bash\n:4\n"
+  },
+  "operator-sdk __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for fish\n:4\n"
+  },
+  "operator-sdk __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for powershell\n:4\n"
+  },
+  "operator-sdk __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for zsh\n:4\n"
+  },
+  "operator-sdk __complete create ": {
+    "returncode": 0,
+    "stdout": "api\tScaffold a Kubernetes API\nwebhook\tScaffold a webhook for an API resource\n:4\n"
+  },
+  "operator-sdk __complete create --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for create\n:4\n"
+  },
+  "operator-sdk __complete create api ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete create api --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--controller\tif set, generate the controller without prompting the user\n--external-api-domain\tSpecify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).\n--external-api-path\tSpecify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).\n--force\tattempt to create resource even if it already exists\n--group\tresource Group\n--help\thelp for api\n--kind\tresource Kind\n--make\tif true, run `make generate` after generating files\n--namespaced\tresource is namespaced\n--plural\tresource irregular plural form\n--resource\tif set, generate the resource without prompting the user\n--version\tresource Version\n:4\n"
+  },
+  "operator-sdk __complete create webhook ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete create webhook --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--conversion\tif set, scaffold the conversion webhook\n--defaulting\tif set, scaffold the defaulting webhook\n--external-api-domain\tSpecify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).\n--external-api-path\tSpecify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).\n--force\tattempt to create resource even if it already exists\n--group\tresource Group\n--help\thelp for webhook\n--kind\tresource Kind\n--legacy\t[DEPRECATED] Attempts to create resource under the API directory (legacy path). This option will be removed in future versions.\n--make\tif true, run `make generate` after generating files\n--plural\tresource irregular plural form\n--programmatic-validation\tif set, scaffold the validating webhook\n--spoke\tComma-separated list of spoke versions to be added to the conversion webhook (e.g., --spoke v1,v2)\n--version\tresource Version\n:4\n"
+  },
+  "operator-sdk __complete edit ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete edit --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for edit\n--multigroup\tenable or disable multigroup layout\n:4\n"
+  },
+  "operator-sdk __complete generate ": {
+    "returncode": 0,
+    "stdout": "bundle\tGenerates bundle data for the operator\nkustomize\tContains subcommands that generate operator-framework kustomize data for the operator\n:4\n"
+  },
+  "operator-sdk __complete generate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for generate\n:4\n"
+  },
+  "operator-sdk __complete generate bundle ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete generate bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--channels\tA comma-separated list of channels the bundle belongs to\n--crds-dir\tDirectory to read cluster-ready CustomResoureDefinition manifests from. This option can only be used if --deploy-dir is set\n--default-channel\tThe default channel for the bundle\n--deploy-dir\tDirectory to read cluster-ready operator manifests from. If --crds-dir is not set, CRDs are ready from this directory. This option is mutually exclusive with --input-dir and piping to stdin\n--extra-service-accounts\tNames of service accounts, outside of the operator's Deployment account, that have bindings to {Cluster}Roles that should be added to the CSV\n--help\thelp for bundle\n--input-dir\tDirectory to read cluster-ready operator manifests from. This option is mutually exclusive with --deploy-dir/--crds-dir and piping to stdin. This option should not be passed an existing bundle directory, as this bundle will not contain the correct set of manifests required to generate a CSV. Use --kustomize-dir to pass a base CSV\n--kustomize-dir\tDirectory containing kustomize bases in a \"bases\" dir and a kustomization.yaml for operator-framework manifests\n--manifests\tGenerate bundle manifests\n--metadata\tGenerate bundle metadata and Dockerfile\n--output-dir\tDirectory to write the bundle to\n--overwrite\tOverwrite the bundle's metadata and Dockerfile if they exist\n--package\tBundle's package name\n--quiet\tRun in quiet mode\n--stdout\tWrite bundle manifest to stdout\n--use-image-digests\tUse SHA Digest for images\n--version\tSemantic version of the operator in the generated bundle. Only set if creating a new bundle or upgrading your operator\n:4\n"
+  },
+  "operator-sdk __complete generate kustomize ": {
+    "returncode": 0,
+    "stdout": "manifests\tGenerates kustomize bases and a kustomization.yaml for operator-framework manifests\n:4\n"
+  },
+  "operator-sdk __complete generate kustomize --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for kustomize\n:4\n"
+  },
+  "operator-sdk __complete generate kustomize manifests ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete generate kustomize manifests --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--apis-dir\tRoot directory for API type defintions\n--help\thelp for manifests\n--input-dir\tDirectory containing existing kustomize files\n--interactive\tWhen set to false, if no kustomize base exists, an interactive command prompt will be presented to accept non-inferrable metadata\n--output-dir\tDirectory to write kustomize files\n--package\tPackage name\n--quiet\tRun in quiet mode\n:4\n"
+  },
+  "operator-sdk __complete help ": {
+    "returncode": 0,
+    "stdout": "alpha\tAlpha-stage subcommands\nbundle\tManage operator bundle metadata\ncleanup\tClean up an Operator deployed with the 'run' subcommand\ncompletion\tLoad completions for the specified shell\ncreate\tScaffold a Kubernetes API or webhook\nedit\tUpdate the project configuration\ngenerate\tInvokes a specific generator\nhelp\tHelp about any command\ninit\tInitialize a new project\nolm\tManage the Operator Lifecycle Manager installation in your cluster\npkgman-to-bundle\tMigrates packagemanifests to bundles\nrun\tRun an Operator in a variety of environments\nscorecard\tRuns scorecard\nversion\tPrint the operator-sdk version\n:4\n"
+  },
+  "operator-sdk __complete help --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help alpha ": {
+    "returncode": 0,
+    "stdout": "config-3alpha-to-3\tConvert your PROJECT config file from version 3-alpha to 3\ngenerate\tRe-scaffold an existing Kuberbuilder project\n:4\n"
+  },
+  "operator-sdk __complete help alpha --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help alpha config-3alpha-to-3 ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help alpha config-3alpha-to-3 --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help alpha generate ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help alpha generate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help bundle ": {
+    "returncode": 0,
+    "stdout": "validate\tValidate an operator bundle\n:4\n"
+  },
+  "operator-sdk __complete help bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help bundle validate ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help bundle validate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help cleanup ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help cleanup --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help completion ": {
+    "returncode": 0,
+    "stdout": "bash\tLoad bash completions\nfish\tLoad fish completions\npowershell\tLoad powershell completions\nzsh\tLoad zsh completions\n:4\n"
+  },
+  "operator-sdk __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help completion bash --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help completion fish --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help completion powershell --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help completion zsh --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help create ": {
+    "returncode": 0,
+    "stdout": "api\tScaffold a Kubernetes API\nwebhook\tScaffold a webhook for an API resource\n:4\n"
+  },
+  "operator-sdk __complete help create --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help create api ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help create api --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help create webhook ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help create webhook --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help edit ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help edit --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help generate ": {
+    "returncode": 0,
+    "stdout": "bundle\tGenerates bundle data for the operator\nkustomize\tContains subcommands that generate operator-framework kustomize data for the operator\n:4\n"
+  },
+  "operator-sdk __complete help generate --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help generate bundle ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help generate bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help generate kustomize ": {
+    "returncode": 0,
+    "stdout": "manifests\tGenerates kustomize bases and a kustomization.yaml for operator-framework manifests\n:4\n"
+  },
+  "operator-sdk __complete help generate kustomize --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help generate kustomize manifests ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help generate kustomize manifests --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help help --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help init ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help init --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help olm ": {
+    "returncode": 0,
+    "stdout": "install\tInstall Operator Lifecycle Manager in your cluster\nstatus\tGet the status of the Operator Lifecycle Manager installation in your cluster\nuninstall\tUninstall Operator Lifecycle Manager from your cluster\n:4\n"
+  },
+  "operator-sdk __complete help olm --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help olm install ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help olm install --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help olm status ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help olm status --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help olm uninstall ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help olm uninstall --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help pkgman-to-bundle ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help pkgman-to-bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help run ": {
+    "returncode": 0,
+    "stdout": "bundle\tDeploy an Operator in the bundle format with OLM\nbundle-upgrade\tUpgrade an Operator previously installed in the bundle format with OLM\n:4\n"
+  },
+  "operator-sdk __complete help run --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help run bundle ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help run bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help run bundle-upgrade ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help run bundle-upgrade --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help scorecard ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help scorecard --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete help version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "operator-sdk __complete help version --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for help\n:4\n"
+  },
+  "operator-sdk __complete init ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete init --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--domain\tdomain for groups\n--fetch-deps\tensure dependencies are downloaded\n--help\thelp for init\n--license\tlicense to use to boilerplate, may be one of 'apache2', 'none'\n--owner\towner to add to the copyright\n--project-name\tname of this project\n--project-version\tproject version\n--repo\tname to use for go module (e.g., github.com/user/repo), defaults to the go package of the current working directory.\n--skip-go-version-check\tif specified, skip checking the Go version\n:4\n"
+  },
+  "operator-sdk __complete olm ": {
+    "returncode": 0,
+    "stdout": "install\tInstall Operator Lifecycle Manager in your cluster\nstatus\tGet the status of the Operator Lifecycle Manager installation in your cluster\nuninstall\tUninstall Operator Lifecycle Manager from your cluster\n:4\n"
+  },
+  "operator-sdk __complete olm --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for olm\n:4\n"
+  },
+  "operator-sdk __complete olm install ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete olm install --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for install\n--timeout\ttime to wait for the command to complete before failing\n--version\tversion of OLM resources to install\n:4\n"
+  },
+  "operator-sdk __complete olm status ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete olm status --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for status\n--olm-namespace\tnamespace where OLM is installed\n--timeout\ttime to wait for the command to complete before failing\n--version\tversion of OLM installed on cluster; if unsetoperator-sdk attempts to auto-discover the version\n:4\n"
+  },
+  "operator-sdk __complete olm uninstall ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete olm uninstall --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for uninstall\n--olm-namespace\tnamespace from where OLM is to be uninstalled.\n--timeout\ttime to wait for the command to complete before failing\n--version\tversion of OLM resources to uninstall.\n:4\n"
+  },
+  "operator-sdk __complete pkgman-to-bundle ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete pkgman-to-bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--build-cmd\tBuild command to be run for building images. By default 'docker build' is run.\n--help\thelp for pkgman-to-bundle\n--image-tag-base\tBase container image name for bundle image tags, ex. my.reg/foo/bar-operator-bundle will become my.reg/foo/bar-operator-bundle:${package-dir-name} for each child directory name in the packagemanifests directory\n--output-dir\tDirectory to write bundle to.\n:4\n"
+  },
+  "operator-sdk __complete run ": {
+    "returncode": 0,
+    "stdout": "bundle\tDeploy an Operator in the bundle format with OLM\nbundle-upgrade\tUpgrade an Operator previously installed in the bundle format with OLM\n:4\n"
+  },
+  "operator-sdk __complete run --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for run\n:4\n"
+  },
+  "operator-sdk __complete run bundle ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete run bundle --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--ca-secret-name\tName of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key \"cert.pem\"\n--decompression-image\timage used in an init container in the registry pod to decompress the compressed catalog contents. cat and gzip binaries are expected to exist in the PATH\n--help\thelp for bundle\n--image-pull-policy\timage pull policy for the registry pod\n--index-image\tindex image in which to inject bundle\n--install-mode\tinstall mode\n--kubeconfig\tPath to the kubeconfig file to use for CLI requests.\n--namespace\tIf present, namespace scope for this CLI request\n--pull-secret-name\tName of image pull secret (\"type: kubernetes.io/dockerconfigjson\") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in\n--security-context-config\tspecifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'.\n--service-account\tService account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account\n--skip-tls\tskip authentication of image registry TLS certificate when pulling a bundle image in-cluster\n--skip-tls-verify\tskip TLS certificate verification for container image registries while pulling bundles\n--timeout\tDuration to wait for the command to complete before failing\n--use-http\tuse plain HTTP for container image registries while pulling bundles\n:4\n"
+  },
+  "operator-sdk __complete run bundle-upgrade ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete run bundle-upgrade --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--ca-secret-name\tName of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key \"cert.pem\"\n--help\thelp for bundle-upgrade\n--image-pull-policy\timage pull policy for the registry pod\n--kubeconfig\tPath to the kubeconfig file to use for CLI requests.\n--namespace\tIf present, namespace scope for this CLI request\n--pull-secret-name\tName of image pull secret (\"type: kubernetes.io/dockerconfigjson\") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in\n--security-context-config\tspecifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'.\n--service-account\tService account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account\n--skip-tls\tskip authentication of image registry TLS certificate when pulling a bundle image in-cluster\n--skip-tls-verify\tskip TLS certificate verification for container image registries while pulling bundles\n--timeout\tDuration to wait for the command to complete before failing\n--use-http\tuse plain HTTP for container image registries while pulling bundles\n:4\n"
+  },
+  "operator-sdk __complete scorecard ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete scorecard --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--config\tpath to scorecard config file\n--help\thelp for scorecard\n--kubeconfig\tkubeconfig path\n--list\tOption to enable listing which tests are run\n--namespace\tnamespace to run the test images in\n--output\tOutput format for results. Valid values: text, json, xunit\n--pod-security\toption to run scorecard with legacy pod security context\n--selector\tlabel selector to determine which tests are run\n--service-account\tService account to use for tests\n--skip-cleanup\tDisable resource cleanup after tests are run\n--storage-image\tStorage image to be used by the Scorecard pod\n--test-output\tTest output directory.\n--untar-image\tUntar image to be used by the Scorecard pod\n--wait-time\tseconds to wait for tests to complete. Example: 35s\n:4\n"
+  },
+  "operator-sdk __complete version ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "operator-sdk __complete version --": {
+    "returncode": 0,
+    "stdout": "--plugins\tplugin keys to be used for this subcommand execution\n--verbose\tEnable verbose logging\n--help\thelp for version\n:4\n"
+  },
+  "operator-sdk alpha --help": {
+    "returncode": 0,
+    "stdout": "Alpha subcommands are for unstable features.\n\n- Alpha subcommands are exploratory and may be removed without warning.\n- No backwards compatibility is provided for any alpha subcommands.\n\nUsage:\n  operator-sdk alpha [command]\n\nAvailable Commands:\n  config-3alpha-to-3 Convert your PROJECT config file from version 3-alpha to 3\n  generate           Re-scaffold an existing Kuberbuilder project\n\nFlags:\n  -h, --help   help for alpha\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nAdditional help topics:\n  operator-sdk alpha                    \n\nUse \"operator-sdk alpha [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk alpha config-3alpha-to-3 --help": {
+    "returncode": 0,
+    "stdout": "Your PROJECT file contains config data specified by some version.\nThis version is not a kubernetes-style version. In general, alpha and beta config versions\nare unstable and support for them is dropped once a stable version is released.\nThe 3-alpha version has recently become stable (3), and therefore is no longer\nsupported by operator-sdk v1.5+. This command is intended to migrate 3-alpha PROJECT files\nto 3 with as few manual modifications required as possible.\n\nUsage:\n  operator-sdk alpha config-3alpha-to-3 [flags]\n\nFlags:\n  -h, --help   help for config-3alpha-to-3\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk alpha generate --help": {
+    "returncode": 0,
+    "stdout": "CLI tool for building Kubernetes extensions and tools.\n\nUsage:\n  operator-sdk [flags]\n\nExamples:\nThe first step is to initialize your project:\n    operator-sdk init [--plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]]\n\n<PLUGIN KEYS> is a comma-separated list of plugin keys from the following table\nand <PROJECT VERSION> a supported project version for these plugins.\n\n                             Plugin keys | Supported project versions\n-----------------------------------------+----------------------------\n     ansible.sdk.operatorframework.io/v1 |                          3\n deploy-image.go.kubebuilder.io/v1-alpha |                          3\n                    go.kubebuilder.io/v4 |                          3\n         grafana.kubebuilder.io/v1-alpha |                          3\n        helm.sdk.operatorframework.io/v1 |                          3\n\nFor more specific help for the init command of a certain plugins and project version\nconfiguration please run:\n    operator-sdk init --help --plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]\n\nDefault plugin keys: \"go.kubebuilder.io/v4\"\nDefault project version: \"3\"\n\n\nFlags:\n  -h, --help                     help for operator-sdk\n      --plugins strings          plugin keys to be used for this subcommand execution\n      --project-version string   project version (default \"3\")\n"
+  },
+  "operator-sdk bundle --help": {
+    "returncode": 0,
+    "stdout": "Manage bundle builds, bundle metadata generation, and bundle validation.\nAn operator bundle is a portable operator packaging format understood by Kubernetes\nnative software, like the Operator Lifecycle Manager.\n\nMore information about operator bundles and metadata:\nhttps://github.com/operator-framework/operator-registry/blob/master/docs/design/operator-bundle.md\n\nMore information about the integration with OLM via SDK:\nhttps://sdk.operatorframework.io/docs/olm-integration\n\nUsage:\n  operator-sdk bundle [command]\n\nAvailable Commands:\n  validate    Validate an operator bundle\n\nFlags:\n  -h, --help   help for bundle\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk bundle [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk bundle validate --help": {
+    "returncode": 0,
+    "stdout": "The 'operator-sdk bundle validate' command can validate both content and format of an operator bundle\nimage or an operator bundle directory on-disk containing operator metadata and manifests. This command will exit\nwith an exit code of 1 if any validation errors arise, and 0 if only warnings arise or all validators pass.\n\nA valid bundle is defined by the bundle spec (linked below), therefore the default validator ensures a bundle conforms to\nthat spec. If you want to ensure that your bundle is valid for an optional superset of requirements such as to those\nrequired to publish your operator on operatorhub.io, then you will need to run one or more supported optional validators.\nSet '--list-optional' to list which optional validators are supported, and how they are grouped by label.\n\nMore information about operator bundles and metadata:\nhttps://github.com/operator-framework/operator-registry/blob/master/docs/design/operator-bundle.md\n\nNOTE: if validating an image, the image must exist in a remote registry, not just locally.\n\nUsage:\n  operator-sdk bundle validate [flags]\n\nExamples:\nThis example assumes you either have a *pullable* bundle image,\nor something similar to the following operator bundle layout present locally:\n\n  $ tree ./bundle\n  ./bundle\n  \u251c\u2500\u2500 manifests\n  \u2502\u00a0\u00a0 \u251c\u2500\u2500 cache.my.domain_memcacheds.yaml\n  \u2502\u00a0\u00a0 \u2514\u2500\u2500 memcached-operator.clusterserviceversion.yaml\n  \u2514\u2500\u2500 metadata\n      \u2514\u2500\u2500 annotations.yaml\n\nTo validate a local bundle:\n\n  $ operator-sdk bundle validate ./bundle\n\nTo build and validate a *pullable* bundle image:\n\n  $ operator-sdk bundle validate <some-registry>/<operator-bundle-name>:<tag>\n\nTo list and run optional validators, which are specified by a label selector:\n\n  $ operator-sdk bundle validate --list-optional\n  NAME           LABELS                     DESCRIPTION\n  operatorhub    name=operatorhub           OperatorHub.io metadata validation.\n                 suite=operatorframework\n\nTo validate a bundle against the entire suite of validators for Operator Framework, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --select-optional suite=operatorframework\n\nThe OperatorHub.io validator in the operatorframework optional suite allows you to validate that your manifests can work with a Kubernetes cluster of a particular version using the k8s-version optional key value:\n\n  $ operator-sdk bundle validate ./bundle --select-optional suite=operatorframework --optional-values=k8s-version=1.22\n\nTo validate a bundle against the validator for operatorhub.io specifically, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=operatorhub\n\nThis validator allows check the bundle against an specific Kubernetes cluster version using the k8s-version optional key value:\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=operatorhub --optional-values=k8s-version=1.22\n\n[Deprecated] To validate a bundle against the (alpha) validator for Community Operators specifically, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=community --optional-values=index-path=bundle.Dockerfile\n\nTo validate a bundle against the validator for Good Practices specifically, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=good-practices\n\nTo validate a bundle against the (alpha) validator for Deprecated APIs specifically, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=alpha-deprecated-apis --optional-values=k8s-version=1.22\n\nTo validate a bundle against an external validator, in addition to required bundle validators:\n\n  $ operator-sdk bundle validate ./bundle --alpha-select-external /path/to/external-validator[:/path/to/optional-second-validator]\n\nTo validate a bundle against the (alpha) validator for Multiple Architectures bundle validation, in addition to required bundle validators:\n\nIMPORTANT: To use this option it is required to have access to pull the images defined on the CSV.\n\n  $ operator-sdk bundle validate ./bundle --select-optional name=multiarch \n\nNOTE: The --optional-values can be used to inform the container-tools that should be used i.e. \"--optional-values=container-tools=docker\".\nThe valid values for the container-tools optional value are [docker, podman, none]. If no value is supplied then the command will default to using docker to inspect the images.\nMore info: https://github.com/operator-framework/api/blob/master/pkg/validation/internal/multiarch.go\n\n\nFlags:\n      --alpha-select-external string                         Selector to select external validators to run. It should be set to a Unix path list (\"/path/to/e1.sh:/path/to/e2\")\n  -h, --help                                                 help for validate\n  -b, --image-builder string                                 Tool to pull and unpack bundle images. Only used when validating a bundle image. One of: [docker, podman, none] (default \"docker\")\n      --list-optional                                        List all optional validators available. When set, no validators will be run\n      --optional-values --optional-values=k8s-version=1.22   Inform a []string map of key=values which can be used by the validator. e.g. to check the operator bundle against an Kubernetes version that it is intended to be distributed use --optional-values=k8s-version=1.22 (default [])\n  -o, --output string                                        Result format for results. One of: [text, json-alpha1]. Note: output format types containing \"alphaX\" are subject to change and not covered by guarantees of stable APIs. (default \"text\")\n      --select-optional string                               Label selector to select optional validators to run. Run this command with '--list-optional' to list available optional validators\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk cleanup --help": {
+    "returncode": 0,
+    "stdout": "This command has subcommands that will destroy an Operator deployed with OLM.\n\nUsage:\n  operator-sdk cleanup <operatorPackageName> [flags]\n\nFlags:\n      --delete-all               If set to true, all other delete options will be enabled (default true)\n      --delete-crds              If set to true, owned CRDs and CRs will be deleted\n      --delete-operator-groups   If set to true, operator groups will be deleted\n  -h, --help                     help for cleanup\n      --kubeconfig string        Path to the kubeconfig file to use for CLI requests.\n  -n, --namespace string         If present, namespace scope for this CLI request\n      --timeout duration         Duration to wait for the command to complete before failing (default 2m0s)\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk completion --help": {
+    "returncode": 0,
+    "stdout": "Output shell completion code for the specified shell.\nThe shell code must be evaluated to provide interactive completion of operator-sdk commands.\nDetailed instructions on how to do this for each shell are provided in their own commands.\n\nUsage:\n  operator-sdk completion [command]\n\nAvailable Commands:\n  bash        Load bash completions\n  fish        Load fish completions\n  powershell  Load powershell completions\n  zsh         Load zsh completions\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk completion [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk completion bash --help": {
+    "returncode": 0,
+    "stdout": "Load bash completions\n\nUsage:\n  operator-sdk completion bash [flags]\n\nExamples:\n# To load completion for this session, execute:\n$ source <(operator-sdk completion bash)\n\n# To load completions for each session, execute once:\nLinux:\n  $ operator-sdk completion bash > /etc/bash_completion.d/operator-sdk\nMacOS:\n  $ operator-sdk completion bash > /usr/local/etc/bash_completion.d/operator-sdk\n\n\nFlags:\n  -h, --help   help for bash\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk completion fish --help": {
+    "returncode": 0,
+    "stdout": "Load fish completions\n\nUsage:\n  operator-sdk completion fish [flags]\n\nExamples:\n# To load completion for this session, execute:\n$ operator-sdk completion fish | source\n\n# To load completions for each session, execute once:\n$ operator-sdk completion fish > ~/.config/fish/completions/operator-sdk.fish\n\n\nFlags:\n  -h, --help   help for fish\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Load powershell completions\n\nUsage:\n  operator-sdk completion powershell [flags]\n\nFlags:\n  -h, --help   help for powershell\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Load zsh completions\n\nUsage:\n  operator-sdk completion zsh [flags]\n\nExamples:\n# If shell completion is not already enabled in your environment you will need\n# to enable it. You can execute the following once:\n$ echo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\n# To load completions for each session, execute once:\n$ operator-sdk completion zsh > \"${fpath[1]}/_operator-sdk\"\n\n# You will need to start a new shell for this setup to take effect.\n\n\nFlags:\n  -h, --help   help for zsh\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk create --help": {
+    "returncode": 0,
+    "stdout": "Scaffold a Kubernetes API or webhook.\n\nUsage:\n  operator-sdk create [command]\n\nAvailable Commands:\n  api         Scaffold a Kubernetes API\n  webhook     Scaffold a webhook for an API resource\n\nFlags:\n  -h, --help   help for create\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk create [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk create api --help": {
+    "returncode": 0,
+    "stdout": "Scaffold a Kubernetes API by writing a Resource definition and/or a Controller.\n\nIf information about whether the resource and controller should be scaffolded\nwas not explicitly provided, it will prompt the user if they should be.\n\nAfter the scaffold is written, the dependencies will be updated and\nmake generate will be run.\n\nUsage:\n  operator-sdk create api [flags]\n\nExamples:\n  # Create a frigates API with Group: ship, Version: v1beta1 and Kind: Frigate\n  operator-sdk create api --group ship --version v1beta1 --kind Frigate\n\n  # Edit the API Scheme\n\n  nano api/v1beta1/frigate_types.go\n\n  # Edit the Controller\n  nano internal/controller/frigate/frigate_controller.go\n\n  # Edit the Controller Test\n  nano internal/controller/frigate/frigate_controller_test.go\n\n  # Generate the manifests\n  make manifests\n\n  # Install CRDs into the Kubernetes cluster using kubectl apply\n  make install\n\n  # Regenerate code and run against the Kubernetes cluster configured by ~/.kube/config\n  make run\n\n\nFlags:\n      --controller                   if set, generate the controller without prompting the user (default true)\n      --external-api-domain string   Specify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).\n      --external-api-path string     Specify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).\n      --force                        attempt to create resource even if it already exists\n      --group string                 resource Group\n  -h, --help                         help for api\n      --kind string                  resource Kind\n      --make make generate           if true, run make generate after generating files (default true)\n      --namespaced                   resource is namespaced (default true)\n      --plural string                resource irregular plural form\n      --resource                     if set, generate the resource without prompting the user (default true)\n      --version string               resource Version\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk create webhook --help": {
+    "returncode": 0,
+    "stdout": "Scaffold a webhook for an API resource. You can choose to scaffold defaulting,\nvalidating and/or conversion webhooks.\n\nUsage:\n  operator-sdk create webhook [flags]\n\nExamples:\n  # Create defaulting and validating webhooks for Group: ship, Version: v1beta1\n  # and Kind: Frigate\n  operator-sdk create webhook --group ship --version v1beta1 --kind Frigate --defaulting --programmatic-validation\n\n  # Create conversion webhook for Group: ship, Version: v1beta1\n  # and Kind: Frigate\n  operator-sdk create webhook --group ship --version v1beta1 --kind Frigate --conversion --spoke v1\n\n\nFlags:\n      --conversion                   if set, scaffold the conversion webhook\n      --defaulting                   if set, scaffold the defaulting webhook\n      --external-api-domain string   Specify the domain name for the external API. This domain is used to generate accurate RBAC markers and permissions for the external resources (e.g., cert-manager.io).\n      --external-api-path string     Specify the Go package import path for the external API. This is used to scaffold controllers for resources defined outside this project (e.g., github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1).\n      --force                        attempt to create resource even if it already exists\n      --group string                 resource Group\n  -h, --help                         help for webhook\n      --kind string                  resource Kind\n      --legacy                       [DEPRECATED] Attempts to create resource under the API directory (legacy path). This option will be removed in future versions.\n      --make make generate           if true, run make generate after generating files (default true)\n      --plural string                resource irregular plural form\n      --programmatic-validation      if set, scaffold the validating webhook\n      --spoke strings                Comma-separated list of spoke versions to be added to the conversion webhook (e.g., --spoke v1,v2)\n      --version string               resource Version\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk edit --help": {
+    "returncode": 0,
+    "stdout": "This command will edit the project configuration.\nFeatures supported:\n  - Toggle between single or multi group projects.\n\nUsage:\n  operator-sdk edit [flags]\n\nExamples:\n  # Enable the multigroup layout\n  operator-sdk edit --multigroup\n\n  # Disable the multigroup layout\n  operator-sdk edit --multigroup=false\n\n\nFlags:\n  -h, --help         help for edit\n      --multigroup   enable or disable multigroup layout\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk generate --help": {
+    "returncode": 0,
+    "stdout": "The 'operator-sdk generate' command invokes a specific generator to generate\ncode or manifests.\n\nUsage:\n  operator-sdk generate [command]\n\nAvailable Commands:\n  bundle           Generates bundle data for the operator\n  kustomize        Contains subcommands that generate operator-framework kustomize data for the operator\n\nFlags:\n  -h, --help   help for generate\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk generate [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk generate bundle --help": {
+    "returncode": 0,
+    "stdout": "\nRunning 'generate bundle' is the first step to publishing your operator to a catalog and deploying it with OLM.\nThis command both generates and packages files into an on-disk representation of an operator called a bundle.\nA bundle consists of a ClusterServiceVersion (CSV), CustomResourceDefinitions (CRDs),\nmanifests not part of the CSV but required by the operator, some metadata (annotations.yaml),\nand a bundle.Dockerfile to build a bundle image.\n\nA CSV manifest is generated by collecting data from the set of manifests passed to this command (see below),\nsuch as CRDs, RBAC, etc., and applying that data to a \"base\" CSV manifest. This base CSV can contain metadata,\nadded by hand or by the 'generate kustomize manifests' command, and can be passed in like any other manifest\n(see below) or by file at the exact path '<kustomize-dir>/bases/<package-name>.clusterserviceversion.yaml'.\nBe aware that 'generate bundle' idempotently regenerates a bundle, so all non-metadata values in a base\nwill be overwritten. If no base was passed in, input manifest data will be applied to an empty CSV.\n\nThere are two ways to pass the to-be-bundled set of manifests to this command: stdin via a Unix pipe,\nor in a directory using '--input-dir'. See command help for more information on these modes.\nPassing a directory is useful for running 'generate bundle' outside of a project or within a project\nthat does not use kustomize and/or contains cluster-ready manifests on disk.\n\nSet '--version' to supply a semantic version for your bundle if you are creating one\nfor the first time or upgrading an existing one.\n\nIf '--output-dir' is set and you wish to build bundle images from that directory,\neither manually update your bundle.Dockerfile or set '--overwrite'.\n\nMore information on bundles:\nhttps://github.com/operator-framework/operator-registry/#manifest-format\n\nUsage:\n  operator-sdk generate bundle [flags]\n\nExamples:\n\n  # If running within a project or in a project that uses kustomize to generate manifests,\n\t# make sure a kustomize directory exists that looks like the following 'config/manifests' directory:\n  $ tree config/manifests\n  config/manifests\n  \u251c\u2500\u2500 bases\n  \u2502\u00a0\u00a0 \u2514\u2500\u2500 memcached-operator.clusterserviceversion.yaml\n  \u2514\u2500\u2500 kustomization.yaml\n\n  # Generate a 0.0.1 bundle by passing manifests to stdin:\n  $ kustomize build config/manifests | operator-sdk generate bundle --version 0.0.1\n  Generating bundle version 0.0.1\n  ...\n\n  # If running outside of a project or in a project that does not use kustomize to generate manifests,\n\t# make sure cluster-ready manifests are available on disk:\n  $ tree deploy/\n  deploy/\n  \u251c\u2500\u2500 crds\n  \u2502\u00a0\u00a0 \u2514\u2500\u2500 cache.my.domain_memcacheds.yaml\n  \u251c\u2500\u2500 deployment.yaml\n  \u251c\u2500\u2500 role.yaml\n  \u251c\u2500\u2500 role_binding.yaml\n  \u251c\u2500\u2500 service_account.yaml\n  \u2514\u2500\u2500 webhooks.yaml\n\n  # Generate a 0.0.1 bundle by passing manifests by dir:\n  $ operator-sdk generate bundle --input-dir deploy --version 0.0.1\n  Generating bundle version 0.0.1\n  ...\n\n  # After running in either of the above modes, you should see this directory structure:\n  $ tree bundle/\n  bundle/\n  \u251c\u2500\u2500 manifests\n  \u2502\u00a0\u00a0 \u251c\u2500\u2500 cache.my.domain_memcacheds.yaml\n  \u2502\u00a0\u00a0 \u2514\u2500\u2500 memcached-operator.clusterserviceversion.yaml\n  \u2514\u2500\u2500 metadata\n      \u2514\u2500\u2500 annotations.yaml\n\n\nFlags:\n      --channels string                  A comma-separated list of channels the bundle belongs to (default \"alpha\")\n      --crds-dir string                  Directory to read cluster-ready CustomResoureDefinition manifests from. This option can only be used if --deploy-dir is set\n      --default-channel string           The default channel for the bundle\n      --deploy-dir string                Directory to read cluster-ready operator manifests from. If --crds-dir is not set, CRDs are ready from this directory. This option is mutually exclusive with --input-dir and piping to stdin\n      --extra-service-accounts strings   Names of service accounts, outside of the operator's Deployment account, that have bindings to {Cluster}Roles that should be added to the CSV\n  -h, --help                             help for bundle\n      --input-dir string                 Directory to read cluster-ready operator manifests from. This option is mutually exclusive with --deploy-dir/--crds-dir and piping to stdin. This option should not be passed an existing bundle directory, as this bundle will not contain the correct set of manifests required to generate a CSV. Use --kustomize-dir to pass a base CSV\n      --kustomize-dir string             Directory containing kustomize bases in a \"bases\" dir and a kustomization.yaml for operator-framework manifests (default \"config/manifests\")\n      --manifests                        Generate bundle manifests\n      --metadata                         Generate bundle metadata and Dockerfile\n      --output-dir string                Directory to write the bundle to\n      --overwrite                        Overwrite the bundle's metadata and Dockerfile if they exist (default true)\n      --package string                   Bundle's package name\n  -q, --quiet                            Run in quiet mode\n      --stdout                           Write bundle manifest to stdout\n      --use-image-digests                Use SHA Digest for images\n  -v, --version string                   Semantic version of the operator in the generated bundle. Only set if creating a new bundle or upgrading your operator\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk generate kustomize --help": {
+    "returncode": 0,
+    "stdout": "Contains subcommands that generate operator-framework kustomize data for the operator\n\nUsage:\n  operator-sdk generate kustomize [command]\n\nAvailable Commands:\n  manifests   Generates kustomize bases and a kustomization.yaml for operator-framework manifests\n\nFlags:\n  -h, --help   help for kustomize\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk generate kustomize [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk generate kustomize manifests --help": {
+    "returncode": 0,
+    "stdout": "\nRunning 'generate kustomize manifests' will (re)generate kustomize bases and a kustomization.yaml in\n'config/manifests', which are used to build operator-framework manifests by other operator-sdk commands.\nThis command will interactively ask for UI metadata, an important component of manifest bases,\nby default unless a base already exists or you set '--interactive=false'.\n\nUsage:\n  operator-sdk generate kustomize manifests [flags]\n\nExamples:\n\n  $ operator-sdk generate kustomize manifests\n\n  Display name for the operator (required):\n  > memcached-operator\n  ...\n\n  $ tree config/manifests\n  config/manifests\n  \u251c\u2500\u2500 bases\n  \u2502\u00a0\u00a0 \u2514\u2500\u2500 memcached-operator.clusterserviceversion.yaml\n  \u2514\u2500\u2500 kustomization.yaml\n\n  # After generating kustomize bases and a kustomization.yaml, you can generate a bundle or package manifests.\n\n  # To generate a bundle:\n  $ kustomize build config/manifests | operator-sdk generate bundle --version 0.0.1\n\n  # To generate package manifests:\n  $ kustomize build config/manifests | operator-sdk generate packagemanifests --version 0.0.1\n\n\nFlags:\n      --apis-dir string     Root directory for API type defintions\n  -h, --help                help for manifests\n      --input-dir string    Directory containing existing kustomize files\n      --interactive         When set to false, if no kustomize base exists, an interactive command prompt will be presented to accept non-inferrable metadata\n      --output-dir string   Directory to write kustomize files\n      --package string      Package name\n  -q, --quiet               Run in quiet mode\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help alpha --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help alpha config-3alpha-to-3 --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help alpha generate --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help bundle --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help bundle validate --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help cleanup --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help completion bash --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help completion fish --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help create api --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help create webhook --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help edit --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help generate --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help generate bundle --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help generate kustomize --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help generate kustomize manifests --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help init --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help olm --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help olm install --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help olm status --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help olm uninstall --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help pkgman-to-bundle --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help run --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help run bundle --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help run bundle-upgrade --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help scorecard --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type operator-sdk help [path to command] for full details.\n\nUsage:\n  operator-sdk help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk init --help": {
+    "returncode": 0,
+    "stdout": "Initialize a new project including the following files:\n  - a \"go.mod\" with project dependencies\n  - a \"PROJECT\" file that stores project configuration\n  - a \"Makefile\" with several useful make targets for the project\n  - several YAML files for project deployment under the \"config\" directory\n  - a \"cmd/main.go\" file that creates the manager that will run the project controllers\n\nUsage:\n  operator-sdk init [flags]\n\nExamples:\n  # Initialize a new project with your domain and name in copyright\n  operator-sdk init --plugins go/v4 --domain example.org --owner \"Your name\"\n\n  # Initialize a new project defining a specific project version\n  operator-sdk init --plugins go/v4 --project-version 3\n\n\nFlags:\n      --domain string            domain for groups (default \"my.domain\")\n      --fetch-deps               ensure dependencies are downloaded (default true)\n  -h, --help                     help for init\n      --license string           license to use to boilerplate, may be one of 'apache2', 'none' (default \"apache2\")\n      --owner string             owner to add to the copyright\n      --project-name string      name of this project\n      --project-version string   project version (default \"3\")\n      --repo string              name to use for go module (e.g., github.com/user/repo), defaults to the go package of the current working directory.\n      --skip-go-version-check    if specified, skip checking the Go version\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk olm --help": {
+    "returncode": 0,
+    "stdout": "Manage the Operator Lifecycle Manager installation in your cluster\n\nUsage:\n  operator-sdk olm [command]\n\nAvailable Commands:\n  install     Install Operator Lifecycle Manager in your cluster\n  status      Get the status of the Operator Lifecycle Manager installation in your cluster\n  uninstall   Uninstall Operator Lifecycle Manager from your cluster\n\nFlags:\n  -h, --help   help for olm\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk olm [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk olm install --help": {
+    "returncode": 0,
+    "stdout": "Install Operator Lifecycle Manager in your cluster\n\nUsage:\n  operator-sdk olm install [flags]\n\nFlags:\n  -h, --help               help for install\n      --timeout duration   time to wait for the command to complete before failing (default 2m0s)\n      --version string     version of OLM resources to install (default \"0.28.0\")\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk olm status --help": {
+    "returncode": 0,
+    "stdout": "Get the status of the Operator Lifecycle Manager installation in your cluster\n\nUsage:\n  operator-sdk olm status [flags]\n\nFlags:\n  -h, --help                   help for status\n      --olm-namespace string   namespace where OLM is installed (default \"olm\")\n      --timeout duration       time to wait for the command to complete before failing (default 2m0s)\n      --version string         version of OLM installed on cluster; if unsetoperator-sdk attempts to auto-discover the version\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk olm uninstall --help": {
+    "returncode": 0,
+    "stdout": "Uninstall Operator Lifecycle Manager from your cluster\n\nUsage:\n  operator-sdk olm uninstall [flags]\n\nFlags:\n  -h, --help                   help for uninstall\n      --olm-namespace string   namespace from where OLM is to be uninstalled. (default \"olm\")\n      --timeout duration       time to wait for the command to complete before failing (default 2m0s)\n      --version string         version of OLM resources to uninstall.\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk pkgman-to-bundle --help": {
+    "returncode": 0,
+    "stdout": "\n'pkgman-to-bundle' command helps in migrating OLM packagemanifests to bundles which is the preferred OLM packaging format.\nThis command takes an input packagemanifest directory and generates bundles for each of the versions of manifests present in\nthe input directory. Additionally, it also provides the flexibility to build bundle images for each of the generated bundles.\n\nThe generated bundles are always written on disk. Location for the generated bundles can be specified using '--output-dir'. If not\nspecified, the default location would be 'bundle/' directory.\n\nThe base container image name for the bundles can be provided using '--image-tag-base' flag. This should be provided without the tag, since the tag\nfor the images would be the bundle version, (ie) image names will be in the format <base_image>:<bundle_version>.\n\nSpecify the build command for building container images using '--build-cmd' flag. The default build command is 'docker build'. The command will\nneed to be in the 'PATH' or fully qualified path name should be provided.\n\nUsage:\n  operator-sdk pkgman-to-bundle <packagemanifestdir> [flags]\n\nExamples:\n\n\n# Provide the packagemanifests directory as input to the command. Consider the packagemanifests directory to have the following\n# structure:\n\n$ tree packagemanifests/\npackagemanifests\n\u2514\u2500\u2500 etcd\n    \u251c\u2500\u2500 0.0.1\n    \u2502   \u251c\u2500\u2500 etcdcluster.crd.yaml\n    \u2502   \u2514\u2500\u2500 etcdoperator.clusterserviceversion.yaml\n    \u251c\u2500\u2500 0.0.2\n    \u2502   \u251c\u2500\u2500 etcdbackup.crd.yaml\n    \u2502   \u251c\u2500\u2500 etcdcluster.crd.yaml\n    \u2502   \u251c\u2500\u2500 etcdoperator.v0.0.2.clusterserviceversion.yaml\n    \u2502   \u2514\u2500\u2500 etcdrestore.crd.yaml\n    \u2514\u2500\u2500 etcd.package.yaml\n\n# Run the following command to generate bundles in the default 'bundle/' directory with the base-container image name\n# to be 'quay.io/example/etcd'\n$ operator-sdk pkgman-to-bundle packagemanifests --image-tag-base quay.io/example/etcd\nINFO[0000] Packagemanifests will be migrated to bundles in bundle directory\nINFO[0000] Creating bundle/bundle-0.0.1/bundle.Dockerfile\nINFO[0000] Creating bundle/bundle-0.0.1/metadata/annotations.yaml\n...\n\n# After running the above command, the bundles will be generated in 'bundles/' directory.\n$ tree bundles/\nbundles/\n\u251c\u2500\u2500 bundle-0.0.1\n\u2502\u00a0\u00a0 \u251c\u2500\u2500 bundle\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 manifests\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdcluster.crd.yaml\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdoperator.clusterserviceversion.yaml\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 metadata\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 annotations.yaml\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u2514\u2500\u2500 tests\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0     \u2514\u2500\u2500 scorecard\n\u2502\u00a0\u00a0 \u2502\u00a0\u00a0         \u2514\u2500\u2500 config.yaml\n\u2502\u00a0\u00a0 \u2514\u2500\u2500 bundle.Dockerfile\n\u2514\u2500\u2500 bundle-0.0.2\n    \u251c\u2500\u2500 bundle\n    \u2502\u00a0\u00a0 \u251c\u2500\u2500 manifests\n    \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdbackup.crd.yaml\n    \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdcluster.crd.yaml\n    \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdoperator.v0.0.2.clusterserviceversion.yaml\n    \u2502\u00a0\u00a0 \u2502\u00a0\u00a0 \u251c\u2500\u2500 etcdrestore.crd.yaml\n    \u2502\u00a0\u00a0 \u2514\u2500\u2500 metadata\n    \u2502\u00a0\u00a0     \u2514\u2500\u2500 annotations.yaml\n    \u2514\u2500\u2500 bundle.Dockerfile\n\nA custom command to build bundle images can also be specified using the '--build-cmd' flag. For example,\n\n$ operator-sdk pkgman-to-bundle packagemanifests --image-tag-base quay.io/example/etcd --build-cmd \"podman build -f bundle.Dockerfile . -t\"\n\nImages for the both the bundles will be built with the following names: quay.io/example/etcd:0.0.1 and quay.io/example/etcd:0.0.2.\n\n\nFlags:\n      --build-cmd string        Build command to be run for building images. By default 'docker build' is run.\n  -h, --help                    help for pkgman-to-bundle\n      --image-tag-base string   Base container image name for bundle image tags, ex. my.reg/foo/bar-operator-bundle will become my.reg/foo/bar-operator-bundle:${package-dir-name} for each child directory name in the packagemanifests directory\n      --output-dir string       Directory to write bundle to. (default \"bundles\")\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk run --help": {
+    "returncode": 0,
+    "stdout": "This command has subcommands that will deploy your Operator with OLM.\n\nUsage:\n  operator-sdk run [command]\n\nAvailable Commands:\n  bundle           Deploy an Operator in the bundle format with OLM\n  bundle-upgrade   Upgrade an Operator previously installed in the bundle format with OLM\n\nFlags:\n  -h, --help   help for run\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n\nUse \"operator-sdk run [command] --help\" for more information about a command.\n"
+  },
+  "operator-sdk run bundle --help": {
+    "returncode": 0,
+    "stdout": "The single argument to this command is a bundle image, with the full registry path specified.\nIf using a docker.io image, you must specify docker.io(/<namespace>)?/<bundle-image-name>:<tag>.\nIf the bundle image provided is a SQLite index, it must be pullable by the cluster as SQLite images are pulled from the cluster.\nIf the bundle image provided is a File-Based Catalog (FBC) index, it will be pulled on the local machine.\n\nThe main purpose of this command is to streamline running the bundle without having to provide an index image with the bundle already included.\n\nThe `--index-image` flag specifies an index image in which to inject the given bundle. It can be specified to resolve dependencies for a bundle. \nThis is an optional flag which will default to `quay.io/operator-framework/opm:latest`.\nThe index image provided should **NOT** already have the bundle. A limitation of the index image flag is that it does not check the upgrade graph\nas the annotations for channels are ignored but it is still a useful flag to have to validate the dependencies. \nFor example: It does not fail fast when the bundle version provided is <= ChannelHead.\n\nUsage:\n  operator-sdk run bundle <bundle-image> [flags]\n\nFlags:\n      --ca-secret-name string                     Name of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key \"cert.pem\"\n      --decompression-image string                image used in an init container in the registry pod to decompress the compressed catalog contents. cat and gzip binaries are expected to exist in the PATH (default \"registry.access.redhat.com/ubi9/ubi:9.4\")\n  -h, --help                                      help for bundle\n      --image-pull-policy string                  image pull policy for the registry pod (default \"Always\")\n      --index-image string                        index image in which to inject bundle (default \"quay.io/operator-framework/opm:latest\")\n      --install-mode InstallModeValue             install mode\n      --kubeconfig string                         Path to the kubeconfig file to use for CLI requests.\n  -n, --namespace string                          If present, namespace scope for this CLI request\n      --pull-secret-name string                   Name of image pull secret (\"type: kubernetes.io/dockerconfigjson\") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in\n      --security-context-config SecurityContext   specifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'. (default legacy)\n      --service-account string                    Service account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account\n      --skip-tls                                  skip authentication of image registry TLS certificate when pulling a bundle image in-cluster\n      --skip-tls-verify                           skip TLS certificate verification for container image registries while pulling bundles\n      --timeout duration                          Duration to wait for the command to complete before failing (default 2m0s)\n      --use-http                                  use plain HTTP for container image registries while pulling bundles\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk run bundle-upgrade --help": {
+    "returncode": 0,
+    "stdout": "The single argument to this command is a bundle image, with the full registry path specified.\nIf using a docker.io image, you must specify docker.io(/<namespace>)?/<bundle-image-name>:<tag>.\nIf the bundle image provided is a SQLite index, it must be pullable by the cluster as SQLite images are pulled from the cluster.\nIf the bundle image provided is a File-Based Catalog (FBC) index, it will be pulled on the local machine.\n\nUsage:\n  operator-sdk run bundle-upgrade <bundle-image> [flags]\n\nFlags:\n      --ca-secret-name string                     Name of a generic secret containing a PEM root certificate file required to pull bundle images. This secret *must* be in the namespace that this command is configured to run in, and the file *must* be encoded under the key \"cert.pem\"\n  -h, --help                                      help for bundle-upgrade\n      --image-pull-policy string                  image pull policy for the registry pod (default \"Always\")\n      --kubeconfig string                         Path to the kubeconfig file to use for CLI requests.\n  -n, --namespace string                          If present, namespace scope for this CLI request\n      --pull-secret-name string                   Name of image pull secret (\"type: kubernetes.io/dockerconfigjson\") required to pull bundle images. This secret *must* be both in the namespace and an imagePullSecret of the service account that this command is configured to run in\n      --security-context-config SecurityContext   specifies the security context to use for the catalog pod. allowed: 'restricted', 'legacy'. (default legacy)\n      --service-account string                    Service account name to bind registry objects to. If unset, the default service account is used. This value does not override the operator's service account\n      --skip-tls                                  skip authentication of image registry TLS certificate when pulling a bundle image in-cluster\n      --skip-tls-verify                           skip TLS certificate verification for container image registries while pulling bundles\n      --timeout duration                          Duration to wait for the command to complete before failing (default 2m0s)\n      --use-http                                  use plain HTTP for container image registries while pulling bundles\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk scorecard --help": {
+    "returncode": 0,
+    "stdout": "Has flags to configure dsl, bundle, and selector. This command takes\none argument, either a bundle image or directory containing manifests and metadata.\nIf the argument holds an image tag, it must be present remotely.\n\nUsage:\n  operator-sdk scorecard [flags]\n\nFlags:\n  -c, --config string            path to scorecard config file\n  -h, --help                     help for scorecard\n      --kubeconfig string        kubeconfig path\n  -L, --list                     Option to enable listing which tests are run\n  -n, --namespace string         namespace to run the test images in\n  -o, --output string            Output format for results. Valid values: text, json, xunit (default \"text\")\n      --pod-security string      option to run scorecard with legacy pod security context (default \"legacy\")\n  -l, --selector string          label selector to determine which tests are run\n  -s, --service-account string   Service account to use for tests (default \"default\")\n  -x, --skip-cleanup             Disable resource cleanup after tests are run\n  -b, --storage-image string     Storage image to be used by the Scorecard pod (default \"quay.io/operator-framework/scorecard-storage@sha256:a3bfda71281393c7794cabdd39c563fb050d3020fd0b642ea164646bdd39a0e2\")\n  -t, --test-output string       Test output directory. (default \"test-output\")\n  -u, --untar-image string       Untar image to be used by the Scorecard pod (default \"quay.io/operator-framework/scorecard-untar@sha256:2e728c5e67a7f4dec0df157a322dd5671212e8ae60f69137463bd4fdfbff8747\")\n  -w, --wait-time duration       seconds to wait for tests to complete. Example: 35s (default 30s)\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  },
+  "operator-sdk version --help": {
+    "returncode": 0,
+    "stdout": "Print the operator-sdk version\n\nUsage:\n  operator-sdk version [flags]\n\nExamples:\noperator-sdk version\n\nFlags:\n  -h, --help   help for version\n\nGlobal Flags:\n      --plugins strings   plugin keys to be used for this subcommand execution\n      --verbose           Enable verbose logging\n"
+  }
+}

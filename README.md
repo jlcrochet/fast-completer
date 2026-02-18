@@ -130,18 +130,25 @@ Download the latest release for your platform from [GitHub Releases](../../relea
 | macOS (Intel) | `fast-completer-macos-x86_64` | `fast-completer-macos-x86_64.zip` |
 | Windows (x86_64) | `fast-completer-windows-x86_64.exe` | `fast-completer-windows-x86_64.zip` |
 
-The **ZIP archives** include the binary and prebuilt blobs for all bundled schemas (aws, az, func, gcloud, gh), plus an install script that copies the blobs to the cache directory. This is the quickest way to get started — no blob generation needed.
+The **ZIP archives** include the binary and prebuilt blobs for all bundled schemas, plus an install script that copies the blobs to the cache directory. This is the quickest way to get started — no blob generation needed.
 
 ```bash
 # Linux / macOS
 unzip fast-completer-linux-x86_64.zip
-./fast-completer-linux-x86_64/install-blobs.sh   # copies blobs to ~/.cache/fast-completer/
+./fast-completer-linux-x86_64/install-blobs.sh   # copies all blobs to ~/.cache/fast-completer/
 cp fast-completer-linux-x86_64/fast-completer ~/.local/bin/
+
+# Install only specific blobs
+./fast-completer-linux-x86_64/install-blobs.sh --only aws --only az --only docker
+
+# Install all except specific blobs
+./fast-completer-linux-x86_64/install-blobs.sh --exclude heroku --exclude pulumi
 
 # Windows (PowerShell)
 Expand-Archive fast-completer-windows-x86_64.zip
-.\fast-completer-windows-x86_64\install-blobs.ps1   # copies blobs to %LOCALAPPDATA%\fast-completer\
-Copy-Item fast-completer-windows-x86_64\fast-completer.exe $env:LOCALAPPDATA\Programs\
+.\fast-completer-windows-x86_64\install-blobs.ps1   # copies all blobs to %LOCALAPPDATA%\fast-completer\
+.\fast-completer-windows-x86_64\install-blobs.ps1 -Only aws,az,docker   # whitelist
+.\fast-completer-windows-x86_64\install-blobs.ps1 -Exclude heroku       # blacklist
 ```
 
 The **standalone binaries** are also available if you prefer to generate blobs yourself:
@@ -171,14 +178,17 @@ curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scrip
 irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
 ```
 
-Use `--shell` to configure shell completions, and `--add-path` to add `~/.local/bin` to your PATH:
+Use `--shell` to configure shell completions, `--add-path` to add `~/.local/bin` to your PATH, and `--only`/`--exclude` to filter which blobs are installed:
 
 ```bash
 # Install with bash completions and PATH setup
 curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --add-path
 
-# Install completions for multiple shells
-curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --shell bash --shell zsh --shell fish --add-path
+# Install only specific blobs
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --only aws --only docker --only kubectl
+
+# Install all except specific blobs
+curl -fsSL https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.sh | sh -s -- --exclude heroku --exclude pulumi
 ```
 
 The PowerShell script automatically configures completions and sources the profile. Use environment variables for additional setup:
@@ -186,12 +196,20 @@ The PowerShell script automatically configures completions and sources the profi
 ```powershell
 # Full setup: add to PATH + interactive menu completions
 $env:FC_ADD_PATH=1; $env:FC_MENU_COMPLETE=1; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
+
+# Install only specific blobs
+$env:FC_ONLY="aws,docker,kubectl"; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
+
+# Install all except specific blobs
+$env:FC_EXCLUDE="heroku,pulumi"; irm https://raw.githubusercontent.com/jlcrochet/fast-completer/main/scripts/install.ps1 | iex
 ```
 
 | Variable | Effect |
 |----------|--------|
 | `FC_ADD_PATH=1` | Permanently adds install directory to PATH |
 | `FC_MENU_COMPLETE=1` | Enables `MenuComplete` (interactive menu on Tab) |
+| `FC_ONLY=aws,docker` | Install only the listed blobs (comma-separated) |
+| `FC_EXCLUDE=heroku` | Install all blobs except the listed ones (comma-separated) |
 
 ### From Source
 
@@ -336,24 +354,142 @@ fast-completer --lint schemas/aws/aws.fcmps
 
 ### Example Schemas
 
-The `schemas/` directory contains pre-generated schemas and export scripts for popular CLIs:
+The `schemas/` directory contains export scripts for 115 popular CLIs. To add a new one, use the scaffolding script:
 
-| CLI | Schema | Requirements |
-|-----|--------|--------------|
-| AWS CLI | `schemas/aws/aws.fcmps` | AWS CLI v2 (official installer, not PyPI) |
-| Azure CLI | `schemas/az/az.fcmps` | `azure-cli` pip package |
-| Azure Functions Core Tools | `schemas/func/func.fcmps` | Hand-maintained (no export script) |
-| gcloud CLI | `schemas/gcloud/gcloud.fcmps` | Google Cloud SDK (system install) |
-| GitHub CLI | `schemas/gh/gh.fcmps` | `gh` CLI (system install) |
+```bash
+python scripts/new_schema.py <framework> <cli_name> "<description>"
+# Frameworks: cobra, clap, oclif, hashicorp, helptext, systemd
+```
 
-To use the included schemas:
+<details>
+<summary>Full list of supported CLIs</summary>
+
+| CLI | Schema | Framework |
+|-----|--------|-----------|
+| act | `schemas/act/` | Cobra |
+| Argo CD | `schemas/argocd/` | Cobra |
+| AWS CLI | `schemas/aws/` | argparse |
+| Azure CLI | `schemas/az/` | argparse |
+| Azure Functions Core Tools | `schemas/func/` | hand-maintained |
+| bacon | `schemas/bacon/` | clap |
+| bat | `schemas/bat/` | clap |
+| bun | `schemas/bun/` | helptext |
+| buf | `schemas/buf/` | Cobra |
+| Cargo | `schemas/cargo/` | clap |
+| Cilium | `schemas/cilium/` | Cobra |
+| Civo | `schemas/civo/` | Cobra |
+| Coder | `schemas/coder/` | Cobra |
+| conda | `schemas/conda/` | argparse |
+| Consul | `schemas/consul/` | HashiCorp |
+| AWS Copilot | `schemas/copilot/` | Cobra |
+| cosign | `schemas/cosign/` | Cobra |
+| crictl | `schemas/crictl/` | Cobra |
+| curl | `schemas/curl/` | custom |
+| deno | `schemas/deno/` | clap |
+| delta | `schemas/delta/` | clap |
+| DigitalOcean CLI | `schemas/doctl/` | Cobra |
+| dive | `schemas/dive/` | Cobra |
+| Docker | `schemas/docker/` | Cobra |
+| dotnet | `schemas/dotnet/` | custom |
+| dust | `schemas/dust/` | clap |
+| Earthly | `schemas/earthly/` | Cobra |
+| eksctl | `schemas/eksctl/` | Cobra |
+| etcdctl | `schemas/etcdctl/` | Cobra |
+| eza | `schemas/eza/` | clap |
+| fd | `schemas/fd/` | clap |
+| Flux | `schemas/flux/` | Cobra |
+| Fly.io CLI | `schemas/flyctl/` | Cobra |
+| gcloud CLI | `schemas/gcloud/` | custom |
+| git | `schemas/git/` | custom |
+| GitHub CLI | `schemas/gh/` | Cobra |
+| GitLab CLI | `schemas/glab/` | Cobra |
+| golangci-lint | `schemas/golangci-lint/` | Cobra |
+| GoReleaser | `schemas/goreleaser/` | Cobra |
+| gpg | `schemas/gpg/` | helptext |
+| grype | `schemas/grype/` | Cobra |
+| Helm | `schemas/helm/` | Cobra |
+| Heroku CLI | `schemas/heroku/` | oclif |
+| htop | `schemas/htop/` | systemd |
+| Hugo | `schemas/hugo/` | Cobra |
+| hyperfine | `schemas/hyperfine/` | clap |
+| istioctl | `schemas/istioctl/` | Cobra |
+| journalctl | `schemas/journalctl/` | systemd |
+| just | `schemas/just/` | clap |
+| k6 | `schemas/k6/` | Cobra |
+| k3d | `schemas/k3d/` | Cobra |
+| kind | `schemas/kind/` | Cobra |
+| kops | `schemas/kops/` | Cobra |
+| krew | `schemas/krew/` | Cobra |
+| kubectl | `schemas/kubectl/` | Cobra |
+| kubeadm | `schemas/kubeadm/` | Cobra |
+| Kustomize | `schemas/kustomize/` | Cobra |
+| Kyverno | `schemas/kyverno/` | Cobra |
+| Linkerd | `schemas/linkerd/` | Cobra |
+| mdbook | `schemas/mdbook/` | clap |
+| MinIO Client | `schemas/mc/` | Cobra |
+| minikube | `schemas/minikube/` | Cobra |
+| mise | `schemas/mise/` | clap |
+| NATS CLI | `schemas/nats/` | Cobra |
+| nerdctl | `schemas/nerdctl/` | Cobra |
+| Netlify CLI | `schemas/netlify/` | oclif |
+| Nomad | `schemas/nomad/` | HashiCorp |
+| npm | `schemas/npm/` | custom |
+| Nushell | `schemas/nu/` | clap |
+| OpenShift CLI | `schemas/oc/` | Cobra |
+| OpenTofu | `schemas/tofu/` | HashiCorp |
+| operator-sdk | `schemas/operator-sdk/` | Cobra |
+| ORAS | `schemas/oras/` | Cobra |
+| Packer | `schemas/packer/` | HashiCorp |
+| pip | `schemas/pip/` | argparse |
+| Poetry | `schemas/poetry/` | custom |
+| pnpm | `schemas/pnpm/` | custom |
+| Podman | `schemas/podman/` | Cobra |
+| procs | `schemas/procs/` | clap |
+| Pulumi | `schemas/pulumi/` | Cobra |
+| rclone | `schemas/rclone/` | Cobra |
+| restic | `schemas/restic/` | Cobra |
+| ripgrep | `schemas/rg/` | clap |
+| Ruff | `schemas/ruff/` | clap |
+| Rustup | `schemas/rustup/` | clap |
+| Salesforce CLI | `schemas/sf/` | oclif |
+| Skaffold | `schemas/skaffold/` | Cobra |
+| ss | `schemas/ss/` | helptext |
+| Starship | `schemas/starship/` | clap |
+| stern | `schemas/stern/` | Cobra |
+| strace | `schemas/strace/` | helptext |
+| Supabase | `schemas/supabase/` | Cobra |
+| systemctl | `schemas/systemctl/` | systemd |
+| syft | `schemas/syft/` | Cobra |
+| Tailscale | `schemas/tailscale/` | Cobra |
+| tar | `schemas/tar/` | helptext |
+| Task (go-task) | `schemas/task/` | Cobra |
+| Tekton CLI | `schemas/tkn/` | Cobra |
+| Terraform | `schemas/terraform/` | HashiCorp |
+| tokei | `schemas/tokei/` | clap |
+| Trivy | `schemas/trivy/` | Cobra |
+| Turbo | `schemas/turbo/` | Cobra |
+| Twilio CLI | `schemas/twilio/` | oclif |
+| uv | `schemas/uv/` | clap |
+| Vault | `schemas/vault/` | HashiCorp |
+| Velero | `schemas/velero/` | Cobra |
+| wasm-pack | `schemas/wasm-pack/` | clap |
+| watchexec | `schemas/watchexec/` | clap |
+| wget | `schemas/wget/` | helptext |
+| Yarn | `schemas/yarn/` | custom |
+| xz | `schemas/xz/` | helptext |
+| yq | `schemas/yq/` | Cobra |
+| Zellij | `schemas/zellij/` | clap |
+| zoxide | `schemas/zoxide/` | clap |
+| zstd | `schemas/zstd/` | helptext |
+
+</details>
+
+To use a schema, generate its blob:
 
 ```bash
 fast-completer --generate-blob schemas/aws/aws.fcmps
-fast-completer --generate-blob schemas/az/az.fcmps
-fast-completer --generate-blob schemas/func/func.fcmps
-fast-completer --generate-blob schemas/gcloud/gcloud.fcmps
-fast-completer --generate-blob schemas/gh/gh.fcmps
+fast-completer --generate-blob schemas/docker/docker.fcmps
+# etc.
 ```
 
 To regenerate schemas from the latest CLI version:
@@ -367,16 +503,31 @@ python3 export_command_tree.py > aws.fcmps
 cd schemas/az
 uv sync && uv run python export_command_tree.py > az.fcmps
 
-# gcloud (requires google-cloud-sdk installed on the system)
-cd schemas/gcloud
-python3 export_command_tree.py > gcloud.fcmps
+# Cobra-based CLIs (docker, kubectl, helm, gh, etc.)
+cd schemas/docker
+python3 export_command_tree.py > docker.fcmps
 
-# GitHub CLI (requires gh installed: brew install gh, apt install gh, etc.)
-cd schemas/gh
-python3 export_command_tree.py > gh.fcmps
+# oclif-based CLIs (heroku, sf, netlify, twilio)
+cd schemas/heroku
+python3 export_command_tree.py > heroku.fcmps
+
+# HashiCorp CLIs (terraform, vault, consul, nomad, packer, tofu)
+cd schemas/terraform
+python3 export_command_tree.py > terraform.fcmps
+
+# clap-based CLIs (cargo, rg, fd, bat, etc.)
+cd schemas/cargo
+python3 export_command_tree.py > cargo.fcmps
+
+# Other CLIs (git, npm, pnpm, pip, yarn)
+cd schemas/git
+python3 export_command_tree.py > git.fcmps
 ```
 
-Some schema directories have a `pyproject.toml` for `uv` to manage pip dependencies (Azure CLI). For others, the CLI must be installed on the system (AWS CLI v2, gcloud, gh).
+Export scripts use shared modules in `scripts/`:
+- **`cobra_exporter.py`** — Introspects Cobra CLIs via `__complete` API
+- **`oclif_exporter.py`** — Parses oclif CLIs via `commands --json`
+- **`helptext_exporter.py`** — Parses `--help` output (clap, HashiCorp, npm, git, pip)
 
 The export scripts introspect the installed CLI to extract all commands, parameters, and descriptions. Run them after updating your CLI to get completions for new commands.
 
@@ -575,7 +726,7 @@ _fast_completer() {
 }
 
 # Register for specific commands
-complete -o nosort -F _fast_completer aws az  # -o nosort requires bash 4.4+
+complete -o nosort -F _fast_completer aws az docker gh kubectl
 
 # Or register for all installed blobs
 _fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
@@ -600,7 +751,7 @@ _fast_completer() {
 }
 
 # Register for specific commands
-compdef _fast_completer aws az
+compdef _fast_completer aws az docker gh kubectl
 
 # Or register for all installed blobs
 _fc_cache="${FAST_COMPLETER_CACHE:-$HOME/.cache/fast-completer}"
@@ -625,7 +776,7 @@ function _fast_completer
 end
 
 # Register for specific commands
-for cmd in aws az
+for cmd in aws az docker gh kubectl
     complete -c $cmd -e  # clear existing completions
     complete -c $cmd -k -a "(_fast_completer)"  # -k preserves order
 end
@@ -652,7 +803,7 @@ var fast-completer~ = {|@words|
 }
 
 # Register for specific commands
-for cmd [aws az] {
+for cmd [aws az docker gh kubectl] {
     set edit:completion:arg-completer[$cmd] = $fast-completer~
 }
 ```
@@ -662,22 +813,17 @@ for cmd [aws az] {
 Nushell doesn't add trailing spaces after external completions, so use `--add-space` to append them.
 
 ```nu
+# Auto-register all installed blobs
+let fc_cache = ($env.FAST_COMPLETER_CACHE? | default ([$env.HOME ".cache/fast-completer"] | path join))
+let fc_commands = (glob ([$fc_cache "*.fcmpb"] | path join) | each { path parse | get stem })
+
 $env.config.completions.external = {
     enable: true
     completer: {|spans|
-        match $spans.0 {
-            az | aws | gcloud | gh => {
-                let completions = ^fast-completer --add-space --full-commands tsv ...$spans
-                if ($completions | is-not-empty) {
-                    $completions | lines | split column -n 2 "\t" value description
-                }
-            }
-            # Optional: fall back to carapace
-            _ => {
-                let completions = ^carapace $cmd nushell ...$spans
-                if ($completions | is-not-empty) {
-                    $completions | from json
-                }
+        if $spans.0 in $fc_commands {
+            let completions = ^fast-completer --add-space --full-commands tsv ...$spans
+            if ($completions | is-not-empty) {
+                $completions | lines | split column -n 2 "\t" value description
             }
         }
     }
@@ -705,7 +851,7 @@ $fcCompleter = {
 }
 
 # Register for specific commands
-Register-ArgumentCompleter -Native -CommandName aws, az -ScriptBlock $fcCompleter
+Register-ArgumentCompleter -Native -CommandName aws, az, docker, gh, kubectl -ScriptBlock $fcCompleter
 
 # Or register for all installed blobs
 $fcCache = if ($env:FAST_COMPLETER_CACHE) { $env:FAST_COMPLETER_CACHE } else { "$env:LOCALAPPDATA\fast-completer" }
@@ -720,7 +866,6 @@ Get-ChildItem "$fcCache\*.fcmpb" -ErrorAction SilentlyContinue | ForEach-Object 
 
 ## TODO
 
-- Add schemas for other large CLIs (e.g., `kubectl`)
 - Check schemas for value types: if it's something like "path" or "directory", we may be able to provide completions for those
 
 ## How It Works

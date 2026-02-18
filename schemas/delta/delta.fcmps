@@ -1,0 +1,110 @@
+# delta CLI schema for fast-completer
+# Generated from delta 0.18.2
+
+delta # A syntax-highlighting pager for git and diff
+	--blame-code-style # Style string for the code section of a git blame line
+	--blame-format # Format string for git blame commit metadata [default: "{timestamp:<15} {author:<15.14} {commit:<8}"]
+	--blame-palette # Background colors used for git blame lines (space-separated string)
+	--blame-separator-format # Separator between the blame format and the code section of a git blame line [default: │{n:^4}│]
+	--blame-separator-style # Style string for the blame-separator-format
+	--blame-timestamp-format # Format of `git blame` timestamp in raw git output received by delta [default: "%Y-%m-%d %H:%M:%S %z"]
+	--blame-timestamp-output-format # Format string for git blame timestamp output
+	--color-only @bool # Do not alter the input structurally in any way
+	--config # Load the config file at PATH instead of ~/.gitconfig [default: ]
+	--commit-decoration-style # Style string for the commit hash decoration [default: ]
+	--commit-regex # Regular expression used to identify the commit line when parsing git output [default: "^commit "]
+	--commit-style # Style string for the commit hash line [default: raw]
+	--dark @bool # Use default colors appropriate for a dark terminal background
+	--default-language # Default language used for syntax highlighting [default: txt]
+	--detect-dark-light (auto|always|never) # Detect whether or not the terminal is dark or light by querying for its colors [default: auto] [possible values: auto, always, never]
+	--diff-highlight @bool # Emulate diff-highlight
+	--diff-so-fancy @bool # Emulate diff-so-fancy
+	--diff-stat-align-width # Width allocated for file paths in a diff stat section [default: 48]
+	--features # Names of delta features to activate (space-separated)
+	--file-added-label # Text to display before an added file path [default: added:]
+	--file-copied-label # Text to display before a copied file path [default: copied:]
+	--file-decoration-style # Style string for the file decoration [default: "blue ul"]
+	--file-modified-label # Text to display before a modified file path [default: ]
+	--file-removed-label # Text to display before a removed file path [default: removed:]
+	--file-renamed-label # Text to display before a renamed file path [default: renamed:]
+	--file-style # Style string for the file section [default: blue]
+	--file-transformation # Sed-style command transforming file paths for display
+	--generate-completion (bash|elvish|fish|powershell|zsh) # Print completion file for the given shell [possible values: bash, elvish, fish, powershell, zsh]
+	--grep-context-line-style # Style string for non-matching lines of grep output
+	--grep-file-style # Style string for file paths in grep output [default: magenta]
+	--grep-header-decoration-style # Style string for the header decoration in grep output
+	--grep-header-file-style # Style string for the file path part of the header in grep output
+	--grep-line-number-style # Style string for line numbers in grep output [default: green]
+	--grep-output-type (ripgrep|classic) # Grep output format. Possible values: "ripgrep" - file name printed once, followed by matching lines within that file, each preceded by a line number. "classic" - file name:line number, followed by matching line. Default is "ripgrep" if `rg --json` format is detected, otherwise "classic" [possible values: ripgrep, classic]
+	--grep-match-line-style # Style string for matching lines of grep output
+	--grep-match-word-style # Style string for the matching substrings within a matching line of grep output
+	--grep-separator-symbol # Separator symbol printed after the file path and line number in grep output [default: :]
+	--hunk-header-decoration-style # Style string for the hunk-header decoration [default: "blue box"]
+	--hunk-header-file-style # Style string for the file path part of the hunk-header [default: blue]
+	--hunk-header-line-number-style # Style string for the line number part of the hunk-header [default: blue]
+	--hunk-header-style # Style string for the hunk-header [default: "line-number syntax"]
+	--hunk-label # Text to display before a hunk header [default: ]
+	--hyperlinks @bool # Render commit hashes, file names, and line numbers as hyperlinks
+	--hyperlinks-commit-link-format # Format string for commit hyperlinks (requires --hyperlinks)
+	--hyperlinks-file-link-format # Format string for file hyperlinks (requires --hyperlinks) [default: file://{path}]
+	--inline-hint-style # Style string for short inline hint text [default: blue]
+	--inspect-raw-lines (true|false) # Kill-switch for --color-moved support [default: true] [possible values: true, false]
+	--keep-plus-minus-markers @bool # Prefix added/removed lines with a +/- character, as git does
+	--light @bool # Use default colors appropriate for a light terminal background
+	--line-buffer-size # Size of internal line buffer [default: 32]
+	--line-fill-method (ansi|spaces) # Line-fill method in side-by-side mode [possible values: ansi, spaces]
+	--line-numbers|-n @bool # Display line numbers next to the diff
+	--line-numbers-left-format # Format string for the left column of line numbers [default: {nm:^4}⋮]
+	--line-numbers-left-style # Style string for the left column of line numbers [default: auto]
+	--line-numbers-minus-style # Style string for line numbers in the old (minus) version of the file [default: auto]
+	--line-numbers-plus-style # Style string for line numbers in the new (plus) version of the file [default: auto]
+	--line-numbers-right-format # Format string for the right column of line numbers [default: {np:^4}│]
+	--line-numbers-right-style # Style string for the right column of line numbers [default: auto]
+	--line-numbers-zero-style # Style string for line numbers in unchanged (zero) lines [default: auto]
+	--list-languages @bool # List supported languages and associated file extensions
+	--list-syntax-themes @bool # List available syntax-highlighting color themes
+	--map-styles # Map styles encountered in raw input to desired output styles
+	--max-line-distance # Maximum line pair distance parameter in within-line diff algorithm [default: 0.6]
+	--max-syntax-highlighting-length # Stop syntax highlighting lines after this many characters [default: 400]
+	--max-line-length # Truncate lines longer than this [default: 3000]
+	--merge-conflict-begin-symbol # String marking the beginning of a merge conflict region [default: ▼]
+	--merge-conflict-end-symbol # String marking the end of a merge conflict region [default: ▲]
+	--merge-conflict-ours-diff-header-decoration-style # Style string for the decoration of the header above the 'ours' merge conflict diff [default: box]
+	--merge-conflict-ours-diff-header-style # Style string for the header above the 'ours' branch merge conflict diff [default: normal]
+	--merge-conflict-theirs-diff-header-decoration-style # Style string for the decoration of the header above the 'theirs' merge conflict diff [default: box]
+	--merge-conflict-theirs-diff-header-style # Style string for the header above the 'theirs' branch merge conflict diff [default: normal]
+	--minus-empty-line-marker-style # Style string for removed empty line marker [default: "normal auto"]
+	--minus-emph-style # Style string for emphasized sections of removed lines [default: "normal auto"]
+	--minus-non-emph-style # Style string for non-emphasized sections of removed lines that have an emphasized section [default: minus-style]
+	--minus-style # Style string for removed lines [default: "normal auto"]
+	--navigate @bool # Activate diff navigation
+	--navigate-regex # Regular expression defining navigation stop points
+	--no-gitconfig @bool # Do not read any settings from git config
+	--pager # Which pager to use
+	--paging (auto|always|never) # Whether to use a pager when displaying output [default: auto] [possible values: auto, always, never]
+	--parse-ansi @bool # Display ANSI color escape sequences in human-readable form
+	--plus-emph-style # Style string for emphasized sections of added lines [default: "syntax auto"]
+	--plus-empty-line-marker-style # Style string for added empty line marker [default: "normal auto"]
+	--plus-non-emph-style # Style string for non-emphasized sections of added lines that have an emphasized section [default: plus-style]
+	--plus-style # Style string for added lines [default: "syntax auto"]
+	--raw @bool # Do not alter the input in any way
+	--relative-paths @bool # Output all file paths relative to the current directory
+	--right-arrow # Text to display with a changed file path [default: "⟶  "]
+	--show-colors @bool # Show available named colors
+	--show-config @bool # Display the active values for all Delta options
+	--show-syntax-themes @bool # Show example diff for available syntax-highlighting themes
+	--show-themes @bool # Show example diff for available delta themes
+	--side-by-side|-s @bool # Display diffs in side-by-side layout
+	--syntax-theme # The syntax-highlighting theme to use
+	--tabs # The number of spaces to replace tab characters with [default: 8]
+	--true-color (auto|always|never) # Whether to emit 24-bit ("true color") RGB color codes [default: auto] [possible values: auto, always, never]
+	--whitespace-error-style # Style string for whitespace errors [default: "auto auto"]
+	--width|-w # The width of underline/overline decorations
+	--word-diff-regex # Regular expression defining a 'word' in within-line diff algorithm [default: \w+]
+	--wrap-left-symbol # End-of-line wrapped content symbol (left-aligned) [default: ↵]
+	--wrap-max-lines # How often a line should be wrapped if it does not fit [default: 2]
+	--wrap-right-percent # Threshold for right-aligning wrapped content [default: 37.0]
+	--wrap-right-prefix-symbol # Pre-wrapped content symbol (right-aligned) [default: …]
+	--wrap-right-symbol # End-of-line wrapped content symbol (right-aligned) [default: ↴]
+	--zero-style # Style string for unchanged lines [default: "syntax normal"]
+	--24-bit-color (auto|always|never) # Deprecated: use --true-color [possible values: auto, always, never]

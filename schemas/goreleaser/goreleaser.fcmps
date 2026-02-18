@@ -1,0 +1,276 @@
+# GoReleaser CLI schema for fast-completer
+# Generated from goreleaser .
+
+goreleaser # Go release automation
+	--help @bool # help for goreleaser
+	--verbose @bool # Enable verbose mode
+	--version @bool # version for goreleaser
+	build # Builds the current project
+		--verbose @bool # Enable verbose mode
+		--auto-snapshot @bool # Automatically sets --snapshot if the repository is dirty
+		--clean @bool # Removes the 'dist' directory before building
+		--config @bool # Load configuration from file
+		--id @bool # Builds only the specified build ids
+		--output @bool # Copy the binary to the path after the build. Only taken into account when using --single-target and a single id (either with --id or if configuration only has one build)
+		--parallelism @bool # Number of tasks to run concurrently (default: number of CPUs)
+		--single-target @bool # Builds only for current GOOS and GOARCH, regardless of what's set in the configuration file
+		--skip @bool # Skip the given options (valid options are: before, post-hooks, pre-hooks, validate)
+		--snapshot @bool # Generate an unversioned snapshot build, skipping all validations
+		--timeout @bool # Timeout to the entire build process
+	check # Checks if configuration is valid
+		--verbose @bool # Enable verbose mode
+		--quiet @bool # Quiet mode: no output
+		yaml
+			--verbose @bool # Enable verbose mode
+			--quiet @bool # Quiet mode: no output
+			yaml
+				--verbose @bool # Enable verbose mode
+				--quiet @bool # Quiet mode: no output
+				yaml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+				yml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+			yml
+				--verbose @bool # Enable verbose mode
+				--quiet @bool # Quiet mode: no output
+				yaml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+				yml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+		yml
+			--verbose @bool # Enable verbose mode
+			--quiet @bool # Quiet mode: no output
+			yaml
+				--verbose @bool # Enable verbose mode
+				--quiet @bool # Quiet mode: no output
+				yaml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+				yml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+			yml
+				--verbose @bool # Enable verbose mode
+				--quiet @bool # Quiet mode: no output
+				yaml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+				yml
+					--verbose @bool # Enable verbose mode
+					--quiet @bool # Quiet mode: no output
+					yaml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+					yml
+						--verbose @bool # Enable verbose mode
+						--quiet @bool # Quiet mode: no output
+						yaml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+						yml
+							--verbose @bool # Enable verbose mode
+							--quiet @bool # Quiet mode: no output
+	completion # Generate the autocompletion script for the specified shell
+		--verbose @bool # Enable verbose mode
+		bash # Generate the autocompletion script for bash
+			--verbose @bool # Enable verbose mode
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--verbose @bool # Enable verbose mode
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--verbose @bool # Enable verbose mode
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--verbose @bool # Enable verbose mode
+			--no-descriptions @bool # disable completion descriptions
+	healthcheck # Checks if needed tools are installed
+		--verbose @bool # Enable verbose mode
+		--config @bool # Configuration file
+		--quiet @bool # Quiet mode: no output
+	help # Help about any command
+		--verbose @bool # Enable verbose mode
+		build # Builds the current project
+			--verbose @bool # Enable verbose mode
+		check # Checks if configuration is valid
+			--verbose @bool # Enable verbose mode
+		completion # Generate the autocompletion script for the specified shell
+			--verbose @bool # Enable verbose mode
+			bash # Generate the autocompletion script for bash
+				--verbose @bool # Enable verbose mode
+			fish # Generate the autocompletion script for fish
+				--verbose @bool # Enable verbose mode
+			powershell # Generate the autocompletion script for powershell
+				--verbose @bool # Enable verbose mode
+			zsh # Generate the autocompletion script for zsh
+				--verbose @bool # Enable verbose mode
+		healthcheck # Checks if needed tools are installed
+			--verbose @bool # Enable verbose mode
+		help # Help about any command
+			--verbose @bool # Enable verbose mode
+		init # Generates a .goreleaser.yaml file
+			--verbose @bool # Enable verbose mode
+		jsonschema # Outputs goreleaser's JSON schema
+			--verbose @bool # Enable verbose mode
+		release # Releases the current project
+			--verbose @bool # Enable verbose mode
+	init # Generates a .goreleaser.yaml file
+		--verbose @bool # Enable verbose mode
+		--config @bool # Load configuration from file
+		--language @bool # Which language will be used
+	jsonschema # Outputs goreleaser's JSON schema
+		--verbose @bool # Enable verbose mode
+		--output @bool # Where to save the JSONSchema file
+	release # Releases the current project
+		--verbose @bool # Enable verbose mode
+		--auto-snapshot @bool # Automatically sets --snapshot if the repository is dirty
+		--clean @bool # Removes the 'dist' directory
+		--config @bool # Load configuration from file
+		--draft @bool # Whether to set the release to draft. Overrides release.draft in the configuration file
+		--fail-fast @bool # Whether to abort the release publishing on the first error
+		--parallelism @bool # Amount tasks to run concurrently (default: number of CPUs)
+		--release-footer @bool # Load custom release notes footer from a markdown file
+		--release-footer-tmpl @bool # Load custom release notes footer from a templated markdown file (overrides --release-footer)
+		--release-header @bool # Load custom release notes header from a markdown file
+		--release-header-tmpl @bool # Load custom release notes header from a templated markdown file (overrides --release-header)
+		--release-notes @bool # Load custom release notes from a markdown file (will skip GoReleaser changelog generation)
+		--release-notes-tmpl @bool # Load custom release notes from a templated markdown file (overrides --release-notes)
+		--skip @bool # Skip the given options (valid options are announce, archive, aur, aur-source, before, chocolatey, docker, homebrew, ko, makeself, mcp, nfpm, nix, notarize, publish, sbom, scoop, sign, snapcraft, validate, winget)
+		--snapshot @bool # Generate an unversioned snapshot release, skipping all validations and without publishing any artifacts (implies --skip=announce,publish,validate)
+		--timeout @bool # Timeout to the entire release process

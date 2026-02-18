@@ -1,0 +1,156 @@
+# golangci-lint CLI schema for fast-completer
+# Generated from golangci-lint 2.10.1
+
+golangci-lint # Go linter
+	--color # Use color when printing; can be 'always', 'auto', or 'never'
+	--help @bool # Help for a command
+	--verbose @bool # Verbose output
+	--version @bool # Print version
+	cache # Cache control and information.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		clean # Clean cache
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+		status # Show cache status
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+	completion # Generate the autocompletion script for the specified shell
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		bash # Generate the autocompletion script for bash
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--no-descriptions @bool # disable completion descriptions
+	config # Configuration file information and verification.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		path # Print used configuration path.
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--config # Read config from file path `PATH`
+			--no-config @bool # Don't read config file
+			--verbose @bool # Verbose output
+			--json @bool # Display as JSON
+		verify # Verify configuration against JSON schema.
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--config # Read config from file path `PATH`
+			--no-config @bool # Don't read config file
+			--verbose @bool # Verbose output
+	custom # Build a version of golangci-lint with custom linters.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--destination # The directory path used to store the custom binary
+		--name # The name of the custom binary
+	fmt # Format Go source files.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		--enable # Enable specific formatter
+		--diff @bool # Display diffs instead of rewriting files
+		--diff-colored @bool # Display diffs instead of rewriting files (with colors)
+		--stdin @bool # Use standard input for piping source files
+	formatters # List current formatters configuration.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		--enable # Enable specific formatter
+		--json @bool # Display as JSON
+	help # Display extra help
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		formatters # Display help for formatters.
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--json @bool # Display as JSON
+		linters # Display help for linters.
+			--color # Use color when printing; can be 'always', 'auto', or 'never'
+			--verbose @bool # Verbose output
+			--json @bool # Display as JSON
+	linters # List current linters configuration.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		--default # Default set of linters to enable
+		--disable # Disable specific linter
+		--enable # Enable specific linter
+		--enable-only # Override linters configuration section to only run the specific linter(s)
+		--fast-only @bool # Filter enabled linters to run only fast linters
+		--json @bool # Display as JSON
+	migrate # Migrate configuration file from v1 to v2.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		--format # Output file format.
+		--skip-validation @bool # Skip validation of the configuration file against the JSON Schema for v1.
+	run # Lint the code.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--config # Read config from file path `PATH`
+		--no-config @bool # Don't read config file
+		--default # Default set of linters to enable
+		--disable # Disable specific linter
+		--enable # Enable specific linter
+		--enable-only # Override linters configuration section to only run the specific linter(s)
+		--fast-only @bool # Filter enabled linters to run only fast linters
+		--concurrency # Number of CPUs to use (Default: Automatically set to match Linux container CPU quota and fall back to the number of logical CPUs in the machine)
+		--modules-download-mode # Modules download mode. If not empty, passed as -mod=<mode> to go tools
+		--issues-exit-code # Exit code when issues were found
+		--build-tags # Build tags
+		--timeout # Timeout for total work. Disabled by default
+		--tests @bool # Analyze tests (*_test.go)
+		--allow-parallel-runners @bool # Allow multiple parallel golangci-lint instances running.
+		--allow-serial-runners @bool # Allow multiple golangci-lint instances running, but serialize them around a lock.
+		--path-prefix # Path prefix to add to output
+		--path-mode # Path mode to use (empty, or 'abs')
+		--show-stats @bool # Show statistics per linter
+		--output.text.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.text.print-linter-name @bool # Print linter name in the end of issue text.
+		--output.text.print-issued-lines @bool # Print lines of code with issue.
+		--output.text.colors @bool # Use colors.
+		--output.json.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.tab.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.tab.print-linter-name @bool # Print linter name in the end of issue text.
+		--output.tab.colors @bool # Use colors.
+		--output.html.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.checkstyle.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.code-climate.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.junit-xml.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.junit-xml.extended @bool # Support extra JUnit XML fields.
+		--output.teamcity.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--output.sarif.path # Output path can be either `stdout`, `stderr` or path to the file to write to.
+		--max-issues-per-linter # Maximum issues count per one linter. Set to 0 to disable
+		--max-same-issues # Maximum count of issues with the same text. Set to 0 to disable
+		--uniq-by-line @bool # Make issues output unique by line
+		--new @bool # Show only new issues: if there are unstaged changes or untracked files, only those changes are analyzed, else only changes in HEAD~ are analyzed.
+		--new-from-rev # Show only new issues created after git revision `REV`
+		--new-from-patch # Show only new issues created in git patch with file path `PATH`
+		--new-from-merge-base # Show only new issues created after the best common ancestor (merge-base against HEAD)
+		--whole-files @bool # Show issues in any part of update files (requires new-from-rev or new-from-patch)
+		--fix @bool # Apply the fixes detected by the linters and formatters (if it's supported by the linter)
+		--cpu-profile-path # Path to CPU profile output file
+		--mem-profile-path # Path to memory profile output file
+		--trace-path # Path to trace output file
+	version # Display the golangci-lint version.
+		--color # Use color when printing; can be 'always', 'auto', or 'never'
+		--verbose @bool # Verbose output
+		--debug @bool # Add build information
+		--json @bool # Display as JSON
+		--short @bool # Display only the version number

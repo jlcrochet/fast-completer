@@ -1,0 +1,34 @@
+{
+  "mdbook --version": {
+    "returncode": 0,
+    "stdout": "mdbook v0.5.2\n"
+  },
+  "mdbook -h": {
+    "returncode": 0,
+    "stdout": "Creates a book from markdown files\n\nUsage: mdbook [COMMAND]\n\nCommands:\n  init         Creates the boilerplate structure and files for a new book\n  build        Builds a book from its markdown files\n  test         Tests that a book's Rust code samples compile\n  clean        Deletes a built book\n  completions  Generate shell completions for your shell to stdout\n  watch        Watches a book's files and rebuilds it on changes\n  serve        Serves a book at http://localhost:3000, and rebuilds it on changes\n  help         Print this message or the help of the given subcommand(s)\n\nOptions:\n  -h, --help     Print help\n  -V, --version  Print version\n\nFor more information about a specific command, try `mdbook <command> --help`\nThe source code for mdBook is available at: https://github.com/rust-lang/mdBook\n"
+  },
+  "mdbook build -h": {
+    "returncode": 0,
+    "stdout": "Builds a book from its markdown files\n\nUsage: mdbook build [OPTIONS] [dir]\n\nArguments:\n  [dir]  Root directory for the book\n         (Defaults to the current directory when omitted)\n\nOptions:\n  -d, --dest-dir <dest-dir>  Output directory for the book\n                             Relative paths are interpreted relative to the current directory.\n                             If omitted, mdBook uses build.build-dir from book.toml or defaults to\n                             `./book`.\n  -o, --open                 Opens the compiled book in a web browser\n  -h, --help                 Print help\n  -V, --version              Print version\n"
+  },
+  "mdbook clean -h": {
+    "returncode": 0,
+    "stdout": "Deletes a built book\n\nUsage: mdbook clean [OPTIONS] [dir]\n\nArguments:\n  [dir]  Root directory for the book\n         (Defaults to the current directory when omitted)\n\nOptions:\n  -d, --dest-dir <dest-dir>  Output directory for the book\n                             Relative paths are interpreted relative to the current directory.\n                             If omitted, mdBook uses build.build-dir from book.toml or defaults to\n                             `./book`.\n  -h, --help                 Print help\n  -V, --version              Print version\n"
+  },
+  "mdbook init -h": {
+    "returncode": 0,
+    "stdout": "Creates the boilerplate structure and files for a new book\n\nUsage: mdbook init [OPTIONS] [dir]\n\nArguments:\n  [dir]  Directory to create the book in\n         (Defaults to the current directory when omitted)\n\nOptions:\n      --theme            Copies the default theme into your source folder\n      --force            Skips confirmation prompts\n      --title <title>    Sets the book title\n      --ignore <ignore>  Creates a VCS ignore file (i.e. .gitignore) [possible values: none, git]\n  -h, --help             Print help\n  -V, --version          Print version\n"
+  },
+  "mdbook serve -h": {
+    "returncode": 0,
+    "stdout": "Serves a book at http://localhost:3000, and rebuilds it on changes\n\nUsage: mdbook serve [OPTIONS] [dir]\n\nArguments:\n  [dir]  Root directory for the book\n         (Defaults to the current directory when omitted)\n\nOptions:\n  -d, --dest-dir <dest-dir>  Output directory for the book\n                             Relative paths are interpreted relative to the current directory.\n                             If omitted, mdBook uses build.build-dir from book.toml or defaults to\n                             `./book`.\n  -n, --hostname <hostname>  Hostname to listen on for HTTP connections [default: localhost]\n  -p, --port <port>          Port to use for HTTP connections [default: 3000]\n  -o, --open                 Opens the compiled book in a web browser\n      --watcher <watcher>    The filesystem watching technique [default: poll] [possible values:\n                             poll, native]\n  -h, --help                 Print help\n  -V, --version              Print version\n"
+  },
+  "mdbook test -h": {
+    "returncode": 0,
+    "stdout": "Tests that a book's Rust code samples compile\n\nUsage: mdbook test [OPTIONS] [dir]\n\nArguments:\n  [dir]  Root directory for the book\n         (Defaults to the current directory when omitted)\n\nOptions:\n  -c, --chapter <chapter>   \n  -L, --library-path <dir>  A comma-separated list of directories to add to the crate search path\n                            when building tests\n  -h, --help                Print help\n  -V, --version             Print version\n"
+  },
+  "mdbook watch -h": {
+    "returncode": 0,
+    "stdout": "Watches a book's files and rebuilds it on changes\n\nUsage: mdbook watch [OPTIONS] [dir]\n\nArguments:\n  [dir]  Root directory for the book\n         (Defaults to the current directory when omitted)\n\nOptions:\n  -d, --dest-dir <dest-dir>  Output directory for the book\n                             Relative paths are interpreted relative to the current directory.\n                             If omitted, mdBook uses build.build-dir from book.toml or defaults to\n                             `./book`.\n  -o, --open                 Opens the compiled book in a web browser\n      --watcher <watcher>    The filesystem watching technique [default: poll] [possible values:\n                             poll, native]\n  -h, --help                 Print help\n  -V, --version              Print version\n"
+  }
+}

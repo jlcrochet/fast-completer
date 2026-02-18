@@ -1,0 +1,8 @@
+[project]
+name = "supabase-schema-export"
+version = "0.1.0"
+description = "Export Supabase command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-supabase = "export_command_tree:main"

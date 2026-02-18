@@ -1,0 +1,8 @@
+[project]
+name = "tar-schema-export"
+version = "0.1.0"
+description = "Export Tar command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-tar = "export_command_tree:main"

@@ -1,0 +1,49 @@
+# Nu CLI schema for fast-completer
+# Generated from nu 0.110.1
+
+nu # Nushell
+	--commands|-c # run the given commands and then exit
+	--execute|-e # run the given commands and then enter an interactive shell
+	--include-path|-I # set the NU_LIB_DIRS for the given script (delimited by char record_sep (''))
+	--interactive|-i @bool # start as an interactive shell
+	--login|-l @bool # start as a login shell
+	--table-mode|-m # the table mode to use. rounded is default.
+	--error-style # the error style to use (fancy or plain). default: fancy
+	--no-newline @bool # print the result for --commands(-c) without a newline
+	--no-config @bool # start with no config file. env: NU_NO_CONFIG=1
+	--no-env @bool # start with no env file. env: NU_NO_ENV=1
+	--no-default-env @bool # skip loading the default env config (default_env.nu). env: NU_NO_DEFAULT_ENV=1
+	--no-default-config @bool # skip loading the default config (default_config.nu). env: NU_NO_DEFAULT_CONFIG=1
+	--no-vendor-autoload @bool # skip loading vendor autoload files. env: NU_NO_VENDOR_AUTOLOAD=1
+	--no-user-autoload @bool # skip loading user autoload files. env: NU_NO_USER_AUTOLOAD=1
+	--no-plugins @bool # skip loading plugins. env: NU_NO_PLUGINS=1
+	--no-history @bool # disable reading and writing to command history
+	--no-std-lib @bool # start with no standard library
+	--threads|-t # threads to use for parallel commands
+	--config # start with an alternate config file
+	--env-config # start with an alternate environment config file
+	--lsp @bool # start nu's language server protocol
+	--ide-goto-def # go to the definition of the item at the given position
+	--ide-hover # give information about the item at the given position
+	--ide-complete # list completions for the item at the given position
+	--ide-check # run a diagnostic check on the given source and limit number of errors returned to provided number
+	--ide-ast @bool # generate the ast on the given source
+	--mcp @bool # start nu's model context protocol server
+	--plugin-config # start with an alternate plugin registry file
+	--log-level # log level for diagnostic logs (error, warn, info, debug, trace). Off by default
+	--log-target # set the target for the log to output. stdout, stderr(default), mixed or file
+	--stdin @bool # redirect standard input to a command (with `-c`) or a script file
+	--testbin # run internal test binary
+	--compile # compile a .nu file to bytecode (.nubc)
+	--compile-user-lib @bool # compile all .nu files in NU_LIB_DIRS to bytecode (.nubc)
+	--compile-plugin-dirs @bool # compile all .nu files in NU_PLUGIN_DIRS to bytecode (.nubc)
+	--compile-std-lib @bool # compile standard library prelude to bytecode
+	--compile-startup-files @bool # compile startup config files (env.nu, config.nu, autoload) to bytecode
+	--compile-all @bool # compile std-lib, user lib dirs, plugin dirs, and startup files to bytecode
+	--clean @bool # remove bytecode directory before compiling (use with --compile-all)
+	--dump-bytecode # dump bytecode (.nubc) file contents for debugging
+	--dump-bytecode-json @bool # output --dump-bytecode results as JSON
+	--generate-completions # output shell completions for nu (nushell, bash, zsh, fish, pwsh)
+	--no-bytecode @bool # disable loading .nubc for config files and sourced modules. env: NU_NO_BYTECODE=1
+	--opt-level # IR optimization level: 0=none, 1=peephole (default), 2=full multi-pass
+	--opt-diagnostics # emit optimizer diagnostics as JSONL to '-' (stderr) or a file path

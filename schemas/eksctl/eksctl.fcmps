@@ -1,0 +1,1359 @@
+# eksctl CLI schema for fast-completer
+# Generated from eksctl unknown
+
+eksctl # AWS EKS CLI
+	--color # toggle colorized logs (valid options: true, false, fabulous)
+	--dumpLogs @bool # dump logs to disk on failure if set to true
+	--help @bool # help for this command
+	--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+	anywhere # EKS anywhere
+	associate # Associate resources with a cluster
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		identityprovider # Associate an identity provider with a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for providers to associate before exiting
+	completion # Generates shell completion scripts for bash, zsh or fish
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		bash # Generates bash completion scripts
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		fish # Generates fish completion scripts
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		powershell # Generates powershell completion scripts
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		zsh # Generates zsh completion scripts
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+	create # Create resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		accessentry # Create access entries
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--kubernetes-groups # A set of Kubernetes groups to map to the principal ARN
+			--kubernetes-username # A Kubernetes username to map to the principal ARN
+			--principal-arn # Principal ARN
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--type # Type of Access Entry
+		addon # Create an Addon
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--attach-policy-arn # ARN of the policies to attach
+			--auto-apply-pod-identity-associations @bool # apply recommended pod identity associations for the addon(s), if supported
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--force @bool # Force migrates an existing self-managed add-on to an EKS managed add-on
+			--name # Add-on name
+			--namespace-config # Namespace configuration for addon deployment in the format 'namespace=<namespace-name>'
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--service-account-role-arn # Add-on serviceAccountRoleARN
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # Wait for the addon creation to complete
+		capability # Create capabilities
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--attach-policy # Inline IAM policy document to attach to the role (JSON string)
+			--attach-policy-arns # List of IAM policy ARNs to attach to the role
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--delete-propagation-policy # Delete propagation policy
+			--name # Name of the capability
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--role-arn # IAM role ARN for the capability (optional if IAM policies are provided)
+			--tags # Tags to apply to the capability
+			--timeout # maximum waiting time for any long-running operation
+			--type # Type of the capability (ACK, KRO, ARGOCD)
+		cluster # Create a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--alb-ingress-access @bool # enable full access for alb-ingress-controller
+			--appmesh-access @bool # enable full access to AppMesh
+			--appmesh-preview-access @bool # enable full access to AppMesh Preview
+			--asg-access @bool # enable IAM policy for cluster-autoscaler
+			--authenticator-role-arn # AWS IAM role to assume for authenticator
+			--auto-kubeconfig @bool # save kubeconfig file by cluster name, e.g. "/home/jeffrey/.kube/eksctl/clusters/wonderful-outfit-1771407794"
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-pod-imds @bool # Blocks IMDS requests from non-host networking pods
+			--dry-run @bool # Dry-run mode that skips cluster creation and outputs a ClusterConfig
+			--enable-auto-mode @bool # enables Auto Mode
+			--enable-node-repair @bool # Enable automatic node repair (managed nodegroups only)
+			--enable-ssm @bool # Enable AWS Systems Manager (SSM)
+			--external-dns-access @bool # enable IAM policy for external-dns
+			--fargate @bool # Create a Fargate profile scheduling pods in the default and kube-system namespaces onto Fargate
+			--full-ecr-access @bool # enable full access to ECR
+			--install-neuron-plugin @bool # install Neuron plugin for Inferentia and Trainium nodes
+			--install-nvidia-plugin @bool # install Nvidia plugin for GPU nodes
+			--instance-name # overrides the default instance's name
+			--instance-prefix # add a prefix value in front of the instance's name
+			--instance-selector-cpu-architecture # x86_64, or arm64
+			--instance-selector-gpus # an integer value
+			--instance-selector-memory # 4 or 4GiB
+			--instance-selector-neuron-devices # an integer value
+			--instance-selector-vcpus # an integer value (2, 4 etc)
+			--instance-types # Comma-separated list of instance types (e.g., --instance-types=c3.large,c4.large,c5.large
+			--kubeconfig # path to write kubeconfig (incompatible with --auto-kubeconfig)
+			--managed @bool # Create EKS-managed nodegroup
+			--max-pods-per-node # maximum number of pods per node (set automatically if unspecified)
+			--name # EKS cluster name (generated if unspecified, e.g. "wonderful-outfit-1771407794")
+			--node-ami # 'auto-ssm', 'auto' or an AMI ID (advanced use)
+			--node-ami-family # supported AMI families: AmazonLinux2023, AmazonLinux2, UbuntuPro2404, Ubuntu2404, UbuntuPro2204, Ubuntu2204, UbuntuPro2004, Ubuntu2004, Bottlerocket, WindowsServer2019CoreContainer, WindowsServer2019FullContainer, WindowsServer2022CoreContainer, WindowsServer2022FullContainer, WindowsServer2025CoreContainer, WindowsServer2025FullContainer
+			--node-labels # extra labels to add when registering the nodes in the nodegroup. List of comma separated KV pairs "k1=v1,k2=v2"
+			--node-private-networking @bool # whether to make nodegroup networking private
+			--node-repair-max-parallel-count # Maximum count of unhealthy nodes that can be repaired concurrently or in parallel (managed nodegroups only)
+			--node-repair-max-parallel-percentage # Maximum percentage of unhealthy nodes that can be repaired concurrently or in parallel (managed nodegroups only)
+			--node-repair-max-unhealthy-count # Count threshold of unhealthy nodes, above which node auto repair actions will stop (managed nodegroups only)
+			--node-repair-max-unhealthy-percentage # Percentage threshold of unhealthy nodes, above which node auto repair actions will stop (managed nodegroups only)
+			--node-security-groups # attach additional security groups to nodes
+			--node-type # node instance type
+			--node-volume-size # node volume size in GB
+			--node-volume-type # node volume type (valid options: gp2, gp3, io1, io2, sc1, st1)
+			--node-zones # (inherited from the cluster if unspecified)
+			--nodegroup-name # name of the nodegroup (generated if unspecified, e.g. "ng-c7de9c30")
+			--nodegroup-parallelism # Number of self-managed or managed nodegroups to create in parallel
+			--nodes # total number of nodes (for a static ASG)
+			--nodes-max # maximum nodes in ASG
+			--nodes-min # minimum nodes in ASG
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--set-kubeconfig-context @bool # if true then current-context will be set in kubeconfig; if a context is already set then it will be overwritten
+			--spot @bool # Create a spot nodegroup (managed nodegroups only)
+			--ssh-access @bool # control SSH access for nodes. Uses ~/.ssh/id_rsa.pub as default key path if enabled
+			--ssh-public-key # SSH public key to use for nodes (import from local path, or use existing EC2 key pair)
+			--support-type # Set cluster's upgradePolicy supportType
+			--tags # Used to tag the AWS resources. List of comma separated KV pairs "k1=v1,k2=v2"
+			--timeout # maximum waiting time for any long-running operation
+			--vpc-cidr # global CIDR to use for VPC
+			--vpc-from-kops-cluster # re-use VPC from a given kops cluster
+			--vpc-nat-mode # VPC NAT mode, valid options: HighlyAvailable, Single, Disable
+			--vpc-private-subnets # re-use private subnets of an existing VPC; the subnets must exist in availability zones and not other types of zones
+			--vpc-public-subnets # re-use public subnets of an existing VPC; the subnets must exist in availability zones and not other types of zones
+			--with-oidc @bool # Enable the IAM OIDC provider
+			--without-nodegroup @bool # if set, initial nodegroup will not be created
+			--write-kubeconfig @bool # toggle writing of kubeconfig
+			--zones # (auto-select if unspecified)
+		fargateprofile # Create a Fargate profile
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--labels # Kubernetes selector labels of the workloads to schedule on Fargate. List of comma separated KV pairs "k1=v1,k2=v2"
+			--name # Fargate profile's name
+			--namespace # Kubernetes namespace of the workloads to schedule on Fargate
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--tags # Used to tag the AWS resources. List of comma separated KV pairs "k1=v1,k2=v2"
+			--timeout # maximum waiting time for any long-running operation
+		iamidentitymapping # Create an IAM identity mapping
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--account # Account ID to automatically map to its username
+			--arn # ARN of the IAM role or user to create
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--group # Groups within Kubernetes to which IAM role is mapped
+			--namespace # Namespace in which to create RBAC resources (only valid with --service-name)
+			--no-duplicate-arns @bool # Throw error when an aws-auth record already exists with the given ARN
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--service-name # Service name; valid value: emr-containers
+			--timeout # maximum waiting time for any long-running operation
+			--username # User name within Kubernetes to map to IAM role
+		iamserviceaccount # Create an iamserviceaccount - AWS IAM role bound to a Kubernetes service account
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--attach-policy-arn # ARN of the policy where to create the iamserviceaccount
+			--attach-role-arn # ARN of the role to attach to the iamserviceaccount
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--exclude # iamserviceaccounts to exclude (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--include # iamserviceaccounts to include (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--name # name of the iamserviceaccount to create
+			--namespace # namespace where to create the iamserviceaccount
+			--override-existing-serviceaccounts @bool # create IAM roles for existing serviceaccounts and update the serviceaccount
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--role-name # Set a custom name for the created role
+			--role-only @bool # disable service account creation, only the role will be created
+			--subject-pattern # subject pattern to use in the trust policy (supports wildcards like '*' with StringLike condition)
+			--tags # Used to tag the IAM role. List of comma separated KV pairs "k1=v1,k2=v2"
+			--timeout # maximum waiting time for any long-running operation
+		nodegroup # Create a nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--alb-ingress-access @bool # enable full access for alb-ingress-controller
+			--appmesh-access @bool # enable full access to AppMesh
+			--appmesh-preview-access @bool # enable full access to AppMesh Preview
+			--asg-access @bool # enable IAM policy for cluster-autoscaler
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-pod-imds @bool # Blocks IMDS requests from non-host networking pods
+			--dry-run @bool # Dry-run mode that skips nodegroup creation and outputs a ClusterConfig
+			--enable-node-repair @bool # Enable automatic node repair (managed nodegroups only)
+			--enable-ssm @bool # Enable AWS Systems Manager (SSM)
+			--exclude # nodegroups to exclude (list of globs), e.g.: 'ng-team-?,prod-*'
+			--external-dns-access @bool # enable IAM policy for external-dns
+			--full-ecr-access @bool # enable full access to ECR
+			--include # nodegroups to include (list of globs), e.g.: 'ng-team-?,prod-*'
+			--install-neuron-plugin @bool # install Neuron plugin for Inferentia and Trainium nodes
+			--install-nvidia-plugin @bool # install Nvidia plugin for GPU nodes
+			--instance-name # overrides the default instance's name
+			--instance-prefix # add a prefix value in front of the instance's name
+			--instance-selector-cpu-architecture # x86_64, or arm64
+			--instance-selector-gpus # an integer value
+			--instance-selector-memory # 4 or 4GiB
+			--instance-selector-neuron-devices # an integer value
+			--instance-selector-vcpus # an integer value (2, 4 etc)
+			--instance-types # Comma-separated list of instance types (e.g., --instance-types=c3.large,c4.large,c5.large
+			--managed @bool # Create EKS-managed nodegroup
+			--max-pods-per-node # maximum number of pods per node (set automatically if unspecified)
+			--name # name of the new nodegroup (generated if unspecified, e.g. "ng-460e83fd")
+			--node-ami # 'auto-ssm', 'auto' or an AMI ID (advanced use)
+			--node-ami-family # supported AMI families: AmazonLinux2023, AmazonLinux2, UbuntuPro2404, Ubuntu2404, UbuntuPro2204, Ubuntu2204, UbuntuPro2004, Ubuntu2004, Bottlerocket, WindowsServer2019CoreContainer, WindowsServer2019FullContainer, WindowsServer2022CoreContainer, WindowsServer2022FullContainer, WindowsServer2025CoreContainer, WindowsServer2025FullContainer
+			--node-labels # extra labels to add when registering the nodes in the nodegroup. List of comma separated KV pairs "k1=v1,k2=v2"
+			--node-private-networking @bool # whether to make nodegroup networking private
+			--node-repair-max-parallel-count # Maximum count of unhealthy nodes that can be repaired concurrently or in parallel (managed nodegroups only)
+			--node-repair-max-parallel-percentage # Maximum percentage of unhealthy nodes that can be repaired concurrently or in parallel (managed nodegroups only)
+			--node-repair-max-unhealthy-count # Count threshold of unhealthy nodes, above which node auto repair actions will stop (managed nodegroups only)
+			--node-repair-max-unhealthy-percentage # Percentage threshold of unhealthy nodes, above which node auto repair actions will stop (managed nodegroups only)
+			--node-security-groups # attach additional security groups to nodes
+			--node-type # node instance type
+			--node-volume-size # node volume size in GB
+			--node-volume-type # node volume type (valid options: gp2, gp3, io1, io2, sc1, st1)
+			--node-zones # (inherited from the cluster if unspecified)
+			--nodegroup-parallelism # Number of self-managed or managed nodegroups to create in parallel
+			--nodes # total number of nodes (for a static ASG)
+			--nodes-max # maximum nodes in ASG
+			--nodes-min # minimum nodes in ASG
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--skip-outdated-addons-check @bool # whether the creation of ARM nodegroups should proceed when the cluster addons are outdated
+			--spot @bool # Create a spot nodegroup (managed nodegroups only)
+			--ssh-access @bool # control SSH access for nodes. Uses ~/.ssh/id_rsa.pub as default key path if enabled
+			--ssh-public-key # SSH public key to use for nodes (import from local path, or use existing EC2 key pair)
+			--subnet-ids # Define an optional list of subnet IDs to create the nodegroup in
+			--tags # Used to tag the AWS resources. List of comma separated KV pairs "k1=v1,k2=v2"
+			--timeout # maximum waiting time for any long-running operation
+			--update-auth-configmap @bool # Add nodegroup IAM role to aws-auth configmap
+		podidentityassociation # Create a pod identity association
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--create-service-account @bool # instructs eksctl to create the K8s service account
+			--disable-session-tags @bool # Disable session tags added by EKS Pod Identity (if not provided, session tags are enabled by default)
+			--namespace # Namespace the service account belongs to
+			--permission-boundary-arn # ARN of the policy that is used to set the permission boundary for the role
+			--permission-policy-arns # List of ARNs of the IAM permission policies to attach
+			--policy # Optional policy that applies additional restrictions to this pod identity association beyond the IAM policies attached to the IAM role
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--role-arn # ARN of the IAM role to be associated with the service account
+			--role-name # Set a custom name for the created role
+			--service-account-name # Name of the service account
+			--tags # AWS tags to attach to the PodIdentityAssosciation. List of comma separated KV pairs "k1=v1,k2=v2"
+			--target-role-arn # ARN of the target IAM role for cross-account access (default to empty string for no cross-account access)
+			--timeout # maximum waiting time for any long-running operation
+			--well-known-policies @bool # Used to attach common IAM policies
+	delete # Delete resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		accessentry # Delete access entry(ies)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--principal-arn # principal ARN to which the access entry is associated
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		addon # Delete an Addon
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--name # Addon name
+			--preserve @bool # Delete the addon from the API but preserve its Kubernetes resources
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		capability # Delete capabilities
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Name of the capability to delete
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		cluster # Delete a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-nodegroup-eviction @bool # Force drain to use delete, even if eviction is supported. This will bypass checking PodDisruptionBudgets, use with caution.
+			--force @bool # Force deletion to continue when errors occur
+			--name # EKS cluster name
+			--parallel # Number of nodes to drain in parallel. Max 25
+			--pod-eviction-wait-period # Duration to wait after failing to evict a pod
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for deletion of all resources before exiting
+		fargateprofile # Delete Fargate profile
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Fargate profile's name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for wait for the deletion of the Fargate profile, which may take from a couple seconds to a couple minutes. before exiting
+		iamidentitymapping # Delete a IAM identity mapping
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--account # Account ID to delete
+			--all @bool # Delete all matching mappings instead of just one
+			--arn # ARN of the IAM role or user to delete
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		iamserviceaccount # Delete an IAM service account
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--exclude # iamserviceaccounts to exclude (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--include # iamserviceaccounts to include (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--name # name of the iamserviceaccount to delete
+			--namespace # namespace where to delete the iamserviceaccount
+			--only-missing @bool # Only delete iamserviceaccounts that are not defined in the given config file
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for deletion of all resources before exiting
+		nodegroup # Delete a nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-eviction @bool # Force drain to use delete, even if eviction is supported. This will bypass checking PodDisruptionBudgets, use with caution.
+			--drain @bool # Drain and cordon all nodes in the nodegroup before deletion
+			--exclude # nodegroups to exclude (list of globs), e.g.: 'ng-team-?,prod-*'
+			--include # nodegroups to include (list of globs), e.g.: 'ng-team-?,prod-*'
+			--max-grace-period # Maximum pods termination grace period
+			--name # Name of the nodegroup to delete
+			--only-missing @bool # Only delete nodegroups that are not defined in the given config file
+			--parallel # Number of nodes to drain in parallel. Max 25
+			--pod-eviction-wait-period # Duration to wait after failing to evict a pod
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--update-auth-configmap @bool # Remove nodegroup IAM role from aws-auth configmap
+			--wait @bool # wait for deletion of all resources before exiting
+		podidentityassociation # Delete pod identity associations
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--namespace # Namespace of the pod identity association
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--service-account-name # Service account name of the pod identity association
+			--timeout # maximum waiting time for any long-running operation
+	deregister # Deregister a non-EKS cluster
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		cluster # Deregister a non-EKS Kubernetes cluster
+			--name # EKS cluster name
+	disassociate # Disassociate resources from a cluster
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		identityprovider # Disassociate an identity provider from a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # name of the provider to disassociate
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--type # type of the provider to disassociate
+			--wait @bool # wait for providers to disassociate before exiting
+	drain # Drain resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		nodegroup # Cordon and drain a nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-eviction @bool # Force drain to use delete, even if eviction is supported. This will bypass checking PodDisruptionBudgets, use with caution.
+			--exclude # nodegroups to exclude (list of globs), e.g.: 'ng-team-?,prod-*'
+			--include # nodegroups to include (list of globs), e.g.: 'ng-team-?,prod-*'
+			--max-grace-period # Maximum pods termination grace period
+			--name # Name of the nodegroup to drain
+			--node-drain-wait-period # Amount of time to wait between draining nodes in a nodegroup
+			--only-missing @bool # Only drain nodegroups that are not defined in the given config file
+			--parallel # Number of nodes to drain in parallel. Max 25
+			--pod-eviction-wait-period # Duration to wait after failing to evict a pod
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--undo @bool # Uncordon the nodegroup
+	enable # Enable features in a cluster
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		flux # Set up GitOps Toolkit - deploys FluxV2 and creates Git repo to store manifests
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--config-file # load configuration from a file (or stdin if set to '-')
+	get # Get resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		accessentry # Get access entry(ies)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--output # specifies the output format (valid option: table, json, yaml)
+			--principal-arn # principal ARN to which the access entry is associated
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		addon # Get an Addon
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Addon name
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		capability # Get capability(ies)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # name of the capability
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		cluster # Get cluster(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--all-regions @bool # List clusters across all supported regions
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # EKS cluster name
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		fargateprofile # Get Fargate profile(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Fargate profile's name
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		iamidentitymapping # Get IAM identity mapping(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--arn # ARN of the IAM role or user to get
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		iamserviceaccount # Get iamserviceaccount(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # name of iamserviceaccount to get
+			--namespace # namespace to look for iamserviceaccount
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		identityprovider # Describe identity providers for cluster authentication and authorization
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # name of the provider to delete
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		labels # Get labels for managed nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--nodegroup # Nodegroup name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		nodegroup # Get nodegroup(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Name of the nodegroup
+			--output # specifies the output format (valid option: table, json, yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		podidentityassociation # Get a pod identity association
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--chunk-size # return large lists in chunks rather than all at once, pass 0 to disable
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--namespace # Namespace the service account belongs to
+			--output # specifies the output format (valid option: table, json, yaml)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--service-account-name # Name of the service account
+			--timeout # maximum waiting time for any long-running operation
+	help # Help about any command
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		anywhere # EKS anywhere
+		associate # Associate resources with a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			identityprovider # Associate an identity provider with a cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		completion # Generates shell completion scripts for bash, zsh or fish
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			bash # Generates bash completion scripts
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			fish # Generates fish completion scripts
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			powershell # Generates powershell completion scripts
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			zsh # Generates zsh completion scripts
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		create # Create resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			accessentry # Create access entries
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			addon # Create an Addon
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			capability # Create capabilities
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Create a cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			fargateprofile # Create a Fargate profile
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamidentitymapping # Create an IAM identity mapping
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamserviceaccount # Create an iamserviceaccount - AWS IAM role bound to a Kubernetes service account
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Create a nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			podidentityassociation # Create a pod identity association
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		delete # Delete resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			accessentry # Delete access entry(ies)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			addon # Delete an Addon
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			capability # Delete capabilities
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Delete a cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			fargateprofile # Delete Fargate profile
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamidentitymapping # Delete a IAM identity mapping
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamserviceaccount # Delete an IAM service account
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Delete a nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			podidentityassociation # Delete pod identity associations
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		deregister # Deregister a non-EKS cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Deregister a non-EKS Kubernetes cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		disassociate # Disassociate resources from a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			identityprovider # Disassociate an identity provider from a cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		drain # Drain resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Cordon and drain a nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		enable # Enable features in a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			flux # Set up GitOps Toolkit - deploys FluxV2 and creates Git repo to store manifests
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		get # Get resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			accessentry # Get access entry(ies)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			addon # Get an Addon
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			capability # Get capability(ies)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Get cluster(s)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			fargateprofile # Get Fargate profile(s)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamidentitymapping # Get IAM identity mapping(s)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamserviceaccount # Get iamserviceaccount(s)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			identityprovider # Describe identity providers for cluster authentication and authorization
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			labels # Get labels for managed nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Get nodegroup(s)
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			podidentityassociation # Get a pod identity association
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		help # Help about any command
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		info # Output the version of eksctl, kubectl and OS info
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		register # Register a non-EKS cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Register a non-EKS Kubernetes cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		scale # Scale resources(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Scale a nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		set # Set values
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			labels # Create or overwrite labels for managed nodegroups
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		unset # Unset values
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			labels # Remove labels from managed nodegroups
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		update # Update resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			addon # Upgrade an Addon
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			auto-mode-config # Update the Auto Mode config
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			capability # Update capabilities
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # DEPRECATED: use 'upgrade cluster' instead. Upgrade control plane to the next version.
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			iamserviceaccount # Update an iamserviceaccount
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Update nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			podidentityassociation # Update pod identity associations
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		upgrade # Upgrade resource(s)
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			cluster # Upgrade control plane to the next version
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup # Upgrade nodegroup
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		utils # Various utils
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			associate-iam-oidc-provider # Setup IAM OIDC provider for a cluster to enable IAM roles for pods
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			describe-addon-configuration # Output the configuration JSON schema for an addon
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			describe-addon-versions # describe addon versions supported
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			describe-cluster-versions # Describe Supported Kubernetes Versions
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			describe-stacks # Describe CloudFormation stack for a given cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			enable-secrets-encryption # Enable secrets encryption
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			install-vpc-controllers # Install Windows VPC controller to support running Windows workloads
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			migrate-to-access-entry # Migrates aws-auth to API authentication mode for the cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			migrate-to-pod-identity # Migrates all IRSA related config for a cluster to an equivalent pod identity associations config
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			nodegroup-health # Get nodegroup health for a managed node
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			schema # Output the ClusterConfig JSON Schema
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-authentication-mode # Updates the authentication mode for a cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-aws-node # Update aws-node add-on to latest released version
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-cluster-logging # Update cluster logging configuration
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-cluster-vpc-config # Update Kubernetes API endpoint access configuration and public access CIDRs
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-coredns # Update coredns add-on to ensure image matches the standard Amazon EKS version
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-kube-proxy # Update kube-proxy add-on to ensure image matches Kubernetes control plane version
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-legacy-subnet-settings # Update the configuration of the cluster's public subnets with MapPublicIpOnLaunch enabled
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			update-zonal-shift-config # update zonal shift config
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			write-kubeconfig # Write kubeconfig file for a given cluster
+				--color # toggle colorized logs (valid options: true, false, fabulous)
+				--dumpLogs @bool # dump logs to disk on failure if set to true
+				--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		version # Output the version of eksctl
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+	info # Output the version of eksctl, kubectl and OS info
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		--output # specifies the output format (valid option: json)
+	register # Register a non-EKS cluster
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		cluster # Register a non-EKS Kubernetes cluster
+			--name # EKS cluster name
+			--provider # Kubernetes provider name (one of [EKS_ANYWHERE ANTHOS GKE AKS OPENSHIFT TANZU RANCHER EC2 OTHER])
+	scale # Scale resources(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		nodegroup # Scale a nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Name of the nodegroup to scale
+			--nodes # desired number of nodes (required)
+			--nodes-max # maximum number of nodes
+			--nodes-min # minimum number of nodes
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for wait for update to finish before exiting
+	set # Set values
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		labels # Create or overwrite labels for managed nodegroups
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--labels # Labels. List of comma separated KV pairs "k1=v1,k2=v2"
+			--nodegroup # Nodegroup name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+	unset # Unset values
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		labels # Remove labels from managed nodegroups
+			--labels # List of labels to remove
+	update # Update resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		addon # Upgrade an Addon
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--force @bool # Force migrates an existing self-managed add-on to an EKS managed add-on
+			--name # Addon name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--service-account-role-arn # Addon serviceAccountRoleARN
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # Wait for the addon update to complete
+		auto-mode-config # Update the Auto Mode config
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--drain-all-nodegroups @bool # Drains nodegroups after enabling Auto Mode in the cluster so that workloads on existing nodegroups are moved to the Auto Mode
+			--drain-parallel # Specifies the number of nodes to drain in parallel
+			--ignore-missing-subnets @bool # If the cluster's CloudFormation stack contains any subnets that no longer exist, eksctl fails with an error. Specifying this flag suppresses the error.
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--timeout # maximum waiting time for any long-running operation
+		capability # Update capabilities
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--attach-policy # Inline IAM policy document to attach to the role (JSON string)
+			--attach-policy-arns # List of IAM policy ARNs to attach to the role
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Name of the capability
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--role-arn # IAM role ARN for the capability (optional if IAM policies are provided)
+			--tags # Tags to apply to the capability
+			--timeout # maximum waiting time for any long-running operation
+			--type # Type of the capability (ACK, KRO, ARGOCD)
+		cluster # DEPRECATED: use 'upgrade cluster' instead. Upgrade control plane to the next version.
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # EKS cluster name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		iamserviceaccount # Update an iamserviceaccount
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--attach-policy-arn # ARN of the policy where to update the iamserviceaccount
+			--cfn-disable-rollback @bool # for debugging: If a stack fails, do not roll it back. Be careful, this may lead to unintentional resource consumption!
+			--cfn-role-arn # IAM role used by CloudFormation to call AWS API on your behalf
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--exclude # iamserviceaccounts to exclude (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--include # iamserviceaccounts to include (list of globs), e.g.: 'default/s3-reader,*/dynamo-*'
+			--name # name of the iamserviceaccount to update
+			--namespace # namespace where to update the iamserviceaccount
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		nodegroup # Update nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # wait for wait for update to finish before exiting
+		podidentityassociation # Update pod identity associations
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-session-tags @bool # Disable session tags added by EKS Pod Identity
+			--namespace # Namespace of the pod identity association
+			--no-disable-session-tags @bool # Enable session tags added by EKS Pod Identity
+			--policy # Optional policy that applies additional restrictions to this pod identity association beyond the IAM policies attached to the IAM role
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--role-arn # ARN of the IAM role to be associated with the service account
+			--service-account-name # Service account name of the pod identity association
+			--target-role-arn # ARN of the target IAM role for cross-account access
+			--timeout # maximum waiting time for any long-running operation
+	upgrade # Upgrade resource(s)
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		cluster # Upgrade control plane to the next version
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--force @bool # Override upgrade-blocking readiness checks
+			--name # EKS cluster name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		nodegroup # Upgrade nodegroup
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--force-upgrade @bool # Force the update if the existing node group's pods are unable to be drained due to a pod disruption budget issue
+			--kubernetes-version # Kubernetes version
+			--launch-template-version # Launch template version
+			--name # Nodegroup name
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--release-version # AMI version of the EKS optimized AMI to use
+			--timeout # maximum waiting time for any long-running operation
+			--wait @bool # nodegroup upgrade to complete
+	utils # Various utils
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		associate-iam-oidc-provider # Setup IAM OIDC provider for a cluster to enable IAM roles for pods
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		describe-addon-configuration # Output the configuration JSON schema for an addon
+			--name # Addon name
+		describe-addon-versions # describe addon versions supported
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--kubernetes-version # Kubernetes version
+			--name # Addon name
+			--owners # Addon owner (optional, can be comma separated list e.g., --owners "ownerA, ownerB"
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--publishers # Addon publisher (optional, can be comma separated list e.g., --publishers "publisherA, publisherB"
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+			--types # Addon type (optional, can be comma separated list e.g., --types "typeA, typeB"
+		describe-cluster-versions # Describe Supported Kubernetes Versions
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--cluster-types # (optional) Specify the cluster type(s) to filter results. Valid options: eks, eks-local-outposts. Example: --cluster-types "eks"
+			--cluster-versions # (optional) Filter results by specific Kubernetes versions. Accepts multiple comma-separated values. Example: --cluster-versions "1.31,1.30"
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--default-only @bool # (optional) When set, returns only the default version for the specified cluster type(s). Default: false
+			--include-all @bool # (optional) When set, includes unsupported versions in the results. Default: false
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--status # (optional) Filter results by support plan status. Valid options: EXTENDED_SUPPORT, STANDARD_SUPPORT
+			--timeout # maximum waiting time for any long-running operation
+		describe-stacks # Describe CloudFormation stack for a given cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--all @bool # include deleted stacks
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--events @bool # include stack events
+			--output # specifies the output formats (valid option: json and yaml)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--resource-status # resource statuses to filter events by, e.g. `CREATE_FAILED`, `UPDATE_FAILED`
+			--timeout # maximum waiting time for any long-running operation
+			--trail @bool # lookup CloudTrail events for the cluster
+		enable-secrets-encryption # Enable secrets encryption
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--encrypt-existing-secrets @bool # Encrypt all existing secrets with the new KMS key
+			--key-arn # KMS key ARN
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		install-vpc-controllers # Install Windows VPC controller to support running Windows workloads
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		migrate-to-access-entry # Migrates aws-auth to API authentication mode for the cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--target-authentication-mode # Target Authentication mode of migration
+			--timeout # maximum waiting time for any long-running operation
+		migrate-to-pod-identity # Migrates all IRSA related config for a cluster to an equivalent pod identity associations config
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--remove-oidc-provider-trust-relationship @bool # Remove existing IRSAv1 OIDC provided entities
+			--timeout # maximum waiting time for any long-running operation
+		nodegroup-health # Get nodegroup health for a managed node
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--name # Name of the nodegroup
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		schema # Output the ClusterConfig JSON Schema
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		update-authentication-mode # Updates the authentication mode for a cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--authentication-mode # authentication mode of the cluster
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		update-aws-node # Update aws-node add-on to latest released version
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		update-cluster-logging # Update cluster logging configuration
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--disable-types # Log types to be disabled, the rest will be disabled. Supported log types: (all, none, api, audit, authenticator, controllerManager, scheduler)
+			--enable-types # Log types to be enabled. Supported log types: (all, none, api, audit, authenticator, controllerManager, scheduler)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		update-cluster-vpc-config # Update Kubernetes API endpoint access configuration and public access CIDRs
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--control-plane-security-group-ids # Security group IDs for the control plane
+			--control-plane-subnet-ids # Subnet IDs for the control plane
+			--private-access @bool # access for private (VPC) clients
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--public-access @bool # access for public clients
+			--public-access-cidrs # CIDR blocks that EKS uses to create a security group on the public endpoint
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		update-coredns # Update coredns add-on to ensure image matches the standard Amazon EKS version
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		update-kube-proxy # Update kube-proxy add-on to ensure image matches Kubernetes control plane version
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--approve @bool # Apply the changes
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		update-legacy-subnet-settings # Update the configuration of the cluster's public subnets with MapPublicIpOnLaunch enabled
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--timeout # maximum waiting time for any long-running operation
+		update-zonal-shift-config # update zonal shift config
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--enable-zonal-shift @bool # Enable zonal shift on a cluster
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+		write-kubeconfig # Write kubeconfig file for a given cluster
+			--color # toggle colorized logs (valid options: true, false, fabulous)
+			--dumpLogs @bool # dump logs to disk on failure if set to true
+			--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+			--authenticator-role-arn # AWS IAM role to assume for authenticator
+			--auto-kubeconfig @bool # save kubeconfig file by cluster name, e.g. "/home/jeffrey/.kube/eksctl/clusters/<name>"
+			--cluster # EKS cluster name
+			--config-file # load configuration from a file (or stdin if set to '-')
+			--kubeconfig # path to write kubeconfig (incompatible with --auto-kubeconfig)
+			--profile # AWS credentials profile to use (defaults to the value of the AWS_PROFILE environment variable)
+			--region # AWS region. Defaults to the value set in your AWS config (~/.aws/config)
+			--set-kubeconfig-context @bool # if true then current-context will be set in kubeconfig; if a context is already set then it will be overwritten
+			--timeout # maximum waiting time for any long-running operation
+	version # Output the version of eksctl
+		--color # toggle colorized logs (valid options: true, false, fabulous)
+		--dumpLogs @bool # dump logs to disk on failure if set to true
+		--verbose # set log level, use 0 to silence, 4 for debugging and 5 for debugging with AWS debug logging
+		--output # specifies the output format (valid option: json)

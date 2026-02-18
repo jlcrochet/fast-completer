@@ -1,0 +1,34 @@
+{
+  "twilio --help": {
+    "returncode": 0,
+    "stdout": "Unleash the power of Twilio from your command prompt. Visit https://twil.io/cli for don.\n\nVERSION\n  twilio-cli/6.2.4 linux-x64 node-v25.6.1\n\nUSAGE\n  $ twilio [COMMAND]\n\nTOPICS\n  api            advanced access to all of the Twilio APIs\n  config         manage Twilio CLI configurations\n  debugger       Show a list of log events generated for the account\n  email          sends emails to single or multiple recipients using Twilio\n                 SendGrid\n  feedback       provide feedback to the CLI team\n  phone-numbers  manage Twilio phone numbers\n  plugins        list available plugins for installation\n  profiles       manage credentials for Twilio profiles\n  version\n\nCOMMANDS\n  autocomplete  display autocomplete installation instructions\n  feedback      provide feedback to the CLI team\n  login         create a new profile to store Twilio Account credentials and\n                configuration\n  plugins       List installed plugins.\n  update        update the twilio CLI\n  version\n\n"
+  },
+  "twilio --version": {
+    "returncode": 0,
+    "stdout": "twilio-cli/6.2.4 linux-x64 node-v25.6.1\n"
+  },
+  "twilio autocomplete --help": {
+    "returncode": 0,
+    "stdout": "display autocomplete installation instructions\n\nUSAGE\n  $ twilio autocomplete [SHELL] [-r]\n\nARGUMENTS\n  SHELL  shell type\n\nOPTIONAL FLAGS\n  -r, --refresh-cache  Refresh cache (ignores displaying instructions)\n\nDESCRIPTION\n  display autocomplete installation instructions\n\nEXAMPLES\n  $ twilio autocomplete\n\n  $ twilio autocomplete bash\n\n  $ twilio autocomplete zsh\n\n  $ twilio autocomplete --refresh-cache\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/twilio-cli/quickstart#install-cli-autocomplete-bash-or-zsh-only\u0007MORE INFO\u001b]8;;\u0007\n\n"
+  },
+  "twilio feedback --help": {
+    "returncode": 0,
+    "stdout": "provide feedback to the CLI team\n\nUSAGE\n  $ twilio feedback\n\nDESCRIPTION\n  provide feedback to the CLI team\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/twilio-cli/quickstart#send-us-feedback\u0007MORE INFO\u001b]8;;\u0007\n\n"
+  },
+  "twilio login --help": {
+    "returncode": 0,
+    "stdout": "create a new profile to store Twilio Account credentials and configuration\n\nUSAGE\n  $ twilio login [ACCOUNT-SID] [-l debug|info|warn|error|none] [-o\n    columns|json|tsv|none] [--silent] [--auth-token <value>] [-f] [--region\n    <value>] [--edge <value>] [-p <value>]\n\nARGUMENTS\n  ACCOUNT-SID  The Account SID for your Twilio Account or Subaccount.\n\nOPTIONAL FLAGS\n  -f, --force                      Force overwriting existing profile\n                                   credentials.\n  -l=(debug|info|warn|error|none)  [default: info] Level of logging messages.\n  -o=(columns|json|tsv|none)       [default: columns] Format of command output.\n  -p, --profile=<value>            Shorthand identifier for your profile.\n  --auth-token=<value>             Your Twilio Auth Token for your Twilio\n                                   Account or Subaccount.\n  --edge=<value>                   Twilio edge location to use. Auto-detected\n                                   from region if not specified.\n  --region=<value>                 Twilio region to use.\n  --silent                         Suppress  output and logs. This is a\n                                   shorthand for \"-l none -o none\".\n\nDESCRIPTION\n  create a new profile to store Twilio Account credentials and configuration\n\nALIASES\n  $ twilio profiles:create\n  $ twilio profiles:add\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/twilio-cli/quickstart#login-to-your-twilio-account\u0007MORE INFO\u001b]8;;\u0007\n\n"
+  },
+  "twilio plugins --help": {
+    "returncode": 0,
+    "stdout": "List installed plugins.\n\nUSAGE\n  $ twilio plugins [--core]\n\nOPTIONAL FLAGS\n  --core  Show core plugins.\n\nDESCRIPTION\n  List installed plugins.\n\nEXAMPLES\n  $ twilio plugins\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/twilio-cli/plugins\u0007MORE INFO\u001b]8;;\u0007\n\nCOMMANDS\n  plugins available  list available plugins for installation\n  plugins inspect    Displays installation properties of a plugin.\n  plugins install    Installs a plugin into the CLI.\n  plugins link       Links a plugin into the CLI for development.\n  plugins uninstall  Removes a plugin from the CLI.\n  plugins update     Update installed plugins.\n\n"
+  },
+  "twilio update --help": {
+    "returncode": 0,
+    "stdout": "update the twilio CLI\n\nUSAGE\n  $ twilio update [CHANNEL] [--force |  | [-a | -v <value> | -i]]\n    [-b ]\n\nOPTIONAL FLAGS\n  -a, --available        See available versions.\n  -b, --verbose          Show more details about the available versions.\n  -i, --interactive      Interactively select version to install. This is\n                         ignored if a channel is provided.\n  -v, --version=<value>  Install a specific version.\n  --force                Force a re-download of the requested version.\n\nDESCRIPTION\n  update the twilio CLI\n\nEXAMPLES\n  Update to the stable channel:\n\n    $ twilio update stable\n\n  Update to a specific version:\n\n    $ twilio update --version 1.0.0\n\n  Interactively select version:\n\n    $ twilio update --interactive\n\n  See available versions:\n\n    $ twilio update --available\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/api/\u0007MORE INFO\u001b]8;;\u0007\n\n"
+  },
+  "twilio version --help": {
+    "returncode": 0,
+    "stdout": "USAGE\n  $ twilio version [--json] [--verbose]\n\nOPTIONAL FLAGS\n  --json     Format output as json.\n  --verbose  Show additional information about the CLI.\n\nGLOBAL FLAGS\n  --json  Format output as json.\n\nFLAG DESCRIPTIONS\n  --verbose  Show additional information about the CLI.\n\n    Additionally shows the architecture, node version, operating system, and\n    versions of plugins that the CLI is using.\n\nMORE INFO\n  \u001b]8;;https://twilio.com/docs/api/\u0007MORE INFO\u001b]8;;\u0007\n\n"
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "zellij --version": {
+    "returncode": 0,
+    "stdout": "zellij 0.43.1\n"
+  },
+  "zellij -h": {
+    "returncode": 0,
+    "stdout": "zellij 0.43.1\n\nUSAGE:\n    zellij [OPTIONS] [SUBCOMMAND]\n\nOPTIONS:\n    -c, --config <CONFIG>\n            Change where zellij looks for the configuration file [env: ZELLIJ_CONFIG_FILE=]\n\n        --config-dir <CONFIG_DIR>\n            Change where zellij looks for the configuration directory [env: ZELLIJ_CONFIG_DIR=]\n\n    -d, --debug\n            Specify emitting additional debug information\n\n        --data-dir <DATA_DIR>\n            Change where zellij looks for plugins\n\n    -h, --help\n            Print help information\n\n    -l, --layout <LAYOUT>\n            Name of a predefined layout inside the layout directory or the path to a layout file if\n            inside a session (or using the --session flag) will be added to the session as a new tab\n            or tabs, otherwise will start a new session\n\n        --max-panes <MAX_PANES>\n            Maximum panes on screen, caution: opening more panes will close old ones\n\n    -n, --new-session-with-layout <NEW_SESSION_WITH_LAYOUT>\n            Name of a predefined layout inside the layout directory or the path to a layout file\n            Will always start a new session, even if inside an existing session\n\n    -s, --session <SESSION>\n            Specify name of a new session\n\n    -V, --version\n            Print version information\n\nSUBCOMMANDS:\n    action                 Send actions to a specific session [aliases: ac]\n    attach                 Attach to a session [aliases: a]\n    convert-config         \n    convert-layout         \n    convert-theme          \n    delete-all-sessions    Delete all sessions [aliases: da]\n    delete-session         Delete a specific session [aliases: d]\n    edit                   Edit file with default $EDITOR / $VISUAL [aliases: e]\n    help                   Print this message or the help of the given subcommand(s)\n    kill-all-sessions      Kill all sessions [aliases: ka]\n    kill-session           Kill a specific session [aliases: k]\n    list-aliases           List existing plugin aliases [aliases: la]\n    list-sessions          List active sessions [aliases: ls]\n    options                Change the behaviour of zellij\n    pipe                   Send data to one or more plugins, launch them if they are not running\n    plugin                 Load a plugin [aliases: p]\n    run                    Run a command in a new pane [aliases: r]\n    setup                  Setup zellij and check its configuration\n    web                    Run a web server to serve terminal sessions\n"
+  },
+  "zellij action -h": {
+    "returncode": 0,
+    "stdout": "zellij-action \nSend actions to a specific session\n\nUSAGE:\n    zellij action <SUBCOMMAND>\n\nOPTIONS:\n    -h, --help    Print help information\n\nSUBCOMMANDS:\n    change-floating-pane-coordinates\n            \n    clear\n            Clear all buffers for a focused pane\n    close-pane\n            Close the focused pane\n    close-tab\n            Close the current tab\n    dump-layout\n            Dump current layout to stdout\n    dump-screen\n            Dump the focused pane to a file\n    edit\n            Open the specified file in a new zellij pane with your default EDITOR\n    edit-scrollback\n            Open the pane scrollback in your default editor\n    focus-next-pane\n            Change focus to the next pane\n    focus-previous-pane\n            Change focus to the previous pane\n    go-to-next-tab\n            Go to the next tab\n    go-to-previous-tab\n            Go to the previous tab\n    go-to-tab\n            Go to tab with index [index]\n    go-to-tab-name\n            Go to tab with name [name]\n    half-page-scroll-down\n            Scroll down half page in focus pane\n    half-page-scroll-up\n            Scroll up half page in focus pane\n    help\n            Print this message or the help of the given subcommand(s)\n    launch-or-focus-plugin\n            \n    launch-plugin\n            \n    list-clients\n            \n    move-focus\n            Move the focused pane in the specified direction. [right|left|up|down]\n    move-focus-or-tab\n            Move focus to the pane or tab (if on screen edge) in the specified direction [right|\n            left|up|down]\n    move-pane\n            Change the location of the focused pane in the specified direction or rotate forwrads\n            [right|left|up|down]\n    move-pane-backwards\n            Rotate the location of the previous pane backwards\n    move-tab\n            Move the focused tab in the specified direction. [right|left]\n    new-pane\n            Open a new pane in the specified direction [right|down] If no direction is specified,\n            will try to use the biggest available space\n    new-tab\n            Create a new tab, optionally with a specified tab layout and name\n    next-swap-layout\n            \n    page-scroll-down\n            Scroll down one page in focus pane\n    page-scroll-up\n            Scroll up one page in focus pane\n    pipe\n            Send data to one or more plugins, launch them if they are not running\n    previous-swap-layout\n            \n    query-tab-names\n            Query all tab names\n    rename-pane\n            Renames the focused pane\n    rename-session\n            \n    rename-tab\n            Renames the focused pane\n    resize\n            [increase|decrease] the focused panes area at the [left|down|up|right] border\n    scroll-down\n            Scroll down in focus pane\n    scroll-to-bottom\n            Scroll down to bottom in focus pane\n    scroll-to-top\n            Scroll up to top in focus pane\n    scroll-up\n            Scroll up in the focused pane\n    stack-panes\n            Stack pane ids Ids are a space separated list of pane ids. They should either be in\n            the form of `terminal_<int>` (eg. terminal_1), `plugin_<int>` (eg. plugin_1) or bare\n            integers in which case they'll be considered terminals (eg. 1 is the equivalent of\n            terminal_1)\n    start-or-reload-plugin\n            \n    switch-mode\n            Switch input mode of all connected clients [locked|pane|tab|resize|move|search|session]\n    toggle-active-sync-tab\n            Toggle between sending text commands to all panes on the current tab and normal mode\n    toggle-floating-panes\n            Toggle the visibility of all floating panes in the current Tab, open one if none exist\n    toggle-fullscreen\n            Toggle between fullscreen focus pane and normal layout\n    toggle-pane-embed-or-floating\n            Embed focused pane if floating or float focused pane if embedded\n    toggle-pane-frames\n            Toggle frames around panes in the UI\n    toggle-pane-pinned\n            \n    undo-rename-pane\n            Remove a previously set pane name\n    undo-rename-tab\n            Remove a previously set tab name\n    write\n            Write bytes to the terminal\n    write-chars\n            Write characters to the terminal\n"
+  },
+  "zellij action change-floating-pane-coordinates -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-change-floating-pane-coordinates \n\nUSAGE:\n    zellij action change-floating-pane-coordinates [OPTIONS] --pane-id <PANE_ID>\n\nOPTIONS:\n    -h, --help                 Print help information\n        --height <HEIGHT>      The height if the pane is floating as a bare integer (eg. 1) or\n                               percent (eg. 10%)\n    -p, --pane-id <PANE_ID>    The pane_id of the floating pane, eg.  terminal_1, plugin_2 or 3\n                               (equivalent to terminal_3)\n        --pinned <PINNED>      Whether to pin a floating pane so that it is always on top\n        --width <WIDTH>        The width if the pane is floating as a bare integer (eg. 1) or\n                               percent (eg. 10%)\n    -x, --x <X>                The x coordinates if the pane is floating as a bare integer (eg. 1)\n                               or percent (eg. 10%)\n    -y, --y <Y>                The y coordinates if the pane is floating as a bare integer (eg. 1)\n                               or percent (eg. 10%)\n"
+  },
+  "zellij action clear -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-clear \nClear all buffers for a focused pane\n\nUSAGE:\n    zellij action clear\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action close-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-close-pane \nClose the focused pane\n\nUSAGE:\n    zellij action close-pane\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action close-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-close-tab \nClose the current tab\n\nUSAGE:\n    zellij action close-tab\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action dump-layout -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-dump-layout \nDump current layout to stdout\n\nUSAGE:\n    zellij action dump-layout\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action dump-screen -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-dump-screen \nDump the focused pane to a file\n\nUSAGE:\n    zellij action dump-screen [OPTIONS] <PATH>\n\nARGS:\n    <PATH>    \n\nOPTIONS:\n    -f, --full    Dump the pane with full scrollback\n    -h, --help    Print help information\n"
+  },
+  "zellij action edit -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-edit \nOpen the specified file in a new zellij pane with your default EDITOR\n\nUSAGE:\n    zellij action edit [OPTIONS] <FILE>\n\nARGS:\n    <FILE>    \n\nOPTIONS:\n        --cwd <CWD>                    Change the working directory of the editor\n    -d, --direction <DIRECTION>        Direction to open the new pane in\n    -f, --floating                     Open the new pane in floating mode\n    -h, --help                         Print help information\n        --height <HEIGHT>              The height if the pane is floating as a bare integer (eg. 1)\n                                       or percent (eg. 10%)\n    -i, --in-place                     Open the new pane in place of the current pane, temporarily\n                                       suspending it\n    -l, --line-number <LINE_NUMBER>    Open the file in the specified line number\n        --pinned <PINNED>              Whether to pin a floating pane so that it is always on top\n        --width <WIDTH>                The width if the pane is floating as a bare integer (eg. 1)\n                                       or percent (eg. 10%)\n    -x, --x <X>                        The x coordinates if the pane is floating as a bare integer\n                                       (eg. 1) or percent (eg. 10%)\n    -y, --y <Y>                        The y coordinates if the pane is floating as a bare integer\n                                       (eg. 1) or percent (eg. 10%)\n"
+  },
+  "zellij action edit-scrollback -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-edit-scrollback \nOpen the pane scrollback in your default editor\n\nUSAGE:\n    zellij action edit-scrollback\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action focus-next-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-focus-next-pane \nChange focus to the next pane\n\nUSAGE:\n    zellij action focus-next-pane\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action focus-previous-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-focus-previous-pane \nChange focus to the previous pane\n\nUSAGE:\n    zellij action focus-previous-pane\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action go-to-next-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-go-to-next-tab \nGo to the next tab\n\nUSAGE:\n    zellij action go-to-next-tab\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action go-to-previous-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-go-to-previous-tab \nGo to the previous tab\n\nUSAGE:\n    zellij action go-to-previous-tab\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action go-to-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-go-to-tab \nGo to tab with index [index]\n\nUSAGE:\n    zellij action go-to-tab <INDEX>\n\nARGS:\n    <INDEX>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action go-to-tab-name -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-go-to-tab-name \nGo to tab with name [name]\n\nUSAGE:\n    zellij action go-to-tab-name [OPTIONS] <NAME>\n\nARGS:\n    <NAME>    \n\nOPTIONS:\n    -c, --create    Create a tab if one does not exist\n    -h, --help      Print help information\n"
+  },
+  "zellij action half-page-scroll-down -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-half-page-scroll-down \nScroll down half page in focus pane\n\nUSAGE:\n    zellij action half-page-scroll-down\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action half-page-scroll-up -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-half-page-scroll-up \nScroll up half page in focus pane\n\nUSAGE:\n    zellij action half-page-scroll-up\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action launch-or-focus-plugin -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-launch-or-focus-plugin \n\nUSAGE:\n    zellij action launch-or-focus-plugin [OPTIONS] <URL>\n\nARGS:\n    <URL>    \n\nOPTIONS:\n    -c, --configuration <CONFIGURATION>    \n    -f, --floating                         \n    -h, --help                             Print help information\n    -i, --in-place                         \n    -m, --move-to-focused-tab              \n    -s, --skip-plugin-cache                \n"
+  },
+  "zellij action launch-plugin -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-launch-plugin \n\nUSAGE:\n    zellij action launch-plugin [OPTIONS] <URL>\n\nARGS:\n    <URL>    \n\nOPTIONS:\n    -c, --configuration <CONFIGURATION>    \n    -f, --floating                         \n    -h, --help                             Print help information\n    -i, --in-place                         \n    -s, --skip-plugin-cache                \n"
+  },
+  "zellij action list-clients -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-list-clients \n\nUSAGE:\n    zellij action list-clients\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action move-focus -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-move-focus \nMove the focused pane in the specified direction. [right|left|up|down]\n\nUSAGE:\n    zellij action move-focus <DIRECTION>\n\nARGS:\n    <DIRECTION>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action move-focus-or-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-move-focus-or-tab \nMove focus to the pane or tab (if on screen edge) in the specified direction [right|left|up|down]\n\nUSAGE:\n    zellij action move-focus-or-tab <DIRECTION>\n\nARGS:\n    <DIRECTION>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action move-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-move-pane \nChange the location of the focused pane in the specified direction or rotate forwrads [right|left|\nup|down]\n\nUSAGE:\n    zellij action move-pane [DIRECTION]\n\nARGS:\n    <DIRECTION>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action move-pane-backwards -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-move-pane-backwards \nRotate the location of the previous pane backwards\n\nUSAGE:\n    zellij action move-pane-backwards\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action move-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-move-tab \nMove the focused tab in the specified direction. [right|left]\n\nUSAGE:\n    zellij action move-tab <DIRECTION>\n\nARGS:\n    <DIRECTION>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action new-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-new-pane \nOpen a new pane in the specified direction [right|down] If no direction is specified, will try to\nuse the biggest available space\n\nUSAGE:\n    zellij action new-pane [OPTIONS] [-- <COMMAND>...]\n\nARGS:\n    <COMMAND>...    \n\nOPTIONS:\n    -c, --close-on-exit\n            Close the pane immediately when its command exits\n\n        --configuration <CONFIGURATION>\n            \n\n        --cwd <CWD>\n            Change the working directory of the new pane\n\n    -d, --direction <DIRECTION>\n            Direction to open the new pane in\n\n    -f, --floating\n            Open the new pane in floating mode\n\n    -h, --help\n            Print help information\n\n        --height <HEIGHT>\n            The height if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -i, --in-place\n            Open the new pane in place of the current pane, temporarily suspending it\n\n    -n, --name <NAME>\n            Name of the new pane\n\n    -p, --plugin <PLUGIN>\n            \n\n        --pinned <PINNED>\n            Whether to pin a floating pane so that it is always on top\n\n    -s, --start-suspended\n            Start the command suspended, only running it after the you first press ENTER\n\n        --skip-plugin-cache\n            \n\n        --stacked\n            \n\n        --width <WIDTH>\n            The width if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -x, --x <X>\n            The x coordinates if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -y, --y <Y>\n            The y coordinates if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n"
+  },
+  "zellij action new-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-new-tab \nCreate a new tab, optionally with a specified tab layout and name\n\nUSAGE:\n    zellij action new-tab [OPTIONS]\n\nOPTIONS:\n    -c, --cwd <CWD>                  Change the working directory of the new tab\n    -h, --help                       Print help information\n    -l, --layout <LAYOUT>            Layout to use for the new tab\n        --layout-dir <LAYOUT_DIR>    Default folder to look for layouts\n    -n, --name <NAME>                Name of the new tab\n"
+  },
+  "zellij action next-swap-layout -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-next-swap-layout \n\nUSAGE:\n    zellij action next-swap-layout\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action page-scroll-down -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-page-scroll-down \nScroll down one page in focus pane\n\nUSAGE:\n    zellij action page-scroll-down\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action page-scroll-up -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-page-scroll-up \nScroll up one page in focus pane\n\nUSAGE:\n    zellij action page-scroll-up\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action pipe -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-pipe \nSend data to one or more plugins, launch them if they are not running\n\nUSAGE:\n    \nzellij action pipe [OPTIONS] [--] <PAYLOAD>\n\n* Send data to a specific plugin:\n\nzellij action pipe --plugin file:/path/to/my/plugin.wasm --name my_pipe_name -- my_arbitrary_data\n\n* To all running plugins (that are listening):\n\nzellij action pipe --name my_pipe_name -- my_arbitrary_data\n\n* Pipe data into this command's STDIN and get output from the plugin on this command's STDOUT\n\ntail -f /tmp/my-live-logfile | zellij action pipe --name logs --plugin https://example.com/my-plugin.wasm | wc -l\n\n\nARGS:\n    <PAYLOAD>    The data to send down this pipe (if blank, will listen to STDIN)\n\nOPTIONS:\n    -n, --name <NAME>\n            The name of the pipe\n\n    -a, --args <ARGS>\n            The args of the pipe\n\n    -p, --plugin <PLUGIN>\n            The plugin url (eg. file:/tmp/my-plugin.wasm) to direct this pipe to, if not specified,\n            will be sent to all plugins, if specified and is not running, the plugin will be\n            launched\n\n    -c, --plugin-configuration <PLUGIN_CONFIGURATION>\n            The plugin configuration (note: the same plugin with different configuration is\n            considered a different plugin for the purposes of determining the pipe destination)\n\n    -l, --force-launch-plugin\n            Launch a new plugin even if one is already running\n\n    -s, --skip-plugin-cache\n            If launching a new plugin, skip cache and force-compile the plugin\n\n    -f, --floating-plugin <FLOATING_PLUGIN>\n            If launching a plugin, should it be floating or not, defaults to floating [possible\n            values: true, false]\n\n    -i, --in-place-plugin <IN_PLACE_PLUGIN>\n            If launching a plugin, launch it in-place (on top of the current pane) [possible values:\n            true, false]\n\n    -w, --plugin-cwd <PLUGIN_CWD>\n            If launching a plugin, specify its working directory\n\n    -t, --plugin-title <PLUGIN_TITLE>\n            If launching a plugin, specify its pane title\n\n    -h, --help\n            Print help information\n"
+  },
+  "zellij action previous-swap-layout -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-previous-swap-layout \n\nUSAGE:\n    zellij action previous-swap-layout\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action query-tab-names -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-query-tab-names \nQuery all tab names\n\nUSAGE:\n    zellij action query-tab-names\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action rename-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-rename-pane \nRenames the focused pane\n\nUSAGE:\n    zellij action rename-pane <NAME>\n\nARGS:\n    <NAME>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action rename-session -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-rename-session \n\nUSAGE:\n    zellij action rename-session <NAME>\n\nARGS:\n    <NAME>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action rename-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-rename-tab \nRenames the focused pane\n\nUSAGE:\n    zellij action rename-tab <NAME>\n\nARGS:\n    <NAME>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action resize -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-resize \n[increase|decrease] the focused panes area at the [left|down|up|right] border\n\nUSAGE:\n    zellij action resize <RESIZE> [DIRECTION]\n\nARGS:\n    <RESIZE>       \n    <DIRECTION>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action scroll-down -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-scroll-down \nScroll down in focus pane\n\nUSAGE:\n    zellij action scroll-down\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action scroll-to-bottom -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-scroll-to-bottom \nScroll down to bottom in focus pane\n\nUSAGE:\n    zellij action scroll-to-bottom\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action scroll-to-top -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-scroll-to-top \nScroll up to top in focus pane\n\nUSAGE:\n    zellij action scroll-to-top\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action scroll-up -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-scroll-up \nScroll up in the focused pane\n\nUSAGE:\n    zellij action scroll-up\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action stack-panes -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-stack-panes \nStack pane ids Ids are a space separated list of pane ids. They should either be in the form of\n`terminal_<int>` (eg. terminal_1), `plugin_<int>` (eg. plugin_1) or bare integers in which case\nthey'll be considered terminals (eg. 1 is the equivalent of terminal_1)\n\nUSAGE:\n    zellij action stack-panes [--] <PANE_IDS>...\n\nARGS:\n    <PANE_IDS>...    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action start-or-reload-plugin -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-start-or-reload-plugin \n\nUSAGE:\n    zellij action start-or-reload-plugin [OPTIONS] <URL>\n\nARGS:\n    <URL>    \n\nOPTIONS:\n    -c, --configuration <CONFIGURATION>    \n    -h, --help                             Print help information\n"
+  },
+  "zellij action switch-mode -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-switch-mode \nSwitch input mode of all connected clients [locked|pane|tab|resize|move|search|session]\n\nUSAGE:\n    zellij action switch-mode <INPUT_MODE>\n\nARGS:\n    <INPUT_MODE>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-active-sync-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-active-sync-tab \nToggle between sending text commands to all panes on the current tab and normal mode\n\nUSAGE:\n    zellij action toggle-active-sync-tab\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-floating-panes -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-floating-panes \nToggle the visibility of all floating panes in the current Tab, open one if none exist\n\nUSAGE:\n    zellij action toggle-floating-panes\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-fullscreen -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-fullscreen \nToggle between fullscreen focus pane and normal layout\n\nUSAGE:\n    zellij action toggle-fullscreen\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-pane-embed-or-floating -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-pane-embed-or-floating \nEmbed focused pane if floating or float focused pane if embedded\n\nUSAGE:\n    zellij action toggle-pane-embed-or-floating\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-pane-frames -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-pane-frames \nToggle frames around panes in the UI\n\nUSAGE:\n    zellij action toggle-pane-frames\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action toggle-pane-pinned -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-toggle-pane-pinned \n\nUSAGE:\n    zellij action toggle-pane-pinned\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action undo-rename-pane -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-undo-rename-pane \nRemove a previously set pane name\n\nUSAGE:\n    zellij action undo-rename-pane\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action undo-rename-tab -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-undo-rename-tab \nRemove a previously set tab name\n\nUSAGE:\n    zellij action undo-rename-tab\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action write -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-write \nWrite bytes to the terminal\n\nUSAGE:\n    zellij action write [BYTES]...\n\nARGS:\n    <BYTES>...    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij action write-chars -h": {
+    "returncode": 0,
+    "stdout": "zellij-action-write-chars \nWrite characters to the terminal\n\nUSAGE:\n    zellij action write-chars <CHARS>\n\nARGS:\n    <CHARS>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij attach -h": {
+    "returncode": 0,
+    "stdout": "zellij-attach \nAttach to a session\n\nUSAGE:\n    zellij attach [OPTIONS] [SESSION_NAME] [SUBCOMMAND]\n\nARGS:\n    <SESSION_NAME>    Name of the session to attach to\n\nOPTIONS:\n    -b, --create-background     Create a detached session in the background if one does not exist\n    -c, --create                Create a session if one does not exist\n    -f, --force-run-commands    If resurrecting a dead session, immediately run all its commands\n                                on startup\n    -h, --help                  Print help information\n        --index <INDEX>         Number of the session index in the active sessions ordered creation\n                                date\n\nSUBCOMMANDS:\n    help       Print this message or the help of the given subcommand(s)\n    options    Change the behaviour of zellij\n"
+  },
+  "zellij attach options -h": {
+    "returncode": 0,
+    "stdout": "zellij-attach-options \nChange the behaviour of zellij\n\nUSAGE:\n    zellij attach options [OPTIONS] [ARGS]\n\nARGS:\n    <WEB_SERVER_IP>                  \n    <WEB_SERVER_PORT>                \n    <WEB_SERVER_CERT>                \n    <WEB_SERVER_KEY>                 \n    <ENFORCE_HTTPS_FOR_LOCALHOST>    \n\nOPTIONS:\n        --advanced-mouse-actions <ADVANCED_MOUSE_ACTIONS>\n            Whether to enable mouse hover effects and pane grouping functionality default is true\n            [possible values: true, false]\n\n        --attach-to-session <ATTACH_TO_SESSION>\n            Whether to attach to a session specified in \"session-name\" if it exists [possible\n            values: true, false]\n\n        --auto-layout <AUTO_LAYOUT>\n            Whether to lay out panes in a predefined set of layouts whenever possible [possible\n            values: true, false]\n\n        --copy-clipboard <COPY_CLIPBOARD>\n            OSC52 destination clipboard [possible values: system, primary]\n\n        --copy-command <COPY_COMMAND>\n            Switch to using a user supplied command for clipboard instead of OSC52\n\n        --copy-on-select <COPY_ON_SELECT>\n            Automatically copy when selecting text (true or false) [possible values: true, false]\n\n        --default-cwd <DEFAULT_CWD>\n            Set the default cwd\n\n        --default-layout <DEFAULT_LAYOUT>\n            Set the default layout\n\n        --default-mode <DEFAULT_MODE>\n            Set the default mode\n\n        --default-shell <DEFAULT_SHELL>\n            Set the default shell\n\n        --disable-mouse-mode\n            Disable handling of mouse events\n\n        --disable-session-metadata <DISABLE_SESSION_METADATA>\n            If true, will disable writing session metadata to disk [possible values: true, false]\n\n    -h, --help\n            Print help information\n\n        --layout-dir <LAYOUT_DIR>\n            Set the layout_dir, defaults to subdirectory of config dir\n\n        --mirror-session <MIRROR_SESSION>\n            Mirror session when multiple users are connected (true or false) [possible values: true,\n            false]\n\n        --mouse-mode <MOUSE_MODE>\n            Set the handling of mouse events (true or false) Can be temporarily bypassed by the\n            [SHIFT] key [possible values: true, false]\n\n        --no-pane-frames\n            Disable display of pane frames\n\n        --on-force-close <ON_FORCE_CLOSE>\n            Set behaviour on force close (quit or detach)\n\n        --pane-frames <PANE_FRAMES>\n            Set display of the pane frames (true or false) [possible values: true, false]\n\n        --post-command-discovery-hook <POST_COMMAND_DISCOVERY_HOOK>\n            A command to run after the discovery of running commands when serializing, for the\n            purpose of manipulating the command (eg. with a regex) before it gets serialized\n\n        --scroll-buffer-size <SCROLL_BUFFER_SIZE>\n            \n\n        --scrollback-editor <SCROLLBACK_EDITOR>\n            Explicit full path to open the scrollback editor (default is $EDITOR or $VISUAL)\n\n        --scrollback-lines-to-serialize <SCROLLBACK_LINES_TO_SERIALIZE>\n            Scrollback lines to serialize along with the pane viewport when serializing sessions, 0\n            defaults to the scrollback size. If this number is higher than the scrollback size, it\n            will also default to the scrollback size\n\n        --serialization-interval <SERIALIZATION_INTERVAL>\n            The interval at which to serialize sessions for resurrection (in seconds)\n\n        --serialize-pane-viewport <SERIALIZE_PANE_VIEWPORT>\n            Whether pane viewports are serialized along with the session, default is false [possible\n            values: true, false]\n\n        --session-name <SESSION_NAME>\n            The name of the session to create when starting Zellij\n\n        --session-serialization <SESSION_SERIALIZATION>\n            Whether sessions should be serialized to the HD so that they can be later resurrected,\n            default is true [possible values: true, false]\n\n        --show-release-notes <SHOW_RELEASE_NOTES>\n            Whether to show release notes on first run of a new version default is true [possible\n            values: true, false]\n\n        --show-startup-tips <SHOW_STARTUP_TIPS>\n            Whether to show startup tips when starting a new session default is true [possible\n            values: true, false]\n\n        --simplified-ui <SIMPLIFIED_UI>\n            Allow plugins to use a more simplified layout that is compatible with more fonts (true\n            or false) [possible values: true, false]\n\n        --stacked-resize <STACKED_RESIZE>\n            Whether to stack panes when resizing beyond a certain size default is true [possible\n            values: true, false]\n\n        --styled-underlines <STYLED_UNDERLINES>\n            Whether to use ANSI styled underlines [possible values: true, false]\n\n        --support-kitty-keyboard-protocol <SUPPORT_KITTY_KEYBOARD_PROTOCOL>\n            Whether to enable support for the Kitty keyboard protocol (must also be supported by\n            the host terminal), defaults to true if the terminal supports it [possible values: true,\n            false]\n\n        --theme <THEME>\n            Set the default theme\n\n        --theme-dir <THEME_DIR>\n            Set the theme_dir, defaults to subdirectory of config dir\n\n        --web-server <WEB_SERVER>\n            Whether to make sure a local web server is running when a new Zellij session starts.\n            This web server will allow creating new sessions and attaching to existing ones that\n            have opted in to being shared in the browser [possible values: true, false]\n\n        --web-sharing <WEB_SHARING>\n            Whether to allow new sessions to be shared through a local web server, assuming one\n            is running (see the `web_server` option for more details) [possible values: on, off,\n            disabled]\n"
+  },
+  "zellij convert-config -h": {
+    "returncode": 0,
+    "stdout": "zellij-convert-config \n\nUSAGE:\n    zellij convert-config <OLD_CONFIG_FILE>\n\nARGS:\n    <OLD_CONFIG_FILE>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij convert-layout -h": {
+    "returncode": 0,
+    "stdout": "zellij-convert-layout \n\nUSAGE:\n    zellij convert-layout <OLD_LAYOUT_FILE>\n\nARGS:\n    <OLD_LAYOUT_FILE>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij convert-theme -h": {
+    "returncode": 0,
+    "stdout": "zellij-convert-theme \n\nUSAGE:\n    zellij convert-theme <OLD_THEME_FILE>\n\nARGS:\n    <OLD_THEME_FILE>    \n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij delete-all-sessions -h": {
+    "returncode": 0,
+    "stdout": "zellij-delete-all-sessions \nDelete all sessions\n\nUSAGE:\n    zellij delete-all-sessions [OPTIONS]\n\nOPTIONS:\n    -f, --force    Kill the sessions if they're running before deleting them\n    -h, --help     Print help information\n    -y, --yes      Automatic yes to prompts\n"
+  },
+  "zellij delete-session -h": {
+    "returncode": 0,
+    "stdout": "zellij-delete-session \nDelete a specific session\n\nUSAGE:\n    zellij delete-session [OPTIONS] [TARGET_SESSION]\n\nARGS:\n    <TARGET_SESSION>    Name of target session\n\nOPTIONS:\n    -f, --force    Kill the session if it's running before deleting it\n    -h, --help     Print help information\n"
+  },
+  "zellij edit -h": {
+    "returncode": 0,
+    "stdout": "zellij-edit \nEdit file with default $EDITOR / $VISUAL\n\nUSAGE:\n    zellij edit [OPTIONS] <FILE>\n\nARGS:\n    <FILE>    \n\nOPTIONS:\n        --cwd <CWD>                    Change the working directory of the editor\n    -d, --direction <DIRECTION>        Direction to open the new pane in\n    -f, --floating                     Open the new pane in floating mode\n    -h, --help                         Print help information\n        --height <HEIGHT>              The height if the pane is floating as a bare integer (eg. 1)\n                                       or percent (eg. 10%)\n    -i, --in-place                     Open the new pane in place of the current pane, temporarily\n                                       suspending it\n    -l, --line-number <LINE_NUMBER>    Open the file in the specified line number\n        --pinned <PINNED>              Whether to pin a floating pane so that it is always on top\n        --width <WIDTH>                The width if the pane is floating as a bare integer (eg. 1)\n                                       or percent (eg. 10%)\n    -x, --x <X>                        The x coordinates if the pane is floating as a bare integer\n                                       (eg. 1) or percent (eg. 10%)\n    -y, --y <Y>                        The y coordinates if the pane is floating as a bare integer\n                                       (eg. 1) or percent (eg. 10%)\n"
+  },
+  "zellij kill-all-sessions -h": {
+    "returncode": 0,
+    "stdout": "zellij-kill-all-sessions \nKill all sessions\n\nUSAGE:\n    zellij kill-all-sessions [OPTIONS]\n\nOPTIONS:\n    -h, --help    Print help information\n    -y, --yes     Automatic yes to prompts\n"
+  },
+  "zellij kill-session -h": {
+    "returncode": 0,
+    "stdout": "zellij-kill-session \nKill a specific session\n\nUSAGE:\n    zellij kill-session [TARGET_SESSION]\n\nARGS:\n    <TARGET_SESSION>    Name of target session\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij list-aliases -h": {
+    "returncode": 0,
+    "stdout": "zellij-list-aliases \nList existing plugin aliases\n\nUSAGE:\n    zellij list-aliases\n\nOPTIONS:\n    -h, --help    Print help information\n"
+  },
+  "zellij list-sessions -h": {
+    "returncode": 0,
+    "stdout": "zellij-list-sessions \nList active sessions\n\nUSAGE:\n    zellij list-sessions [OPTIONS]\n\nOPTIONS:\n    -h, --help             Print help information\n    -n, --no-formatting    Do not add colors and formatting to the list (useful for parsing)\n    -r, --reverse          List the sessions in reverse order (default is ascending order)\n    -s, --short            Print just the session name\n"
+  },
+  "zellij options -h": {
+    "returncode": 0,
+    "stdout": "zellij-options \nChange the behaviour of zellij\n\nUSAGE:\n    zellij options [OPTIONS] [ARGS]\n\nARGS:\n    <WEB_SERVER_IP>                  \n    <WEB_SERVER_PORT>                \n    <WEB_SERVER_CERT>                \n    <WEB_SERVER_KEY>                 \n    <ENFORCE_HTTPS_FOR_LOCALHOST>    \n\nOPTIONS:\n        --advanced-mouse-actions <ADVANCED_MOUSE_ACTIONS>\n            Whether to enable mouse hover effects and pane grouping functionality default is true\n            [possible values: true, false]\n\n        --attach-to-session <ATTACH_TO_SESSION>\n            Whether to attach to a session specified in \"session-name\" if it exists [possible\n            values: true, false]\n\n        --auto-layout <AUTO_LAYOUT>\n            Whether to lay out panes in a predefined set of layouts whenever possible [possible\n            values: true, false]\n\n        --copy-clipboard <COPY_CLIPBOARD>\n            OSC52 destination clipboard [possible values: system, primary]\n\n        --copy-command <COPY_COMMAND>\n            Switch to using a user supplied command for clipboard instead of OSC52\n\n        --copy-on-select <COPY_ON_SELECT>\n            Automatically copy when selecting text (true or false) [possible values: true, false]\n\n        --default-cwd <DEFAULT_CWD>\n            Set the default cwd\n\n        --default-layout <DEFAULT_LAYOUT>\n            Set the default layout\n\n        --default-mode <DEFAULT_MODE>\n            Set the default mode\n\n        --default-shell <DEFAULT_SHELL>\n            Set the default shell\n\n        --disable-mouse-mode\n            Disable handling of mouse events\n\n        --disable-session-metadata <DISABLE_SESSION_METADATA>\n            If true, will disable writing session metadata to disk [possible values: true, false]\n\n    -h, --help\n            Print help information\n\n        --layout-dir <LAYOUT_DIR>\n            Set the layout_dir, defaults to subdirectory of config dir\n\n        --mirror-session <MIRROR_SESSION>\n            Mirror session when multiple users are connected (true or false) [possible values: true,\n            false]\n\n        --mouse-mode <MOUSE_MODE>\n            Set the handling of mouse events (true or false) Can be temporarily bypassed by the\n            [SHIFT] key [possible values: true, false]\n\n        --no-pane-frames\n            Disable display of pane frames\n\n        --on-force-close <ON_FORCE_CLOSE>\n            Set behaviour on force close (quit or detach)\n\n        --pane-frames <PANE_FRAMES>\n            Set display of the pane frames (true or false) [possible values: true, false]\n\n        --post-command-discovery-hook <POST_COMMAND_DISCOVERY_HOOK>\n            A command to run after the discovery of running commands when serializing, for the\n            purpose of manipulating the command (eg. with a regex) before it gets serialized\n\n        --scroll-buffer-size <SCROLL_BUFFER_SIZE>\n            \n\n        --scrollback-editor <SCROLLBACK_EDITOR>\n            Explicit full path to open the scrollback editor (default is $EDITOR or $VISUAL)\n\n        --scrollback-lines-to-serialize <SCROLLBACK_LINES_TO_SERIALIZE>\n            Scrollback lines to serialize along with the pane viewport when serializing sessions, 0\n            defaults to the scrollback size. If this number is higher than the scrollback size, it\n            will also default to the scrollback size\n\n        --serialization-interval <SERIALIZATION_INTERVAL>\n            The interval at which to serialize sessions for resurrection (in seconds)\n\n        --serialize-pane-viewport <SERIALIZE_PANE_VIEWPORT>\n            Whether pane viewports are serialized along with the session, default is false [possible\n            values: true, false]\n\n        --session-name <SESSION_NAME>\n            The name of the session to create when starting Zellij\n\n        --session-serialization <SESSION_SERIALIZATION>\n            Whether sessions should be serialized to the HD so that they can be later resurrected,\n            default is true [possible values: true, false]\n\n        --show-release-notes <SHOW_RELEASE_NOTES>\n            Whether to show release notes on first run of a new version default is true [possible\n            values: true, false]\n\n        --show-startup-tips <SHOW_STARTUP_TIPS>\n            Whether to show startup tips when starting a new session default is true [possible\n            values: true, false]\n\n        --simplified-ui <SIMPLIFIED_UI>\n            Allow plugins to use a more simplified layout that is compatible with more fonts (true\n            or false) [possible values: true, false]\n\n        --stacked-resize <STACKED_RESIZE>\n            Whether to stack panes when resizing beyond a certain size default is true [possible\n            values: true, false]\n\n        --styled-underlines <STYLED_UNDERLINES>\n            Whether to use ANSI styled underlines [possible values: true, false]\n\n        --support-kitty-keyboard-protocol <SUPPORT_KITTY_KEYBOARD_PROTOCOL>\n            Whether to enable support for the Kitty keyboard protocol (must also be supported by\n            the host terminal), defaults to true if the terminal supports it [possible values: true,\n            false]\n\n        --theme <THEME>\n            Set the default theme\n\n        --theme-dir <THEME_DIR>\n            Set the theme_dir, defaults to subdirectory of config dir\n\n        --web-server <WEB_SERVER>\n            Whether to make sure a local web server is running when a new Zellij session starts.\n            This web server will allow creating new sessions and attaching to existing ones that\n            have opted in to being shared in the browser [possible values: true, false]\n\n        --web-sharing <WEB_SHARING>\n            Whether to allow new sessions to be shared through a local web server, assuming one\n            is running (see the `web_server` option for more details) [possible values: on, off,\n            disabled]\n"
+  },
+  "zellij pipe -h": {
+    "returncode": 0,
+    "stdout": "zellij-pipe \nSend data to one or more plugins, launch them if they are not running\n\nUSAGE:\n    \nzellij pipe [OPTIONS] [--] <PAYLOAD>\n\n* Send data to a specific plugin:\n\nzellij pipe --plugin file:/path/to/my/plugin.wasm --name my_pipe_name -- my_arbitrary_data\n\n* To all running plugins (that are listening):\n\nzellij pipe --name my_pipe_name -- my_arbitrary_data\n\n* Pipe data into this command's STDIN and get output from the plugin on this command's STDOUT\n\ntail -f /tmp/my-live-logfile | zellij pipe --name logs --plugin https://example.com/my-plugin.wasm | wc -l\n\n\nARGS:\n    <PAYLOAD>    The data to send down this pipe (if blank, will listen to STDIN)\n\nOPTIONS:\n    -n, --name <NAME>\n            The name of the pipe\n\n    -a, --args <ARGS>\n            The args of the pipe\n\n    -p, --plugin <PLUGIN>\n            The plugin url (eg. file:/tmp/my-plugin.wasm) to direct this pipe to, if not specified,\n            will be sent to all plugins, if specified and is not running, the plugin will be\n            launched\n\n    -c, --plugin-configuration <PLUGIN_CONFIGURATION>\n            The plugin configuration (note: the same plugin with different configuration is\n            considered a different plugin for the purposes of determining the pipe destination)\n\n    -h, --help\n            Print help information\n"
+  },
+  "zellij plugin -h": {
+    "returncode": 0,
+    "stdout": "zellij-plugin \nLoad a plugin\n\nUSAGE:\n    zellij plugin [OPTIONS] [--] <URL>\n\nARGS:\n    <URL>    Plugin URL, can either start with http(s), file: or zellij:\n\nOPTIONS:\n    -c, --configuration <CONFIGURATION>\n            Plugin configuration\n\n    -f, --floating\n            Open the new pane in floating mode\n\n    -h, --help\n            Print help information\n\n        --height <HEIGHT>\n            The height if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -i, --in-place\n            Open the new pane in place of the current pane, temporarily suspending it\n\n        --pinned <PINNED>\n            Whether to pin a floating pane so that it is always on top\n\n    -s, --skip-plugin-cache\n            Skip the memory and HD cache and force recompile of the plugin (good for development)\n\n        --width <WIDTH>\n            The width if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -x, --x <X>\n            The x coordinates if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n\n    -y, --y <Y>\n            The y coordinates if the pane is floating as a bare integer (eg. 1) or percent (eg. 10%)\n"
+  },
+  "zellij run -h": {
+    "returncode": 0,
+    "stdout": "zellij-run \nRun a command in a new pane\n\nUSAGE:\n    zellij run [OPTIONS] [--] <COMMAND>...\n\nARGS:\n    <COMMAND>...    Command to run\n\nOPTIONS:\n    -c, --close-on-exit            Close the pane immediately when its command exits\n        --cwd <CWD>                Change the working directory of the new pane\n    -d, --direction <DIRECTION>    Direction to open the new pane in\n    -f, --floating                 Open the new pane in floating mode\n    -h, --help                     Print help information\n        --height <HEIGHT>          The height if the pane is floating as a bare integer (eg. 1) or\n                                   percent (eg. 10%)\n    -i, --in-place                 Open the new pane in place of the current pane, temporarily\n                                   suspending it\n    -n, --name <NAME>              Name of the new pane\n        --pinned <PINNED>          Whether to pin a floating pane so that it is always on top\n    -s, --start-suspended          Start the command suspended, only running after you first presses\n                                   ENTER\n        --stacked                  \n        --width <WIDTH>            The width if the pane is floating as a bare integer (eg. 1) or\n                                   percent (eg. 10%)\n    -x, --x <X>                    The x coordinates if the pane is floating as a bare integer (eg.\n                                   1) or percent (eg. 10%)\n    -y, --y <Y>                    The y coordinates if the pane is floating as a bare integer (eg.\n                                   1) or percent (eg. 10%)\n"
+  },
+  "zellij setup -h": {
+    "returncode": 0,
+    "stdout": "zellij-setup \nSetup zellij and check its configuration\n\nUSAGE:\n    zellij setup [OPTIONS]\n\nOPTIONS:\n        --check\n            Checks the configuration of zellij and displays currently used directories\n\n        --clean\n            Disables loading of configuration file at default location, loads the defaults that\n            zellij ships with\n\n        --dump-config\n            Dump the default configuration file to stdout\n\n        --dump-layout <DUMP_LAYOUT>\n            Dump specified layout to stdout\n\n        --dump-plugins [<DIR>...]\n            Dump the builtin plugins to DIR or \"DATA DIR\" if unspecified\n\n        --dump-swap-layout <DUMP_SWAP_LAYOUT>\n            Dump the specified swap layout file to stdout\n\n        --generate-auto-start <SHELL>\n            Generates auto-start script for the specified shell\n\n        --generate-completion <SHELL>\n            Generates completion for the specified shell\n\n    -h, --help\n            Print help information\n"
+  },
+  "zellij web -h": {
+    "returncode": 0,
+    "stdout": "zellij-web \nRun a web server to serve terminal sessions\n\nUSAGE:\n    zellij web [OPTIONS]\n\nOPTIONS:\n        --start                        Start the server (default unless other arguments are\n                                       specified)\n        --stop                         Stop the server\n        --status                       Get the server status\n    -d, --daemonize                    Run the server in the background\n        --create-token                 Create a login token for the web interface, will only be\n                                       displayed once and cannot later be retrieved. Returns the\n                                       token name and the token\n        --revoke-token <TOKEN NAME>    Revoke a login token by its name\n        --revoke-all-tokens            Revoke all login tokens\n        --list-tokens                  List token names and their creation dates (cannot show actual\n                                       tokens)\n        --ip <IP>                      The ip address to listen on locally for connections (defaults\n                                       to 127.0.0.1)\n        --port <PORT>                  The port to listen on locally for connections (defaults to\n                                       8082)\n        --cert <CERT>                  The path to the SSL certificate (required if not listening\n                                       on 127.0.0.1)\n        --key <KEY>                    The path to the SSL key (required if not listening on\n                                       127.0.0.1)\n    -h, --help                         Print help information\n"
+  }
+}

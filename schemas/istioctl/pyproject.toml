@@ -1,0 +1,8 @@
+[project]
+name = "istioctl-schema-export"
+version = "0.1.0"
+description = "Export istioctl command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-istioctl = "export_command_tree:main"

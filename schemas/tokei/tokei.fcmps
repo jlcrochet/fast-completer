@@ -1,0 +1,23 @@
+# Tokei CLI schema for fast-completer
+# Generated from tokei 14.0.0
+
+tokei # Code statistics
+	--columns|-c # Sets a strict column width of the output, only available for
+	--exclude|-e # Ignore all files & directories matching the pattern.
+	--files|-f @bool # Will print out statistics on individual files.
+	--input|-i # Gives statistics from a previous tokei run. Can be given a
+	--hidden @bool # Count hidden files.
+	--languages|-l @bool # Prints out supported languages and their extensions.
+	--no-ignore @bool # Don't respect ignore files (.gitignore, .ignore, etc.). This
+	--no-ignore-vcs. @bool # --no-ignore-parent               Don't respect ignore files (.gitignore, .ignore, etc.) in
+	--no-ignore-parent @bool # Don't respect ignore files (.gitignore, .ignore, etc.) in
+	--no-ignore-dot @bool # Don't respect .ignore and .tokeignore files, including those
+	--no-ignore-vcs @bool # Don't respect VCS ignore files (.gitignore, .hgignore, etc.)
+	--output|-o # Outputs Tokei in a specific format. Compile with additional
+	--streaming # prints the (language, path, lines, blanks, code, comments)
+	--sort|-s # Sort languages based on column [possible values: files,
+	--rsort|-r # Reverse sort languages based on column [possible values:
+	--types|-t # Filters output by language type, separated by a comma. i.e.
+	--compact|-C @bool # Do not print statistics about embedded languages.
+	--num-format|-n # Format of printed numbers, i.e., plain (1234, default),
+	--verbose...|-v @bool # Set log output level:

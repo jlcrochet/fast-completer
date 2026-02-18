@@ -1,0 +1,922 @@
+# cosign CLI schema for fast-completer
+# Generated from cosign unknown
+
+cosign # Container signing
+	--help @bool # help for cosign
+	--output-file # log output to a file
+	--timeout @bool # timeout for commands
+	--verbose @bool # log debug output
+	attach # Provides utilities for attaching artifacts to other artifacts in a registry
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		attestation # Attach attestation to the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--attestation @bool # path to the attestation envelope
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+		sbom # DEPRECATED: Attach sbom to the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--input-format @bool # type of sbom input format (json|xml|text)
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-referrers-mode @bool # mode for fetching references from the registry. allowed: legacy, oci-1-1
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+			--sbom @bool # path to the sbom, or {-} for stdin
+			--type @bool # type of sbom (spdx|cyclonedx|syft)
+		signature # Attach signatures to the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--bundle @bool # path to bundle containing signature (alias for payload)
+			--certificate @bool # path to the X.509 certificate in PEM format to include in the OCI Signature
+			--certificate-chain @bool # path to a list of CA X.509 certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Included in the OCI Signature
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--payload @bool # path to the payload covered by the signature
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+			--rekor-response @bool # path to the rekor bundle
+			--signature @bool # path to the signature, or {-} for stdin
+			--tsr @bool # path to the Time Stamped Signature Response from RFC3161 compliant TSA
+	attest # Attest the supplied container image.
+		--predicate @bool # path to the predicate file.
+		--statement @bool # path to the statement file.
+	attest-blob # Attest the supplied blob.
+		--predicate @bool # path to the predicate file.
+		--statement @bool # path to the statement file.
+	bundle # Interact with a Sigstore protobuf bundle
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		create # Create a Sigstore protobuf bundle
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--artifact @bool # path to artifact FILE
+			--attestation @bool # path to attestation FILE
+			--bundle @bool # path to old format bundle FILE
+			--certificate @bool # path to the signing certificate, likely from Fulco.
+			--ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log.
+			--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+			--out @bool # path to output bundle
+			--rekor-url @bool # address of rekor STL server
+			--rfc3161-timestamp @bool # path to RFC3161 timestamp FILE
+			--signature @bool # path to base64-encoded signature over attestation in DSSE format
+			--sk @bool # whether to use a hardware security key
+			--slot @bool # security key slot to use for generated key (authentication|signature|card-authentication|key-management)
+	clean # Remove all signatures from an image.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--force @bool # do not prompt for confirmation
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--type @bool # a type of clean: <signature|attestation|referrer|sbom|all> (sbom is deprecated)
+	completion # Generate completion script
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		bash
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		fish
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		powershell
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		zsh
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+	copy # Copy the supplied container image and signatures.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--force @bool # overwrite destination image(s), if necessary
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--only @bool # custom string array to only copy specific items, this flag is comma delimited. ex: --only=sig,att,sbom
+		--platform @bool # only copy container image and its signatures for a specific platform image
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--sig-only @bool # [DEPRECATED] only copy the image signature
+	dockerfile # Provides utilities for discovering images in and performing operations on Dockerfiles
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		verify # Verify a signature on the base image specified in the Dockerfile
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--annotations @bool # extra key=value pairs to sign
+			--attachment @bool # DEPRECATED, related image attachment to verify (sbom), default none
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--base-image-only @bool # only verify the base image (the last FROM image in the Dockerfile)
+			--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+			--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+			--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+			--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+			--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+			--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+			--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+			--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+			--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+			--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+			--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+			--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+			--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+			--check-claims @bool # whether to check the claims found
+			--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+			--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+			--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+			--local-image @bool # whether the specified image is a path to an image saved locally via 'cosign save'
+			--max-workers @bool # the amount of maximum workers for parallel executions
+			--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+			--output @bool # output format for the signing image information (json|text)
+			--payload @bool # payload path or remote URL
+			--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+			--rekor-url @bool # address of rekor STL server
+			--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+			--signature @bool # signature content or path or remote URL
+			--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+			--sk @bool # whether to use a hardware security key
+			--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+			--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+			--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+			--use-signed-timestamps @bool # verify rfc3161 timestamps
+	download # Provides utilities for downloading artifacts and attached artifacts in a registry
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		attestation # Download in-toto attestations from the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--platform @bool # download attestation for a specific platform image
+			--predicate-type @bool # download attestation with matching predicateType
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+		sbom # DEPRECATED: Download SBOMs from the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--platform @bool # download SBOM for a specific platform image
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+		signature # Download signatures from the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+	env # Prints Cosign environment variables
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--show-descriptions @bool # show descriptions for environment variables
+		--show-sensitive-values @bool # show values of sensitive environment variables
+	generate # Generates (unsigned) signature payloads from the supplied container image.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--annotations @bool # extra key=value pairs to sign
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+	generate-key-pair # Generates a key-pair.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--kms @bool # create key pair in KMS service to use for signing
+		--output-key-prefix @bool # name used for generated .pub and .key files (defaults to `cosign`)
+	help # Help about any command
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		attach # Provides utilities for attaching artifacts to other artifacts in a registry
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			attestation # Attach attestation to the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+			sbom # DEPRECATED: Attach sbom to the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+			signature # Attach signatures to the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		attest # Attest the supplied container image.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		attest-blob # Attest the supplied blob.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		bundle # Interact with a Sigstore protobuf bundle
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			create # Create a Sigstore protobuf bundle
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		clean # Remove all signatures from an image.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		completion # Generate completion script
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		copy # Copy the supplied container image and signatures.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		dockerfile # Provides utilities for discovering images in and performing operations on Dockerfiles
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			verify # Verify a signature on the base image specified in the Dockerfile
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		download # Provides utilities for downloading artifacts and attached artifacts in a registry
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			attestation # Download in-toto attestations from the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+			sbom # DEPRECATED: Download SBOMs from the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+			signature # Download signatures from the supplied container image
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		env # Prints Cosign environment variables
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		generate # Generates (unsigned) signature payloads from the supplied container image.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		generate-key-pair # Generates a key-pair.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		help # Help about any command
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		import-key-pair # Imports a PEM-encoded RSA or EC private key.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		initialize # Initializes SigStore root to retrieve trusted certificate and key targets for verification.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		load # Load a signed image on disk to a remote registry
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		login # Log in to a registry
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		manifest # Provides utilities for discovering images in and performing operations on Kubernetes manifests
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			verify # Verify all signatures of images specified in the manifest
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		public-key # Gets a public key from the key-pair.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		save # Save the container image and associated signatures to disk at the specified directory.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		sign # Sign the supplied container image.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		sign-blob # Sign the supplied blob, outputting the base64-encoded signature to stdout.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		signing-config # Interact with a Sigstore protobuf signing config
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			create # Create a Sigstore protobuf signing config
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		tree # Display supply chain security related artifacts for an image such as signatures, SBOMs and attestations
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		triangulate # Outputs the located cosign image reference. This is the location where cosign stores the specified artifact type.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		trusted-root # Interact with a Sigstore protobuf trusted root
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			create # Create a Sigstore protobuf trusted root
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		upload # Provides utilities for uploading artifacts to a registry
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			blob # Upload one or more blobs to the supplied container image address.
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+			wasm # Upload a wasm module to the supplied container image reference
+				--output-file # log output to a file
+				--timeout # timeout for commands
+				--verbose @bool # log debug output
+		verify # Verify a signature on the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		verify-attestation # Verify an attestation on the supplied container image
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		verify-blob # Verify a signature on the supplied blob
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		verify-blob-attestation # Verify an attestation on the supplied blob
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+		version # Prints the version
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+	import-key-pair # Imports a PEM-encoded RSA or EC private key.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--key @bool # import key pair to use for signing
+		--output-key-prefix @bool # name used for outputted key pairs
+		--yes @bool # skip confirmation prompts for overwriting existing key
+	initialize # Initializes SigStore root to retrieve trusted certificate and key targets for verification.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--mirror @bool # GCS bucket to a SigStore TUF repository, or HTTP(S) base URL, or file:/// for local filestore remote (air-gap)
+		--root @bool # path to trusted initial root. defaults to embedded root
+		--root-checksum @bool # checksum of the initial root, required if root is downloaded via http(s). expects sha256 by default, can be changed to sha512 by providing sha512:<checksum>
+		--staging @bool # use the staging TUF repository
+	load # Load a signed image on disk to a remote registry
+		--dir @bool # path to directory where the signed image is stored on disk
+	login # Log in to a registry
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--password @bool # Password
+		--password-stdin @bool # Take the password from stdin
+		--username @bool # Username
+	manifest # Provides utilities for discovering images in and performing operations on Kubernetes manifests
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		verify # Verify all signatures of images specified in the manifest
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--annotations @bool # extra key=value pairs to sign
+			--attachment @bool # DEPRECATED, related image attachment to verify (sbom), default none
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+			--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+			--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+			--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+			--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+			--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+			--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+			--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+			--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+			--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+			--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+			--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+			--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+			--check-claims @bool # whether to check the claims found
+			--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+			--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+			--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+			--local-image @bool # whether the specified image is a path to an image saved locally via 'cosign save'
+			--max-workers @bool # the amount of maximum workers for parallel executions
+			--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+			--output @bool # output format for the signing image information (json|text)
+			--payload @bool # payload path or remote URL
+			--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+			--rekor-url @bool # address of rekor STL server
+			--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+			--signature @bool # signature content or path or remote URL
+			--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+			--sk @bool # whether to use a hardware security key
+			--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+			--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+			--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+			--use-signed-timestamps @bool # verify rfc3161 timestamps
+	public-key # Gets a public key from the key-pair.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--key @bool # path to the private key file, KMS URI or Kubernetes Secret
+		--outfile @bool # path to a payload file to use rather than generating one
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+	save # Save the container image and associated signatures to disk at the specified directory.
+		--dir @bool # path to dir where the signed image should be stored on disk
+	sign # Sign the supplied container image.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--annotations @bool # extra key=value pairs to sign
+		--attachment @bool # DEPRECATED, related image attachment to sign (sbom), default none
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--bundle @bool # write everything required to verify the image to FILE
+		--certificate @bool # path to the X.509 certificate in PEM format to include in the OCI Signature
+		--certificate-chain @bool # path to a list of CA X.509 certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Included in the OCI Signature
+		--fulcio-auth-flow @bool # fulcio interactive oauth2 flow to use for certificate from fulcio. Defaults to determining the flow based on the runtime environment. (options) normal|device|token|client_credentials
+		--fulcio-url @bool # address of sigstore PKI server
+		--identity-token @bool # identity token to use for certificate from fulcio. the token or a path to a file containing the token is accepted.
+		--insecure-skip-verify @bool # skip verifying fulcio published to the SCT (this should only be used for testing).
+		--issue-certificate @bool # issue a code signing certificate from Fulcio, even if a key is provided
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--key @bool # path to the private key file, KMS URI or Kubernetes Secret
+		--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+		--oidc-client-id @bool # OIDC client ID for application
+		--oidc-client-secret-file @bool # Path to file containing OIDC client secret for application
+		--oidc-disable-ambient-providers @bool # Disable ambient OIDC providers. When true, ambient credentials will not be read
+		--oidc-issuer @bool # OIDC provider to be used to issue ID token
+		--oidc-provider @bool # Specify the provider to get the OIDC token from (Optional). If unset, all options will be tried. Options include: [spiffe, google, github-actions, filesystem, buildkite-agent]
+		--oidc-redirect-url @bool # OIDC redirect URL (Optional). The default oidc-redirect-url is 'http://localhost:0/auth/callback'.
+		--output-certificate @bool # write the certificate to FILE
+		--output-payload @bool # write the signed payload to FILE
+		--output-signature @bool # write the signature to FILE
+		--payload @bool # path to a payload file to use rather than generating one
+		--record-creation-timestamp @bool # set the createdAt timestamp in the signature artifact to the time it was created; by default, cosign sets this to the zero value
+		--recursive @bool # if a multi-arch image is specified, additionally sign each discrete image
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-referrers-mode @bool # mode for fetching references from the registry. allowed: legacy, oci-1-1
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--rekor-url @bool # address of rekor STL server
+		--sign-container-identity @bool # manually set the .critical.docker-reference field for the signed identity, which is useful when image proxies are being used where the pull reference should match the signature, this flag is comma delimited. ex: --sign-container-identity=identity1,identity2
+		--signing-config @bool # path to a signing config file. Must provide --new-bundle-format, which will store verification material in the new format
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-client-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the TSA Server
+		--timestamp-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the TSA Server
+		--timestamp-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'timestamp-client-cert' value, for the connection to the TSA Server
+		--timestamp-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the TSA Server
+		--timestamp-server-url @bool # url to the Timestamp RFC3161 server, default none. Must be the path to the API to request timestamp responses, e.g. https://freetsa.org/tsr
+		--trusted-root @bool # optional path to a TrustedRoot JSON file to verify a signature after signing
+		--upload @bool # whether to upload the signature
+		--use-signing-config @bool # whether to use a TUF-provided signing config for the service URLs. Must set --new-bundle-format, which will store verification material in the new format
+		--yes @bool # skip confirmation prompts for non-destructive operations
+	sign-blob # Sign the supplied blob, outputting the base64-encoded signature to stdout.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--b64 @bool # whether to base64 encode the output
+		--bundle @bool # write everything required to verify the blob to a FILE
+		--certificate @bool # path to the X.509 certificate for signing attestation
+		--certificate-chain @bool # path to a list of CA X.509 certificates in PEM format which will be needed when building the certificate chain for the signed attestation. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate.
+		--fulcio-auth-flow @bool # fulcio interactive oauth2 flow to use for certificate from fulcio. Defaults to determining the flow based on the runtime environment. (options) normal|device|token|client_credentials
+		--fulcio-url @bool # address of sigstore PKI server
+		--identity-token @bool # identity token to use for certificate from fulcio. the token or a path to a file containing the token is accepted.
+		--insecure-skip-verify @bool # skip verifying fulcio published to the SCT (this should only be used for testing).
+		--issue-certificate @bool # issue a code signing certificate from Fulcio, even if a key is provided
+		--key @bool # path to the private key file, KMS URI or Kubernetes Secret
+		--new-bundle-format @bool # output bundle in new format that contains all verification material
+		--oidc-client-id @bool # OIDC client ID for application
+		--oidc-client-secret-file @bool # Path to file containing OIDC client secret for application
+		--oidc-disable-ambient-providers @bool # Disable ambient OIDC providers. When true, ambient credentials will not be read
+		--oidc-issuer @bool # OIDC provider to be used to issue ID token
+		--oidc-provider @bool # Specify the provider to get the OIDC token from (Optional). If unset, all options will be tried. Options include: [spiffe, google, github-actions, filesystem, buildkite-agent]
+		--oidc-redirect-url @bool # OIDC redirect URL (Optional). The default oidc-redirect-url is 'http://localhost:0/auth/callback'.
+		--output @bool # write the signature to FILE
+		--output-certificate @bool # write the certificate to FILE
+		--output-signature @bool # write the signature to FILE
+		--rekor-url @bool # address of rekor STL server
+		--rfc3161-timestamp @bool # write the RFC3161 timestamp to a file
+		--signing-algorithm @bool # signing algorithm to use for signing/hashing (allowed ecdsa-sha2-256-nistp256, ecdsa-sha2-384-nistp384, ecdsa-sha2-512-nistp521, rsa-sign-pkcs1-2048-sha256, rsa-sign-pkcs1-3072-sha256, rsa-sign-pkcs1-4096-sha256)
+		--signing-config @bool # path to a signing config file. Must provide --bundle, which will output verification material in the new format
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-client-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the TSA Server
+		--timestamp-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the TSA Server
+		--timestamp-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'timestamp-client-cert' value, for the connection to the TSA Server
+		--timestamp-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the TSA Server
+		--timestamp-server-url @bool # url to the Timestamp RFC3161 server, default none. Must be the path to the API to request timestamp responses, e.g. https://freetsa.org/tsr
+		--trusted-root @bool # optional path to a TrustedRoot JSON file to verify a signature after signing
+		--use-signing-config @bool # whether to use a TUF-provided signing config for the service URLs. Must provide --bundle, which will output verification material in the new format
+		--yes @bool # skip confirmation prompts for non-destructive operations
+	signing-config # Interact with a Sigstore protobuf signing config
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		create # Create a Sigstore protobuf signing config
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--fulcio @bool # fulcio service specification, as a comma-separated key-value list.
+			--no-default-fulcio @bool # removes the default Fulcio URLs from the signing config.
+			--no-default-oidc @bool # removes the default OIDC provider URLs from the signing config.
+			--no-default-rekor @bool # removes the default Rekor URLs from the signing config.
+			--no-default-tsa @bool # removes the default TSA URLs from the signing config.
+			--oidc-provider @bool # oidc provider specification, as a comma-separated key-value list.
+			--out @bool # path to output signing config
+			--rekor @bool # rekor service specification, as a comma-separated key-value list.
+			--rekor-config @bool # rekor configuration. Required if --rekor is provided. One of: ANY, ALL, EXACT:<count>
+			--tsa @bool # timestamping authority specification, as a comma-separated key-value list.
+			--tsa-config @bool # timestamping authority configuration. Required if --tsa is provided. One of: ANY, ALL, EXACT:<count>
+			--with-default-services @bool # use the Sigstore TUF root as default values to populate the signing config. Specifying the other service flags will override the default values.
+	tree # Display supply chain security related artifacts for an image such as signatures, SBOMs and attestations
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--experimental-oci11 @bool # set to false to ignore OCI 1.1 behavior
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-referrers-mode @bool # mode for fetching references from the registry. allowed: legacy, oci-1-1
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+	triangulate # Outputs the located cosign image reference. This is the location where cosign stores the specified artifact type.
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--type @bool # related attachment to triangulate (attestation|sbom|signature|digest), default signature (sbom is deprecated)
+	trusted-root # Interact with a Sigstore protobuf trusted root
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		create # Create a Sigstore protobuf trusted root
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--ctfe @bool # ctfe service specification, as a comma-separated key-value list.
+			--fulcio @bool # fulcio service specification, as a comma-separated key-value list.
+			--no-default-ctfe @bool # removes the default CTFE URLs from the trusted root.
+			--no-default-fulcio @bool # removes the default Fulcio URLs from the trusted root.
+			--no-default-rekor @bool # removes the default Rekor URLs from the trusted root.
+			--no-default-tsa @bool # removes the default TSA URLs from the trusted root.
+			--out @bool # path to output trusted root
+			--rekor @bool # rekor service specification, as a comma-separated key-value list.
+			--tsa @bool # timestamping authority specification, as a comma-separated key-value list.
+			--with-default-services @bool # use the Sigstore TUF root as default values to populate the trusted root. Specifying the other service flags will override the default values.
+	upload # Provides utilities for uploading artifacts to a registry
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		blob # Upload one or more blobs to the supplied container image address.
+			--output-file # log output to a file
+			--timeout # timeout for commands
+			--verbose @bool # log debug output
+			--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+			--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+			--annotation @bool # annotations to set
+			--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+			--ct @bool # content type to set
+			--files @bool # <filepath>:[platform/arch]
+			--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+			--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+			--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+			--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+			--registry-password @bool # registry basic auth password
+			--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+			--registry-token @bool # registry bearer auth token
+			--registry-username @bool # registry basic auth username
+		wasm # Upload a wasm module to the supplied container image reference
+			--file @bool # path to the wasm file to upload
+	verify # Verify a signature on the supplied container image
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--annotations @bool # extra key=value pairs to sign
+		--attachment @bool # DEPRECATED, related image attachment to verify (sbom), default none
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+		--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+		--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+		--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+		--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+		--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+		--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+		--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+		--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+		--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--check-claims @bool # whether to check the claims found
+		--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+		--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+		--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+		--local-image @bool # whether the specified image is a path to an image saved locally via 'cosign save'
+		--max-workers @bool # the amount of maximum workers for parallel executions
+		--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+		--output @bool # output format for the signing image information (json|text)
+		--payload @bool # payload path or remote URL
+		--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--rekor-url @bool # address of rekor STL server
+		--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+		--signature @bool # signature content or path or remote URL
+		--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+		--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+		--use-signed-timestamps @bool # verify rfc3161 timestamps
+	verify-attestation # Verify an attestation on the supplied container image
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--allow-http-registry @bool # whether to allow using HTTP protocol while connecting to registries. Don't use this for anything but testing
+		--allow-insecure-registry @bool # whether to allow insecure connections to registries (e.g., with expired or self-signed TLS certificates). Don't use this for anything but testing
+		--attachment-tag-prefix @bool # optional custom prefix to use for attached image tags. Attachment images are tagged as: `[AttachmentTagPrefix]sha256-[TargetImageDigest].[AttachmentName]`
+		--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+		--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+		--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+		--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+		--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+		--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+		--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+		--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+		--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+		--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--check-claims @bool # whether to check the claims found
+		--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+		--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+		--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+		--k8s-keychain @bool # whether to use the kubernetes keychain instead of the default keychain (supports workload identity).
+		--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+		--local-image @bool # whether the specified image is a path to an image saved locally via 'cosign save'
+		--max-workers @bool # the amount of maximum workers for parallel executions
+		--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+		--output @bool # output format for the signing image information (json|text)
+		--policy @bool # specify CUE or Rego files with policies to be used for validation
+		--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+		--registry-cacert @bool # path to the X.509 CA certificate file in PEM format to be used for the connection to the registry
+		--registry-client-cert @bool # path to the X.509 certificate file in PEM format to be used for the connection to the registry
+		--registry-client-key @bool # path to the X.509 private key file in PEM format to be used, together with the 'registry-client-cert' value, for the connection to the registry
+		--registry-password @bool # registry basic auth password
+		--registry-server-name @bool # SAN name to use as the 'ServerName' tls.Config field to verify the mTLS connection to the registry
+		--registry-token @bool # registry bearer auth token
+		--registry-username @bool # registry basic auth username
+		--rekor-url @bool # address of rekor STL server
+		--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+		--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+		--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+		--type @bool # specify a predicate type (slsaprovenance|slsaprovenance02|slsaprovenance1|link|spdx|spdxjson|cyclonedx|vuln|openvex|custom) or an URI
+		--use-signed-timestamps @bool # verify rfc3161 timestamps
+	verify-blob # Verify a signature on the supplied blob
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--bundle @bool # path to bundle FILE
+		--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+		--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+		--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+		--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+		--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+		--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+		--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+		--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+		--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+		--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+		--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+		--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+		--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+		--max-workers @bool # the amount of maximum workers for parallel executions
+		--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+		--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+		--rekor-url @bool # address of rekor STL server
+		--rfc3161-timestamp @bool # path to RFC3161 timestamp FILE
+		--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+		--signature @bool # signature content or path or remote URL
+		--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+		--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+		--use-signed-timestamps @bool # verify rfc3161 timestamps
+	verify-blob-attestation # Verify an attestation on the supplied blob
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--bundle @bool # path to bundle FILE
+		--ca-intermediates @bool # path to a file of intermediate CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. The flag is optional and must be used together with --ca-roots, conflicts with --certificate-chain.
+		--ca-roots @bool # path to a bundle file of CA certificates in PEM format which will be needed when building the certificate chains for the signing certificate. Conflicts with --certificate-chain.
+		--certificate @bool # path to the public certificate. The certificate will be verified against the Fulcio roots if the --certificate-chain option is not passed.
+		--certificate-chain @bool # path to a list of CA certificates in PEM format which will be needed when building the certificate chain for the signing certificate. Must start with the parent intermediate CA certificate of the signing certificate and end with the root certificate. Conflicts with --ca-roots and --ca-intermediates.
+		--certificate-github-workflow-name @bool # contains the workflow claim from the GitHub OIDC Identity token that contains the name of the executed workflow.
+		--certificate-github-workflow-ref @bool # contains the ref claim from the GitHub OIDC Identity token that contains the git ref that the workflow run was based upon.
+		--certificate-github-workflow-repository @bool # contains the repository claim from the GitHub OIDC Identity token that contains the repository that the workflow run was based upon
+		--certificate-github-workflow-sha @bool # contains the sha claim from the GitHub OIDC Identity token that contains the commit SHA that the workflow run was based upon.
+		--certificate-github-workflow-trigger @bool # contains the event_name claim from the GitHub OIDC Identity token that contains the name of the event that triggered the workflow run
+		--certificate-identity @bool # The identity expected in a valid Fulcio certificate. Valid values include email address, DNS names, IP addresses, and URIs. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-identity-regexp @bool # A regular expression alternative to --certificate-identity. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-identity or --certificate-identity-regexp must be set for keyless flows.
+		--certificate-oidc-issuer @bool # The OIDC issuer expected in a valid Fulcio certificate, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--certificate-oidc-issuer-regexp @bool # A regular expression alternative to --certificate-oidc-issuer. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --certificate-oidc-issuer or --certificate-oidc-issuer-regexp must be set for keyless flows.
+		--check-claims @bool # if true, verifies the digest exists in the in-toto subject (using either the provided digest and digest algorithm or the provided blob's sha256 digest). If false, only the DSSE envelope is verified.
+		--digest @bool # Digest to use for verifying in-toto subject (instead of providing a blob)
+		--digestAlg @bool # Digest algorithm to use for verifying in-toto subject (instead of providing a blob)
+		--experimental-oci11 @bool # set to true to enable experimental OCI 1.1 behaviour (unrelated to bundle format)
+		--insecure-ignore-sct @bool # when set, verification will not check that a certificate contains an embedded SCT, a proof of inclusion in a certificate transparency log
+		--insecure-ignore-tlog @bool # ignore transparency log verification, to be used when an artifact signature has not been uploaded to the transparency log. Artifacts cannot be publicly verified when not included in a log
+		--key @bool # path to the public key file, KMS URI or Kubernetes Secret
+		--max-workers @bool # the amount of maximum workers for parallel executions
+		--new-bundle-format @bool # expect the signature/attestation to be packaged in a Sigstore bundle
+		--private-infrastructure @bool # skip transparency log verification when verifying artifacts in a privately deployed infrastructure
+		--rekor-url @bool # address of rekor STL server
+		--rfc3161-timestamp @bool # path to RFC3161 timestamp FILE
+		--sct @bool # path to a detached Signed Certificate Timestamp, formatted as a RFC6962 AddChainResponse struct. If a certificate contains an SCT, verification will check both the detached and embedded SCTs.
+		--signature @bool # path to base64-encoded signature over attestation in DSSE format
+		--signature-digest-algorithm @bool # digest algorithm to use when processing a signature (sha224|sha256|sha384|sha512)
+		--sk @bool # whether to use a hardware security key
+		--slot @bool # security key slot to use for generated key (default: signature) (authentication|signature|card-authentication|key-management)
+		--timestamp-certificate-chain @bool # path to PEM-encoded certificate chain file for the RFC3161 timestamp authority. Must contain the root CA certificate. Optionally may contain intermediate CA certificates, and may contain the leaf TSA certificate if not present in the timestamp
+		--trusted-root @bool # Path to a Sigstore TrustedRoot JSON file. Requires --new-bundle-format to be set.
+		--type @bool # specify a predicate type (slsaprovenance|slsaprovenance02|slsaprovenance1|link|spdx|spdxjson|cyclonedx|vuln|openvex|custom) or an URI
+		--use-signed-timestamps @bool # verify rfc3161 timestamps
+	version # Prints the version
+		--output-file # log output to a file
+		--timeout # timeout for commands
+		--verbose @bool # log debug output
+		--json @bool # print JSON instead of text

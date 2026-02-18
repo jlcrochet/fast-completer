@@ -1,0 +1,8 @@
+[project]
+name = "flyctl-schema-export"
+version = "0.1.0"
+description = "Export Fly.io CLI command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-flyctl = "export_command_tree:main"

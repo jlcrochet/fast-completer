@@ -1,0 +1,8 @@
+[project]
+name = "docker-schema-export"
+version = "0.1.0"
+description = "Export Docker command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-docker = "export_command_tree:main"

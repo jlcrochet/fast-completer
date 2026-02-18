@@ -1,0 +1,594 @@
+{
+  "kind --help": {
+    "returncode": 0,
+    "stdout": "kind creates and manages local Kubernetes clusters using Docker container 'nodes'\n\nUsage:\n  kind [command]\n\nAvailable Commands:\n  build       Build one of [node-image]\n  completion  Output shell completion code for the specified shell (bash, zsh or fish)\n  create      Creates one of [cluster]\n  delete      Deletes one of [cluster]\n  export      Exports one of [kubeconfig, logs]\n  get         Gets one of [clusters, nodes, kubeconfig]\n  help        Help about any command\n  load        Loads images into nodes\n  version     Prints the kind CLI version\n\nFlags:\n  -h, --help              help for kind\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n      --version           version for kind\n\nUse \"kind [command] --help\" for more information about a command.\n"
+  },
+  "kind --version": {
+    "returncode": 0,
+    "stdout": "kind version 0.31.0\n"
+  },
+  "kind __complete ": {
+    "returncode": 0,
+    "stdout": "build\tBuild one of [node-image]\ncompletion\tOutput shell completion code for the specified shell (bash, zsh or fish)\ncreate\tCreates one of [cluster]\ndelete\tDeletes one of [cluster]\nexport\tExports one of [kubeconfig, logs]\nget\tGets one of [clusters, nodes, kubeconfig]\nhelp\tHelp about any command\nload\tLoads images into nodes\nversion\tPrints the kind CLI version\n:4\n"
+  },
+  "kind __complete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for kind\n--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--version\tversion for kind\n:4\n"
+  },
+  "kind __complete build ": {
+    "returncode": 0,
+    "stdout": "node-image\tBuild the node image\n:4\n"
+  },
+  "kind __complete build --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for build\n:4\n"
+  },
+  "kind __complete build node-image ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete build node-image --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--arch\tarchitecture to build for, defaults to the host architecture\n--base-image\tname:tag of the base image to use for the build\n--help\thelp for node-image\n--image\tname:tag of the resulting image to be built\n--type\toptionally specify one of 'url', 'file', 'release' or 'source' as the type of build\n:4\n"
+  },
+  "kind __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tOutput shell completions for bash\nfish\tOutput shell completions for fish\npowershell\tOutput shell completions for powershell\nzsh\tOutput shell completions for zsh\n:4\n"
+  },
+  "kind __complete completion --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for completion\n:4\n"
+  },
+  "kind __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for bash\n:4\n"
+  },
+  "kind __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for fish\n:4\n"
+  },
+  "kind __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for powershell\n:4\n"
+  },
+  "kind __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for zsh\n:4\n"
+  },
+  "kind __complete create ": {
+    "returncode": 0,
+    "stdout": "cluster\tCreates a local Kubernetes cluster\n:4\n"
+  },
+  "kind __complete create --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for create\n:4\n"
+  },
+  "kind __complete create cluster ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete create cluster --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--config\tpath to a kind config file\n--help\thelp for cluster\n--image\tnode docker image to use for booting the cluster\n--kubeconfig\tsets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n--name\tcluster name, overrides KIND_CLUSTER_NAME, config (default kind)\n--retain\tretain nodes for debugging when cluster creation fails\n--wait\twait for control plane node to be ready (default 0s)\n:4\n"
+  },
+  "kind __complete delete ": {
+    "returncode": 0,
+    "stdout": "cluster\tDeletes a cluster\nclusters\tDeletes one or more clusters\n:4\n"
+  },
+  "kind __complete delete --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for delete\n:4\n"
+  },
+  "kind __complete delete cluster ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete delete cluster --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for cluster\n--kubeconfig\tsets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n--name\tthe cluster name\n:4\n"
+  },
+  "kind __complete delete clusters ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete delete clusters --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--all\tdelete all clusters\n--help\thelp for clusters\n--kubeconfig\tsets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n:4\n"
+  },
+  "kind __complete export ": {
+    "returncode": 0,
+    "stdout": "kubeconfig\tExports cluster kubeconfig\nlogs\tExports logs to a tempdir or [output-dir] if specified\n:4\n"
+  },
+  "kind __complete export --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for export\n:4\n"
+  },
+  "kind __complete export kubeconfig ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete export kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for kubeconfig\n--internal\tuse internal address instead of external\n--kubeconfig\tsets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n--name\tthe cluster context name\n:4\n"
+  },
+  "kind __complete export logs ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete export logs --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for logs\n--name\tthe cluster context name\n:4\n"
+  },
+  "kind __complete get ": {
+    "returncode": 0,
+    "stdout": "clusters\tLists existing kind clusters by their name\nkubeconfig\tPrints cluster kubeconfig\nnodes\tLists existing kind nodes by their name\n:4\n"
+  },
+  "kind __complete get --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for get\n:4\n"
+  },
+  "kind __complete get clusters ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete get clusters --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for clusters\n:4\n"
+  },
+  "kind __complete get kubeconfig ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete get kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for kubeconfig\n--internal\tuse internal address instead of external\n--name\tthe cluster context name\n:4\n"
+  },
+  "kind __complete get nodes ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete get nodes --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--all-clusters\tIf present, list all the available nodes across all cluster contexts. Current context is ignored even if specified with --name.\n--help\thelp for nodes\n--name\tthe cluster context name\n:4\n"
+  },
+  "kind __complete help ": {
+    "returncode": 0,
+    "stdout": "build\tBuild one of [node-image]\ncompletion\tOutput shell completion code for the specified shell (bash, zsh or fish)\ncreate\tCreates one of [cluster]\ndelete\tDeletes one of [cluster]\nexport\tExports one of [kubeconfig, logs]\nget\tGets one of [clusters, nodes, kubeconfig]\nhelp\tHelp about any command\nload\tLoads images into nodes\nversion\tPrints the kind CLI version\n:4\n"
+  },
+  "kind __complete help --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help build ": {
+    "returncode": 0,
+    "stdout": "node-image\tBuild the node image\n:4\n"
+  },
+  "kind __complete help build --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help build node-image ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help build node-image --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help completion ": {
+    "returncode": 0,
+    "stdout": "bash\tOutput shell completions for bash\nfish\tOutput shell completions for fish\npowershell\tOutput shell completions for powershell\nzsh\tOutput shell completions for zsh\n:4\n"
+  },
+  "kind __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help completion bash --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help completion fish --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help completion powershell --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help completion zsh --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help create ": {
+    "returncode": 0,
+    "stdout": "cluster\tCreates a local Kubernetes cluster\n:4\n"
+  },
+  "kind __complete help create --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help create cluster ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help create cluster --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help delete ": {
+    "returncode": 0,
+    "stdout": "cluster\tDeletes a cluster\nclusters\tDeletes one or more clusters\n:4\n"
+  },
+  "kind __complete help delete --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help delete cluster ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help delete cluster --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help delete clusters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help delete clusters --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help export ": {
+    "returncode": 0,
+    "stdout": "kubeconfig\tExports cluster kubeconfig\nlogs\tExports logs to a tempdir or [output-dir] if specified\n:4\n"
+  },
+  "kind __complete help export --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help export kubeconfig ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help export kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help export logs ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help export logs --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help get ": {
+    "returncode": 0,
+    "stdout": "clusters\tLists existing kind clusters by their name\nkubeconfig\tPrints cluster kubeconfig\nnodes\tLists existing kind nodes by their name\n:4\n"
+  },
+  "kind __complete help get --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help get clusters ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help get clusters --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help get kubeconfig ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help get kubeconfig --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help get nodes ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help get nodes --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help help --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help load ": {
+    "returncode": 0,
+    "stdout": "docker-image\tLoads docker images from host into nodes\nimage-archive\tLoads docker image from archive into nodes\n:4\n"
+  },
+  "kind __complete help load --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help load docker-image ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help load docker-image --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help load image-archive ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help load image-archive --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete help version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "kind __complete help version --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for help\n:4\n"
+  },
+  "kind __complete load ": {
+    "returncode": 0,
+    "stdout": "docker-image\tLoads docker images from host into nodes\nimage-archive\tLoads docker image from archive into nodes\n:4\n"
+  },
+  "kind __complete load --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for load\n:4\n"
+  },
+  "kind __complete load docker-image ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete load docker-image --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for docker-image\n--name\tthe cluster context name\n--nodes\tcomma separated list of nodes to load images into\n:4\n"
+  },
+  "kind __complete load image-archive ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete load image-archive --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for image-archive\n--name\tthe cluster context name\n--nodes\tcomma separated list of nodes to load images into\n:4\n"
+  },
+  "kind __complete version ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "kind __complete version --": {
+    "returncode": 0,
+    "stdout": "--quiet\tsilence all stderr output\n--verbosity\tinfo log verbosity, higher value produces more output\n--help\thelp for version\n:4\n"
+  },
+  "kind build --help": {
+    "returncode": 0,
+    "stdout": "Build one of [node-image]\n\nUsage:\n  kind build [flags]\n  kind build [command]\n\nAvailable Commands:\n  node-image  Build the node image\n\nFlags:\n  -h, --help   help for build\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind build [command] --help\" for more information about a command.\n"
+  },
+  "kind build node-image --help": {
+    "returncode": 0,
+    "stdout": "Build the node image which contains Kubernetes build artifacts and other kind requirements\n\nUsage:\n  kind build node-image [kubernetes-source] [flags]\n\nFlags:\n      --arch string         architecture to build for, defaults to the host architecture\n      --base-image string   name:tag of the base image to use for the build (default \"docker.io/kindest/base:v20251215-d00590df\")\n  -h, --help                help for node-image\n      --image string        name:tag of the resulting image to be built (default \"kindest/node:latest\")\n      --type string         optionally specify one of 'url', 'file', 'release' or 'source' as the type of build\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind completion --help": {
+    "returncode": 0,
+    "stdout": "\nOutputs kind shell completion for the given shell (bash, fish, powershell, or zsh)\nThis depends on the bash-completion binary.  Example installation instructions:\n# for bash users\n\t$ kind completion bash > ~/.kind-completion\n\t$ source ~/.kind-completion\n\n# for zsh users\n\t% kind completion zsh > /usr/local/share/zsh/site-functions/_kind\n\t% autoload -U compinit && compinit\n# or if zsh-completion is installed via homebrew\n    % kind completion zsh > \"${fpath[1]}/_kind\"\n# or if you use oh-my-zsh (needs zsh-completions plugin)\n\t% mkdir $ZSH/completions/\n\t% kind completion zsh > $ZSH/completions/_kind\n\n# for fish users\n\t% kind completion fish > ~/.config/fish/completions/kind.fish\n\n# for powershell users\n\tPS> kind completion powershell | Out-String | Invoke-Expression\n\nAdditionally, you may want to output the completion to a file and source in your .bashrc\nNote for zsh users: [1] zsh completions are only supported in versions of zsh >= 5.2\n\nUsage:\n  kind completion [flags]\n  kind completion [command]\n\nAvailable Commands:\n  bash        Output shell completions for bash\n  fish        Output shell completions for fish\n  powershell  Output shell completions for powershell\n  zsh         Output shell completions for zsh\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind completion [command] --help\" for more information about a command.\n"
+  },
+  "kind completion bash --help": {
+    "returncode": 0,
+    "stdout": "Output shell completions for bash\n\nUsage:\n  kind completion bash [flags]\n\nFlags:\n  -h, --help   help for bash\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind completion fish --help": {
+    "returncode": 0,
+    "stdout": "Output shell completions for fish\n\nUsage:\n  kind completion fish [flags]\n\nFlags:\n  -h, --help   help for fish\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Output shell completions for powershell\n\nUsage:\n  kind completion powershell [flags]\n\nFlags:\n  -h, --help   help for powershell\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Output shell completions for zsh\n\nUsage:\n  kind completion zsh [flags]\n\nFlags:\n  -h, --help   help for zsh\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind create --help": {
+    "returncode": 0,
+    "stdout": "Creates one of local Kubernetes cluster (cluster)\n\nUsage:\n  kind create [flags]\n  kind create [command]\n\nAvailable Commands:\n  cluster     Creates a local Kubernetes cluster\n\nFlags:\n  -h, --help   help for create\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind create [command] --help\" for more information about a command.\n"
+  },
+  "kind create cluster --help": {
+    "returncode": 0,
+    "stdout": "Creates a local Kubernetes cluster using Docker container 'nodes'\n\nUsage:\n  kind create cluster [flags]\n\nFlags:\n      --config string       path to a kind config file\n  -h, --help                help for cluster\n      --image string        node docker image to use for booting the cluster\n      --kubeconfig string   sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n  -n, --name string         cluster name, overrides KIND_CLUSTER_NAME, config (default kind)\n      --retain              retain nodes for debugging when cluster creation fails\n      --wait duration       wait for control plane node to be ready (default 0s)\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind delete --help": {
+    "returncode": 0,
+    "stdout": "Deletes one of [cluster]\n\nUsage:\n  kind delete [flags]\n  kind delete [command]\n\nAvailable Commands:\n  cluster     Deletes a cluster\n  clusters    Deletes one or more clusters\n\nFlags:\n  -h, --help   help for delete\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind delete [command] --help\" for more information about a command.\n"
+  },
+  "kind delete cluster --help": {
+    "returncode": 0,
+    "stdout": "Deletes a Kind cluster from the system.\n\nThis is an idempotent operation, meaning it may be called multiple times without\nfailing (like \"rm -f\"). If the cluster resources exist they will be deleted, and\nif the cluster is already gone it will just return success.\n\nErrors will only occur if the cluster resources exist and are not able to be deleted.\n\nUsage:\n  kind delete cluster [flags]\n\nFlags:\n  -h, --help                help for cluster\n      --kubeconfig string   sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n  -n, --name string         the cluster name (default \"kind\")\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind delete clusters --help": {
+    "returncode": 0,
+    "stdout": "Deletes one or more Kind clusters from the system.\n\nThis is an idempotent operation, meaning it may be called multiple times without\nfailing (like \"rm -f\"). If the cluster resources exist they will be deleted, and\nif the cluster is already gone it will just return success.\n\nErrors will only occur if the cluster resources exist and are not able to be deleted.\n\nUsage:\n  kind delete clusters [flags]\n\nFlags:\n  -A, --all                 delete all clusters\n  -h, --help                help for clusters\n      --kubeconfig string   sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind export --help": {
+    "returncode": 0,
+    "stdout": "Exports one of [kubeconfig, logs]\n\nUsage:\n  kind export [flags]\n  kind export [command]\n\nAvailable Commands:\n  kubeconfig  Exports cluster kubeconfig\n  logs        Exports logs to a tempdir or [output-dir] if specified\n\nFlags:\n  -h, --help   help for export\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind export [command] --help\" for more information about a command.\n"
+  },
+  "kind export kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Exports cluster kubeconfig\n\nUsage:\n  kind export kubeconfig [flags]\n\nFlags:\n  -h, --help                help for kubeconfig\n      --internal            use internal address instead of external\n      --kubeconfig string   sets kubeconfig path instead of $KUBECONFIG or $HOME/.kube/config\n  -n, --name string         the cluster context name (default \"kind\")\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind export logs --help": {
+    "returncode": 0,
+    "stdout": "Exports logs to a tempdir or [output-dir] if specified\n\nUsage:\n  kind export logs [output-dir] [flags]\n\nFlags:\n  -h, --help          help for logs\n  -n, --name string   the cluster context name (default \"kind\")\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind get --help": {
+    "returncode": 0,
+    "stdout": "Gets one of [clusters, nodes, kubeconfig]\n\nUsage:\n  kind get [flags]\n  kind get [command]\n\nAvailable Commands:\n  clusters    Lists existing kind clusters by their name\n  kubeconfig  Prints cluster kubeconfig\n  nodes       Lists existing kind nodes by their name\n\nFlags:\n  -h, --help   help for get\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind get [command] --help\" for more information about a command.\n"
+  },
+  "kind get clusters --help": {
+    "returncode": 0,
+    "stdout": "Lists existing kind clusters by their name\n\nUsage:\n  kind get clusters [flags]\n\nFlags:\n  -h, --help   help for clusters\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind get kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Prints cluster kubeconfig\n\nUsage:\n  kind get kubeconfig [flags]\n\nFlags:\n  -h, --help          help for kubeconfig\n      --internal      use internal address instead of external\n  -n, --name string   the cluster context name (default \"kind\")\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind get nodes --help": {
+    "returncode": 0,
+    "stdout": "Lists existing kind nodes by their name\n\nUsage:\n  kind get nodes [flags]\n\nFlags:\n  -A, --all-clusters   If present, list all the available nodes across all cluster contexts. Current context is ignored even if specified with --name.\n  -h, --help           help for nodes\n  -n, --name string    the cluster context name (default \"kind\")\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help build --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help build node-image --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help completion bash --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help completion fish --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help create cluster --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help delete cluster --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help delete clusters --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help export --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help export kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help export logs --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help get --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help get clusters --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help get kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help get nodes --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help load --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help load docker-image --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help load image-archive --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type kind help [path to command] for full details.\n\nUsage:\n  kind help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind load --help": {
+    "returncode": 0,
+    "stdout": "Loads images into node from an archive or image on host\n\nUsage:\n  kind load [flags]\n  kind load [command]\n\nAvailable Commands:\n  docker-image  Loads docker images from host into nodes\n  image-archive Loads docker image from archive into nodes\n\nFlags:\n  -h, --help   help for load\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n\nUse \"kind load [command] --help\" for more information about a command.\n"
+  },
+  "kind load docker-image --help": {
+    "returncode": 0,
+    "stdout": "Loads docker images from host into all or specified nodes by name\n\nUsage:\n  kind load docker-image <IMAGE> [IMAGE...] [flags]\n\nFlags:\n  -h, --help            help for docker-image\n  -n, --name string     the cluster context name (default \"kind\")\n      --nodes strings   comma separated list of nodes to load images into\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind load image-archive --help": {
+    "returncode": 0,
+    "stdout": "Loads docker image from archive into all or specified nodes by name\n\nUsage:\n  kind load image-archive <IMAGE.tar> [flags]\n\nFlags:\n  -h, --help            help for image-archive\n  -n, --name string     the cluster context name (default \"kind\")\n      --nodes strings   comma separated list of nodes to load images into\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  },
+  "kind version --help": {
+    "returncode": 0,
+    "stdout": "Prints the kind CLI version\n\nUsage:\n  kind version [flags]\n\nFlags:\n  -h, --help   help for version\n\nGlobal Flags:\n  -q, --quiet             silence all stderr output\n  -v, --verbosity int32   info log verbosity, higher value produces more output\n"
+  }
+}

@@ -1,0 +1,149 @@
+# Wget CLI schema for fast-completer
+# Generated from wget 1.25.0
+
+wget # Non-interactive network downloader
+	--background|-b @bool # go to background after startup
+	--execute|-e # execute a `.wgetrc'-style command
+	--output-file|-o # log messages to FILE
+	--append-output|-a # append messages to FILE
+	--debug|-d @bool # print lots of debugging information
+	--quiet|-q @bool # quiet (no output)
+	--verbose|-v @bool # be verbose (this is the default)
+	--report-speed # output bandwidth as TYPE.  TYPE can be bits
+	--input-file|-i # download URLs found in local or external FILE
+	--force-html|-F @bool # treat input file as HTML
+	--base|-B # resolves HTML input-file links (-i -F)
+	--config # specify config file to use
+	--no-config @bool # do not read any config file
+	--rejected-log # log reasons for URL rejection to FILE
+	--tries|-t # set number of retries to NUMBER (0 unlimits)
+	--retry-connrefused @bool # retry even if connection is refused
+	--retry-on-host-error @bool # consider host errors as non-fatal, transient errors
+	--retry-on-http-error # comma-separated list of HTTP errors to retry
+	--output-document|-O # write documents to FILE
+	--no-netrc @bool # don't try to obtain credentials from .netrc
+	--continue|-c @bool # resume getting a partially-downloaded file
+	--start-pos # start downloading from zero-based position OFFSET
+	--progress # select progress gauge type
+	--show-progress @bool # display the progress bar in any verbosity mode
+	--timestamping|-N @bool # don't re-retrieve files unless newer than
+	--no-if-modified-since @bool # don't use conditional if-modified-since get
+	--no-use-server-timestamps @bool # don't set the local file's timestamp by
+	--server-response|-S @bool # print server response
+	--spider @bool # don't download anything
+	--timeout|-T # set all timeout values to SECONDS
+	--dns-timeout # set the DNS lookup timeout to SECS
+	--connect-timeout # set the connect timeout to SECS
+	--read-timeout # set the read timeout to SECS
+	--wait|-w # wait SECONDS between retrievals
+	--waitretry # wait 1..SECONDS between retries of a retrieval
+	--random-wait @bool # wait from 0.5*WAIT...1.5*WAIT secs between retrievals
+	--no-proxy @bool # explicitly turn off proxy
+	--quota|-Q # set retrieval quota to NUMBER
+	--bind-address # bind to ADDRESS (hostname or IP) on local host
+	--limit-rate # limit download rate to RATE
+	--no-dns-cache @bool # disable caching DNS lookups
+	--restrict-file-names # restrict chars in file names to ones OS allows
+	--ignore-case @bool # ignore case when matching files/directories
+	--inet4-only|-4 @bool # connect only to IPv4 addresses
+	--inet6-only|-6 @bool # connect only to IPv6 addresses
+	--prefer-family # connect first to addresses of specified family,
+	--user # set both ftp and http user to USER
+	--password # set both ftp and http password to PASS
+	--ask-password @bool # prompt for passwords
+	--use-askpass # specify credential handler for requesting
+	--no-iri @bool # turn off IRI support
+	--local-encoding # use ENC as the local encoding for IRIs
+	--remote-encoding # use ENC as the default remote encoding
+	--unlink @bool # remove file before clobber
+	--xattr @bool # turn on storage of metadata in extended file attributes
+	--force-directories|-x @bool # force creation of directories
+	--protocol-directories @bool # use protocol name in directories
+	--directory-prefix|-P # save files to PREFIX/..
+	--cut-dirs # ignore NUMBER remote directory components
+	--http-user # set http user to USER
+	--http-password # set http password to PASS
+	--no-cache @bool # disallow server-cached data
+	--default-page # change the default page name (normally
+	--adjust-extension|-E @bool # save HTML/CSS documents with proper extensions
+	--ignore-length @bool # ignore 'Content-Length' header field
+	--header # insert STRING among the headers
+	--compression # choose compression, one of auto, gzip and none. (default: none)
+	--max-redirect @bool # maximum redirections allowed per page
+	--proxy-user # set USER as proxy username
+	--proxy-password # set PASS as proxy password
+	--referer # include 'Referer: URL' header in HTTP request
+	--save-headers @bool # save the HTTP headers to file
+	--user-agent|-U # identify as AGENT instead of Wget/VERSION
+	--no-http-keep-alive @bool # disable HTTP keep-alive (persistent connections)
+	--no-cookies @bool # don't use cookies
+	--load-cookies # load cookies from FILE before session
+	--save-cookies # save cookies to FILE after session
+	--keep-session-cookies @bool # load and save session (non-permanent) cookies
+	--post-data # use the POST method; send STRING as the data
+	--post-file # use the POST method; send contents of FILE
+	--method # use method "HTTPMethod" in the request
+	--body-data # send STRING as data. --method MUST be set
+	--body-file # send contents of FILE. --method MUST be set
+	--content-disposition @bool # honor the Content-Disposition header when
+	--content-on-error @bool # output the received content on server errors
+	--auth-no-challenge @bool # send Basic HTTP authentication information
+	--secure-protocol # choose secure protocol, one of auto, SSLv2,
+	--https-only @bool # only follow secure HTTPS links
+	--no-check-certificate @bool # don't validate the server's certificate
+	--certificate # client certificate file
+	--certificate-type # client certificate type, PEM or DER
+	--private-key # private key file
+	--private-key-type # private key type, PEM or DER
+	--ca-certificate # file with the bundle of CAs
+	--ca-directory # directory where hash list of CAs is stored
+	--crl-file # file with bundle of CRLs
+	--pinnedpubkey # Public key (PEM/DER) file, or any number
+	--ciphers # Set the priority string (GnuTLS) or cipher list string (OpenSSL) directly.
+	--no-hsts @bool # disable HSTS
+	--hsts-file @bool # path of HSTS database (will override default)
+	--ftp-user # set ftp user to USER
+	--ftp-password # set ftp password to PASS
+	--no-remove-listing @bool # don't remove '.listing' files
+	--no-glob @bool # turn off FTP file name globbing
+	--no-passive-ftp @bool # disable the "passive" transfer mode
+	--preserve-permissions @bool # preserve remote file permissions
+	--retr-symlinks @bool # when recursing, get linked-to files (not dir)
+	--ftps-implicit @bool # use implicit FTPS (default port is 990)
+	--ftps-resume-ssl @bool # resume the SSL/TLS session started in the control connection when
+	--ftps-clear-data-connection @bool # cipher the control channel only; all the data will be in plaintext
+	--ftps-fallback-to-ftp @bool # fall back to FTP if FTPS is not supported in the target server
+	--warc-file # save request/response data to a .warc.gz file
+	--warc-header # insert STRING into the warcinfo record
+	--warc-max-size # set maximum size of WARC files to NUMBER
+	--warc-cdx @bool # write CDX index files
+	--warc-dedup # do not store records listed in this CDX file
+	--no-warc-compression @bool # do not compress WARC files with GZIP
+	--no-warc-digests @bool # do not calculate SHA1 digests
+	--no-warc-keep-log @bool # do not store the log file in a WARC record
+	--warc-tempdir # location for temporary files created by the
+	--recursive|-r @bool # specify recursive download
+	--level|-l # maximum recursion depth (inf or 0 for infinite)
+	--delete-after @bool # delete files locally after downloading them
+	--convert-links|-k @bool # make links in downloaded HTML or CSS point to
+	--convert-file-only @bool # convert the file part of the URLs only (usually known as the basename)
+	--backups # before writing file X, rotate up to N backup files
+	--backup-converted|-K @bool # before converting file X, back up as X.orig
+	--mirror|-m @bool # shortcut for -N -r -l inf --no-remove-listing
+	--page-requisites|-p @bool # get all images, etc. needed to display HTML page
+	--strict-comments @bool # turn on strict (SGML) handling of HTML comments
+	--accept|-A # comma-separated list of accepted extensions
+	--reject|-R # comma-separated list of rejected extensions
+	--accept-regex # regex matching accepted URLs
+	--reject-regex # regex matching rejected URLs
+	--regex-type # regex type (posix|pcre)
+	--domains|-D # comma-separated list of accepted domains
+	--exclude-domains # comma-separated list of rejected domains
+	--follow-ftp @bool # follow FTP links from HTML documents
+	--follow-tags # comma-separated list of followed HTML tags
+	--ignore-tags # comma-separated list of ignored HTML tags
+	--span-hosts|-H @bool # go to foreign hosts when recursive
+	--relative|-L @bool # follow relative links only
+	--include-directories|-I # list of allowed directories
+	--trust-server-names @bool # use the name specified by the redirection
+	--exclude-directories|-X # list of excluded directories

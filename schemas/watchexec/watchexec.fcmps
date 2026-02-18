@@ -1,0 +1,49 @@
+# Watchexec CLI schema for fast-completer
+# Generated from watchexec 2.3.3
+
+watchexec # Execute commands on file changes
+	--completions # Generate a shell completions script
+	--manual @bool # Show the manual page
+	--only-emit-events @bool # Only emit events to stdout, run no commands
+	--delay-run # Sleep before running the command
+	--env|-E # Add env vars to the command
+	--socket # Provide a socket to the command
+	--no-process-group @bool # Don't use a process group
+	--shell # Use a different shell
+	--stop-signal # Signal to send to stop the command
+	--stop-timeout # Time to wait for the command to exit gracefully
+	--workdir # Set the working directory
+	--wrap-process # Configure how the process is wrapped [default: group]
+	--debounce|-d # Time to wait for new events before taking action
+	--emit-events-to # Configure event emission
+	--map-signal # Translate signals from the OS to signals to send to the command
+	--on-busy-update|-o # What to do when receiving events while the command is running
+	--postpone|-p @bool # Wait until first change before running command
+	--restart|-r @bool # Restart the process if it's still running
+	--signal|-s # Send a signal to the process when it's still running
+	--stdin-quit @bool # Exit when stdin closes
+	--exts|-e # Filename extensions to filter to
+	--filter|-f # Filename patterns to filter to
+	--filter-file # Files to load filters from
+	--filter-prog|-j # Filter programs
+	--fs-events # Filesystem events to filter to
+	--ignore|-i # Filename patterns to filter out
+	--ignore-file # Files to load ignores from
+	--ignore-nothing @bool # Don't ignore anything at all
+	--no-default-ignore @bool # Don't use internal default ignores
+	--no-discover-ignore @bool # Don't discover ignore files at all
+	--no-global-ignore @bool # Don't load global ignores
+	--no-meta @bool # Don't emit fs events for metadata changes
+	--no-project-ignore @bool # Don't load project-local ignores
+	--no-vcs-ignore @bool # Don't load gitignores
+	--project-origin # Set the project origin
+	--watch|-w # Watch a specific file or directory
+	--watch-non-recursive|-W # Watch a specific directory, non-recursively
+	--watch-file|-F # Watch files and directories from a file
+	--print-events @bool # Print events that trigger actions
+	--verbose...|-v @bool # Set diagnostic log level
+	--bell @bool # Ring the terminal bell on command completion
+	--color # When to use terminal colours [default: auto]
+	--notify|-N @bool # Alert when commands start and end
+	--quiet|-q @bool # Don't print starting and stopping messages
+	--timings @bool # Print how long the command took to run

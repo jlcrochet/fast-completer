@@ -1,0 +1,53 @@
+# Just CLI schema for fast-completer
+# Generated from just 1.46.0
+
+just # Command runner
+	--alias-style # Set list command alias display style [env: JUST_ALIAS_STYLE=] [default: right] [possible
+	--ceiling # Do not ascend above <CEILING> directory when searching for a justfile. [env:
+	--check @bool # Run `--fmt` in 'check' mode. Exits with 0 if justfile is formatted correctly. Exits with 1
+	--chooser # Override binary invoked by `--choose` [env: JUST_CHOOSER=]
+	--clear-shell-args @bool # Clear shell arguments
+	--color # Print colorful output [env: JUST_COLOR=] [default: auto] [possible values: always, auto,
+	--command-color # Echo recipe lines in <COMMAND-COLOR> [env: JUST_COMMAND_COLOR=] [possible values: black,
+	--cygpath # Use binary at <CYGPATH> to convert between unix and Windows paths. [env: JUST_CYGPATH=]
+	--dotenv-filename # Search for environment file named <DOTENV-FILENAME> instead of `.env`
+	--dotenv-path|-E # Load <DOTENV-PATH> as environment file instead of searching for one
+	--dry-run|-n @bool # Print what just would do without doing it [env: JUST_DRY_RUN=]
+	--dump-format # Dump justfile as <FORMAT> [env: JUST_DUMP_FORMAT=] [default: just] [possible values: json,
+	--explain @bool # Print recipe doc comment before running it [env: JUST_EXPLAIN=]
+	--global-justfile|-g @bool # Use global justfile
+	--highlight @bool # Highlight echoed recipe lines in bold [env: JUST_HIGHLIGHT=]
+	--justfile|-f # Use <JUSTFILE> as justfile [env: JUST_JUSTFILE=]
+	--list-heading # Print <TEXT> before list [env: JUST_LIST_HEADING=] [default: "Available recipes:\n"]
+	--list-prefix # Print <TEXT> before each list item [env: JUST_LIST_PREFIX=] [default: "    "]
+	--list-submodules @bool # List recipes in submodules [env: JUST_LIST_SUBMODULES=]
+	--no-aliases @bool # Don't show aliases in list [env: JUST_NO_ALIASES=]
+	--no-deps @bool # Don't run recipe dependencies [env: JUST_NO_DEPS=]
+	--no-dotenv @bool # Don't load `.env` file [env: JUST_NO_DOTENV=]
+	--no-highlight @bool # Don't highlight echoed recipe lines in bold [env: JUST_NO_HIGHLIGHT=]
+	--one @bool # Forbid multiple recipes from being invoked on the command line [env: JUST_ONE=]
+	--quiet|-q @bool # Suppress all output [env: JUST_QUIET=]
+	--allow-missing @bool # Ignore missing recipe and module errors [env: JUST_ALLOW_MISSING=]
+	--shell # Invoke <SHELL> to run recipes
+	--shell-arg # Invoke shell with <SHELL-ARG> as an argument
+	--shell-command @bool # Invoke <COMMAND> with the shell used to run recipe lines and backticks
+	--tempdir # Save temporary files to <TEMPDIR>. [env: JUST_TEMPDIR=]
+	--timestamp @bool # Print recipe command timestamps [env: JUST_TIMESTAMP=]
+	--timestamp-format # Timestamp format string [env: JUST_TIMESTAMP_FORMAT=] [default: %H:%M:%S]
+	--unsorted|-u @bool # Return list and summary entries in source order [env: JUST_UNSORTED=]
+	--unstable @bool # Enable unstable features [env: JUST_UNSTABLE=]
+	--verbose...|-v @bool # Use verbose output [env: JUST_VERBOSE=]
+	--working-directory|-d # Use <WORKING-DIRECTORY> as working directory. --justfile must also be set [env:
+	--yes @bool # Automatically confirm all recipes. [env: JUST_YES=]
+	--changelog @bool # Print changelog
+	--choose @bool # Select one or more recipes to run using a binary chooser. If
+	--completions # Print shell completion script for <SHELL> [possible values: bash,
+	--dump @bool # Print justfile
+	--edit|-e @bool # Edit justfile with editor given by $VISUAL or $EDITOR, falling back to
+	--evaluate @bool # Evaluate and print all variables. If a variable name is given as an
+	--fmt @bool # Format and overwrite justfile
+	--groups @bool # List recipe groups
+	--init @bool # Initialize new justfile in project root
+	--man @bool # Print man page
+	--summary @bool # List names of available recipes
+	--variables @bool # List names of variables

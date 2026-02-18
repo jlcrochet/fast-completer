@@ -1,0 +1,17 @@
+# Htop CLI schema for fast-completer
+# Generated from htop 3.4.1
+
+htop # Interactive process viewer
+	--no-color|-C @bool # Use a monochrome color scheme
+	--delay|-d # Set the delay between updates, in tenths of seconds
+	--filter|-F # Show only the commands matching the given filter
+	--highlight-changes|-H # Highlight new and old processes
+	--no-mouse|-M @bool # Disable the mouse
+	--max-iterations|-n # Exit htop after NUMBER iterations/frame updates
+	--pid|-p # Show only the given PIDs
+	--readonly @bool # Disable all system and process changing features
+	--sort-key|-s # Sort by COLUMN in list view (try --sort-key=help for a list)
+	--tree|-t @bool # Show the tree view (can be combined with -s)
+	--user|-u # Show only processes for a given user (or $USER)
+	--no-unicode|-U @bool # Do not use unicode but plain ASCII
+	--drop-capabilities # Drop Linux capabilities when running as root

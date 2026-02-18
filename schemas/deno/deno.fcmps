@@ -1,0 +1,465 @@
+# Deno CLI schema for fast-completer
+# Generated from deno 2.6.10
+
+deno # A modern JavaScript and TypeScript runtime
+	add # Add dependencies
+		--dev|-D @bool # Add the package as a dev dependency. Note: This only applies when adding to a `package.json` file.
+		--jsr @bool # assume unprefixed package names are jsr packages
+		--lockfile-only @bool # Install only updating the lockfile
+		--npm @bool # assume unprefixed package names are npm packages
+		--quiet|-q @bool # Suppress diagnostic output
+		--no-lock @bool # Disable auto discovery of the lock file
+	bench # Run benchmarks
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--filter # Run benchmarks with this string or regexp pattern in the bench name
+		--json @bool # UNSTABLE: Output benchmark result in JSON format
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-config @bool # Disable automatic loading of the configuration file
+		--no-run @bool # Cache bench modules, but don't run benchmarks
+		--permit-no-files @bool # Don't return an error code if no files were found
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--watch @bool # Watch for file changes and restart process automatically.
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	check # Type-check the dependencies
+		--all @bool # Type-check all code, including remote modules and npm packages
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--doc @bool # Type-check code blocks in JSDoc as well as actual code
+		--doc-only @bool # Type-check code blocks in JSDoc and Markdown only
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-code-cache @bool # Disable V8 code cache feature
+		--no-config @bool # Disable automatic loading of the configuration file
+		--quiet|-q @bool # Suppress diagnostic output
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+	clean # Remove the cache directory
+		--dry-run @bool # Show what would be removed without performing any actions
+		--except|-e @bool # Retain cache data needed by the given files
+		--quiet|-q @bool # Suppress diagnostic output
+	compile # Compile the script into a self contained executable
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-code-cache @bool # Disable V8 code cache feature
+		--no-config @bool # Disable automatic loading of the configuration file
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--exclude # Excludes a file/directory in the compiled executable.
+		--icon # Set the icon of the executable on Windows (.ico)
+		--include # Includes an additional module or file/directory in the compiled executable.
+		--no-terminal @bool # Hide terminal on Windows
+		--output|-o # Output file (defaults to $PWD/<inferred-name>)
+		--target (x86_64-unknown-linux-gnu|aarch64-unknown-linux-gnu|x86_64-pc-windows-msvc|x86_64-apple-darwin|aarch64-apple-darwin) # Target OS architecture [possible values: x86_64-unknown-linux-gnu, aarch64-unknown-linux-gnu, x86_64-pc-windows-msvc, x86_64-apple-darwin, aarch64-apple-darwin]
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	coverage # Print coverage reports
+		--detailed @bool # Output coverage report in detailed format in the terminal
+		--html @bool # Output coverage report in HTML format in the given directory
+		--lcov @bool # Output coverage report in lcov format
+		--output # Exports the coverage report in lcov format to the given file.
+		--quiet|-q @bool # Suppress diagnostic output
+	deploy # Manage and publish applications with Deno Deploy
+	doc # Generate and show documentation for a module or built-ins
+		--quiet|-q @bool # Suppress diagnostic output
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--category-docs # Path to a JSON file keyed by category and an optional value of a markdown doc
+		--default-symbol-map # Uses the provided mapping of default name to wanted name for usage blocks
+		--filter # Dot separated path to symbol
+		--html @bool # Output documentation in HTML format
+		--json @bool # Output documentation in JSON format
+		--lint @bool # Output documentation diagnostics.
+		--name # The name that will be used in the docs (ie for breadcrumbs)
+		--output # Directory for HTML documentation output
+		--private @bool # Output private documentation
+		--strip-trailing-html @bool # Remove trailing .html from various links. Will still generate files with a .html extension
+		--symbol-redirect-map # Path to a JSON file keyed by file, with an inner map of symbol to an external link
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+	eval # Evaluate a script from the command line
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-config @bool # Disable automatic loading of the configuration file
+		--preload # A list of files that will be executed before the main module
+		--print|-p @bool # print result to stdout
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+	fmt # Format source files
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--no-config @bool # Disable automatic loading of the configuration file
+		--permit-no-files @bool # Don't return an error code if no files were found
+		--quiet|-q @bool # Suppress diagnostic output
+		--check @bool # Check if the source files are formatted
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs|md|json|jsonc|css|scss|sass|less|html|svelte|vue|astro|yml|yaml|ipynb|sql|vto|njk) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs, md, json, jsonc, css, scss, sass, less, html, svelte, vue, astro, yml, yaml, ipynb, sql, vto, njk]
+		--indent-width # Define indentation width [default: 2]
+		--line-width # Define maximum line width [default: 80]
+		--prose-wrap (always|never|preserve) # Define how prose should be wrapped [default: always] [possible values: always, never, preserve]
+		--unstable-component @bool # Enable formatting Svelte, Vue, Astro and Angular files
+		--unstable-sql @bool # Enable formatting SQL files.
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--watch @bool # Watch for file changes and restart process automatically.
+	info # Show info about cache or info related to source file
+		--cert # Load certificate authority from PEM encoded file
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--json @bool # UNSTABLE: Outputs the information in JSON format
+		--location # Show files used for origin bound APIs like the Web Storage API when running a script with --location=<HREF>
+		--no-config @bool # Disable automatic loading of the configuration file
+		--quiet|-q @bool # Suppress diagnostic output
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+	init # Initialize a new project
+		--empty @bool # Generate a minimal project with just main.ts and deno.json
+		--lib @bool # Generate an example library project
+		--npm @bool # Generate a npm create-* project
+		--quiet|-q @bool # Suppress diagnostic output
+		--serve @bool # Generate an example project for `deno serve`
+		--yes|-y @bool # Bypass the prompt and run with full permissions
+	install # Installs dependencies either in the local project or globally to a bin directory
+		--cert # Load certificate authority from PEM encoded file
+		--compile @bool # Install the script as a compiled executable
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--dev|-D @bool # Add the package as a dev dependency. Note: This only applies when adding to a `package.json` file.
+		--entrypoint|-e @bool # Install dependents of the specified entrypoint(s)
+		--force|-f @bool # Forcefully overwrite existing installation
+		--global|-g @bool # Install a package or script as a globally available executable
+		--jsr @bool # assume unprefixed package names are jsr packages
+		--location # Value of globalThis.location used by some web APIs
+		--lockfile-only @bool # Install only updating the lockfile
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--name|-n # Executable file name
+		--no-config @bool # Disable automatic loading of the configuration file
+		--npm @bool # assume unprefixed package names are npm packages
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--root # Installation root
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	jupyter # Deno kernel for Jupyter notebooks
+		--conn # Path to JSON file describing connection parameters, provided by Jupyter
+		--display|-d # Set a display name for the kernel (defaults to 'Deno'). Useful when maintaing multiple Deno kernels.
+		--force @bool # Force installation of a kernel, overwriting previously existing kernelspec
+		--install @bool # Install a kernelspec
+		--kernel @bool # Start the kernel
+		--name|-n # Set a name for the kernel (defaults to 'deno'). Useful when maintaing multiple Deno kernels.
+		--quiet|-q @bool # Suppress diagnostic output
+	lint # Lint source files
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext # Specify the file extension to lint when reading from stdin.For example, use `jsx` to lint JSX files or `tsx` for TSX files.This argument is necessary because stdin input does not automatically infer the file type.Example usage: `cat file.jsx | deno lint - --ext=jsx`.
+		--no-config @bool # Disable automatic loading of the configuration file
+		--permit-no-files @bool # Don't return an error code if no files were found
+		--quiet|-q @bool # Suppress diagnostic output
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--compact @bool # Output lint result in compact format
+		--fix @bool # Fix any linting errors for rules that support it
+		--json @bool # Output lint result in JSON format
+		--rules @bool # List available rules
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--watch @bool # Watch for file changes and restart process automatically.
+	outdated # Find and update outdated dependencies
+		--compatible @bool # Only consider versions that satisfy semver requirements
+		--interactive|-i @bool # Interactively select which dependencies to update
+		--latest @bool # Consider the latest version, regardless of semver constraints
+		--lockfile-only @bool # Install only updating the lockfile
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--quiet|-q @bool # Suppress diagnostic output
+		--recursive|-r @bool # Include all workspace members
+		--update|-u @bool # Update dependency versions
+		--no-lock @bool # Disable auto discovery of the lock file
+	publish # Publish the current working directory's package or workspace
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--no-config @bool # Disable automatic loading of the configuration file
+		--quiet|-q @bool # Suppress diagnostic output
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--allow-dirty @bool # Allow publishing if the repository has uncommitted changed
+		--allow-slow-types @bool # Allow publishing with slow types
+		--dry-run @bool # Prepare the package for publishing performing all checks and validations without uploading
+		--no-provenance @bool # Disable provenance attestation.
+		--set-version # Set version for a package to be published.
+		--token # The API token to use when publishing. If unset, interactive authentication is be used
+	remove # Remove dependencies from the configuration file
+		--lockfile-only @bool # Install only updating the lockfile
+		--quiet|-q @bool # Suppress diagnostic output
+		--no-lock @bool # Disable auto discovery of the lock file
+	repl # Start an interactive Read-Eval-Print Loop (REPL) for Deno
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--eval # Evaluates the provided code when the REPL starts
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-config @bool # Disable automatic loading of the configuration file
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		DENO_REPL_HISTORY
+	run # Run a JavaScript or TypeScript program, or a task
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-code-cache @bool # Disable V8 code cache feature
+		--no-config @bool # Disable automatic loading of the configuration file
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	serve # Run a server
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--host # The TCP address to serve on, defaulting to 0.0.0.0 (all interfaces)
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-code-cache @bool # Disable V8 code cache feature
+		--no-config @bool # Disable automatic loading of the configuration file
+		--open @bool # Open the browser on the address that the server is running on.
+		--parallel @bool # Run multiple server workers in parallel. Parallelism defaults to the number of available CPUs or the value of the DENO_JOBS environment variable
+		--port # The TCP port to serve on. Pass 0 to pick a random free port [default: 8000]
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	task # Run a task defined in the configuration file
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--cwd # Specify the directory to run the task in
+		--eval @bool # Evaluate the passed value as if it was a task in a configuration file
+		--filter|-f # Filter members of the workspace by name, implies --recursive flag
+		--quiet|-q @bool # Suppress diagnostic output
+		--recursive|-r @bool # Run the task in all projects in the workspace
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--no-lock @bool # Disable auto discovery of the lock file
+	test # Run tests
+		--cert # Load certificate authority from PEM encoded file
+		--conditions # Use this argument to specify custom conditions for npm package exports. You can also use DENO_CONDITIONS env var.
+		--config|-c # Configure different aspects of deno including TypeScript, linting, and code formatting.
+		--ext (ts|tsx|js|jsx|mts|mjs|cts|cjs) # Set content type of the supplied file [possible values: ts, tsx, js, jsx, mts, mjs, cts, cjs]
+		--hide-stacktraces @bool # Hide stack traces for errors in failure test results.
+		--location # Value of globalThis.location used by some web APIs
+		--minimum-dependency-age # (Unstable) The age in minutes, ISO-8601 duration or RFC3339 absolute timestamp (e.g. '120' for two hours, 'P2D' for two days, '2025-09-16' for cutoff date, '2025-09-16T12:00:00+00:00' for cutoff time, '0' to disable)
+		--no-config @bool # Disable automatic loading of the configuration file
+		--parallel @bool # Run test modules in parallel. Parallelism defaults to the number of available CPUs or the value of the DENO_JOBS environment variable
+		--preload # A list of files that will be executed before the main module
+		--quiet|-q @bool # Suppress diagnostic output
+		--require # A list of CommonJS modules that will be executed before the main module
+		--seed # Set the random number generator seed
+		--unstable @bool # The `--unstable` flag has been deprecated. Use granular `--unstable-*` flags instead
+		--clean @bool # Empty the temporary coverage profile data directory before running tests.
+		--coverage-raw-data-only @bool # Only collect raw coverage data, without generating a report
+		--doc @bool # Evaluate code blocks in JSDoc and Markdown
+		--filter # Run tests with this string or regexp pattern in the test name
+		--junit-path # Write a JUnit XML test report to PATH. Use '-' to write to stdout which is the default when PATH is not provided
+		--no-run @bool # Cache test modules, but don't run tests
+		--permit-no-files @bool # Don't return an error code if no files were found
+		--reporter (pretty|dot|junit|tap) # Select reporter to use. Default to 'pretty' [possible values: pretty, dot, junit, tap]
+		--trace-leaks @bool # Enable tracing of leaks. Useful when debugging leaking ops in test, but impacts test execution time
+		--no-clear-screen @bool # Do not clear terminal screen when under watch mode
+		--cached-only @bool # Require that remote dependencies are already cached
+		--import-map # Load import map file from local file or remote URL
+		--no-lock @bool # Disable auto discovery of the lock file
+		--no-npm @bool # Do not resolve npm modules
+		--no-remote @bool # Do not resolve remote modules
+		--allow-all|-A @bool # Allow all permissions.
+		--no-prompt @bool # Always throw if required permission wasn't passed.
+		--allow-read # --allow-read="/etc,/var/log.txt"
+		--allow-write # --allow-write="/etc,/var/log.txt"
+		--allow-import # --allow-import="example.com,github.com"
+		--allow-net # --allow-net="localhost:8080,deno.land"
+		--allow-env # --allow-env="PORT,HOME,PATH"
+		--allow-sys # --allow-sys="systemMemoryInfo,osRelease"
+		--allow-run # --allow-run="whoami,ps"
+		--allow-ffi # --allow-ffi="./libfoo.so"
+		--deny-read # --deny-read="/etc,/var/log.txt"
+		--deny-write # --deny-write="/etc,/var/log.txt"
+		--deny-net # --deny-net="localhost:8080,deno.land"
+		--deny-env # --deny-env="PORT,HOME,PATH"
+		--deny-sys # --deny-sys="systemMemoryInfo,osRelease"
+		--deny-run # --deny-run="whoami,ps"
+		--deny-ffi # --deny-ffi="./libfoo.so"
+		--deny-import # --deny-import="example.com:443,github.com:443"
+		--ignore-env # --ignore-env="PORT,HOME,PATH"
+		--ignore-read # --ignore-read="/etc,/var/log.txt"
+	uninstall # Uninstalls a dependency or an executable script in the installation root's bin directory
+		--global|-g @bool # Remove globally installed package or module
+		--lockfile-only @bool # Install only updating the lockfile
+		--quiet|-q @bool # Suppress diagnostic output
+		--root # Installation root
+		--no-lock @bool # Disable auto discovery of the lock file
+	upgrade # Upgrade deno executable to given version
+		--cert # Load certificate authority from PEM encoded file
+		--quiet|-q @bool # Suppress diagnostic output
+		--checksum # Verify the downloaded archive against the provided SHA256 checksum
+		--dry-run @bool # Perform all checks without replacing old exe
+		--force|-f @bool # Replace current exe even if not out-of-date
+		--output # The path to output the updated version to

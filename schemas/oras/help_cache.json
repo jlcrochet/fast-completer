@@ -1,0 +1,810 @@
+{
+  "oras --help": {
+    "returncode": 0,
+    "stdout": "Usage:\n  oras [command]\n\nAvailable Commands:\n  attach      Attach files to an existing artifact\n  backup      [Experimental] Back up artifacts from a registry into an OCI image layout\n  blob        Blob operations\n  completion  Generate the autocompletion script for the specified shell\n  cp          Copy artifacts from one target to another\n  discover    [Preview] Discover referrers of a manifest in a registry or an OCI image layout\n  help        Help about any command\n  login       Log in to a remote registry\n  logout      Log out from a remote registry\n  manifest    Manifest operations\n  pull        Pull files from a registry or an OCI image layout\n  push        Push files to a registry or an OCI image layout\n  repo        Repository operations\n  resolve     [Preview] Resolves digest of the target artifact\n  restore     [Experimental] Restore artifacts to a registry from an OCI image layout\n  tag         Tag a manifest in a registry or an OCI image layout\n  version     Show the oras version information\n\nFlags:\n  -h, --help   help for oras\n\nUse \"oras [command] --help\" for more information about a command.\n"
+  },
+  "oras --version": {
+    "returncode": 1,
+    "stdout": ""
+  },
+  "oras __complete ": {
+    "returncode": 0,
+    "stdout": "attach\tAttach files to an existing artifact\nbackup\t[Experimental] Back up artifacts from a registry into an OCI image layout\nblob\tBlob operations\ncompletion\tGenerate the autocompletion script for the specified shell\ncp\tCopy artifacts from one target to another\ndiscover\t[Preview] Discover referrers of a manifest in a registry or an OCI image layout\nhelp\tHelp about any command\nlogin\tLog in to a remote registry\nlogout\tLog out from a remote registry\nmanifest\tManifest operations\npull\tPull files from a registry or an OCI image layout\npush\tPush files to a registry or an OCI image layout\nrepo\tRepository operations\nresolve\t[Preview] Resolves digest of the target artifact\nrestore\t[Experimental] Restore artifacts to a registry from an OCI image layout\ntag\tTag a manifest in a registry or an OCI image layout\nversion\tShow the oras version information\n:4\n"
+  },
+  "oras __complete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for oras\n:4\n"
+  },
+  "oras __complete attach ": {
+    "returncode": 0,
+    "stdout": "--artifact-type\tartifact type\n:0\n"
+  },
+  "oras __complete attach --": {
+    "returncode": 0,
+    "stdout": "--artifact-type\tartifact type\n:4\n"
+  },
+  "oras __complete backup ": {
+    "returncode": 0,
+    "stdout": "--output\tpath to the target output, either a tar archive (*.tar) or a directory\n-o\tpath to the target output, either a tar archive (*.tar) or a directory\n:0\n"
+  },
+  "oras __complete backup --": {
+    "returncode": 0,
+    "stdout": "--output\tpath to the target output, either a tar archive (*.tar) or a directory\n:4\n"
+  },
+  "oras __complete blob ": {
+    "returncode": 0,
+    "stdout": "delete\tDelete a blob from a remote registry\nfetch\tFetch a blob from a registry or an OCI image layout\npush\tPush a blob to a registry or an OCI image layout\n:4\n"
+  },
+  "oras __complete blob --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for blob\n:4\n"
+  },
+  "oras __complete blob delete ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete blob delete --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--force\tignore nonexistent references, never prompt\n--header\tadd custom headers to requests\n--help\thelp for delete\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete blob fetch ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete blob fetch --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--header\tadd custom headers to requests\n--help\thelp for fetch\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--no-tty\t[Preview] disable progress bars\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\toutput file `path`, use - for stdout\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete blob push ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete blob push --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--header\tadd custom headers to requests\n--help\thelp for push\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--media-type\tspecify the returned media type in the descriptor if --descriptor is used\n--no-tty\t[Preview] disable progress bars\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--size\tprovide the blob size\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "oras __complete completion --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for completion\n:4\n"
+  },
+  "oras __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for bash\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "oras __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for fish\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "oras __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for powershell\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "oras __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for zsh\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "oras __complete cp ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete cp --": {
+    "returncode": 0,
+    "stdout": "--concurrency\tconcurrency level\n--debug\toutput debug logs (implies --no-tty)\n--from-ca-file\tserver certificate authority file for the remote source registry\n--from-cert-file\tclient certificate file for the remote source registry\n--from-distribution-spec\t[Preview] set OCI distribution spec version and API option for source target. Options: v1.1-referrers-tag, v1.1-referrers-api\n--from-header\tadd custom headers to source requests\n--from-identity-token\tsource registry identity token\n--from-insecure\tallow connections to source SSL registry without certs\n--from-key-file\tclient private key file for the remote source registry\n--from-oci-layout\tset source target as an OCI image layout\n--from-oci-layout-path\t[Experimental] set the path for the source OCI image layout target\n--from-password\tsource registry password or identity token\n--from-plain-http\tallow insecure connections to source registry without SSL check\n--from-registry-config\t`path` of the authentication file for source registry\n--from-resolve\tcustomized DNS for source registry, formatted in `host:port:address[:address_port]`\n--from-username\tsource registry username\n--help\thelp for cp\n--no-tty\t[Preview] disable progress bars\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--recursive\t[Preview] recursively copy the artifact and its referrer artifacts\n--resolve\tbase DNS rules formatted in `host:port:address[:address_port]` for --from-resolve and --to-resolve\n--to-ca-file\tserver certificate authority file for the remote destination registry\n--to-cert-file\tclient certificate file for the remote destination registry\n--to-distribution-spec\t[Preview] set OCI distribution spec version and API option for destination target. Options: v1.1-referrers-tag, v1.1-referrers-api\n--to-header\tadd custom headers to destination requests\n--to-identity-token\tdestination registry identity token\n--to-insecure\tallow connections to destination SSL registry without certs\n--to-key-file\tclient private key file for the remote destination registry\n--to-oci-layout\tset destination target as an OCI image layout\n--to-oci-layout-path\t[Experimental] set the path for the destination OCI image layout target\n--to-password\tdestination registry password or identity token\n--to-plain-http\tallow insecure connections to destination registry without SSL check\n--to-registry-config\t`path` of the authentication file for destination registry\n--to-resolve\tcustomized DNS for destination registry, formatted in `host:port:address[:address_port]`\n--to-username\tdestination registry username\n:4\n"
+  },
+  "oras __complete discover ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete discover --": {
+    "returncode": 0,
+    "stdout": "--artifact-type\tartifact type\n--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--depth\t[Experimental] level of referrers to display, if unused shows referrers of all levels\n--distribution-spec\t[Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for discover\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--no-tty\t[Preview] disable colors\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\t[Deprecated] format in which to display referrers (table, json, or tree).\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete help ": {
+    "returncode": 0,
+    "stdout": "attach\tAttach files to an existing artifact\nbackup\t[Experimental] Back up artifacts from a registry into an OCI image layout\nblob\tBlob operations\ncompletion\tGenerate the autocompletion script for the specified shell\ncp\tCopy artifacts from one target to another\ndiscover\t[Preview] Discover referrers of a manifest in a registry or an OCI image layout\nhelp\tHelp about any command\nlogin\tLog in to a remote registry\nlogout\tLog out from a remote registry\nmanifest\tManifest operations\npull\tPull files from a registry or an OCI image layout\npush\tPush files to a registry or an OCI image layout\nrepo\tRepository operations\nresolve\t[Preview] Resolves digest of the target artifact\nrestore\t[Experimental] Restore artifacts to a registry from an OCI image layout\ntag\tTag a manifest in a registry or an OCI image layout\nversion\tShow the oras version information\n:4\n"
+  },
+  "oras __complete help --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help attach ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help attach --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help backup ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help backup --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help blob ": {
+    "returncode": 0,
+    "stdout": "delete\tDelete a blob from a remote registry\nfetch\tFetch a blob from a registry or an OCI image layout\npush\tPush a blob to a registry or an OCI image layout\n:4\n"
+  },
+  "oras __complete help blob --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help blob delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help blob delete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help blob fetch ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help blob fetch --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help blob push ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help blob push --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "oras __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help completion bash --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help completion fish --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help completion powershell --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help completion zsh --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help cp ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help cp --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help discover ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help discover --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help help --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help login ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help login --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help logout ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help logout --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest ": {
+    "returncode": 0,
+    "stdout": "delete\tDelete a manifest from remote registry\nfetch\tFetch manifest of the target artifact\nfetch-config\tFetch the config of a manifest from a registry or an OCI image layout\nindex\t[Experimental] Index operations\npush\tPush a manifest to a registry or an OCI image layout\n:4\n"
+  },
+  "oras __complete help manifest --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest delete ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest delete --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest fetch ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest fetch --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest fetch-config ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest fetch-config --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest index ": {
+    "returncode": 0,
+    "stdout": "create\t[Experimental] Create and push an index from provided manifests\nupdate\t[Experimental] Update and push an image index\n:4\n"
+  },
+  "oras __complete help manifest index --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest index create ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest index create --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest index update ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest index update --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help manifest push ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help manifest push --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help pull ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help pull --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help push ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help push --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help repo ": {
+    "returncode": 0,
+    "stdout": "ls\tList the repositories under the registry\ntags\tShow tags of the target repository\n:4\n"
+  },
+  "oras __complete help repo --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help repo ls ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help repo ls --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help repo tags ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help repo tags --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help resolve ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help resolve --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help restore ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help restore --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help tag ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help tag --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete help version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "oras __complete help version --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for help\n:4\n"
+  },
+  "oras __complete login ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete login --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--header\tadd custom headers to requests\n--help\thelp for login\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete logout ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete logout --": {
+    "returncode": 0,
+    "stdout": "--debug\tdebug mode\n--help\thelp for logout\n--registry-config\tauth config path\n:4\n"
+  },
+  "oras __complete manifest ": {
+    "returncode": 0,
+    "stdout": "delete\tDelete a manifest from remote registry\nfetch\tFetch manifest of the target artifact\nfetch-config\tFetch the config of a manifest from a registry or an OCI image layout\nindex\t[Experimental] Index operations\npush\tPush a manifest to a registry or an OCI image layout\n:4\n"
+  },
+  "oras __complete manifest --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for manifest\n:4\n"
+  },
+  "oras __complete manifest delete ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest delete --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--distribution-spec\t[Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n--force\tignore nonexistent references, never prompt\n--header\tadd custom headers to requests\n--help\thelp for delete\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete manifest fetch ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest fetch --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for fetch\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--media-type\taccepted media types\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\tfile `path` to write the fetched manifest to, use - for stdout\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete manifest fetch-config ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest fetch-config --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--header\tadd custom headers to requests\n--help\thelp for fetch-config\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\tfile `path` to write the fetched config to, use - for stdout\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete manifest index ": {
+    "returncode": 0,
+    "stdout": "create\t[Experimental] Create and push an index from provided manifests\nupdate\t[Experimental] Update and push an image index\n:4\n"
+  },
+  "oras __complete manifest index --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for index\n:4\n"
+  },
+  "oras __complete manifest index create ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest index create --": {
+    "returncode": 0,
+    "stdout": "--annotation\tmanifest annotations\n--artifact-type\tartifact type for overall index\n--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--header\tadd custom headers to requests\n--help\thelp for create\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\tfile `path` to write the created index to, use - for stdout\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete manifest index update ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest index update --": {
+    "returncode": 0,
+    "stdout": "--add\tmanifests to add to the index\n--artifact-type\tnew artifact type for overall index\n--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--header\tadd custom headers to requests\n--help\thelp for update\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--merge\tindexes to be merged into the index\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\tfile `path` to write the created index to, use - for stdout\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--remove\tmanifests to remove from the index, must be digests\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--tag\textra tags for the updated index\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete manifest push ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete manifest push --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--concurrency\tconcurrency level\n--debug\toutput debug logs (implies --no-tty)\n--descriptor\toutput the descriptor\n--distribution-spec\t[Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n--header\tadd custom headers to requests\n--help\thelp for push\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--media-type\tmedia type of manifest\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--pretty\tprettify JSON objects printed to stdout\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete pull ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete pull --": {
+    "returncode": 0,
+    "stdout": "--allow-path-traversal\tallow storing files out of the output directory\n--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--concurrency\tconcurrency level\n--config\toutput manifest config file\n--debug\toutput debug logs (implies --no-tty)\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for pull\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--include-subject\trecursively pull the subject of artifacts\n--insecure\tallow connections to SSL registry without certs\n--keep-old-files\tdo not replace existing files when pulling, treat them as errors\n--key-file\tclient private key file for the remote registry\n--no-tty\t[Preview] disable progress bars\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--output\toutput directory\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete push ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete push --": {
+    "returncode": 0,
+    "stdout": "--annotation\tmanifest annotations\n--annotation-file\tpath of the annotation file\n--artifact-platform\t[Experimental] set artifact platform in the form of `os[/arch][/variant][:os_version]`\n--artifact-type\tartifact type\n--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--concurrency\tconcurrency level\n--config\t`path` of image config file\n--debug\toutput debug logs (implies --no-tty)\n--disable-path-validation\tskip path validation\n--export-manifest\t`path` of the pushed manifest\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for push\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--image-spec\t[Preview] specify manifest type for building artifact. Options: v1.1, v1.0 (default v1.1, overridden to v1.0 if --config is used without --artifact-type)\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--no-tty\t[Preview] disable progress bars\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete repo ": {
+    "returncode": 0,
+    "stdout": "ls\tList the repositories under the registry\ntags\tShow tags of the target repository\n:4\n"
+  },
+  "oras __complete repo --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for repo\n:4\n"
+  },
+  "oras __complete repo ls ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete repo ls --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for ls\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--last\tstart after the repository specified by `last`\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete repo tags ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete repo tags --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--exclude-digest-tags\t[Preview] exclude all digest-like tags such as 'sha256-aaaa...'\n--format\t[Experimental] format output using a custom template:\n--header\tadd custom headers to requests\n--help\thelp for tags\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--last\tstart after the tag specified by `last`\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--template\t[Experimental] template string used to format output\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete resolve ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete resolve --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--debug\toutput debug logs (implies --no-tty)\n--full-reference\tprint the full artifact reference with digest\n--header\tadd custom headers to requests\n--help\thelp for resolve\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--platform\trequest platform in the form of `os[/arch][/variant][:os_version]`\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete restore ": {
+    "returncode": 0,
+    "stdout": "--input\tpath to the OCI layout, either a tar archive (*.tar) or a directory\n:0\n"
+  },
+  "oras __complete restore --": {
+    "returncode": 0,
+    "stdout": "--input\tpath to the OCI layout, either a tar archive (*.tar) or a directory\n:4\n"
+  },
+  "oras __complete tag ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete tag --": {
+    "returncode": 0,
+    "stdout": "--ca-file\tserver certificate authority file for the remote registry\n--cert-file\tclient certificate file for the remote registry\n--concurrency\tconcurrency level\n--debug\toutput debug logs (implies --no-tty)\n--header\tadd custom headers to requests\n--help\thelp for tag\n--identity-token\tregistry identity token\n--identity-token-stdin\tread identity token from stdin\n--insecure\tallow connections to SSL registry without certs\n--key-file\tclient private key file for the remote registry\n--oci-layout\tset target as an OCI image layout\n--oci-layout-path\t[Experimental] set the path for the OCI image layout target\n--password\tregistry password or identity token\n--password-stdin\tread password from stdin\n--plain-http\tallow insecure connections to registry without SSL check\n--registry-config\t`path` of the authentication file for registry\n--resolve\tcustomized DNS for registry, formatted in `host:port:address[:address_port]`\n--username\tregistry username\n:4\n"
+  },
+  "oras __complete version ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "oras __complete version --": {
+    "returncode": 0,
+    "stdout": "--help\thelp for version\n:4\n"
+  },
+  "oras attach --help": {
+    "returncode": 0,
+    "stdout": "Attach files to an existing artifact\n\nExample - Attach file 'hi.txt' with artifact type 'doc/example' to manifest 'hello:v1' in registry 'localhost:5000':\n  oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt\n\nExample - Attach file 'hi.txt' to a specific artifact with platform 'linux/amd64' in multi-arch index 'hello:v1'\n  oras attach --artifact-type doc/example --platform linux/amd64 localhost:5000/hello:v1 hi.txt\n\nExample - Push file \"hi.txt\" with the custom layer media type 'application/vnd.me.hi':\n  oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt:application/vnd.me.hi\n\nExample - Attach file \"hi.txt\" using a specific method for the Referrers API:\n  oras attach --artifact-type doc/example --distribution-spec v1.1-referrers-api localhost:5000/hello:v1 hi.txt # via API\n  oras attach --artifact-type doc/example --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1 hi.txt # via tag scheme\n\nExample - Attach file 'hi.txt' and add annotations from file 'annotation.json':\n  oras attach --artifact-type doc/example --annotation-file annotation.json localhost:5000/hello:v1 hi.txt\n\nExample - Attach an artifact with manifest annotations:\n  oras attach --artifact-type doc/example --annotation \"key1=val1\" --annotation \"key2=val2\" localhost:5000/hello:v1\n\nExample - Attach file 'hi.txt' and add manifest annotations:\n  oras attach --artifact-type doc/example --annotation \"key=val\" localhost:5000/hello:v1 hi.txt\n\nExample - [Experimental] Attach file 'hi.txt' and format output in JSON:\n  oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt --format json\n\nExample - [Experimental] Attach file 'hi.txt' and format output with Go template:\n  oras attach --artifact-type doc/example localhost:5000/hello:v1 hi.txt --format go-template --template \"{{.digest}}\"\n\nExample - Attach file 'hi.txt' and export the pushed manifest to 'manifest.json':\n  oras attach --artifact-type doc/example --export-manifest manifest.json localhost:5000/hello:v1 hi.txt\n\nExample - Attach file to the manifest tagged 'v1' in an OCI image layout folder 'layout-dir':\n  oras attach --oci-layout --artifact-type doc/example layout-dir:v1 hi.txt\n\nExample - Attach file to the manifest tagged 'example.com:v1' in an OCI image layout folder 'layout-dir':\n  oras attach --artifact-type doc/example --oci-layout-path layout-dir example.com:v1 hi.txt\n\nUsage:\n  oras attach [flags] --artifact-type=<type> <name>{:<tag>|@<digest>} {<file>[:<layer_media_type>]|--annotation <key>=<value>} [...]\n\nFlags:\n  -a, --annotation stringArray                      manifest annotations\n      --annotation-file string                      path of the annotation file\n      --artifact-type string                        artifact type\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n      --concurrency int                             concurrency level (default 5)\n  -d, --debug                                       output debug logs (implies --no-tty)\n      --disable-path-validation                     skip path validation\n      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n      --export-manifest path                        path of the pushed manifest\n      --format string                               [Experimental] format output using a custom template:\n                                                    'json':         Print in JSON format\n                                                    'go-template':  Print output using the given Go template\n                                                    'text':         Print in text format (default \"text\")\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for attach\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --insecure                                    allow connections to SSL registry without certs\n      --key-file string                             client private key file for the remote registry\n      --no-tty                                      [Preview] disable progress bars\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   attach to an arch-specific subject in the form of os[/arch][/variant][:os_version]\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                             [Experimental] template string used to format output\n  -u, --username string                             registry username\n"
+  },
+  "oras backup --help": {
+    "returncode": 0,
+    "stdout": "[Experimental] Back up artifacts from a registry into an OCI image layout, saved either as a directory or a tar archive.\nThe output format is determined by the file extension of the specified output path: if it ends with \".tar\", the output will be a tar archive; otherwise, it will be a directory.\n\nExample - Back up a single artifact to a directory:\n  oras backup --output hello localhost:5000/hello:v1\n\nExample - Back up to a tar archive:\n  oras backup --output hello.tar localhost:5000/hello:v1\n\nExample - Back up an artifact along with its referrers (e.g. attestations, SBOMs):\n  oras backup --output hello --include-referrers localhost:5000/hello:v1\n\nExample - Back up multiple specific tags:\n  oras backup --output hello localhost:5000/hello:v1,v2,v3\n\nExample - Back up all tagged artifacts in a repository:\n  oras backup --output hello localhost:5000/hello\n\nExample - Use Referrers API for discovering referrers:\n  oras backup --output hello --include-referrers --distribution-spec v1.1-referrers-api localhost:5000/hello:v1\n\nExample - Use Referrers Tag Schema for discovering referrers:\n  oras backup --output hello --include-referrers --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1\n\nExample - Back up from an insecure registry:\n  oras backup --output hello --insecure localhost:5000/hello:v1\n\nExample - Back up from a registry using plain HTTP (no TLS):\n  oras backup --output hello --plain-http localhost:5000/hello:v1\n\nExample - Set custom concurrency level:\n  oras backup --output hello --concurrency 6 localhost:5000/hello:v1\n\nUsage:\n  oras backup [flags] --output <path> <registry>/<repository>[:<ref1>[,<ref2>...]]\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n      --concurrency int                            concurrency level (default 3)\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for backup\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --include-referrers                          back up the artifact with its referrers (e.g., attestations, SBOMs)\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --no-tty                                     [Preview] disable progress bars\n  -o, --output string                              path to the target output, either a tar archive (*.tar) or a directory\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras blob --help": {
+    "returncode": 0,
+    "stdout": "Blob operations\n\nUsage:\n  oras blob [command]\n\nAvailable Commands:\n  delete      Delete a blob from a remote registry\n  fetch       Fetch a blob from a registry or an OCI image layout\n  push        Push a blob to a registry or an OCI image layout\n\nFlags:\n  -h, --help   help for blob\n\nUse \"oras blob [command] --help\" for more information about a command.\n"
+  },
+  "oras blob delete --help": {
+    "returncode": 0,
+    "stdout": "Delete a blob from a remote registry\n\nExample - Delete a blob:\n  oras blob delete localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Delete a blob without prompting confirmation:\n  oras blob delete --force localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Delete a blob and print its descriptor:\n  oras blob delete --descriptor --force localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nUsage:\n  oras blob delete [flags] <name>@<digest>\n\nAliases:\n  delete, remove, rm\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --descriptor                                 output the descriptor\n  -f, --force                                      ignore nonexistent references, never prompt\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for delete\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras blob fetch --help": {
+    "returncode": 0,
+    "stdout": "Fetch a blob from a registry or an OCI image layout\n\nExample - Fetch a blob from registry and save it to a local file:\n  oras blob fetch --output blob.tar.gz localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Fetch a blob from registry and print the raw blob content:\n  oras blob fetch --output - localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Fetch and print the descriptor of a blob:\n  oras blob fetch --descriptor localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Fetch a blob, save it to a local file and print the descriptor:\n  oras blob fetch --output blob.tar.gz --descriptor localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Fetch and print a blob from OCI image layout folder 'layout-dir':\n  oras blob fetch --oci-layout --output - layout-dir@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nExample - Fetch and print a blob from OCI image layout archive file 'layout.tar':\n  oras blob fetch --oci-layout --output - layout.tar@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5\n\nUsage:\n  oras blob fetch [flags] {--output <file> | --descriptor} <name>@<digest>\n\nAliases:\n  fetch, get\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --descriptor                                 output the descriptor\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for fetch\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --no-tty                                     [Preview] disable progress bars\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -o, --output path                                output file path, use - for stdout\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras blob push --help": {
+    "returncode": 0,
+    "stdout": "Push a blob to a registry or an OCI image layout\n\nExample - Push blob 'hi.txt' to a registry:\n  oras blob push localhost:5000/hello hi.txt\n\nExample - Push blob 'hi.txt' with the specific digest:\n  oras blob push localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 hi.txt\n\nExample - Push blob from stdin with blob size and digest:\n  oras blob push --size 12 localhost:5000/hello@sha256:9a201d228ebd966211f7d1131be19f152be428bd373a92071c71d8deaf83b3e5 -\n\nExample - Push blob 'hi.txt' and output the descriptor:\n  oras blob push --descriptor localhost:5000/hello hi.txt\n\nExample - Push blob 'hi.txt' with the specific returned media type in the descriptor:\n  oras blob push --media-type application/vnd.oci.image.config.v1+json --descriptor localhost:5000/hello hi.txt\n\nExample - Push blob 'hi.txt' and output the prettified descriptor:\n  oras blob push --descriptor --pretty localhost:5000/hello hi.txt\n\nExample - Push blob without TLS:\n  oras blob push --insecure localhost:5000/hello hi.txt\n\nExample - Push blob 'hi.txt' into an OCI image layout folder 'layout-dir':\n  oras blob push --oci-layout layout-dir hi.txt\n\nUsage:\n  oras blob push [flags] <name>[@digest] <file>\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --descriptor                                 output the descriptor\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for push\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --media-type string                          specify the returned media type in the descriptor if --descriptor is used (default \"application/vnd.oci.image.layer.v1.tar\")\n      --no-tty                                     [Preview] disable progress bars\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n      --size int                                   provide the blob size (default -1)\n  -u, --username string                            registry username\n"
+  },
+  "oras completion --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for oras for the specified shell.\nSee each sub-command's help for details on how to use the generated script.\n\nUsage:\n  oras completion [command]\n\nAvailable Commands:\n  bash        Generate the autocompletion script for bash\n  fish        Generate the autocompletion script for fish\n  powershell  Generate the autocompletion script for powershell\n  zsh         Generate the autocompletion script for zsh\n\nFlags:\n  -h, --help   help for completion\n\nUse \"oras completion [command] --help\" for more information about a command.\n"
+  },
+  "oras completion bash --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the bash shell.\n\nThis script depends on the 'bash-completion' package.\nIf it is not installed already, you can install it via your OS's package manager.\n\nTo load completions in your current shell session:\n\n\tsource <(oras completion bash)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\toras completion bash > /etc/bash_completion.d/oras\n\n#### macOS:\n\n\toras completion bash > $(brew --prefix)/etc/bash_completion.d/oras\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  oras completion bash\n\nFlags:\n  -h, --help              help for bash\n      --no-descriptions   disable completion descriptions\n"
+  },
+  "oras completion fish --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the fish shell.\n\nTo load completions in your current shell session:\n\n\toras completion fish | source\n\nTo load completions for every new session, execute once:\n\n\toras completion fish > ~/.config/fish/completions/oras.fish\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  oras completion fish [flags]\n\nFlags:\n  -h, --help              help for fish\n      --no-descriptions   disable completion descriptions\n"
+  },
+  "oras completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for powershell.\n\nTo load completions in your current shell session:\n\n\toras completion powershell | Out-String | Invoke-Expression\n\nTo load completions for every new session, add the output of the above command\nto your powershell profile.\n\nUsage:\n  oras completion powershell [flags]\n\nFlags:\n  -h, --help              help for powershell\n      --no-descriptions   disable completion descriptions\n"
+  },
+  "oras completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the zsh shell.\n\nIf shell completion is not already enabled in your environment you will need\nto enable it.  You can execute the following once:\n\n\techo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\nTo load completions in your current shell session:\n\n\tsource <(oras completion zsh)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\toras completion zsh > \"${fpath[1]}/_oras\"\n\n#### macOS:\n\n\toras completion zsh > $(brew --prefix)/share/zsh/site-functions/_oras\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  oras completion zsh [flags]\n\nFlags:\n  -h, --help              help for zsh\n      --no-descriptions   disable completion descriptions\n"
+  },
+  "oras cp --help": {
+    "returncode": 0,
+    "stdout": "Copy artifacts from one target to another. When copying an image index, all of its manifests will be copied\n\nExample - Copy an artifact between registries:\n  oras cp localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1\n\nExample - Download an artifact into an OCI image layout folder:\n  oras cp --to-oci-layout localhost:5000/net-monitor:v1 ./downloaded:v1\n\nExample - Upload an artifact from an OCI image layout folder:\n  oras cp --from-oci-layout ./to-upload:v1 localhost:5000/net-monitor:v1\n\nExample - Upload an artifact from an OCI layout tar archive:\n  oras cp --from-oci-layout ./to-upload.tar:v1 localhost:5000/net-monitor:v1\n\nExample - Copy an artifact and its referrers:\n  oras cp -r localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1\n\nExample - Copy an artifact and referrers using specific methods for the Referrers API:\n  oras cp -r --from-distribution-spec v1.1-referrers-api --to-distribution-spec v1.1-referrers-tag \\\n    localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1\n\nExample - Copy certain platform of an artifact:\n  oras cp --platform linux/arm/v5 localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:v1\n\nExample - Copy an artifact with multiple tags:\n  oras cp localhost:5000/net-monitor:v1 localhost:6000/net-monitor-copy:tag1,tag2,tag3\n\nExample - Copy an artifact with multiple tags with concurrency tuned:\n  oras cp --concurrency 10 localhost:5000/net-monitor:v1 localhost:5000/net-monitor-copy:tag1,tag2,tag3\n\nUsage:\n  oras cp [flags] <from>{:<tag>|@<digest>} <to>[:<tag>[,<tag>][...]]\n\nAliases:\n  cp, copy\n\nFlags:\n      --concurrency int                                 concurrency level (default 3)\n  -d, --debug                                           output debug logs (implies --no-tty)\n      --from-ca-file string                             server certificate authority file for the remote source registry\n      --from-cert-file string                           client certificate file for the remote source registry\n      --from-distribution-spec string                   [Preview] set OCI distribution spec version and API option for source target. Options: v1.1-referrers-tag, v1.1-referrers-api\n      --from-header stringArray                         add custom headers to source requests\n      --from-identity-token string                      source registry identity token\n      --from-insecure                                   allow connections to source SSL registry without certs\n      --from-key-file string                            client private key file for the remote source registry\n      --from-oci-layout                                 set source target as an OCI image layout\n      --from-oci-layout-path string                     [Experimental] set the path for the source OCI image layout target\n      --from-password string                            source registry password or identity token\n      --from-plain-http                                 allow insecure connections to source registry without SSL check\n      --from-registry-config path                       path of the authentication file for source registry\n      --from-resolve host:port:address[:address_port]   customized DNS for source registry, formatted in host:port:address[:address_port]\n      --from-username string                            source registry username\n  -h, --help                                            help for cp\n      --no-tty                                          [Preview] disable progress bars\n      --platform os[/arch][/variant][:os_version]       request platform in the form of os[/arch][/variant][:os_version]\n  -r, --recursive                                       [Preview] recursively copy the artifact and its referrer artifacts\n      --resolve host:port:address[:address_port]        base DNS rules formatted in host:port:address[:address_port] for --from-resolve and --to-resolve\n      --to-ca-file string                               server certificate authority file for the remote destination registry\n      --to-cert-file string                             client certificate file for the remote destination registry\n      --to-distribution-spec string                     [Preview] set OCI distribution spec version and API option for destination target. Options: v1.1-referrers-tag, v1.1-referrers-api\n      --to-header stringArray                           add custom headers to destination requests\n      --to-identity-token string                        destination registry identity token\n      --to-insecure                                     allow connections to destination SSL registry without certs\n      --to-key-file string                              client private key file for the remote destination registry\n      --to-oci-layout                                   set destination target as an OCI image layout\n      --to-oci-layout-path string                       [Experimental] set the path for the destination OCI image layout target\n      --to-password string                              destination registry password or identity token\n      --to-plain-http                                   allow insecure connections to destination registry without SSL check\n      --to-registry-config path                         path of the authentication file for destination registry\n      --to-resolve host:port:address[:address_port]     customized DNS for destination registry, formatted in host:port:address[:address_port]\n      --to-username string                              destination registry username\n"
+  },
+  "oras discover --help": {
+    "returncode": 0,
+    "stdout": "[Preview] Discover referrers of a manifest in a registry or an OCI image layout\n\n** This command is in preview and under development. **\n\nExample - Discover referrers of manifest 'hello:v1' in registry 'localhost:5000', displayed in a tree view:\n  oras discover localhost:5000/hello:v1\n\nExample - Discover referrers via referrers API:\n  oras discover --distribution-spec v1.1-referrers-api localhost:5000/hello:v1\n\nExample - Discover referrers via tag scheme:\n  oras discover --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1\n\nExample - [Experimental] Discover referrers and display in a table view:\n  oras discover localhost:5000/hello:v1 --format table\n\nExample - [Experimental] Discover referrers and format output with Go template:\n  oras discover localhost:5000/hello:v1 --format go-template --template \"{{.referrers}}\"\n\nExample - [Experimental] Discover only direct referrers, displayed in json view:\n  oras discover localhost:5000/hello:v1 --format json --depth 1\n\nExample - Discover referrers with type 'test-artifact' of manifest 'hello:v1' in registry 'localhost:5000':\n  oras discover --artifact-type test-artifact localhost:5000/hello:v1\n\nExample - Discover referrers of the manifest tagged 'v1' in an OCI image layout folder 'layout-dir':\n  oras discover --oci-layout layout-dir:v1\n\nExample - Discover referrers of the manifest tagged 'example.com:v1' in an OCI image layout folder 'layout-dir':\n  oras discover example.com:v1 --oci-layout-path layout-dir\n\nUsage:\n  oras discover [flags] <name>{:<tag>|@<digest>}\n\nFlags:\n      --artifact-type string                        artifact type\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n  -d, --debug                                       output debug logs (implies --no-tty)\n      --depth int                                   [Experimental] level of referrers to display, if unused shows referrers of all levels\n      --distribution-spec string                    [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n      --format string                               [Experimental] format output using a custom template:\n                                                    'table':        [Deprecated] Get referrers and output in table format\n                                                    'json':         Get referrers and output in JSON format\n                                                    'go-template':  Print referrers using the given Go template\n                                                    'tree':         Get referrers and print in tree format (default \"tree\")\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for discover\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --insecure                                    allow connections to SSL registry without certs\n      --key-file string                             client private key file for the remote registry\n      --no-tty                                      [Preview] disable colors\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -o, --output string                               [Deprecated] format in which to display referrers (table, json, or tree). (default \"tree\")\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                             [Experimental] template string used to format output\n  -u, --username string                             registry username\n"
+  },
+  "oras help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help attach --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help backup --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help blob --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help blob delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help blob fetch --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help blob push --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help completion bash --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help completion fish --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help cp --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help discover --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help login --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help logout --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest delete --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest fetch --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest fetch-config --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest index --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest index create --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest index update --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help manifest push --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help pull --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help push --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help repo --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help repo ls --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help repo tags --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help resolve --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help restore --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help tag --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type oras help [path to command] for full details.\n\nUsage:\n  oras help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n"
+  },
+  "oras login --help": {
+    "returncode": 0,
+    "stdout": "Log in to a remote registry\n\nExample - Log in with username and password from command line flags:\n  oras login -u username -p password localhost:5000\n\nExample - Log in with username and password from stdin:\n  oras login -u username --password-stdin localhost:5000\n\nExample - Log in with identity token from command line flags:\n  oras login --identity-token token localhost:5000\n\nExample - Log in with identity token from stdin:\n  oras login --identity-token-stdin localhost:5000\n\nExample - Log in with username and password in an interactive terminal:\n  oras login localhost:5000\n\nExample - Log in with username and password in an interactive terminal and no TLS check:\n  oras login --insecure localhost:5000\n\nUsage:\n  oras login [flags] <registry>\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for login\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras logout --help": {
+    "returncode": 0,
+    "stdout": "Log out from a remote registry\n\nExample - Logout:\n  oras logout localhost:5000\n\nUsage:\n  oras logout [flags] <registry>\n\nFlags:\n  -d, --debug                         debug mode\n  -h, --help                          help for logout\n      --registry-config stringArray   auth config path\n"
+  },
+  "oras manifest --help": {
+    "returncode": 0,
+    "stdout": "Manifest operations\n\nUsage:\n  oras manifest [command]\n\nAvailable Commands:\n  delete       Delete a manifest from remote registry\n  fetch        Fetch manifest of the target artifact\n  fetch-config Fetch the config of a manifest from a registry or an OCI image layout\n  index        [Experimental] Index operations\n  push         Push a manifest to a registry or an OCI image layout\n\nFlags:\n  -h, --help   help for manifest\n\nUse \"oras manifest [command] --help\" for more information about a command.\n"
+  },
+  "oras manifest delete --help": {
+    "returncode": 0,
+    "stdout": "Delete a manifest from remote registry\n\nExample - Delete a manifest tagged with 'v1' from repository 'localhost:5000/hello':\n  oras manifest delete localhost:5000/hello:v1\n\nExample - Delete a manifest without prompting confirmation:\n  oras manifest delete --force localhost:5000/hello:v1\n\nExample - Delete a manifest and print its descriptor:\n  oras manifest delete --descriptor localhost:5000/hello:v1\n\nExample - Delete a manifest by digest 'sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9' from repository 'localhost:5000/hello':\n  oras manifest delete localhost:5000/hello@sha:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9\n\nUsage:\n  oras manifest delete [flags] <name>{:<tag>|@<digest>}\n\nAliases:\n  delete, remove, rm\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --descriptor                                 output the descriptor\n      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n  -f, --force                                      ignore nonexistent references, never prompt\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for delete\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras manifest fetch --help": {
+    "returncode": 0,
+    "stdout": "Fetch manifest of the target artifact\n\nExample - Fetch raw manifest from a registry:\n  oras manifest fetch localhost:5000/hello:v1\n\nExample - Fetch the descriptor of a manifest from a registry:\n  oras manifest fetch --descriptor localhost:5000/hello:v1\n\nExample - [Experimental] Fetch the manifest digest from a registry similar to the resolve command:\n  oras manifest fetch --format go-template --template '{{ .digest }}' localhost:5000/hello:v1\n\nExample - [Experimental] Fetch manifest and output metadata encoded in JSON:\n  oras manifest fetch localhost:5000/hello:v1 --format json\n\nExample - Fetch manifest from a registry with specified media type:\n  oras manifest fetch --media-type 'application/vnd.oci.image.manifest.v1+json' localhost:5000/hello:v1\n\nExample - Fetch manifest from a registry with certain platform:\n  oras manifest fetch --platform 'linux/arm/v5' localhost:5000/hello:v1\n\nExample - Fetch manifest from a registry with prettified json result:\n  oras manifest fetch --pretty localhost:5000/hello:v1\n\nExample - Fetch raw manifest from an OCI image layout folder 'layout-dir':\n  oras manifest fetch --oci-layout layout-dir:v1\n\nExample - Fetch raw manifest from an OCI layout archive file 'layout.tar':\n  oras manifest fetch --oci-layout layout.tar:v1\n\nExample - Fetch raw manifest tagged 'example.com:v1' from an OCI image layout folder 'layout-dir':\n  oras manifest fetch example.com:v1 --oci-layout-path layout-dir\n\nUsage:\n  oras manifest fetch [flags] <name>{:<tag>|@<digest>}\n\nAliases:\n  fetch, get, show\n\nFlags:\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n  -d, --debug                                       output debug logs (implies --no-tty)\n      --descriptor                                  output the descriptor\n      --format string                               [Experimental] format output using a custom template:\n                                                    'json':         Print in prettified JSON format\n                                                    'go-template':  Print using the given Go template\n                                                    'text':         Print in text format (default \"text\")\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for fetch\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --insecure                                    allow connections to SSL registry without certs\n      --key-file string                             client private key file for the remote registry\n      --media-type strings                          accepted media types\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -o, --output path                                 file path to write the fetched manifest to, use - for stdout\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]\n      --pretty                                      prettify JSON objects printed to stdout\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                             [Experimental] template string used to format output\n  -u, --username string                             registry username\n"
+  },
+  "oras manifest fetch-config --help": {
+    "returncode": 0,
+    "stdout": "Fetch the config of a manifest from a registry or an OCI image layout\n\nExample - Fetch the config:\n  oras manifest fetch-config localhost:5000/hello:v1\n\nExample - Fetch the config of certain platform:\n  oras manifest fetch-config --platform 'linux/arm/v5' localhost:5000/hello:v1\n\nExample - Fetch and print the prettified config:\n  oras manifest fetch-config --pretty localhost:5000/hello:v1\n\nExample - Fetch the config and save it to a local file:\n  oras manifest fetch-config --output config.json localhost:5000/hello:v1\n\nExample - Fetch the descriptor of the config:\n  oras manifest fetch-config --descriptor localhost:5000/hello:v1\n\nExample - Fetch and print the prettified descriptor of the config:\n  oras manifest fetch-config --descriptor --pretty localhost:5000/hello:v1\n\nUsage:\n  oras manifest fetch-config [flags] <name>{:<tag>|@<digest>}\n\nAliases:\n  fetch-config, get-config\n\nFlags:\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n  -d, --debug                                       output debug logs (implies --no-tty)\n      --descriptor                                  output the descriptor\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for fetch-config\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --insecure                                    allow connections to SSL registry without certs\n      --key-file string                             client private key file for the remote registry\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -o, --output path                                 file path to write the fetched config to, use - for stdout\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]\n      --pretty                                      prettify JSON objects printed to stdout\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                             registry username\n"
+  },
+  "oras manifest index --help": {
+    "returncode": 0,
+    "stdout": "[Experimental] Index operations\n\nUsage:\n  oras manifest index [command]\n\nAvailable Commands:\n  create      [Experimental] Create and push an index from provided manifests\n  update      [Experimental] Update and push an image index\n\nFlags:\n  -h, --help   help for index\n\nUse \"oras manifest index [command] --help\" for more information about a command.\n"
+  },
+  "oras manifest index create --help": {
+    "returncode": 0,
+    "stdout": "[Experimental] Create and push an index from provided manifests. All manifests should be in the same repository\n\nExample - Create an index from source manifests tagged 'linux-amd64' and 'linux-arm64', and push without tagging:\n  oras manifest index create localhost:5000/hello linux-amd64 linux-arm64\n\nExample - Create an index from source manifests tagged 'linux-amd64' and 'linux-arm64', and push with the tag 'v1':\n  oras manifest index create localhost:5000/hello:v1 linux-amd64 linux-arm64\n\nExample - Create an index from source manifests using both tags and digests, and push with tag 'v1':\n  oras manifest index create localhost:5000/hello:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9\n\nExample - Create an index and push it with multiple tags:\n  oras manifest index create localhost:5000/hello:tag1,tag2,tag3 linux-amd64 linux-arm64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9\n\nExample - Create and push an index with annotations:\n  oras manifest index create localhost:5000/hello:v1 linux-amd64 --annotation \"key=val\"\n\nExample - Create an index with a specified artifact type:\n  oras manifest index create --artifact-type=\"application/vnd.example+type\" localhost:5000/hello linux-amd64\n\nExample - Create an index and push to an OCI image layout folder 'layout-dir' and tag with 'v1':\n  oras manifest index create layout-dir:v1 linux-amd64 sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --oci-layout\n  \nExample - Create an index and save it locally to index.json, auto push will be disabled:\n  oras manifest index create localhost:5000/hello linux-amd64 linux-arm64 --output index.json\n\nExample - Create an index and output the index to stdout, auto push will be disabled:\n  oras manifest index create localhost:5000/hello linux-arm64 --output - --pretty\n\nUsage:\n  oras manifest index create [flags] <target>[:<tag[,<tag>][...]] <sources>[{<tag>|<digest>}...]\n\nAliases:\n  create, pack\n\nFlags:\n  -a, --annotation stringArray                     manifest annotations\n      --artifact-type string                       artifact type for overall index\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for create\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -o, --output path                                file path to write the created index to, use - for stdout\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras manifest index update --help": {
+    "returncode": 0,
+    "stdout": "[Experimental] Update and push an image index. All manifests should be in the same repository\n\t\t\nExample - Remove a manifest and add two manifests from an index tagged 'v1'. The tag will point to the updated index:\n  oras manifest index update localhost:5000/hello:v1 --add linux-amd64 --add linux-arm64 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9\n\nExample - Create a new index by updating an existing index specified by its digest:\n  oras manifest index update localhost:5000/hello@sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-amd64 --remove sha256:fd6ed2f36b5465244d5dc86cb4e7df0ab8a9d24adc57825099f522fe009a22bb\n\nExample - Merge manifests from the index 'v2-windows' to the index 'v2':\n  oras manifest index update localhost:5000/hello:v2 --merge v2-windows\n\nExample - Update an index and tag the updated index as 'v2.1.0' and 'v2':\n  oras manifest index update localhost:5000/hello@sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-amd64 --tag \"v2.1.0\" --tag \"v2\"\n\nExample - Update an index and push to an OCI image layout folder 'layout-dir' and tag with 'v2':\n  oras manifest index update layout-dir@99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --add linux-arm64 --tag \"v2\" --oci-layout\n\nExample - Update an index and save it locally to index.json, auto push will be disabled:\n  oras manifest index update localhost:5000/hello:v2 --add v2-linux-amd64 --output index.json\n\nExample - Update an index and output the index to stdout, auto push will be disabled:\n  oras manifest index update localhost:5000/hello:v2 --remove sha256:99e4703fbf30916f549cd6bfa9cdbab614b5392fbe64fdee971359a77073cdf9 --output - --pretty\n\nExample - Update an index to use a different artifact type:\n  oras manifest index update localhost:5000/hello:v1 --artifact-type=\"application/vnd.example+type\"\n\nExample - Update an index to remove any existing artifact type:\n  oras manifest index update localhost:5000/hello:v1 --artifact-type=\"\"\n\nUsage:\n  oras manifest index update <index>{:<tag>|@<digest>} [{--add|--merge|--remove} <manifest>{<tag>|<digest>}] [...] [flags]\n\nFlags:\n      --add stringArray                            manifests to add to the index\n      --artifact-type string                       new artifact type for overall index\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for update\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --merge stringArray                          indexes to be merged into the index\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -o, --output path                                file path to write the created index to, use - for stdout\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --remove stringArray                         manifests to remove from the index, must be digests\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n      --tag stringArray                            extra tags for the updated index\n  -u, --username string                            registry username\n"
+  },
+  "oras manifest push --help": {
+    "returncode": 0,
+    "stdout": "Push a manifest to a registry or an OCI image layout\n\nExample - Push a manifest to repository 'localhost:5000/hello' and tag with 'v1':\n  oras manifest push localhost:5000/hello:v1 manifest.json\n\nExample - Push a manifest using a specific method for the Referrers API:\n  oras manifest push --distribution-spec v1.1-referrers-api localhost:5000/hello:v1 manifest.json\n  oras manifest push --distribution-spec v1.1-referrers-tag localhost:5000/hello:v1 manifest.json\n\nExample - Push a manifest with content read from stdin:\n  oras manifest push localhost:5000/hello:v1 -\n\nExample - Push a manifest and output its descriptor:\n  oras manifest push --descriptor localhost:5000/hello:v1 manifest.json\n\nExample - Push a manifest to repository 'localhost:5000/hello' and output the prettified descriptor:\n  oras manifest push --descriptor --pretty localhost:5000/hello manifest.json\n\nExample - Push a manifest with specified media type to repository 'localhost:5000/hello' and tag with 'v1':\n  oras manifest push --media-type application/vnd.cncf.oras.artifact.manifest.v1+json localhost:5000/hello:v1 oras_manifest.json\n\nExample - Push a manifest to repository 'localhost:5000/hello' and tag with 'tag1', 'tag2', 'tag3':\n  oras manifest push localhost:5000/hello:tag1,tag2,tag3 manifest.json\n\nExample - Push a manifest to repository 'localhost:5000/hello' and tag with 'tag1', 'tag2', 'tag3' and concurrency level tuned:\n  oras manifest push --concurrency 6 localhost:5000/hello:tag1,tag2,tag3 manifest.json\n\nExample - Push a manifest to an OCI image layout folder 'layout-dir' and tag with 'v1':\n  oras manifest push --oci-layout layout-dir:v1 manifest.json\n\nExample - Push a manifest to an OCI image layout folder 'layout-dir' and tag with 'example.com:v1':\n  oras manifest push example.com:v1 manifest.json --oci-layout-path layout-dir\n\nUsage:\n  oras manifest push [flags] <name>[:<tag>[,<tag>][...]|@<digest>] <file>\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n      --concurrency int                            concurrency level (default 5)\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --descriptor                                 output the descriptor\n      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for push\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --media-type string                          media type of manifest\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --pretty                                     prettify JSON objects printed to stdout\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras pull --help": {
+    "returncode": 0,
+    "stdout": "Pull files from a registry or an OCI image layout\n\nExample - Pull artifact files from a registry:\n  oras pull localhost:5000/hello:v1\n\nExample - Recursively pulling all files from a registry, including subjects of hello:v1:\n  oras pull --include-subject localhost:5000/hello:v1\n\nExample - Pull files from an insecure registry:\n  oras pull --insecure localhost:5000/hello:v1\n\nExample - Pull files from the HTTP registry:\n  oras pull --plain-http localhost:5000/hello:v1\n\nExample - Pull files from a registry with local cache:\n  export ORAS_CACHE=~/.oras/cache\n  oras pull localhost:5000/hello:v1\n\nExample - Pull files from a registry with certain platform:\n  oras pull --platform linux/arm/v5 localhost:5000/hello:v1\n\nExample - Pull all files with concurrency level tuned:\n  oras pull --concurrency 6 localhost:5000/hello:v1\n\nExample - [Experimental] Pull files and format output in JSON:\n  oras pull localhost:5000/hello:v1 --format json\n\nExample - [Experimental] Pull files and format output with Go template:\n  oras pull localhost:5000/hello:v1 --format go-template=\"{{.reference}}\"\n\nExample - Pull artifact files from an OCI image layout folder 'layout-dir':\n  oras pull --oci-layout layout-dir:v1\n\nExample - Pull artifact files from an OCI layout archive 'layout.tar':\n  oras pull --oci-layout layout.tar:v1\n\nExample - Pull artifact files tagged 'example.com:v1' from an OCI image layout folder 'layout-dir':\n  oras pull example.com:v1 --oci-layout-path layout-dir\n\nUsage:\n  oras pull [flags] <name>{:<tag>|@<digest>}\n\nFlags:\n  -T, --allow-path-traversal                        allow storing files out of the output directory\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n      --concurrency int                             concurrency level (default 3)\n      --config string                               output manifest config file\n  -d, --debug                                       output debug logs (implies --no-tty)\n      --format string                               [Experimental] format output using a custom template:\n                                                    'json':         Print in JSON format\n                                                    'go-template':  Print output using the given Go template\n                                                    'text':         Print in text format (default \"text\")\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for pull\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --include-subject                             recursively pull the subject of artifacts\n      --insecure                                    allow connections to SSL registry without certs\n  -k, --keep-old-files                              do not replace existing files when pulling, treat them as errors\n      --key-file string                             client private key file for the remote registry\n      --no-tty                                      [Preview] disable progress bars\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -o, --output string                               output directory (default \".\")\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                             [Experimental] template string used to format output\n  -u, --username string                             registry username\n"
+  },
+  "oras push --help": {
+    "returncode": 0,
+    "stdout": "Push files to a registry or an OCI image layout\n\nExample - Push file \"hi.txt\" with media type \"application/vnd.oci.image.layer.v1.tar\" (default):\n  oras push localhost:5000/hello:v1 hi.txt\n\nExample - Push file \"hi.txt\" and export the pushed manifest to a specified path:\n  oras push --export-manifest manifest.json localhost:5000/hello:v1 hi.txt\n\nExample - Push file \"hi.txt\" with the custom media type \"application/vnd.me.hi\":\n  oras push localhost:5000/hello:v1 hi.txt:application/vnd.me.hi\n\nExample - Push multiple files with different media types:\n  oras push localhost:5000/hello:v1 hi.txt:application/vnd.me.hi bye.txt:application/vnd.me.bye\n\nExample - Push file with colon in name \"hi:txt\" with the default media type:\n  oras push localhost:5000/hello:v1 hi:txt:\n\nExample - Push file \"hi.txt\" with artifact type \"application/vnd.example+type\":\n  oras push --artifact-type application/vnd.example+type localhost:5000/hello:v1 hi.txt\n\nExample - Push file \"hi.txt\" with config type \"application/vnd.me.config\":\n  oras push --image-spec v1.0 --artifact-type application/vnd.me.config localhost:5000/hello:v1 hi.txt\n\nExample - Push file \"hi.txt\" with the custom manifest config \"config.json\" of the custom media type \"application/vnd.me.config\":\n  oras push --config config.json:application/vnd.me.config localhost:5000/hello:v1 hi.txt\n\nExample - [Experimental] Push file \"hi.txt\" and format output in JSON:\n  oras push localhost:5000/hello:v1 hi.txt --format json\n\nExample - [Experimental] Push file \"hi.txt\" and format output with Go template:\n  oras push localhost:5000/hello:v1 hi.txt --format go-template=\"{{.digest}}\"\n\nExample - Push file to the insecure registry:\n  oras push --insecure localhost:5000/hello:v1 hi.txt\n\nExample - Push file to the HTTP registry:\n  oras push --plain-http localhost:5000/hello:v1 hi.txt\n\nExample - Push repository with manifest annotations:\n  oras push --annotation \"key=val\" localhost:5000/hello:v1\n\nExample - Push repository with manifest annotation file:\n  oras push --annotation-file annotation.json localhost:5000/hello:v1\n\nExample - [Experimental] Push artifact to repository with platform:\n  oras push --artifact-platform linux/arm/v5 localhost:5000/hello:v1\n\nExample - Push file \"hi.txt\" with multiple tags:\n  oras push localhost:5000/hello:tag1,tag2,tag3 hi.txt\n\nExample - Push file \"hi.txt\" with multiple tags and concurrency level tuned:\n  oras push --concurrency 6 localhost:5000/hello:tag1,tag2,tag3 hi.txt\n\nExample - Push file \"hi.txt\" into an OCI image layout folder 'layout-dir' with tag 'test':\n  oras push --oci-layout layout-dir:test hi.txt\n\nExample - Push file \"hi.txt\" into an OCI image layout folder 'layout-dir' with tag 'example.com:test':\n  oras push example.com:test hi.txt --oci-layout-path layout-dir\n\nUsage:\n  oras push [flags] <name>[:<tag>[,<tag>][...]] <file>[:<type>] [...]\n\nFlags:\n  -a, --annotation stringArray                               manifest annotations\n      --annotation-file string                               path of the annotation file\n      --artifact-platform os[/arch][/variant][:os_version]   [Experimental] set artifact platform in the form of os[/arch][/variant][:os_version]\n      --artifact-type string                                 artifact type\n      --ca-file string                                       server certificate authority file for the remote registry\n      --cert-file string                                     client certificate file for the remote registry\n      --concurrency int                                      concurrency level (default 5)\n      --config path                                          path of image config file\n  -d, --debug                                                output debug logs (implies --no-tty)\n      --disable-path-validation                              skip path validation\n      --export-manifest path                                 path of the pushed manifest\n      --format string                                        [Experimental] format output using a custom template:\n                                                             'json':         Print in JSON format\n                                                             'go-template':  Print output using the given Go template\n                                                             'text':         Print in text format (default \"text\")\n  -H, --header stringArray                                   add custom headers to requests\n  -h, --help                                                 help for push\n      --identity-token string                                registry identity token\n      --identity-token-stdin                                 read identity token from stdin\n      --image-spec string                                    [Preview] specify manifest type for building artifact. Options: v1.1, v1.0 (default v1.1, overridden to v1.0 if --config is used without --artifact-type)\n      --insecure                                             allow connections to SSL registry without certs\n      --key-file string                                      client private key file for the remote registry\n      --no-tty                                               [Preview] disable progress bars\n      --oci-layout                                           set target as an OCI image layout\n      --oci-layout-path string                               [Experimental] set the path for the OCI image layout target\n  -p, --password string                                      registry password or identity token\n      --password-stdin                                       read password from stdin\n      --plain-http                                           allow insecure connections to registry without SSL check\n      --registry-config path                                 path of the authentication file for registry\n      --resolve host:port:address[:address_port]             customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                                      [Experimental] template string used to format output\n  -u, --username string                                      registry username\n"
+  },
+  "oras repo --help": {
+    "returncode": 0,
+    "stdout": "Repository operations\n\nUsage:\n  oras repo [command]\n\nAliases:\n  repo, repository\n\nAvailable Commands:\n  ls          List the repositories under the registry\n  tags        Show tags of the target repository\n\nFlags:\n  -h, --help   help for repo\n\nUse \"oras repo [command] --help\" for more information about a command.\n"
+  },
+  "oras repo ls --help": {
+    "returncode": 0,
+    "stdout": "List the repositories under the registry\n\nExample - List the repositories under the registry:\n  oras repo ls localhost:5000\n\nExample - List the repositories under a namespace in the registry:\n  oras repo ls localhost:5000/example-namespace\n\nExample - List the repositories under the registry that include values lexically after last:\n  oras repo ls --last \"last_repo\" localhost:5000\n\nExample - [Experimental] List the repositories under the registry in JSON format:\n  oras repo ls localhost:5000 --format json\n\nExample - [Experimental] List the repositories under the registry using the given Go template:\n  oras repo ls localhost:5000 --format go-template --template \"{{.repositories}}\"\n\nUsage:\n  oras repo ls [flags] <registry>\n\nAliases:\n  ls, list\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --format string                              [Experimental] format output using a custom template:\n                                                   'json':         Print in JSON format\n                                                   'go-template':  Print output using the given Go template\n                                                   'text':         Print in text format (default \"text\")\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for ls\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --last last                                  start after the repository specified by last\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                            [Experimental] template string used to format output\n  -u, --username string                            registry username\n"
+  },
+  "oras repo tags --help": {
+    "returncode": 0,
+    "stdout": "Show tags of the target repository\n\nExample - Show tags of the target repository:\n  oras repo tags localhost:5000/hello\n\nExample - Show tags in the target repository with digest-like tags hidden:\n  oras repo tags --exclude-digest-tags localhost:5000/hello\n\nExample - Show tags of the target repository that include values lexically after last:\n  oras repo tags --last \"last_tag\" localhost:5000/hello\n\nExample - Show tags of the target OCI image layout folder 'layout-dir':\n  oras repo tags --oci-layout layout-dir\n\nExample - Show tags of the target OCI layout archive 'layout.tar':\n  oras repo tags --oci-layout layout.tar\n\nExample - [Experimental] Show tags associated with a particular tagged resource:\n  oras repo tags localhost:5000/hello:latest\n\nExample - [Experimental] Show tags associated with a digest:\n  oras repo tags localhost:5000/hello@sha256:c551125a624189cece9135981621f3f3144564ddabe14b523507bf74c2281d9b\n\nExample - [Experimental] Show tags of the target repository in JSON format:\n  oras repo tags localhost:5000/hello --format json\n\nExample - [Experimental] Show tags of the target repository using the given Go template:\n  oras repo tags localhost:5000/hello --format go-template --template \"{{.tags}}\"\n\nExample - [Experimental] Show tags of a specific repository in OCI layout:\n  oras repo tags --oci-layout-path layout-dir localhost:5000/hello\n\nUsage:\n  oras repo tags [flags] <name>\n\nAliases:\n  tags, show-tags\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --exclude-digest-tags                        [Preview] exclude all digest-like tags such as 'sha256-aaaa...'\n      --format string                              [Experimental] format output using a custom template:\n                                                   'json':         Print in JSON format\n                                                   'go-template':  Print output using the given Go template\n                                                   'text':         Print in text format (default \"text\")\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for tags\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --last last                                  start after the tag specified by last\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n      --template string                            [Experimental] template string used to format output\n  -u, --username string                            registry username\n"
+  },
+  "oras resolve --help": {
+    "returncode": 0,
+    "stdout": "[Preview] Resolves digest of the target artifact\n\nExample - Resolve digest of the target artifact:\n  oras resolve localhost:5000/hello-world:v1\n\nUsage:\n  oras resolve [flags] <name>{:<tag>|@<digest>}\n\nAliases:\n  resolve, digest\n\nFlags:\n      --ca-file string                              server certificate authority file for the remote registry\n      --cert-file string                            client certificate file for the remote registry\n  -d, --debug                                       output debug logs (implies --no-tty)\n  -l, --full-reference                              print the full artifact reference with digest\n  -H, --header stringArray                          add custom headers to requests\n  -h, --help                                        help for resolve\n      --identity-token string                       registry identity token\n      --identity-token-stdin                        read identity token from stdin\n      --insecure                                    allow connections to SSL registry without certs\n      --key-file string                             client private key file for the remote registry\n      --oci-layout                                  set target as an OCI image layout\n      --oci-layout-path string                      [Experimental] set the path for the OCI image layout target\n  -p, --password string                             registry password or identity token\n      --password-stdin                              read password from stdin\n      --plain-http                                  allow insecure connections to registry without SSL check\n      --platform os[/arch][/variant][:os_version]   request platform in the form of os[/arch][/variant][:os_version]\n      --registry-config path                        path of the authentication file for registry\n      --resolve host:port:address[:address_port]    customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                             registry username\n"
+  },
+  "oras restore --help": {
+    "returncode": 0,
+    "stdout": "[Experimental] Restore artifacts to a registry from an OCI image layout, which can be either a directory or a tar archive. \n\nExample - Restore a single artifact from a tar archive:\n  oras restore --input hello.tar localhost:5000/hello:v1\n\nExample - Restore a single artifact from a directory:\n  oras restore --input hello localhost:5000/hello:v1\n\nExample - Perform a dry run without actually uploading artifacts:\n  oras restore --input hello --dry-run localhost:5000/hello:v1\n\nExample - Restore multiple specific tags:\n  oras restore --input hello localhost:5000/hello:v1,v2\n\nExample - Restore all tagged artifacts:\n  oras restore --input hello localhost:5000/hello\n\nExample - Exclude referrers when restoring artifacts:\n  oras restore --input hello --exclude-referrers localhost:5000/hello\n\nExample - Use Referrers API for discovering referrers:\n  oras restore --input hello --distribution-spec v1.1-referrers-api localhost:5000/hello\n\nExample - Use Referrers Tag Schema for discovering referrers:\n  oras restore --input hello --distribution-spec v1.1-referrers-tag localhost:5000/hello\n\nExample - Restore to an insecure registry:\n  oras restore --input hello --insecure localhost:5000/hello:v1\n\nExample - Restore to a plain HTTP registry (no TLS):\n  oras restore --input hello --plain-http localhost:5000/hello:v1\n\nExample - Set custom concurrency level:\n  oras restore --input hello --concurrency 6 localhost:5000/hello:v1\n\nUsage:\n  oras restore [flags] --input <path> <registry>/<repository>[:<ref1>[,<ref2>...]]\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n      --concurrency int                            concurrency level (default 5)\n  -d, --debug                                      output debug logs (implies --no-tty)\n      --distribution-spec string                   [Preview] set OCI distribution spec version and API option for target. Options: v1.1-referrers-tag, v1.1-referrers-api\n      --dry-run                                    simulate the restore process without actually uploading any artifacts\n      --exclude-referrers                          restore artifacts excluding their referrers\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for restore\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --input string                               path to the OCI layout, either a tar archive (*.tar) or a directory\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --no-tty                                     [Preview] disable progress bars\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras tag --help": {
+    "returncode": 0,
+    "stdout": "Tag a manifest in a registry or an OCI image layout\n\nExample - Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2':\n  oras tag localhost:5000/hello:v1.0.1 v1.0.2\n\nExample - Tag the manifest with digest sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 to 'v1.0.2'\n  oras tag localhost:5000/hello@sha256:9463e0d192846bc994279417b50114606712d516aab45f4d8b31cbc6e46aad71 v1.0.2\n\nExample - Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.2', 'latest'\n  oras tag localhost:5000/hello:v1.0.1 v1.0.2 latest\n\nExample - Tag the manifest 'v1.0.1' in 'localhost:5000/hello' to 'v1.0.1', 'v1.0.2', 'latest' with concurrency level tuned:\n  oras tag --concurrency 1 localhost:5000/hello:v1.0.1 v1.0.2 latest\n\nExample - Tag the manifest 'v1.0.1' to 'v1.0.2' in an OCI image layout folder 'layout-dir':\n  oras tag --oci-layout layout-dir:v1.0.1 v1.0.2\n\nUsage:\n  oras tag [flags] <name>{:<tag>|@<digest>} <new_tag> [...]\n\nFlags:\n      --ca-file string                             server certificate authority file for the remote registry\n      --cert-file string                           client certificate file for the remote registry\n      --concurrency int                            concurrency level (default 5)\n  -d, --debug                                      output debug logs (implies --no-tty)\n  -H, --header stringArray                         add custom headers to requests\n  -h, --help                                       help for tag\n      --identity-token string                      registry identity token\n      --identity-token-stdin                       read identity token from stdin\n      --insecure                                   allow connections to SSL registry without certs\n      --key-file string                            client private key file for the remote registry\n      --oci-layout                                 set target as an OCI image layout\n      --oci-layout-path string                     [Experimental] set the path for the OCI image layout target\n  -p, --password string                            registry password or identity token\n      --password-stdin                             read password from stdin\n      --plain-http                                 allow insecure connections to registry without SSL check\n      --registry-config path                       path of the authentication file for registry\n      --resolve host:port:address[:address_port]   customized DNS for registry, formatted in host:port:address[:address_port]\n  -u, --username string                            registry username\n"
+  },
+  "oras version --help": {
+    "returncode": 0,
+    "stdout": "Show the oras version information\n\nExample - print version:\n  oras version\n\nUsage:\n  oras version [flags]\n\nFlags:\n  -h, --help   help for version\n"
+  }
+}

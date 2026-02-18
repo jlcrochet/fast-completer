@@ -77,8 +77,8 @@ def main() -> int:
             refresh_schema(schema_dir, schema_file, exporter, use_uv)
 
         if not schema_file.exists():
-            print(f"Schema not found: {schema_file}", file=sys.stderr)
-            return 1
+            print(f"Schema not found: {schema_file}; skipping", file=sys.stderr)
+            continue
 
         print(f"Generating blob for {schema_file}")
         cmd = [str(fast_completer), "--generate-blob", str(schema_file)]

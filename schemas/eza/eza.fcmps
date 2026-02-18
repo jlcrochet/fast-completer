@@ -1,0 +1,63 @@
+# eza CLI schema for fast-completer
+# Generated from eza 0.23.4
+
+eza # A modern replacement for ls
+	--oneline|-1 @bool # display one entry per line
+	--long|-l @bool # display extended file metadata as a table
+	--grid|-G @bool # display entries as a grid (default)
+	--across|-x @bool # sort the grid across, rather than downwards
+	--recurse|-R @bool # recurse into directories
+	--tree|-T @bool # recurse into directories as a tree
+	--dereference|-X @bool # dereference symbolic links when displaying information
+	--classify|-F # display type indicator by file names (always, auto, never)
+	--colo # when to use terminal colours (always, auto, never)
+	--colo # highlight levels of 'field' distinctly(all, age, size)
+	--colo # use gradient or fixed colors in --color-scale (fixed, gradient)
+	--icons # when to display icons (always, auto, never)
+	--no-quotes @bool # don't quote file names with spaces
+	--hyperlink @bool # display entries as hyperlinks
+	--absolute @bool # display entries with their absolute path (on, follow, off)
+	--follow-symlinks @bool # drill down into symbolic links that point to directories
+	--width|-w # set screen width in columns
+	--all|-a @bool # show hidden and 'dot' files. Use this twice to also
+	--almost-all|-A @bool # equivalent to --all; included for compatibility with `ls -A`
+	--treat-dirs-as-files|-d @bool # list directories as files; don't list their contents
+	--only-dirs|-D @bool # list only directories
+	--only-files|-f @bool # list only files
+	--show-symlinks @bool # explicitly show symbolic links (for use with --only-dirs | --only-files)
+	--no-symlinks @bool # do not show symbolic links
+	--level|-L # limit the depth of recursion
+	--reverse|-r @bool # reverse the sort order
+	--sort|-s # which field to sort by
+	--group-directories-first @bool # list directories before other files
+	--group-directories-last @bool # list directories after other files
+	--ignore-glob|-I # glob patterns (pipe-separated) of files to ignore
+	--git-ignore @bool # ignore files mentioned in '.gitignore'
+	--binary|-b @bool # list file sizes with binary prefixes
+	--bytes|-B @bool # list file sizes in bytes, without any prefixes
+	--group|-g @bool # list each file's group
+	--smart-group @bool # only show group if it has a different name from owner
+	--links|-H @bool # list each file's number of hard links
+	--inode|-i @bool # list each file's inode number
+	--mounts|-M @bool # show mount details (Linux and Mac only)
+	--numeric|-n @bool # list numeric user and group IDs
+	--flags|-O @bool # list file flags (Mac, BSD, and Windows only)
+	--blocksize|-S @bool # show size of allocated file system blocks
+	--time|-t # which timestamp field to list (modified, accessed, created)
+	--modified|-m @bool # use the modified timestamp field
+	--accessed|-u @bool # use the accessed timestamp field
+	--created|-U @bool # use the created timestamp field
+	--changed @bool # use the changed timestamp field
+	--time-style @bool # how to format timestamps (default, iso, long-iso,
+	--total-size @bool # show the size of a directory as the size of all
+	--octal-permissions|-o @bool # list each file's permission in octal format
+	--no-permissions @bool # suppress the permissions field
+	--no-filesize @bool # suppress the filesize field
+	--no-user @bool # suppress the user field
+	--no-time @bool # suppress the time field
+	--stdin @bool # read file names from stdin, one per line or other separator
+	--git @bool # list each file's Git status, if tracked or ignored
+	--no-git @bool # suppress Git status (always overrides --git,
+	--git-repos @bool # list root of git-tree status
+	--git-repos-no-status @bool # list each git-repos branch name (much faster)
+	--context|-Z @bool # list each file's security context

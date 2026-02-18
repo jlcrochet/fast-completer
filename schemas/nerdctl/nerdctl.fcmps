@@ -1,0 +1,1109 @@
+# nerdctl CLI schema for fast-completer
+# Generated from nerdctl 2.2.1
+
+nerdctl # containerd CLI
+	--H|-H # Alias of --address (default "/run/containerd/containerd.sock")
+	--a|-a # Alias of --address (default "/run/containerd/containerd.sock")
+	--address # containerd address, optionally with "unix://" prefix [$CONTAINERD_ADDRESS] (default "/run/containerd/containerd.sock")
+	--bridge-ip # IP address for the default nerdctl bridge network [$NERDCTL_BRIDGE_IP]
+	--cdi-spec-dirs # The directories to search for CDI spec files. Defaults to /etc/cdi,/var/run/cdi (default [/home/jeffrey/.config/cdi,/run/user/1000/cdi])
+	--cgroup-manager # Cgroup manager to use ("cgroupfs"|"systemd") (default "systemd")
+	--cni-netconfpath # cni config directory [$NETCONFPATH] (default "/home/jeffrey/.config/cni/net.d")
+	--cni-path # cni plugins binary directory [$CNI_PATH] (default "/opt/cni/bin")
+	--data-root # Root directory of persistent nerdctl state (managed by nerdctl, not by containerd) (default "/home/jeffrey/.local/share/nerdctl")
+	--debug @bool # debug mode
+	--debug-full @bool # debug mode (with full output)
+	--experimental @bool # Control experimental: https://github.com/containerd/nerdctl/blob/main/docs/experimental.md [$NERDCTL_EXPERIMENTAL] (default true)
+	--host # Alias of --address (default "/run/containerd/containerd.sock")
+	--host-gateway-ip # IP address that the special 'host-gateway' string in --add-host resolves to. Defaults to the IP address of the host. It has no effect without setting --add-host [$NERDCTL_HOST_GATEWAY_IP] (default "10.255.255.254")
+	--hosts-dir # A directory that contains <HOST:PORT>/hosts.toml (containerd style) or <HOST:PORT>/{ca.cert, cert.pem, key.pem} (docker style) (default [/home/jeffrey/.config/containerd/certs.d,/home/jeffrey/.config/docker/certs.d])
+	--insecure-registry @bool # skips verifying HTTPS certs, and allows falling back to plain HTTP
+	--kube-hide-dupe @bool # Deduplicate images for Kubernetes with namespace k8s.io
+	--n|-n # Alias of --namespace (default "default")
+	--namespace # containerd namespace, such as "moby" for Docker, "k8s.io" for Kubernetes [$CONTAINERD_NAMESPACE] (default "default")
+	--snapshotter # containerd snapshotter [$CONTAINERD_SNAPSHOTTER] (default "overlayfs")
+	--storage-driver # Alias of --snapshotter (default "overlayfs")
+	--userns-remap # Support idmapping for creating and running containers. This options is only supported on linux. If host is passed, no idmapping is done. if a user name is passed, it does idmapping based on the uidmap and gidmap ranges specified in /etc/subuid and /etc/subgid respectively
+	apparmor # Manage AppArmor profiles
+		inspect
+		load
+		ls
+			--format # Format the output using the given go template
+			--quiet|-q @bool # Only display profile names
+		unload
+	attach # Attach stdin, stdout, and stderr to a running container.
+		--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+		--no-stdin @bool # Do not attach STDIN
+	build # Build an image from a Dockerfile. Needs buildkitd to be running.
+		--add-host # Add a custom host-to-IP mapping (format: "host:ip")
+		--allow # Allow extra privileged entitlement, e.g. network.host, security.insecure
+		--attest # Attestation parameters (format: "type=sbom,generator=image")
+		--build-arg # Set build-time variables
+		--build-context # Additional build contexts (e.g., name=path)
+		--buildkit-host # BuildKit address
+		--cache-from # External cache sources (eg. user/app:cache, type=local,src=path/to/dir)
+		--cache-to # Cache export destinations (eg. user/app:cache, type=local,dest=path/to/dir)
+		--file|-f # Name of the Dockerfile
+		--iidfile # Write the image ID to the file
+		--label # Set metadata for an image
+		--network # Set type of network for build (format:network=default|none|host) (default "default")
+		--no-cache @bool # Do not use cache when building the image
+		--output|-o # Output destination (format: type=local,dest=path)
+		--platform # Set target platform for build (e.g., "amd64", "arm64")
+		--progress # Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
+		--provenance # Shorthand for "--attest=type=provenance"
+		--pull @bool # On true, always attempt to pull latest image version from remote. Default uses buildkit's default.
+		--quiet|-q @bool # Suppress the build output and print image ID on success
+		--rm @bool # Remove intermediate containers after a successful build (default true)
+		--sbom # Shorthand for "--attest=type=sbom"
+		--secret # Secret file to expose to the build: id=mysecret,src=/local/secret
+		--ssh # SSH agent socket or keys to expose to the build (format: default|<id>[=<socket>|<key>[,<key>]])
+		--tag|-t # Name and optionally a tag in the 'name:tag' format
+		--target # Set the target build stage to build
+	builder # Manage builds
+		build
+			--add-host # Add a custom host-to-IP mapping (format: "host:ip")
+			--allow # Allow extra privileged entitlement, e.g. network.host, security.insecure
+			--attest # Attestation parameters (format: "type=sbom,generator=image")
+			--build-arg # Set build-time variables
+			--build-context # Additional build contexts (e.g., name=path)
+			--buildkit-host # BuildKit address
+			--cache-from # External cache sources (eg. user/app:cache, type=local,src=path/to/dir)
+			--cache-to # Cache export destinations (eg. user/app:cache, type=local,dest=path/to/dir)
+			--file|-f # Name of the Dockerfile
+			--iidfile # Write the image ID to the file
+			--label # Set metadata for an image
+			--network # Set type of network for build (format:network=default|none|host) (default "default")
+			--no-cache @bool # Do not use cache when building the image
+			--output|-o # Output destination (format: type=local,dest=path)
+			--platform # Set target platform for build (e.g., "amd64", "arm64")
+			--progress # Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
+			--provenance # Shorthand for "--attest=type=provenance"
+			--pull @bool # On true, always attempt to pull latest image version from remote. Default uses buildkit's default.
+			--quiet|-q @bool # Suppress the build output and print image ID on success
+			--rm @bool # Remove intermediate containers after a successful build (default true)
+			--sbom # Shorthand for "--attest=type=sbom"
+			--secret # Secret file to expose to the build: id=mysecret,src=/local/secret
+			--ssh # SSH agent socket or keys to expose to the build (format: default|<id>[=<socket>|<key>[,<key>]])
+			--tag|-t # Name and optionally a tag in the 'name:tag' format
+			--target # Set the target build stage to build
+		debug
+			--build-arg # Set build-time variables
+			--buildg-startup-timeout # Timeout for starting up buildg (default 1m0s)
+			--file|-f # Name of the Dockerfile
+			--image # Image to use for debugging stage
+			--secret # Expose secret value to the build. Format: id=secretname,src=filepath
+			--ssh # Allow forwarding SSH agent to the build. Format: default|<id>[=<socket>|<key>[,<key>]]
+			--target # Set the target build stage to build
+		prune
+			--all|-a @bool # Remove all unused build cache, not just dangling ones
+			--buildkit-host # BuildKit address
+			--force|-f @bool # Do not prompt for confirmation
+	checkpoint # Manage checkpoints.
+		create
+			--checkpoint-dir # Checkpoint directory
+			--leave-running @bool # Leave the container running after checkpointing
+		ls
+			--checkpoint-dir # Checkpoint directory
+		rm
+			--checkpoint-dir # Checkpoint directory
+	commit # Create a new image from a container's changes
+		--author|-a # Author (e.g., "nerdctl contributor <nerdctl-dev@example.com>")
+		--change|-c # Apply Dockerfile instruction to the created image (supported directives: [CMD, ENTRYPOINT])
+		--compression # commit compression algorithm (zstd or gzip) (default "gzip")
+		--estargz @bool # Convert the committed layer to eStargz for lazy pulling
+		--estargz-chunk-size # eStargz chunk size
+		--estargz-compression-level # eStargz compression level (1-9) (default 9)
+		--estargz-min-chunk-size # The minimal number of bytes of data must be written in one gzip stream
+		--format # Format of the committed image (docker or oci) (default "docker")
+		--message|-m # Commit message
+		--pause|-p @bool # Pause container during commit (default true)
+		--zstdchunked @bool # Convert the committed layer to zstd:chunked for lazy pulling
+		--zstdchunked-chunk-size # zstd:chunked chunk size
+		--zstdchunked-compression-level # zstd:chunked compression level (default 3)
+	compose # Compose
+		--env-file # Specify an alternate environment file
+		--f|-f # Alias of --file
+		--file # Specify an alternate compose file
+		--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+		--profile # Specify a profile to enable
+		--project-directory # Specify an alternate working directory
+		--project-name|-p # Specify an alternate project name
+		build
+			--build-arg # Set build-time variables for services.
+			--no-cache @bool # Do not use cache when building the image.
+			--progress # Set type of progress output (auto, plain, tty). Use plain to show container output
+		config
+			--hash # Print the service config hash, one per line.
+			--quiet|-q @bool # Only validate the configuration, don't print anything.
+			--services @bool # Print the service names, one per line.
+			--volumes @bool # Print the volume names, one per line.
+		cp
+			--dry-run @bool # Execute command in dry run mode
+			--follow-link|-L @bool # Always follow symbol link in SRC_PATH
+			--index # index of the container if service has multiple replicas
+		create
+			--build @bool # Build images before starting containers.
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed.
+			--no-build @bool # Don't build an image even if it's missing, conflict with --build.
+			--no-recreate @bool # Don't recreate containers if they exist, conflict with --force-recreate.
+			--pull # Pull images before running. (support always|missing|never) (default "missing")
+		down
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file.
+			--volumes|-v # Remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers.
+		exec
+			--detach|-d @bool # Detached mode: Run containers in the background
+			--env|-e # Set environment variables
+			--index # index of the container if the service has multiple instances. (default 1)
+			--no-TTY|-T @bool # Disable pseudo-TTY allocation. By default nerdctl compose exec allocates a TTY. (default true)
+			--privileged @bool # Give extended privileges to the command
+			--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+			--workdir|-w # Working directory inside the container
+		images
+			--format # Format the output. Supported values: [json]
+			--quiet|-q @bool # Only show numeric image IDs
+		kill
+			--signal|-s # SIGNAL to send to the container. (default "SIGKILL")
+		logs
+			--follow|-f @bool # Follow log output.
+			--no-color @bool # Produce monochrome output
+			--no-log-prefix @bool # Don't print prefix in logs
+			--tail # Number of lines to show from the end of the logs (default "all")
+			--timestamps|-t @bool # Show timestamps
+		pause
+		port
+			--index # index of the container if the service has multiple instances. (default 1)
+			--protocol # protocol of the port (tcp|udp) (default "tcp")
+		ps
+			--all|-a @bool # Show all containers (default shows just running)
+			--filter # Filter matches containers based on given conditions
+			--format # Format the output. Supported values: [table|json] (default "table")
+			--quiet|-q @bool # Only display container IDs
+			--services @bool # Display services
+			--status # Filter services by status. Values: [paused | restarting | removing | running | dead | created | exited]
+		pull
+			--quiet|-q @bool # Pull without printing progress information
+		push
+		restart
+			--timeout|-t # Seconds to wait before restarting them (default 10)
+		rm
+			--force|-f @bool # Do not prompt for confirmation
+			--stop|-s @bool # Stop containers before removing
+			--volumes|-v @bool # Remove anonymous volumes associated with containers
+		run
+			--build @bool # Build images before starting containers.
+			--detach|-d @bool # Detached mode: Run containers in the background
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env|-e # Set environment variables
+			--interactive|-i @bool # Keep STDIN open even if not attached (default true)
+			--label|-l # Set metadata on container
+			--name # Assign a name to the container
+			--no-build @bool # Don't build an image, even if it's missing.
+			--no-color @bool # Produce monochrome output
+			--no-deps @bool # Don't start dependencies
+			--no-log-prefix @bool # Don't print prefix in logs
+			--publish # Publish a container's port(s) to the host
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file.
+			--rm @bool # Automatically remove the container when it exits
+			--service-ports @bool # Run command with the service's ports enabled and mapped to the host
+			--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+			--volume|-v # Bind mount a volume
+			--workdir|-w # Working directory inside the container
+		start
+		stop
+			--timeout|-t # Seconds to wait for stop before killing them (default 10)
+		top
+		unpause
+		up
+			--abort-on-container-exit @bool # Stops all containers if any container was stopped. Incompatible with -d.
+			--build @bool # Build images before starting containers.
+			--detach|-d @bool # Detached mode: Run containers in the background. Incompatible with --abort-on-container-exit.
+			--force-recreate @bool # Recreate containers even if their configuration and image haven't changed.
+			--ipfs @bool # Allow pulling base images from IPFS during build
+			--no-build @bool # Don't build an image, even if it's missing.
+			--no-color @bool # Produce monochrome output
+			--no-log-prefix @bool # Don't print prefix in logs
+			--no-recreate @bool # Don't recreate containers if they exist, conflict with --force-recreate.
+			--pull # Pull image before running ("always"|"missing"|"never")
+			--quiet-pull @bool # Pull without printing progress information
+			--remove-orphans @bool # Remove containers for services not defined in the Compose file.
+			--scale # Scale SERVICE to NUM instances. Overrides the scale setting in the Compose file if present.
+		version
+			--format|-f # Format the output. Values: [pretty | json] (default "pretty")
+			--short @bool # Shows only Compose's version number
+	container # Manage containers
+		attach
+			--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+			--no-stdin @bool # Do not attach STDIN
+		commit
+			--author|-a # Author (e.g., "nerdctl contributor <nerdctl-dev@example.com>")
+			--change|-c # Apply Dockerfile instruction to the created image (supported directives: [CMD, ENTRYPOINT])
+			--compression # commit compression algorithm (zstd or gzip) (default "gzip")
+			--estargz @bool # Convert the committed layer to eStargz for lazy pulling
+			--estargz-chunk-size # eStargz chunk size
+			--estargz-compression-level # eStargz compression level (1-9) (default 9)
+			--estargz-min-chunk-size # The minimal number of bytes of data must be written in one gzip stream
+			--format # Format of the committed image (docker or oci) (default "docker")
+			--message|-m # Commit message
+			--pause|-p @bool # Pause container during commit (default true)
+			--zstdchunked @bool # Convert the committed layer to zstd:chunked for lazy pulling
+			--zstdchunked-chunk-size # zstd:chunked chunk size
+			--zstdchunked-compression-level # zstd:chunked compression level (default 3)
+		cp
+			--follow-link|-L @bool # Always follow symbolic link in SRC_PATH.
+		create
+			--add-host # Add a custom host-to-IP mapping (host:ip)
+			--annotation # Add an annotation to the container (passed through to the OCI runtime)
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--blkio-weight-device # Block IO weight (relative device weight) (default [])
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--cgroup-conf # Configure cgroup v2 (key=value)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # Cgroup namespace to use, the default depends on the cgroup version ("host"|"private") (default "private")
+			--cidfile # Write the container ID to the file
+			--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+			--cpu-rt-period # Limit CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+			--device # Add a host device to the container
+			--device-read-bps # Limit read rate (bytes per second) from a device (default [])
+			--device-read-iops # Limit read rate (IO per second) from a device (default [])
+			--device-write-bps # Limit write rate (bytes per second) to a device (default [])
+			--device-write-iops # Limit write rate (IO per second) to a device (default [])
+			--dns # Set custom DNS servers
+			--dns-opt # Set DNS options
+			--dns-option # Set DNS options
+			--dns-search # Set custom DNS search domains
+			--domainname # Container domain name
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env|-e # Set environment variables
+			--env-file # Set environment variables from file
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to join
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (default: 30s)
+			--health-retries # Consecutive failures needed to report unhealthy (default: 3)
+			--health-start-period # Start period for the container to initialize before starting health-retries countdown
+			--health-timeout # Maximum time to allow one check to run (default: 30s)
+			--init @bool # Run an init process inside the container, Default to use tini
+			--init-binary # The custom binary to use as the init process (default "tini")
+			--interactive|-i @bool # Keep STDIN open even if not attached
+			--ip # IPv4 address to assign to the container
+			--ip6 # IPv6 address to assign to the container
+			--ipc # IPC namespace to use ("host"|"private")
+			--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+			--isolation # Specify isolation technology for container. On Linux the only valid value is default. Windows options are host, process and hyperv with process isolation as the default (default "default")
+			--kernel-memory # Kernel memory limit (deprecated)
+			--label|-l # Set metadata on container
+			--label-file # Set metadata on container from file
+			--log-driver # Logging driver for the container. Default is json-file. It also supports logURI (eg: --log-driver binary://<path>) (default "json-file")
+			--log-opt # Log driver options
+			--mac-address # MAC address to assign to the container
+			--memory|-m # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100) (default -1) (default -1)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--net # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+			--network # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune container’s OOM preferences (-1000 to 1000, rootless: 100 to 1000)
+			--pid # PID namespace to use
+			--pidfile # file path to write the task's pid
+			--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+			--platform # Set platform (e.g. "amd64", "arm64")
+			--privileged @bool # Give extended privileges to this container
+			--publish|-p # Publish a container's port(s) to the host
+			--pull # Pull image before running ("always"|"missing"|"never") (default "missing")
+			--quiet|-q @bool # Suppress the pull output
+			--rdt-class # Name of the RDT class (or CLOS) to associate the container with
+			--read-only @bool # Mount the container's root filesystem as read only
+			--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+			--rm @bool # Automatically remove the container when it exits
+			--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+			--runtime # Runtime to use for this container, e.g. "crun", or "io.containerd.runsc.v1" (default "io.containerd.runc.v2")
+			--security-opt # Security options
+			--shm-size # Size of /dev/shm
+			--sig-proxy @bool # Proxy received signals to the process (default true) (default true)
+			--stop-signal # Signal to stop a container (default "SIGTERM")
+			--stop-timeout # Timeout (in seconds) to stop a container
+			--sysctl # Sysctl options
+			--systemd # Allow running systemd in this container (default: false) (default "false")
+			--tmpfs # Mount a tmpfs directory
+			--tty|-t @bool # Allocate a pseudo-TTY
+			--ulimit # Ulimit options
+			--umask # Set the umask inside the container. Defaults to 0022
+			--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # Specify host to disable userns-remap
+			--uts # UTS namespace to use
+			--verify # Verify the image (none|cosign|notation) (default "none")
+			--volume|-v # Bind mount a volume
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir|-w # Working directory inside the container
+		diff
+		exec
+			--detach|-d @bool # Detached mode: run command in the background
+			--env|-e # Set environment variables
+			--env-file # Set environment variables from file
+			--interactive|-i @bool # Keep STDIN open even if not attached
+			--privileged @bool # Give extended privileges to the command
+			--tty|-t @bool # Allocate a pseudo-TTY
+			--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+			--workdir|-w # Working directory inside the container
+		export
+			--output|-o # Write to a file, instead of STDOUT
+		healthcheck
+		inspect
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--mode # Inspect mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+			--size|-s @bool # Display total file sizes
+		kill
+			--signal|-s # Signal to send to the container (default "KILL")
+		logs
+			--details @bool # Show extra details provided to logs
+			--follow|-f @bool # Follow log output
+			--since # Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+			--tail|-n # Number of lines to show from the end of the logs (default "all")
+			--timestamps|-t @bool # Show timestamps
+			--until # Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+		ls
+			--all|-a @bool # Show all containers (default shows just running)
+			--filter|-f # Filter matches containers based on given conditions. When specifying the condition 'status', it filters all containers
+			--format # Format the output using the given Go template, e.g, '{{json .}}', 'wide'
+			--last|-n # Show n last created containers (includes all states) (default -1)
+			--latest|-l @bool # Show the latest created container (includes all states)
+			--no-trunc @bool # Don't truncate output
+			--quiet|-q @bool # Only display container IDs
+			--size|-s @bool # Display total file sizes
+		pause
+		port
+		prune
+			--force|-f @bool # Do not prompt for confirmation
+		rename
+		restart
+			--signal|-s # Signal to send to stop the container, before killing it
+			--time|-t # Seconds to wait for stop before killing it (default 10)
+		rm
+			--force|-f @bool # Force the removal of a running|paused|unknown container (uses SIGKILL)
+			--volumes|-v @bool # Remove volumes associated with the container
+		run
+			--add-host # Add a custom host-to-IP mapping (host:ip)
+			--annotation # Add an annotation to the container (passed through to the OCI runtime)
+			--attach|-a # Attach STDIN, STDOUT, or STDERR
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--blkio-weight-device # Block IO weight (relative device weight) (default [])
+			--cap-add # Add Linux capabilities
+			--cap-drop # Drop Linux capabilities
+			--cgroup-conf # Configure cgroup v2 (key=value)
+			--cgroup-parent # Optional parent cgroup for the container
+			--cgroupns # Cgroup namespace to use, the default depends on the cgroup version ("host"|"private") (default "private")
+			--cidfile # Write the container ID to the file
+			--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+			--cpu-rt-period # Limit CPU real-time period in microseconds
+			--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--detach|-d @bool # Run container in background and print container ID
+			--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+			--device # Add a host device to the container
+			--device-read-bps # Limit read rate (bytes per second) from a device (default [])
+			--device-read-iops # Limit read rate (IO per second) from a device (default [])
+			--device-write-bps # Limit write rate (bytes per second) to a device (default [])
+			--device-write-iops # Limit write rate (IO per second) to a device (default [])
+			--dns # Set custom DNS servers
+			--dns-opt # Set DNS options
+			--dns-option # Set DNS options
+			--dns-search # Set custom DNS search domains
+			--domainname # Container domain name
+			--entrypoint # Overwrite the default ENTRYPOINT of the image
+			--env|-e # Set environment variables
+			--env-file # Set environment variables from file
+			--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+			--group-add # Add additional groups to join
+			--health-cmd # Command to run to check health
+			--health-interval # Time between running the check (default: 30s)
+			--health-retries # Consecutive failures needed to report unhealthy (default: 3)
+			--health-start-period # Start period for the container to initialize before starting health-retries countdown
+			--health-timeout # Maximum time to allow one check to run (default: 30s)
+			--init @bool # Run an init process inside the container, Default to use tini
+			--init-binary # The custom binary to use as the init process (default "tini")
+			--interactive|-i @bool # Keep STDIN open even if not attached
+			--ip # IPv4 address to assign to the container
+			--ip6 # IPv6 address to assign to the container
+			--ipc # IPC namespace to use ("host"|"private")
+			--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+			--isolation # Specify isolation technology for container. On Linux the only valid value is default. Windows options are host, process and hyperv with process isolation as the default (default "default")
+			--kernel-memory # Kernel memory limit (deprecated)
+			--label|-l # Set metadata on container
+			--label-file # Set metadata on container from file
+			--log-driver # Logging driver for the container. Default is json-file. It also supports logURI (eg: --log-driver binary://<path>) (default "json-file")
+			--log-opt # Log driver options
+			--mac-address # MAC address to assign to the container
+			--memory|-m # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--memory-swappiness # Tune container memory swappiness (0 to 100) (default -1) (default -1)
+			--mount # Attach a filesystem mount to the container
+			--name # Assign a name to the container
+			--net # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+			--network # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+			--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+			--oom-kill-disable @bool # Disable OOM Killer
+			--oom-score-adj # Tune container’s OOM preferences (-1000 to 1000, rootless: 100 to 1000)
+			--pid # PID namespace to use
+			--pidfile # file path to write the task's pid
+			--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+			--platform # Set platform (e.g. "amd64", "arm64")
+			--privileged @bool # Give extended privileges to this container
+			--publish|-p # Publish a container's port(s) to the host
+			--pull # Pull image before running ("always"|"missing"|"never") (default "missing")
+			--quiet|-q @bool # Suppress the pull output
+			--rdt-class # Name of the RDT class (or CLOS) to associate the container with
+			--read-only @bool # Mount the container's root filesystem as read only
+			--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+			--rm @bool # Automatically remove the container when it exits
+			--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+			--runtime # Runtime to use for this container, e.g. "crun", or "io.containerd.runsc.v1" (default "io.containerd.runc.v2")
+			--security-opt # Security options
+			--shm-size # Size of /dev/shm
+			--sig-proxy @bool # Proxy received signals to the process (default true) (default true)
+			--stop-signal # Signal to stop a container (default "SIGTERM")
+			--stop-timeout # Timeout (in seconds) to stop a container
+			--sysctl # Sysctl options
+			--systemd # Allow running systemd in this container (default: false) (default "false")
+			--tmpfs # Mount a tmpfs directory
+			--tty|-t @bool # Allocate a pseudo-TTY
+			--ulimit # Ulimit options
+			--umask # Set the umask inside the container. Defaults to 0022
+			--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+			--userns # Specify host to disable userns-remap
+			--uts # UTS namespace to use
+			--verify # Verify the image (none|cosign|notation) (default "none")
+			--volume|-v # Bind mount a volume
+			--volumes-from # Mount volumes from the specified container(s)
+			--workdir|-w # Working directory inside the container
+		start
+			--attach|-a @bool # Attach STDOUT/STDERR and forward signals
+			--checkpoint # checkpoint name
+			--checkpoint-dir # checkpoint directory
+			--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+			--interactive|-i @bool # Attach container's STDIN
+		stats
+			--all|-a @bool # Show all containers (default shows just running)
+			--format # Pretty-print images using a Go template, e.g, '{{json .}}'
+			--no-stream @bool # Disable streaming stats and only pull the first result
+			--no-trunc @bool # Do not truncate output
+		stop
+			--signal|-s # Signal to send to the container (default "SIGTERM")
+			--time|-t # Seconds to wait before sending a SIGKILL (default 10)
+		unpause
+		update
+			--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+			--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+			--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+			--cpu-shares # CPU shares (relative weight)
+			--cpus # Number of CPUs
+			--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+			--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+			--kernel-memory # Kernel memory limit (deprecated)
+			--memory|-m # Memory limit
+			--memory-reservation # Memory soft limit
+			--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+			--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+			--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+		wait
+	cp # Copy files/folders between a running container and the local filesystem.
+		--follow-link|-L @bool # Always follow symbolic link in SRC_PATH.
+	create # Create a new container. Optionally specify "ipfs://" or "ipns://" scheme to pull image from IPFS.
+		--add-host # Add a custom host-to-IP mapping (host:ip)
+		--annotation # Add an annotation to the container (passed through to the OCI runtime)
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--blkio-weight-device # Block IO weight (relative device weight) (default [])
+		--cap-add # Add Linux capabilities
+		--cap-drop # Drop Linux capabilities
+		--cgroup-conf # Configure cgroup v2 (key=value)
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # Cgroup namespace to use, the default depends on the cgroup version ("host"|"private") (default "private")
+		--cidfile # Write the container ID to the file
+		--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+		--cpu-rt-period # Limit CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+		--device # Add a host device to the container
+		--device-read-bps # Limit read rate (bytes per second) from a device (default [])
+		--device-read-iops # Limit read rate (IO per second) from a device (default [])
+		--device-write-bps # Limit write rate (bytes per second) to a device (default [])
+		--device-write-iops # Limit write rate (IO per second) to a device (default [])
+		--dns # Set custom DNS servers
+		--dns-opt # Set DNS options
+		--dns-option # Set DNS options
+		--dns-search # Set custom DNS search domains
+		--domainname # Container domain name
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env|-e # Set environment variables
+		--env-file # Set environment variables from file
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to join
+		--health-cmd # Command to run to check health
+		--health-interval # Time between running the check (default: 30s)
+		--health-retries # Consecutive failures needed to report unhealthy (default: 3)
+		--health-start-period # Start period for the container to initialize before starting health-retries countdown
+		--health-timeout # Maximum time to allow one check to run (default: 30s)
+		--init @bool # Run an init process inside the container, Default to use tini
+		--init-binary # The custom binary to use as the init process (default "tini")
+		--interactive|-i @bool # Keep STDIN open even if not attached
+		--ip # IPv4 address to assign to the container
+		--ip6 # IPv6 address to assign to the container
+		--ipc # IPC namespace to use ("host"|"private")
+		--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+		--isolation # Specify isolation technology for container. On Linux the only valid value is default. Windows options are host, process and hyperv with process isolation as the default (default "default")
+		--kernel-memory # Kernel memory limit (deprecated)
+		--label|-l # Set metadata on container
+		--label-file # Set metadata on container from file
+		--log-driver # Logging driver for the container. Default is json-file. It also supports logURI (eg: --log-driver binary://<path>) (default "json-file")
+		--log-opt # Log driver options
+		--mac-address # MAC address to assign to the container
+		--memory|-m # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100) (default -1) (default -1)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--net # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+		--network # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+		--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune container’s OOM preferences (-1000 to 1000, rootless: 100 to 1000)
+		--pid # PID namespace to use
+		--pidfile # file path to write the task's pid
+		--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+		--platform # Set platform (e.g. "amd64", "arm64")
+		--privileged @bool # Give extended privileges to this container
+		--publish|-p # Publish a container's port(s) to the host
+		--pull # Pull image before running ("always"|"missing"|"never") (default "missing")
+		--quiet|-q @bool # Suppress the pull output
+		--rdt-class # Name of the RDT class (or CLOS) to associate the container with
+		--read-only @bool # Mount the container's root filesystem as read only
+		--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+		--rm @bool # Automatically remove the container when it exits
+		--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+		--runtime # Runtime to use for this container, e.g. "crun", or "io.containerd.runsc.v1" (default "io.containerd.runc.v2")
+		--security-opt # Security options
+		--shm-size # Size of /dev/shm
+		--sig-proxy @bool # Proxy received signals to the process (default true) (default true)
+		--stop-signal # Signal to stop a container (default "SIGTERM")
+		--stop-timeout # Timeout (in seconds) to stop a container
+		--sysctl # Sysctl options
+		--systemd # Allow running systemd in this container (default: false) (default "false")
+		--tmpfs # Mount a tmpfs directory
+		--tty|-t @bool # Allocate a pseudo-TTY
+		--ulimit # Ulimit options
+		--umask # Set the umask inside the container. Defaults to 0022
+		--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # Specify host to disable userns-remap
+		--uts # UTS namespace to use
+		--verify # Verify the image (none|cosign|notation) (default "none")
+		--volume|-v # Bind mount a volume
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir|-w # Working directory inside the container
+	diff # Inspect changes to files or directories on a container's filesystem
+	events # Get real time events from the server
+		--filter|-f # Filter matches containers based on given conditions
+		--format # Format the output using the given Go template, e.g, '{{json .}}'
+	exec # Run a command in a running container
+		--detach|-d @bool # Detached mode: run command in the background
+		--env|-e # Set environment variables
+		--env-file # Set environment variables from file
+		--interactive|-i @bool # Keep STDIN open even if not attached
+		--privileged @bool # Give extended privileges to the command
+		--tty|-t @bool # Allocate a pseudo-TTY
+		--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+		--workdir|-w # Working directory inside the container
+	export # Export a containers filesystem as a tar archive
+		--output|-o # Write to a file, instead of STDOUT
+	healthcheck # Execute the health check command in a container
+	history # Show the history of an image
+		--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+		--human|-H @bool # Print sizes and dates in human readable format (default true) (default true)
+		--no-trunc @bool # Don't truncate output
+		--quiet|-q @bool # Only show numeric IDs
+	image # Manage images
+		build
+			--add-host # Add a custom host-to-IP mapping (format: "host:ip")
+			--allow # Allow extra privileged entitlement, e.g. network.host, security.insecure
+			--attest # Attestation parameters (format: "type=sbom,generator=image")
+			--build-arg # Set build-time variables
+			--build-context # Additional build contexts (e.g., name=path)
+			--buildkit-host # BuildKit address
+			--cache-from # External cache sources (eg. user/app:cache, type=local,src=path/to/dir)
+			--cache-to # Cache export destinations (eg. user/app:cache, type=local,dest=path/to/dir)
+			--file|-f # Name of the Dockerfile
+			--iidfile # Write the image ID to the file
+			--label # Set metadata for an image
+			--network # Set type of network for build (format:network=default|none|host) (default "default")
+			--no-cache @bool # Do not use cache when building the image
+			--output|-o # Output destination (format: type=local,dest=path)
+			--platform # Set target platform for build (e.g., "amd64", "arm64")
+			--progress # Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
+			--provenance # Shorthand for "--attest=type=provenance"
+			--pull @bool # On true, always attempt to pull latest image version from remote. Default uses buildkit's default.
+			--quiet|-q @bool # Suppress the build output and print image ID on success
+			--rm @bool # Remove intermediate containers after a successful build (default true)
+			--sbom # Shorthand for "--attest=type=sbom"
+			--secret # Secret file to expose to the build: id=mysecret,src=/local/secret
+			--ssh # SSH agent socket or keys to expose to the build (format: default|<id>[=<socket>|<key>[,<key>]])
+			--tag|-t # Name and optionally a tag in the 'name:tag' format
+			--target # Set the target build stage to build
+		convert
+			--all-platforms @bool # Convert content for all platforms
+			--estargz @bool # Convert legacy tar(.gz) layers to eStargz for lazy pulling. Should be used in conjunction with '--oci'
+			--estargz-chunk-size # eStargz chunk size
+			--estargz-compression-level # eStargz compression level (default 9)
+			--estargz-external-toc @bool # Separate TOC JSON into another image (called "TOC image"). The name of TOC image is the original + "-esgztoc" suffix. Both eStargz and the TOC image should be pushed to the same registry. (requires stargz-snapshotter >= v0.13.0) (EXPERIMENTAL)
+			--estargz-gzip-helper # Helper command for decompressing layers compressed with gzip. Options: pigz, igzip, or gzip.
+			--estargz-keep-diff-id @bool # Convert to esgz without changing diffID (cannot be used in conjunction with '--estargz-record-in'. must be specified with '--estargz-external-toc')
+			--estargz-min-chunk-size # The minimal number of bytes of data must be written in one gzip stream. (requires stargz-snapshotter >= v0.13.0)
+			--estargz-record-in # Read 'ctr-remote optimize --record-out=<FILE>' record file (EXPERIMENTAL)
+			--format # Format the output using the given Go template, e.g, 'json'
+			--nydus @bool # Convert an OCI image to Nydus image. Should be used in conjunction with '--oci'
+			--nydus-builder-path # The nydus-image binary path, if unset, search in PATH environment (default "nydus-image")
+			--nydus-compressor # Nydus blob compression algorithm, possible values: none, `lz4_block`, `zstd`, default is `lz4_block` (default "lz4_block")
+			--nydus-prefetch-patterns # The file path pattern list want to prefetch
+			--nydus-work-dir # Work directory path for image conversion, default is the nerdctl data root directory
+			--oci @bool # Convert Docker media types to OCI media types
+			--overlaybd @bool # Convert tar.gz layers to overlaybd layers
+			--overlaybd-dbstr # Database config string for overlaybd
+			--overlaybd-fs-type # Filesystem type for overlaybd (default "ext4")
+			--platform # Convert content for a specific platform
+			--soci @bool # Convert image to SOCI Index V2 format.
+			--soci-min-layer-size # The minimum size of layers that will be converted to SOCI Index V2 format (default -1)
+			--soci-span-size # The size of SOCI spans (default -1)
+			--uncompress @bool # Convert tar.gz layers to uncompressed tar layers
+			--zstd @bool # Convert legacy tar(.gz) layers to zstd. Should be used in conjunction with '--oci'
+			--zstd-compression-level # zstd compression level (default 3)
+			--zstdchunked @bool # Convert legacy tar(.gz) layers to zstd:chunked for lazy pulling. Should be used in conjunction with '--oci'
+			--zstdchunked-chunk-size # zstd:chunked chunk size
+			--zstdchunked-compression-level # zstd:chunked compression level (default 3)
+			--zstdchunked-record-in # Read 'ctr-remote optimize --record-out=<FILE>' record file (EXPERIMENTAL)
+		decrypt
+			--all-platforms @bool # Convert content for all platforms
+			--dec-recipient # Recipient of the image; used only for PKCS7 and must be an x509 certificate
+			--gpg-homedir # The GPG homedir to use; by default gpg uses ~/.gnupg
+			--gpg-version # The GPG version ("v1" or "v2"), default will make an educated guess
+			--key # A secret key's filename and an optional password separated by colon; this option may be provided multiple times
+			--platform # Convert content for a specific platform
+		encrypt
+			--all-platforms @bool # Convert content for all platforms
+			--dec-recipient # Recipient of the image; used only for PKCS7 and must be an x509 certificate
+			--gpg-homedir # The GPG homedir to use; by default gpg uses ~/.gnupg
+			--gpg-version # The GPG version ("v1" or "v2"), default will make an educated guess
+			--key # A secret key's filename and an optional password separated by colon; this option may be provided multiple times
+			--platform # Convert content for a specific platform
+			--recipient # Recipient of the image is the person who can decrypt it in the form specified above (i.e. jwe:/path/to/pubkey)
+		history
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--human|-H @bool # Print sizes and dates in human readable format (default true) (default true)
+			--no-trunc @bool # Don't truncate output
+			--quiet|-q @bool # Only show numeric IDs
+		import
+			--message|-m # Set commit message for imported image
+			--platform # Set platform for imported image (e.g., linux/amd64)
+		inspect
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--mode # Inspect mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+			--platform # Inspect a specific platform
+		load
+			--all-platforms @bool # Import content for all platforms
+			--input|-i # Read from tar archive file, instead of STDIN
+			--platform # Import content for a specific platform
+			--quiet|-q @bool # Suppress the load output
+		ls
+			--all|-a @bool # (unimplemented yet, always true) (default true)
+			--digests @bool # Show digests (compatible with Docker, unlike ID)
+			--filter|-f # Filter output based on conditions provided
+			--format # Format the output using the given Go template, e.g, '{{json .}}', 'wide'
+			--names @bool # Show image names
+			--no-trunc @bool # Don't truncate output
+			--quiet|-q @bool # Only show numeric IDs
+		prune
+			--all|-a @bool # Remove all unused images, not just dangling ones
+			--filter # Filter output based on conditions provided
+			--force|-f @bool # Do not prompt for confirmation
+		pull
+			--all-platforms @bool # Pull content for all platforms
+			--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign,, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign,. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+			--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+			--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+			--platform # Pull content for a specific platform
+			--quiet|-q @bool # Suppress verbose output
+			--soci-index-digest # Specify a particular index digest for SOCI. If left empty, SOCI will automatically use the index determined by the selection policy.
+			--unpack # Unpack the image for the current single platform (auto/true/false) (default "auto")
+			--verify # Verify the image (none|cosign|notation) (default "none")
+		push
+			--all-platforms @bool # Push content for all platforms
+			--allow-nondistributable-artifacts @bool # Allow pushing images with non-distributable blobs
+			--cosign-key # Path to the private key file, KMS URI or Kubernetes Secret for --sign=cosign
+			--estargz @bool # Convert the image into eStargz
+			--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+			--ipfs-ensure-image @bool # Ensure the entire contents of the image is locally available before push (default true)
+			--notation-key-name # Signing key name for a key previously added to notation's key list for --sign=notation
+			--platform # Push content for a specific platform
+			--quiet|-q @bool # Suppress verbose output
+			--sign # Sign the image (none|cosign|notation (default "none")
+			--soci-min-layer-size # Minimum layer size to build zTOC for. Smaller layers won't have zTOC and not lazy pulled. Default is 10 MiB. (default -1)
+			--soci-span-size # Span size that soci index uses to segment layer data. Default is 4 MiB. (default -1)
+		rm
+			--async @bool # Asynchronous mode
+			--force|-f @bool # Force removal of the image
+		save
+			--all-platforms @bool # Export content for all platforms
+			--output|-o # Write to a file, instead of STDOUT
+			--platform # Export content for a specific platform
+		tag
+	images # List images
+		--all|-a @bool # (unimplemented yet, always true) (default true)
+		--digests @bool # Show digests (compatible with Docker, unlike ID)
+		--filter|-f # Filter output based on conditions provided
+		--format # Format the output using the given Go template, e.g, '{{json .}}', 'wide'
+		--names @bool # Show image names
+		--no-trunc @bool # Don't truncate output
+		--quiet|-q @bool # Only show numeric IDs
+	import # Import the contents from a tarball to create a filesystem image
+		--message|-m # Set commit message for imported image
+		--platform # Set platform for imported image (e.g., linux/amd64)
+	info # Display system-wide information
+		--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+		--mode # Information mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+	inspect # Return low-level information on objects.
+		--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+		--mode # Inspect mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+		--size|-s @bool # Display total file sizes (for containers)
+		--type # Return JSON for specified type
+	ipfs # Distributing images on IPFS
+		registry
+			serve
+				--ipfs-address # multiaddr of IPFS API (default is pulled from $IPFS_PATH/api file. If $IPFS_PATH env var is not present, it defaults to ~/.ipfs) [$IPFS_REGISTRY_SERVE_IPFS_ADDRESS]
+				--listen-registry # address to listen [$IPFS_REGISTRY_SERVE_LISTEN_REGISTRY] (default "localhost:5050")
+				--read-retry-num # times to retry query on IPFS. Zero or lower means no retry. [$IPFS_REGISTRY_SERVE_READ_RETRY_NUM]
+				--read-timeout # timeout duration of a read request to IPFS. Zero means no timeout. [$IPFS_REGISTRY_SERVE_READ_TIMEOUT]
+	kill # Kill one or more running containers
+		--signal|-s # Signal to send to the container (default "KILL")
+	load # Load an image from a tar archive or STDIN
+		--all-platforms @bool # Import content for all platforms
+		--input|-i # Read from tar archive file, instead of STDIN
+		--platform # Import content for a specific platform
+		--quiet|-q @bool # Suppress the load output
+	login # Log in to a container registry
+		--password|-p # Password
+		--password-stdin @bool # Take the password from stdin
+		--username|-u # Username
+	logout # Log out from a container registry
+	logs # Fetch the logs of a container. Expected to be used with 'nerdctl run -d'.
+		--details @bool # Show extra details provided to logs
+		--follow|-f @bool # Follow log output
+		--since # Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+		--tail|-n # Number of lines to show from the end of the logs (default "all")
+		--timestamps|-t @bool # Show timestamps
+		--until # Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+	manifest # Manage image manifests.
+		annotate
+			--arch # Set architecture
+			--os # Set operating system
+			--os-features # Set architecture variant
+			--os-version # Set operating system version
+			--variant # Set operating system feature
+		create
+			--amend @bool # Amend the existing index/manifest list
+			--insecure @bool # Allow communication with an insecure registry
+		inspect
+			--insecure @bool # Allow communication with an insecure registry
+			--verbose @bool # Verbose output additional info including layers and platform
+		push
+			--insecure @bool # Allow communication with an insecure registry
+			--purge @bool # Remove the manifest list after pushing
+		rm
+	namespace # Manage containerd namespaces
+		create
+			--label|-l # Set labels for a namespace
+		inspect
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+		ls
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--quiet|-q @bool # Only display names
+		remove
+			--cgroup|-c @bool # delete the namespace's cgroup
+		update
+			--label|-l # Set labels for a namespace (required)
+	network # Manage networks
+		create
+			--driver|-d # Driver to manage the Network (default "bridge")
+			--gateway # Gateway for the master subnet
+			--internal @bool # Restrict external access to the network
+			--ip-range # Allocate container ip from a sub-range
+			--ipam-driver # IP Address helpers.Management Driver (default "default")
+			--ipam-opt # Set IPAM driver specific options
+			--ipv6 @bool # Enable IPv6 networking
+			--label # Set metadata for a network
+			--opt|-o # Set driver specific options
+			--subnet # Subnet in CIDR format that represents a network segment, e.g. "10.5.0.0/16"
+		inspect
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--mode # Inspect mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+		ls
+			--filter|-f # Provide filter values (e.g. "name=default")
+			--format # Format the output using the given Go template, e.g, '{{json .}}'
+			--quiet|-q @bool # Only display network IDs
+		prune
+			--force|-f @bool # Do not prompt for confirmation
+		rm
+	pause # Pause all processes within one or more containers
+	port # List port mappings or a specific mapping for the container
+	ps # List containers
+		--all|-a @bool # Show all containers (default shows just running)
+		--filter|-f # Filter matches containers based on given conditions. When specifying the condition 'status', it filters all containers
+		--format # Format the output using the given Go template, e.g, '{{json .}}', 'wide'
+		--last|-n # Show n last created containers (includes all states) (default -1)
+		--latest|-l @bool # Show the latest created container (includes all states)
+		--no-trunc @bool # Don't truncate output
+		--quiet|-q @bool # Only display container IDs
+		--size|-s @bool # Display total file sizes
+	pull # Pull an image from a registry. Optionally specify "ipfs://" or "ipns://" scheme to pull image from IPFS.
+		--all-platforms @bool # Pull content for all platforms
+		--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign,, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign,. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+		--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+		--platform # Pull content for a specific platform
+		--quiet|-q @bool # Suppress verbose output
+		--soci-index-digest # Specify a particular index digest for SOCI. If left empty, SOCI will automatically use the index determined by the selection policy.
+		--unpack # Unpack the image for the current single platform (auto/true/false) (default "auto")
+		--verify # Verify the image (none|cosign|notation) (default "none")
+	push # Push an image or a repository to a registry. Optionally specify "ipfs://" or "ipns://" scheme to push image to IPFS.
+		--all-platforms @bool # Push content for all platforms
+		--allow-nondistributable-artifacts @bool # Allow pushing images with non-distributable blobs
+		--cosign-key # Path to the private key file, KMS URI or Kubernetes Secret for --sign=cosign
+		--estargz @bool # Convert the image into eStargz
+		--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+		--ipfs-ensure-image @bool # Ensure the entire contents of the image is locally available before push (default true)
+		--notation-key-name # Signing key name for a key previously added to notation's key list for --sign=notation
+		--platform # Push content for a specific platform
+		--quiet|-q @bool # Suppress verbose output
+		--sign # Sign the image (none|cosign|notation (default "none")
+		--soci-min-layer-size # Minimum layer size to build zTOC for. Smaller layers won't have zTOC and not lazy pulled. Default is 10 MiB. (default -1)
+		--soci-span-size # Span size that soci index uses to segment layer data. Default is 4 MiB. (default -1)
+	rename # rename a container
+	restart # Restart one or more running containers
+		--signal|-s # Signal to send to stop the container, before killing it
+		--time|-t # Seconds to wait for stop before killing it (default 10)
+	rm # Remove one or more containers
+		--force|-f @bool # Force the removal of a running|paused|unknown container (uses SIGKILL)
+		--volumes|-v @bool # Remove volumes associated with the container
+	rmi # Remove one or more images
+		--async @bool # Asynchronous mode
+		--force|-f @bool # Force removal of the image
+	run # Run a command in a new container. Optionally specify "ipfs://" or "ipns://" scheme to pull image from IPFS.
+		--add-host # Add a custom host-to-IP mapping (host:ip)
+		--annotation # Add an annotation to the container (passed through to the OCI runtime)
+		--attach|-a # Attach STDIN, STDOUT, or STDERR
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--blkio-weight-device # Block IO weight (relative device weight) (default [])
+		--cap-add # Add Linux capabilities
+		--cap-drop # Drop Linux capabilities
+		--cgroup-conf # Configure cgroup v2 (key=value)
+		--cgroup-parent # Optional parent cgroup for the container
+		--cgroupns # Cgroup namespace to use, the default depends on the cgroup version ("host"|"private") (default "private")
+		--cidfile # Write the container ID to the file
+		--cosign-certificate-identity # The identity expected in a valid Fulcio certificate for --verify=cosign. Valid values include email address, DNS names, IP addresses, and URIs. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-identity-regexp # A regular expression alternative to --cosign-certificate-identity for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-identity or --cosign-certificate-identity-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer # The OIDC issuer expected in a valid Fulcio certificate for --verify=cosign, e.g. https://token.actions.githubusercontent.com or https://oauth2.sigstore.dev/auth. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-certificate-oidc-issuer-regexp # A regular expression alternative to --certificate-oidc-issuer for --verify=cosign. Accepts the Go regular expression syntax described at https://golang.org/s/re2syntax. Either --cosign-certificate-oidc-issuer or --cosign-certificate-oidc-issuer-regexp must be set for keyless flows
+		--cosign-key # Path to the public key file, KMS, URI or Kubernetes Secret for --verify=cosign
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+		--cpu-rt-period # Limit CPU real-time period in microseconds
+		--cpu-rt-runtime # Limit CPU real-time runtime in microseconds
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--detach|-d @bool # Run container in background and print container ID
+		--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+		--device # Add a host device to the container
+		--device-read-bps # Limit read rate (bytes per second) from a device (default [])
+		--device-read-iops # Limit read rate (IO per second) from a device (default [])
+		--device-write-bps # Limit write rate (bytes per second) to a device (default [])
+		--device-write-iops # Limit write rate (IO per second) to a device (default [])
+		--dns # Set custom DNS servers
+		--dns-opt # Set DNS options
+		--dns-option # Set DNS options
+		--dns-search # Set custom DNS search domains
+		--domainname # Container domain name
+		--entrypoint # Overwrite the default ENTRYPOINT of the image
+		--env|-e # Set environment variables
+		--env-file # Set environment variables from file
+		--gpus # GPU devices to add to the container ('all' to pass all GPUs)
+		--group-add # Add additional groups to join
+		--health-cmd # Command to run to check health
+		--health-interval # Time between running the check (default: 30s)
+		--health-retries # Consecutive failures needed to report unhealthy (default: 3)
+		--health-start-period # Start period for the container to initialize before starting health-retries countdown
+		--health-timeout # Maximum time to allow one check to run (default: 30s)
+		--init @bool # Run an init process inside the container, Default to use tini
+		--init-binary # The custom binary to use as the init process (default "tini")
+		--interactive|-i @bool # Keep STDIN open even if not attached
+		--ip # IPv4 address to assign to the container
+		--ip6 # IPv6 address to assign to the container
+		--ipc # IPC namespace to use ("host"|"private")
+		--ipfs-address # multiaddr of IPFS API (default uses $IPFS_PATH env variable if defined or local directory ~/.ipfs)
+		--isolation # Specify isolation technology for container. On Linux the only valid value is default. Windows options are host, process and hyperv with process isolation as the default (default "default")
+		--kernel-memory # Kernel memory limit (deprecated)
+		--label|-l # Set metadata on container
+		--label-file # Set metadata on container from file
+		--log-driver # Logging driver for the container. Default is json-file. It also supports logURI (eg: --log-driver binary://<path>) (default "json-file")
+		--log-opt # Log driver options
+		--mac-address # MAC address to assign to the container
+		--memory|-m # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--memory-swappiness # Tune container memory swappiness (0 to 100) (default -1) (default -1)
+		--mount # Attach a filesystem mount to the container
+		--name # Assign a name to the container
+		--net # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+		--network # Connect a container to a network ("bridge"|"host"|"none"|"container:<container>"|"ns:<path>"|<CNI>) (default [bridge])
+		--no-healthcheck @bool # Disable any container-specified HEALTHCHECK
+		--oom-kill-disable @bool # Disable OOM Killer
+		--oom-score-adj # Tune container’s OOM preferences (-1000 to 1000, rootless: 100 to 1000)
+		--pid # PID namespace to use
+		--pidfile # file path to write the task's pid
+		--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+		--platform # Set platform (e.g. "amd64", "arm64")
+		--privileged @bool # Give extended privileges to this container
+		--publish|-p # Publish a container's port(s) to the host
+		--pull # Pull image before running ("always"|"missing"|"never") (default "missing")
+		--quiet|-q @bool # Suppress the pull output
+		--rdt-class # Name of the RDT class (or CLOS) to associate the container with
+		--read-only @bool # Mount the container's root filesystem as read only
+		--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+		--rm @bool # Automatically remove the container when it exits
+		--rootfs @bool # The first argument is not an image but the rootfs to the exploded container
+		--runtime # Runtime to use for this container, e.g. "crun", or "io.containerd.runsc.v1" (default "io.containerd.runc.v2")
+		--security-opt # Security options
+		--shm-size # Size of /dev/shm
+		--sig-proxy @bool # Proxy received signals to the process (default true) (default true)
+		--stop-signal # Signal to stop a container (default "SIGTERM")
+		--stop-timeout # Timeout (in seconds) to stop a container
+		--sysctl # Sysctl options
+		--systemd # Allow running systemd in this container (default: false) (default "false")
+		--tmpfs # Mount a tmpfs directory
+		--tty|-t @bool # Allocate a pseudo-TTY
+		--ulimit # Ulimit options
+		--umask # Set the umask inside the container. Defaults to 0022
+		--user|-u # Username or UID (format: <name|uid>[:<group|gid>])
+		--userns # Specify host to disable userns-remap
+		--uts # UTS namespace to use
+		--verify # Verify the image (none|cosign|notation) (default "none")
+		--volume|-v # Bind mount a volume
+		--volumes-from # Mount volumes from the specified container(s)
+		--workdir|-w # Working directory inside the container
+	save # Save one or more images to a tar archive (streamed to STDOUT by default)
+		--all-platforms @bool # Export content for all platforms
+		--output|-o # Write to a file, instead of STDOUT
+		--platform # Export content for a specific platform
+	start # Start one or more running containers
+		--attach|-a @bool # Attach STDOUT/STDERR and forward signals
+		--checkpoint # checkpoint name
+		--checkpoint-dir # checkpoint directory
+		--detach-keys # Override the default detach keys (default "ctrl-p,ctrl-q")
+		--interactive|-i @bool # Attach container's STDIN
+	stats # Display a live stream of container(s) resource usage statistics.
+		--all|-a @bool # Show all containers (default shows just running)
+		--format # Pretty-print images using a Go template, e.g, '{{json .}}'
+		--no-stream @bool # Disable streaming stats and only pull the first result
+		--no-trunc @bool # Do not truncate output
+	stop # Stop one or more running containers
+		--signal|-s # Signal to send to the container (default "SIGTERM")
+		--time|-t # Seconds to wait before sending a SIGKILL (default 10)
+	system # Manage containerd
+		events
+			--filter|-f # Filter matches containers based on given conditions
+			--format # Format the output using the given Go template, e.g, '{{json .}}'
+		info
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--mode # Information mode, "dockercompat" for Docker-compatible output, "native" for containerd-native output (default "dockercompat")
+		prune
+			--all|-a @bool # Remove all unused images, not just dangling ones
+			--force|-f @bool # Do not prompt for confirmation
+			--volumes @bool # Prune volumes
+	tag # Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+	top # Display the running processes of a container
+	unpause # Unpause all processes within one or more containers
+	update # Update one or more running containers
+		--blkio-weight # Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+		--cpu-period # Limit CPU CFS (Completely Fair Scheduler) period
+		--cpu-quota # Limit CPU CFS (Completely Fair Scheduler) quota (default -1)
+		--cpu-shares # CPU shares (relative weight)
+		--cpus # Number of CPUs
+		--cpuset-cpus # CPUs in which to allow execution (0-3, 0,1)
+		--cpuset-mems # MEMs in which to allow execution (0-3, 0,1)
+		--kernel-memory # Kernel memory limit (deprecated)
+		--memory|-m # Memory limit
+		--memory-reservation # Memory soft limit
+		--memory-swap # Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+		--pids-limit # Tune container pids limit (set -1 for unlimited) (default -1)
+		--restart # Restart policy to apply when a container exits (implemented values: "no"|"always|on-failure:n|unless-stopped") (default "no")
+	version # Show the nerdctl version information
+		--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+	volume # Manage volumes
+		create
+			--label # Set a label on the volume
+		inspect
+			--format|-f # Format the output using the given Go template, e.g, '{{json .}}'
+			--size|-s @bool # Display the disk usage of the volume
+		ls
+			--filter|-f # Filter matches volumes based on given conditions
+			--format # Format the output using the given go template
+			--quiet|-q @bool # Only display volume names
+			--size|-s @bool # Display the disk usage of volumes. Can be slow with volumes having loads of directories.
+		prune
+			--all|-a @bool # Remove all unused volumes, not just anonymous ones
+			--force|-f @bool # Do not prompt for confirmation
+		rm
+			--force|-f @bool # (unimplemented yet)
+	wait # Block until one or more containers stop, then print their exit codes.

@@ -1,0 +1,45 @@
+# Earthly CLI schema for fast-completer
+# Generated from earthly 0.8.16
+
+earthly # CI/CD build tool
+	--config # Path to config file [$EARTHLY_CONFIG]
+	--ssh-auth-sock # The SSH auth socket to use for ssh-agent forwarding [$EARTHLY_SSH_AUTH_SOCK]
+	--git-username # The git username to use for git HTTPS authentication [$GIT_USERNAME]
+	--git-password # The git password to use for git HTTPS authentication [$GIT_PASSWORD]
+	--buildkit-host # The URL to use for connecting to a buildkit host
+	--env-file-path # Use values from this file as earthly environment variables; values are no longer used as --build-arg's or --secret's (default: ".env") [$EARTHLY_ENV_FILE_PATH]
+	--arg-file-path # Use values from this file as earthly buildargs (default: ".arg") [$EARTHLY_ARG_FILE_PATH]
+	--secret-file-path # Use values from this file as earthly secrets (default: ".secret") [$EARTHLY_SECRET_FILE_PATH]
+	--image @bool # Output only docker image of the specified target (default: false)
+	--push @bool # Push docker images and execute RUN --push commands (default: false) [$EARTHLY_PUSH]
+	--ci @bool # Execute in CI mode.
+	--output @bool # Allow artifacts or images to be output, even when running under --ci mode (default: false) [$EARTHLY_OUTPUT]
+	--no-output @bool # Do not output artifacts or images
+	--no-cache @bool # Do not use cache while building (default: false) [$EARTHLY_NO_CACHE]
+	--auto-skip @bool # Skip buildkit if target has already been built (default: false) [$EARTHLY_AUTO_SKIP]
+	--max-remote-cache @bool # Saves all intermediate images too in the remote cache (default: false) [$EARTHLY_MAX_REMOTE_CACHE]
+	--save-inline-cache @bool # Enable cache inlining when pushing images (default: false) [$EARTHLY_SAVE_INLINE_CACHE]
+	--use-inline-cache @bool # Attempt to use any inline cache that may have been previously pushed
+	--strict @bool # Disallow usage of features that may create unrepeatable builds (default: false) [$EARTHLY_STRICT]
+	--auto-skip-db-path # use a local database for auto-skip [$EARTHLY_AUTO_SKIP_DB_PATH]
+	--buildkit-image # The docker image to use for the buildkit daemon (default: "docker.io/earthly/buildkitd:v0.8.16") [$EARTHLY_BUILDKIT_IMAGE]
+	--remote-cache # A remote docker image tag use as explicit cache and optionally additional attributes to set in the image (Format: "<image-tag>[,<attr1>=<val1>,<attr2>=<val2>,...]") [$EARTHLY_REMOTE_CACHE]
+	--disable-remote-registry-proxy @bool # Don't use the Docker registry proxy when transferring images (default: false) [$EARTHLY_DISABLE_REMOTE_REGISTRY_PROXY]
+	--no-auto-skip @bool # Disable auto-skip functionality (default: false) [$EARTHLY_NO_AUTO_SKIP]
+	--github-annotations @bool # Enable Git Hub Actions workflow specific output (default: false) [$GITHUB_ACTIONS]
+	bootstrap # Bootstraps earthly installation including buildkit image download and optionally shell autocompletion
+		--no-buildkit @bool # Skips setting up the BuildKit container (default: false)
+		--with-autocomplete @bool # Install shell autocompletions during bootstrap (default: false)
+		--force-certificate-generation @bool # Force the generation of self-signed TLS certificates, even when no BuildKit container is started (default: false)
+		--certs-hostname # Hostname to generate certificates for (default: "localhost") [$EARTHLY_CERTS_HOSTNAME]
+	config # Edits your Earthly configuration file
+		--dry-run @bool # Print the changed config file to the console instead of writing it to file (default: false)
+	doc # Document targets from an Earthfile
+	docker-build # *beta* Build a Dockerfile without an Earthfile
+		--target # The docker target to build in the specified dockerfile [$EARTHLY_DOCKER_TARGET]
+	init # *experimental* Initialize an Earthfile for the current project
+	ls # List targets from an Earthfile
+	prune # Prune Earthly build cache
+		--reset @bool # Reset cache entirely by restarting BuildKit daemon and wiping cache dir. (default: false) [$EARTHLY_PRUNE_RESET]
+		--age # Prune cache older than the specified duration passed in as a string;
+		--size # Prune cache to specified size, starting from oldest (default: 0 B)

@@ -1,0 +1,57 @@
+# Systemctl CLI schema for fast-completer
+# Generated from systemctl unknown
+
+systemctl # systemd service manager
+	--system @bool # Connect to system manager
+	--user @bool # Connect to user service manager
+	--capsule|-C # Connect to service manager of specified capsule
+	--machine|-M # Operate on a local container
+	--type|-t # List units of a particular type
+	--state # List units with particular LOAD or SUB or ACTIVE state
+	--failed @bool # Shortcut for --state=failed
+	--property|-p # Show only properties by this name
+	--all|-a @bool # Show all properties/all units currently in memory,
+	--full|-l @bool # Don't ellipsize unit names on output
+	--recursive|-r @bool # Show unit list of host and local containers
+	--reverse @bool # Show reverse dependencies with 'list-dependencies'
+	--before @bool # Show units ordered before with 'list-dependencies'
+	--after @bool # Show units ordered after with 'list-dependencies'
+	--with-dependencies @bool # Show unit dependencies with 'status', 'cat',
+	--job-mode # Specify how to deal with already queued jobs, when
+	--show-transaction|-T @bool # When enqueuing a unit job, show full transaction
+	--show-types @bool # When showing sockets, explicitly show their type
+	--value @bool # When showing properties, only print the value
+	-i @bool # Shortcut for --check-inhibitors=no
+	--signal|-s # Which signal to send
+	--kill-whom # Whom to send signal to
+	--kill-value # Signal value to enqueue
+	--what # Which types of resources to remove
+	--now @bool # Start or stop unit after enabling or disabling it
+	--dry-run @bool # Only print what would be done
+	--quiet|-q @bool # Suppress output
+	--verbose|-v @bool # Show unit logs while executing operation
+	--no-warn @bool # Suppress several warnings shown by default
+	--wait @bool # For (re)start, wait until service stopped again
+	--no-block @bool # Do not wait until operation finished
+	--no-wall @bool # Don't send wall message before halt/power-off/reboot
+	--message # Specify human-readable reason for system shutdown
+	--no-reload @bool # Don't reload daemon after en-/dis-abling unit files
+	--legend # Enable/disable the legend (column headers and hints)
+	--no-pager @bool # Do not pipe output into a pager
+	--no-ask-password @bool # Do not ask for system passwords
+	--global @bool # Edit/enable/disable/mask default user unit files
+	--runtime @bool # Edit/enable/disable/mask unit files temporarily until
+	--force|-f @bool # When enabling unit files, override existing symlinks
+	--root # Edit/enable/disable/mask unit files in the specified
+	--image # Edit/enable/disable/mask unit files in the specified
+	--lines|-n # Number of journal entries to show
+	--output|-o # Change journal output mode (short, short-precise,
+	--firmware-setup @bool # Tell the firmware to show the setup menu on next boot
+	--plain @bool # Print unit dependencies as a list instead of a tree
+	--timestamp # Change format of printed timestamps (pretty, unix,
+	--read-only @bool # Create read-only bind mount
+	--mkdir @bool # Create directory before mounting, if missing
+	--marked @bool # Restart/reload previously marked units
+	--drop-in # Edit unit files using the specified drop-in file name
+	--when # Schedule halt/power-off/reboot/kexec action after
+	--stdin @bool # Read new contents of edited file from stdin

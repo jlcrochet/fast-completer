@@ -1,0 +1,210 @@
+{
+  "dive --help": {
+    "returncode": 0,
+    "stdout": "This tool provides a way to discover and explore the contents of a docker image. Additionally the tool estimates\nthe amount of wasted space and identifies the offending files from the image.\n\nUsage:\n  dive [IMAGE] [flags]\n  dive [command]\n\nAvailable Commands:\n  build       Builds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).\n  completion  Generate the autocompletion script for the specified shell\n  help        Help about any command\n  version     print the version number and exit (also --version)\n\nFlags:\n      --ci                                Skip the interactive TUI and validate against CI rules (same as env var CI=true)\n      --ci-config string                  If CI=true in the environment, use the given yaml to drive validation rules. (default \".dive-ci\")\n      --config string                     config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -h, --help                              help for dive\n      --highestUserWastedPercent string   (only valid with --ci given) highest allowable percentage of bytes wasted (as a ratio between 0-1), otherwise CI validation will fail. (default \"0.1\")\n      --highestWastedBytes string         (only valid with --ci given) highest allowable bytes wasted, otherwise CI validation will fail. (default \"disabled\")\n  -i, --ignore-errors                     ignore image parsing errors and run the analysis anyway\n  -j, --json string                       Skip the interactive TUI and write the layer analysis statistics to a given file.\n      --lowestEfficiency string           (only valid with --ci given) lowest allowable image efficiency (as a ratio between 0-1), otherwise CI validation will fail. (default \"0.9\")\n      --source string                     The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version                           display version number\n\nUse \"dive [command] --help\" for more information about a command.\n"
+  },
+  "dive --version": {
+    "returncode": 0,
+    "stdout": "dive 0.13.1\n"
+  },
+  "dive __complete ": {
+    "returncode": 0,
+    "stdout": "build\tBuilds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).\ncompletion\tGenerate the autocompletion script for the specified shell\nhelp\tHelp about any command\nversion\tprint the version number and exit (also --version)\n:4\n"
+  },
+  "dive __complete --": {
+    "returncode": 0,
+    "stdout": "--ci\tSkip the interactive TUI and validate against CI rules (same as env var CI=true)\n--ci-config\tIf CI=true in the environment, use the given yaml to drive validation rules.\n--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--help\thelp for dive\n--highestUserWastedPercent\t(only valid with --ci given) highest allowable percentage of bytes wasted (as a ratio between 0-1), otherwise CI validation will fail.\n--highestWastedBytes\t(only valid with --ci given) highest allowable bytes wasted, otherwise CI validation will fail.\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--json\tSkip the interactive TUI and write the layer analysis statistics to a given file.\n--lowestEfficiency\t(only valid with --ci given) lowest allowable image efficiency (as a ratio between 0-1), otherwise CI validation will fail.\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n:4\n"
+  },
+  "dive __complete build ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "dive __complete build --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n:4\n"
+  },
+  "dive __complete completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "dive __complete completion --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for completion\n:4\n"
+  },
+  "dive __complete completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete completion bash --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for bash\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "dive __complete completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete completion fish --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for fish\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "dive __complete completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete completion powershell --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for powershell\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "dive __complete completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete completion zsh --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for zsh\n--no-descriptions\tdisable completion descriptions\n:4\n"
+  },
+  "dive __complete help ": {
+    "returncode": 0,
+    "stdout": "build\tBuilds and analyzes a docker image from a Dockerfile (this is a thin wrapper for the `docker build` command).\ncompletion\tGenerate the autocompletion script for the specified shell\nhelp\tHelp about any command\nversion\tprint the version number and exit (also --version)\n:4\n"
+  },
+  "dive __complete help --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help build ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help build --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help completion ": {
+    "returncode": 0,
+    "stdout": "bash\tGenerate the autocompletion script for bash\nfish\tGenerate the autocompletion script for fish\npowershell\tGenerate the autocompletion script for powershell\nzsh\tGenerate the autocompletion script for zsh\n:4\n"
+  },
+  "dive __complete help completion --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help completion bash ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help completion bash --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help completion fish ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help completion fish --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help completion powershell ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help completion powershell --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help completion zsh ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help completion zsh --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help help ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help help --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete help version ": {
+    "returncode": 0,
+    "stdout": ":4\n"
+  },
+  "dive __complete help version --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for help\n:4\n"
+  },
+  "dive __complete version ": {
+    "returncode": 0,
+    "stdout": ":0\n"
+  },
+  "dive __complete version --": {
+    "returncode": 0,
+    "stdout": "--config\tconfig file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n--ignore-errors\tignore image parsing errors and run the analysis anyway\n--source\tThe container engine to fetch the image from. Allowed values: docker, podman, docker-archive\n--version\tdisplay version number\n--help\thelp for version\n:4\n"
+  },
+  "dive build --help": {
+    "returncode": 1,
+    "stdout": "\u001b[1mBuilding image...\u001b[0m\nUsage:  docker build [OPTIONS] PATH | URL | -\n\nBuild an image from a Dockerfile\n\nAliases:\n  docker image build, docker build, docker builder build\n\nOptions:\n      --add-host list          Add a custom host-to-IP mapping (\"host:ip\")\n      --build-arg list         Set build-time variables\n      --cache-from strings     Images to consider as cache sources\n      --cgroup-parent string   Set the parent cgroup for the \"RUN\"\n                               instructions during build\n      --compress               Compress the build context using gzip\n      --cpu-period int         Limit the CPU CFS (Completely Fair\n                               Scheduler) period\n      --cpu-quota int          Limit the CPU CFS (Completely Fair\n                               Scheduler) quota\n  -c, --cpu-shares int         CPU shares (relative weight)\n      --cpuset-cpus string     CPUs in which to allow execution (0-3, 0,1)\n      --cpuset-mems string     MEMs in which to allow execution (0-3, 0,1)\n  -f, --file string            Name of the Dockerfile (Default is\n                               \"PATH/Dockerfile\")\n      --force-rm               Always remove intermediate containers\n      --iidfile string         Write the image ID to the file\n      --isolation string       Container isolation technology\n      --label list             Set metadata for an image\n  -m, --memory bytes           Memory limit\n      --memory-swap bytes      Swap limit equal to memory plus swap: -1\n                               to enable unlimited swap\n      --network string         Set the networking mode for the RUN\n                               instructions during build (default \"default\")\n      --no-cache               Do not use cache when building the image\n      --platform string        Set platform if server is multi-platform\n                               capable\n      --pull                   Always attempt to pull a newer version of\n                               the image\n  -q, --quiet                  Suppress the build output and print image\n                               ID on success\n      --rm                     Remove intermediate containers after a\n                               successful build (default true)\n      --security-opt strings   Security options\n      --shm-size bytes         Size of \"/dev/shm\"\n      --squash                 Squash newly built layers into a single\n                               new layer\n  -t, --tag list               Name and optionally a tag in the\n                               \"name:tag\" format\n      --target string          Set the target build stage to build.\n      --ulimit ulimit          Ulimit options (default [])\nThe image is not available locally. Trying to pull ''...\n"
+  },
+  "dive completion --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for dive for the specified shell.\nSee each sub-command's help for details on how to use the generated script.\n\nUsage:\n  dive completion [command]\n\nAvailable Commands:\n  bash        Generate the autocompletion script for bash\n  fish        Generate the autocompletion script for fish\n  powershell  Generate the autocompletion script for powershell\n  zsh         Generate the autocompletion script for zsh\n\nFlags:\n  -h, --help   help for completion\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n\nUse \"dive completion [command] --help\" for more information about a command.\n"
+  },
+  "dive completion bash --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the bash shell.\n\nThis script depends on the 'bash-completion' package.\nIf it is not installed already, you can install it via your OS's package manager.\n\nTo load completions in your current shell session:\n\n\tsource <(dive completion bash)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\tdive completion bash > /etc/bash_completion.d/dive\n\n#### macOS:\n\n\tdive completion bash > $(brew --prefix)/etc/bash_completion.d/dive\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  dive completion bash\n\nFlags:\n  -h, --help              help for bash\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive completion fish --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the fish shell.\n\nTo load completions in your current shell session:\n\n\tdive completion fish | source\n\nTo load completions for every new session, execute once:\n\n\tdive completion fish > ~/.config/fish/completions/dive.fish\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  dive completion fish [flags]\n\nFlags:\n  -h, --help              help for fish\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for powershell.\n\nTo load completions in your current shell session:\n\n\tdive completion powershell | Out-String | Invoke-Expression\n\nTo load completions for every new session, add the output of the above command\nto your powershell profile.\n\nUsage:\n  dive completion powershell [flags]\n\nFlags:\n  -h, --help              help for powershell\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Generate the autocompletion script for the zsh shell.\n\nIf shell completion is not already enabled in your environment you will need\nto enable it.  You can execute the following once:\n\n\techo \"autoload -U compinit; compinit\" >> ~/.zshrc\n\nTo load completions in your current shell session:\n\n\tsource <(dive completion zsh)\n\nTo load completions for every new session, execute once:\n\n#### Linux:\n\n\tdive completion zsh > \"${fpath[1]}/_dive\"\n\n#### macOS:\n\n\tdive completion zsh > $(brew --prefix)/share/zsh/site-functions/_dive\n\nYou will need to start a new shell for this setup to take effect.\n\nUsage:\n  dive completion zsh [flags]\n\nFlags:\n  -h, --help              help for zsh\n      --no-descriptions   disable completion descriptions\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help build --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help completion --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help completion bash --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help completion fish --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help completion powershell --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help completion zsh --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help help --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive help version --help": {
+    "returncode": 0,
+    "stdout": "Help provides help for any command in the application.\nSimply type dive help [path to command] for full details.\n\nUsage:\n  dive help [command] [flags]\n\nFlags:\n  -h, --help   help for help\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  },
+  "dive version --help": {
+    "returncode": 0,
+    "stdout": "print the version number and exit (also --version)\n\nUsage:\n  dive version [flags]\n\nFlags:\n  -h, --help   help for version\n\nGlobal Flags:\n      --config string   config file (default is $HOME/.dive.yaml, ~/.config/dive/*.yaml, or $XDG_CONFIG_HOME/dive.yaml)\n  -i, --ignore-errors   ignore image parsing errors and run the analysis anyway\n      --source string   The container engine to fetch the image from. Allowed values: docker, podman, docker-archive (default \"docker\")\n  -v, --version         display version number\n"
+  }
+}

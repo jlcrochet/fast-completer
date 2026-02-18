@@ -1,0 +1,8 @@
+[project]
+name = "kyverno-schema-export"
+version = "0.1.0"
+description = "Export Kyverno command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-kyverno = "export_command_tree:main"

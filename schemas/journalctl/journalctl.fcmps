@@ -1,0 +1,68 @@
+# Journalctl CLI schema for fast-completer
+# Generated from journalctl unknown
+
+journalctl # Query the systemd journal
+	--system @bool # Show the system journal
+	--user @bool # Show the user journal for the current user
+	--machine|-M # Operate on local container
+	--merge|-m @bool # Show entries from all available journals
+	--directory|-D # Show journal files from directory
+	--file|-i # Show journal file
+	--root # Operate on an alternate filesystem root
+	--image # Operate on disk image as filesystem root
+	--image-policy # Specify disk image dissection policy
+	--namespace # Show journal data from specified journal namespace
+	--since|-S # Show entries not older than the specified date
+	--until|-U # Show entries not newer than the specified date
+	--cursor|-c # Show entries starting at the specified cursor
+	--after-cursor # Show entries after the specified cursor
+	--cursor-file # Show entries after cursor in FILE and update FILE
+	--boot|-b # Show current boot or the specified boot
+	--unit|-u # Show logs from the specified unit
+	--user-unit # Show logs from the specified user unit
+	--invocation # Show logs from the matching invocation ID
+	-I @bool # Show logs from the latest invocation of unit
+	--identifier|-t # Show entries with the specified syslog identifier
+	--priority|-p # Show entries within the specified priority range
+	--facility # Show entries with the specified facilities
+	--grep|-g # Show entries with MESSAGE matching PATTERN
+	--case-sensitive # Force case sensitive or insensitive matching
+	--dmesg|-k @bool # Show kernel message log from the current boot
+	--output|-o # Change journal output mode (short, short-precise,
+	--output-fields # Select fields to print in verbose/export/json modes
+	--reverse|-r @bool # Show the newest entries first
+	--show-cursor @bool # Print the cursor after all the entries
+	--utc @bool # Express time in Coordinated Universal Time (UTC)
+	--catalog|-x @bool # Add message explanations where available
+	--no-hostname|-W @bool # Suppress output of hostname field
+	--no-full @bool # Ellipsize fields
+	--all|-a @bool # Show all fields, including long and unprintable
+	--follow|-f @bool # Follow the journal
+	--no-tail @bool # Show all lines, even in follow mode
+	--truncate-newline @bool # Truncate entries by first newline character
+	--quiet|-q @bool # Do not show info messages and privilege warning
+	--no-pager @bool # Do not pipe output into a pager
+	--pager-end|-e @bool # Immediately jump to the end in the pager
+	--interval # Time interval for changing the FSS sealing key
+	--verify-key # Specify FSS verification key
+	--force @bool # Override of the FSS key pair with --setup-keys
+	--fields|-N @bool # List all field names currently used
+	--field|-F # List all values that a specified field takes
+	--list-boots @bool # Show terse information about recorded boots
+	--list-invocations @bool # Show invocation IDs of specified unit
+	--list-namespaces @bool # Show list of journal namespaces
+	--disk-usage @bool # Show total disk usage of all journal files
+	--vacuum-size # Reduce disk usage below specified size
+	--vacuum-files # Leave only the specified number of journal files
+	--vacuum-time # Remove journal files older than specified time
+	--verify @bool # Verify journal file consistency
+	--sync @bool # Synchronize unwritten journal messages to disk
+	--relinquish-var @bool # Stop logging to disk, log to temporary file system
+	--smart-relinquish-var @bool # Similar, but NOP if log directory is on root mount
+	--flush @bool # Flush all journal data from /run into /var
+	--rotate @bool # Request immediate rotation of the journal files
+	--header @bool # Show journal header information
+	--list-catalog @bool # Show all message IDs in the catalog
+	--dump-catalog @bool # Show entries in the message catalog
+	--update-catalog @bool # Update the message catalog database
+	--setup-keys @bool # Generate a new FSS key pair

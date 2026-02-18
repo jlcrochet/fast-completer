@@ -1,0 +1,2544 @@
+# Linkerd CLI schema for fast-completer
+# Generated from linkerd unknown
+
+linkerd # Service mesh CLI
+	--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+	--as # Username to impersonate for Kubernetes operations
+	--as-group # Group to impersonate for Kubernetes operations
+	--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+	--context # Name of the kubeconfig context to use
+	--help @bool # help for linkerd
+	--kubeconfig # Path to the kubeconfig file to use for CLI requests
+	--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+	--verbose @bool # Turn on debug logging
+	authz # List authorizations for a resource
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--namespace # Namespace of resource
+		cronjob
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		daemonset
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		deployment
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		job
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		namespace
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		pod
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		replicaset
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		replicationcontroller
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		service
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+		statefulset
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+	check # Check the Linkerd installation for potential problems
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--cli-version-override # Used to override the version of the cli (mostly for testing)
+		--crds @bool # Only run checks which determine if the Linkerd CRDs have been installed
+		--expected-version # Overrides the version used when checking if Linkerd is running the latest version (mostly for testing)
+		--linkerd-cni-enabled @bool # When running pre-installation checks (--pre), assume the linkerd-cni plugin is already installed, and a NET_ADMIN check is not needed
+		--namespace # Namespace to use for --proxy checks (default: all namespaces)
+		--output # Output format. One of: table, json, short
+		--pre @bool # Only run pre-installation checks, to determine if the control plane can be installed
+		--proxy @bool # Only run data-plane checks, to determine if the data plane is healthy
+		--wait # Maximum allowed time for all tests to pass
+	completion # Output shell completion code for the specified shell (bash, zsh or fish)
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		bash
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		fish
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		zsh
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+	diagnostics # Commands used to diagnose Linkerd components
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		controller-metrics # Fetch metrics directly from the Linkerd control plane containers
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--wait # Time allowed to fetch diagnostics
+		endpoints # Introspect Linkerd's service discovery state
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--destination-pod # Target a specific destination Pod when there are multiple running
+			--output # Output format; one of: "table" or "json"
+			--token # The context token to use when making the request to the destination API
+		policy # Introspect Linkerd's policy state
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--destination-pod # Target a specific destination Pod when there are multiple running
+			--namespace # Namespace of resource
+			--output # Output format. One of: yaml, json
+			--token # Token to use when querying the policy service
+		profile # Introspect Linkerd's service discovery state
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--destination-pod # Target a specific destination Pod when there are multiple running
+			--token # The context token to use when making the request to the destination API
+		proxy-metrics # Fetch metrics directly from Linkerd proxies
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			--namespace # Namespace of resource
+			--obfuscate @bool # Obfuscate sensitive information
+	help # Help about any command
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		authz # List authorizations for a resource
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		check # Check the Linkerd installation for potential problems
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		completion # Output shell completion code for the specified shell (bash, zsh or fish)
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		diagnostics # Commands used to diagnose Linkerd components
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			controller-metrics # Fetch metrics directly from the Linkerd control plane containers
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			endpoints # Introspect Linkerd's service discovery state
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			policy # Introspect Linkerd's policy state
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			profile # Introspect Linkerd's service discovery state
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			proxy-metrics # Fetch metrics directly from Linkerd proxies
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+		help # Help about any command
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		identity # Display the certificate(s) of one or more selected pod(s)
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		inject # Add the Linkerd proxy to a Kubernetes config
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		install # Output Kubernetes configs to install Linkerd
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		install-cni # Output Kubernetes configs to install Linkerd CNI
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		multicluster # Manages the multicluster setup for Linkerd
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			allow # Outputs credential resources that allow service-mirror controllers to connect to this cluster
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			check # Check the multicluster extension for potential problems
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			gateways # Display stats information about the gateways in target clusters
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			install # Output Kubernetes configs to install the Linkerd multicluster add-on
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			link-gen # Outputs a Link manifest and credentials for another cluster to mirror services from this one
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			uninstall # Output Kubernetes configs to uninstall the Linkerd multicluster add-on
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+		profile # Output service profile config for Kubernetes
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		prune # Output extraneous Kubernetes resources in the linkerd control plane
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		uninject # Remove the Linkerd proxy from a Kubernetes config
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		uninstall # Output Kubernetes resources to uninstall Linkerd control plane
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		upgrade # Output Kubernetes configs to upgrade an existing Linkerd control plane
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		version # Print the client and server version information
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+		viz # viz manages the linkerd-viz extension of Linkerd service mesh
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+			--verbose @bool # Turn on debug logging
+			allow-scrapes # Output Kubernetes resources to authorize Prometheus scrapes
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			authz # Display stats for authorizations for a resource
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			check # Check the Linkerd Viz extension for potential problems
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			dashboard # Open the Linkerd dashboard in a web browser
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			edges # Display connections between resources, and Linkerd proxy identities
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			install # Output Kubernetes resources to install linkerd-viz extension
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			list # Lists which pods can be tapped
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			profile # Output service profile config for Kubernetes based off tap data
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			prune # Output extraneous Kubernetes resources in the linkerd-viz extension
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			routes # Display route stats
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			stat # Display traffic stats about one or many resources
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			stat-inbound # Display inbound traffic stats about a resource
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			stat-outbound # Display outbound traffic stats about a resource
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			tap # Listen to a traffic stream
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			top # Display sorted information about live traffic
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+			uninstall # Output Kubernetes resources to uninstall the linkerd-viz extension
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+				--verbose @bool # Turn on debug logging
+	identity # Display the certificate(s) of one or more selected pod(s)
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--namespace # Namespace of the pod
+		--selector # Selector (label query) to filter on, supports ‘=’, ‘==’, and ‘!=’
+	inject # Add the Linkerd proxy to a Kubernetes config
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--admin-port # Proxy port to serve metrics on
+		--close-wait-timeout # Sets nf_conntrack_tcp_timeout_close_wait
+		--control-port # Proxy port to use for control
+		--default-inbound-policy # Inbound policy to use to control inbound access to the proxy
+		--enable-debug-sidecar @bool # Inject a debug sidecar for data plane debugging
+		--enable-external-profiles @bool # Enable service profiles for non-Kubernetes services
+		--ignore-cluster @bool # Ignore the current Kubernetes cluster when checking for existing cluster configuration (default false)
+		--inbound-port # Proxy port to use for inbound traffic
+		--ingress @bool # Enable ingress mode in the linkerd proxy
+		--manual @bool # Include the proxy sidecar container spec in the YAML output (the auto-injector won't pick it up, so config annotations aren't supported) (default false)
+		--native-sidecar @bool # Enable native sidecar
+		--opaque-ports # Set opaque ports on the proxy
+		--outbound-port # Proxy port to use for outbound traffic
+		--output # Output format, one of: json|yaml
+		--proxy-cpu-limit # Maximum amount of CPU units that the proxy sidecar can use
+		--proxy-cpu-request # Amount of CPU units that the proxy sidecar requests
+		--proxy-gid # Run the proxy under this group ID
+		--proxy-log-level # Log level for the proxy
+		--proxy-memory-limit # Maximum amount of Memory that the proxy sidecar can use
+		--proxy-memory-request # Amount of Memory that the proxy sidecar requests
+		--proxy-uid # Run the proxy under this user ID
+		--registry # Docker registry to pull images from ($LINKERD_DOCKER_REGISTRY)
+		--require-identity-on-inbound-ports # Inbound ports on which the proxy should require identity
+		--skip-inbound-ports # Ports and/or port ranges (inclusive) that should skip the proxy and send directly to the application
+		--skip-outbound-ports # Outbound ports and/or port ranges (inclusive) that should skip the proxy
+		--wait-before-exit-seconds # The period during which the proxy sidecar must stay alive while its pod is terminating. Must be smaller than terminationGracePeriodSeconds for the pod (default 0)
+	install # Output Kubernetes configs to install Linkerd
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--admin-port # Proxy port to serve metrics on
+		--cluster-domain # Set custom cluster domain
+		--control-port # Proxy port to use for control
+		--controller-gid # Run the control plane components under this group ID
+		--controller-log-level # Log level for the controller and web components
+		--controller-replicas # Replicas of the controller to deploy
+		--controller-uid # Run the control plane components under this user ID
+		--crds @bool # Install Linkerd CRDs
+		--default-inbound-policy # Inbound policy to use to control inbound access to the proxy
+		--disable-h2-upgrade @bool # Prevents the controller from instructing proxies to perform transparent HTTP/2 upgrading (default false)
+		--disable-heartbeat @bool # Disables the heartbeat cronjob (default false)
+		--enable-endpoint-slices @bool # Enables the usage of EndpointSlice informers and resources for destination service
+		--enable-external-profiles @bool # Enable service profiles for non-Kubernetes services
+		--ha @bool # Enable HA deployment config for the control plane (default false)
+		--identity-clock-skew-allowance # The amount of time to allow for clock skew within a Linkerd cluster
+		--identity-external-ca @bool # Whether to use an external CA provider (default false)
+		--identity-external-issuer @bool # Whether to use an external identity issuer (default false)
+		--identity-issuance-lifetime # The amount of time for which the Identity issuer should certify identity
+		--identity-issuer-certificate-file # A path to a PEM-encoded file containing the Linkerd Identity issuer certificate (generated by default)
+		--identity-issuer-key-file # A path to a PEM-encoded file containing the Linkerd Identity issuer private key (generated by default)
+		--identity-trust-anchors-file # A path to a PEM-encoded file containing Linkerd Identity trust anchors (generated by default)
+		--identity-trust-domain # Configures the name suffix used for identities.
+		--ignore-cluster @bool # Ignore the current Kubernetes cluster when checking for existing cluster configuration (default false)
+		--inbound-port # Proxy port to use for inbound traffic
+		--linkerd-cni-enabled @bool # Omit the NET_ADMIN capability in the PSP and the proxy-init container when injecting the proxy; requires the linkerd-cni plugin to already be installed
+		--outbound-port # Proxy port to use for outbound traffic
+		--output # Output format. One of: json|yaml
+		--proxy-cpu-limit # Maximum amount of CPU units that the proxy sidecar can use
+		--proxy-cpu-request # Amount of CPU units that the proxy sidecar requests
+		--proxy-gid # Run the proxy under this group ID
+		--proxy-log-level # Log level for the proxy
+		--proxy-memory-limit # Maximum amount of Memory that the proxy sidecar can use
+		--proxy-memory-request # Amount of Memory that the proxy sidecar requests
+		--proxy-uid # Run the proxy under this user ID
+		--registry # Docker registry to pull images from ($LINKERD_DOCKER_REGISTRY)
+		--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--skip-inbound-ports # Ports and/or port ranges (inclusive) that should skip the proxy and send directly to the application
+		--skip-outbound-ports # Outbound ports and/or port ranges (inclusive) that should skip the proxy
+		--values # specify values in a YAML file or a URL (can specify multiple)
+	install-cni # Output Kubernetes configs to install Linkerd CNI
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--admin-port # Proxy port to serve metrics on
+		--cni-image # Image for the cni-plugin
+		--cni-image-version # Image Version for the cni-plugin
+		--cni-log-level # Log level for the cni-plugin
+		--control-port # Proxy port to use for control
+		--dest-cni-bin-dir # Directory on the host where the CNI binary will be placed
+		--dest-cni-net-dir # Directory on the host where the CNI configuration will be placed
+		--inbound-port # Proxy port to use for inbound traffic
+		--linkerd-version # Tag to be used for Linkerd images
+		--outbound-port # Proxy port to use for outbound traffic
+		--priority-class-name # Pod priorityClassName for CNI daemonset's pods
+		--proxy-gid # Run the proxy under this group ID
+		--proxy-uid # Run the proxy under this user ID
+		--redirect-ports # Ports to redirect to proxy, if no port is specified then ALL ports are redirected
+		--registry # Docker registry to pull images from ($LINKERD_DOCKER_REGISTRY)
+		--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--skip-inbound-ports # Ports and/or port ranges (inclusive) that should skip the proxy and send directly to the application
+		--skip-outbound-ports # Outbound ports and/or port ranges (inclusive) that should skip the proxy
+		--use-wait-flag @bool # Configures the CNI plugin to use the "-w" flag for the iptables command. (default false)
+		--values # specify values in a YAML file or a URL (can specify multiple)
+	multicluster # Manages the multicluster setup for Linkerd
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed
+		--verbose @bool # Turn on debug logging
+		allow # Outputs credential resources that allow service-mirror controllers to connect to this cluster
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--ignore-cluster @bool # Ignore cluster configuration
+			--namespace # The destination namespace for the service account.
+			--output # Output format. One of: json|yaml
+			--service-account-name # The name of the multicluster access service account
+		check # Check the multicluster extension for potential problems
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--output # Output format. One of: table, json, short
+			--timeout # Timeout for calls to the Kubernetes API
+			--wait # Maximum allowed time for all tests to pass
+		gateways # Display stats information about the gateways in target clusters
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--cluster-name # the name of the target cluster
+			--output # used to print output in different format
+			--wait # time allowed to fetch diagnostics
+		install # Output Kubernetes configs to install the Linkerd multicluster add-on
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--gateway @bool # If the gateway component should be installed
+			--gateway-port # The port on the gateway used for all incoming traffic
+			--gateway-probe-port # The liveness check port of the gateway
+			--gateway-probe-seconds # The interval at which the gateway will be checked for being alive in seconds
+			--gateway-service-type # Overwrite Service type for gateway service
+			--ha @bool # Install multicluster extension in High Availability mode.
+			--ignore-cluster @bool # Ignore the current Kubernetes cluster when checking for existing cluster configuration (default false)
+			--output # Output format. One of: json|yaml
+			--service-mirror-credentials @bool # Whether to install the service account which can be used by service mirror components in source clusters to discover exported services
+			--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+			--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--values # specify values in a YAML file or a URL (can specify multiple)
+			--wait # Wait for core control-plane components to be available
+		link-gen # Outputs a Link manifest and credentials for another cluster to mirror services from this one
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--api-server-address # The api server address of the target cluster
+			--cluster-name # Cluster name
+			--excluded-annotations # Annotations to exclude when mirroring services
+			--excluded-labels # Labels to exclude when mirroring services
+			--federated-service-selector # Selector (label query) for federated service members in the target cluster
+			--gateway @bool # If false, allows a link to be created against a cluster that does not have a gateway service
+			--gateway-addresses # If specified, overwrites gateway addresses when gateway service is not type LoadBalancer (comma separated list)
+			--gateway-name # The name of the gateway service
+			--gateway-namespace # The namespace of the gateway service
+			--gateway-port # If specified, overwrites gateway port when gateway service is not type LoadBalancer
+			--namespace # The namespace for the service account
+			--output # Output format. One of: json|yaml
+			--remote-discovery-selector # Selector (label query) to filter which services in the target cluster to mirror in remote discovery mode
+			--selector # Selector (label query) to filter which services in the target cluster to mirror
+			--service-account-name # The name of the service account associated with the credentials
+		uninstall # Output Kubernetes configs to uninstall the Linkerd multicluster add-on
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--output # Output format. One of: json|yaml
+	profile # Output service profile config for Kubernetes
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--ignore-cluster @bool # Output a service profile through offline generation
+		--namespace # Namespace of the service
+		--open-api # Output a service profile based on the given OpenAPI spec file
+		--output # Output format. One of: yaml, json
+		--proto # Output a service profile based on the given Protobuf spec file
+		--template @bool # Output a service profile template
+	prune # Output extraneous Kubernetes resources in the linkerd control plane
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--output # Output format. One of: json|yaml
+	uninject # Remove the Linkerd proxy from a Kubernetes config
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--output # Output format, one of: json|yaml
+	uninstall # Output Kubernetes resources to uninstall Linkerd control plane
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--force @bool # Force uninstall even if there exist non-control-plane injected pods
+		--output # Output format. One of: json|yaml
+	upgrade # Output Kubernetes configs to upgrade an existing Linkerd control plane
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--admin-port # Proxy port to serve metrics on
+		--control-port # Proxy port to use for control
+		--controller-gid # Run the control plane components under this group ID
+		--controller-log-level # Log level for the controller and web components
+		--controller-replicas # Replicas of the controller to deploy
+		--controller-uid # Run the control plane components under this user ID
+		--crds @bool # Upgrade Linkerd CRDs
+		--default-inbound-policy # Inbound policy to use to control inbound access to the proxy
+		--disable-h2-upgrade @bool # Prevents the controller from instructing proxies to perform transparent HTTP/2 upgrading (default false)
+		--disable-heartbeat @bool # Disables the heartbeat cronjob (default false)
+		--enable-endpoint-slices @bool # Enables the usage of EndpointSlice informers and resources for destination service
+		--enable-external-profiles @bool # Enable service profiles for non-Kubernetes services
+		--force @bool # Force upgrade operation even when issuer certificate does not work with the trust anchors of all proxies
+		--from-manifests # Read config from a Linkerd install YAML rather than from Kubernetes
+		--ha @bool # Enable HA deployment config for the control plane (default false)
+		--identity-clock-skew-allowance # The amount of time to allow for clock skew within a Linkerd cluster
+		--identity-issuance-lifetime # The amount of time for which the Identity issuer should certify identity
+		--identity-issuer-certificate-file # A path to a PEM-encoded file containing the Linkerd Identity issuer certificate (generated by default)
+		--identity-issuer-key-file # A path to a PEM-encoded file containing the Linkerd Identity issuer private key (generated by default)
+		--identity-trust-anchors-file # A path to a PEM-encoded file containing Linkerd Identity trust anchors (generated by default)
+		--inbound-port # Proxy port to use for inbound traffic
+		--linkerd-cni-enabled @bool # Omit the NET_ADMIN capability in the PSP and the proxy-init container when injecting the proxy; requires the linkerd-cni plugin to already be installed
+		--outbound-port # Proxy port to use for outbound traffic
+		--output # Output format. One of: json|yaml
+		--proxy-cpu-limit # Maximum amount of CPU units that the proxy sidecar can use
+		--proxy-cpu-request # Amount of CPU units that the proxy sidecar requests
+		--proxy-gid # Run the proxy under this group ID
+		--proxy-log-level # Log level for the proxy
+		--proxy-memory-limit # Maximum amount of Memory that the proxy sidecar can use
+		--proxy-memory-request # Amount of Memory that the proxy sidecar requests
+		--proxy-uid # Run the proxy under this user ID
+		--registry # Docker registry to pull images from ($LINKERD_DOCKER_REGISTRY)
+		--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--skip-inbound-ports # Ports and/or port ranges (inclusive) that should skip the proxy and send directly to the application
+		--skip-outbound-ports # Outbound ports and/or port ranges (inclusive) that should skip the proxy
+		--values # specify values in a YAML file or a URL (can specify multiple)
+	version # Print the client and server version information
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed ($LINKERD_NAMESPACE)
+		--verbose @bool # Turn on debug logging
+		--client @bool # Print the client version only
+		--namespace # Namespace to use for --proxy versions (default: all namespaces)
+		--proxy @bool # Print data-plane versions
+		--short @bool # Print the version number(s) only, with no additional output
+	viz # viz manages the linkerd-viz extension of Linkerd service mesh
+		--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+		--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+		--as # Username to impersonate for Kubernetes operations
+		--as-group # Group to impersonate for Kubernetes operations
+		--context # Name of the kubeconfig context to use
+		--kubeconfig # Path to the kubeconfig file to use for CLI requests
+		--linkerd-namespace # Namespace in which Linkerd is installed
+		--verbose @bool # Turn on debug logging
+		--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+		allow-scrapes # Output Kubernetes resources to authorize Prometheus scrapes
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # The namespace in which to authorize Prometheus scrapes.
+			--output # Output format. One of: json|yaml
+		authz # Display stats for authorizations for a resource
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace of the specified resource
+			--output # Output format; one of: "table" or "json" or "wide"
+			--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+			--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+		check # Check the Linkerd Viz extension for potential problems
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace to use for --proxy checks (default: all namespaces)
+			--output # Output format. One of: table, json, short
+			--proxy @bool # Also run data-plane checks, to determine if the data plane is healthy
+			--wait # Maximum allowed time for all tests to pass
+		dashboard # Open the Linkerd dashboard in a web browser
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--address # The address at which to serve requests
+			--port # The local port on which to serve requests (when set to 0, a random port will be used)
+			--show # Open a dashboard in a browser or show URLs in the CLI (one of: linkerd, grafana, url)
+			--wait # Wait for dashboard to become available if it's not available when the command is run
+		edges # Display connections between resources, and Linkerd proxy identities
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+			--namespace # Namespace of the specified resource
+			--output # Output format; one of: "table" or "json" or "wide"
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns edges across all namespaces, ignoring the "--namespace" flag
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+		install # Output Kubernetes resources to install linkerd-viz extension
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--ha @bool # Install Viz Extension in High Availability mode.
+			--ignore-cluster @bool # Ignore the current Kubernetes cluster when checking for existing cluster configuration (default false)
+			--output # Output format. One of: json|yaml
+			--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+			--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--skip-checks @bool # Skip checks for linkerd core control-plane existence
+			--values # specify values in a YAML file or a URL (can specify multiple)
+			--wait # Wait for core control-plane components to be available
+		list # Lists which pods can be tapped
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--all-namespaces @bool # If present, list pods across all namespaces
+			--namespace # The namespace to list pods in
+		profile # Output service profile config for Kubernetes based off tap data
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace of the service
+			--output # Output format. One of: yaml, json
+			--tap # Output a service profile based on tap data for the given target resource
+			--tap-duration # Duration over which tap data is collected (for example: "10s", "1m", "10m")
+			--tap-route-limit # Max number of routes to add to the profile
+		prune # Output extraneous Kubernetes resources in the linkerd-viz extension
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--ha @bool # Set if Linkerd Viz Extension is installed in High Availability mode.
+			--output # Output format. One of: json|yaml
+			--set # set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--set-file # set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+			--set-string # set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+			--values # specify values in a YAML file or a URL (can specify multiple)
+			--wait # Wait for extension components to be available
+		routes # Display route stats
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace of the specified resource
+			--output # Output format; one of: "table", "wide", or "json"
+			--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+			--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			--to # If present, shows outbound stats to the specified resource
+			--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table", "wide", or "json"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+				--to # If present, shows outbound stats to the specified resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+		stat # Display traffic stats about one or many resources
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+			--from # If present, restricts outbound stats from the specified resource name
+			--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+			--namespace # Namespace of the specified resource
+			--output # Output format; one of: "table" or "json" or "wide"
+			--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+			--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+			--to # If present, restricts outbound stats to the specified resource name
+			--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			--unmeshed @bool # If present, include unmeshed resources in the output
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--all-namespaces @bool # If present, returns stats across all namespaces, ignoring the "--namespace" flag
+				--from # If present, restricts outbound stats from the specified resource name
+				--from-namespace # Sets the namespace used from lookup the "--from" resource; by default the current "--namespace" is used
+				--namespace # Namespace of the specified resource
+				--output # Output format; one of: "table" or "json" or "wide"
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--time-window # Stat window (for example: "15s", "1m", "10m", "1h"). Needs to be at least 15s.
+				--to # If present, restricts outbound stats to the specified resource name
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+				--unmeshed @bool # If present, include unmeshed resources in the output
+		stat-inbound # Display inbound traffic stats about a resource
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace
+			--output # Output format; one of: "table" or "json"
+			--prometheusURL # Address of Prometheus instance to query
+			--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+		stat-outbound # Display outbound traffic stats about a resource
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--namespace # Namespace
+			--output # Output format; one of: "table" or "json"
+			--prometheusURL # Address of Prometheus instance to query
+			--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--namespace # Namespace
+				--output # Output format; one of: "table" or "json"
+				--prometheusURL # Address of Prometheus instance to query
+				--time-window # Stat window (for example: "10s", "1m", "10m", "1h")
+		tap # Listen to a traffic stream
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--authority # Display requests with this :authority
+			--max-rps # Maximum requests per second to tap.
+			--method # Display requests with this HTTP method
+			--namespace # Namespace of the specified resource
+			--output # Output format. One of: "wide", "json", "jsonpath"
+			--path # Display requests with paths that start with this prefix
+			--scheme # Display requests with this scheme
+			--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+			--to # Display requests to this resource
+			--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--output # Output format. One of: "wide", "json", "jsonpath"
+				--path # Display requests with paths that start with this prefix
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+		top # Display sorted information about live traffic
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--authority # Display requests with this :authority
+			--hide-sources @bool # Hide the source column
+			--max-rps # Maximum requests per second to tap.
+			--method # Display requests with this HTTP method
+			--namespace # Namespace of the specified resource
+			--path # Display requests with paths that start with this prefix
+			--routes @bool # Display data per route instead of per path
+			--scheme # Display requests with this scheme
+			--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+			--to # Display requests to this resource
+			--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			cronjob
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			daemonset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			deployment
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			job
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			namespace
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			pod
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicaset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			replicationcontroller
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			service
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+			statefulset
+				--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+				--as # Username to impersonate for Kubernetes operations
+				--as-group # Group to impersonate for Kubernetes operations
+				--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+				--context # Name of the kubeconfig context to use
+				--kubeconfig # Path to the kubeconfig file to use for CLI requests
+				--linkerd-namespace # Namespace in which Linkerd is installed
+				--verbose @bool # Turn on debug logging
+				--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+				--authority # Display requests with this :authority
+				--hide-sources @bool # Hide the source column
+				--max-rps # Maximum requests per second to tap.
+				--method # Display requests with this HTTP method
+				--namespace # Namespace of the specified resource
+				--path # Display requests with paths that start with this prefix
+				--routes @bool # Display data per route instead of per path
+				--scheme # Display requests with this scheme
+				--selector # Selector (label query) to filter on, supports '=', '==', and '!='
+				--to # Display requests to this resource
+				--to-namespace # Sets the namespace used to lookup the "--to" resource; by default the current "--namespace" is used
+		uninstall # Output Kubernetes resources to uninstall the linkerd-viz extension
+			--api-addr # Override kubeconfig and communicate directly with the control plane at host:port (mostly for testing)
+			--as # Username to impersonate for Kubernetes operations
+			--as-group # Group to impersonate for Kubernetes operations
+			--cni-namespace # Namespace in which the Linkerd CNI plugin is installed
+			--context # Name of the kubeconfig context to use
+			--kubeconfig # Path to the kubeconfig file to use for CLI requests
+			--linkerd-namespace # Namespace in which Linkerd is installed
+			--verbose @bool # Turn on debug logging
+			--viz-namespace # Name of the linkerd-viz namespace. If not set, it's automatically detected
+			--output # Output format. One of: json|yaml

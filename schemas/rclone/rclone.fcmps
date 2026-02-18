@@ -1,0 +1,2266 @@
+# rclone CLI schema for fast-completer
+# Generated from rclone 1.73.1
+
+rclone # Cloud storage sync
+	about # Get quota information from the remote.
+		--full @bool # Full numbers instead of human-readable
+		--json @bool # Format output as JSON
+	archive # Perform an action on an archive.
+		create
+			--format # Create the archive with format or guess from extension.
+			--full-path @bool # Set prefix for files in archive to source path
+			--prefix # Set prefix for files in archive to entered value or source path
+		extract
+		list
+			--dirs-only @bool # Only list directories
+			--files-only @bool # Only list files
+			--long @bool # List extra attributtes
+			--plain @bool # Only list file names
+	authorize # Remote authorization.
+		--auth-no-open-browser @bool # Do not automatically open auth link in default browser
+		--template # The path to a custom Go template for generating HTML responses
+	backend # Run a backend-specific command.
+		--json @bool # Always output in JSON format
+		--option|-o # Option in the form name=value or name
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	bisync # Perform bidirectional synchronization between two paths.
+		--backup-dir1 # --backup-dir for Path1. Must be a non-overlapping path on the same remote.
+		--backup-dir2 # --backup-dir for Path2. Must be a non-overlapping path on the same remote.
+		--check-access @bool # Ensure expected RCLONE_TEST files are found on both Path1 and Path2 filesystems, else abort.
+		--check-filename # Filename for --check-access (default: RCLONE_TEST)
+		--check-sync # Controls comparison of final listings: true|false|only (default: true) (default "true")
+		--compare # Comma-separated list of bisync-specific compare options ex. 'size,modtime,checksum' (default: 'size,modtime')
+		--conflict-loser # Action to take on the loser of a sync conflict (when there is a winner) or on both files (when there is no winner): , num, pathname, delete (default: num)
+		--conflict-resolve # Automatically resolve conflicts by preferring the version that is: none, path1, path2, newer, older, larger, smaller (default: none) (default "none")
+		--conflict-suffix # Suffix to use when renaming a --conflict-loser. Can be either one string or two comma-separated strings to assign different suffixes to Path1/Path2. (default: 'conflict')
+		--create-empty-src-dirs @bool # Sync creation and deletion of empty directories. (Not compatible with --remove-empty-dirs)
+		--download-hash @bool # Compute hash by downloading when otherwise unavailable. (warning: may be slow and use lots of data!)
+		--filters-file # Read filtering patterns from a file
+		--force @bool # Bypass --max-delete safety check and run the sync. Consider using with --verbose
+		--ignore-listing-checksum @bool # Do not use checksums for listings (add --ignore-checksum to additionally skip post-copy checksum checks)
+		--max-lock # Consider lock files older than this to be expired (default: 0 (never expire)) (minimum: 2m) (default 0s)
+		--no-cleanup @bool # Retain working files (useful for troubleshooting and testing).
+		--no-slow-hash @bool # Ignore listing checksums only on backends where they are slow
+		--recover @bool # Automatically recover from interruptions without requiring --resync.
+		--remove-empty-dirs @bool # Remove ALL empty directories at the final cleanup step.
+		--resilient @bool # Allow future runs to retry after certain less-serious errors, instead of requiring --resync.
+		--resync|-1 @bool # Performs the resync run. Equivalent to --resync-mode path1. Consider using --verbose or --dry-run first.
+		--resync-mode # During resync, prefer the version that is: path1, path2, newer, older, larger, smaller (default: path1 if --resync, otherwise none for no resync.) (default "none")
+		--slow-hash-sync-only @bool # Ignore slow checksums for listings and deltas, but still consider them during sync calls.
+		--workdir # Use custom working dir - useful for testing. (default: {WORKDIR})
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+	cat # Concatenates any files and sends them to stdout.
+		--count # Only print N characters (default -1)
+		--discard @bool # Discard the output instead of printing
+		--head # Only print the first N characters
+		--offset # Start printing at offset N (or from end if -ve)
+		--separator # Separator to use between objects when printing multiple files
+		--tail # Only print the last N characters
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	check # Checks the files in the source and destination match.
+		--checkfile|-C # Treat source:path as a SUM file with hashes of given type
+		--combined # Make a combined report of changes to this file
+		--differ # Report all non-matching files to this file
+		--download @bool # Check by downloading rather than with hash
+		--error # Report all files with errors (hashing or reading) to this file
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--one-way @bool # Check one way only, source files must exist on remote
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	checksum # Checks the files in the destination against a SUM file.
+		--combined # Make a combined report of changes to this file
+		--differ # Report all non-matching files to this file
+		--download @bool # Check by hashing the contents
+		--error # Report all files with errors (hashing or reading) to this file
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--one-way @bool # Check one way only, source files must exist on remote
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	cleanup # Clean up the remote if possible.
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	config # Enter an interactive configuration session.
+		create
+			--all @bool # Ask the full set of config questions
+			--continue @bool # Continue the configuration process with an answer
+			--no-obscure @bool # Force any passwords not to be obscured
+			--no-output @bool # Don't provide any output
+			--non-interactive @bool # Don't interact with user and return questions
+			--obscure @bool # Force any passwords to be obscured
+			--result # Result - use with --continue
+			--state # State - use with --continue
+		delete
+		disconnect
+		dump
+		edit
+		encryption
+			check
+			remove
+			set
+		file
+		password
+		paths
+		providers
+		reconnect
+		redacted
+		show
+		string
+		touch
+		update
+			--all @bool # Ask the full set of config questions
+			--continue @bool # Continue the configuration process with an answer
+			--no-obscure @bool # Force any passwords not to be obscured
+			--no-output @bool # Don't provide any output
+			--non-interactive @bool # Don't interact with user and return questions
+			--obscure @bool # Force any passwords to be obscured
+			--result # Result - use with --continue
+			--state # State - use with --continue
+		userinfo
+			--json @bool # Format output as JSON
+	convmv # Convert file and directory names in place.
+		--create-empty-src-dirs @bool # Create empty source dirs on destination after move
+		--delete-empty-src-dirs @bool # Delete empty source dirs after move
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	copy # Copy files from source to dest, skipping identical files.
+		--absolute @bool # Put a leading / in front of path names
+		--combined # Make a combined report of changes to this file
+		--create-empty-src-dirs @bool # Create empty source dirs on destination after copy
+		--csv @bool # Output in CSV format
+		--dest-after # Report all files that exist on the dest post-sync
+		--differ # Report all non-matching files to this file
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--error # Report all files with errors (hashing or reading) to this file
+		--files-only @bool # Only list files (default true)
+		--format|-F # Output format - see lsf help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--separator|-s # Separator for the items in the format (default ";")
+		--timeformat|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	copyto # Copy files from source to dest, skipping identical files.
+		--absolute @bool # Put a leading / in front of path names
+		--combined # Make a combined report of changes to this file
+		--csv @bool # Output in CSV format
+		--dest-after # Report all files that exist on the dest post-sync
+		--differ # Report all non-matching files to this file
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--error # Report all files with errors (hashing or reading) to this file
+		--files-only @bool # Only list files (default true)
+		--format|-F # Output format - see lsf help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--separator|-s # Separator for the items in the format (default ";")
+		--timeformat|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	copyurl # Copy the contents of the URL supplied content to dest:path.
+		--auto-filename|-a @bool # Get the file name from the URL and use it for destination file path
+		--header-filename @bool # Get the file name from the Content-Disposition header
+		--no-clobber @bool # Prevent overwriting file with same name
+		--print-filename|-p @bool # Print the resulting name from --auto-filename
+		--stdout @bool # Write the output to stdout rather than a file
+		--urls @bool # Use a CSV file of links to process multiple URLs
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	cryptcheck # Cryptcheck checks the integrity of an encrypted remote.
+		--combined # Make a combined report of changes to this file
+		--differ # Report all non-matching files to this file
+		--error # Report all files with errors (hashing or reading) to this file
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--one-way @bool # Check one way only, source files must exist on remote
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	dedupe # Interactively find duplicate filenames and delete/rename them.
+		--by-hash @bool # Find identical hashes rather than names
+		--dedupe-mode # Dedupe mode interactive|skip|first|newest|oldest|largest|smallest|rename (default "interactive")
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	delete # Remove the files in path.
+		--rmdirs @bool # rmdirs removes empty directories but leaves root intact
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	deletefile # Remove a single file from remote.
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	gendocs # Output markdown docs for rclone to the directory supplied.
+	gitannex # Speaks with git-annex over stdin/stdout.
+	hashsum # Produces a hashsum file for all the objects in the path.
+		--base64 @bool # Output base64 encoded hashsum
+		--checkfile|-C # Validate hashes against a given SUM file instead of printing them
+		--download @bool # Download the file and hash it locally; if this flag is not specified, the hash is requested from the remote
+		--output-file # Output hashsums to a file rather than the terminal
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	link # Generate public link to file/folder.
+		--expire # The amount of time that the link will be valid (default off)
+		--unlink @bool # Remove existing public link to file/folder
+	ls # List the objects in the path with size and path.
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	lsd # List all directories/containers/buckets in the path.
+		--recursive|-R @bool # Recurse into the listing
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	lsf # List directories and objects in remote:path formatted for parsing.
+		--absolute @bool # Put a leading / in front of path names
+		--csv @bool # Output in CSV format
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--files-only @bool # Only list files
+		--format|-F # Output format - see  help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--recursive|-R @bool # Recurse into the listing
+		--separator|-s # Separator for the items in the format (default ";")
+		--time-format|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	lsjson # List directories and objects in the path in JSON format.
+		--dirs-only @bool # Show only directories in the listing
+		--encrypted @bool # Show the encrypted names
+		--files-only @bool # Show only files in the listing
+		--hash @bool # Include hashes in the output (may take longer)
+		--hash-type # Show only this hash type (may be repeated)
+		--metadata|-M @bool # Add metadata to the listing
+		--no-mimetype @bool # Don't read the mime type (can speed things up)
+		--no-modtime @bool # Don't read the modification time (can speed things up)
+		--original @bool # Show the ID of the underlying Object
+		--recursive|-R @bool # Recurse into the listing
+		--stat @bool # Just return the info for the pointed to file
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	lsl # List the objects in path with modification time, size and path.
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	md5sum # Produces an md5sum file for all the objects in the path.
+		--base64 @bool # Output base64 encoded hashsum
+		--checkfile|-C # Validate hashes against a given SUM file instead of printing them
+		--download @bool # Download the file and hash it locally; if this flag is not specified, the hash is requested from the remote
+		--output-file # Output hashsums to a file rather than the terminal
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	mkdir # Make the path if it doesn't already exist.
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	mount # Mount the remote as file system on a mountpoint.
+		--dir-cache-time # Time to cache directory entries for (default 5m0s)
+		--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+		--cache-dir # Directory rclone will use for caching.
+		--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+		--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+		--vfs-cache-max-size # Max total size of objects in the cache (default off)
+		--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+		--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+		--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+		--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+		--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+		--vfs-read-chunk-streams # The number of parallel streams to read at once
+		--no-checksum @bool # Don't compare checksums on up/download.
+		--no-modtime @bool # Don't read/write the modification time (can speed things up).
+		--no-seek @bool # Don't allow seeking in files.
+		--read-only @bool # Only allow read-only access.
+		--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+		--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+		--transfers # Number of file transfers to run in parallel (default 4)
+		--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+		--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+		--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+		--allow-non-empty @bool # Allow mounting over a non-empty directory (not supported on Windows)
+		--allow-other @bool # Allow access to other users (not supported on Windows)
+		--allow-root @bool # Allow access to root user (not supported on Windows)
+		--async-read @bool # Use asynchronous reads (not supported on Windows) (default true)
+		--attr-timeout # Time for which file/directory attributes are cached (default 1s)
+		--daemon @bool # Run mount in background and exit parent process (as background output is suppressed, use --log-file with --log-format=pid,... to monitor) (not supported on Windows)
+		--daemon-timeout # Time limit for rclone to respond to kernel (not supported on Windows) (default 0s)
+		--daemon-wait # Time to wait for ready mount from daemon (maximum time on Linux, constant sleep time on OSX/BSD) (not supported on Windows) (default 1m0s)
+		--debug-fuse @bool # Debug the FUSE internals - needs -v
+		--default-permissions @bool # Makes kernel enforce access control based on the file mode (not supported on Windows)
+		--devname # Set the device name - default is remote:path
+		--dir-cache-time # Time to cache directory entries for (default 5m0s)
+		--dir-perms # Directory permissions (default 777)
+		--direct-io @bool # Use Direct IO, disables caching of data
+		--file-perms # File permissions (default 666)
+		--fuse-flag # Flags or arguments to be passed direct to libfuse/WinFsp (repeat if required)
+		--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+		--link-perms # Link permissions (default 666)
+		--max-read-ahead # The number of bytes that can be prefetched for sequential reads (not supported on Windows) (default 128Ki)
+		--mount-case-insensitive # Tell the OS the mount is case insensitive (true) or sensitive (false) regardless of the backend (auto) (default unset)
+		--network-mode @bool # Mount as remote network drive, instead of fixed disk drive (supported on Windows only)
+		--no-checksum @bool # Don't compare checksums on up/download
+		--no-modtime @bool # Don't read/write the modification time (can speed things up)
+		--no-seek @bool # Don't allow seeking in files
+		--noappledouble @bool # Ignore Apple Double (._) and .DS_Store files (supported on OSX only) (default true)
+		--noapplexattr @bool # Ignore all "com.apple.*" extended attributes (supported on OSX only)
+		--option|-o # Option for libfuse/WinFsp (repeat if required)
+		--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+		--read-only @bool # Only allow read-only access
+		--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+		--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+		--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+		--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+		--vfs-cache-max-size # Max total size of objects in the cache (default off)
+		--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+		--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+		--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+		--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+		--vfs-disk-space-total-size # Specify the total space of disk (default off)
+		--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+		--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+		--vfs-metadata-extension # Set the extension to read metadata from
+		--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+		--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+		--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+		--vfs-read-chunk-streams # The number of parallel streams to read at once
+		--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+		--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+		--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+		--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+		--volname # Set the volume name (supported on Windows and OSX only)
+		--write-back-cache @bool # Makes kernel buffer writes before sending them to rclone (without this, writethrough caching is used) (not supported on Windows)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+	move # Move files from source to dest.
+		--absolute @bool # Put a leading / in front of path names
+		--combined # Make a combined report of changes to this file
+		--create-empty-src-dirs @bool # Create empty source dirs on destination after move
+		--csv @bool # Output in CSV format
+		--delete-empty-src-dirs @bool # Delete empty source dirs after move
+		--dest-after # Report all files that exist on the dest post-sync
+		--differ # Report all non-matching files to this file
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--error # Report all files with errors (hashing or reading) to this file
+		--files-only @bool # Only list files (default true)
+		--format|-F # Output format - see lsf help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--separator|-s # Separator for the items in the format (default ";")
+		--timeformat|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	moveto # Move file or directory from source to dest.
+		--absolute @bool # Put a leading / in front of path names
+		--combined # Make a combined report of changes to this file
+		--csv @bool # Output in CSV format
+		--dest-after # Report all files that exist on the dest post-sync
+		--differ # Report all non-matching files to this file
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--error # Report all files with errors (hashing or reading) to this file
+		--files-only @bool # Only list files (default true)
+		--format|-F # Output format - see lsf help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--separator|-s # Separator for the items in the format (default ";")
+		--timeformat|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	ncdu # Explore a remote with a text based user interface.
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	nfsmount # Mount the remote as file system on a mountpoint.
+		--dir-cache-time # Time to cache directory entries for (default 5m0s)
+		--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+		--cache-dir # Directory rclone will use for caching.
+		--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+		--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+		--vfs-cache-max-size # Max total size of objects in the cache (default off)
+		--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+		--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+		--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+		--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+		--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+		--vfs-read-chunk-streams # The number of parallel streams to read at once
+		--no-checksum @bool # Don't compare checksums on up/download.
+		--no-modtime @bool # Don't read/write the modification time (can speed things up).
+		--no-seek @bool # Don't allow seeking in files.
+		--read-only @bool # Only allow read-only access.
+		--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+		--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+		--transfers # Number of file transfers to run in parallel (default 4)
+		--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+		--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+		--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+		--addr # IPaddress:Port or :Port to bind server to
+		--allow-non-empty @bool # Allow mounting over a non-empty directory (not supported on Windows)
+		--allow-other @bool # Allow access to other users (not supported on Windows)
+		--allow-root @bool # Allow access to root user (not supported on Windows)
+		--async-read @bool # Use asynchronous reads (not supported on Windows) (default true)
+		--attr-timeout # Time for which file/directory attributes are cached (default 1s)
+		--daemon @bool # Run mount in background and exit parent process (as background output is suppressed, use --log-file with --log-format=pid,... to monitor) (not supported on Windows)
+		--daemon-timeout # Time limit for rclone to respond to kernel (not supported on Windows) (default 0s)
+		--daemon-wait # Time to wait for ready mount from daemon (maximum time on Linux, constant sleep time on OSX/BSD) (not supported on Windows) (default 1m0s)
+		--debug-fuse @bool # Debug the FUSE internals - needs -v
+		--default-permissions @bool # Makes kernel enforce access control based on the file mode (not supported on Windows)
+		--devname # Set the device name - default is remote:path
+		--dir-cache-time # Time to cache directory entries for (default 5m0s)
+		--dir-perms # Directory permissions (default 777)
+		--direct-io @bool # Use Direct IO, disables caching of data
+		--file-perms # File permissions (default 666)
+		--fuse-flag # Flags or arguments to be passed direct to libfuse/WinFsp (repeat if required)
+		--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+		--link-perms # Link permissions (default 666)
+		--max-read-ahead # The number of bytes that can be prefetched for sequential reads (not supported on Windows) (default 128Ki)
+		--mount-case-insensitive # Tell the OS the mount is case insensitive (true) or sensitive (false) regardless of the backend (auto) (default unset)
+		--network-mode @bool # Mount as remote network drive, instead of fixed disk drive (supported on Windows only)
+		--nfs-cache-dir # The directory the NFS handle cache will use if set
+		--nfs-cache-handle-limit # max file handles cached simultaneously (min 5) (default 1000000)
+		--nfs-cache-type # Type of NFS handle cache to use (default memory)
+		--no-checksum @bool # Don't compare checksums on up/download
+		--no-modtime @bool # Don't read/write the modification time (can speed things up)
+		--no-seek @bool # Don't allow seeking in files
+		--noappledouble @bool # Ignore Apple Double (._) and .DS_Store files (supported on OSX only) (default true)
+		--noapplexattr @bool # Ignore all "com.apple.*" extended attributes (supported on OSX only)
+		--option|-o # Option for libfuse/WinFsp (repeat if required)
+		--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+		--read-only @bool # Only allow read-only access
+		--sudo @bool # Use sudo to run the mount/umount commands as root.
+		--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+		--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+		--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+		--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+		--vfs-cache-max-size # Max total size of objects in the cache (default off)
+		--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+		--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+		--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+		--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+		--vfs-disk-space-total-size # Specify the total space of disk (default off)
+		--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+		--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+		--vfs-metadata-extension # Set the extension to read metadata from
+		--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+		--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+		--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+		--vfs-read-chunk-streams # The number of parallel streams to read at once
+		--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+		--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+		--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+		--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+		--volname # Set the volume name (supported on Windows and OSX only)
+		--write-back-cache @bool # Makes kernel buffer writes before sending them to rclone (without this, writethrough caching is used) (not supported on Windows)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+	obscure # Obscure password for use in the rclone config file.
+	purge # Remove the path and all of its contents.
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	rc # Run a command against a running rclone.
+		--arg|-a # Argument placed in the "arg" array
+		--json # Input JSON - use instead of key=value args
+		--loopback @bool # If set connect to this rclone instance not via HTTP
+		--no-output @bool # If set, don't output the JSON result
+		--opt|-o # Option in the form name=value or name placed in the "opt" array
+		--pass # Password to use to connect to rclone remote control
+		--unix-socket # Path to a unix domain socket to dial to, instead of opening a TCP connection directly
+		--url # URL to connect to rclone remote control (default "http://localhost:5572/")
+		--user # Username to use to rclone remote control
+	rcat # Copies standard input to file on remote.
+		--size # File size hint to preallocate (default -1)
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	rcd # Run rclone listening to remote control commands only.
+		--rc @bool # Enable the remote control server
+		--rc-addr # IPaddress:Port or :Port to bind server to (default localhost:5572)
+		--rc-allow-origin # Origin which cross-domain request (CORS) can be executed from
+		--rc-baseurl # Prefix for URLs - leave blank for root
+		--rc-cert # TLS PEM key (concatenation of certificate and CA certificate)
+		--rc-client-ca # Client certificate authority to verify clients with
+		--rc-enable-metrics @bool # Enable the Prometheus metrics path at the remote control server
+		--rc-files # Path to local files to serve on the HTTP server
+		--rc-htpasswd # A htpasswd file - if not provided no authentication is done
+		--rc-job-expire-duration # Expire finished async jobs older than this value (default 1m0s)
+		--rc-job-expire-interval # Interval to check for expired async jobs (default 10s)
+		--rc-key # TLS PEM Private key
+		--rc-max-header-bytes # Maximum size of request header (default 4096)
+		--rc-min-tls-version # Minimum TLS version that is acceptable (default "tls1.0")
+		--rc-no-auth @bool # Don't require auth for certain methods
+		--rc-pass # Password for authentication
+		--rc-realm # Realm for authentication
+		--rc-salt # Password hashing salt (default "dlPL2MqE")
+		--rc-serve @bool # Enable the serving of remote objects
+		--rc-serve-no-modtime @bool # Don't read the modification time (can speed things up)
+		--rc-server-read-timeout # Timeout for server reading data (default 1h0m0s)
+		--rc-server-write-timeout # Timeout for server writing data (default 1h0m0s)
+		--rc-template # User-specified template
+		--rc-user # User name for authentication
+		--rc-user-from-header # User name from a defined HTTP header
+		--rc-web-fetch-url # URL to fetch the releases for webgui (default "https://api.github.com/repos/rclone/rclone-webui-react/releases/latest")
+		--rc-web-gui @bool # Launch WebGUI on localhost
+		--rc-web-gui-force-update @bool # Force update to latest version of web gui
+		--rc-web-gui-no-open-browser @bool # Don't open the browser automatically
+		--rc-web-gui-update @bool # Check and update to latest version of web gui
+	rmdir # Remove the empty directory at path.
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	rmdirs # Remove empty directories under the path.
+		--leave-root @bool # Do not remove root directory if empty
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+	selfupdate # Update the rclone binary.
+		--beta @bool # Install beta release
+		--check @bool # Check for latest release, do not download
+		--output # Save the downloaded binary at a given path (default: replace running binary)
+		--package # Package format: zip|deb|rpm (default: zip)
+		--stable @bool # Install stable release (this is the default)
+	serve # Serve a remote over a protocol.
+		dlna
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # The ip:port or :port to bind the DLNA http server to (default ":7879")
+			--announce-interval # The interval between SSDP announcements (default 12m0s)
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--interface # The interface to use for SSDP (repeat as necessary)
+			--link-perms # Link permissions (default 666)
+			--log-trace @bool # Enable trace logging of SOAP traffic
+			--name # Name of DLNA server
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		docker
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--allow-non-empty @bool # Allow mounting over a non-empty directory (not supported on Windows)
+			--allow-other @bool # Allow access to other users (not supported on Windows)
+			--allow-root @bool # Allow access to root user (not supported on Windows)
+			--async-read @bool # Use asynchronous reads (not supported on Windows) (default true)
+			--attr-timeout # Time for which file/directory attributes are cached (default 1s)
+			--base-dir # Base directory for volumes (default "/var/lib/docker-volumes/rclone")
+			--daemon @bool # Run mount in background and exit parent process (as background output is suppressed, use --log-file with --log-format=pid,... to monitor) (not supported on Windows)
+			--daemon-timeout # Time limit for rclone to respond to kernel (not supported on Windows) (default 0s)
+			--daemon-wait # Time to wait for ready mount from daemon (maximum time on Linux, constant sleep time on OSX/BSD) (not supported on Windows) (default 1m0s)
+			--debug-fuse @bool # Debug the FUSE internals - needs -v
+			--default-permissions @bool # Makes kernel enforce access control based on the file mode (not supported on Windows)
+			--devname # Set the device name - default is remote:path
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--direct-io @bool # Use Direct IO, disables caching of data
+			--file-perms # File permissions (default 666)
+			--forget-state @bool # Skip restoring previous state
+			--fuse-flag # Flags or arguments to be passed direct to libfuse/WinFsp (repeat if required)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--link-perms # Link permissions (default 666)
+			--max-read-ahead # The number of bytes that can be prefetched for sequential reads (not supported on Windows) (default 128Ki)
+			--mount-case-insensitive # Tell the OS the mount is case insensitive (true) or sensitive (false) regardless of the backend (auto) (default unset)
+			--network-mode @bool # Mount as remote network drive, instead of fixed disk drive (supported on Windows only)
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--no-spec @bool # Do not write spec file
+			--noappledouble @bool # Ignore Apple Double (._) and .DS_Store files (supported on OSX only) (default true)
+			--noapplexattr @bool # Ignore all "com.apple.*" extended attributes (supported on OSX only)
+			--option|-o # Option for libfuse/WinFsp (repeat if required)
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--socket-addr # Address <host:port> or absolute path (default: /run/docker/plugins/rclone.sock)
+			--socket-gid # GID for unix socket (default: current process GID) (default 1000)
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--volname # Set the volume name (supported on Windows and OSX only)
+			--write-back-cache @bool # Makes kernel buffer writes before sending them to rclone (without this, writethrough caching is used) (not supported on Windows)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		ftp
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to (default "localhost:2121")
+			--auth-proxy # A program to use to create the backend from the auth
+			--cert # TLS PEM key (concatenation of certificate and CA certificate)
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--key # TLS PEM Private key
+			--link-perms # Link permissions (default 666)
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--pass # Password for authentication (empty value allow every password)
+			--passive-port # Passive port range to use (default "30000-32000")
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--public-ip # Public IP address to advertise for passive connections
+			--read-only @bool # Only allow read-only access
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--user # User name for authentication (default "anonymous")
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		http
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to (default 127.0.0.1:8080)
+			--allow-origin # Origin which cross-domain request (CORS) can be executed from
+			--auth-proxy # A program to use to create the backend from the auth
+			--baseurl # Prefix for URLs - leave blank for root
+			--cert # TLS PEM key (concatenation of certificate and CA certificate)
+			--client-ca # Client certificate authority to verify clients with
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--disable-zip @bool # Disable zip download of directories
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--htpasswd # A htpasswd file - if not provided no authentication is done
+			--key # TLS PEM Private key
+			--link-perms # Link permissions (default 666)
+			--max-header-bytes # Maximum size of request header (default 4096)
+			--min-tls-version # Minimum TLS version that is acceptable (default "tls1.0")
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--pass # Password for authentication
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--realm # Realm for authentication
+			--salt # Password hashing salt (default "dlPL2MqE")
+			--server-read-timeout # Timeout for server reading data (default 1h0m0s)
+			--server-write-timeout # Timeout for server writing data (default 1h0m0s)
+			--template # User-specified template
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--user # User name for authentication
+			--user-from-header # User name from a defined HTTP header
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		nfs
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--link-perms # Link permissions (default 666)
+			--nfs-cache-dir # The directory the NFS handle cache will use if set
+			--nfs-cache-handle-limit # max file handles cached simultaneously (min 5) (default 1000000)
+			--nfs-cache-type # Type of NFS handle cache to use (default memory)
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		restic
+			--addr # IPaddress:Port or :Port to bind server to (default 127.0.0.1:8080)
+			--allow-origin # Origin which cross-domain request (CORS) can be executed from
+			--append-only @bool # Disallow deletion of repository data
+			--baseurl # Prefix for URLs - leave blank for root
+			--cache-objects @bool # Cache listed objects (default true)
+			--cert # TLS PEM key (concatenation of certificate and CA certificate)
+			--client-ca # Client certificate authority to verify clients with
+			--htpasswd # A htpasswd file - if not provided no authentication is done
+			--key # TLS PEM Private key
+			--max-header-bytes # Maximum size of request header (default 4096)
+			--min-tls-version # Minimum TLS version that is acceptable (default "tls1.0")
+			--pass # Password for authentication
+			--private-repos @bool # Users can only access their private repo
+			--realm # Realm for authentication
+			--salt # Password hashing salt (default "dlPL2MqE")
+			--server-read-timeout # Timeout for server reading data (default 1h0m0s)
+			--server-write-timeout # Timeout for server writing data (default 1h0m0s)
+			--stdio @bool # Run an HTTP2 server on stdin/stdout
+			--user # User name for authentication
+			--user-from-header # User name from a defined HTTP header
+		s3
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to (default 127.0.0.1:8080)
+			--allow-origin # Origin which cross-domain request (CORS) can be executed from
+			--auth-key # Set key pair for v4 authorization: access_key_id,secret_access_key
+			--auth-proxy # A program to use to create the backend from the auth
+			--baseurl # Prefix for URLs - leave blank for root
+			--cert # TLS PEM key (concatenation of certificate and CA certificate)
+			--client-ca # Client certificate authority to verify clients with
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--etag-hash # Which hash to use for the ETag, or auto or blank for off (default "MD5")
+			--file-perms # File permissions (default 666)
+			--force-path-style @bool # If true use path style access if false use virtual hosted style (default true)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--htpasswd # A htpasswd file - if not provided no authentication is done
+			--key # TLS PEM Private key
+			--link-perms # Link permissions (default 666)
+			--max-header-bytes # Maximum size of request header (default 4096)
+			--min-tls-version # Minimum TLS version that is acceptable (default "tls1.0")
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-cleanup @bool # Not to cleanup empty folder after object is deleted
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--pass # Password for authentication
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--realm # Realm for authentication
+			--salt # Password hashing salt (default "dlPL2MqE")
+			--server-read-timeout # Timeout for server reading data (default 1h0m0s)
+			--server-write-timeout # Timeout for server writing data (default 1h0m0s)
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--user # User name for authentication
+			--user-from-header # User name from a defined HTTP header
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		sftp
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to (default "localhost:2022")
+			--auth-proxy # A program to use to create the backend from the auth
+			--authorized-keys # Authorized keys file (default "~/.ssh/authorized_keys")
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--key # SSH private host key file (Can be multi-valued, leave blank to auto generate)
+			--link-perms # Link permissions (default 666)
+			--no-auth @bool # Allow connections with no authentication if set
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--pass # Password for authentication
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--stdio @bool # Run an sftp server on stdin/stdout
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--user # User name for authentication
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		webdav
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--poll-interval # Time to wait between polling for changes. Must be smaller than dir-cache-time. Only on supported remotes. Set to 0 to disable (default 1m0s)
+			--cache-dir # Directory rclone will use for caching.
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128M)
+			--vfs-read-chunk-size-limit # Max chunk doubling size (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--no-checksum @bool # Don't compare checksums on up/download.
+			--no-modtime @bool # Don't read/write the modification time (can speed things up).
+			--no-seek @bool # Don't allow seeking in files.
+			--read-only @bool # Only allow read-only access.
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--transfers # Number of file transfers to run in parallel (default 4)
+			--links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension.
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-disk-space-total-size @bool # Manually set the total disk space size (example: 256G, default: -1)
+			--addr # IPaddress:Port or :Port to bind server to (default 127.0.0.1:8080)
+			--allow-origin # Origin which cross-domain request (CORS) can be executed from
+			--auth-proxy # A program to use to create the backend from the auth
+			--baseurl # Prefix for URLs - leave blank for root
+			--cert # TLS PEM key (concatenation of certificate and CA certificate)
+			--client-ca # Client certificate authority to verify clients with
+			--dir-cache-time # Time to cache directory entries for (default 5m0s)
+			--dir-perms # Directory permissions (default 777)
+			--disable-dir-list @bool # Disable HTML directory list on GET request for a directory
+			--disable-zip @bool # Disable zip download of directories
+			--etag-hash # Which hash to use for the ETag, or auto or blank for off
+			--file-perms # File permissions (default 666)
+			--gid # Override the gid field set by the filesystem (not supported on Windows) (default 1000)
+			--htpasswd # A htpasswd file - if not provided no authentication is done
+			--key # TLS PEM Private key
+			--link-perms # Link permissions (default 666)
+			--max-header-bytes # Maximum size of request header (default 4096)
+			--min-tls-version # Minimum TLS version that is acceptable (default "tls1.0")
+			--no-checksum @bool # Don't compare checksums on up/download
+			--no-modtime @bool # Don't read/write the modification time (can speed things up)
+			--no-seek @bool # Don't allow seeking in files
+			--pass # Password for authentication
+			--poll-interval # Time to wait between polling for changes, must be smaller than dir-cache-time and only on supported remotes (set 0 to disable) (default 1m0s)
+			--read-only @bool # Only allow read-only access
+			--realm # Realm for authentication
+			--salt # Password hashing salt (default "dlPL2MqE")
+			--server-read-timeout # Timeout for server reading data (default 1h0m0s)
+			--server-write-timeout # Timeout for server writing data (default 1h0m0s)
+			--template # User-specified template
+			--uid # Override the uid field set by the filesystem (not supported on Windows) (default 1000)
+			--umask # Override the permission bits set by the filesystem (not supported on Windows) (default 022)
+			--user # User name for authentication
+			--user-from-header # User name from a defined HTTP header
+			--vfs-block-norm-dupes @bool # If duplicate filenames exist in the same directory (after normalization), log an error and hide the duplicates (may have a performance cost)
+			--vfs-cache-max-age # Max time since last access of objects in the cache (default 1h0m0s)
+			--vfs-cache-max-size # Max total size of objects in the cache (default off)
+			--vfs-cache-min-free-space # Target minimum free space on the disk containing the cache (default off)
+			--vfs-cache-mode # Cache mode off|minimal|writes|full (default off)
+			--vfs-cache-poll-interval # Interval to poll the cache for stale objects (default 1m0s)
+			--vfs-case-insensitive @bool # If a file name not found, find a case insensitive match
+			--vfs-disk-space-total-size # Specify the total space of disk (default off)
+			--vfs-fast-fingerprint @bool # Use fast (less accurate) fingerprints for change detection
+			--vfs-links @bool # Translate symlinks to/from regular files with a '.rclonelink' extension for the VFS
+			--vfs-metadata-extension # Set the extension to read metadata from
+			--vfs-read-ahead # Extra read ahead over --buffer-size when using cache-mode full
+			--vfs-read-chunk-size # Read the source objects in chunks (default 128Mi)
+			--vfs-read-chunk-size-limit # If greater than --vfs-read-chunk-size, double the chunk size after each chunk read, until the limit is reached ('off' is unlimited) (default off)
+			--vfs-read-chunk-streams # The number of parallel streams to read at once
+			--vfs-read-wait # Time to wait for in-sequence read before seeking (default 20ms)
+			--vfs-refresh @bool # Refreshes the directory cache recursively in the background on start
+			--vfs-write-back # Time to writeback files after last use when using cache (default 5s)
+			--vfs-write-wait # Time to wait for in-sequence write before giving error (default 1s)
+			--delete-excluded @bool # Delete files on dest excluded from sync
+			--exclude # Exclude files matching pattern
+			--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+			--exclude-if-present # Exclude directories if filename is present
+			--files-from # Read list of source-file names from file (use - to read from stdin)
+			--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+			--filter|-f # Add a file filtering rule
+			--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+			--hash-filter # Partition filenames by hash k/n or randomly @/n
+			--ignore-case @bool # Ignore case in filters (case insensitive)
+			--include # Include files matching pattern
+			--include-from # Read file include patterns from file (use - to read from stdin)
+			--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--max-depth # If set limits the recursion depth to this (default -1)
+			--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+			--metadata-exclude # Exclude metadatas matching pattern
+			--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+			--metadata-filter # Add a metadata filtering rule
+			--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+			--metadata-include # Include metadatas matching pattern
+			--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+			--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+			--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+	settier # Changes storage class/tier of objects in remote.
+	sha1sum # Produces an sha1sum file for all the objects in the path.
+		--base64 @bool # Output base64 encoded hashsum
+		--checkfile|-C # Validate hashes against a given SUM file instead of printing them
+		--download @bool # Download the file and hash it locally; if this flag is not specified, the hash is requested from the remote
+		--output-file # Output hashsums to a file rather than the terminal
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	size # Prints the total size and number of objects in remote:path.
+		--json @bool # Format output as JSON
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	sync # Make source and dest identical, modifying destination only.
+		--absolute @bool # Put a leading / in front of path names
+		--combined # Make a combined report of changes to this file
+		--create-empty-src-dirs @bool # Create empty source dirs on destination after sync
+		--csv @bool # Output in CSV format
+		--dest-after # Report all files that exist on the dest post-sync
+		--differ # Report all non-matching files to this file
+		--dir-slash|-d @bool # Append a slash to directory names (default true)
+		--dirs-only @bool # Only list directories
+		--error # Report all files with errors (hashing or reading) to this file
+		--files-only @bool # Only list files (default true)
+		--format|-F # Output format - see lsf help for details (default "p")
+		--hash # Use this hash when h is used in the format MD5|SHA-1|DropboxHash (default "md5")
+		--match # Report all matching files to this file
+		--missing-on-dst # Report all files missing from the destination to this file
+		--missing-on-src # Report all files missing from the source to this file
+		--separator|-s # Separator for the items in the format (default ";")
+		--timeformat|-t # Specify a custom time format - see docs for details (default: 2006-01-02 15:04:05)
+		--check-first @bool # Do all the checks before starting transfers
+		--checksum|-c @bool # Check for changes with size & checksum (if available, or fallback to size only)
+		--compare-dest # Include additional server-side paths during comparison
+		--copy-dest # Implies --compare-dest but also copies files from paths into destination
+		--cutoff-mode # Mode to stop transfers when reaching the max transfer limit HARD|SOFT|CAUTIOUS (default HARD)
+		--ignore-case-sync @bool # Ignore case when synchronizing
+		--ignore-checksum @bool # Skip post copy check of checksums
+		--ignore-existing @bool # Skip all files that exist on destination
+		--ignore-size @bool # Ignore size when skipping use modtime or checksum
+		--ignore-times|-I @bool # Don't skip items that match size and time - transfer all unconditionally
+		--immutable @bool # Do not modify files, fail if existing files have been modified
+		--inplace @bool # Download directly to destination file instead of atomic download to temp/rename
+		--links|-l @bool # Translate symlinks to/from regular files with a '.rclonelink' extension
+		--max-backlog # Maximum number of objects in sync or check backlog (default 10000)
+		--max-duration # Maximum duration rclone will transfer data for (default 0s)
+		--max-transfer # Maximum size of data to transfer (default off)
+		--metadata|-M @bool # If set, preserve metadata when copying objects
+		--modify-window # Max time diff to be considered the same (default 1ns)
+		--multi-thread-chunk-size # Chunk size for multi-thread downloads / uploads, if not set by filesystem (default 64Mi)
+		--multi-thread-cutoff # Use multi-thread downloads for files above this size (default 256Mi)
+		--multi-thread-streams # Number of streams to use for multi-thread downloads (default 4)
+		--multi-thread-write-buffer-size # In memory buffer size for writing when in multi-thread mode (default 128Ki)
+		--name-transform # Transform paths during the copy process
+		--no-check-dest @bool # Don't check the destination, copy regardless
+		--no-traverse @bool # Don't traverse destination file system on copy
+		--no-update-dir-modtime @bool # Don't update directory modification times
+		--no-update-modtime @bool # Don't update destination modtime if files identical
+		--order-by # Instructions on how to order the transfers, e.g. 'size,descending'
+		--partial-suffix # Add partial-suffix to temporary file name when --inplace is not used (default ".partial")
+		--refresh-times @bool # Refresh the modtime of remote files
+		--server-side-across-configs @bool # Allow server-side operations (e.g. copy) to work across different configs
+		--size-only @bool # Skip based on size only, not modtime or checksum
+		--streaming-upload-cutoff # Cutoff for switching to chunked upload if file size is unknown, upload starts after reaching cutoff or when file ends (default 100Ki)
+		--update|-u @bool # Skip files that are newer on the destination
+		--backup-dir # Make backups into hierarchy based in DIR
+		--delete-after @bool # When synchronizing, delete files on destination after transferring (default)
+		--delete-before @bool # When synchronizing, delete files on destination before transferring
+		--delete-during @bool # When synchronizing, delete files during transfer
+		--fix-case @bool # Force rename of case insensitive dest to match source
+		--ignore-errors @bool # Delete even if there are I/O errors
+		--list-cutoff # To save memory, sort directory listings on disk above this threshold (default 1000000)
+		--max-delete # When synchronizing, limit the number of deletes (default -1)
+		--max-delete-size # When synchronizing, limit the total size of deletes (default off)
+		--suffix # Suffix to add to changed files
+		--suffix-keep-extension @bool # Preserve the extension when using --suffix
+		--track-renames @bool # When synchronizing, track file renames and do a server-side move if possible
+		--track-renames-strategy # Strategies to use when synchronizing using track-renames hash|modtime|leaf (default "hash")
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	test # Run a test command
+		histogram
+		info
+			--all @bool # Run all tests
+			--check-base32768 @bool # Check can store all possible base32768 characters
+			--check-control @bool # Check control characters
+			--check-length @bool # Check max filename length
+			--check-normalization @bool # Check UTF-8 Normalization
+			--check-streaming @bool # Check uploads with indeterminate file size
+			--keep-test-files @bool # Keep test files after execution
+			--upload-wait # Wait after writing a file (default 0s)
+			--write-json # Write results to file
+		makefile
+			--ascii @bool # Fill files with random ASCII printable bytes only
+			--chargen @bool # Fill files with a ASCII chargen pattern
+			--pattern @bool # Fill files with a periodic pattern
+			--seed # Seed for the random number generator (0 for random) (default 1)
+			--sparse @bool # Make the files sparse (appear to be filled with ASCII 0x00)
+			--zero @bool # Fill files with ASCII 0x00
+		makefiles
+			--ascii @bool # Fill files with random ASCII printable bytes only
+			--chargen @bool # Fill files with a ASCII chargen pattern
+			--files # Number of files to create (default 1000)
+			--files-per-directory # Average number of files per directory (default 10)
+			--flat @bool # If set create all files in the root directory
+			--max-depth # Maximum depth of directory hierarchy (default 10)
+			--max-file-size # Maximum size of files to create (default 100)
+			--max-name-length # Maximum size of file names (default 12)
+			--min-file-size # Minimum size of file to create
+			--min-name-length # Minimum size of file names (default 4)
+			--pattern @bool # Fill files with a periodic pattern
+			--seed # Seed for the random number generator (0 for random) (default 1)
+			--sparse @bool # Make the files sparse (appear to be filled with ASCII 0x00)
+			--zero @bool # Fill files with ASCII 0x00
+		memory
+		speed
+			--ascii @bool # Fill files with random ASCII printable bytes only
+			--chargen @bool # Fill files with a ASCII chargen pattern
+			--file-cap # Maximum number of files to use in each test (default 100)
+			--json @bool # Output only results in JSON format
+			--large # Size of large files (default 1Gi)
+			--medium # Size of medium files (default 10Mi)
+			--pattern @bool # Fill files with a periodic pattern
+			--seed # Seed for the random number generator (0 for random) (default 1)
+			--small # Size of small files (default 1Ki)
+			--sparse @bool # Make the files sparse (appear to be filled with ASCII 0x00)
+			--test-time # Length for each test to run (default 15s)
+			--zero @bool # Fill files with ASCII 0x00
+	touch # Create new file or change file modification time.
+		--localtime @bool # Use localtime for timestamp, not UTC
+		--no-create|-C @bool # Do not create the file if it does not exist (implied with --recursive)
+		--recursive|-R @bool # Recursively touch all files
+		--timestamp|-t # Use specified time instead of the current time of day
+		--dry-run|-n @bool # Do a trial run with no permanent changes
+		--interactive|-i @bool # Enable interactive mode
+		--verbose|-v # Print lots more stuff (repeat for more)
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	tree # List the contents of the remote in a tree like fashion.
+		--all|-a @bool # All files are listed (list . files too)
+		--dirs-only|-d @bool # List directories only
+		--dirsfirst @bool # List directories before files (-U disables)
+		--full-path @bool # Print the full path prefix for each file
+		--level # Descend only level directories deep
+		--modtime|-D @bool # Print the date of last modification.
+		--noindent @bool # Don't print indentation lines
+		--noreport @bool # Turn off file/directory count at end of tree listing
+		--output|-o # Output to file instead of stdout
+		--protections|-p @bool # Print the protections for each file.
+		--quote|-Q @bool # Quote filenames with double quotes.
+		--size|-s @bool # Print the size in bytes of each file.
+		--sort # Select sort: name,version,size,mtime,ctime
+		--sort-ctime @bool # Sort files by last status change time
+		--sort-modtime|-t @bool # Sort files by last modification time
+		--sort-reverse|-r @bool # Reverse the order of the sort
+		--unsorted|-U @bool # Leave files unsorted
+		--delete-excluded @bool # Delete files on dest excluded from sync
+		--exclude # Exclude files matching pattern
+		--exclude-from # Read file exclude patterns from file (use - to read from stdin)
+		--exclude-if-present # Exclude directories if filename is present
+		--files-from # Read list of source-file names from file (use - to read from stdin)
+		--files-from-raw # Read list of source-file names from file without any processing of lines (use - to read from stdin)
+		--filter|-f # Add a file filtering rule
+		--filter-from # Read file filtering patterns from a file (use - to read from stdin)
+		--hash-filter # Partition filenames by hash k/n or randomly @/n
+		--ignore-case @bool # Ignore case in filters (case insensitive)
+		--include # Include files matching pattern
+		--include-from # Read file include patterns from file (use - to read from stdin)
+		--max-age # Only transfer files younger than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--max-depth # If set limits the recursion depth to this (default -1)
+		--max-size # Only transfer files smaller than this in KiB or suffix B|K|M|G|T|P (default off)
+		--metadata-exclude # Exclude metadatas matching pattern
+		--metadata-exclude-from # Read metadata exclude patterns from file (use - to read from stdin)
+		--metadata-filter # Add a metadata filtering rule
+		--metadata-filter-from # Read metadata filtering patterns from a file (use - to read from stdin)
+		--metadata-include # Include metadatas matching pattern
+		--metadata-include-from # Read metadata include patterns from file (use - to read from stdin)
+		--min-age # Only transfer files older than this in s or suffix ms|s|m|h|d|w|M|y (default off)
+		--min-size # Only transfer files bigger than this in KiB or suffix B|K|M|G|T|P (default off)
+		--default-time # Time to show if modtime is unknown for files and directories (default 2000-01-01T00:00:00Z)
+		--fast-list @bool # Use recursive list if available; uses more memory but fewer transactions
+	version # Show the version number.
+		--check @bool # Check for new version
+		--deps @bool # Show the Go dependencies

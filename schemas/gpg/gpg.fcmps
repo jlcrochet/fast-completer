@@ -1,0 +1,67 @@
+# Gpg CLI schema for fast-completer
+# Generated from gpg 2.4.9
+
+gpg # OpenPGP encryption and signing tool
+	--sign|-s @bool # make a signature
+	--clear-sign @bool # make a clear text signature
+	--detach-sign|-b @bool # make a detached signature
+	--encrypt|-e @bool # encrypt data
+	--symmetric|-c @bool # encryption only with symmetric cipher
+	--decrypt|-d @bool # decrypt data (default)
+	--verify @bool # verify a signature
+	--list-keys|-k @bool # list keys
+	--list-signatures @bool # list keys and signatures
+	--check-signatures @bool # list and check key signatures
+	--fingerprint @bool # list keys and fingerprints
+	--list-secret-keys|-K @bool # list secret keys
+	--generate-key @bool # generate a new key pair
+	--quick-generate-key @bool # quickly generate a new key pair
+	--quick-add-uid @bool # quickly add a new user-id
+	--quick-revoke-uid @bool # quickly revoke a user-id
+	--quick-set-expire @bool # quickly set a new expiration date
+	--full-generate-key @bool # full featured key pair generation
+	--generate-revocation @bool # generate a revocation certificate
+	--delete-keys @bool # remove keys from the public keyring
+	--delete-secret-keys @bool # remove keys from the secret keyring
+	--quick-sign-key @bool # quickly sign a key
+	--quick-lsign-key @bool # quickly sign a key locally
+	--quick-revoke-sig @bool # quickly revoke a key signature
+	--sign-key @bool # sign a key
+	--lsign-key @bool # sign a key locally
+	--edit-key @bool # sign or edit a key
+	--change-passphrase @bool # change a passphrase
+	--export @bool # export keys
+	--send-keys @bool # export keys to a keyserver
+	--receive-keys @bool # import keys from a keyserver
+	--search-keys @bool # search for keys on a keyserver
+	--refresh-keys @bool # update all keys from a keyserver
+	--import @bool # import/merge keys
+	--card-status @bool # print the card status
+	--edit-card @bool # change data on a card
+	--change-pin @bool # change a card's PIN
+	--update-trustdb @bool # update the trust database
+	--print-md @bool # print message digests
+	--server @bool # run in server mode
+	--tofu-policy # set the TOFU policy for a key
+	--verbose|-v @bool # verbose
+	--quiet|-q @bool # be somewhat more quiet
+	--options # read options from FILE
+	--log-file # write server mode logs to FILE
+	--default-key # use NAME as default secret key
+	--encrypt-to # encrypt to user ID NAME as well
+	--group # set up email aliases
+	--openpgp @bool # use strict OpenPGP behavior
+	--dry-run|-n @bool # do not make any changes
+	--interactive|-i @bool # prompt before overwriting
+	--armor|-a @bool # create ascii armored output
+	--output|-o # write output to FILE
+	--auto-key-locate # use MECHANISMS to locate keys by mail address
+	--auto-key-import @bool # import missing key from a signature
+	--include-key-block @bool # include the public key in signatures
+	--disable-dirmngr @bool # disable all access to the dirmngr
+	--recipient|-r # encrypt for USER-ID
+	--local-user|-u # use USER-ID to sign or decrypt
+	--clear-sign # make a clear text signature
+	--detach-sign # make a detached signature
+	--list-keys # show keys
+	--fingerprint # show fingerprints

@@ -1,0 +1,286 @@
+{
+  "tailscale --help": {
+    "returncode": 0,
+    "stdout": "The easiest, most secure way to use WireGuard.\n\nUSAGE\n  tailscale [flags] <subcommand> [command flags]\n\nFor help on subcommands, add --help after: \"tailscale status --help\".\n\nThis CLI is still under active development. Commands and flags will\nchange in the future.\n\nSUBCOMMANDS\n  up           Connect to Tailscale, logging in if needed\n  down         Disconnect from Tailscale\n  set          Change specified preferences\n  login        Log in to a Tailscale account\n  logout       Disconnect from Tailscale and expire current node key\n  switch       Switch to a different Tailscale account\n  configure    Configure the host to enable more Tailscale features\n  syspolicy    Diagnose the MDM and system policy configuration\n  netcheck     Print an analysis of local network conditions\n  ip           Show Tailscale IP addresses\n  dns          Diagnose the internal DNS forwarder\n  status       Show state of tailscaled and its connections\n  metrics      Show Tailscale metrics\n  ping         Ping a host at the Tailscale layer, see how it routed\n  nc           Connect to a port on a host, connected to stdin/stdout\n  ssh          SSH to a Tailscale machine\n  funnel       Serve content and local servers on the internet\n  serve        Serve content and local servers on your tailnet\n  version      Print Tailscale version\n  web          Run a web server for controlling Tailscale\n  file         Send or receive files\n  bugreport    Print a shareable identifier to help diagnose issues\n  cert         Get TLS certs\n  lock         Manage tailnet lock\n  licenses     Get open source license information\n  exit-node    Show machines on your tailnet configured as exit nodes\n  update       Update Tailscale to the latest/different version\n  whois        Show the machine and user associated with a Tailscale IP (v4 or v6)\n  drive        Share a directory with your tailnet\n  systray      Run a systray application to manage Tailscale\n  appc-routes  Print the current app connector routes\n  completion   Shell tab-completion scripts\n\nFLAGS\n  --socket value\n    \tpath to tailscaled socket (default /var/run/tailscale/tailscaled.sock)\n"
+  },
+  "tailscale --version": {
+    "returncode": 0,
+    "stdout": "1.94.1\n  tailscale commit: 62c6f1cd7560763edcc552251abadf7dd4659f82\n  long version: 1.94.1-t62c6f1cd7-g09fea6572\n  other commit: 09fea6572e9c7a839b4a8c209420141fdb33fbb4\n  go version: go1.25.5\n"
+  },
+  "tailscale appc-routes --help": {
+    "returncode": 0,
+    "stdout": "Print the current app connector routes\n\nUSAGE\n  tailscale appc-routes\n\nThe 'tailscale appc-routes' command prints the current App Connector route status.\n\nBy default this command prints the domains configured in the app connector configuration and how many routes have been\nlearned for each domain.\n\n--all prints the routes learned from the domains configured in the app connector configuration; and any extra routes provided\nin the the policy app connector 'routes' field.\n\n--map prints the routes learned from the domains configured in the app connector configuration.\n\n-n prints the total number of routes advertised by this device, whether learned, set in the policy, or set locally.\n\nFor more information about App Connectors, refer to\nhttps://tailscale.com/kb/1281/app-connectors\n\nFLAGS\n  --all, --all=false\n    \tPrint learned domains and routes and extra policy configured routes. (default false)\n  --map, --map=false\n    \tPrint the map of learned domains: [routes]. (default false)\n  --n, --n=false\n    \tPrint the total number of routes this node advertises. (default false)\n"
+  },
+  "tailscale bugreport --help": {
+    "returncode": 0,
+    "stdout": "Print a shareable identifier to help diagnose issues\n\nUSAGE\n  tailscale bugreport [note]\n\nFLAGS\n  --diagnose, --diagnose=false\n    \trun additional in-depth checks (default false)\n  --record, --record=false\n    \tif true, pause and then write another bugreport (default false)\n"
+  },
+  "tailscale cert --help": {
+    "returncode": 0,
+    "stdout": "Get TLS certs\n\nUSAGE\n  tailscale cert [flags] <domain>\n\nFLAGS\n  --cert-file value\n    \toutput cert file or \"-\" for stdout; defaults to DOMAIN.crt if --cert-file and --key-file are both unset\n  --key-file value\n    \toutput key file or \"-\" for stdout; defaults to DOMAIN.key if --cert-file and --key-file are both unset\n  --min-validity value\n    \tensure the certificate is valid for at least this duration; the output certificate is never expired if this flag is unset or 0, but the lifetime may vary; the maximum allowed min-validity depends on the CA (default 0s)\n  --serve-demo, --serve-demo=false\n    \tif true, serve on port :443 using the cert as a demo, instead of writing out the files to disk (default false)\n"
+  },
+  "tailscale configure --help": {
+    "returncode": 0,
+    "stdout": "Configure the host to enable more Tailscale features\n\nUSAGE\n  tailscale configure <subcommand>\n\nThe 'configure' set of commands are intended to provide a way to enable different\nservices on the host to use Tailscale in more ways.\n\nSUBCOMMANDS\n  kubeconfig  [ALPHA] Connect to a Kubernetes cluster using a Tailscale Auth Proxy\n  systray     [ALPHA] Manage the systray client for Linux\n"
+  },
+  "tailscale configure kubeconfig --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] Connect to a Kubernetes cluster using a Tailscale Auth Proxy\n\nUSAGE\n  tailscale configure kubeconfig <hostname-or-fqdn>\n\nRun this command to configure kubectl to connect to a Kubernetes cluster over Tailscale.\n\nThe hostname argument should be set to the Tailscale hostname of the peer running as an auth proxy in the cluster.\n\nSee: https://tailscale.com/s/k8s-auth-proxy\n\nFLAGS\n  --http, --http=false\n    \tUse HTTP instead of HTTPS to connect to the auth proxy. Ignored if you include a scheme in the hostname argument. (default false)\n"
+  },
+  "tailscale configure systray --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] Manage the systray client for Linux\n\nUSAGE\n  tailscale configure systray [options]\n\n[ALPHA] The systray set of commands provides a way to configure the systray application on Linux.\n\nFLAGS\n  --enable-startup value\n    \tInstall startup script for init system. Currently supported systems are [systemd].\n"
+  },
+  "tailscale dns --help": {
+    "returncode": 0,
+    "stdout": "Diagnose the internal DNS forwarder\n\nUSAGE\n  tailscale dns status [--all]\n  tailscale dns query <name> [a|aaaa|cname|mx|ns|opt|ptr|srv|txt]\n\nThe 'tailscale dns' subcommand provides tools for diagnosing the internal DNS\nforwarder (100.100.100.100).\n\nFor more information about the DNS functionality built into Tailscale, refer to\nhttps://tailscale.com/kb/1054/dns.\n\nSUBCOMMANDS\n  status  Print the current DNS status and configuration\n  query   Perform a DNS query\n"
+  },
+  "tailscale dns query --help": {
+    "returncode": 0,
+    "stdout": "Perform a DNS query\n\nUSAGE\n  tailscale dns query <name> [a|aaaa|cname|mx|ns|opt|ptr|srv|txt]\n\nThe 'tailscale dns query' subcommand performs a DNS query for the specified name\nusing the internal DNS forwarder (100.100.100.100).\n\nBy default, the DNS query will request an A record. Another DNS record type can\nbe specified as the second parameter.\n\nThe output also provides information about the resolver(s) used to resolve the\nquery.\n"
+  },
+  "tailscale dns status --help": {
+    "returncode": 0,
+    "stdout": "Print the current DNS status and configuration\n\nUSAGE\n  tailscale dns status [--all]\n\nThe 'tailscale dns status' subcommand prints the current DNS status and\nconfiguration, including:\n\n- Whether the built-in DNS forwarder is enabled.\n\n- The MagicDNS configuration provided by the coordination server.\n\n- Details on which resolver(s) Tailscale believes the system is using by\n  default.\n\nThe --all flag can be used to output advanced debugging information, including\nfallback resolvers, nameservers, certificate domains, extra records, and the\nexit node filtered set.\n\n=== Contents of the MagicDNS configuration ===\n\nThe MagicDNS configuration is provided by the coordination server to the client\nand includes the following components:\n\n- MagicDNS enablement status: Indicates whether MagicDNS is enabled across the\n  entire tailnet.\n\n- MagicDNS Suffix: The DNS suffix used for devices within your tailnet.\n\n- DNS Name: The DNS name that other devices in the tailnet can use to reach this\n  device.\n\n- Resolvers: The preferred DNS resolver(s) to be used for resolving queries, in\n  order of preference. If no resolvers are listed here, the system defaults are\n  used.\n\n- Split DNS Routes: Custom DNS resolvers may be used to resolve hostnames in\n  specific domains, this is also known as a 'Split DNS' configuration. The\n  mapping of domains to their respective resolvers is provided here.\n\n- Certificate Domains: The DNS names for which the coordination server will\n  assist in provisioning TLS certificates.\n\n- Extra Records: Additional DNS records that the coordination server might\n  provide to the internal DNS resolver.\n\n- Exit Node Filtered Set: DNS suffixes that the node, when acting as an exit\n  node DNS proxy, will not answer.\n\nFor more information about the DNS functionality built into Tailscale, refer to\nhttps://tailscale.com/kb/1054/dns.\n\nFLAGS\n  --all, --all=false\n    \toutputs advanced debugging information (default false)\n"
+  },
+  "tailscale dns status device. --help": {
+    "returncode": 1,
+    "stdout": "Failed to connect to local Tailscale daemon for /localapi/v0/status; not running? Error: dial unix /var/run/tailscale/tailscaled.sock: connect: no such file or directory\n"
+  },
+  "tailscale dns status used. --help": {
+    "returncode": 1,
+    "stdout": "Failed to connect to local Tailscale daemon for /localapi/v0/status; not running? Error: dial unix /var/run/tailscale/tailscaled.sock: connect: no such file or directory\n"
+  },
+  "tailscale down --help": {
+    "returncode": 0,
+    "stdout": "Disconnect from Tailscale\n\nUSAGE\n  tailscale down\n\nFLAGS\n  --accept-risk value\n    \taccept risk and skip confirmation for risk types: lose-ssh,mac-app-connector,linux-strict-rp-filter,all\n  --reason value\n    \treason for the disconnect, if required by a policy\n"
+  },
+  "tailscale drive --help": {
+    "returncode": 0,
+    "stdout": "Share a directory with your tailnet\n\nUSAGE\n  tailscale drive share <name> <path>\n  tailscale drive rename <oldname> <newname>\n  tailscale drive unshare <name>\n  tailscale drive list\n\nTaildrive allows you to share directories with other machines on your tailnet.\n\nIn order to share folders, your node needs to have the node attribute \"drive:share\".\n\nIn order to access shares, your node needs to have the node attribute \"drive:access\".\n\nFor example, to enable sharing and accessing shares for all member nodes:\n\n  \"nodeAttrs\": [\n    {\n      \"target\": [\"autogroup:member\"],\n      \"attr\": [\n        \"drive:share\",\n        \"drive:access\",\n      ],\n    }]\n\nEach share is identified by a name and points to a directory at a specific path. For example, to share the path /Users/me/Documents under the name \"docs\", you would run:\n\n  $ tailscale drive share docs /Users/me/Documents\n\nNote that the system forces share names to lowercase to avoid problems with clients that don't support case-sensitive filenames.\n\nShare names may only contain the letters a-z, underscore _, parentheses (), or spaces. Leading and trailing spaces are omitted.\n\nAll Tailscale shares have a globally unique path consisting of the tailnet, the machine name and the share name. For example, if the above share was created on the machine \"mylaptop\" on the tailnet \"mydomain.com\", the share's path would be:\n\n  /mydomain.com/mylaptop/docs\n\nIn order to access this share, other machines on the tailnet can connect to the above path on a WebDAV server running at 100.100.100.100:8080, for example:\n\n  http://100.100.100.100:8080/mydomain.com/mylaptop/docs\n\nPermissions to access shares are controlled via ACLs. For example, to give the group \"home\" read-only access to the above share, use the below ACL grant:\n\n  \"grants\": [\n    {\n      \"src\": [\"group:home\"],\n      \"dst\": [\"mylaptop\"],\n      \"app\": {\n        \"tailscale.com/cap/drive\": [{\n          \"shares\": [\"docs\"],\n          \"access\": \"ro\"\n        }]\n      }\n    }]\n\nWhenever anyone in the group \"home\" connects to the share, they connect as if they are using your local machine user. They'll be able to read the same files as your user, and if they create files, those files will be owned by your user.\n\nIf you want a share to be accessed as a different user, you can use sudo to accomplish this. For example, to create the aforementioned share as \"theuser\", you could run:\n\n  $ sudo -u theuser tailscale drive share docs /Users/theuser/Documents\n\nOn small tailnets, it may be convenient to categorically give all users full access to their own shares. That can be accomplished with the below grant.\n\n  \"grants\": [\n\t{\n\t  \"src\": [\"autogroup:member\"],\n\t  \"dst\": [\"autogroup:self\"],\n\t  \"app\": {\n\t    \"tailscale.com/cap/drive\": [{\n\t\t  \"shares\": [\"*\"],\n\t\t  \"access\": \"rw\"\n\t    }]\n\t  }\n\t}]\n\nYou can rename shares, for example you could rename the above share by running:\n\n  $ tailscale drive rename docs newdocs\n\nYou can remove shares by name, for example you could remove the above share by running:\n\n  $ tailscale drive unshare newdocs\n\nYou can get a list of currently published shares by running:\n\n  $ tailscale drive list\n\nSUBCOMMANDS\n  share    [ALPHA] Create or modify a share\n  rename   [ALPHA] Rename a share\n  unshare  [ALPHA] Remove a share\n  list     [ALPHA] List current shares\n"
+  },
+  "tailscale drive list --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] List current shares\n\nUSAGE\n  tailscale drive list\n"
+  },
+  "tailscale drive rename --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] Rename a share\n\nUSAGE\n  tailscale drive rename <oldname> <newname>\n"
+  },
+  "tailscale drive share --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] Create or modify a share\n\nUSAGE\n  tailscale drive share <name> <path>\n"
+  },
+  "tailscale drive unshare --help": {
+    "returncode": 0,
+    "stdout": "[ALPHA] Remove a share\n\nUSAGE\n  tailscale drive unshare <name>\n"
+  },
+  "tailscale exit-node --help": {
+    "returncode": 0,
+    "stdout": "Show machines on your tailnet configured as exit nodes\n\nUSAGE\n  tailscale exit-node [flags]\n\nSUBCOMMANDS\n  list     Show exit nodes\n  suggest  Suggest the best available exit node\n"
+  },
+  "tailscale exit-node list --help": {
+    "returncode": 0,
+    "stdout": "Show exit nodes\n\nUSAGE\n  tailscale exit-node list [flags]\n\nFLAGS\n  --filter value\n    \tfilter exit nodes by country\n"
+  },
+  "tailscale exit-node suggest --help": {
+    "returncode": 0,
+    "stdout": "Suggest the best available exit node\n\nUSAGE\n  tailscale exit-node suggest\n"
+  },
+  "tailscale file --help": {
+    "returncode": 0,
+    "stdout": "Send or receive files\n\nUSAGE\n  tailscale file <cp|get> ...\n\nSUBCOMMANDS\n  cp   Copy file(s) to a host\n  get  Move files out of the Tailscale file inbox\n"
+  },
+  "tailscale file cp --help": {
+    "returncode": 0,
+    "stdout": "Copy file(s) to a host\n\nUSAGE\n  tailscale file cp <files...> <target>:\n\nFLAGS\n  --name value\n    \talternate filename to use, especially useful when <file> is \"-\" (stdin)\n  --targets, --targets=false\n    \tlist possible file cp targets (default false)\n  --verbose, --verbose=false\n    \tverbose output (default false)\n"
+  },
+  "tailscale file get --help": {
+    "returncode": 0,
+    "stdout": "Move files out of the Tailscale file inbox\n\nUSAGE\n  tailscale file get [--wait] [--verbose] [--conflict=(skip|overwrite|rename)] <target-directory>\n\nFLAGS\n  --conflict behavior\n    \tbehavior when a conflicting (same-named) file already exists in the target directory.\n    \t\tskip:       skip conflicting files: leave them in the taildrop inbox and print an error. get any non-conflicting files\n    \t\toverwrite:  overwrite existing file\n    \t\trename:     write to a new number-suffixed filename (default skip)\n  --loop, --loop=false\n    \trun get in a loop, receiving files as they come in (default false)\n  --verbose, --verbose=false\n    \tverbose output (default false)\n  --wait, --wait=false\n    \twait for a file to arrive if inbox is empty (default false)\n"
+  },
+  "tailscale funnel --help": {
+    "returncode": 0,
+    "stdout": "Serve content and local servers on the internet\n\nUSAGE\n  tailscale funnel <target>\n  tailscale funnel status [--json]\n  tailscale funnel reset\n\nFunnel enables you to share a local server on the internet using Tailscale.\n\nTo share only within your tailnet, use `tailscale serve`\n\n<target> can be a file, directory, text, or most commonly the location to a service running on the\nlocal machine. The location to the location service can be expressed as a port number (e.g., 3000),\na partial URL (e.g., localhost:3000), or a full URL including a path (e.g., http://localhost:3000/foo).\nOn Unix-like systems, you can also specify a Unix domain socket (e.g., unix:/tmp/myservice.sock).\n\nEXAMPLES\n  - Expose an HTTP server running at 127.0.0.1:3000 in the foreground:\n    $ tailscale funnel 3000\n\n  - Expose an HTTP server running at 127.0.0.1:3000 in the background:\n    $ tailscale funnel --bg 3000\n\n  - Expose an HTTPS server with invalid or self-signed certificates at https://localhost:8443\n    $ tailscale funnel https+insecure://localhost:8443\n\n  - Expose a service listening on a Unix socket (Linux/macOS/BSD only):\n    $ tailscale funnel unix:/var/run/myservice.sock\n\nFor more examples and use cases visit our docs site https://tailscale.com/kb/1247/funnel-serve-use-cases\n\nSUBCOMMANDS\n  status  View current funnel configuration\n  reset   Reset current funnel config\n\nFLAGS\n  --bg, --bg=false\n    \tRun the command as a background process (default false, when --service is set defaults to true).\n  --https value\n    \tExpose an HTTPS server at the specified port (default mode)\n  --proxy-protocol value\n    \tPROXY protocol version (1 or 2) for TCP forwarding\n  --set-path value\n    \tAppends the specified path to the base URL for accessing the underlying service\n  --tcp value\n    \tExpose a TCP forwarder to forward raw TCP packets at the specified port\n  --tls-terminated-tcp value\n    \tExpose a TCP forwarder to forward TLS-terminated TCP packets at the specified port\n  --yes, --yes=false\n    \tUpdate without interactive prompts (default false)\n"
+  },
+  "tailscale funnel reset --help": {
+    "returncode": 0,
+    "stdout": "Reset current funnel config\n\nUSAGE\n  tailscale funnel reset\n"
+  },
+  "tailscale funnel status --help": {
+    "returncode": 0,
+    "stdout": "View current funnel configuration\n\nUSAGE\n  tailscale funnel status [--json]\n\nFLAGS\n  --json, --json=false\n    \toutput JSON (default false)\n"
+  },
+  "tailscale ip --help": {
+    "returncode": 0,
+    "stdout": "Show Tailscale IP addresses\n\nUSAGE\n  tailscale ip [-1] [-4] [-6] [peer hostname or ip address]\n\nShow Tailscale IP addresses for peer. Peer defaults to the current machine.\n\nFLAGS\n  --1, --1=false\n    \tonly print one IP address (default false)\n  --4, --4=false\n    \tonly print IPv4 address (default false)\n  --6, --6=false\n    \tonly print IPv6 address (default false)\n"
+  },
+  "tailscale licenses --help": {
+    "returncode": 0,
+    "stdout": "Get open source license information\n\nUSAGE\n  tailscale licenses\n\nGet open source license information\n"
+  },
+  "tailscale lock --help": {
+    "returncode": 0,
+    "stdout": "Manage tailnet lock\n\nUSAGE\n  tailscale lock <subcommand> [arguments...]\n\nManage tailnet lock\n\nSUBCOMMANDS\n  init             Initialize tailnet lock\n  status           Output the state of tailnet lock\n  add              Add one or more trusted signing keys to tailnet lock\n  remove           Remove one or more trusted signing keys from tailnet lock\n  sign             Sign a node or pre-approved auth key\n  disable          Consume a disablement secret to shut down tailnet lock for the tailnet\n  disablement-kdf  Compute a disablement value from a disablement secret (advanced users only)\n  log              List changes applied to tailnet lock\n  local-disable    Disable tailnet lock for this node only\n  revoke-keys      Revoke compromised tailnet-lock keys\n"
+  },
+  "tailscale lock add --help": {
+    "returncode": 0,
+    "stdout": "Add one or more trusted signing keys to tailnet lock\n\nUSAGE\n  tailscale lock add <public-key>...\n"
+  },
+  "tailscale lock disable --help": {
+    "returncode": 0,
+    "stdout": "Consume a disablement secret to shut down tailnet lock for the tailnet\n\nUSAGE\n  tailscale lock disable <disablement-secret>\n\nThe 'tailscale lock disable' command uses the specified disablement\nsecret to disable tailnet lock.\n\nIf tailnet lock is re-enabled, new disablement secrets can be generated.\n\nOnce this secret is used, it has been distributed\nto all nodes in the tailnet and should be considered public.\n"
+  },
+  "tailscale lock disablement-kdf --help": {
+    "returncode": 0,
+    "stdout": "Compute a disablement value from a disablement secret (advanced users only)\n\nUSAGE\n  tailscale lock disablement-kdf <hex-encoded-disablement-secret>\n\nCompute a disablement value from a disablement secret (advanced users only)\n"
+  },
+  "tailscale lock init --help": {
+    "returncode": 0,
+    "stdout": "Initialize tailnet lock\n\nUSAGE\n  tailscale lock init [--gen-disablement-for-support] --gen-disablements N <trusted-key>...\n\nThe 'tailscale lock init' command initializes tailnet lock for the\nentire tailnet. The tailnet lock keys specified are those initially\ntrusted to sign nodes or to make further changes to tailnet lock.\n\nYou can identify the tailnet lock key for a node you wish to trust by\nrunning 'tailscale lock' on that node, and copying the node's tailnet\nlock key.\n\nTo disable tailnet lock, use the 'tailscale lock disable' command\nalong with one of the disablement secrets.\nThe number of disablement secrets to be generated is specified using the\n--gen-disablements flag. Initializing tailnet lock requires at least\none disablement.\n\nIf --gen-disablement-for-support is specified, an additional disablement secret\nwill be generated and transmitted to Tailscale, which support can use to disable\ntailnet lock. We recommend setting this flag.\n\nFLAGS\n  --confirm, --confirm=false\n    \tdo not prompt for confirmation (default false)\n  --gen-disablement-for-support, --gen-disablement-for-support=false\n    \tgenerates and transmits a disablement secret for Tailscale support (default false)\n  --gen-disablements value\n    \tnumber of disablement secrets to generate (default 1)\n"
+  },
+  "tailscale lock local-disable --help": {
+    "returncode": 0,
+    "stdout": "Disable tailnet lock for this node only\n\nUSAGE\n  tailscale lock local-disable\n\nThe 'tailscale lock local-disable' command disables tailnet lock for only\nthe current node.\n\nIf the current node is locked out, this does not mean that it can initiate\nconnections in a tailnet with tailnet lock enabled. Rather, this means\nthat the current node will accept traffic from other nodes in the tailnet\nthat are locked out.\n"
+  },
+  "tailscale lock log --help": {
+    "returncode": 0,
+    "stdout": "List changes applied to tailnet lock\n\nUSAGE\n  tailscale lock log [--limit N]\n\nList changes applied to tailnet lock\n\nFLAGS\n  --json, --json=false\n    \toutput in JSON format (default (not set))\n  --limit value\n    \tmax number of updates to list (default 50)\n"
+  },
+  "tailscale lock remove --help": {
+    "returncode": 0,
+    "stdout": "Remove one or more trusted signing keys from tailnet lock\n\nUSAGE\n  tailscale lock remove [--re-sign=false] <public-key>...\n\nFLAGS\n  --re-sign, --re-sign=false\n    \tresign signatures which would be invalidated by removal of trusted signing keys (default true)\n"
+  },
+  "tailscale lock revoke-keys --help": {
+    "returncode": 0,
+    "stdout": "Revoke compromised tailnet-lock keys\n\nUSAGE\n  tailscale lock revoke-keys <tailnet-lock-key>...\n    revoke-keys [--cosign] [--finish] <recovery-blob>\n\nRetroactively revoke the specified tailnet lock keys (tlpub:abc).\n\nRevoked keys are prevented from being used in the future. Any nodes previously signed\nby revoked keys lose their authorization and must be signed again.\n\nRevocation is a multi-step process that requires several signing nodes to `--cosign` the revocation. Use `tailscale lock remove` instead if the key has not been compromised.\n\n1. To start, run `tailscale revoke-keys <tlpub-keys>` with the tailnet lock keys to revoke.\n2. Re-run the `--cosign` command output by `revoke-keys` on other signing nodes. Use the\n   most recent command output on the next signing node in sequence.\n3. Once the number of `--cosign`s is greater than the number of keys being revoked,\n   run the command one final time with `--finish` instead of `--cosign`.\n\nFLAGS\n  --cosign, --cosign=false\n    \tcontinue generating the recovery using the tailnet lock key on this device and the provided recovery blob (default false)\n  --finish, --finish=false\n    \tfinish the recovery process by transmitting the revocation (default false)\n  --fork-from value\n    \tparent AUM hash to rewrite from (advanced users only)\n"
+  },
+  "tailscale lock sign --help": {
+    "returncode": 0,
+    "stdout": "Sign a node or pre-approved auth key\n\nUSAGE\n  tailscale lock sign <node-key> [<rotation-key>]\n  tailscale lock sign <auth-key>\n\nEither:\n  - signs a node key and transmits the signature to the coordination\n    server, or\n  - signs a pre-approved auth key, printing it in a form that can be\n    used to bring up nodes under tailnet lock\n\nIf any of the key arguments begin with \"file:\", the key is retrieved from\nthe file at the path specified in the argument suffix.\n"
+  },
+  "tailscale lock status --help": {
+    "returncode": 0,
+    "stdout": "Output the state of tailnet lock\n\nUSAGE\n  tailscale lock status\n\nFLAGS\n  --json, --json=false\n    \toutput in JSON format (default (not set))\n"
+  },
+  "tailscale login --help": {
+    "returncode": 0,
+    "stdout": "Log in to a Tailscale account\n\nUSAGE\n  tailscale login [flags]\n\n\"tailscale login\" logs this machine in to your Tailscale network.\nThis command is currently in alpha and may change in the future.\n\nFLAGS\n  --accept-dns, --accept-dns=false\n    \taccept DNS configuration from the admin panel (default true)\n  --accept-routes, --accept-routes=false\n    \taccept routes advertised by other Tailscale nodes (default false)\n  --advertise-connector, --advertise-connector=false\n    \tadvertise this node as an app connector (default false)\n  --advertise-exit-node, --advertise-exit-node=false\n    \toffer to be an exit node for internet traffic for the tailnet (default false)\n  --advertise-routes value\n    \troutes to advertise to other nodes (comma-separated, e.g. \"10.0.0.0/8,192.168.0.0/24\") or empty string to not advertise routes\n  --advertise-tags value\n    \tcomma-separated ACL tags to request; each must start with \"tag:\" (e.g. \"tag:eng,tag:montreal,tag:ssh\")\n  --audience value\n    \tAudience used when requesting an ID token from an identity provider for auth keys via workload identity federation\n  --auth-key value\n    \tnode authorization key; if it begins with \"file:\", then it's a path to a file containing the authkey\n  --client-id value\n    \tClient ID used to generate authkeys via workload identity federation\n  --client-secret value\n    \tClient Secret used to generate authkeys via OAuth; if it begins with \"file:\", then it's a path to a file containing the secret\n  --exit-node value\n    \tTailscale exit node (IP, base name, or auto:any) for internet traffic, or empty string to not use an exit node\n  --exit-node-allow-lan-access, --exit-node-allow-lan-access=false\n    \tAllow direct access to the local network when routing traffic via an exit node (default false)\n  --hostname value\n    \thostname to use instead of the one provided by the OS\n  --id-token value\n    \tID token from the identity provider to exchange with the control server for workload identity federation; if it begins with \"file:\", then it's a path to a file containing the token\n  --login-server value\n    \tbase URL of control server (default https://controlplane.tailscale.com)\n  --netfilter-mode value\n    \tnetfilter mode (one of on, nodivert, off) (default on)\n  --nickname value\n    \tshort name for the account\n  --operator value\n    \tUnix username to allow to operate on tailscaled without sudo\n  --qr, --qr=false\n    \tshow QR code for login URLs (default false)\n  --qr-format value\n    \tQR code formatting (auto, ascii, large, small) (default auto)\n  --shields-up, --shields-up=false\n    \tdon't allow incoming connections (default false)\n  --snat-subnet-routes, --snat-subnet-routes=false\n    \tsource NAT traffic to local routes advertised with --advertise-routes (default true)\n  --ssh, --ssh=false\n    \trun an SSH server, permitting access per tailnet admin's declared policy (default false)\n  --stateful-filtering, --stateful-filtering=false\n    \tapply stateful filtering to forwarded packets (subnet routers, exit nodes, and so on) (default false)\n  --timeout value\n    \tmaximum amount of time to wait for tailscaled to enter a Running state; default (0s) blocks forever (default 0s)\n"
+  },
+  "tailscale logout --help": {
+    "returncode": 0,
+    "stdout": "Disconnect from Tailscale and expire current node key\n\nUSAGE\n  tailscale logout\n\n\"tailscale logout\" brings the network down and invalidates\nthe current node key, forcing a future use of it to cause\na reauthentication.\n\nFLAGS\n  --reason value\n    \treason for the logout, if required by a policy\n"
+  },
+  "tailscale metrics --help": {
+    "returncode": 0,
+    "stdout": "Show Tailscale metrics\n\nUSAGE\n  tailscale metrics <subcommand> [flags]\n\nThe 'tailscale metrics' command shows Tailscale user-facing metrics (as opposed\nto internal metrics printed by 'tailscale debug metrics').\n\nFor more information about Tailscale metrics, refer to\nhttps://tailscale.com/s/client-metrics\n\nSUBCOMMANDS\n  print  Print current metric values in Prometheus text format\n  write  Write metric values to a file\n"
+  },
+  "tailscale metrics print --help": {
+    "returncode": 0,
+    "stdout": "Print current metric values in Prometheus text format\n\nUSAGE\n  tailscale metrics print\n"
+  },
+  "tailscale metrics write --help": {
+    "returncode": 0,
+    "stdout": "Write metric values to a file\n\nUSAGE\n  tailscale metrics write <path>\n\nThe 'tailscale metrics write' command writes metric values to a text file provided as its\nonly argument. It's meant to be used alongside Prometheus node exporter, allowing Tailscale\nmetrics to be consumed and exported by the textfile collector.\n\nAs an example, to export Tailscale metrics on an Ubuntu system running node exporter, you\ncan regularly run 'tailscale metrics write /var/lib/prometheus/node-exporter/tailscaled.prom'\nusing cron or a systemd timer.\n"
+  },
+  "tailscale nc --help": {
+    "returncode": 0,
+    "stdout": "Connect to a port on a host, connected to stdin/stdout\n\nUSAGE\n  tailscale nc <hostname-or-IP> <port>\n"
+  },
+  "tailscale netcheck --help": {
+    "returncode": 0,
+    "stdout": "Print an analysis of local network conditions\n\nUSAGE\n  tailscale netcheck\n\nFLAGS\n  --every value\n    \tif non-zero, do an incremental report with the given frequency (default 0s)\n  --format value\n    \toutput format; empty (for human-readable), \"json\" or \"json-line\"\n  --verbose, --verbose=false\n    \tverbose logs (default false)\n"
+  },
+  "tailscale ping --help": {
+    "returncode": 0,
+    "stdout": "Ping a host at the Tailscale layer, see how it routed\n\nUSAGE\n  tailscale ping <hostname-or-IP>\n\nThe 'tailscale ping' command pings a peer node from the Tailscale layer\nand reports which route it took for each response. The first ping or\nso will likely go over DERP (Tailscale's TCP relay protocol) while NAT\ntraversal finds a direct path through.\n\nIf 'tailscale ping' works but a normal ping does not, that means one\nside's operating system firewall is blocking packets; 'tailscale ping'\ndoes not inject packets into either side's TUN devices.\n\nBy default, 'tailscale ping' stops after 10 pings or once a direct\n(non-DERP) path has been established, whichever comes first.\n\nThe provided hostname must resolve to or be a Tailscale IP\n(e.g. 100.x.y.z) or a subnet IP advertised by a Tailscale\nrelay node.\n\nFLAGS\n  --c value\n    \tmax number of pings to send. 0 for infinity. (default 10)\n  --icmp, --icmp=false\n    \tdo a ICMP-level ping (through WireGuard, but not the local host OS stack) (default false)\n  --peerapi, --peerapi=false\n    \ttry hitting the peer's peerapi HTTP server (default false)\n  --size value\n    \tsize of the ping message (disco pings only). 0 for minimum size. (default 0)\n  --timeout value\n    \ttimeout before giving up on a ping (default 5s)\n  --tsmp, --tsmp=false\n    \tdo a TSMP-level ping (through WireGuard, but not either host OS stack) (default false)\n  --until-direct, --until-direct=false\n    \tstop once a direct path is established (default true)\n  --verbose, --verbose=false\n    \tverbose output (default false)\n"
+  },
+  "tailscale serve --help": {
+    "returncode": 0,
+    "stdout": "Serve content and local servers on your tailnet\n\nUSAGE\n  tailscale serve <target>\n  tailscale serve status [--json]\n  tailscale serve reset\n\nTailscale Serve enables you to share a local server securely within your tailnet.\n\nTo share a local server on the internet, use `tailscale funnel`\n\n<target> can be a file, directory, text, or most commonly the location to a service running on the\nlocal machine. The location to the location service can be expressed as a port number (e.g., 3000),\na partial URL (e.g., localhost:3000), or a full URL including a path (e.g., http://localhost:3000/foo).\nOn Unix-like systems, you can also specify a Unix domain socket (e.g., unix:/tmp/myservice.sock).\n\nEXAMPLES\n  - Expose an HTTP server running at 127.0.0.1:3000 in the foreground:\n    $ tailscale serve 3000\n\n  - Expose an HTTP server running at 127.0.0.1:3000 in the background:\n    $ tailscale serve --bg 3000\n\n  - Expose an HTTPS server with invalid or self-signed certificates at https://localhost:8443\n    $ tailscale serve https+insecure://localhost:8443\n\n  - Expose a service listening on a Unix socket (Linux/macOS/BSD only):\n    $ tailscale serve unix:/var/run/myservice.sock\n\nFor more examples and use cases visit our docs site https://tailscale.com/kb/1247/funnel-serve-use-cases\n\nSUBCOMMANDS\n  status      View current serve configuration\n  reset       Reset current serve config\n  drain       Drain a service from the current node\n  clear       Remove all config for a service\n  advertise   Advertise this node as a service proxy to the tailnet\n  get-config  Get service configuration to save to a file\n  set-config  Define service configuration from a file\n\nFLAGS\n  --accept-app-caps value\n    \tApp capabilities to forward to the server (specify multiple capabilities with a comma-separated list)\n  --bg, --bg=false\n    \tRun the command as a background process (default false, when --service is set defaults to true).\n  --http value\n    \tExpose an HTTP server at the specified port\n  --https value\n    \tExpose an HTTPS server at the specified port (default mode)\n  --proxy-protocol value\n    \tPROXY protocol version (1 or 2) for TCP forwarding\n  --service value\n    \tServe for a service with distinct virtual IP instead on node itself.\n  --set-path value\n    \tAppends the specified path to the base URL for accessing the underlying service\n  --tcp value\n    \tExpose a TCP forwarder to forward raw TCP packets at the specified port\n  --tls-terminated-tcp value\n    \tExpose a TCP forwarder to forward TLS-terminated TCP packets at the specified port\n  --tun, --tun=false\n    \tForward all traffic to the local machine (default false), only supported for services. Refer to docs for more information.\n  --yes, --yes=false\n    \tUpdate without interactive prompts (default false)\n"
+  },
+  "tailscale serve advertise --help": {
+    "returncode": 0,
+    "stdout": "Advertise this node as a service proxy to the tailnet\n\nUSAGE\n  tailscale serve advertise <service>\n\nAdvertise this node as a service proxy to the tailnet. This command is used\nto make the current node be considered as a service host for a service. This is\nuseful to bring a service back after it has been drained. (i.e. after running \n`tailscale serve drain <service>`). This is not needed if you are using `tailscale serve` to initialize a service.\n"
+  },
+  "tailscale serve clear --help": {
+    "returncode": 0,
+    "stdout": "Remove all config for a service\n\nUSAGE\n  tailscale serve clear <service>\n\nRemove all handlers configured for the specified service.\n"
+  },
+  "tailscale serve drain --help": {
+    "returncode": 0,
+    "stdout": "Drain a service from the current node\n\nUSAGE\n  tailscale serve drain <service>\n\nMake the current node no longer accept new connections for the specified service.\nExisting connections will continue to work until they are closed, but no new connections will be accepted.\nUse this command to gracefully remove a service from the current node without disrupting existing connections.\n<service> should be a service name (e.g., svc:my-service).\n"
+  },
+  "tailscale serve get-config --help": {
+    "returncode": 0,
+    "stdout": "Get service configuration to save to a file\n\nUSAGE\n  tailscale serve get-config <file> [--service=<service>] [--all]\n\nGet the configuration for services that this node is currently hosting in a\nformat that can later be provided to set-config. This can be used to declaratively set\nconfiguration for a service host.\n\nFLAGS\n  --all, --all=false\n    \tread config from all services (default false)\n  --service value\n    \tread config from a particular service\n"
+  },
+  "tailscale serve reset --help": {
+    "returncode": 0,
+    "stdout": "Reset current serve config\n\nUSAGE\n  tailscale serve reset\n"
+  },
+  "tailscale serve set-config --help": {
+    "returncode": 0,
+    "stdout": "Define service configuration from a file\n\nUSAGE\n  tailscale serve set-config <file> [--service=<service>] [--all]\n\nRead the provided configuration file and use it to declaratively set the configuration\nfor either a single service, or for all services that this node is hosting. If --service is specified,\nall endpoint handlers for that service are overwritten. If --all is specified, all endpoint handlers for\nall services are overwritten.\n\nFor information on the file format, see tailscale.com/kb/1589/tailscale-services-configuration-file\n\nFLAGS\n  --all, --all=false\n    \tapply config to all services (default false)\n  --service value\n    \tapply config to a particular service\n"
+  },
+  "tailscale serve status --help": {
+    "returncode": 0,
+    "stdout": "View current serve configuration\n\nUSAGE\n  tailscale serve status [--json]\n\nFLAGS\n  --json, --json=false\n    \toutput JSON (default false)\n"
+  },
+  "tailscale set --help": {
+    "returncode": 0,
+    "stdout": "Change specified preferences\n\nUSAGE\n  tailscale set [flags]\n\n\"tailscale set\" allows changing specific preferences.\n\nUnlike \"tailscale up\", this command does not require the complete set of desired settings.\n\nOnly settings explicitly mentioned will be set. There are no default values.\n\nFLAGS\n  --accept-dns, --accept-dns=false\n    \taccept DNS configuration from the admin panel\n  --accept-risk value\n    \taccept risk and skip confirmation for risk types: lose-ssh,mac-app-connector,linux-strict-rp-filter,all\n  --accept-routes, --accept-routes=false\n    \taccept routes advertised by other Tailscale nodes\n  --advertise-connector, --advertise-connector=false\n    \toffer to be an app connector for domain specific internet traffic for the tailnet\n  --advertise-exit-node, --advertise-exit-node=false\n    \toffer to be an exit node for internet traffic for the tailnet\n  --advertise-routes value\n    \troutes to advertise to other nodes (comma-separated, e.g. \"10.0.0.0/8,192.168.0.0/24\") or empty string to not advertise routes\n  --auto-update, --auto-update=false\n    \tautomatically update to the latest available version\n  --exit-node value\n    \tTailscale exit node (IP, base name, or auto:any) for internet traffic, or empty string to not use an exit node\n  --exit-node-allow-lan-access, --exit-node-allow-lan-access=false\n    \tAllow direct access to the local network when routing traffic via an exit node\n  --hostname value\n    \thostname to use instead of the one provided by the OS\n  --netfilter-mode value\n    \tnetfilter mode (one of on, nodivert, off)\n  --nickname value\n    \tnickname for the current account\n  --operator value\n    \tUnix username to allow to operate on tailscaled without sudo\n  --relay-server-port value\n    \tUDP port number (0 will pick a random unused port) for the relay server to bind to, on all interfaces, or empty string to disable relay server functionality\n  --relay-server-static-endpoints value\n    \tstatic IP:port endpoints to advertise as candidates for relay connections (comma-separated, e.g. \"[2001:db8::1]:40000,192.0.2.1:40000\") or empty string to not advertise any static endpoints\n  --report-posture, --report-posture=false\n    \tallow management plane to gather device posture information\n  --shields-up, --shields-up=false\n    \tdon't allow incoming connections\n  --snat-subnet-routes, --snat-subnet-routes=false\n    \tsource NAT traffic to local routes advertised with --advertise-routes\n  --ssh, --ssh=false\n    \trun an SSH server, permitting access per tailnet admin's declared policy\n  --stateful-filtering, --stateful-filtering=false\n    \tapply stateful filtering to forwarded packets (subnet routers, exit nodes, and so on)\n  --update-check, --update-check=false\n    \tnotify about available Tailscale updates\n  --webclient, --webclient=false\n    \texpose the web interface for managing this node over Tailscale at port 5252\n"
+  },
+  "tailscale ssh --help": {
+    "returncode": 0,
+    "stdout": "SSH to a Tailscale machine\n\nUSAGE\n  tailscale ssh [user@]<host> [args...]\n\nThe 'tailscale ssh' command is an optional wrapper around the system 'ssh'\ncommand that's useful in some cases. Tailscale SSH does not require its use;\nmost users running the Tailscale SSH server will prefer to just use the normal\n'ssh' command or their normal SSH client.\n\nThe 'tailscale ssh' wrapper adds a few things:\n\n* It resolves the destination server name in its arguments using MagicDNS,\n  even if --accept-dns=false.\n* It works in userspace-networking mode, by supplying a ProxyCommand to the\n  system 'ssh' command that connects via a pipe through tailscaled.\n* It automatically checks the destination server's SSH host key against the\n  node's SSH host key as advertised via the Tailscale coordination server.\n"
+  },
+  "tailscale status --help": {
+    "returncode": 0,
+    "stdout": "Show state of tailscaled and its connections\n\nUSAGE\n  tailscale status [--active] [--web] [--json]\n\nJSON FORMAT\n\nWarning: this format has changed between releases and might change more\nin the future.\n\nFor a description of the fields, see the \"type Status\" declaration at:\n\nhttps://github.com/tailscale/tailscale/blob/main/ipn/ipnstate/ipnstate.go\n\n(and be sure to select branch/tag that corresponds to the version\n of Tailscale you're running)\n\nFLAGS\n  --active, --active=false\n    \tfilter output to only peers with active sessions (not applicable to web mode) (default false)\n  --browser, --browser=false\n    \tOpen a browser in web mode (default true)\n  --header, --header=false\n    \tshow column headers in table format (default false)\n  --json, --json=false\n    \toutput in JSON format (WARNING: format subject to change) (default false)\n  --listen value\n    \tlisten address for web mode; use port 0 for automatic (default 127.0.0.1:8384)\n  --peers, --peers=false\n    \tshow status of peers (default true)\n  --self, --self=false\n    \tshow status of local machine (default true)\n  --web, --web=false\n    \trun webserver with HTML showing status (default false)\n"
+  },
+  "tailscale switch --help": {
+    "returncode": 0,
+    "stdout": "Switch to a different Tailscale account\n\nUSAGE\n  tailscale switch <id>\n\n\"tailscale switch\" switches between logged in accounts. You can\nuse the ID that's returned from 'tailnet switch -list'\nto pick which profile you want to switch to. Alternatively, you\ncan use the Tailnet, account names, or display names to switch as well.\n\nThis command is currently in alpha and may change in the future.\n\nSUBCOMMANDS\n  remove  Remove a Tailscale account\n\nFLAGS\n  --list, --list=false\n    \tlist available accounts (default false)\n"
+  },
+  "tailscale switch remove --help": {
+    "returncode": 0,
+    "stdout": "Remove a Tailscale account\n\nUSAGE\n  tailscale switch remove <id>\n\n\"tailscale switch remove\" removes a Tailscale account from the\nlocal machine. This does not delete the account itself, but\nit will no longer be available for switching to. You can\nadd it back by logging in again.\n\nThis command is currently in alpha and may change in the future.\n"
+  },
+  "tailscale syspolicy --help": {
+    "returncode": 0,
+    "stdout": "Diagnose the MDM and system policy configuration\n\nUSAGE\n  tailscale syspolicy <subcommand>\n\nThe 'tailscale syspolicy' command provides tools for diagnosing the MDM and system policy configuration.\n\nSUBCOMMANDS\n  list    Print effective policy settings\n  reload  Force a reload of policy settings, even if no changes are detected, and prints the result\n"
+  },
+  "tailscale syspolicy list --help": {
+    "returncode": 0,
+    "stdout": "Print effective policy settings\n\nUSAGE\n  tailscale syspolicy list\n\nThe 'tailscale syspolicy list' subcommand displays the effective policy settings and their sources (e.g., MDM or environment variables).\n\nFLAGS\n  --json, --json=false\n    \toutput in JSON format (default false)\n"
+  },
+  "tailscale syspolicy reload --help": {
+    "returncode": 0,
+    "stdout": "Force a reload of policy settings, even if no changes are detected, and prints the result\n\nUSAGE\n  tailscale syspolicy reload\n\nThe 'tailscale syspolicy reload' subcommand forces a reload of policy settings, even if no changes are detected, and prints the result.\n\nFLAGS\n  --json, --json=false\n    \toutput in JSON format (default false)\n"
+  },
+  "tailscale systray --help": {
+    "returncode": 0,
+    "stdout": "Run a systray application to manage Tailscale\n\nUSAGE\n  tailscale systray\n\nRun a systray application to manage Tailscale.\n"
+  },
+  "tailscale up --help": {
+    "returncode": 0,
+    "stdout": "Connect to Tailscale, logging in if needed\n\nUSAGE\n  tailscale up [flags]\n\n\"tailscale up\" connects this machine to your Tailscale network,\ntriggering authentication if necessary.\n\nWith no flags, \"tailscale up\" brings the network online without\nchanging any settings. (That is, it's the opposite of \"tailscale\ndown\").\n\nIf flags are specified, the flags must be the complete set of desired\nsettings. An error is returned if any setting would be changed as a\nresult of an unspecified flag's default value, unless the --reset flag\nis also used. (The flags --auth-key, --force-reauth, and --qr are not\nconsidered settings that need to be re-specified when modifying\nsettings.)\n\nFLAGS\n  --accept-dns, --accept-dns=false\n    \taccept DNS configuration from the admin panel (default true)\n  --accept-risk value\n    \taccept risk and skip confirmation for risk types: lose-ssh,mac-app-connector,linux-strict-rp-filter,all\n  --accept-routes, --accept-routes=false\n    \taccept routes advertised by other Tailscale nodes (default false)\n  --advertise-connector, --advertise-connector=false\n    \tadvertise this node as an app connector (default false)\n  --advertise-exit-node, --advertise-exit-node=false\n    \toffer to be an exit node for internet traffic for the tailnet (default false)\n  --advertise-routes value\n    \troutes to advertise to other nodes (comma-separated, e.g. \"10.0.0.0/8,192.168.0.0/24\") or empty string to not advertise routes\n  --advertise-tags value\n    \tcomma-separated ACL tags to request; each must start with \"tag:\" (e.g. \"tag:eng,tag:montreal,tag:ssh\")\n  --audience value\n    \tAudience used when requesting an ID token from an identity provider for auth keys via workload identity federation\n  --auth-key value\n    \tnode authorization key; if it begins with \"file:\", then it's a path to a file containing the authkey\n  --client-id value\n    \tClient ID used to generate authkeys via workload identity federation\n  --client-secret value\n    \tClient Secret used to generate authkeys via OAuth; if it begins with \"file:\", then it's a path to a file containing the secret\n  --exit-node value\n    \tTailscale exit node (IP, base name, or auto:any) for internet traffic, or empty string to not use an exit node\n  --exit-node-allow-lan-access, --exit-node-allow-lan-access=false\n    \tAllow direct access to the local network when routing traffic via an exit node (default false)\n  --force-reauth, --force-reauth=false\n    \tforce reauthentication (WARNING: this may bring down the Tailscale connection and thus should not be done remotely over SSH or RDP) (default false)\n  --hostname value\n    \thostname to use instead of the one provided by the OS\n  --id-token value\n    \tID token from the identity provider to exchange with the control server for workload identity federation; if it begins with \"file:\", then it's a path to a file containing the token\n  --json, --json=false\n    \toutput in JSON format (WARNING: format subject to change) (default false)\n  --login-server value\n    \tbase URL of control server (default https://controlplane.tailscale.com)\n  --netfilter-mode value\n    \tnetfilter mode (one of on, nodivert, off) (default on)\n  --operator value\n    \tUnix username to allow to operate on tailscaled without sudo\n  --qr, --qr=false\n    \tshow QR code for login URLs (default false)\n  --qr-format value\n    \tQR code formatting (auto, ascii, large, small) (default auto)\n  --reset, --reset=false\n    \treset unspecified settings to their default values (default false)\n  --shields-up, --shields-up=false\n    \tdon't allow incoming connections (default false)\n  --snat-subnet-routes, --snat-subnet-routes=false\n    \tsource NAT traffic to local routes advertised with --advertise-routes (default true)\n  --ssh, --ssh=false\n    \trun an SSH server, permitting access per tailnet admin's declared policy (default false)\n  --stateful-filtering, --stateful-filtering=false\n    \tapply stateful filtering to forwarded packets (subnet routers, exit nodes, and so on) (default false)\n  --timeout value\n    \tmaximum amount of time to wait for tailscaled to enter a Running state; default (0s) blocks forever (default 0s)\n"
+  },
+  "tailscale update --help": {
+    "returncode": 0,
+    "stdout": "Update Tailscale to the latest/different version\n\nUSAGE\n  tailscale update\n\nFLAGS\n  --dry-run, --dry-run=false\n    \tprint what update would do without doing it, or prompts (default false)\n  --yes, --yes=false\n    \tupdate without interactive prompts (default false)\n"
+  },
+  "tailscale version --help": {
+    "returncode": 0,
+    "stdout": "Print Tailscale version\n\nUSAGE\n  tailscale version [flags]\n\nFLAGS\n  --daemon, --daemon=false\n    \talso print local node's daemon version (default false)\n  --json, --json=false\n    \toutput in JSON format (default false)\n  --upstream, --upstream=false\n    \tfetch and print the latest upstream release version from pkgs.tailscale.com (default false)\n"
+  },
+  "tailscale web --help": {
+    "returncode": 0,
+    "stdout": "Run a web server for controlling Tailscale\n\nUSAGE\n  tailscale web [flags]\n\n\"tailscale web\" runs a webserver for controlling the Tailscale daemon.\n\nIt's primarily intended for use on Synology, QNAP, and other\nNAS devices where a web interface is the natural place to control\nTailscale, as opposed to a CLI or a native app.\n\nFLAGS\n  --cgi, --cgi=false\n    \trun as CGI script (default false)\n  --listen value\n    \tlisten address; use port 0 for automatic (default localhost:8088)\n  --origin value\n    \torigin at which the web UI is served (if behind a reverse proxy or used with cgi)\n  --prefix value\n    \tURL prefix added to requests (for cgi or reverse proxies)\n  --readonly, --readonly=false\n    \trun web UI in read-only mode (default false)\n"
+  },
+  "tailscale whois --help": {
+    "returncode": 0,
+    "stdout": "Show the machine and user associated with a Tailscale IP (v4 or v6)\n\nUSAGE\n  tailscale whois [--json] ip[:port]\n\n'tailscale whois' shows the machine and user associated with a Tailscale IP (v4 or v6).\n\nFLAGS\n  --json, --json=false\n    \toutput in JSON format (default false)\n  --proto value\n    \tprotocol; one of \"tcp\" or \"udp\"; empty mans both\n"
+  }
+}

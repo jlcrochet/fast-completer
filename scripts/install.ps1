@@ -4,6 +4,8 @@ $githubRepo = "jlcrochet/fast-completer"
 $onWindows = $env:OS -eq "Windows_NT"
 $addPath = $env:FC_ADD_PATH -eq "1"
 $menuComplete = $env:FC_MENU_COMPLETE -eq "1"
+$onlyBlobs = if ($env:FC_ONLY) { $env:FC_ONLY -split "," | ForEach-Object { $_.Trim() } } else { @() }
+$excludeBlobs = if ($env:FC_EXCLUDE) { $env:FC_EXCLUDE -split "," | ForEach-Object { $_.Trim() } } else { @() }
 $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "fast-completer-install"
 
 # Detect platform
@@ -52,7 +54,26 @@ try {
         "$HOME/.cache/fast-completer"
     }
     New-Item -ItemType Directory -Force -Path $cache | Out-Null
-    Copy-Item -Path "$extractDir/blobs/*.fcmpb" -Destination $cache
+
+    $blobSrc = Join-Path $extractDir "blobs"
+    if ($onlyBlobs.Count -gt 0) {
+        foreach ($name in $onlyBlobs) {
+            $blob = Join-Path $blobSrc "$name.fcmpb"
+            if (Test-Path $blob) {
+                Copy-Item $blob -Destination $cache
+            } else {
+                Write-Warning "Blob not found: $name.fcmpb"
+            }
+        }
+    } elseif ($excludeBlobs.Count -gt 0) {
+        foreach ($blob in Get-ChildItem "$blobSrc/*.fcmpb") {
+            if ($blob.BaseName -notin $excludeBlobs) {
+                Copy-Item $blob.FullName -Destination $cache
+            }
+        }
+    } else {
+        Copy-Item -Path "$blobSrc/*.fcmpb" -Destination $cache
+    }
     Write-Host "Installed blobs to $cache"
 
     # Add to PATH

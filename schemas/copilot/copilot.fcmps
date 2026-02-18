@@ -1,0 +1,444 @@
+# Copilot CLI schema for fast-completer
+# Generated from copilot 1.34.1
+
+copilot # AWS Copilot CLI
+	--help @bool # help for copilot
+	--version @bool # version for copilot
+	app # Commands for applications.
+		delete # Delete all resources associated with the application.
+			--name # Name of the application.
+			--yes @bool # Skips confirmation prompt.
+		init # Creates a new empty application.
+			--domain # Optional. Your existing custom domain name.
+			--permissions-boundary # Optional. The name or ARN of an existing IAM policy with which to set a
+			--resource-tags # Optional. Labels with a key and value separated by commas.
+		ls # Lists all the applications in your account.
+		show # Shows info about an application.
+			--json @bool # Optional. Output in JSON format.
+			--name # Name of the application.
+		upgrade # Upgrades the template of an application to the latest version.
+			--name # Name of the application.
+	completion # Output shell completion code.
+	deploy # Deploy one or more Copilot jobs or services.
+		--all @bool # Optional. Deploy all workloads with manifests in the current Copilot workspace.
+		--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+		--app # Name of the application.
+		--aws-access-key-id # Optional. An AWS access key for the environment account.
+		--aws-secret-access-key # Optional. An AWS secret access key for the environment account.
+		--aws-session-token # Optional. An AWS session token for temporary credentials.
+		--deploy-env @bool # Deploy the target environment before deploying the workload.
+		--detach @bool # Optional. Skip displaying CloudFormation deployment progress.
+		--env # Name of the environment.
+		--force @bool # Optional. Force a new service deployment using the existing image.
+		--init-env @bool # Confirm initializing the target environment if it does not exist.
+		--init-wkld @bool # Optional. When specified with --all, initialize all local workloads before deployment.
+		--name # Names of the service or jobs to deploy, with an optional priority tag (e.g. fe/1, be/2, my-job/1).
+		--no-rollback @bool # Optional. Disable automatic stack
+		--profile # Name of the profile for the environment account.
+		--region # Optional. An AWS region where the environment will be created.
+		--resource-tags # Optional. Labels with a key and value separated by commas.
+		--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+	docs # Open the copilot docs.
+	env # Commands for environments.
+		delete # Deletes an environment from your application.
+			--app # Name of the application.
+			--name # Name of the environment.
+			--yes @bool # Skips confirmation prompt.
+		deploy # Deploys an environment to an application.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--detach @bool # Optional. Skip displaying CloudFormation deployment progress.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--diff-yes @bool # Skip interactive approval of diff before deploying.
+			--force @bool # Optional. Force update the environment stack template.
+			--name # Name of the environment.
+			--no-rollback @bool # Optional. Disable automatic stack
+		init # Creates a new environment in your application.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--aws-access-key-id # Optional. An AWS access key for the environment account.
+			--aws-secret-access-key # Optional. An AWS secret access key for the environment account.
+			--aws-session-token # Optional. An AWS session token for temporary credentials.
+			--container-insights @bool # Optional. Enable CloudWatch Container Insights.
+			--default-config @bool # Optional. Skip prompting and use default environment configuration.
+			--import-cert-arns # Optional. Apply existing ACM certificates to the internet-facing load balancer.
+			--import-private-subnets # Optional. Use existing private subnet IDs.
+			--import-public-subnets # Optional. Use existing public subnet IDs.
+			--import-vpc-id # Optional. Use an existing VPC ID.
+			--internal-alb-allow-vpc-ingress @bool # Optional. Allow internal ALB ingress from port 80 and/or port 443.
+			--internal-alb-subnets # Optional. Specify subnet IDs for an internal load balancer.
+			--name # Name of the environment.
+			--override-az-names # Optional. Availability Zone names.
+			--override-private-cidrs # Optional. CIDR to use for private subnets.
+			--override-public-cidrs # Optional. CIDR to use for public subnets.
+			--override-vpc-cidr # Optional. Global CIDR to use for VPC.
+			--prod @bool # If the environment contains production services.
+			--profile # Name of the profile for the environment account.
+			--region # Optional. An AWS region where the environment will be created.
+		ls # Lists all the environments in an application.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+		override # Override the AWS CloudFormation template of environments.
+			--app # Name of the application.
+			--cdk-language # Optional. The Cloud Development Kit language.
+			--name # Optional. Name of the environment to use when retrieving resources in a template.
+			--skip-resources @bool # Optional. Skip asking for which resources to override and generate empty IaC extension files.
+			--tool # Infrastructure as Code tool to override a template.
+		package # Print the AWS CloudFormation template of an environment.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--force @bool # Optional. Force update the environment stack template.
+			--name # Name of the environment.
+			--output-dir # Optional. Writes the stack template and template configuration to a directory.
+			--upload-assets @bool # Optional. Whether to upload assets (container images, Lambda functions, etc.).
+		show # Shows info about a deployed environment.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--manifest @bool # Optional. Output the manifest file used for the deployment.
+			--name # Name of the environment.
+			--resources @bool # Optional. Show the resources in your environment.
+	help # Help about any command
+		app # Commands for applications.
+			delete # Delete all resources associated with the application.
+			init # Creates a new empty application.
+			ls # Lists all the applications in your account.
+			show # Shows info about an application.
+			upgrade # Upgrades the template of an application to the latest version.
+		completion # Output shell completion code.
+		deploy # Deploy one or more Copilot jobs or services.
+		docs # Open the copilot docs.
+		env # Commands for environments.
+			delete # Deletes an environment from your application.
+			deploy # Deploys an environment to an application.
+			init # Creates a new environment in your application.
+			ls # Lists all the environments in an application.
+			override # Override the AWS CloudFormation template of environments.
+			package # Print the AWS CloudFormation template of an environment.
+			show # Shows info about a deployed environment.
+		help # Help about any command
+		init # Create a new ECS or App Runner application.
+		job # Commands for jobs.
+			delete # Deletes a job from an application.
+			deploy # Deploys a job to an environment.
+			init # Creates a new scheduled job in an application.
+			logs # Displays logs of a deployed job.
+			ls # Lists all the jobs in an application.
+			override # Override the AWS CloudFormation template of a job.
+			package # Print the AWS CloudFormation template of a job.
+			run # Invoke a job in an environment.
+		pipeline # Commands for pipelines.
+			delete # Deletes the pipeline associated with your workspace.
+			deploy # Deploys a pipeline for the services in your workspace.
+			init # Creates a pipeline for the services in your workspace.
+			ls # Lists all the deployed pipelines in an application.
+			override # Override the AWS CloudFormation template of a Pipeline.
+			show # Shows info about a deployed pipeline for an application.
+			status # Shows the status of a pipeline.
+		run # Run the workload locally.
+		secret # Commands for secrets.
+			init # Create or update secrets in SSM Parameter Store.
+		storage # Commands for working with storage and databases.
+			init # Creates a new AWS CloudFormation template for a storage resource.
+		svc # Commands for services.
+			delete # Deletes a service from an application.
+			deploy # Deploys a service to an environment.
+			exec # Execute a command in a running container part of a service.
+			init # Creates a new service in an application.
+			logs # Displays logs of a deployed service.
+			ls # Lists all the services in an application.
+			override # Override the AWS CloudFormation template of a service.
+			package # Print the AWS CloudFormation template of a service.
+			pause # Pause running App Runner service.
+			resume # Resumes a paused service.
+			show # Shows info about a deployed service per environment.
+			status # Shows status of a deployed service.
+		task # Commands for tasks.
+			delete # Deletes a one-off task from an application or default cluster.
+			exec # Execute a command in a running container part of a task.
+			run # Run a one-off task on Amazon ECS.
+		version # Print the version number.
+	init # Create a new ECS or App Runner application.
+		--app # Name of the application.
+		--deploy @bool # Deploy your service or job to a new or existing environment.
+		--dockerfile # Path to the Dockerfile.
+		--env # Name of the environment.
+		--image # The location of an existing Docker image.
+		--name # Name of the service or job.
+		--port # The port on which your service listens.
+		--retries # Optional. The number of times to try restarting the job on a failure.
+		--schedule # The schedule on which to run this job.
+		--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+		--timeout # Optional. The total execution time for the task, including retries.
+		--type # Type of job or svc to create. Must be one of:
+	job # Commands for jobs.
+		delete # Deletes a job from an application.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--name # Name of the job.
+			--yes @bool # Skips confirmation prompt.
+		deploy # Deploys a job to an environment.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--detach @bool # Optional. Skip displaying CloudFormation deployment progress.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--env # Name of the environment.
+			--name # Name of the job.
+			--no-rollback @bool # Optional. Disable automatic stack
+			--resource-tags # Optional. Labels with a key and value separated by commas.
+			--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+		init # Creates a new scheduled job in an application.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--dockerfile # Path to the Dockerfile.
+			--image # The location of an existing Docker image.
+			--job-type # Type of job to create. Must be one of:
+			--name # Name of the job.
+			--retries # Optional. The number of times to try restarting the job on a failure.
+			--schedule # The schedule on which to run this job.
+			--timeout # Optional. The total execution time for the task, including retries.
+		logs # Displays logs of a deployed job.
+			--app # Name of the application.
+			--end-time # Optional. Only return logs before a specific date (RFC3339).
+			--env # Name of the environment.
+			--follow @bool # Optional. Specifies if the logs should be streamed.
+			--include-state-machine @bool # Optional. Include logs from the state machine executions.
+			--json @bool # Optional. Output in JSON format.
+			--last # Optional. The number of executions of the scheduled job for which
+			--limit # Optional. The maximum number of log events returned. Default is 10
+			--name # Name of the service.
+			--since # Optional. Only return logs newer than a relative duration like 5s, 2m, or 3h.
+			--start-time # Optional. Only return logs after a specific date (RFC3339).
+			--tasks # Optional. Only return logs from specific task IDs.
+		ls # Lists all the jobs in an application.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--local @bool # Only show jobs in the workspace.
+		override # Override the AWS CloudFormation template of a job.
+			--app # Name of the application.
+			--cdk-language # Optional. The Cloud Development Kit language.
+			--env # Optional. Name of the environment to use when retrieving resources in a template.
+			--name # Name of the job.
+			--skip-resources @bool # Optional. Skip asking for which resources to override and generate empty IaC extension files.
+			--tool # Infrastructure as Code tool to override a template.
+		package # Print the AWS CloudFormation template of a job.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--env # Name of the environment.
+			--name # Name of the job.
+			--output-dir # Optional. Writes the stack template and template configuration to a directory.
+			--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+			--upload-assets @bool # Optional. Whether to upload assets (container images, Lambda functions, etc.).
+		run # Invoke a job in an environment.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--name # Name of the job.
+	pipeline # Commands for pipelines.
+		delete # Deletes the pipeline associated with your workspace.
+			--app # Name of the application.
+			--delete-secret @bool # Deletes AWS Secrets Manager secret associated with a pipeline source repository.
+			--name # Name of the pipeline.
+			--yes @bool # Skips confirmation prompt.
+		deploy # Deploys a pipeline for the services in your workspace.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--name # Name of the pipeline.
+			--yes @bool # Skips confirmation prompt.
+		init # Creates a pipeline for the services in your workspace.
+			--app # Name of the application.
+			--environments # Environments to add to the pipeline.
+			--git-branch # Branch used to trigger your pipeline.
+			--name # Name of the pipeline.
+			--pipeline-type # The type of pipeline. Must be either "Workloads" or "Environments".
+			--url # The repository URL to trigger your pipeline.
+		ls # Lists all the deployed pipelines in an application.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--local @bool # Only show pipelines in the workspace.
+		override # Override the AWS CloudFormation template of a Pipeline.
+			--app # Name of the application.
+			--cdk-language # Optional. The Cloud Development Kit language.
+			--name # Name of the pipeline.
+			--skip-resources @bool # Optional. Skip asking for which resources to override and generate empty IaC extension files.
+			--tool # Infrastructure as Code tool to override a template.
+		show # Shows info about a deployed pipeline for an application.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--name # Name of the pipeline.
+			--resources @bool # Optional. Show the resources in your pipeline.
+		status # Shows the status of a pipeline.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--name # Name of the pipeline.
+	run # Run the workload locally.
+		--app # Name of the application.
+		--env # Name of the environment.
+		--env-var-override # Optional. Override environment variables passed to containers.
+		--name # Name of the service or job.
+		--port-override # Optional. Override ports exposed by service. Format: <host port>:<service port>.
+		--proxy @bool # Optional. Proxy outbound requests to your environment's VPC.
+		--proxy-network # proxy-network
+		--use-task-role @bool # Optional. Run containers with TaskRole credentials instead of session credentials.
+		--watch @bool # Optional. Watch changes to local files and restart containers when updated. Directories and files in the main .dockerignore file are ignored.
+	secret # Commands for secrets.
+		init # Create or update secrets in SSM Parameter Store.
+			--app # Name of the application.
+			--cli-input-yaml # Optional. A YAML file in which the secret values are specified.
+			--name # The name of the secret.
+			--overwrite @bool # Optional. Whether to overwrite an existing secret.
+			--values # Values of the secret in each environment. Specified as <environment>=<value> separated by commas.
+	storage # Commands for working with storage and databases.
+		init # Creates a new AWS CloudFormation template for a storage resource.
+			--add-ingress-from # The workload that needs access to an
+			--engine # The database engine used in the cluster.
+			--initial-db # The initial database to create in the cluster.
+			--lifecycle # Whether the storage should be created and deleted
+			--lsi # Optional. Attribute to use as an alternate sort key. May be specified up to 5 times.
+			--name # Name of the storage resource to create.
+			--no-lsi @bool # Optional. Don't ask about configuring alternate sort keys.
+			--no-sort @bool # Optional. Skip configuring sort keys.
+			--parameter-group # Optional. The name of the parameter group to associate with the cluster.
+			--partition-key # Partition key for the DDB table.
+			--serverless-version # Optional. Aurora Serverless version.
+			--sort-key # Optional. Sort key for the DDB table.
+			--storage-type # Type of storage to add. Must be one of:
+			--workload # Name of the service/job that accesses the storage.
+	svc # Commands for services.
+		delete # Deletes a service from an application.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--name # Name of the service.
+			--yes @bool # Skips confirmation prompt.
+		deploy # Deploys a service to an environment.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--detach @bool # Optional. Skip displaying CloudFormation deployment progress.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--diff-yes @bool # Skip interactive approval of diff before deploying.
+			--env # Name of the environment.
+			--force @bool # Optional. Force a new service deployment using the existing image.
+			--name # Name of the service.
+			--no-rollback @bool # Optional. Disable automatic stack
+			--resource-tags # Optional. Labels with a key and value separated by commas.
+			--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+		exec # Execute a command in a running container part of a service.
+			--app # Name of the application.
+			--command # Optional. The command that is passed to a running container.
+			--container # Optional. The specific container you want to exec in. By default the first essential container will be used.
+			--env # Name of the environment.
+			--name # Name of the service, job, or task group.
+			--task-id # Optional. ID of the task you want to exec in.
+			--yes @bool # Optional. Whether to update the Session Manager Plugin.
+		init # Creates a new service in an application.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--dockerfile # Path to the Dockerfile.
+			--image # The location of an existing Docker image.
+			--ingress-type # Required for a Request-Driven Web Service. Allowed source of traffic to your service.
+			--name # Name of the service.
+			--no-subscribe @bool # Optional. Turn off selection for adding subscriptions for worker services.
+			--port # The port on which your service listens.
+			--sources # List of relative paths to source directories or files.
+			--subscribe-topics # Optional. SNS topics to subscribe to from other services in your application.
+			--svc-type # Type of service to create. Must be one of:
+		logs # Displays logs of a deployed service.
+			--app # Name of the application.
+			--container # Optional. Return only logs from a specific container.
+			--end-time # Optional. Only return logs before a specific date (RFC3339).
+			--env # Name of the environment.
+			--follow @bool # Optional. Specifies if the logs should be streamed.
+			--json @bool # Optional. Output in JSON format.
+			--limit # Optional. The maximum number of log events returned. Default is 10
+			--log-group # Optional. Only return logs from specific log group.
+			--name # Name of the service.
+			--previous @bool # Optional. Print logs for the last stopped task if exists.
+			--since # Optional. Only return logs newer than a relative duration like 5s, 2m, or 3h.
+			--start-time # Optional. Only return logs after a specific date (RFC3339).
+			--tasks # Optional. Only return logs from specific task IDs.
+		ls # Lists all the services in an application.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--local @bool # Only show services in the workspace.
+		override # Override the AWS CloudFormation template of a service.
+			--app # Name of the application.
+			--cdk-language # Optional. The Cloud Development Kit language.
+			--env # Optional. Name of the environment to use when retrieving resources in a template.
+			--name # Name of the service.
+			--skip-resources @bool # Optional. Skip asking for which resources to override and generate empty IaC extension files.
+			--tool # Infrastructure as Code tool to override a template.
+		package # Print the AWS CloudFormation template of a service.
+			--allow-downgrade @bool # Optional. Allow using an older version of Copilot to update Copilot components
+			--app # Name of the application.
+			--diff @bool # Compares the generated CloudFormation template to the deployed stack.
+			--env # Name of the environment.
+			--name # Name of the service.
+			--output-dir # Optional. Writes the stack template and template configuration to a directory.
+			--tag # Optional. The tag for the container images Copilot builds from Dockerfiles.
+			--upload-assets @bool # Optional. Whether to upload assets (container images, Lambda functions, etc.).
+		pause # Pause running App Runner service.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--name # Name of the service.
+			--yes @bool # Skips confirmation prompt.
+		resume # Resumes a paused service.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--name # Name of the service.
+		show # Shows info about a deployed service per environment.
+			--app # Name of the application.
+			--json @bool # Optional. Output in JSON format.
+			--manifest # Optional. Name of the environment in which the service was deployed;
+			--name # Name of the service.
+			--resources @bool # Optional. Show the resources in your service.
+		status # Shows status of a deployed service.
+			--app # Name of the application.
+			--env # Name of the environment.
+			--json @bool # Optional. Output in JSON format.
+			--name # Name of the service.
+	task # Commands for tasks.
+		delete # Deletes a one-off task from an application or default cluster.
+			--app # Name of the application.
+			--default @bool # Optional. Delete a task which was launched in the default cluster and subnets.
+			--env # Name of the environment.
+			--name # Name of the service.
+			--yes @bool # Skips confirmation prompt.
+		exec # Execute a command in a running container part of a task.
+			--app # Name of the application.
+			--command # Optional. The command that is passed to a running container.
+			--default @bool # Optional. Execute commands in running tasks in default cluster and default subnets.
+			--env # Name of the environment.
+			--name # Name of the service, job, or task group.
+			--task-id # Optional. ID of the task you want to exec in.
+			--yes @bool # Optional. Whether to update the Session Manager Plugin.
+		run # Run a one-off task on Amazon ECS.
+			--acknowledge-secrets-access @bool # Optional. Skip the confirmation question and grant access to the secrets specified by --secrets flag.
+			--app # Optional. Name of the application.
+			--build-args # Key-value pairs converted to --build-args.
+			--build-context # Path to the Docker build context.
+			--cluster # Optional. The short name or full ARN of the cluster to run the task in.
+			--command # Optional. The command that is passed to "docker run" to override the default command.
+			--count # Optional. The number of tasks to set up.
+			--cpu # Optional. The number of CPU units to reserve for each task.
+			--default @bool # Optional. Run tasks in default cluster and default subnets.
+			--dockerfile # Path to the Dockerfile.
+			--entrypoint # Optional. The entrypoint that is passed to "docker run" to override the default entrypoint.
+			--env # Optional. Name of the environment.
+			--env-file # Optional. A path to an environment variable (.env) file.
+			--env-vars # Optional. Environment variables specified by key=value separated by commas.
+			--execution-role # Optional. The ARN of the role that grants the container agent permission to make AWS API calls.
+			--follow @bool # Optional. Specifies if the logs should be streamed.
+			--generate-cmd # Optional. Generate a command with a pre-filled value for each flag.
+			--image # The location of an existing Docker image.
+			--memory # Optional. The amount of memory to reserve in MiB for each task.
+			--platform-arch # Optional. Architecture of the task. Must be specified along with 'platform-os'.
+			--platform-os # Optional. Operating system of the task. Must be specified along with 'platform-arch'.
+			--resource-tags # Optional. Labels with a key and value separated by commas.
+			--secrets # Optional. Secrets to inject into the container. Specified by key=value separated by commas.
+			--security-groups # Optional. Additional security group IDs for the task to use. Can be specified multiple times.
+			--subnets # Optional. The subnet IDs for the task to use. Can be specified multiple times.
+			--tag # Optional. The container image tag in addition to "latest".
+			--task-group-name # Optional. The group name of the task.
+			--task-role # Optional. The ARN of the role for the task to use.
+	version # Print the version number.

@@ -1,0 +1,8 @@
+[project]
+name = "starship-schema-export"
+version = "0.1.0"
+description = "Export Starship command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-starship = "export_command_tree:main"

@@ -1,0 +1,5 @@
+test-cli # A test CLI
+	--verbose|-v @bool # Enable verbose
+	--output|-o (json|text) # Output format
+	sub # A subcommand
+		--flag {key1|key2} # Members

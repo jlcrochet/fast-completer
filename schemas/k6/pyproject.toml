@@ -1,0 +1,8 @@
+[project]
+name = "k6-schema-export"
+version = "0.1.0"
+description = "Export K6 command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-k6 = "export_command_tree:main"

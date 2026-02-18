@@ -1,0 +1,2556 @@
+# Civo CLI schema for fast-completer
+# Generated from civo 1.4.7
+
+civo # Civo cloud CLI
+	--config # config file (default is $HOME/.civo.json)
+	--fields # output fields for custom format output (use -h to determine fields)
+	--help @bool # help for civo
+	--output # output format (json/human/custom)
+	--pretty @bool # Print pretty the json output
+	--region # Choose the region to connect to, if you use this option it will use it over the default region
+	--version @bool # Print the version of the CLI
+	--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	apikey # Manage API keys used to access your Civo account
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List stored API keys
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove a saved API key
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--force @bool # Force removal of the current API key without confirmation
+		save # Save a new API key
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--load-from-env @bool # When set, the name and key will be taken from environment variables (see notes above)
+		set # Set the current API key
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		show # Show the default (current) API key
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	completion # Generates bash completion scripts
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		bash # Generates bash completion scripts
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		fish # Generates fish completion scripts
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		powershell # Generates powershell completion scripts
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		zsh # Generates zsh completion scripts
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	database # Manage Civo Database
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		backup # Manage Civo Database Backups
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new database backup
+				--name # name of the database backup
+			delete # Delete a manual database backup or scheduled backups
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--scheduled @bool # delete scheduled backups instead of manual backups
+			ls # List all database backups
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show details of a database backup
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update a scheduled database backup
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--name # name of the database backup
+				--schedule # schedule of the database backup in the form of cronjob
+		create # Create a new database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--firewall # the firewall to use for the database
+			--firewall-rules # the firewall rules to use for the database
+			--network # the network to use for the database
+			--nodes # the number of nodes for the database
+			--size @bool # the size of the database. You can list available DB sizes by `civo size list -s database`
+			--software # the software to use for the database.
+			--wait @bool # a simple flag (e.g. --wait) that will cause the CLI to spin and wait for the database to be ACTIVE
+		credential # Show credential details of a database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--connection-string @bool # show the connection string for the database
+		delete # Delete a database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		engine # List Database engines
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List all databases
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		restore # Restore a database
+			--backup # the backup name which you can restore database
+			--name # name of the restore
+		show # Show details of a database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		size # List Database node sizes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Update a database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--firewall # the firewall to use for the database
+			--name # the new name for the database
+			--nodes # the number of nodes for the database
+		versions # List all the available database versions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	diskimage # Details of Civo disk images
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new disk image
+			--distribution # Distribution name (e.g. ubuntu, centos)
+			--name # Name of the disk image
+			--path # Path to disk image file (.raw/.qcow2)
+		delete # Delete a disk image
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List diskimages
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--custom @bool # Show only your custom disk images
+		show # Finds a disk image by either part of the ID or part of the name
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	domain # Details of Civo domains
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new domain
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List domains
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		record # Details of Civo domains records
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new domain record
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--name # the name of the record
+				--priority # the priority of record only for SRV and MX record
+				--ttl # The TTL of the record
+				--type # type of the record (A, CNAME, TXT, SRV, MX, NS)
+				--value # the value of the record
+			ls # List all domains records
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove domain record
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show domain record
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove a domain
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	firewall # Details of Civo firewalls
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new firewall
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--network # the network to create the firewall
+			--no-default-rules @bool # the no-default-rules flag will ensure no default rules are created for the firewall, if not defined it will be set to false
+		ls # List firewall
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove a firewall
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		rule # Details of Civo firewalls rules
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new firewall rule
+				--startport # the start port of the rule
+			ls # List firewall rule
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove firewall rule
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Update a firewall
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	help # Help about any command
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		apikey # Manage API keys used to access your Civo account
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List stored API keys
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a saved API key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			save # Save a new API key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			set # Set the current API key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show the default (current) API key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		completion # Generates bash completion scripts
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			bash # Generates bash completion scripts
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			fish # Generates fish completion scripts
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			powershell # Generates powershell completion scripts
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			zsh # Generates zsh completion scripts
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		database # Manage Civo Database
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			backup # Manage Civo Database Backups
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a new database backup
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				delete # Delete a manual database backup or scheduled backups
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List all database backups
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				show # Show details of a database backup
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				update # Update a scheduled database backup
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			credential # Show credential details of a database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Delete a database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			engine # List Database engines
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all databases
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			restore # Restore a database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show details of a database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			size # List Database node sizes
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update a database
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			versions # List all the available database versions
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		diskimage # Details of Civo disk images
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new disk image
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Delete a disk image
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List diskimages
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Finds a disk image by either part of the ID or part of the name
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		domain # Details of Civo domains
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new domain
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List domains
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			record # Details of Civo domains records
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a new domain record
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List all domains records
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				remove # Remove domain record
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				show # Show domain record
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a domain
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		firewall # Details of Civo firewalls
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new firewall
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List firewall
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a firewall
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			rule # Details of Civo firewalls rules
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a new firewall rule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List firewall rule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				remove # Remove firewall rule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update a firewall
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		help # Help about any command
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		instance # Details of Civo instances
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			allowed-ips-update # Update the allowed IP addresses for an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			bandwidth-update # Update the network bandwidth limit for an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			console # Connect to the console of an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				status # Get the status of the console for an instance
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				stop # Stop the console session for an instance
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			firewall # Set firewall for instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List instances
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			password # Show instance's default password
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			public-ip # Enable/disable controls if instance should have a public IP
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			reboot # Hard reboot an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			recovery # Enable/disable recovery mode for an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			recovery-status # Get the recovery status of an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove/delete instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			size # List instances size
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			snapshot # Manage instance snapshots
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a snapshot of an instance
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				delete # Delete an instance snapshot
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				list # List all snapshots of an instance
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				restore # Restore an instance from a snapshot
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				show # Show details of an instance snapshot
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				update # Update an instance snapshot
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			soft-reboot # Soft reboot an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			start # Start an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			stop # Stop an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			tag # Change the instance's tags
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Change the instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			upgrade # Upgrade an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ip # Details of Civo reserved IPs
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			assign # Assign IP address to an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Delete a reserved ip
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List ips
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			rename # Rename reserved ip
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			reserve # Reserve a new ip
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			unassign # Unassign IP address to an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		kubernetes # Details of Civo Kubernetes clusters
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			applications # Details of Civo Kubernetes applications
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				add # Add the marketplace application to a Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List all Kubernetes clusters applications
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				remove # Remove the marketplace application from a Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				show # Shows the details of an application installed in the cluster.
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			config # Get a Kubernetes cluster's config
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all Kubernetes clusters
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			node-pool # Cluster node pool management
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Add a node pool to Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				delete # Delete a node pool from Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				instance-delete # Delete an instance from a node pool in a Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				instance-ls # List all instances in a Kubernetes node pool
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List all node pools in a Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				scale # Scale a node pool in a Kubernetes cluster
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			recycle # Recycle a Kubernetes node
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			rename # Rename a kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			size # List Kubernetes node sizes
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update the configuration of your Civo Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update-kubeconfig # Update kubeconfig for the specified cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			upgrade # Upgrade a Kubernetes cluster to desired version (from 'civo k3s versions')
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			versions # List all Kubernetes cluster versions
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		loadbalancer # Details of Civo Load Balancer
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List load balancers
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show load balancer
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		network # Details of Civo networks
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			connect # Attach an existing VLAN to a network
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new network
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List networks
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a network
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show details of a specific Civo network, including VLAN information if available
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Rename a network
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		objectstore # Civo Object Store/Bucket management commands
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new Object Store
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			credential # Credentials for Civo Object Store
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a new Object Store Credential
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				delete # Delete an Object Store Credential
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				export # Export the credentials for your Object Store.
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				ls # List all Object Store Credentials
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				secret # Access the secret key for the Object Store by providing your access key.
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				update # Update an Object Store Credential
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Remove an Object Store
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all Object Stores
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			resize # Update an Object Store
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Prints information about an Object Store
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		permissions # List available permissions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all available permissions
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		quota # Show quota
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		region # Details of Civo regions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			current # Set the current region
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List regions
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		resource-snapshot # Manage resource snapshots
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Delete a resource snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			list # List all resource snapshots
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			restore # Restore from a resource snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show details of a specific resource snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update resource snapshot details
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		size # Details of Civo instance sizes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List sizes
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		snapshot # Manage snapshots and snapshot schedules
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			schedule # Manage snapshot schedules
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				create # Create a new snapshot schedule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				delete # Delete a snapshot schedule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				list # List all snapshot schedules
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				show # Show snapshot schedule details
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				update # Update a snapshot schedule
+					--config # config file (default is $HOME/.civo.json)
+					--fields # output fields for custom format output (use -h to determine fields)
+					--output # output format (json/human/custom)
+					--pretty @bool # Print pretty the json output
+					--region # Choose the region to connect to, if you use this option it will use it over the default region
+					--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		sshkey # Details of Civo SSH keys
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new SSH key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			find # Finds an SSH key by either part of the ID or part of the name
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all SSH keys
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove an SSH key
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Updates a SSH key record
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		teams # Manage teams in Civo
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new team
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			delete # Delete a team
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List all teams
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			rename # Rename a team
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Update the cli to the last version
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		version # Version will output the current build information
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		volume # Details of Civo volumes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			attach # Attach a volume to an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new volume
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			detach # Detach a volume from an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List volumes
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove a volume
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			resize # Resize a volume
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		volumetypes # Details of Civo Volume Types
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			ls # List available volume types
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	instance # Details of Civo instances
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		allowed-ips-update # Update the allowed IP addresses for an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--ips # Comma-separated list of IP addresses to allow (e.g., --ips 1.2.3.4,5.6.7.8). To clear all IPs, provide an empty string.
+		bandwidth-update # Update the network bandwidth limit for an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--limit # Network bandwidth limit in Mbps (e.g., 1000). Use 0 for unlimited
+		console # Connect to the console of an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--duration # The duration for the console session (e.g., '30m', '1h'). Default is provider-dependent.
+			status # Get the status of the console for an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			stop # Stop the console session for an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--allowed-ips # A comma separated list of IP addresses that the instance is allowed to use
+			--diskimage # the instance's disk image (from 'civo diskimage ls' command)
+			--firewall # the instance's firewall you can use the Name or the ID
+			--hostname # the instance's hostname
+			--initialuser # the instance's initial user
+			--network # the instance's network you can use the Name or the ID
+			--network-bandwidth-limit # The network bandwidth limit for the instance in Mbps (0 for unlimited)
+			--private_ipv4 # Private IPv4 address
+			--publicip # This should be either "none" or "create"
+			--reservedip # Reserved IPv4 address
+			--script # path to a script that will be uploaded to /usr/local/bin/civo-user-init-script on your instance, read/write/executable only by root and then will be executed at the end of the cloud initialization
+			--size # the instance's size (from 'civo instance size' command)
+			--skip-shebang-check @bool # skip the shebang line check when passing a user init script
+			--sshkey # the instance's ssh key you can use the Name or the ID
+			--tags # the instance's tags
+			--volume-type # Specify the volume type for the instance
+			--volumes # List of volumes to attach at boot
+			--wait @bool # wait until the instance's is ready
+		firewall # Set firewall for instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List instances
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		password # Show instance's default password
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		public-ip # Enable/disable controls if instance should have a public IP
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		reboot # Hard reboot an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		recovery # Enable/disable recovery mode for an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		recovery-status # Get the recovery status of an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove/delete instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		show # Show instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		size # List instances size
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		snapshot # Manage instance snapshots
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a snapshot of an instance
+				--name # Name for the snapshot
+			delete # Delete an instance snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			list # List all snapshots of an instance
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			restore # Restore an instance from a snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--description # New description for the restore operation
+				--hostname # New hostname for the restored instance (optional)
+				--overwrite-existing @bool # Overwrite the existing instance
+				--private-ipv4 # New private IPv4 address for the restored instance (optional)
+			show # Show details of an instance snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update an instance snapshot
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--description # New description for the snapshot
+				--name # New name for the snapshot
+		soft-reboot # Soft reboot an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		start # Start an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		stop # Stop an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--wait @bool # wait until the instance's is stoped
+		tag # Change the instance's tags
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Change the instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--hostname # the instance's hostname
+			--notes # notes stored against the instance
+			--reverse-dns # the reverse DNS entry for the instance
+		upgrade # Upgrade an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	ip # Details of Civo reserved IPs
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		assign # Assign IP address to an instance
+			--instance # Name/ID of the instance to assign the IP to
+		delete # Delete a reserved ip
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List ips
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		rename # Rename reserved ip
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		reserve # Reserve a new ip
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--name # Name of the reserved IP
+		unassign # Unassign IP address to an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	kubernetes # Details of Civo Kubernetes clusters
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		applications # Details of Civo Kubernetes applications
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			add # Add the marketplace application to a Kubernetes cluster
+				--cluster # the name of the cluster to install the app.
+			ls # List all Kubernetes clusters applications
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			remove # Remove the marketplace application from a Kubernetes cluster
+				--cluster # the name of the cluster to remove the app.
+			show # Shows the details of an application installed in the cluster.
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		config # Get a Kubernetes cluster's config
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--local-path # local path to save the kubeconfig file
+			--overwrite @bool # overwrite the kubeconfig file
+			--save @bool # save the config
+		create # Create a new Kubernetes cluster
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--applications # optional, use names shown by running 'civo kubernetes applications ls'
+			--cluster-type # optional, possible options: k3s,talos.
+			--cni-plugin # optional, possible options: flannel,cilium.
+			--create-firewall @bool # optional, create a firewall for the cluster with all open ports
+			--existing-firewall # optional, ID of existing firewall to use
+			--firewall-rules # optional, can be used if the --create-firewall flag is set, semicolon-separated list of ports to open
+			--network # the name of the network to use in the creation
+			--nodes # the number of nodes to create (the master also acts as a node).
+			--remove-applications # optional, remove default application names shown by running  'civo kubernetes applications ls'
+			--save @bool # save the config
+			--size @bool # the size of nodes to create. You can list available kubernetes sizes by `civo size list -s kubernetes`
+			--switch @bool # switch context to newly-created cluster
+			--volume-type # optional, volume-type name as returned by 'civo volumetypes ls'
+			--wait @bool # a simple flag (e.g. --wait) that will cause the CLI to spin and wait for the cluster to be ACTIVE
+		ls # List all Kubernetes clusters
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		node-pool # Cluster node pool management
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Add a node pool to Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--name # the name of the node pool.
+				--nodes # the number of nodes to create for the pool.
+				--size # the size of nodes to create.
+			delete # Delete a node pool from Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			instance-delete # Delete an instance from a node pool in a Kubernetes cluster
+				--instance-id # the ID of the instance.
+				--node-pool-id # the ID of the node pool.
+			instance-ls # List all instances in a Kubernetes node pool
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--node-pool-id # the ID of the node pool.
+			ls # List all node pools in a Kubernetes cluster
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			scale # Scale a node pool in a Kubernetes cluster
+				--nodes # the number of nodes to scale for the pool.
+		recycle # Recycle a Kubernetes node
+			--node # the node that needs to be recycled.
+		remove # Remove a Kubernetes cluster
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--delete-kubeconfig-context @bool # delete the kubeconfig context for the cluster
+		rename # Rename a kubernetes cluster
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--name # the new name for the cluster.
+		show # Show Kubernetes cluster
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		size # List Kubernetes node sizes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Update the configuration of your Civo Kubernetes cluster
+			--firewall # the Name or ID of the firewall.
+		update-kubeconfig # Update kubeconfig for the specified cluster
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		upgrade # Upgrade a Kubernetes cluster to desired version (from 'civo k3s versions')
+		versions # List all Kubernetes cluster versions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	loadbalancer # Details of Civo Load Balancer
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List load balancers
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		show # Show load balancer
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	network # Details of Civo networks
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		connect # Attach an existing VLAN to a network
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--allocation-pool-v4-end # End of the IPv4 allocation pool for the VLAN
+			--allocation-pool-v4-start # Start of the IPv4 allocation pool for the VLAN
+			--cidr-v4 # CIDR v4 of the VLAN
+			--gateway-ipv4 # Gateway IPv4 address for the VLAN
+			--physical-interface # Physical interface for the VLAN connection
+			--vlan-id # VLAN ID to connect
+		create # Create a new network
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--cidr-v4 # Custom IPv4 CIDR
+			--create-default-firewall @bool # Create a default firewall for the network
+			--nameservers-v4 # Custom list of IPv4 nameservers (up to three, comma-separated)
+		ls # List networks
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove a network
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		show # Show details of a specific Civo network, including VLAN information if available
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Rename a network
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	objectstore # Civo Object Store/Bucket management commands
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new Object Store
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--owner-access-key # Access Key ID of Owner of the Object store. You can reference name of any civo object store credential created before
+			--owner-name # Name of Owner of the Object store. You can reference name of any civo object store credential created before
+			--size # Size of the Object store (Minimum size is 500GB)
+			--wait @bool # a simple flag (e.g. --wait) that will cause the CLI to spin and wait for the Object Store to be ready
+		credential # Credentials for Civo Object Store
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new Object Store Credential
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--access-key # Access Key
+				--secret-access-key # Secret Access Key
+				--wait @bool # a simple flag (e.g. --wait) that will cause the CLI to spin and wait for the credential to be ready
+			delete # Delete an Object Store Credential
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			export # Export the credentials for your Object Store.
+				--access-key # Access Key
+			ls # List all Object Store Credentials
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			secret # Access the secret key for the Object Store by providing your access key.
+				--access-key # Access Key
+			update # Update an Object Store Credential
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--access-key # Access Key
+				--secret-key # Secret Key
+		delete # Remove an Object Store
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List all Object Stores
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		resize # Update an Object Store
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--size # Size of the object store (Minimum size is 500GB)
+		show # Prints information about an Object Store
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	permissions # List available permissions
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List all available permissions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	quota # Show quota
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	region # Details of Civo regions
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		current # Set the current region
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List regions
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	resource-snapshot # Manage resource snapshots
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		delete # Delete a resource snapshot
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		list # List all resource snapshots
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		restore # Restore from a resource snapshot
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--description # Description for the restore operation
+			--hostname # Hostname for the restored instance (instance snapshots only)
+			--overwrite @bool # Overwrite existing instance if it exists (instance snapshots only)
+			--private-ip # Private IP for the restored instance (instance snapshots only)
+		show # Show details of a specific resource snapshot
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Update resource snapshot details
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--description # New description for the resource snapshot
+			--name # New name for the resource snapshot
+	size # Details of Civo instance sizes
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List sizes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--filter # filter the result by the type (kubernetes, database, instance)
+	snapshot # Manage snapshots and snapshot schedules
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		schedule # Manage snapshot schedules
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			create # Create a new snapshot schedule
+				--cron # Cron expression for the schedule (e.g., '0 0 * * *' for daily at midnight)
+				--instance-id # Instance IDs to snapshot (can be specified multiple times)
+				--name # Name for the snapshot schedule
+			delete # Delete a snapshot schedule
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			list # List all snapshot schedules
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			show # Show snapshot schedule details
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			update # Update a snapshot schedule
+				--config # config file (default is $HOME/.civo.json)
+				--fields # output fields for custom format output (use -h to determine fields)
+				--output # output format (json/human/custom)
+				--pretty @bool # Print pretty the json output
+				--region # Choose the region to connect to, if you use this option it will use it over the default region
+				--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+				--description # New description for the snapshot schedule
+				--name # New name for the snapshot schedule
+				--paused # Whether to pause the snapshot schedule (use 'true' or 'false')
+	sshkey # Details of Civo SSH keys
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new SSH key
+			--key # The path of the key
+		find # Finds an SSH key by either part of the ID or part of the name
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List all SSH keys
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		remove # Remove an SSH key
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		update # Updates a SSH key record
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	teams # Manage teams in Civo
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		create # Create a new team
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		delete # Delete a team
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List all teams
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		rename # Rename a team
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	update # Update the cli to the last version
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+	version # Version will output the current build information
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		--quiet @bool # Use quiet output for simple output
+		--verbose @bool # Use verbose output to see full information
+	volume # Details of Civo volumes
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		attach # Attach a volume to an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--attach-at-boot @bool # Attach the volume at boot to instance
+			--wait @bool # wait until the volume is attached
+		create # Create a new volume
+			--size-gb # The new size in GB (required)
+		detach # Detach a volume from an instance
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--wait @bool # wait until the volume is detached
+		ls # List volumes
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+			--dangling @bool # List only dangling volumes
+		remove # Remove a volume
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		resize # Resize a volume
+			--size-gb # The new size in GB (required)
+	volumetypes # Details of Civo Volume Types
+		--config # config file (default is $HOME/.civo.json)
+		--fields # output fields for custom format output (use -h to determine fields)
+		--output # output format (json/human/custom)
+		--pretty @bool # Print pretty the json output
+		--region # Choose the region to connect to, if you use this option it will use it over the default region
+		--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively
+		ls # List available volume types
+			--config # config file (default is $HOME/.civo.json)
+			--fields # output fields for custom format output (use -h to determine fields)
+			--output # output format (json/human/custom)
+			--pretty @bool # Print pretty the json output
+			--region # Choose the region to connect to, if you use this option it will use it over the default region
+			--yes @bool # Automatic yes to prompts; assume "yes" as answer to all prompts and run non-interactively

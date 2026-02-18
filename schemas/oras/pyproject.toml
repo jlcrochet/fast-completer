@@ -1,0 +1,8 @@
+[project]
+name = "oras-schema-export"
+version = "0.1.0"
+description = "Export Oras command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-oras = "export_command_tree:main"

@@ -1,0 +1,515 @@
+# Conda CLI schema for fast-completer
+# Generated from conda 25.11.1
+
+conda # Package, dependency and environment management
+	--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+	--no-plugins @bool # Disable all plugins that are not built into conda.
+	activate # Activate a conda environment.
+	clean # Remove unused packages and caches.
+		--all|-a @bool # Remove index cache, lock files, unused cache packages,
+		--index-cache|-i @bool # Remove index cache.
+		--packages|-p @bool # Remove unused packages from writable package caches.
+		--tarballs|-t @bool # Remove cached package tarballs.
+		--force-pkgs-dirs|-f @bool # Remove *all* writable package caches. This option is
+		--logfiles|-l @bool # Remove log files.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+	compare # Compare packages between conda environments.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+	config # Modify configuration values in .condarc.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--system @bool # Write to the system .condarc file at
+		--env @bool # Write to the active conda environment .condarc file
+		--file # Write to the given file.
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--show-sources @bool # Display all identified configuration sources.
+		--validate @bool # Validate all configuration sources. Iterates over all
+		--write-default @bool # Write the default configuration to a file. Equivalent
+		--remove-key # Remove a configuration key (and all its values).
+		--stdin @bool # Apply configuration information given in yaml format
+	content-trust # Signing and verification tools for Conda
+		gpg-key-lookup
+		gpg-sign
+		modify-metadata
+		sign-artifacts
+		verify-metadata
+	create # Create a new conda environment from a list of
+		--clone # Create a new environment as a copy of an existing
+		--file # Read package versions from the given file. Repeated
+		--dev @bool # Use `sys.executable -m conda` in wrapper scripts
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--strict-channel-priority @bool # Packages in lower priority channels are not considered
+		--no-channel-priority @bool # Package version takes precedence over channel
+		--no-deps @bool # Do not install, update, remove, or change
+		--only-deps @bool # Only install dependencies.
+		--no-pin @bool # Ignore pinned file.
+		--no-default-packages @bool # Ignore create_default_packages in the .condarc file.
+		--solver # Choose which solver backend to use.
+		--copy @bool # Install all packages using copies instead of hard- or
+		--no-shortcuts @bool # Don't install start menu shortcuts
+		--shortcuts-only # Install shortcuts only for this package name. Can be
+		--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+		--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+		--offline @bool # Offline mode. Don't connect to the Internet.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+		--download-only @bool # Solve an environment and ensure package caches are
+		--show-channel-urls @bool # Show channel urls. Overrides the value given by `conda
+	deactivate # Deactivate the current active conda environment.
+	doctor # Display a health report for your environment.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+	env # Create and manage conda environments.
+		config
+			vars
+				list
+					--name|-n # Name of environment.
+					--prefix|-p # Full path to environment location (i.e. prefix).
+					--json @bool # Report all output as json. Suitable for using conda
+					--console # Select the backend to use for normal output rendering.
+					--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+					--quiet|-q @bool # Do not display progress bar.
+				set
+					--name|-n # Name of environment.
+					--prefix|-p # Full path to environment location (i.e. prefix).
+				unset
+					--name|-n # Name of environment.
+					--prefix|-p # Full path to environment location (i.e. prefix).
+		create
+			--file|-f # Environment definition file (default: environment.yml)
+			--no-default-packages @bool # Ignore create_default_packages in the .condarc file.
+			--solver # Choose which solver backend to use.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+			--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+			--offline @bool # Offline mode. Don't connect to the Internet.
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+			--dry-run|-d @bool # Only display what would have been done.
+			--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+		export
+			--channel|-c # Additional channel to include in the export
+			--override-channels @bool # Do not include .condarc channels
+			--override-platforms @bool # Override the platforms specified in the condarc
+			--file|-f # File name or path for the exported environment. Note:
+			--format # Format for the exported environment. If not specified,
+			--no-builds @bool # Remove build specification from dependencies
+			--ignore-channels @bool # Do not include channel names with package names.
+			--from-history @bool # Build environment spec from explicit specs in history
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+		list
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+		remove
+			--override-frozen @bool # DANGEROUS. Use at your own risk. Ignore protections if
+			--solver # Choose which solver backend to use.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+			--dry-run|-d @bool # Only display what would have been done.
+			--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+		update
+			--override-frozen @bool # DANGEROUS. Use at your own risk. Ignore protections if
+			--file|-f # environment definition (default: environment.yml)
+			--prune @bool # remove installed packages not defined in
+			--solver # Choose which solver backend to use.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+	export # Export a given environment
+		--channel|-c # Additional channel to include in the export
+		--override-channels @bool # Do not include .condarc channels
+		--override-platforms @bool # Override the platforms specified in the condarc
+		--file|-f # File name or path for the exported environment. Note:
+		--format # Format for the exported environment. If not specified,
+		--no-builds @bool # Remove build specification from dependencies
+		--ignore-channels @bool # Do not include channel names with package names.
+		--from-history @bool # Build environment spec from explicit specs in history
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	info # Display information about current conda install.
+		--all|-a @bool # Show all information.
+		--base @bool # Display base environment path.
+		--envs|-e @bool # List all known conda environments. Combine with `--json`
+		--system|-s @bool # List environment variables.
+		--unsafe-channels @bool # Display list of channels with tokens exposed.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	init # Initialize conda for shell interaction.
+		--all @bool # Initialize all currently available shells.
+		--dry-run|-d @bool # Only display what would have been done.
+		--condabin @bool # Add 'condabin/' directory to PATH only. Does not install
+		--user @bool # Initialize conda for the current user (default).
+		--no-user @bool # Don't initialize conda for the current user.
+		--system @bool # Initialize conda for all users on the system.
+		--reverse @bool # Undo effects of last conda init.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	install # Install a list of packages into a specified conda
+		--revision # Revert to the specified REVISION.
+		--override-frozen @bool # DANGEROUS. Use at your own risk. Ignore protections if
+		--file # Read package versions from the given file. Repeated
+		--dev @bool # Use `sys.executable -m conda` in wrapper scripts
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--strict-channel-priority @bool # Packages in lower priority channels are not considered
+		--no-channel-priority @bool # Package version takes precedence over channel
+		--no-deps @bool # Do not install, update, remove, or change
+		--only-deps @bool # Only install dependencies.
+		--no-pin @bool # Ignore pinned file.
+		--solver # Choose which solver backend to use.
+		--force-reinstall @bool # Ensure that any user-requested package for the current
+		--update-deps @bool # Update dependencies that have available updates.
+		--satisfied-skip-solve|-S @bool # Exit early and do not run the solver if the requested
+		--update-specs @bool # Update based on provided specifications.
+		--copy @bool # Install all packages using copies instead of hard- or
+		--no-shortcuts @bool # Don't install start menu shortcuts
+		--shortcuts-only # Install shortcuts only for this package name. Can be
+		--clobber @bool # Allow clobbering (i.e. overwriting) of overlapping
+		--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+		--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+		--offline @bool # Offline mode. Don't connect to the Internet.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+		--download-only @bool # Solve an environment and ensure package caches are
+		--show-channel-urls @bool # Show channel urls. Overrides the value given by `conda
+	list # List installed packages in a conda environment.
+		--show-channel-urls @bool # Show channel urls. Overrides the value given by `conda
+		--fields # Comma-separated list of fields to print. Valid values:
+		--reverse @bool # List installed packages in reverse order.
+		--canonical|-c @bool # Output canonical names of packages only.
+		--full-name|-f @bool # Only search for full names, i.e., ^<regex>$. --full-
+		--explicit @bool # List explicitly all installed conda packages with URL
+		--md5 @bool # Add MD5 hashsum when using --explicit.
+		--sha256 @bool # Add SHA256 hashsum when using --explicit.
+		--export|-e @bool # Output explicit, machine-readable requirement strings
+		--revisions|-r @bool # List the revision history.
+		--no-pip @bool # Do not include pip-only installed packages.
+		--auth @bool # In explicit mode, leave authentication details in
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	menuinst # A subcommand for installing and removing shortcuts via
+		--root-prefix # The menuinst base/root prefix
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+	notices # Retrieve latest channel notifications.
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	package # Create low-level conda packages. (EXPERIMENTAL)
+		--reset|-r @bool # Remove all untracked files and exit.
+		--untracked|-u @bool # Display all untracked files and exit.
+		--pkg-name # Designate package name of the package being created.
+		--pkg-version # Designate package version of the package being
+		--pkg-build # Designate package build number of the package being
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+	remove # Remove a list of packages from a specified conda
+		--override-frozen @bool # DANGEROUS. Use at your own risk. Ignore protections if
+		--all @bool # Remove all packages, i.e., the entire environment.
+		--keep-env @bool # Used with `--all`, delete all packages but keep the
+		--dev @bool # Use `sys.executable -m conda` in wrapper scripts
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--features @bool # Remove features (instead of packages).
+		--no-pin @bool # Ignore pinned package(s) that apply to the current
+		--solver # Choose which solver backend to use.
+		--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+		--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+		--offline @bool # Offline mode. Don't connect to the Internet.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+	rename # Rename an existing environment.
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+	repoquery # Advanced search for repodata.
+		depends
+			--platform|-p # Platform/subdir to search packages for. Defaults to
+			--no-installed @bool # Do not search currently installed packages.
+			--pretty @bool # Prettier output with more details.
+			--all-channels|-a @bool # Look at all channels (for depends / whoneeds).
+			--use-cache-only @bool # Search in pkgs_dirs too
+			--tree|-t @bool # Show dependencies in a tree-like format.
+			--recursive @bool # Show dependencies recursively.
+			--channel|-c # Additional channel to search for packages. These are
+			--use-local @bool # Use locally built packages. Identical to '-c local'.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--repodata-fn # Specify file name of repodata on the remote server
+			--experimental # jlap: Download incremental package index data from
+			--no-lock @bool # Disable locking when reading, updating index
+			--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+			--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+			--offline @bool # Offline mode. Don't connect to the Internet.
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+		search
+			--platform|-p # Platform/subdir to search packages for. Defaults to
+			--no-installed @bool # Do not search currently installed packages.
+			--pretty @bool # Prettier output with more details.
+			--all-channels|-a @bool # Look at all channels (for depends / whoneeds).
+			--use-cache-only @bool # Search in pkgs_dirs too
+			--channel|-c # Additional channel to search for packages. These are
+			--use-local @bool # Use locally built packages. Identical to '-c local'.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--repodata-fn # Specify file name of repodata on the remote server
+			--experimental # jlap: Download incremental package index data from
+			--no-lock @bool # Disable locking when reading, updating index
+			--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+			--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+			--offline @bool # Offline mode. Don't connect to the Internet.
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+		whoneeds
+			--platform|-p # Platform/subdir to search packages for. Defaults to
+			--no-installed @bool # Do not search currently installed packages.
+			--pretty @bool # Prettier output with more details.
+			--all-channels|-a @bool # Look at all channels (for depends / whoneeds).
+			--use-cache-only @bool # Search in pkgs_dirs too
+			--tree|-t @bool # Show dependencies in a tree-like format.
+			--recursive @bool # Show dependencies recursively.
+			--channel|-c # Additional channel to search for packages. These are
+			--use-local @bool # Use locally built packages. Identical to '-c local'.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--repodata-fn # Specify file name of repodata on the remote server
+			--experimental # jlap: Download incremental package index data from
+			--no-lock @bool # Disable locking when reading, updating index
+			--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+			--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+			--offline @bool # Offline mode. Don't connect to the Internet.
+			--json @bool # Report all output as json. Suitable for using conda
+			--console # Select the backend to use for normal output rendering.
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--quiet|-q @bool # Do not display progress bar.
+	run # Run an executable in a conda environment.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--dev @bool # Sets `CONDA_EXE` to `python -m conda`, assuming the
+		--debug-wrapper-scripts @bool # When this is set, where implemented, the shell wrapper
+		--cwd # Current working directory for command to run in.
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+	search # Search for packages and display associated information
+		--envs @bool # Search all of the current user's environments. If run
+		--info|-i @bool # Provide detailed information about each package.
+		--skip-flexible-search @bool # Do not perform flexible search if initial search
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+		--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+		--offline @bool # Offline mode. Don't connect to the Internet.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+	token # Set repository access token and configure
+		list
+		remove
+			--system @bool # Write to the system .condarc file at '/home/jeffrey/.condarc'.
+			--env @bool # Write to the active conda environment .condarc file (<no active
+			--file # Write to the given file.
+		set
+			--file # token
+			--no-ssl-verify @bool # Force disabling SSL verification. By default conda-
+			--enable-signature-verification @bool # Enable Conda package signature verification. Default
+			--force-config-condarc @bool # Force configuration of .condarc
+			--system @bool # Write to the system .condarc file at
+			--env @bool # Write to the active conda environment .condarc file
+			--file # Write to the given file.
+	tos # A subcommand for viewing, accepting, rejecting, and
+		--json @bool # Report all output as json. Suitable for using conda
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--channel|-c # Additional channels to search for Terms of Service.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--cache-timeout # Cache timeout (in seconds) to check for Terms of
+		--ignore-cache @bool # Ignore the cache and always check for Terms of Service
+		accept
+			--json @bool # Report all output as json. Suitable for using conda
+			--channel|-c # Additional channels to search for Terms of Service.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--site @bool # System-wide storage location.
+			--system @bool # Conda installation storage location.
+			--user @bool # User storage location.
+			--env @bool # Conda environment storage location.
+			--tos-root # Custom storage location.
+			--cache-timeout # Cache timeout (in seconds) to check for Terms of
+			--ignore-cache @bool # Ignore the cache and always check for Terms of Service
+		clean
+			--cache @bool # Remove all cache files.
+			--tos @bool # Remove all acceptances/rejections.
+			--all @bool # Invoke both `--cache` and `--tos`.
+			--json @bool # Report all output as json. Suitable for using conda
+		info
+			--json @bool # Report all output as json. Suitable for using conda
+		interactive
+			--json @bool # Report all output as json. Suitable for using conda
+			--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+			--channel|-c # Additional channels to search for Terms of Service.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--site @bool # System-wide storage location.
+			--system @bool # Conda installation storage location.
+			--user @bool # User storage location.
+			--env @bool # Conda environment storage location.
+			--tos-root # Custom storage location.
+			--cache-timeout # Cache timeout (in seconds) to check for Terms of
+			--ignore-cache @bool # Ignore the cache and always check for Terms of Service
+		reject
+			--json @bool # Report all output as json. Suitable for using conda
+			--channel|-c # Additional channels to search for Terms of Service.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--site @bool # System-wide storage location.
+			--system @bool # Conda installation storage location.
+			--user @bool # User storage location.
+			--env @bool # Conda environment storage location.
+			--tos-root # Custom storage location.
+			--cache-timeout # Cache timeout (in seconds) to check for Terms of
+			--ignore-cache @bool # Ignore the cache and always check for Terms of Service
+		view
+			--json @bool # Report all output as json. Suitable for using conda
+			--channel|-c # Additional channels to search for Terms of Service.
+			--override-channels @bool # Do not search default or .condarc channels.
+			--name|-n # Name of environment.
+			--prefix|-p # Full path to environment location (i.e. prefix).
+			--site @bool # System-wide storage location.
+			--system @bool # Conda installation storage location.
+			--user @bool # User storage location.
+			--env @bool # Conda environment storage location.
+			--tos-root # Custom storage location.
+			--cache-timeout # Cache timeout (in seconds) to check for Terms of
+			--ignore-cache @bool # Ignore the cache and always check for Terms of Service
+	update # Update conda packages to the latest compatible
+		--override-frozen @bool # DANGEROUS. Use at your own risk. Ignore protections if
+		--file # Read package versions from the given file. Repeated
+		--name|-n # Name of environment.
+		--prefix|-p # Full path to environment location (i.e. prefix).
+		--channel|-c # Additional channel to search for packages. These are
+		--use-local @bool # Use locally built packages. Identical to '-c local'.
+		--override-channels @bool # Do not search default or .condarc channels.
+		--repodata-fn # Specify file name of repodata on the remote server
+		--experimental # jlap: Download incremental package index data from
+		--no-lock @bool # Disable locking when reading, updating index
+		--strict-channel-priority @bool # Packages in lower priority channels are not considered
+		--no-channel-priority @bool # Package version takes precedence over channel
+		--no-deps @bool # Do not install, update, remove, or change
+		--only-deps @bool # Only install dependencies.
+		--no-pin @bool # Ignore pinned file.
+		--solver # Choose which solver backend to use.
+		--force-reinstall @bool # Ensure that any user-requested package for the current
+		--update-deps @bool # Update dependencies that have available updates.
+		--satisfied-skip-solve|-S @bool # Exit early and do not run the solver if the requested
+		--update-specs @bool # Update based on provided specifications.
+		--copy @bool # Install all packages using copies instead of hard- or
+		--no-shortcuts @bool # Don't install start menu shortcuts
+		--shortcuts-only # Install shortcuts only for this package name. Can be
+		--clobber @bool # Allow clobbering of overlapping file paths within
+		--use-index-cache|-C @bool # Use cache of channel index files, even if it has
+		--insecure|-k @bool # Allow conda to perform "insecure" SSL connections and
+		--offline @bool # Offline mode. Don't connect to the Internet.
+		--json @bool # Report all output as json. Suitable for using conda
+		--console # Select the backend to use for normal output rendering.
+		--verbose|-v @bool # Can be used multiple times. Once for detailed output,
+		--quiet|-q @bool # Do not display progress bar.
+		--dry-run|-d @bool # Only display what would have been done.
+		--yes|-y @bool # Sets any confirmation values to 'yes' automatically.
+		--download-only @bool # Solve an environment and ensure package caches are
+		--show-channel-urls @bool # Show channel urls. Overrides the value given by `conda

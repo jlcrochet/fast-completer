@@ -1,0 +1,46 @@
+# Xz CLI schema for fast-completer
+# Generated from xz 5.8.2
+
+xz # Compress or decompress .xz files
+	--compress|-z @bool # force compression
+	--decompress|-d @bool # force decompression
+	--test|-t @bool # test compressed file integrity
+	--list|-l @bool # list information about .xz files
+	--keep|-k @bool # keep (don't delete) input files
+	--force|-f @bool # force overwrite of output file and (de)compress links
+	--stdout|-c @bool # write to standard output and don't delete input files
+	--no-sync @bool # don't synchronize the output file to the storage device
+	--no-sparse @bool # do not create sparse files when decompressing
+	--suffix|-S # use the suffix '.SUF' on compressed files
+	--files # read filenames to process from FILE; if FILE is omitted,
+	--check|-C # integrity check type: 'none' (use with caution), 'crc32',
+	--ignore-check @bool # don't verify the integrity check when decompressing
+	--extreme|-e @bool # try to improve compression ratio by using more CPU time;
+	--threads|-T # use at most NUM threads; the default is 0 which uses as
+	--block-size # start a new .xz block after every SIZE bytes of input;
+	--block-list # start a new .xz block after the given comma-separated
+	--flush-timeout # when compressing, if more than NUM milliseconds has
+	--memlimit-compress # --memlimit-decompress=LIMIT
+	--memlimit-decompress # --memlimit-mt-decompress=LIMIT
+	--memlimit-mt-decompress
+	--memlimit|-M # set memory usage limit for compression, decompression,
+	--no-adjust @bool # if compression settings exceed the memory usage limit,
+	--filters # set the filter chain using the liblzma filter string
+	--filters-help @bool # display more information about the liblzma filter string
+	--lzma1
+	--lzma2 # LZMA1 or LZMA2; OPTS is a comma-separated list of zero or
+	--x86 # x86 BCJ filter (32-bit and 64-bit)
+	--arm # ARM BCJ filter
+	--armthumb # ARM-Thumb BCJ filter
+	--arm64 # ARM64 BCJ filter
+	--powerpc # PowerPC BCJ filter (big endian only)
+	--ia64 # IA-64 (Itanium) BCJ filter
+	--sparc # SPARC BCJ filter
+	--riscv # RISC-V BCJ filter
+	--delta # Delta filter; valid OPTS (valid values; default):
+	--quiet|-q @bool # suppress warnings; specify twice to suppress errors too
+	--verbose|-v @bool # be verbose; specify twice for even more verbose
+	--no-warn|-Q @bool # make warnings not affect the exit status
+	--robot @bool # use machine-parsable messages (useful for scripts)
+	--info-memory @bool # display the total amount of RAM and the currently active
+	--long-help|-H @bool # display this long help and exit

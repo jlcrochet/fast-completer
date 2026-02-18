@@ -1,0 +1,979 @@
+# Cilium CLI schema for fast-completer
+# Generated from cilium unknown
+
+cilium # Kubernetes networking
+	--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+	--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+	--context # Kubernetes configuration context
+	--helm-release-name # Helm release name
+	--help @bool # help for cilium
+	--kubeconfig # Path to the kubeconfig file
+	--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+	bgp # Access to BGP control plane
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		peers # Lists BGP peering state
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--agent-pod-selector # Label on cilium-agent pods to select with
+			--capabilities @bool # Show all BGP peer capabilities in detail
+			--node # Node from which BGP status will be fetched, omit to select all nodes
+			--output # Output format. One of: json, summary
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		routes # Lists BGP routes
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--agent-pod-selector # Label on cilium-agent pods to select with
+			--node # Node from which BGP routes will be fetched, omit to select all nodes
+			--output # Output format. One of: json, summary
+			--wait-duration # Maximum time to wait for result, default 1 minute
+	clustermesh # Multi Cluster Management
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		connect # Connect to a remote cluster
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--connection-mode # Connection mode: unicast, bidirectional or mesh
+			--destination-context # Comma separated list of Kubernetes configuration contexts of destination cluster
+			--destination-endpoint # IP of ClusterMesh service of destination cluster
+			--parallel # Number of parallel connection of destination cluster
+			--source-endpoint # IP of ClusterMesh service of source cluster
+		disable # Disable ClusterMesh ability in a cluster using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		disconnect # Disconnect from a remote cluster
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--connection-mode # Connection mode: unicast, bidirectional or mesh
+			--destination-context # Comma separated list of Kubernetes configuration contexts of destination cluster
+		enable # Enable ClusterMesh ability in a cluster using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--enable-kvstoremesh @bool # Enable kvstoremesh, an extension which caches remote cluster information in the local kvstore
+			--service-type # Type of Kubernetes service to expose control plane { LoadBalancer | NodePort }
+		inspect-policy-default-local-cluster # List policies that would be affected by changing policy-default-local-cluster on a cluster
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--all-namespaces @bool # If present, list the resources across all namespace. Namespace in current context or specified with --namespace is ignored.
+			--namespace # Namespace used for listing resources
+			--output # Output format. One of: json, summary
+		status # Show status of ClusterMesh
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--output # Output format. One of: json, summary
+			--wait @bool # Wait until status is successful
+			--wait-duration # Maximum time to wait
+	completion # Generate the autocompletion script for the specified shell
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		bash # Generate the autocompletion script for bash
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--no-descriptions @bool # disable completion descriptions
+	config # Manage Configuration
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		delete # Delete a key in the configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--restart @bool # Restart Cilium pods
+		set # Set a key/value pair in the configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--restart @bool # Restart Cilium pods
+		view # View current configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+	connectivity # Connectivity troubleshooting
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		perf # Test network performance
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--bandwidth @bool # Test pod network bandwidth manage
+			--crr @bool # Run CRR test
+			--debug @bool # Show debug messages
+			--duration # Duration for the Performance test to run
+			--host-net @bool # Test host network
+			--host-to-pod @bool # Test host-to-pod traffic
+			--msg-size # Size of message to use in UDP test
+			--namespace-labels # Add labels to the connectivity test namespace
+			--net-qos @bool # Test pod network Quality of Service
+			--node-selector-client # Node selector for the other-node client pod
+			--node-selector-server # Node selector for the server pod (and client same-node)
+			--other-node @bool # Run tests in which the client and the server are hosted on difference nodes
+			--performance-image # Image path to use for performance
+			--pod-net @bool # Test pod network
+			--pod-to-host @bool # Test pod-to-host traffic
+			--print-image-artifacts @bool # Prints the used image artifacts
+			--report-dir # Directory to save perf results in json format
+			--rr @bool # Run RR test
+			--same-node @bool # Run tests in which the client and the server are hosted on the same node
+			--samples # Number of Performance samples to capture (how many times to run each test)
+			--setup-delay # Extra delay before starting the performance tests
+			--streams # The parallelism of tests with multiple streams
+			--test-namespace # Namespace to perform the connectivity in (always suffixed with a sequence number to be compliant with test-concurrency param, e.g.: cilium-test-1)
+			--throughput @bool # Run throughput test
+			--throughput-multi @bool # Run throughput test with multiple streams
+			--tolerations # Extra NoSchedule tolerations added to test pods
+			--udp @bool # Run UDP tests
+			--unsafe-capture-kernel-profiles @bool # Capture kernel profiles during test execution. Warning: run on disposable nodes only, as it installs additional software and modifies their configuration
+		test # Validate connectivity in cluster
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--agent-daemonset-name # Name of cilium agent daemonset
+			--agent-pod-selector # Label on cilium-agent pods to select with
+			--all-flows @bool # Print all flows during flow validation
+			--assume-cilium-version # Assume Cilium version for connectivity tests
+			--chart-directory # Helm chart directory
+			--cilium-pod-selector # Label selector matching all cilium-related pods
+			--collect-sysdump-on-failure @bool # Collect sysdump after a test fails
+			--conn-disrupt-dispatch-interval # TCP packet dispatch interval
+			--conn-disrupt-test-restarts-path # Conn disrupt test temporary result file (used internally)
+			--conn-disrupt-test-setup @bool # Set up conn disrupt test dependencies
+			--conn-disrupt-test-xfrm-errors-path # Conn disrupt test temporary result file (used internally)
+			--connect-timeout # Maximum time to allow initiation of the connection to take
+			--curl-image # Image path to use for curl
+			--curl-insecure @bool # Pass --insecure to curl
+			--curl-parallel # Number of parallel requests in curl commands (0 to disable)
+			--debug @bool # Show debug messages
+			--dns-test-server-image # Image path to use for CoreDNS
+			--echo-image # Image path to use for echo server
+			--external-cidr # IPv4 CIDR to use as external target in connectivity tests
+			--external-cidrv6 # IPv6 CIDR to use as external target in connectivity tests
+			--external-ip # IPv4 to use as external target in connectivity tests
+			--external-ipv6 # IPv6 to use as external target in connectivity tests
+			--external-other-ip # Other IPv4 to use as external target in connectivity tests
+			--external-other-ipv6 # Other IPv6 to use as external target in connectivity tests
+			--external-other-target # Domain name to use as a second external target in connectivity tests
+			--external-target # Domain name to use as external target in connectivity tests
+			--external-target-ca-name # Name of the CA secret for the external target.
+			--external-target-ca-namespace # Namespace of the CA secret for the external target.
+			--external-target-ipv6-capable @bool # External target is IPv6 capable
+			--flow-validation # Enable Hubble flow validation { disabled | warning | strict }
+			--force-deploy @bool # Force re-deploying test artifacts
+			--frr-image # Image path to use for FRR
+			--helm-values-secret-name # Secret name to store the auto-generated helm values file. The namespace is the same as where Cilium will be installed
+			--hubble @bool # Automatically use Hubble for flow validation & troubleshooting
+			--hubble-server # Address of the Hubble endpoint for flow validation
+			--include-conn-disrupt-test @bool # Include conn disrupt test
+			--include-conn-disrupt-test-egw @bool # Include conn disrupt test for Egress Gateway
+			--include-conn-disrupt-test-l7-traffic @bool # Include conn disrupt test for L7 traffic
+			--include-conn-disrupt-test-ns-traffic @bool # Include conn disrupt test for NS traffic
+			--ip-families # Restrict test actions to specific IP families
+			--json-mock-image # Image path to use for json mock
+			--junit-file # Generate junit report and write to file
+			--junit-property # Add key=value properties to the generated junit file
+			--k8s-version # Kubernetes server version in case auto-detection fails
+			--multi-cluster # Test across clusters to given context
+			--namespace-labels # Add labels to the connectivity test namespace
+			--node-cidr # one or more CIDRs that cover all nodes in the cluster
+			--node-selector # Restrict connectivity pods to nodes matching this label
+			--pause-on-fail @bool # Pause execution on test failure
+			--post-test-sleep # Wait time after each test before next test starts
+			--print-flows @bool # Print flow logs for each test
+			--print-image-artifacts @bool # Prints the used image artifacts
+			--request-timeout # Maximum time to allow a request to take
+			--retry # Number of retries on connection failure to external targets
+			--retry-delay # Delay between retries for external targets
+			--secondary-network-iface # Secondary network iface name (e.g., to test NodePort BPF on multiple networks)
+			--service-type # Type of Kubernetes Services created for connectivity tests
+			--single-node @bool # Limit to tests able to run on a single node
+			--socat-image # Image path to use for multicast tests
+			--sysdump-cilium-bugtool-flags # Optional set of flags to pass to cilium-bugtool command.
+			--sysdump-cilium-daemon-set-label-selector # The labels used to target Cilium daemon set
+			--sysdump-cilium-envoy-label-selector # The labels used to target Cilium Envoy pods
+			--sysdump-cilium-helm-release-name # The Cilium Helm release name for which to get values. If not provided then the --helm-release-name global flag is used (if provided)
+			--sysdump-cilium-label-selector # The labels used to target Cilium pods
+			--sysdump-cilium-namespace # The namespace Cilium is running in. If not provided then the --namespace global flag is used (if provided)
+			--sysdump-cilium-node-init-selector # The labels used to target Cilium node init pods
+			--sysdump-cilium-operator-label-selector # The labels used to target Cilium operator pods
+			--sysdump-cilium-operator-namespace # The namespace Cilium operator is running in. If not provided then the --namespace global flag is used (if provided)
+			--sysdump-cilium-spire-agent-selector # The labels used to target Cilium spire-agent pods
+			--sysdump-cilium-spire-namespace # The namespace Cilium SPIRE installation is running in
+			--sysdump-cilium-spire-server-selector # The labels used to target Cilium spire-server pods
+			--sysdump-clustermesh-apiserver-label-selector # The labels used to target 'clustermesh-apiserver' pods
+			--sysdump-cni-config-directory # Directory where CNI configs are located
+			--sysdump-cni-configmap-name # The name of the CNI config map
+			--sysdump-collect-logs-from-not-ready-agents @bool # Whether to collect logs from not ready Cilium agent pods
+			--sysdump-copy-retry-limit # Retry limit for file copying operations. If set to -1, copying will be retried indefinitely. Useful for collecting sysdump while on unreliable connection.
+			--sysdump-debug @bool # Whether to enable debug logging
+			--sysdump-detect-gops-pid @bool # Whether to automatically detect the gops agent PID.
+			--sysdump-extra-label-selectors # Optional set of labels selectors used to target additional pods for log collection.
+			--sysdump-hubble-flows-count # Number of Hubble flows to collect. Setting to zero disables collecting Hubble flows.
+			--sysdump-hubble-flows-timeout # Timeout for collecting Hubble flows
+			--sysdump-hubble-generate-certs-labels # The labels used to target Hubble UI pods
+			--sysdump-hubble-label-selector # The labels used to target Hubble pods
+			--sysdump-hubble-relay-labels # The labels used to target Hubble Relay pods
+			--sysdump-hubble-ui-labels # The labels used to target Hubble UI pods
+			--sysdump-logs-limit-bytes # The limit on the number of bytes to retrieve when collecting logs
+			--sysdump-logs-since-time # How far back in time to go when collecting logs
+			--sysdump-node-list # Comma-separated list of node IPs or names to filter pods for which to collect gops and logs
+			--sysdump-output-filename # The name of the resulting file (without extension)
+			--sysdump-profiling @bool # Whether to enable scraping profiling data
+			--sysdump-quick @bool # Whether to enable quick mode (i.e. skip collection of 'cilium-bugtool' output and logs)
+			--sysdump-tetragon-helm-release-name # The Tetragon Helm release name for which to get values.
+			--sysdump-tetragon-label-selector # The labels used to target Tetragon pods
+			--sysdump-tetragon-namespace # The namespace Tetragon is running in
+			--sysdump-tetragon-operator-label-selector # The labels used to target Tetragon operator pods
+			--sysdump-tracing @bool # Whether to enable scraping tracing data
+			--sysdump-worker-count # The number of workers to use
+			--test # Run tests that match one of the given regular expressions, skip tests by starting the expression with '!', target Scenarios with e.g. '/pod-to-cidr'
+			--test-concurrency # Count of namespaces to perform the connectivity tests in parallel (value <= 0 will be treated as 1)
+			--test-conn-disrupt-image # Image path to use for connection disruption tests
+			--test-namespace # Namespace to perform the connectivity in (always suffixed with a sequence number to be compliant with test-concurrency param, e.g.: cilium-test-1)
+			--timeout # Maximum time to allow the connectivity test suite to take
+			--timestamp @bool # Show timestamp in messages
+			--tolerations # Extra NoSchedule tolerations added to test pods
+			--verbose @bool # Show informational messages and don't buffer any lines
+	context # Display the configuration context
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+	encryption # Cilium encryption
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		create-key # Create IPsec key
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--auth-algo # IPsec key authentication algorithm. One of: rfc4106-gcm-aes, cbc-aes-sha256, cbc-aes-sha512
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		key-status # Display IPsec key
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--output # Output format. One of: json, summary
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		rotate-key # Rotate IPsec key
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--auth-algo # IPsec key authentication algorithm. One of: rfc4106-gcm-aes, cbc-aes-sha256, cbc-aes-sha512
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		status # Display encryption status
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--agent-pod-selector # Label on cilium-agent pods to select with
+			--node # Node from which encryption status will be fetched, omit to select all nodes
+			--output # Output format. One of: json, summary
+			--per-node-details @bool # Encryption status will be displayed for each cluster node separately
+			--wait-duration # Maximum time to wait for result, default 1 minute
+	features # Report which features are enabled in Cilium agents
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		status # Display features status
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--agent-pod-selector # Label on cilium-agent pods to select with
+			--node # Node from which features status will be fetched, omit to select all nodes
+			--operator-container-command # Binary used to run Cilium Operator
+			--operator-node # Node from which features status will be fetched, omit to select all nodes
+			--operator-pod-selector # Label on cilium-operator pods to select with
+			--output # Output format. One of: tab, markdown, json
+			--output-file # Outputs into a file. Defaults to stdout
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		summary # Stores and generates the summary for the features tested on a CI run
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--anchor @bool # Add workaround HTML anchor to generated markdown (For GitHub step summary).
+			--commit # Commit SHA to retrieve the metrics.
+			--metrics-directory # Directory where the metrics are saved from GitHub.
+			--output # Output format. One of: markdown
+			--output-file # Outputs into a file. Defaults to stdout
+			--repo # Repository to retrieve the metrics from CI.
+	help # Help about any command
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		bgp # Access to BGP control plane
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			peers # Lists BGP peering state
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			routes # Lists BGP routes
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		clustermesh # Multi Cluster Management
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			connect # Connect to a remote cluster
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			disable # Disable ClusterMesh ability in a cluster using Helm
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			disconnect # Disconnect from a remote cluster
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			enable # Enable ClusterMesh ability in a cluster using Helm
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			inspect-policy-default-local-cluster # List policies that would be affected by changing policy-default-local-cluster on a cluster
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			status # Show status of ClusterMesh
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		completion # Generate the autocompletion script for the specified shell
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			bash # Generate the autocompletion script for bash
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			fish # Generate the autocompletion script for fish
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			powershell # Generate the autocompletion script for powershell
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			zsh # Generate the autocompletion script for zsh
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		config # Manage Configuration
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			delete # Delete a key in the configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			set # Set a key/value pair in the configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			view # View current configuration
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		connectivity # Connectivity troubleshooting
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			perf # Test network performance
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			test # Validate connectivity in cluster
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		context # Display the configuration context
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		encryption # Cilium encryption
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			create-key # Create IPsec key
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			key-status # Display IPsec key
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			rotate-key # Rotate IPsec key
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			status # Display encryption status
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		features # Report which features are enabled in Cilium agents
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			status # Display features status
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			summary # Stores and generates the summary for the features tested on a CI run
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		help # Help about any command
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		hubble # Hubble observability
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			disable # Disable Hubble observability using Helm
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			enable # Enable Hubble observability using Helm
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			port-forward # Forward the relay port to the local machine
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			ui # Open the Hubble UI
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		install # Install Cilium in a Kubernetes cluster using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		multicast # Manage multicast groups
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			add # Add all nodes to the specified multicast group as subscribers in every cilium-agent
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			delete # Delete the specified multicast group in every cilium-agent
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			list # Show the information about multicast groups
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+				group # Show list of multicast groups in every node
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--context # Kubernetes configuration context
+					--helm-release-name # Helm release name
+					--kubeconfig # Path to the kubeconfig file
+					--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+				subscriber # Show list of subscribers belonging to the specified multicast group
+					--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+					--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+					--context # Kubernetes configuration context
+					--helm-release-name # Helm release name
+					--kubeconfig # Path to the kubeconfig file
+					--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		status # Display status
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		sysdump # Collects information required to troubleshoot issues with Cilium and Hubble
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		uninstall # Uninstall Cilium using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		upgrade # Upgrade a Cilium installation a Kubernetes cluster using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		version # Display detailed version information
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+	hubble # Hubble observability
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		disable # Disable Hubble observability using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		enable # Enable Hubble observability using Helm
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--relay @bool # Deploy Hubble Relay
+			--ui @bool # Enable Hubble UI
+		port-forward # Forward the relay port to the local machine
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--port-forward # Local port to forward to. 0 will select a random port.
+		ui # Open the Hubble UI
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--open-browser @bool # When --open-browser=false is supplied, cilium Hubble UI will not open the browser
+			--port-forward # Local port to forward to. 0 will select a random port.
+	install # Install Cilium in a Kubernetes cluster using Helm
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--chart-directory # Helm chart directory
+		--datapath-mode # Datapath mode to use { tunnel | native | aws-eni | gke | azure | aks-byocni } (default: autodetected).
+		--dry-run @bool # Write resources to be installed to stdout without actually installing them
+		--dry-run-helm-values @bool # Write non-default Helm values to stdout without performing the actual installation
+		--history-max # limit the maximum number of revisions saved per release. Use 0 for no limit
+		--list-versions @bool # List all the available versions without actually installing
+		--nodes-without-cilium @bool # Configure the affinities to avoid scheduling Cilium components on nodes labeled with cilium.io/no-schedule. It is assumed that the infrastructure has set up routing on these nodes to provide connectivity within the Cilium cluster.
+		--repository # Helm chart repository to download Cilium charts from
+		--set # Set helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--set-file # Set helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--set-string # Set helm STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--values # Specify helm values in a YAML file or a URL (can specify multiple)
+		--wait @bool # Wait for helm install to finish
+		--wait-duration # Maximum time to wait for status
+	multicast # Manage multicast groups
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		add # Add all nodes to the specified multicast group as subscribers in every cilium-agent
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--group-ip # Multicast group IP address
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		delete # Delete the specified multicast group in every cilium-agent
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			--group-ip # Multicast group IP address
+			--wait-duration # Maximum time to wait for result, default 1 minute
+		list # Show the information about multicast groups
+			--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+			--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+			--context # Kubernetes configuration context
+			--helm-release-name # Helm release name
+			--kubeconfig # Path to the kubeconfig file
+			--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+			group # Show list of multicast groups in every node
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+				--output # Output format. One of: json, summary
+				--wait-duration # Maximum time to wait for result, default 1 minute
+			subscriber # Show list of subscribers belonging to the specified multicast group
+				--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+				--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+				--context # Kubernetes configuration context
+				--helm-release-name # Helm release name
+				--kubeconfig # Path to the kubeconfig file
+				--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+				--all @bool # Show all subscribers
+				--group-ip # Multicast group IP address
+				--output # Output format. One of: json, summary
+				--wait-duration # Maximum time to wait for result, default 1 minute
+	status # Display status
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--ignore-warnings @bool # Ignore warnings when waiting for status to report success
+		--interactive @bool # Refresh the status summary output after each retry when --wait flag is specified
+		--output # Output format. One of: json, summary
+		--verbose @bool # Print more verbose error / log messages
+		--wait @bool # Wait for status to report success (no errors and warnings)
+		--wait-duration # Maximum time to wait for status
+		--worker-count # The number of workers to use
+	sysdump # Collects information required to troubleshoot issues with Cilium and Hubble
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--cilium-bugtool-flags # Optional set of flags to pass to cilium-bugtool command.
+		--cilium-daemon-set-label-selector # The labels used to target Cilium daemon set
+		--cilium-envoy-label-selector # The labels used to target Cilium Envoy pods
+		--cilium-helm-release-name # The Cilium Helm release name for which to get values. If not provided then the --helm-release-name global flag is used (if provided)
+		--cilium-label-selector # The labels used to target Cilium pods
+		--cilium-namespace # The namespace Cilium is running in. If not provided then the --namespace global flag is used (if provided)
+		--cilium-node-init-selector # The labels used to target Cilium node init pods
+		--cilium-operator-label-selector # The labels used to target Cilium operator pods
+		--cilium-operator-namespace # The namespace Cilium operator is running in. If not provided then the --namespace global flag is used (if provided)
+		--cilium-spire-agent-selector # The labels used to target Cilium spire-agent pods
+		--cilium-spire-namespace # The namespace Cilium SPIRE installation is running in
+		--cilium-spire-server-selector # The labels used to target Cilium spire-server pods
+		--clustermesh-apiserver-label-selector # The labels used to target 'clustermesh-apiserver' pods
+		--cni-config-directory # Directory where CNI configs are located
+		--cni-configmap-name # The name of the CNI config map
+		--collect-logs-from-not-ready-agents @bool # Whether to collect logs from not ready Cilium agent pods
+		--copy-retry-limit # Retry limit for file copying operations. If set to -1, copying will be retried indefinitely. Useful for collecting sysdump while on unreliable connection.
+		--debug @bool # Whether to enable debug logging
+		--detect-gops-pid @bool # Whether to automatically detect the gops agent PID.
+		--extra-label-selectors # Optional set of labels selectors used to target additional pods for log collection.
+		--hubble-flows-count # Number of Hubble flows to collect. Setting to zero disables collecting Hubble flows.
+		--hubble-flows-timeout # Timeout for collecting Hubble flows
+		--hubble-generate-certs-labels # The labels used to target Hubble UI pods
+		--hubble-label-selector # The labels used to target Hubble pods
+		--hubble-relay-labels # The labels used to target Hubble Relay pods
+		--hubble-ui-labels # The labels used to target Hubble UI pods
+		--logs-limit-bytes # The limit on the number of bytes to retrieve when collecting logs
+		--logs-since-time # How far back in time to go when collecting logs
+		--node-list # Comma-separated list of node IPs or names to filter pods for which to collect gops and logs
+		--output-filename # The name of the resulting file (without extension)
+		--profiling @bool # Whether to enable scraping profiling data
+		--quick @bool # Whether to enable quick mode (i.e. skip collection of 'cilium-bugtool' output and logs)
+		--tetragon-helm-release-name # The Tetragon Helm release name for which to get values.
+		--tetragon-label-selector # The labels used to target Tetragon pods
+		--tetragon-namespace # The namespace Tetragon is running in
+		--tetragon-operator-label-selector # The labels used to target Tetragon operator pods
+		--tracing @bool # Whether to enable scraping tracing data
+		--worker-count # The number of workers to use
+	uninstall # Uninstall Cilium using Helm
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--test-namespace # Namespace to uninstall Cilium tests from
+		--timeout # Maximum time to wait for resources to be deleted
+		--wait @bool # Wait for uninstallation to have completed
+	upgrade # Upgrade a Cilium installation a Kubernetes cluster using Helm
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--chart-directory # Helm chart directory
+		--datapath-mode # Datapath mode to use { tunnel | native | aws-eni | gke | azure | aks-byocni } (default: autodetected).
+		--dry-run @bool # Write resources to be installed to stdout without actually installing them
+		--dry-run-helm-values @bool # Write non-default Helm values to stdout; without performing the actual upgrade
+		--history-max # limit the maximum number of revisions saved per release. Use 0 for no limit
+		--list-versions @bool # List all the available versions without actually installing
+		--nodes-without-cilium @bool # Configure the affinities to avoid scheduling Cilium components on nodes labeled with cilium.io/no-schedule. It is assumed that the infrastructure has set up routing on these nodes to provide connectivity within the Cilium cluster.
+		--repository # Helm chart repository to download Cilium charts from
+		--reset-then-reuse-values @bool # When upgrading, reset the values to the ones built into the chart, apply the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' or '--reuse-values' is specified, this is ignored
+		--reset-values @bool # When upgrading, reset the helm values to the ones built into the chart
+		--reuse-values @bool # When upgrading, reuse the helm values from the latest release unless any overrides from are set from other flags. This option takes precedence over HelmResetValues
+		--set # Set helm values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--set-file # Set helm values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)
+		--set-string # Set helm STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+		--values # Specify helm values in a YAML file or a URL (can specify multiple)
+		--wait @bool # Wait for helm install to finish
+		--wait-duration # Maximum time to wait for status
+	version # Display detailed version information
+		--as # Username to impersonate for the operation. User could be a regular user or a service account in a namespace.
+		--as-group # Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+		--context # Kubernetes configuration context
+		--helm-release-name # Helm release name
+		--kubeconfig # Path to the kubeconfig file
+		--namespace # Namespace Cilium is running in. Can also be set via CILIUM_NAMESPACE env var
+		--client @bool # If true, shows client version only (no server required)

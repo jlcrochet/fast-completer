@@ -1,0 +1,8 @@
+[project]
+name = "trivy-schema-export"
+version = "0.1.0"
+description = "Export Trivy command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-trivy = "export_command_tree:main"

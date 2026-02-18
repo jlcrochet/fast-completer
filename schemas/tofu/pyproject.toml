@@ -1,0 +1,8 @@
+[project]
+name = "tofu-schema-export"
+version = "0.1.0"
+description = "Export OpenTofu command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-tofu = "export_command_tree:main"

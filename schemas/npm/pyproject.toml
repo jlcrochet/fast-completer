@@ -1,0 +1,8 @@
+[project]
+name = "npm-schema-export"
+version = "0.1.0"
+description = "Export npm command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-npm = "export_command_tree:main"

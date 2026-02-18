@@ -1,0 +1,740 @@
+# Tkn CLI schema for fast-completer
+# Generated from tkn unknown
+
+tkn # Tekton pipelines CLI
+	--help @bool # help for tkn
+	bundle # Manage Tekton Bundles
+		--no-color @bool # disable coloring (default: false)
+		list # List and print a Tekton bundle's contents
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--cache-dir # A directory to cache Tekton bundles in.
+			--no-cache @bool # If set to true, pulls a Tekton bundle from the remote even its exact digest is available in the cache.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--remote-bearer # A Bearer token to authenticate against the repository
+			--remote-password # A password to pass to the registry for basic auth. Must be used with --remote-username
+			--remote-skip-tls @bool # If set to true, skips TLS check when connecting to the registry
+			--remote-username # A username to pass to the registry for basic auth. Must be used with --remote-password
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		push # Create or replace a Tekton bundle
+			--no-color @bool # disable coloring (default: false)
+			--annotate # OCI Manifest annotation in the form of key=value to be added to the OCI image. Can be provided multiple times to add multiple annotations.
+			--ctime # YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS or RFC3339 formatted created time to set, defaults to current time. In non RFC3339 syntax dates are in UTC timezone.
+			--filenames # List of fully-qualified file paths containing YAML or JSON defined Tekton objects to include in this bundle
+			--label # OCI Config labels in the form of key=value to be added to the OCI image. Can be provided multiple times to add multiple labels.
+			--remote-bearer # A Bearer token to authenticate against the repository
+			--remote-password # A password to pass to the registry for basic auth. Must be used with --remote-username
+			--remote-skip-tls @bool # If set to true, skips TLS check when connecting to the registry
+			--remote-username # A username to pass to the registry for basic auth. Must be used with --remote-password
+	clustertriggerbinding # Manage ClusterTriggerBindings
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete ClusterTriggerBindings
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all ClusterTriggerBindings (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describes a ClusterTriggerBinding
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists ClusterTriggerBindings in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	completion # Prints shell completion scripts
+		bash
+		fish
+		powershell
+		zsh
+	customrun # Manage CustomRuns
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete CustomRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists CustomRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list CustomRuns from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--label # A selector (label query) to filter on, supports '=', '==', and '!='
+			--limit # Limits the number of CustomRuns. If the limit value is 0 returns all
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--reverse @bool # list CustomRuns in reverse order
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	eventlistener # Manage EventListeners
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete EventListeners in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all EventListeners in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describe EventListener in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists EventListeners in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list EventListeners from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		logs # Show EventListener logs
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--tail # Number of most recent log lines to show. Specify -1 for all logs from each pod.
+	help # Help about any command
+		bundle # Manage Tekton Bundles
+			list # List and print a Tekton bundle's contents
+			push # Create or replace a Tekton bundle
+		clustertriggerbinding # Manage ClusterTriggerBindings
+			delete # Delete ClusterTriggerBindings
+			describe # Describes a ClusterTriggerBinding
+			list # Lists ClusterTriggerBindings in a namespace
+		completion # Prints shell completion scripts
+		customrun # Manage CustomRuns
+			delete # Delete CustomRuns in a namespace
+			list # Lists CustomRuns in a namespace
+		eventlistener # Manage EventListeners
+			delete # Delete EventListeners in a namespace
+			describe # Describe EventListener in a namespace
+			list # Lists EventListeners in a namespace
+			logs # Show EventListener logs
+		help # Help about any command
+		hub # Interact with tekton hub
+			check-upgrade # Check for upgrades of resources if present
+				task # Check updates for Task installed via Hub CLI
+			downgrade # Downgrade an installed resource
+				task # Downgrade an installed Task by its name to a lower version
+			get # Get resource manifest by its name, kind, catalog, and version
+				pipeline # Get Pipeline by name, catalog and version
+				task # Get Task by name, catalog and version
+			info # Display info of resource by its name, kind, catalog, and version
+				task # Display info of Task by its name, catalog and version
+			install # Install a resource from a catalog by its kind, name and version
+				task # Install Task from a catalog by its name and version
+			reinstall # Reinstall a resource by its kind and name
+				task # Reinstall a Task by its name
+			search # Search resource by a combination of name, kind, categories, platforms, and tags
+			upgrade # Upgrade an installed resource
+				task # Upgrade a Task by its name
+		pipeline # Manage pipelines
+			delete # Delete Pipelines in a namespace
+			describe # Describes a Pipeline in a namespace
+			export # Export Pipeline
+			list # Lists Pipelines in a namespace
+			logs # Show Pipeline logs
+			sign # Sign Tekton Pipeline
+			start # Start Pipelines
+			verify # Verify Tekton Pipeline
+		pipelinerun # Manage PipelineRuns
+			cancel # Cancel a PipelineRun in a namespace
+			delete # Delete PipelineRuns in a namespace
+			describe # Describe a PipelineRun in a namespace
+			export # Export PipelineRun
+			list # Lists PipelineRuns in a namespace
+			logs # Show the logs of a PipelineRun
+		task # Manage Tasks
+			delete # Delete Tasks in a namespace
+			describe # Describe a Task in a namespace
+			list # Lists Tasks in a namespace
+			logs # Show Task logs
+			sign # Sign Tekton Task
+			start # Start Tasks
+			verify # Verify Tekton Task
+		taskrun # Manage TaskRuns
+			cancel # Cancel a TaskRun in a namespace
+			delete # Delete TaskRuns in a namespace
+			describe # Describe a TaskRun in a namespace
+			export # Export TaskRun
+			list # Lists TaskRuns in a namespace
+			logs # Show TaskRuns logs
+		triggerbinding # Manage TriggerBindings
+			delete # Delete TriggerBindings in a namespace
+			describe # Describes a TriggerBinding in a namespace
+			list # Lists TriggerBindings in a namespace
+		triggertemplate # Manage TriggerTemplates
+			delete # Delete TriggerTemplates in a namespace
+			describe # Describes a TriggerTemplate in a namespace
+			list # Lists TriggerTemplates in a namespace
+		version # Prints version information
+	hub # Interact with tekton hub
+		--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+		--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		check-upgrade # Check for upgrades of resources if present
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+			--namespace # Namespace to use (default: from $KUBECONFIG)
+			task # Check updates for Task installed via Hub CLI
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+				--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+				--namespace # Namespace to use (default: from $KUBECONFIG)
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		downgrade # Downgrade an installed resource
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+			--namespace # Namespace to use (default: from $KUBECONFIG)
+			--to # Version of Resource
+			task # Downgrade an installed Task by its name to a lower version
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+				--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+				--namespace # Namespace to use (default: from $KUBECONFIG)
+				--to # Version of Resource
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		get # Get resource manifest by its name, kind, catalog, and version
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--from # Name of Catalog to which resource belongs to.
+			pipeline # Get Pipeline by name, catalog and version
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--from # Name of Catalog to which resource belongs to.
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			task # Get Task by name, catalog and version
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--from # Name of Catalog to which resource belongs to.
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		info # Display info of resource by its name, kind, catalog, and version
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--from # Name of Catalog to which resource belongs.
+			task # Display info of Task by its name, catalog and version
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--from # Name of Catalog to which resource belongs.
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		install # Install a resource from a catalog by its kind, name and version
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+			--from # Name of Catalog to which resource belongs.
+			--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+			--namespace # Namespace to use (default: from $KUBECONFIG)
+			task # Install Task from a catalog by its name and version
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+				--from # Name of Catalog to which resource belongs.
+				--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+				--namespace # Namespace to use (default: from $KUBECONFIG)
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		reinstall # Reinstall a resource by its kind and name
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+			--from # Name of Catalog to which resource belongs.
+			--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+			--namespace # Namespace to use (default: from $KUBECONFIG)
+			task # Reinstall a Task by its name
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+				--from # Name of Catalog to which resource belongs.
+				--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+				--namespace # Namespace to use (default: from $KUBECONFIG)
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+		search # Search resource by a combination of name, kind, categories, platforms, and tags
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--categories # Accepts a comma separated list of categories
+			--kinds # Accepts a comma separated list of kinds
+			--limit # Max number of resources to fetch
+			--match # Accept type of search. 'exact' or 'contains'.
+			--output # Accepts output format: [table, json, wide]
+			--platforms # Accepts a comma separated list of platforms
+			--tags # Accepts a comma separated list of tags
+		upgrade # Upgrade an installed resource
+			--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+			--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+			--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+			--namespace # Namespace to use (default: from $KUBECONFIG)
+			--to # Version of Resource
+			task # Upgrade a Task by its name
+				--api-server # Hub API Server URL (default 'https://api.hub.tekton.dev' for 'tekton' type; default 'https://artifacthub.io' for 'artifact' type).
+				--context # Name of the kubeconfig context to use (default: kubectl config current-context)
+				--kubeconfig # Kubectl config file (default: $HOME/.kube/config)
+				--namespace # Namespace to use (default: from $KUBECONFIG)
+				--to # Version of Resource
+				--type # The type of Hub from where to pull the resource. Either 'artifact' or 'tekton'
+	pipeline # Manage pipelines
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete Pipelines in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all Pipelines in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--prs @bool # Whether to delete Pipeline(s) and related resources (PipelineRuns) (default: false)
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describes a Pipeline in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		export # Export Pipeline
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists Pipelines in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list Pipelines from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		logs # Show Pipeline logs
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # show all logs including init steps injected by tekton
+			--follow @bool # stream live logs
+			--last @bool # show logs for last PipelineRun
+			--limit # lists number of PipelineRuns
+			--prefix @bool # prefix each log line with the log source (task name and step name)
+			--timestamps @bool # show logs with timestamp
+		sign # Sign Tekton Pipeline
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--file-name # Fle name of the signed pipeline, using the original file name will overwrite the file
+			--key-file # Key file
+			--kms-key # KMS key url
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		start # Start Pipelines
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--dry-run @bool # preview PipelineRun without running it
+			--exit-with-pipelinerun-error @bool # when using --showlog, exit with pipelinerun to the unix shell, 0 if success, 1 if error, 2 on unknown status
+			--filename # local or remote file name containing a Pipeline definition to start a PipelineRun
+			--finally-timeout # timeout for Finally TaskRuns
+			--labels # pass labels as label=value.
+			--last @bool # re-run the Pipeline using last PipelineRun values
+			--output # format of PipelineRun (yaml, json or name)
+			--param # pass the param as key=value for string type, or key=value1,value2,... for array type, or key="key1:value1, key2:value2" for object type
+			--pipeline-timeout # timeout for PipelineRun
+			--pod-template # local or remote file containing a PodTemplate definition
+			--prefix-name # specify a prefix for the PipelineRun name (must be lowercase alphanumeric characters)
+			--resolvertype # resolver type for remote pipelines (hub, git, http, cluster, bundle, remote)
+			--serviceaccount # pass the serviceaccount name
+			--showlog @bool # show logs right after starting the Pipeline
+			--skip-optional-workspace @bool # skips the prompt for optional workspaces
+			--task-serviceaccount # pass the service account corresponding to the task
+			--tasks-timeout # timeout for Pipeline TaskRuns
+			--use-param-defaults @bool # use default parameter values without prompting for input
+			--use-pipelinerun # use this pipelinerun values to re-run the pipeline.
+			--workspace # pass one or more workspaces to map to the corresponding physical volumes
+		verify # Verify Tekton Pipeline
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--key-file # Key file
+			--kms-key # KMS key url
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	pipelinerun # Manage PipelineRuns
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		cancel # Cancel a PipelineRun in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--grace # Gracefully cancel a PipelineRun
+		delete # Delete PipelineRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all PipelineRuns in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--ignore-running @bool # ignore running PipelineRun
+			--keep # Keep n most recent number of PipelineRuns
+			--keep-since # When deleting all PipelineRuns keep the ones that has been completed since n minutes
+			--label # A selector (label query) to filter on when running with --all, supports '=', '==', and '!='
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--pipeline # The name of a Pipeline whose PipelineRuns should be deleted (does not delete the Pipeline)
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describe a PipelineRun in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--fzf @bool # use fzf to select a PipelineRun to describe
+			--last @bool # show description for last PipelineRun
+			--limit # lists number of PipelineRuns when selecting a PipelineRun to describe
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		export # Export PipelineRun
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists PipelineRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list PipelineRuns from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--label # A selector (label query) to filter on, supports '=', '==', and '!='
+			--limit # Limits the number of PipelineRuns. If the limit value is 0 returns all
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--reverse @bool # list PipelineRuns in reverse order
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		logs # Show the logs of a PipelineRun
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # show all logs including init steps injected by tekton
+			--exit-with-pipelinerun-error @bool # exit with pipelinerun to the unix shell, 0 if success, 1 if error, 2 on unknown status
+			--follow @bool # stream live logs
+			--fzf @bool # use fzf to select a PipelineRun
+			--last @bool # show logs for last PipelineRun
+			--limit # lists number of PipelineRuns
+			--prefix @bool # prefix each log line with the log source (task name and step name)
+			--task # show logs for mentioned Tasks only
+			--timestamps @bool # show logs with timestamp
+	task # Manage Tasks
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete Tasks in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all Tasks in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+			--trs @bool # Whether to delete Task(s) and related resources (TaskRuns) (default: false)
+		describe # Describe a Task in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists Tasks in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list Tasks from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		logs # Show Task logs
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # show all logs including init steps injected by tekton
+			--follow @bool # stream live logs
+			--last @bool # show logs for last TaskRun
+			--limit # lists number of TaskRuns
+			--timestamps @bool # show logs with timestamp
+		sign # Sign Tekton Task
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--file-name # file name of the signed task, using the original file name will overwrite the file
+			--key-file # Key file
+			--kms-key # KMS key url
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		start # Start Tasks
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--dry-run @bool # preview TaskRun without running it
+			--filename # local or remote file name containing a Task definition to start a TaskRun
+			--image # use an oci bundle
+			--labels # pass labels as label=value.
+			--last @bool # re-run the Task using last TaskRun values
+			--output # format of TaskRun (yaml or json)
+			--param # pass the param as key=value for string type, or key=value1,value2,... for array type, or key="key1:value1, key2:value2" for object type
+			--pod-template # local or remote file containing a PodTemplate definition
+			--prefix-name # specify a prefix for the TaskRun name (must be lowercase alphanumeric characters)
+			--remote-bearer # A Bearer token to authenticate against the repository
+			--remote-password # A password to pass to the registry for basic auth. Must be used with --remote-username
+			--remote-skip-tls @bool # If set to true, skips TLS check when connecting to the registry
+			--remote-username # A username to pass to the registry for basic auth. Must be used with --remote-password
+			--serviceaccount # pass the serviceaccount name
+			--showlog @bool # show logs right after starting the Task
+			--skip-optional-workspace @bool # skips the prompt for optional workspaces
+			--timeout # timeout for TaskRun
+			--use-param-defaults @bool # use default parameter values without prompting for input
+			--use-taskrun # specify a TaskRun name to use its values to re-run the TaskRun
+			--workspace # pass one or more workspaces to map to the corresponding physical volumes
+		verify # Verify Tekton Task
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--key-file # Key file
+			--kms-key # KMS key url
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	taskrun # Manage TaskRuns
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		cancel # Cancel a TaskRun in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+		delete # Delete TaskRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all TaskRuns in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--ignore-running @bool # ignore running TaskRun
+			--ignore-running-pipelinerun @bool # ignore deleting taskruns of a running PipelineRun
+			--keep # Keep n most recent number of TaskRuns
+			--keep-since # When deleting all TaskRuns keep the ones that has been completed since n minutes
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--task # The name of a Task whose TaskRuns should be deleted (does not delete the task)
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describe a TaskRun in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--fzf @bool # use fzf to select a taskrun to describe
+			--last @bool # show description for last TaskRun
+			--limit # lists number of TaskRuns when selecting a TaskRun to describe
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		export # Export TaskRun
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists TaskRuns in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list TaskRuns from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--label # A selector (label query) to filter on, supports '=', '==', and '!='
+			--limit # Limits the number of TaskRuns. If the limit value is 0 returns all
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--reverse @bool # list TaskRuns in reverse order
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		logs # Show TaskRuns logs
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # show all logs including init steps injected by tekton
+			--follow @bool # stream live logs
+			--fzf @bool # use fzf to select a TaskRun
+			--last @bool # show logs for last TaskRun
+			--limit # lists number of TaskRuns
+			--prefix @bool # prefix each log line with the log source (step name)
+			--step # show logs for mentioned steps only
+			--timestamps @bool # show logs with timestamp
+	triggerbinding # Manage TriggerBindings
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete TriggerBindings in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all TriggerBindings in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describes a TriggerBinding in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists TriggerBindings in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list TriggerBindings from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	triggertemplate # Manage TriggerTemplates
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to use (default: from $KUBECONFIG)
+		--no-color @bool # disable coloring (default: false)
+		delete # Delete TriggerTemplates in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all @bool # Delete all TriggerTemplates in a namespace (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--force @bool # Whether to force deletion (default: false)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		describe # Describes a TriggerTemplate in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+		list # Lists TriggerTemplates in a namespace
+			--context # name of the kubeconfig context to use (default: kubectl config current-context)
+			--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+			--namespace # namespace to use (default: from $KUBECONFIG)
+			--no-color @bool # disable coloring (default: false)
+			--all-namespaces @bool # list TriggerTemplates from all namespaces
+			--allow-missing-template-keys @bool # If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+			--no-headers @bool # do not print column headers with output (default print column headers with output)
+			--output # Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+			--show-managed-fields @bool # If true, keep the managedFields when printing objects in JSON or YAML format.
+			--template # Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+	version # Prints version information
+		--check @bool # check if a newer version is available
+		--component # provide a particular component name for its version (client|chains|pipeline|triggers|dashboard)
+		--context # name of the kubeconfig context to use (default: kubectl config current-context)
+		--kubeconfig # kubectl config file (default: $HOME/.kube/config)
+		--namespace # namespace to check installed controller version
+		--no-color @bool # disable coloring (default: false)

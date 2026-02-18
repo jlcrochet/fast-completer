@@ -1,0 +1,8 @@
+[project]
+name = "delta-schema-export"
+version = "0.1.0"
+description = "Export delta command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-delta = "export_command_tree:main"

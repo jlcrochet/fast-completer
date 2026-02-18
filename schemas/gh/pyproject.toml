@@ -1,0 +1,15 @@
+[project]
+name = "gh-schema-export"
+version = "0.1.0"
+description = "Export GitHub CLI command tree for fast-completer"
+requires-python = ">=3.8"
+# No Python dependencies - only uses standard library
+
+[project.scripts]
+export-gh = "export_command_tree:main"
+
+# gh CLI must be installed separately:
+#   macOS:   brew install gh
+#   Ubuntu:  sudo apt install gh
+#   Windows: winget install GitHub.cli
+#   Other:   https://cli.github.com/

@@ -1,0 +1,45 @@
+# Ss CLI schema for fast-completer
+# Generated from ss 6.18.0
+
+ss # Socket statistics utility
+	--numeric|-n @bool # don't resolve service names
+	--resolve|-r @bool # resolve host names
+	--all|-a @bool # display all sockets
+	--listening|-l @bool # display listening sockets
+	--options|-o @bool # show timer information
+	--extended|-e @bool # show detailed socket information
+	--memory|-m @bool # show socket memory usage
+	--processes|-p @bool # show process using socket
+	--threads|-T @bool # show thread using socket
+	--info|-i @bool # show internal TCP information
+	--tipcinfo @bool # show internal tipc socket information
+	--summary|-s @bool # show socket usage summary
+	--tos @bool # show tos and priority information
+	--cgroup @bool # show cgroup information
+	--bpf|-b @bool # show bpf filter socket information
+	--bpf-maps @bool # show all BPF socket-local storage maps
+	--bpf-map-id # show a BPF socket-local storage map
+	--events|-E @bool # continually display sockets as they are destroyed
+	--context|-Z @bool # display task SELinux security contexts
+	--contexts|-z @bool # display task and socket SELinux security contexts
+	--net|-N @bool # switch to the specified network namespace name
+	--ipv4|-4 @bool # display only IP version 4 sockets
+	--ipv6|-6 @bool # display only IP version 6 sockets
+	--packet|-0 @bool # display PACKET sockets
+	--tcp|-t @bool # display only TCP sockets
+	--mptcp|-M @bool # display only MPTCP sockets
+	--sctp|-S @bool # display only SCTP sockets
+	--udp|-u @bool # display only UDP sockets
+	--dccp|-d @bool # display only DCCP sockets
+	--raw|-w @bool # display only RAW sockets
+	--unix|-x @bool # display only Unix domain sockets
+	--tipc @bool # display only TIPC sockets
+	--vsock @bool # display only vsock sockets
+	--xdp @bool # display only XDP sockets
+	--kill|-K @bool # forcibly close sockets, display what was closed
+	--no-header|-H @bool # Suppress header line
+	--no-queues|-Q @bool # Suppress sending and receiving queue columns
+	--oneline|-O @bool # socket's data printed on a single line
+	--inet-sockopt @bool # show various inet socket options
+	--diag|-D # Dump raw information about TCP sockets to FILE
+	--filter|-F # read filter information from FILE

@@ -1,0 +1,27 @@
+# Mdbook CLI schema for fast-completer
+# Generated from mdbook 0.5.2
+
+mdbook # Create books with Markdown
+	build # Builds a book from its markdown files
+		--dest-dir|-d # Output directory for the book
+		--open|-o @bool # Opens the compiled book in a web browser
+	clean # Deletes a built book
+		--dest-dir|-d # Output directory for the book
+	init # Creates the boilerplate structure and files for a new book
+		--theme @bool # Copies the default theme into your source folder
+		--force @bool # Skips confirmation prompts
+		--title # Sets the book title
+		--ignore (none|git) # Creates a VCS ignore file (i.e. .gitignore) [possible values: none, git]
+	serve # Serves a book at http://localhost:3000, and rebuilds it on changes
+		--dest-dir|-d # Output directory for the book
+		--hostname|-n # Hostname to listen on for HTTP connections [default: localhost]
+		--port|-p # Port to use for HTTP connections [default: 3000]
+		--open|-o @bool # Opens the compiled book in a web browser
+		--watcher # The filesystem watching technique [default: poll] [possible values:
+	test # Tests that a book's Rust code samples compile
+		--chapter|-c
+		--library-path|-L # A comma-separated list of directories to add to the crate search path
+	watch # Watches a book's files and rebuilds it on changes
+		--dest-dir|-d # Output directory for the book
+		--open|-o @bool # Opens the compiled book in a web browser
+		--watcher # The filesystem watching technique [default: poll] [possible values:

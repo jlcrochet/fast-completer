@@ -1,0 +1,1319 @@
+# Hugo CLI schema for fast-completer
+# Generated from hugo .
+
+hugo # Static site generator
+	--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+	--buildDrafts @bool # include content marked as draft
+	--buildExpired @bool # include expired content
+	--buildFuture @bool # include content with publishdate in the future
+	--cacheDir # filesystem path to cache directory
+	--cleanDestinationDir @bool # remove files from destination not found in static directories
+	--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+	--config # config file (default is hugo.yaml|json|toml)
+	--configDir # config dir
+	--contentDir # filesystem path to content directory
+	--destination # filesystem path to write files to
+	--disableKinds # disable different kind of pages (home, RSS etc.)
+	--enableGitInfo @bool # add Git revision, date, author, and CODEOWNERS info to the pages
+	--environment # build environment
+	--forceSyncStatic @bool # copy all files when static is changed.
+	--gc @bool # enable to run some cleanup tasks (remove unused cache files) after the build
+	--help @bool # help for hugo
+	--ignoreCache @bool # ignores the cache directory
+	--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+	--layoutDir # filesystem path to layout directory
+	--logLevel # log level (debug|info|warn|error)
+	--minify @bool # minify any supported output format (HTML, XML etc.)
+	--noBuildLock @bool # don't create .hugo_build.lock file
+	--noChmod @bool # don't sync permission mode of files
+	--noTimes @bool # don't sync modification time of files
+	--panicOnWarning @bool # panic on first WARNING log
+	--poll # set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes
+	--printI18nWarnings @bool # print missing translations
+	--printMemoryUsage @bool # print memory usage to screen at intervals
+	--printPathWarnings @bool # print warnings on duplicate target paths etc.
+	--printUnusedTemplates @bool # print warnings on unused templates.
+	--quiet @bool # build in quiet mode
+	--renderSegments # named segments to render (configured in the segments config)
+	--renderToMemory @bool # render to memory (mostly useful when running the server)
+	--source # filesystem path to read files relative from
+	--templateMetrics @bool # display metrics about template executions
+	--templateMetricsHints @bool # calculate some improvement hints when combined with --templateMetrics
+	--theme # themes to use (located in /themes/THEMENAME/)
+	--themesDir # filesystem path to themes directory
+	--trace # write trace to `file` (not useful in general)
+	--watch @bool # watch filesystem for changes and recreate as needed
+	build # Build your site
+		--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+		--buildDrafts @bool # include content marked as draft
+		--buildExpired @bool # include expired content
+		--buildFuture @bool # include content with publishdate in the future
+		--cacheDir # filesystem path to cache directory
+		--cleanDestinationDir @bool # remove files from destination not found in static directories
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--contentDir # filesystem path to content directory
+		--destination # filesystem path to write files to
+		--disableKinds # disable different kind of pages (home, RSS etc.)
+		--enableGitInfo @bool # add Git revision, date, author, and CODEOWNERS info to the pages
+		--environment # build environment
+		--forceSyncStatic @bool # copy all files when static is changed.
+		--gc @bool # enable to run some cleanup tasks (remove unused cache files) after the build
+		--ignoreCache @bool # ignores the cache directory
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--layoutDir # filesystem path to layout directory
+		--logLevel # log level (debug|info|warn|error)
+		--minify @bool # minify any supported output format (HTML, XML etc.)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--noChmod @bool # don't sync permission mode of files
+		--noTimes @bool # don't sync modification time of files
+		--panicOnWarning @bool # panic on first WARNING log
+		--poll # set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes
+		--printI18nWarnings @bool # print missing translations
+		--printMemoryUsage @bool # print memory usage to screen at intervals
+		--printPathWarnings @bool # print warnings on duplicate target paths etc.
+		--printUnusedTemplates @bool # print warnings on unused templates.
+		--quiet @bool # build in quiet mode
+		--renderSegments # named segments to render (configured in the segments config)
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--templateMetrics @bool # display metrics about template executions
+		--templateMetricsHints @bool # calculate some improvement hints when combined with --templateMetrics
+		--theme # themes to use (located in /themes/THEMENAME/)
+		--themesDir # filesystem path to themes directory
+		--trace # write trace to `file` (not useful in general)
+		--watch @bool # watch filesystem for changes and recreate as needed
+	completion # Generate the autocompletion script for the specified shell
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		bash # Generate the autocompletion script for bash
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--no-descriptions @bool # disable completion descriptions
+		fish # Generate the autocompletion script for fish
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--no-descriptions @bool # disable completion descriptions
+		powershell # Generate the autocompletion script for powershell
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--no-descriptions @bool # disable completion descriptions
+		zsh # Generate the autocompletion script for zsh
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--no-descriptions @bool # disable completion descriptions
+	config # Display site configuration
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+		--cacheDir # filesystem path to cache directory
+		--contentDir # filesystem path to content directory
+		--format # preferred file format (toml, yaml or json)
+		--lang # the language to display config for. Defaults to the first language defined.
+		--printZero @bool # include config options with zero values (e.g. false, 0, "") in the output
+		--renderSegments # named segments to render (configured in the segments config)
+		--theme # themes to use (located in /themes/THEMENAME/)
+		mounts # Print the configured file mounts
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+	convert # Convert front matter to another format
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		--output # filesystem path to write files to
+		--unsafe @bool # enable less safe operations, please backup first
+		toJSON # Convert front matter to JSON
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--output # filesystem path to write files to
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--unsafe @bool # enable less safe operations, please backup first
+		toTOML # Convert front matter to TOML
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--output # filesystem path to write files to
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--unsafe @bool # enable less safe operations, please backup first
+		toYAML # Convert front matter to YAML
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--output # filesystem path to write files to
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--unsafe @bool # enable less safe operations, please backup first
+	env # Display version and environment info
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+	gen # Generate documentation and syntax highlighting styles
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		chromastyles # Generate CSS stylesheet for the Chroma code highlighter
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--highlightStyle # foreground and background colors for highlighted lines, e.g. --highlightStyle "#fff000 bg:#000fff"
+			--lineNumbersInlineStyle # foreground and background colors for inline line numbers, e.g. --lineNumbersInlineStyle "#fff000 bg:#000fff"
+			--lineNumbersTableStyle # foreground and background colors for table line numbers, e.g. --lineNumbersTableStyle "#fff000 bg:#000fff"
+			--omitClassComments @bool # omit CSS class comment prefixes in the generated CSS
+			--omitEmpty @bool # omit empty CSS rules (deprecated, no longer needed)
+			--style # highlighter style (see https://xyproto.github.io/splash/docs/)
+		doc # Generate Markdown documentation for the Hugo CLI
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--dir # the directory to write the doc.
+		man # Generate man pages for the Hugo CLI
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--dir # the directory to write the man pages.
+	help # Help about any command
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		build # Build your site
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		completion # Generate the autocompletion script for the specified shell
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			bash # Generate the autocompletion script for bash
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			fish # Generate the autocompletion script for fish
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			powershell # Generate the autocompletion script for powershell
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			zsh # Generate the autocompletion script for zsh
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		config # Display site configuration
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			mounts # Print the configured file mounts
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		convert # Convert front matter to another format
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			toJSON # Convert front matter to JSON
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			toTOML # Convert front matter to TOML
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			toYAML # Convert front matter to YAML
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		env # Display version and environment info
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		gen # Generate documentation and syntax highlighting styles
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			chromastyles # Generate CSS stylesheet for the Chroma code highlighter
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			doc # Generate Markdown documentation for the Hugo CLI
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			man # Generate man pages for the Hugo CLI
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		help # Help about any command
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		import # Import a site from another system
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			jekyll # hugo import from Jekyll
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		list # List content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			all # List all content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			drafts # List draft content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			expired # List expired content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			future # List future content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			published # List published content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		mod # Manage modules
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			clean # Delete the Hugo Module cache for the current project
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			get # Resolves dependencies in your current Hugo project
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			graph # Print a module dependency graph
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			init # Initialize this project as a Hugo Module
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			npm # Various npm helpers
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+				pack # Experimental: Prepares and writes a composite package.json file for your project
+					--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+					--config # config file (default is hugo.yaml|json|toml)
+					--configDir # config dir
+					--destination # filesystem path to write files to
+					--environment # build environment
+					--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+					--logLevel # log level (debug|info|warn|error)
+					--noBuildLock @bool # don't create .hugo_build.lock file
+					--quiet @bool # build in quiet mode
+					--renderToMemory @bool # render to memory (mostly useful when running the server)
+					--source # filesystem path to read files relative from
+					--themesDir # filesystem path to themes directory
+			tidy # Remove unused entries in go.mod and go.sum
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			vendor # Vendor all module dependencies into the _vendor directory
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			verify # Verify dependencies
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		new # Create new content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			content # Create new content
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			site # Create a new site
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+			theme # Create a new theme
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		server # Start the embedded web server
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			trust # Install the local CA in the system trust store
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+		version # Display version
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+	import # Import a site from another system
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		jekyll # hugo import from Jekyll
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--force @bool # allow import into non-empty target directory
+	list # List content
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		all # List all content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		drafts # List draft content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		expired # List expired content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		future # List future content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		published # List published content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+	mod # Manage modules
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		clean # Delete the Hugo Module cache for the current project
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--all @bool # clean entire module cache
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--pattern # pattern matching module paths to clean (all if not set), e.g. "**hugo*"
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		get # Resolves dependencies in your current Hugo project
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+		graph # Print a module dependency graph
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--clean @bool # delete module cache for dependencies that fail verification
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		init # Initialize this project as a Hugo Module
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		npm # Various npm helpers
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			pack # Experimental: Prepares and writes a composite package.json file for your project
+				--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+				--config # config file (default is hugo.yaml|json|toml)
+				--configDir # config dir
+				--destination # filesystem path to write files to
+				--environment # build environment
+				--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+				--logLevel # log level (debug|info|warn|error)
+				--noBuildLock @bool # don't create .hugo_build.lock file
+				--quiet @bool # build in quiet mode
+				--renderToMemory @bool # render to memory (mostly useful when running the server)
+				--source # filesystem path to read files relative from
+				--themesDir # filesystem path to themes directory
+				--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+				--cacheDir # filesystem path to cache directory
+				--contentDir # filesystem path to content directory
+				--renderSegments # named segments to render (configured in the segments config)
+				--theme # themes to use (located in /themes/THEMENAME/)
+		tidy # Remove unused entries in go.mod and go.sum
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		vendor # Vendor all module dependencies into the _vendor directory
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		verify # Verify dependencies
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--clean @bool # delete module cache for dependencies that fail verification
+			--contentDir # filesystem path to content directory
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+	new # Create new content
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		content # Create new content
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+			--cacheDir # filesystem path to cache directory
+			--contentDir # filesystem path to content directory
+			--editor # edit new content with this editor, if provided
+			--force @bool # overwrite file if it already exists
+			--kind # content type to create
+			--renderSegments # named segments to render (configured in the segments config)
+			--theme # themes to use (located in /themes/THEMENAME/)
+		site # Create a new site
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--force @bool # init inside non-empty directory
+			--format # preferred file format (toml, yaml or json)
+		theme # Create a new theme
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--format # preferred file format (toml, yaml or json)
+	server # Start the embedded web server
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
+		--appendPort @bool # append port to baseURL
+		--baseURL # hostname (and path) to the root, e.g. https://spf13.com/
+		--bind # interface to which the server will bind
+		--buildDrafts @bool # include content marked as draft
+		--buildExpired @bool # include expired content
+		--buildFuture @bool # include content with publishdate in the future
+		--cacheDir # filesystem path to cache directory
+		--cleanDestinationDir @bool # remove files from destination not found in static directories
+		--contentDir # filesystem path to content directory
+		--disableBrowserError @bool # do not show build errors in the browser
+		--disableFastRender @bool # enables full re-renders on changes
+		--disableKinds # disable different kind of pages (home, RSS etc.)
+		--disableLiveReload @bool # watch without enabling live browser reload on rebuild
+		--enableGitInfo @bool # add Git revision, date, author, and CODEOWNERS info to the pages
+		--forceSyncStatic @bool # copy all files when static is changed.
+		--gc @bool # enable to run some cleanup tasks (remove unused cache files) after the build
+		--ignoreCache @bool # ignores the cache directory
+		--layoutDir # filesystem path to layout directory
+		--liveReloadPort # port for live reloading (i.e. 443 in HTTPS proxy situations)
+		--minify @bool # minify any supported output format (HTML, XML etc.)
+		--navigateToChanged @bool # navigate to changed content file on live browser reload
+		--noChmod @bool # don't sync permission mode of files
+		--noHTTPCache @bool # prevent HTTP caching
+		--noTimes @bool # don't sync modification time of files
+		--openBrowser @bool # open the site in a browser after server startup
+		--panicOnWarning @bool # panic on first WARNING log
+		--poll # set this to a poll interval, e.g --poll 700ms, to use a poll based approach to watch for file system changes
+		--port # port on which the server will listen
+		--pprof @bool # enable the pprof server (port 8080)
+		--printI18nWarnings @bool # print missing translations
+		--printMemoryUsage @bool # print memory usage to screen at intervals
+		--printPathWarnings @bool # print warnings on duplicate target paths etc.
+		--printUnusedTemplates @bool # print warnings on unused templates.
+		--renderSegments # named segments to render (configured in the segments config)
+		--renderStaticToDisk @bool # serve static files from disk and dynamic files from memory
+		--templateMetrics @bool # display metrics about template executions
+		--templateMetricsHints @bool # calculate some improvement hints when combined with --templateMetrics
+		--theme # themes to use (located in /themes/THEMENAME/)
+		--tlsAuto @bool # generate and use locally-trusted certificates.
+		--tlsCertFile # path to TLS certificate file
+		--tlsKeyFile # path to TLS key file
+		--trace # write trace to `file` (not useful in general)
+		--watch @bool # watch filesystem for changes and recreate as needed
+		trust # Install the local CA in the system trust store
+			--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+			--config # config file (default is hugo.yaml|json|toml)
+			--configDir # config dir
+			--destination # filesystem path to write files to
+			--environment # build environment
+			--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+			--logLevel # log level (debug|info|warn|error)
+			--noBuildLock @bool # don't create .hugo_build.lock file
+			--quiet @bool # build in quiet mode
+			--renderToMemory @bool # render to memory (mostly useful when running the server)
+			--source # filesystem path to read files relative from
+			--themesDir # filesystem path to themes directory
+			--uninstall @bool # Uninstall the local CA (but do not delete it).
+	version # Display version
+		--clock # set the clock used by Hugo, e.g. --clock 2021-11-06T22:30:00.00+09:00
+		--config # config file (default is hugo.yaml|json|toml)
+		--configDir # config dir
+		--destination # filesystem path to write files to
+		--environment # build environment
+		--ignoreVendorPaths # ignores any _vendor for module paths matching the given Glob pattern
+		--logLevel # log level (debug|info|warn|error)
+		--noBuildLock @bool # don't create .hugo_build.lock file
+		--quiet @bool # build in quiet mode
+		--renderToMemory @bool # render to memory (mostly useful when running the server)
+		--source # filesystem path to read files relative from
+		--themesDir # filesystem path to themes directory
