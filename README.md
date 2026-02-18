@@ -714,6 +714,8 @@ The blob format (`.fcmpb`) is designed for zero-copy memory-mapped access with m
 
 Completions are returned pre-sorted. Where possible, disable the shell's sorting to preserve the order.
 
+Note: I've personally tested fast-completer on Bash, Nushell, and PowerShell. I haven't tested the other shells yet, and I would appreciate reports from anyone who can verify those setups.
+
 ### Bash
 
 Add to your `~/.bashrc`:

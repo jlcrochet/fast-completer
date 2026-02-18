@@ -208,6 +208,15 @@ static void discover_schemas(void) {
     qsort(g_schemas, g_num_schemas, sizeof(SchemaEntry), schema_entry_cmp);
 }
 
+static SchemaEntry *find_schema_entry(const char *name) {
+    for (size_t i = 0; i < g_num_schemas; i++) {
+        if (strcmp(g_schemas[i].name, name) == 0) {
+            return &g_schemas[i];
+        }
+    }
+    return NULL;
+}
+
 static void setup_blobs(void) {
     pid_t pid = getpid();
     snprintf(g_func_blob, sizeof(g_func_blob), "/tmp/test_func_%d.fcmpb", pid);
@@ -407,6 +416,33 @@ TEST complete_flag_prefix(void) {
     PASS();
 }
 
+TEST complete_pnpm_config_delete_leaf(void) {
+    SchemaEntry *pnpm = find_schema_entry("pnpm");
+    ASSERTm("pnpm schema not discovered", pnpm != NULL);
+
+    bool ok = generate_blob(pnpm->schema, pnpm->blob, DESC_SHORT, 0);
+    ASSERT(ok);
+
+    const char *argv[] = {
+        FC_BIN, "--blob", pnpm->blob, "lines",
+        "pnpm", "config", "delete", "", NULL
+    };
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+
+    ASSERT(strstr(r.out, "--global") != NULL);
+    ASSERT(strstr(r.out, "--location") != NULL);
+    ASSERT(strstr(r.out, "delete\n") == NULL);
+    ASSERT(strstr(r.out, "get\n") == NULL);
+    ASSERT(strstr(r.out, "list\n") == NULL);
+    ASSERT(strstr(r.out, "set\n") == NULL);
+
+    run_result_free(&r);
+    PASS();
+}
+
 /* ======================================================================
  * suite_all_schemas — generate, lint, validate every .fcmps schema
  * ====================================================================== */
@@ -522,6 +558,7 @@ SUITE(suite_integration) {
     RUN_TEST(complete_minimal_members);
     RUN_TEST(complete_prefix_filter);
     RUN_TEST(complete_flag_prefix);
+    RUN_TEST(complete_pnpm_config_delete_leaf);
 
     /* Error cases */
     RUN_TEST(lint_malformed_schema);

@@ -584,7 +584,13 @@ class CommandTree:
             self.children[name].write(file, indent + 1)
 
 
-def walk_commands(config, command_parts=None, depth=0, seen=None):
+def walk_commands(
+    config,
+    command_parts=None,
+    depth=0,
+    seen=None,
+    parent_subcommand_names=None,
+):
     """Recursively discover commands and their flags."""
     if command_parts is None:
         command_parts = []
@@ -600,6 +606,21 @@ def walk_commands(config, command_parts=None, depth=0, seen=None):
     seen.add(command_path)
 
     subcommands = discover_subcommands(config, command_parts)
+    subcommands = [
+        sub for sub in subcommands
+        if sub['name'] not in ('help', 'completion', 'completions')
+    ]
+
+    # Some CLIs print the parent command's full sibling list for leaf help
+    # (e.g. `pnpm config delete -h`), which can create synthetic recursion.
+    subcommand_names = tuple(sorted({sub['name'] for sub in subcommands}))
+    if subcommand_names and command_parts and parent_subcommand_names:
+        if (
+            parent_subcommand_names == subcommand_names
+            and command_parts[-1] in subcommand_names
+        ):
+            subcommands = []
+            subcommand_names = ()
 
     if subcommands:
         # Group command — emit with flags
@@ -612,14 +633,12 @@ def walk_commands(config, command_parts=None, depth=0, seen=None):
             }
 
         for sub in subcommands:
-            # Skip help/completion commands
-            if sub['name'] in ('help', 'completion', 'completions'):
-                continue
             yield from walk_commands(
                 config,
                 command_parts + [sub['name']],
                 depth + 1,
-                seen
+                seen,
+                subcommand_names,
             )
     else:
         # Leaf command
