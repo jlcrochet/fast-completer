@@ -4,7 +4,7 @@
 cargo # Rust package manager
 	--list @bool # List installed commands
 	--explain # Provide a detailed explanation of a rustc error message
-	--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+	--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 	--quiet|-q @bool # Do not print cargo log messages
 	--color (auto|always|never) # Coloring [possible values: auto, always, never]
 	--locked @bool # Assert that `Cargo.lock` will remain unchanged
@@ -21,7 +21,7 @@ cargo # Rust package manager
 		--no-public @bool # Mark the dependency as private (unstable)
 		--rename # Rename the dependency
 		--dry-run|-n @bool # Don't actually write the manifest
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -45,7 +45,7 @@ cargo # Rust package manager
 		--no-run @bool # Compile, but don't run benchmarks
 		--no-fail-fast @bool # Run all benchmarks regardless of failure
 		--message-format # Error format [possible values: human, short, json,
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -74,7 +74,7 @@ cargo # Rust package manager
 	build # Compile the current package
 		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
 		--message-format # Error format [possible values: human, short, json,
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -106,7 +106,7 @@ cargo # Rust package manager
 	check # Analyze the current package and report errors, but don't build object files
 		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
 		--message-format # Error format [possible values: human, short, json,
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -137,7 +137,7 @@ cargo # Rust package manager
 	clean # Remove the target directory
 		--doc @bool # Whether or not to clean just the documentation directory
 		--dry-run|-n @bool # Display what would be deleted without deleting anything
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -155,7 +155,7 @@ cargo # Rust package manager
 		--no-deps @bool # Don't build documentation for dependencies
 		--document-private-items @bool # Document private items
 		--message-format # Error format [possible values: human, short, json,
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -187,7 +187,7 @@ cargo # Rust package manager
 		--edition # Edition to set for the crate generated [possible values: 2015,
 		--name # Set the resulting package name, defaults to the directory name
 		--registry # Registry to use
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -209,7 +209,7 @@ cargo # Rust package manager
 		--list @bool # List all installed packages and their versions
 		--message-format # Error format [possible values: human, short, json,
 		--debug @bool # Build in debug mode (with the 'dev' profile) instead of release
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -234,7 +234,7 @@ cargo # Rust package manager
 		--edition # Edition to set for the crate generated [possible values: 2015,
 		--name # Set the resulting package name, defaults to the directory name
 		--registry # Registry to use
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -247,7 +247,7 @@ cargo # Rust package manager
 		--registry # Registry to upload the package to
 		--no-verify @bool # Don't verify the contents by building them
 		--allow-dirty @bool # Allow dirty working directories to be packaged
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -266,7 +266,7 @@ cargo # Rust package manager
 		--frozen @bool # Equivalent to specifying both --locked and --offline
 	remove # Remove dependencies from a manifest file
 		--dry-run|-n @bool # Don't actually write the manifest
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -280,7 +280,7 @@ cargo # Rust package manager
 		--frozen @bool # Equivalent to specifying both --locked and --offline
 	run # Run a binary or example of the local package
 		--message-format # Error format [possible values: human, short, json,
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -303,7 +303,7 @@ cargo # Rust package manager
 		--limit # Limit the number of results (default: 10, max: 100)
 		--index # Registry index URL to search packages in
 		--registry # Registry to search packages in
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -316,7 +316,7 @@ cargo # Rust package manager
 		--future-incompat-report @bool # Outputs a future incompatibility report at the end of the build
 		--message-format # Error format [possible values: human, short, json,
 		--quiet|-q @bool # Display one character per test instead of one line
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
 		--workspace @bool # Test all packages in the workspace
@@ -345,7 +345,7 @@ cargo # Rust package manager
 		--frozen @bool # Equivalent to specifying both --locked and --offline
 	uninstall # Uninstall a Rust binary
 		--root # Directory to uninstall packages from
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value
@@ -358,7 +358,7 @@ cargo # Rust package manager
 		--recursive @bool # Force updating all dependencies of [SPEC]... as well
 		--precise # Update [SPEC] to exactly PRECISE
 		--breaking|-b @bool # Update [SPEC] to latest SemVer-breaking version (unstable)
-		--verbose...|-v @bool # Use verbose output (-vv very verbose/build.rs output)
+		--verbose|-v @bool # Use verbose output (-vv very verbose/build.rs output)
 		--quiet|-q @bool # Do not print cargo log messages
 		--color (auto|always|never) # Coloring [possible values: auto, always, never]
 		--config # Override a configuration value

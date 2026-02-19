@@ -344,9 +344,25 @@ _NPM_FLAG_RE = re.compile(
 )
 
 
+def _normalize_flag_alias(flag):
+    """Normalize a parsed flag token from help output.
+
+    Some CLIs (notably clap-based) render repeatable flags as
+    `--verbose...`. The trailing ellipsis is not part of the actual option
+    token, so strip it before writing schemas.
+    """
+    if flag and flag.endswith('...'):
+        return flag[:-3]
+    return flag
+
+
 def _pick_primary_aliases(alias_spec):
     """Choose canonical short/long aliases from a comma/pipe list."""
-    aliases = [a.strip() for a in re.split(r'[|,]', alias_spec) if a.strip()]
+    aliases = [
+        _normalize_flag_alias(a.strip())
+        for a in re.split(r'[|,]', alias_spec)
+        if a.strip()
+    ]
 
     short_candidates = []
     double_dash_longs = []
@@ -405,6 +421,8 @@ def parse_flags_standard(config, command_parts):
         m = _STD_FLAG_RE.match(line)
         if m:
             short, long, value_type = m.group(1), m.group(2), m.group(3)
+            short = _normalize_flag_alias(short)
+            long = _normalize_flag_alias(long)
             desc_start = m.end()
             desc = line[desc_start:].strip() if desc_start < len(line) else ''
             i += 1
@@ -414,6 +432,8 @@ def parse_flags_standard(config, command_parts):
             if m:
                 short, long = _pick_primary_aliases(m.group(1))
                 value_type = m.group(2)
+                short = _normalize_flag_alias(short)
+                long = _normalize_flag_alias(long)
                 if not long and short:
                     long, short = short, None
                 if not long:
@@ -428,6 +448,8 @@ def parse_flags_standard(config, command_parts):
                 if m:
                     short, long = m.group(1), m.group(2)
                     value_type = m.group(3)
+                    short = _normalize_flag_alias(short)
+                    long = _normalize_flag_alias(long)
                     desc_start = m.end()
                     desc = line[desc_start:].strip() if desc_start < len(line) else ''
                     # Nushell types: "string", "int", "path" indicate value
@@ -441,6 +463,8 @@ def parse_flags_standard(config, command_parts):
                     m = _STD_FLAG_MULTILINE_RE.match(line)
                     if m:
                         short, long, value_type = m.group(1), m.group(2), m.group(3)
+                        short = _normalize_flag_alias(short)
+                        long = _normalize_flag_alias(long)
                         # Grab description from next indented line(s)
                         desc = ''
                         if i + 1 < len(lines):
@@ -456,6 +480,8 @@ def parse_flags_standard(config, command_parts):
                         if m:
                             short, long = _pick_primary_aliases(m.group(1))
                             value_type = m.group(2)
+                            short = _normalize_flag_alias(short)
+                            long = _normalize_flag_alias(long)
                             if not long and short:
                                 long, short = short, None
                             if not long:
@@ -548,7 +574,7 @@ def parse_flags_npm(config, command_parts):
 
     for m in _NPM_FLAG_RE.finditer(output):
         short = m.group(1)
-        long = m.group(2)
+        long = _normalize_flag_alias(m.group(2))
         value_type = m.group(3)
 
         if long in seen or long in config.inherited_skip_flags:
@@ -579,15 +605,15 @@ def parse_flags_systemd(config, command_parts):
     for line in output.split('\n'):
         m = _SYSTEMD_FLAG_RE.match(line)
         if m:
-            short = m.group(1)
-            long = m.group(2)
+            short = _normalize_flag_alias(m.group(1))
+            long = _normalize_flag_alias(m.group(2))
             value_type = m.group(3)
         else:
             # Try short-only format: "  -I  description"
             m = _SYSTEMD_SHORT_RE.match(line)
             if not m:
                 continue
-            short = m.group(1)
+            short = _normalize_flag_alias(m.group(1))
             long = None
             value_type = None
 
