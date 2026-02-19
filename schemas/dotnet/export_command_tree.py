@@ -10,6 +10,7 @@ def main():
         cli_name='dotnet',
         root_description='.NET CLI',
         schema_comment='Dotnet CLI schema for fast-completer',
+        inherited_skip_flags={'--help', '-h', '-?'},
     ))
 
 if __name__ == '__main__':

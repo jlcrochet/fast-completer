@@ -97,6 +97,23 @@ def discover_subcommands_from_help(config, command_parts):
 
     subcommands = []
     in_commands = False
+    non_command_sections = {
+        'options',
+        'usage',
+        'arguments',
+        'flags',
+        'positional arguments',
+        'optional arguments',
+        'description',
+        'examples',
+        'remarks',
+        'environment variables',
+        'path-to-application',
+        'runtime-options',
+        'sdk-options',
+        'additional arguments',
+        'switches',
+    }
 
     # Command entry regex: name[, alias]... followed by gap and description
     # Captures all names (e.g. "build, b" or "i, install") then picks longest
@@ -115,14 +132,23 @@ def discover_subcommands_from_help(config, command_parts):
         # Non-indented section header ending with ":" (category headers)
         if stripped and not stripped[0].isspace() and stripped.endswith(':') and not stripped.startswith('-'):
             if re.match(r'^[A-Z][\w\s\'"-]+:$', stripped, re.IGNORECASE):
-                # Could be a command category (e.g. "Manage your dependencies:")
-                # or a non-command section (e.g. "Options:", "Usage:")
-                if stripped.lower() in ('options:', 'usage:', 'arguments:', 'flags:',
-                                        'positional arguments:'):
+                header = stripped[:-1].strip().lower()
+                header = re.sub(r'\s+', ' ', header)
+
+                # Explicit non-command sections always end command parsing.
+                if header in non_command_sections:
                     in_commands = False
-                else:
+                    continue
+
+                # Headers that mention commands restart/continue command parsing.
+                if re.search(r'\bcommands?\b', header):
                     in_commands = True
-                continue
+                    continue
+
+                # If already in a commands section, treat as an intra-section
+                # category header. Otherwise ignore.
+                if in_commands:
+                    continue
 
         # Blank line — keep going (sections may be separated by blank lines)
         if in_commands and not stripped:
@@ -135,7 +161,7 @@ def discover_subcommands_from_help(config, command_parts):
                 names = [n.strip() for n in m.group(1).split(',')]
                 name = max(names, key=len)
                 # Skip placeholder entries like "..."
-                if re.fullmatch(r'[\w][\w.-]*', name):
+                if re.fullmatch(r'[\w](?:[\w.-]*[\w-])?', name):
                     subcommands.append({
                         'name': name,
                         'summary': m.group(2).strip()
@@ -144,7 +170,8 @@ def discover_subcommands_from_help(config, command_parts):
                 # Command with no description (limit indent to avoid
                 # picking up continuation lines from multi-line descriptions)
                 name = line.strip()
-                subcommands.append({'name': name, 'summary': ''})
+                if re.fullmatch(r'[\w](?:[\w.-]*[\w-])?', name):
+                    subcommands.append({'name': name, 'summary': ''})
             elif not re.match(r'^\s', line):
                 # Non-indented line = end of commands section
                 in_commands = False
@@ -254,6 +281,26 @@ _STD_FLAG_MULTILINE_RE = re.compile(
     r'\s*$'                       # end of line (no description)
 )
 
+# Alias-list variants used by some CLIs (notably dotnet):
+# "  -d|--diagnostics  desc"
+# "  -?, -h, --help  desc"
+# "  -v, -verbosity <LEVEL>  desc"
+# "  --add-source, --nuget-source  desc"
+_STD_FLAG_ALIASES_RE = re.compile(
+    r'^\s+'
+    r'((?:--?[\w?][\w.-]*)(?:\s*(?:,|\|)\s*--?[\w?][\w.-]*)+)'
+    r'(?:\s+<?([^>\s]+)>?)?'
+    r'\s{2,}'
+)
+
+# Multi-line variant: alias list on one line, description on next line
+_STD_FLAG_ALIASES_MULTILINE_RE = re.compile(
+    r'^\s{2,}'
+    r'((?:--?[\w?][\w.-]*)(?:\s*(?:,|\|)\s*--?[\w?][\w.-]*)+)'
+    r'(?:\s+<?([^>\s]+)>?)?'
+    r'\s*$'
+)
+
 # Nushell flag format: "  -s, --long <type>: description"
 _NU_FLAG_RE = re.compile(
     r'^\s+'
@@ -297,6 +344,44 @@ _NPM_FLAG_RE = re.compile(
 )
 
 
+def _pick_primary_aliases(alias_spec):
+    """Choose canonical short/long aliases from a comma/pipe list."""
+    aliases = [a.strip() for a in re.split(r'[|,]', alias_spec) if a.strip()]
+
+    short_candidates = []
+    double_dash_longs = []
+    single_dash_longs = []
+
+    for alias in aliases:
+        if not alias.startswith('-'):
+            continue
+
+        # Treat exactly one-character options ("-h", "-v", "-?") as short.
+        if len(alias) == 2:
+            short_candidates.append(alias)
+            continue
+
+        if alias.startswith('--'):
+            double_dash_longs.append(alias)
+        else:
+            single_dash_longs.append(alias)
+
+    short = None
+    if short_candidates:
+        # Prefer human-friendly short aliases over "-?" when both are present.
+        preferred = [s for s in short_candidates if s != '-?']
+        short = preferred[0] if preferred else short_candidates[0]
+
+    # Prefer full double-dash names, picking the most descriptive alias.
+    long = None
+    if double_dash_longs:
+        long = max(double_dash_longs, key=len)
+    elif single_dash_longs:
+        long = max(single_dash_longs, key=len)
+
+    return short, long
+
+
 def parse_flags_standard(config, command_parts):
     """Parse standard --help flag format (clap, git, pip).
 
@@ -324,36 +409,69 @@ def parse_flags_standard(config, command_parts):
             desc = line[desc_start:].strip() if desc_start < len(line) else ''
             i += 1
         else:
-            # Try Nushell format: "  -s, --long <type>: description"
-            m = _NU_FLAG_RE.match(line)
+            # Try alias-list format: "-d|--diagnostics" or "-v, -verbosity"
+            m = _STD_FLAG_ALIASES_RE.match(line)
             if m:
-                short, long = m.group(1), m.group(2)
-                value_type = m.group(3)
-                desc_start = m.end()
-                desc = line[desc_start:].strip() if desc_start < len(line) else ''
-                # Nushell types: "string", "int", "path" indicate value
-                if value_type and value_type not in ('', 'switch'):
-                    value_type = value_type  # keep it to signal takes_value
-                elif value_type == 'switch':
-                    value_type = None  # switch = bool
-                i += 1
-            else:
-                # Try multi-line format: flag on this line, description on next
-                m = _STD_FLAG_MULTILINE_RE.match(line)
-                if m:
-                    short, long, value_type = m.group(1), m.group(2), m.group(3)
-                    # Grab description from next indented line(s)
-                    desc = ''
-                    if i + 1 < len(lines):
-                        next_line = lines[i + 1]
-                        next_stripped = next_line.strip()
-                        # Description line is more deeply indented
-                        if next_stripped and next_line.startswith('    '):
-                            desc = next_stripped
-                    i += 1
-                else:
+                short, long = _pick_primary_aliases(m.group(1))
+                value_type = m.group(2)
+                if not long and short:
+                    long, short = short, None
+                if not long:
                     i += 1
                     continue
+                desc_start = m.end()
+                desc = line[desc_start:].strip() if desc_start < len(line) else ''
+                i += 1
+            else:
+                # Try Nushell format: "  -s, --long <type>: description"
+                m = _NU_FLAG_RE.match(line)
+                if m:
+                    short, long = m.group(1), m.group(2)
+                    value_type = m.group(3)
+                    desc_start = m.end()
+                    desc = line[desc_start:].strip() if desc_start < len(line) else ''
+                    # Nushell types: "string", "int", "path" indicate value
+                    if value_type and value_type not in ('', 'switch'):
+                        value_type = value_type  # keep it to signal takes_value
+                    elif value_type == 'switch':
+                        value_type = None  # switch = bool
+                    i += 1
+                else:
+                    # Try multi-line format: flag on this line, description on next
+                    m = _STD_FLAG_MULTILINE_RE.match(line)
+                    if m:
+                        short, long, value_type = m.group(1), m.group(2), m.group(3)
+                        # Grab description from next indented line(s)
+                        desc = ''
+                        if i + 1 < len(lines):
+                            next_line = lines[i + 1]
+                            next_stripped = next_line.strip()
+                            # Description line is more deeply indented
+                            if next_stripped and next_line.startswith('    '):
+                                desc = next_stripped
+                        i += 1
+                    else:
+                        # Try multi-line alias-list format
+                        m = _STD_FLAG_ALIASES_MULTILINE_RE.match(line)
+                        if m:
+                            short, long = _pick_primary_aliases(m.group(1))
+                            value_type = m.group(2)
+                            if not long and short:
+                                long, short = short, None
+                            if not long:
+                                i += 1
+                                continue
+
+                            desc = ''
+                            if i + 1 < len(lines):
+                                next_line = lines[i + 1]
+                                next_stripped = next_line.strip()
+                                if next_stripped and next_line.startswith('    '):
+                                    desc = next_stripped
+                            i += 1
+                        else:
+                            i += 1
+                            continue
 
         # Skip filtered flags
         if long in config.inherited_skip_flags:
