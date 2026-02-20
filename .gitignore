@@ -7,3 +7,9 @@ fast-completer.bak
 .venv/
 /pyproject.toml
 uv.lock
+tests/test_runtime
+tests/test_generate
+tests/test_integration
+tests/test_runtime.exe
+tests/test_generate.exe
+tests/test_integration.exe

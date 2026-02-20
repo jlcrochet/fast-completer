@@ -392,8 +392,8 @@ TEST decode_string_at_rejects_truncated_payload(void) {
 }
 
 TEST find_value_param_for_token_short_cluster_terminal_value(void) {
-    char blob_path[256];
-    snprintf(blob_path, sizeof(blob_path), "/tmp/fc_runtime_%d.fcmpb", getpid());
+    const char *blob_path = "tests/.tmp_fc_runtime_1.fcmpb";
+    remove(blob_path);
     ASSERT(generate_blob("tests/fixtures/minimal.fcmps", blob_path, DESC_SHORT, 0));
     ASSERT(load_blob(blob_path));
 
@@ -404,13 +404,13 @@ TEST find_value_param_for_token_short_cluster_terminal_value(void) {
     ASSERT(name.n == 8);
     ASSERT(memcmp(name.p, "--output", 8) == 0);
 
-    unlink(blob_path);
+    remove(blob_path);
     PASS();
 }
 
 TEST find_value_param_for_token_short_attached_value_returns_null(void) {
-    char blob_path[256];
-    snprintf(blob_path, sizeof(blob_path), "/tmp/fc_runtime_%d_2.fcmpb", getpid());
+    const char *blob_path = "tests/.tmp_fc_runtime_2.fcmpb";
+    remove(blob_path);
     ASSERT(generate_blob("tests/fixtures/minimal.fcmps", blob_path, DESC_SHORT, 0));
     ASSERT(load_blob(blob_path));
 
@@ -418,7 +418,7 @@ TEST find_value_param_for_token_short_attached_value_returns_null(void) {
     const Param *param = find_value_param_for_token("-ovalue", 7);
     ASSERT(param == NULL);
 
-    unlink(blob_path);
+    remove(blob_path);
     PASS();
 }
 
