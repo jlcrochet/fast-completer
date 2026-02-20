@@ -28,30 +28,8 @@ Listed roughly by implementation difficulty — easiest first.
 
 ## Needs research (not installed locally)
 
-### ansible / ansible-playbook
-- **Impact**: Very widely used config management
-- **Format**: Python argparse
-- **Strategy**: `subcommand_strategy='none'` (flat), `flag_style='standard'`
-- **Notes**: `ansible` itself is flat (no subcommands). The many "modules" are
-  not subcommands. `ansible-playbook`, `ansible-galaxy`, `ansible-vault` are
-  separate binaries that could each get a schema.
-
-### brew
-- **Impact**: Essential macOS package manager
-- **Format**: Custom Ruby-based help
-- **Strategy**: Needs format investigation (likely `helptext` with tweaks)
-- **Notes**: `brew commands` lists all commands. Each has `brew <cmd> --help`.
-  macOS-only, can't test on this machine.
-
 ### flutter
 - **Impact**: Large mobile dev framework
 - **Format**: Dart-based, standard `--help` format
 - **Strategy**: Probably `helptext` + `flag_style='standard'`
 - **Notes**: Has many subcommands (build, run, test, doctor, etc.)
-
-### nix
-- **Impact**: Growing package manager, large subcommand tree
-- **Format**: Custom C++
-- **Strategy**: Needs format investigation
-- **Notes**: `nix` (new CLI) vs `nix-env`/`nix-build` (legacy). The new CLI
-  has a large subcommand tree.

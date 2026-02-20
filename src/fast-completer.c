@@ -551,24 +551,31 @@ static inline String decode_string_at(const uint8_t *base, uint32_t off, uint32_
         s.n = 0;
         return s;
     }
-    if (off >= section_size) {
+    if (!base || off >= section_size) {
         s.p = "";
         s.n = 0;
         return s;
     }
     const uint8_t *p = base + off;
+    size_t hdr = 0;
     if (p[0] < 128) {
+        hdr = 1;
         s.n = p[0];
-        s.p = (const char *)(p + 1);
     } else {
         if (off + 1 >= section_size) {
             s.p = "";
             s.n = 0;
             return s;
         }
+        hdr = 2;
         s.n = ((p[0] & 0x7f) << 8) | p[1];
-        s.p = (const char *)(p + 2);
     }
+    if (off + hdr > section_size || s.n > section_size - off - hdr) {
+        s.p = "";
+        s.n = 0;
+        return s;
+    }
+    s.p = (const char *)(p + hdr);
     return s;
 }
 
@@ -777,6 +784,10 @@ static bool validate_blob_quick(const char *path) {
     }
     if (header.root_command_size < COMMAND_SIZE) {
         fcmp_errorf("%s: invalid/corrupt blob: root command section too small\n", path);
+        return false;
+    }
+    if (header.max_command_path_len == 0) {
+        fcmp_errorf("%s: invalid/corrupt blob: max command path length is zero\n", path);
         return false;
     }
     if (g_long_cmd_refs != header.command_count + 1) {
@@ -1189,15 +1200,9 @@ static const Command *find_subcommand_by_name(const Command *subs, uint16_t coun
 // Maximum command path depth (root -> ... -> leaf)
 #define MAX_CMD_DEPTH 64
 
-// Command path from root to deepest match (for param inheritance)
-static const Command *g_cmd_path[MAX_CMD_DEPTH];
-static int g_cmd_path_len = 0;
-
 // Find the deepest matching command, tracking the path
 static const Command *find_command(const CompletionContext *ctx) {
-    g_cmd_path_len = 0;
     const Command *cmd = get_root_command();
-    g_cmd_path[g_cmd_path_len++] = cmd;
     int i = 1;  // Skip first arg (CLI name)
 
     while (ctx && i < ctx->span_count && cmd->subcommands_count > 0) {
@@ -1213,9 +1218,6 @@ static const Command *find_command(const CompletionContext *ctx) {
 
         if (found) {
             cmd = found;
-            if (g_cmd_path_len < MAX_CMD_DEPTH) {
-                g_cmd_path[g_cmd_path_len++] = cmd;
-            }
             i++;
         } else {
             break;
@@ -2329,6 +2331,32 @@ static const Param *find_path_param(const char *opt, size_t opt_len) {
     return NULL;
 }
 
+// Resolve an option token that may be a short cluster to the param that expects
+// a separate value.
+static const Param *find_value_param_for_token(const char *token, size_t token_len) {
+    if (!token || token_len < 2 || token[0] != '-') return NULL;
+
+    if (token[1] == '-') {
+        return find_path_param(token, token_len);
+    }
+
+    if (token_len == 2) {
+        return find_path_param(token, token_len);
+    }
+
+    for (size_t i = 1; i < token_len; i++) {
+        char short_opt[3] = {'-', token[i], '\0'};
+        const Param *param = find_path_param(short_opt, 2);
+        if (!param || !PARAM_TAKES_VALUE(param)) continue;
+
+        // -ovalue style token: value is already attached to -o.
+        if (i + 1 < token_len) return NULL;
+        return param;
+    }
+
+    return NULL;
+}
+
 // Check if span is empty/whitespace
 static inline bool is_new_arg(const char *span) {
     if (!span || !*span) return true;
@@ -2437,7 +2465,7 @@ static void complete(int nspans, const char **spans) {
         if (prev && prev[0] == '-') {
             // If the previous token already has an inline value (--opt=val), don't treat the current token as its value.
             if (!memchr(prev, '=', prev_len)) {
-                    const Param *param = find_path_param(prev, prev_len);
+                    const Param *param = find_value_param_for_token(prev, prev_len);
                     if (param && PARAM_TAKES_VALUE(param)) {
                         complete_param_values(&ctx, param, last_span, last_span_len, (String){NULL, 0});
                         if (output_format == OUT_JSON) put_lit("]\n");
@@ -2484,7 +2512,7 @@ static void complete(int nspans, const char **spans) {
     if (prev_arg[0] == '-') {
         size_t prev_len = arg_lens[ctx.span_count - 1];
 
-        const Param *param = find_path_param(prev_arg, prev_len);
+        const Param *param = find_value_param_for_token(prev_arg, prev_len);
         if (param && PARAM_TAKES_VALUE(param)) {
             complete_param_values(&ctx, param, NULL, 0, (String){NULL, 0});
             if (output_format == OUT_JSON) put_lit("]\n");
@@ -3256,13 +3284,16 @@ int main(int argc, char *argv[]) {
             }
             char *path = resolve_blob_path(argv[optind]);
             if (!path) return 1;
+            int exists = 1;
 #ifdef _WIN32
             DWORD attrs = GetFileAttributesA(path);
-            return (attrs != INVALID_FILE_ATTRIBUTES) ? 0 : 1;
+            exists = (attrs != INVALID_FILE_ATTRIBUTES) ? 0 : 1;
 #else
             struct stat st;
-            return (stat(path, &st) == 0) ? 0 : 1;
+            exists = (stat(path, &st) == 0) ? 0 : 1;
 #endif
+            free(path);
+            return exists;
         }
 
         case MODE_DUMP_HEADER: {
@@ -3271,10 +3302,13 @@ int main(int argc, char *argv[]) {
                 return 1;
             }
             char *path = resolve_blob_path(argv[optind]);
+            if (!path) return 1;
             if (!load_blob(path)) {
+                free(path);
                 return 1;
             }
             dump_header(path);
+            free(path);
             return 0;
         }
 
@@ -3284,13 +3318,17 @@ int main(int argc, char *argv[]) {
                 return 1;
             }
             char *path = resolve_blob_path(argv[optind]);
+            if (!path) return 1;
             if (!load_blob(path)) {
+                free(path);
                 return 1;
             }
             if (!validate_blob_full(path)) {
+                free(path);
                 return 1;
             }
             printf("%s: ok\n", path);
+            free(path);
             return 0;
         }
 
@@ -3314,10 +3352,16 @@ int main(int argc, char *argv[]) {
                 }
                 ensure_cache_dir();
                 derived_path = build_cache_path(name);
+                free(name);
+                if (!derived_path) {
+                    fcmp_errorf("Failed to build output path from schema name\n");
+                    return 1;
+                }
                 output_path = derived_path;
             }
 
             bool result = generate_blob(schema_path, output_path, desc_mode, desc_max_len);
+            free(derived_path);
             return result ? 0 : 1;
         }
 
@@ -3348,13 +3392,14 @@ int main(int argc, char *argv[]) {
     const char *cli_name = argv[spans_start];
 
     // Resolve blob path
+    int exit_code = 1;
     char *resolved_path = NULL;
     const char *blob_path;
     if (explicit_blob_path) {
         blob_path = explicit_blob_path;
     } else {
         resolved_path = resolve_blob_path(cli_name);
-        if (!resolved_path) return 1;
+        if (!resolved_path) goto completion_cleanup;
         blob_path = resolved_path;
     }
 
@@ -3362,17 +3407,17 @@ int main(int argc, char *argv[]) {
     if (output_format == OUT_UNKNOWN) {
         fcmp_errorf("Unknown output format: %s\n", format_name);
         fcmp_errorf("Supported: lines, zsh, tsv, json, pwsh\n");
-        return 1;
+        goto completion_cleanup;
     }
 
     // In quiet mode, check if blob exists before attempting load (avoids error output)
     if (quiet_mode) {
 #ifdef _WIN32
         if (GetFileAttributesA(blob_path) == INVALID_FILE_ATTRIBUTES)
-            return 1;
+            goto completion_cleanup;
 #else
         if (access(blob_path, F_OK) != 0)
-            return 1;
+            goto completion_cleanup;
 #endif
     }
 
@@ -3383,7 +3428,7 @@ int main(int argc, char *argv[]) {
             fcmp_errorf("Blob '%s' not found in %s\n", cli_name, cache_dir ? cache_dir : "(unknown)");
             fcmp_errorf("Generate it with: fast-completer --generate-blob <schema>\n");
         }
-        return 1;
+        goto completion_cleanup;
     }
 
     // Ensure this blob matches the requested CLI name (and constrain dynamic completers accordingly).
@@ -3391,7 +3436,7 @@ int main(int argc, char *argv[]) {
     if (blob_cli.n == 0 || strlen(cli_name) != blob_cli.n || memcmp(cli_name, blob_cli.p, blob_cli.n) != 0) {
         fcmp_errorf("Blob is for '%.*s', but invocation requested '%s'\n",
                 (int)blob_cli.n, blob_cli.p, cli_name);
-        return 1;
+        goto completion_cleanup;
     }
 
     // Allocate path buffer only when needed for --full-commands
@@ -3399,7 +3444,7 @@ int main(int argc, char *argv[]) {
         path_buf = malloc(header.max_command_path_len);
         if (!path_buf) {
             fcmp_perror("malloc");
-            return 1;
+            goto completion_cleanup;
         }
     }
 
@@ -3407,5 +3452,11 @@ int main(int argc, char *argv[]) {
     complete(argc - spans_start, (const char **)(argv + spans_start));
     funlockfile(stdout);
 
-    return 0;
+    exit_code = 0;
+
+completion_cleanup:
+    free(path_buf);
+    path_buf = NULL;
+    free(resolved_path);
+    return exit_code;
 }

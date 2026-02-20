@@ -451,7 +451,6 @@ typedef struct {
     uint32_t *offsets;
     size_t count;
     uint32_t hash;
-    uint32_t blob_off;
 } StringList;
 
 typedef struct {
@@ -782,6 +781,19 @@ static uint32_t hash_string_list(const uint32_t *offsets, size_t count) {
     return h ? h : 1;
 }
 
+static int cmp_u32_asc(const void *a, const void *b) {
+    uint32_t va = *(const uint32_t *)a;
+    uint32_t vb = *(const uint32_t *)b;
+    if (va < vb) return -1;
+    if (va > vb) return 1;
+    return 0;
+}
+
+static void normalize_list_offsets(uint32_t *offsets, size_t count) {
+    if (!offsets || count < 2) return;
+    qsort(offsets, count, sizeof(uint32_t), cmp_u32_asc);
+}
+
 static size_t find_existing_list(StringList *lists,
                                  uint32_t *hash_idx, size_t hash_cap,
                                  const uint32_t *offsets, size_t n, uint32_t hash) {
@@ -857,7 +869,6 @@ static bool store_string_list(BlobGen *bg, uint32_t *offsets, size_t count,
     sl->offsets = offsets;
     sl->count = count;
     sl->hash = hash;
-    sl->blob_off = 0;
     if (*hash_idx) {
         list_hash_insert(*hash_idx, *hash_cap, hash, (uint32_t)*list_count);
     }
@@ -897,6 +908,7 @@ static bool add_choices_from_string(BlobGen *bg, const char *choices_str,
         }
     }
     free(items);
+    normalize_list_offsets(offsets, count);
 
     return store_string_list(bg, offsets, count,
                              &bg->choices_lists, &bg->choices_count, &bg->choices_cap,
@@ -960,6 +972,7 @@ static bool add_members_from_items(BlobGen *bg, const char *content,
         }
     }
     free(items);
+    normalize_list_offsets(offsets, count);
 
     return store_string_list(bg, offsets, count,
                              &bg->members_lists, &bg->members_count, &bg->members_cap,
@@ -1093,6 +1106,22 @@ static int cmp_params(const void *a, const void *b) {
     return strtab_cmp(&g_sort_bg->param_strtab, off_a, off_b);
 }
 
+static int cmp_long_index_entry(const void *a, const void *b) {
+    const LongIndexEntry *ea = (const LongIndexEntry *)a;
+    const LongIndexEntry *eb = (const LongIndexEntry *)b;
+    const ParamEntry *pa = &g_sort_bg->params[ea->param_idx];
+    const ParamEntry *pb = &g_sort_bg->params[eb->param_idx];
+    return strtab_cmp(&g_sort_bg->param_strtab, pa->name_off, pb->name_off);
+}
+
+static int cmp_short_index_entry(const void *a, const void *b) {
+    uint8_t ca = ((const ShortIndexEntry *)a)->short_ch;
+    uint8_t cb = ((const ShortIndexEntry *)b)->short_ch;
+    if (ca < cb) return -1;
+    if (ca > cb) return 1;
+    return 0;
+}
+
 // Sort params within each depth level, then recurse
 static void sort_node_params(BlobGen *bg, CommandNode *node) {
     if (node->params_count > 1) {
@@ -1137,8 +1166,8 @@ static IdxCount collect_params_from_node(BlobGen *bg, CommandNode *node) {
     }
 
     // Params are sorted alphabetically within each depth level, with inheritance order preserved
-    // (command's own params first, then parent's, then grandparent's, etc.)
-    // Linear search is used in the completer, which is fine for typical param counts
+    // (command's own params first, then parent's, then grandparent's, etc.).
+    // Runtime lookup is served by generated long/short per-command indexes.
     result.idx = start_idx;
     result.count = (uint16_t)node->params_count;
     return result;
@@ -2102,19 +2131,22 @@ static bool section_append(SectionEntry *sections, size_t *count, size_t cap, ui
     return true;
 }
 
+static StringTable *g_list_sort_strtab = NULL;
+
+static int cmp_string_offsets(const void *a, const void *b) {
+    uint32_t off_a = *(const uint32_t *)a;
+    uint32_t off_b = *(const uint32_t *)b;
+    return strtab_cmp(g_list_sort_strtab, off_a, off_b);
+}
+
 static void sort_string_lists(StringTable *st, StringList *lists, size_t count) {
+    g_list_sort_strtab = st;
     for (size_t i = 0; i < count; i++) {
         StringList *sl = &lists[i];
-        for (size_t j = 1; j < sl->count; j++) {
-            uint32_t key = sl->offsets[j];
-            size_t k = j;
-            while (k > 0 && strtab_cmp(st, sl->offsets[k - 1], key) > 0) {
-                sl->offsets[k] = sl->offsets[k - 1];
-                k--;
-            }
-            sl->offsets[k] = key;
-        }
+        if (sl->count < 2) continue;
+        qsort(sl->offsets, sl->count, sizeof(uint32_t), cmp_string_offsets);
     }
+    g_list_sort_strtab = NULL;
 }
 
 bool generate_blob(const char *schema_path, const char *output_path, DescriptionMode desc_mode, size_t desc_max_len) {
@@ -2140,6 +2172,8 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     Slice32 *short_slices = NULL;
     LongIndexEntry *long_entries = NULL;
     ShortIndexEntry *short_entries = NULL;
+    uint32_t *chain_workspace = NULL;
+    size_t chain_workspace_cap = 0;
     uint8_t *blob = NULL;
     FILE *out = NULL;
 
@@ -2312,44 +2346,38 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     // Build per-command long/short option indices from inherited params.
     size_t long_total = 0, long_cap = 0;
     size_t short_total = 0, short_cap = 0;
+    g_sort_bg = &bg;
 
     for (size_t ref = 0; ref < cmd_ref_count; ref++) {
         long_slices[ref].start = (uint32_t)long_total;
         short_slices[ref].start = (uint32_t)short_total;
 
         // Build the chain from current command to root so we can walk root->...->current.
-        uint32_t chain_buf[128];
-        uint32_t *chain = chain_buf;
         size_t chain_len = 0;
-        size_t chain_cap = sizeof(chain_buf) / sizeof(chain_buf[0]);
         uint32_t cur = (uint32_t)ref;
         while (1) {
-            if (chain_len == chain_cap) {
-                size_t next_cap = chain_cap * 2;
-                uint32_t *tmp = malloc(next_cap * sizeof(uint32_t));
+            if (chain_len == chain_workspace_cap) {
+                size_t next_cap = chain_workspace_cap ? chain_workspace_cap * 2 : 128;
+                uint32_t *tmp = realloc(chain_workspace, next_cap * sizeof(uint32_t));
                 if (!tmp) {
-                    fcmp_perror("malloc");
-                    if (chain != chain_buf) free(chain);
+                    fcmp_perror("realloc");
                     goto cleanup;
                 }
-                memcpy(tmp, chain, chain_len * sizeof(uint32_t));
-                if (chain != chain_buf) free(chain);
-                chain = tmp;
-                chain_cap = next_cap;
+                chain_workspace = tmp;
+                chain_workspace_cap = next_cap;
             }
-            chain[chain_len++] = cur;
+            chain_workspace[chain_len++] = cur;
             if (cur == 0) break;
             cur = parent_ref[cur];
             if (chain_len > cmd_ref_count) {
                 fcmp_errorf("Internal error: cycle in command parent map\n");
-                if (chain != chain_buf) free(chain);
                 goto cleanup;
             }
         }
 
         size_t inherited_count = 0;
         for (size_t i = 0; i < chain_len; i++) {
-            inherited_count += own_params_count[chain[i]];
+            inherited_count += own_params_count[chain_workspace[i]];
         }
         // Hash set for long option dedup (open addressing, 0 = empty sentinel).
         // name_off is always > 0 for real params (checked by `if (pe->name_off)`).
@@ -2358,7 +2386,6 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         uint32_t *seen_long = calloc(seen_cap, sizeof(uint32_t));
         if (!seen_long) {
             fcmp_perror("calloc");
-            if (chain != chain_buf) free(chain);
             goto cleanup;
         }
         size_t seen_mask = seen_cap - 1;
@@ -2366,7 +2393,7 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
 
         // Iterate root->...->current so closer commands override inherited options.
         for (size_t ci = chain_len; ci > 0; ci--) {
-            uint32_t node_ref = chain[ci - 1];
+            uint32_t node_ref = chain_workspace[ci - 1];
             uint32_t base = own_params_idx[node_ref];
             uint32_t cnt = own_params_count[node_ref];
             for (uint32_t i = 0; i < cnt; i++) {
@@ -2388,7 +2415,6 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
                             if (!tmp) {
                                 fcmp_perror("realloc");
                                 free(seen_long);
-                                if (chain != chain_buf) free(chain);
                                 goto cleanup;
                             }
                             long_entries = tmp;
@@ -2413,7 +2439,6 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
                                 if (!tmp) {
                                     fcmp_perror("realloc");
                                     free(seen_long);
-                                    if (chain != chain_buf) free(chain);
                                     goto cleanup;
                                 }
                                 short_entries = tmp;
@@ -2434,40 +2459,24 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
         // Sort long entries for binary prefix search by option name.
         size_t lstart = long_slices[ref].start;
         size_t lcount = long_total - lstart;
-        for (size_t i = 1; i < lcount; i++) {
-            LongIndexEntry key = long_entries[lstart + i];
-            size_t k = i;
-            while (k > 0) {
-                LongIndexEntry prev = long_entries[lstart + k - 1];
-                if (strtab_cmp(&bg.param_strtab,
-                               bg.params[prev.param_idx].name_off,
-                               bg.params[key.param_idx].name_off) <= 0) break;
-                long_entries[lstart + k] = prev;
-                k--;
-            }
-            long_entries[lstart + k] = key;
+        if (lcount > 1) {
+            qsort(long_entries + lstart, lcount, sizeof(LongIndexEntry), cmp_long_index_entry);
         }
 
         // Sort short entries by short char for fast lookup.
         size_t sstart = short_slices[ref].start;
         size_t scount = short_total - sstart;
-        for (size_t i = 1; i < scount; i++) {
-            ShortIndexEntry key = short_entries[sstart + i];
-            size_t k = i;
-            while (k > 0 && short_entries[sstart + k - 1].short_ch > key.short_ch) {
-                short_entries[sstart + k] = short_entries[sstart + k - 1];
-                k--;
-            }
-            short_entries[sstart + k] = key;
+        if (scount > 1) {
+            qsort(short_entries + sstart, scount, sizeof(ShortIndexEntry), cmp_short_index_entry);
         }
 
         long_slices[ref].count = (uint32_t)lcount;
         short_slices[ref].count = (uint32_t)scount;
-        if (chain != chain_buf) free(chain);
         free(seen_long);
     }
+    g_sort_bg = NULL;
 
-    size_t option_long_size = 8 + cmd_ref_count * sizeof(Slice32) + long_total * sizeof(uint32_t);
+    size_t option_long_size = 8 + cmd_ref_count * sizeof(Slice32) + long_total * sizeof(LongIndexEntry);
     size_t option_short_size = short_total > 0
         ? (8 + cmd_ref_count * sizeof(Slice32) + short_total * sizeof(ShortIndexEntry))
         : 0;
@@ -2683,11 +2692,13 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     result = true;
 
 cleanup:
+    g_sort_bg = NULL;
     if (out) fclose(out);
     free(blob);
     free(parent_ref); free(own_params_idx); free(own_params_count);
     free(long_slices); free(short_slices);
     free(long_entries); free(short_entries);
+    free(chain_workspace);
     node_free(root); blobgen_free(&bg); free(root_desc);
     return result;
 }

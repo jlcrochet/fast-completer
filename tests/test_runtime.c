@@ -384,6 +384,44 @@ TEST split_args_whitespace_only(void) {
     PASS();
 }
 
+TEST decode_string_at_rejects_truncated_payload(void) {
+    const uint8_t section[] = {0, 5, 'a', 'b'};
+    String s = decode_string_at(section, 1, sizeof(section));
+    ASSERT_EQ(0, s.n);
+    PASS();
+}
+
+TEST find_value_param_for_token_short_cluster_terminal_value(void) {
+    char blob_path[256];
+    snprintf(blob_path, sizeof(blob_path), "/tmp/fc_runtime_%d.fcmpb", getpid());
+    ASSERT(generate_blob("tests/fixtures/minimal.fcmps", blob_path, DESC_SHORT, 0));
+    ASSERT(load_blob(blob_path));
+
+    g_current_cmd_ref = 0;  // root command
+    const Param *param = find_value_param_for_token("-vo", 3);
+    ASSERT(param != NULL);
+    String name = str_get(param->name_off);
+    ASSERT(name.n == 8);
+    ASSERT(memcmp(name.p, "--output", 8) == 0);
+
+    unlink(blob_path);
+    PASS();
+}
+
+TEST find_value_param_for_token_short_attached_value_returns_null(void) {
+    char blob_path[256];
+    snprintf(blob_path, sizeof(blob_path), "/tmp/fc_runtime_%d_2.fcmpb", getpid());
+    ASSERT(generate_blob("tests/fixtures/minimal.fcmps", blob_path, DESC_SHORT, 0));
+    ASSERT(load_blob(blob_path));
+
+    g_current_cmd_ref = 0;  // root command
+    const Param *param = find_value_param_for_token("-ovalue", 7);
+    ASSERT(param == NULL);
+
+    unlink(blob_path);
+    PASS();
+}
+
 SUITE(suite_parsing) {
     RUN_TEST(parse_escape_newline);
     RUN_TEST(parse_escape_tab);
@@ -401,6 +439,9 @@ SUITE(suite_parsing) {
     RUN_TEST(split_args_max_exceeded);
     RUN_TEST(split_args_empty);
     RUN_TEST(split_args_whitespace_only);
+    RUN_TEST(decode_string_at_rejects_truncated_payload);
+    RUN_TEST(find_value_param_for_token_short_cluster_terminal_value);
+    RUN_TEST(find_value_param_for_token_short_attached_value_returns_null);
 }
 
 /* ======================================================================

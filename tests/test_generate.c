@@ -561,6 +561,49 @@ SUITE(suite_option_parse) {
 }
 
 /* ======================================================================
+ * suite_list_dedup — canonicalization before list dedup hashing
+ * ====================================================================== */
+
+TEST choices_lists_dedup_across_input_order(void) {
+    BlobGen bg;
+    blobgen_init(&bg, DESC_SHORT, 0);
+    ASSERT_FALSE(bg.error);
+
+    size_t idx1 = (size_t)-1;
+    size_t idx2 = (size_t)-1;
+    ASSERT(add_choices_from_string(&bg, "b|a", "<test>", 1, &idx1));
+    ASSERT(add_choices_from_string(&bg, "a|b", "<test>", 1, &idx2));
+
+    ASSERT_EQ(idx1, idx2);
+    ASSERT_EQ(1, bg.choices_count);
+
+    blobgen_free(&bg);
+    PASS();
+}
+
+TEST members_lists_dedup_across_input_order(void) {
+    BlobGen bg;
+    blobgen_init(&bg, DESC_SHORT, 0);
+    ASSERT_FALSE(bg.error);
+
+    size_t idx1 = (size_t)-1;
+    size_t idx2 = (size_t)-1;
+    ASSERT(add_members_from_items(&bg, "key2|key1", "<test>", 1, &idx1));
+    ASSERT(add_members_from_items(&bg, "key1|key2", "<test>", 1, &idx2));
+
+    ASSERT_EQ(idx1, idx2);
+    ASSERT_EQ(1, bg.members_count);
+
+    blobgen_free(&bg);
+    PASS();
+}
+
+SUITE(suite_list_dedup) {
+    RUN_TEST(choices_lists_dedup_across_input_order);
+    RUN_TEST(members_lists_dedup_across_input_order);
+}
+
+/* ======================================================================
  * suite_tokenizer — tokenize_line
  * ====================================================================== */
 
@@ -691,6 +734,7 @@ int main(int argc, char *argv[]) {
     RUN_SUITE(suite_blob_format);
     RUN_SUITE(suite_strtab);
     RUN_SUITE(suite_option_parse);
+    RUN_SUITE(suite_list_dedup);
     RUN_SUITE(suite_tokenizer);
     GREATEST_MAIN_END();
 }

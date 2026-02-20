@@ -12,6 +12,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <spawn.h>
+#include <poll.h>
+#include <errno.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -60,23 +62,115 @@ static void run_result_free(RunResult *r) {
     r->err = NULL;
 }
 
-static char *read_fd_to_string(int fd, size_t *out_len) {
-    size_t cap = 4096, len = 0;
-    char *buf = malloc(cap);
-    if (!buf) return NULL;
-    ssize_t n;
-    while ((n = read(fd, buf + len, cap - len)) > 0) {
-        len += (size_t)n;
-        if (len == cap) {
-            cap *= 2;
-            char *tmp = realloc(buf, cap);
-            if (!tmp) { free(buf); return NULL; }
-            buf = tmp;
+static bool append_bytes(char **buf, size_t *len, size_t *cap, const char *src, size_t n) {
+    if (!buf || !len || !cap) return false;
+    if (*buf == NULL) {
+        *cap = 4096;
+        *buf = malloc(*cap);
+        if (!*buf) return false;
+        *len = 0;
+    }
+    if (n > SIZE_MAX - 1 - *len) return false;
+    if (*len + n + 1 > *cap) {
+        size_t next = *cap;
+        while (*len + n + 1 > next) {
+            if (next > SIZE_MAX / 2) return false;
+            next *= 2;
+        }
+        char *tmp = realloc(*buf, next);
+        if (!tmp) return false;
+        *buf = tmp;
+        *cap = next;
+    }
+    memcpy(*buf + *len, src, n);
+    *len += n;
+    (*buf)[*len] = '\0';
+    return true;
+}
+
+static bool drain_pipes(int fd_out, int fd_err, RunResult *result) {
+    char *out = NULL, *err = NULL;
+    size_t out_len = 0, err_len = 0;
+    size_t out_cap = 0, err_cap = 0;
+    bool out_open = true, err_open = true;
+    char tmp[4096];
+
+    while (out_open || err_open) {
+        struct pollfd pfds[2];
+        int out_idx = -1, err_idx = -1;
+        int nfds = 0;
+        if (out_open) {
+            out_idx = nfds;
+            pfds[nfds].fd = fd_out;
+            pfds[nfds].events = POLLIN | POLLHUP;
+            pfds[nfds].revents = 0;
+            nfds++;
+        }
+        if (err_open) {
+            err_idx = nfds;
+            pfds[nfds].fd = fd_err;
+            pfds[nfds].events = POLLIN | POLLHUP;
+            pfds[nfds].revents = 0;
+            nfds++;
+        }
+
+        int pr = poll(pfds, (nfds_t)nfds, -1);
+        if (pr < 0) {
+            if (errno == EINTR) continue;
+            free(out);
+            free(err);
+            return false;
+        }
+
+        if (out_open && out_idx >= 0 && (pfds[out_idx].revents & (POLLIN | POLLHUP))) {
+            ssize_t n = read(fd_out, tmp, sizeof(tmp));
+            if (n > 0) {
+                if (!append_bytes(&out, &out_len, &out_cap, tmp, (size_t)n)) {
+                    free(out);
+                    free(err);
+                    return false;
+                }
+            } else if (n == 0) {
+                out_open = false;
+            } else if (errno != EINTR) {
+                free(out);
+                free(err);
+                return false;
+            }
+        }
+
+        if (err_open && err_idx >= 0 && (pfds[err_idx].revents & (POLLIN | POLLHUP))) {
+            ssize_t n = read(fd_err, tmp, sizeof(tmp));
+            if (n > 0) {
+                if (!append_bytes(&err, &err_len, &err_cap, tmp, (size_t)n)) {
+                    free(out);
+                    free(err);
+                    return false;
+                }
+            } else if (n == 0) {
+                err_open = false;
+            } else if (errno != EINTR) {
+                free(out);
+                free(err);
+                return false;
+            }
         }
     }
-    buf[len] = '\0';
-    if (out_len) *out_len = len;
-    return buf;
+
+    if (!out) {
+        out = strdup("");
+        if (!out) { free(err); return false; }
+    }
+    if (!err) {
+        err = strdup("");
+        if (!err) { free(out); return false; }
+    }
+
+    result->out = out;
+    result->out_len = out_len;
+    result->err = err;
+    result->err_len = err_len;
+    return true;
 }
 
 static bool run_capture(const char **argv, RunResult *result) {
@@ -107,8 +201,12 @@ static bool run_capture(const char **argv, RunResult *result) {
     close(stdout_pipe[1]);
     close(stderr_pipe[1]);
 
-    result->out = read_fd_to_string(stdout_pipe[0], &result->out_len);
-    result->err = read_fd_to_string(stderr_pipe[0], &result->err_len);
+    if (!drain_pipes(stdout_pipe[0], stderr_pipe[0], result)) {
+        close(stdout_pipe[0]);
+        close(stderr_pipe[0]);
+        waitpid(pid, NULL, 0);
+        return false;
+    }
 
     close(stdout_pipe[0]);
     close(stderr_pipe[0]);
@@ -277,6 +375,33 @@ TEST validate_func_blob(void) {
     PASS();
 }
 
+TEST check_blob_exists_and_missing(void) {
+    const char *argv_ok[] = {FC_BIN, "--check", g_func_blob, NULL};
+    RunResult ok;
+    ASSERT(run_capture(argv_ok, &ok));
+    ASSERT_EQ(0, ok.exit_code);
+    run_result_free(&ok);
+
+    const char *argv_missing[] = {FC_BIN, "--check", "/tmp/definitely-missing-fc-blob.fcmpb", NULL};
+    RunResult missing;
+    ASSERT(run_capture(argv_missing, &missing));
+    ASSERT_EQ(1, missing.exit_code);
+    run_result_free(&missing);
+    PASS();
+}
+
+TEST dump_header_minimal_blob(void) {
+    const char *argv[] = {FC_BIN, "--dump-header", g_minimal_blob, NULL};
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+    ASSERT(strstr(r.out, "magic: FCMP") != NULL);
+    ASSERT(strstr(r.out, "section_count:") != NULL);
+    run_result_free(&r);
+    PASS();
+}
+
 TEST lint_func_schema(void) {
     const char *argv[] = {FC_BIN, "--lint", FUNC_SCHEMA, NULL};
     RunResult r;
@@ -365,6 +490,115 @@ TEST complete_minimal_members(void) {
     ASSERT(strstr(r.out, "key1") != NULL);
     ASSERT(strstr(r.out, "key2") != NULL);
     run_result_free(&r);
+    PASS();
+}
+
+TEST quiet_missing_blob_is_silent(void) {
+    const char *argv[] = {FC_BIN, "-q", "json", "definitely-missing-fc-cli", "", NULL};
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(1, r.exit_code);
+    ASSERT_EQ(0, r.err_len);
+    run_result_free(&r);
+    PASS();
+}
+
+TEST add_space_appends_space_to_values(void) {
+    const char *argv[] = {FC_BIN, "--blob", g_minimal_blob, "--add-space", "lines",
+                          "test-cli", "--output=", NULL};
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+    ASSERT(strstr(r.out, "--output=json ") != NULL);
+    ASSERT(strstr(r.out, "--output=text ") != NULL);
+    run_result_free(&r);
+    PASS();
+}
+
+TEST full_commands_emits_leaf_paths(void) {
+    char schema_path[256];
+    char blob_path[256];
+    snprintf(schema_path, sizeof(schema_path), "/tmp/test_full_%d.fcmps", getpid());
+    snprintf(blob_path, sizeof(blob_path), "/tmp/test_full_%d.fcmpb", getpid());
+
+    FILE *f = fopen(schema_path, "w");
+    ASSERT(f != NULL);
+    fprintf(f, "mycli\n");
+    fprintf(f, "\talpha\n");
+    fprintf(f, "\t\tbeta\n");
+    fclose(f);
+
+    ASSERT(generate_blob(schema_path, blob_path, DESC_SHORT, 0));
+    const char *argv[] = {
+        FC_BIN, "--blob", blob_path, "--full-commands", "lines",
+        "mycli", "", NULL
+    };
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+    ASSERT(strstr(r.out, "alpha beta\n") != NULL);
+    ASSERT(strstr(r.out, "alpha\n") == NULL);
+    run_result_free(&r);
+
+    unlink(schema_path);
+    unlink(blob_path);
+    PASS();
+}
+
+TEST dynamic_completer_returns_values(void) {
+    char schema_path[256];
+    char blob_path[256];
+    snprintf(schema_path, sizeof(schema_path), "/tmp/test_dyn_%d.fcmps", getpid());
+    snprintf(blob_path, sizeof(blob_path), "/tmp/test_dyn_%d.fcmpb", getpid());
+
+    FILE *f = fopen(schema_path, "w");
+    ASSERT(f != NULL);
+    fprintf(f, "printf\n");
+    fprintf(f, "\t--pick `\"%%s\\\\n\" alpha beta`\n");
+    fclose(f);
+
+    ASSERT(generate_blob(schema_path, blob_path, DESC_SHORT, 0));
+    const char *argv[] = {FC_BIN, "--blob", blob_path, "lines", "printf", "--pick=", NULL};
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+    ASSERT(strstr(r.out, "--pick=alpha") != NULL);
+    ASSERT(strstr(r.out, "--pick=beta") != NULL);
+    run_result_free(&r);
+
+    unlink(schema_path);
+    unlink(blob_path);
+    PASS();
+}
+
+TEST dynamic_completer_timeout_override(void) {
+    char schema_path[256];
+    char blob_path[256];
+    snprintf(schema_path, sizeof(schema_path), "/tmp/test_dyn_to_%d.fcmps", getpid());
+    snprintf(blob_path, sizeof(blob_path), "/tmp/test_dyn_to_%d.fcmpb", getpid());
+
+    FILE *f = fopen(schema_path, "w");
+    ASSERT(f != NULL);
+    fprintf(f, "sh\n");
+    fprintf(f, "\t--pick `-c \"sleep 1; printf 'slow\\\\n'\"`\n");
+    fclose(f);
+
+    ASSERT(generate_blob(schema_path, blob_path, DESC_SHORT, 0));
+    const char *argv[] = {FC_BIN, "--blob", blob_path, "-T", "10", "lines", "sh", "--pick=", NULL};
+    RunResult r;
+    ASSERT(run_capture(argv, &r));
+    ASSERT_EQ(0, r.exit_code);
+    ASSERT(r.out != NULL);
+    ASSERT_EQ(0, r.out_len);
+    ASSERT(r.err != NULL);
+    ASSERT(strstr(r.err, "timed out") != NULL);
+    run_result_free(&r);
+
+    unlink(schema_path);
+    unlink(blob_path);
     PASS();
 }
 
@@ -545,6 +779,8 @@ SUITE(suite_integration) {
     RUN_TEST(generate_minimal_blob);
 
     /* Validation/linting */
+    RUN_TEST(check_blob_exists_and_missing);
+    RUN_TEST(dump_header_minimal_blob);
     RUN_TEST(validate_func_blob);
     RUN_TEST(lint_func_schema);
     RUN_TEST(lint_minimal_schema);
@@ -556,6 +792,11 @@ SUITE(suite_integration) {
     RUN_TEST(complete_minimal_subcommands);
     RUN_TEST(complete_minimal_choices);
     RUN_TEST(complete_minimal_members);
+    RUN_TEST(quiet_missing_blob_is_silent);
+    RUN_TEST(add_space_appends_space_to_values);
+    RUN_TEST(full_commands_emits_leaf_paths);
+    RUN_TEST(dynamic_completer_returns_values);
+    RUN_TEST(dynamic_completer_timeout_override);
     RUN_TEST(complete_prefix_filter);
     RUN_TEST(complete_flag_prefix);
     RUN_TEST(complete_pnpm_config_delete_leaf);

@@ -103,16 +103,24 @@ $(TEST_DIR)/test_generate: $(TEST_DIR)/test_generate.c src/generate_blob.c \
 	$(CC) $(TEST_CFLAGS) -Isrc -o $@ \
 	    $(TEST_DIR)/test_generate.c src/diagnostic.c
 
+ifneq ($(OS),Windows_NT)
 $(TEST_DIR)/test_integration: $(TEST_DIR)/test_integration.c $(TEST_DIR)/greatest.h \
                               src/generate_blob.c src/generate_blob.h \
                               src/diagnostic.c src/diagnostic.h $(TARGET)
 	$(CC) $(TEST_CFLAGS) -Isrc -o $@ \
 	    $(TEST_DIR)/test_integration.c src/diagnostic.c src/generate_blob.c
 
-test: $(TARGET) $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate $(TEST_DIR)/test_integration
+TEST_BINS = $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate $(TEST_DIR)/test_integration
+else
+TEST_BINS = $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate
+endif
+
+test: $(TARGET) $(TEST_BINS)
 	@echo "=== test_runtime ===" && $(TEST_DIR)/test_runtime && \
-	 echo "=== test_generate ===" && $(TEST_DIR)/test_generate && \
-	 echo "=== test_integration ===" && $(TEST_DIR)/test_integration
+	 echo "=== test_generate ===" && $(TEST_DIR)/test_generate
+ifneq ($(OS),Windows_NT)
+	@echo "=== test_integration ===" && $(TEST_DIR)/test_integration
+endif
 
 test-clean:
 	rm -f $(TEST_DIR)/test_runtime $(TEST_DIR)/test_generate $(TEST_DIR)/test_integration

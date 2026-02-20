@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install scan-build
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-tools
+
+      - name: Build and test
+        run: make test
+
+      - name: Static analysis
+        run: make analyze
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - name: Runtime and generator tests
+        run: |
+          make tests/test_runtime tests/test_generate
+          tests/test_runtime
+          tests/test_generate
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: mingw-w64-x86_64-gcc make
+
+      - name: Build and portable tests
+        shell: msys2 {0}
+        run: |
+          make
+          make tests/test_runtime tests/test_generate
+          tests/test_runtime
+          tests/test_generate
