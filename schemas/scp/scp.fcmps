@@ -1,0 +1,24 @@
+# OpenSSH scp CLI schema for fast-completer
+scp # OpenSSH secure file copy
+	-3 @bool # Transfer between remote hosts through local host
+	-4 @bool # Force IPv4 addresses only
+	-6 @bool # Force IPv6 addresses only
+	-A @bool # Allow forwarding of ssh-agent
+	-B @bool # Batch mode, prevent password prompts
+	-C @bool # Enable compression
+	-c # Cipher for encrypting data transfer
+	-D # Path to local SFTP server program
+	-F # Alternative per-user SSH config file
+	-i # Identity file for public key authentication
+	-J # Jump host destination
+	-l # Limit bandwidth in Kbit/s
+	-O @bool # Use legacy SCP protocol instead of SFTP
+	-o # SSH option in ssh_config format
+	--port|-P # Port to connect to on remote host
+	-p @bool # Preserve modification times and mode bits
+	-q @bool # Quiet mode
+	-R @bool # Copy between remote hosts via origin host
+	--recursive|-r @bool # Recursively copy entire directories
+	-S # Program for encrypted connection
+	-T @bool # Disable strict filename checking
+	--verbose|-v @bool # Verbose mode

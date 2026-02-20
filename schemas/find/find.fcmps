@@ -1,0 +1,77 @@
+find # Search for files in a directory hierarchy
+	-H @bool # Follow symbolic links on command line only
+	-L @bool # Follow all symbolic links
+	-P @bool # Never follow symbolic links (default)
+	-daystart @bool # Measure times from start of today
+	-follow @bool # Deprecated, use -L instead
+	-nowarn @bool # Disable warnings
+	-warn @bool # Enable warnings
+	-regextype # Set regular expression syntax type
+	-depth @bool # Process directory contents before directory itself
+	-files0-from # Read starting points from file (NUL-terminated)
+	-maxdepth # Maximum search depth
+	-mindepth # Minimum search depth
+	-mount @bool # Don't descend into other filesystems
+	-noleaf @bool # Don't optimize by assuming Unix directory link convention
+	-xdev @bool # Don't descend into other filesystems
+	-ignore_readdir_race @bool # Ignore errors from files disappearing during search
+	-noignore_readdir_race @bool # Don't ignore readdir race errors
+	-amin # Access time in minutes
+	-anewer # File was accessed more recently than reference file
+	-atime # Access time in days
+	-cmin # Status change time in minutes
+	-cnewer # Status changed more recently than reference file
+	-context # Match SELinux security context
+	-ctime # Status change time in days
+	-empty @bool # File is empty and is regular file or directory
+	-false @bool # Always false
+	-true @bool # Always true
+	-fstype # Filesystem type
+	-gid # File numeric group ID
+	-group # File belongs to group
+	-ilname # Case-insensitive symbolic link name match
+	-iname # Case-insensitive filename match
+	-inum # Inode number
+	-iwholename # Case-insensitive whole path match
+	-iregex # Case-insensitive regex match on whole path
+	-links # Number of hard links
+	-lname # Symbolic link name match
+	-mmin # Modification time in minutes
+	-mtime # Modification time in days
+	-name # Match filename pattern
+	-newer # File was modified more recently than reference file
+	-nouser @bool # No user corresponds to file numeric user ID
+	-nogroup @bool # No group corresponds to file numeric group ID
+	-path # Match whole path pattern
+	-perm # File permission bits match mode
+	-regex # Regex match on whole path
+	-readable @bool # File is readable by current user
+	-writable @bool # File is writable by current user
+	-executable @bool # File is executable by current user
+	-wholename # Match whole path pattern
+	-size # File uses specified space
+	-type (f|d|l|b|c|p|s) # File type
+	-uid # File numeric user ID
+	-used # File was accessed N days after status change
+	-user # File belongs to user
+	-xtype (f|d|l|b|c|p|s) # File type, check link target
+	-delete @bool # Delete matched files
+	-print @bool # Print full filename followed by newline
+	-print0 @bool # Print full filename followed by null character
+	-printf # Print formatted string
+	-fprintf # Print formatted string to file
+	-fprint0 # Print null-terminated name to file
+	-fprint # Print name to file
+	-ls @bool # List matched files in ls -dils format
+	-fls # List matched files to file in ls format
+	-prune @bool # Do not descend into directory
+	-quit @bool # Exit immediately
+	-exec # Execute command on matched files
+	-execdir # Execute command in file's directory
+	-ok # Execute command with user confirmation
+	-okdir # Execute command in file's directory with confirmation
+	-not @bool # Negate following expression
+	-and @bool # Logical AND (implicit)
+	-or @bool # Logical OR
+	--help @bool # Display help and exit
+	--version @bool # Output version information and exit

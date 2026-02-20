@@ -1,0 +1,91 @@
+cmake # Cross-platform build system generator
+	-S # Path to source directory
+	-B # Path to build directory
+	-C # Pre-load a script to populate the cache
+	-D # Create or update a CMake cache entry
+	-U # Remove matching entries from CMake cache
+	-G # Specify build system generator
+	-T # Specify toolset name for generator
+	-A # Specify platform name for generator
+	-N @bool # View mode only
+	-P # Process script mode
+	-E # CMake command mode
+	--toolchain # Specify toolchain file
+	--install-prefix # Override install prefix
+	--project-file # Specify alternate project file name
+	-Wdev @bool # Enable developer warnings
+	-Wno-dev @bool # Suppress developer warnings
+	-Werror=dev @bool # Make developer warnings errors
+	-Wno-error=dev @bool # Make developer warnings not errors
+	-Wdeprecated @bool # Enable deprecation warnings
+	-Wno-deprecated @bool # Suppress deprecation warnings
+	-Werror=deprecated @bool # Make deprecated warnings errors
+	-Wno-error=deprecated @bool # Make deprecated warnings not errors
+	--preset # Specify a configure preset
+	--list-presets @bool # List available presets
+	--fresh @bool # Configure a fresh build tree
+	--find-package @bool # Legacy pkg-config like mode
+	--graphviz # Generate graphviz of dependencies
+	--system-information @bool # Dump information about this system
+	--print-config-dir @bool # Print CMake config directory
+	--log-level (ERROR|WARNING|NOTICE|STATUS|VERBOSE|DEBUG|TRACE) # Set message verbosity
+	--log-context @bool # Prepend log messages with context
+	--debug-trycompile @bool # Do not delete try_compile build tree
+	--debug-output @bool # Put cmake in debug mode
+	--debug-find @bool # Put cmake find in debug mode
+	--debug-find-pkg # Limit debug-find to specific packages
+	--debug-find-var # Limit debug-find to specific variables
+	--trace @bool # Put cmake in trace mode
+	--trace-expand @bool # Trace mode with variable expansion
+	--trace-format (human|json-v1) # Set trace output format
+	--trace-source # Trace only this CMake file or module
+	--trace-redirect # Redirect trace output to a file
+	--warn-uninitialized @bool # Warn about uninitialized values
+	--no-warn-unused-cli @bool # Don't warn about unused command line options
+	--check-system-vars @bool # Find problems with variable usage in system files
+	--compile-no-warning-as-error @bool # Ignore COMPILE_WARNING_AS_ERROR property
+	--link-no-warning-as-error @bool # Ignore LINK_WARNING_AS_ERROR property
+	--profiling-format (google-trace) # Output format for profiling data
+	--profiling-output # Output path for profiling data
+	--help|-h @bool # Print usage information
+	--version @bool # Print version number
+	--help-full @bool # Print all help manuals
+	--help-manual # Print one help manual
+	--help-manual-list @bool # List help manuals available
+	--help-command # Print help for one command
+	--help-command-list @bool # List commands with help available
+	--help-commands @bool # Print cmake-commands manual
+	--help-module # Print help for one module
+	--help-module-list @bool # List modules with help available
+	--help-modules @bool # Print cmake-modules manual
+	--help-policy # Print help for one policy
+	--help-policy-list @bool # List policies with help available
+	--help-policies @bool # Print cmake-policies manual
+	--help-property # Print help for one property
+	--help-property-list @bool # List properties with help available
+	--help-properties @bool # Print cmake-properties manual
+	--help-variable # Print help for one variable
+	--help-variable-list @bool # List variables with help available
+	--help-variables @bool # Print cmake-variables manual
+	build # Build a CMake-generated project
+		--preset # Specify a build preset
+		--list-presets @bool # List available build presets
+		--parallel|-j # Build in parallel using given number of jobs
+		--target|-t # Build specific targets
+		--config # Build configuration for multi-config tools
+		--clean-first @bool # Clean first then build
+		--resolve-package-references (on|only|off) # Restore or resolve package references
+		--verbose|-v @bool # Enable verbose output
+	install # Install a CMake-generated project
+		--config # Install configuration for multi-config tools
+		--component # Component-based install
+		--default-directory-permissions # Default install permissions
+		--parallel|-j # Install in parallel using given number of jobs
+		--prefix # Override install prefix
+		--strip @bool # Strip before installing
+		--verbose|-v @bool # Enable verbose output
+	open # Open generated project in associated application
+	workflow # Run a workflow preset
+		--preset # Specify a workflow preset
+		--list-presets @bool # List available workflow presets
+		--fresh @bool # Configure a fresh build tree

@@ -1,0 +1,270 @@
+# Wrangler CLI schema for fast-completer
+# Curated from Cloudflare Wrangler command docs (last checked: 2026-02-20)
+
+wrangler # Cloudflare Developer Platform CLI
+	--config|-c # Path to Wrangler configuration file
+	--cwd # Run as if Wrangler was started in the specified directory
+	--env|-e # Environment to use from Wrangler config
+	--env-file # Load one or more .env files (repeatable)
+	--experimental-auto-create @bool # Automatically create missing resources
+	--experimental-provision @bool # Enable experimental provisioning behavior
+	--help|-h @bool # Show help
+	--version|-v @bool # Show Wrangler version
+	check # Validate local configuration and project setup
+		startup # Validate startup checks for your Worker
+	cert # Manage certificates
+		upload # Upload certificates
+			mtls-certificate # Upload an mTLS certificate
+			certificate-authority # Upload a certificate authority
+		list # List certificates
+		delete # Delete a certificate
+	complete # Generate shell completion scripts
+	containers # Manage containers
+		build # Build a container image
+		delete # Delete a container deployment
+		images # Manage container images
+			list # List images
+			delete # Delete an image
+		registries # Manage container registries
+			list # List registries
+			info # Get registry information
+		info # Show container info
+		list # List container deployments
+		push # Push a container image
+	d1 # Manage D1 databases
+		create # Create a D1 database
+		info # Show details for a D1 database
+		list # List D1 databases
+		delete # Delete a D1 database
+		execute # Execute SQL against a D1 database
+		export # Export D1 database schema/data
+		time-travel # Manage D1 point-in-time recovery
+			info # Show D1 time-travel status
+			restore # Restore D1 to a specific point in time
+		migrations # Manage D1 migrations
+			create # Create a migration file
+			list # List migrations
+			apply # Apply pending migrations
+		insights # Inspect D1 query insights
+	deploy # Deploy a Worker
+	delete # Delete a Worker
+	dev # Start local development server
+	deployments # Inspect recent Worker deployments
+		list # List deployments
+		status # Show deployment status
+	dispatch-namespace # Manage dispatch namespaces
+		list # List dispatch namespaces
+		get # Get dispatch namespace details
+		create # Create a dispatch namespace
+		delete # Delete a dispatch namespace
+		rename # Rename a dispatch namespace
+	docs # Open Wrangler documentation
+	hyperdrive # Manage Hyperdrive configurations
+		create # Create Hyperdrive config
+		delete # Delete Hyperdrive config
+		get # Get Hyperdrive config
+		list # List Hyperdrive configs
+		update # Update Hyperdrive config
+	init # Initialize a new Worker project
+	kv # Manage Workers KV
+		namespace # Manage KV namespaces
+			create # Create a namespace
+			list # List namespaces
+			delete # Delete a namespace
+			rename # Rename a namespace
+		key # Manage KV keys
+			put # Set a KV key
+			list # List keys
+			get # Get a KV key
+			delete # Delete a KV key
+		bulk # Bulk KV operations
+			get # Read KV data in bulk
+			put # Write KV data in bulk
+			delete # Delete KV data in bulk
+	login # Log in to Cloudflare
+	logout # Log out of Cloudflare
+	mtls-certificate # Manage mTLS certificates
+		upload # Upload mTLS certificate
+		list # List mTLS certificates
+		delete # Delete mTLS certificate
+	auth # Manage authentication
+		token # Print an API token for Wrangler
+	pages # Manage Cloudflare Pages projects and deployments
+		dev # Run Pages project locally
+		functions # Manage Pages Functions
+			build # Build Pages Functions assets
+		project # Manage Pages projects
+			list # List Pages projects
+			create # Create a Pages project
+			delete # Delete a Pages project
+		deployment # Manage Pages deployments
+			list # List deployments
+			tail # Tail deployment logs
+		deploy # Deploy a Pages project
+		secret # Manage Pages secrets
+			put # Create/update a Pages secret
+			bulk # Bulk upload Pages secrets
+			delete # Delete a Pages secret
+			list # List Pages secrets
+		download # Download Pages assets/config
+			config # Download Pages config
+	pipelines # Manage data pipelines
+		setup # Initialize pipelines for account
+		create # Create a pipeline
+		list # List pipelines
+		get # Get pipeline details
+		update # Update a pipeline
+		delete # Delete a pipeline
+		streams # Manage pipeline streams
+			create # Create stream
+			list # List streams
+			get # Get stream details
+			delete # Delete stream
+		sinks # Manage pipeline sinks
+			create # Create sink
+			list # List sinks
+			get # Get sink details
+			delete # Delete sink
+	queues # Manage Queues
+		list # List queues
+		create # Create a queue
+		update # Update queue settings
+		delete # Delete a queue
+		info # Show queue information
+		consumer # Manage queue consumers
+			add # Add a consumer
+			remove # Remove a consumer
+			http # Manage HTTP consumers
+				add # Add HTTP consumer
+				remove # Remove HTTP consumer
+			worker # Manage Worker consumers
+				add # Add Worker consumer
+				remove # Remove Worker consumer
+		pause-delivery # Pause queue delivery
+		resume-delivery # Resume queue delivery
+		purge # Purge queued messages
+		subscription # Manage queue subscriptions
+			create # Create a subscription
+			list # List subscriptions
+			get # Get subscription
+			delete # Delete subscription
+			update # Update subscription
+	r2 # Manage R2 buckets and objects
+		bucket # Manage R2 buckets
+			create # Create bucket
+			info # Show bucket information
+			delete # Delete bucket
+			list # List buckets
+			catalog # Manage R2 Data Catalog
+				enable # Enable catalog
+				disable # Disable catalog
+				get # Get catalog status
+				compaction # Manage catalog compaction
+					enable # Enable compaction
+					disable # Disable compaction
+				snapshot-expiration # Manage snapshot expiration
+					enable # Enable snapshot expiration
+					disable # Disable snapshot expiration
+			cors # Manage bucket CORS
+				set # Set CORS rules
+				delete # Delete CORS rules
+				list # List CORS rules
+			dev-url # Manage bucket dev URL
+				enable # Enable dev URL
+				disable # Disable dev URL
+				get # Get dev URL status
+			domain # Manage custom domains
+				add # Add custom domain
+				remove # Remove custom domain
+				update # Update custom domain
+				get # Get custom domain
+				list # List custom domains
+			lifecycle # Manage lifecycle policies
+				add # Add lifecycle rule
+				remove # Remove lifecycle rule
+				list # List lifecycle rules
+				set # Set lifecycle policy set
+			lock # Manage bucket lock configuration
+				add # Add lock rule
+				remove # Remove lock rule
+				list # List lock rules
+				set # Set lock rules
+			notification # Manage bucket notifications
+				create # Create notification
+				delete # Delete notification
+				list # List notifications
+			sippy # Manage Sippy migration
+				enable # Enable Sippy
+				disable # Disable Sippy
+				get # Get Sippy config
+		object # Manage bucket objects
+			get # Download object
+			put # Upload object
+			delete # Delete object
+		sql # Query R2 metadata with SQL
+			query # Execute SQL query
+	rollback # Roll back to a previous deployment
+	secret # Manage Worker secrets
+		put # Create/update a secret
+		delete # Delete a secret
+		list # List Worker secrets
+		bulk # Bulk upload secrets
+	secrets-store # Manage Secrets Store
+		secret # Manage store secrets
+			create # Create secret in store
+			update # Update secret in store
+			duplicate # Duplicate secret in store
+			get # Get secret in store
+			delete # Delete secret in store
+			list # List secrets in store
+		store # Manage secret stores
+			create # Create secret store
+			delete # Delete secret store
+			list # List secret stores
+	setup # Configure Wrangler defaults
+	tail # Tail Worker logs
+	telemetry # Manage Wrangler telemetry
+		enable # Enable telemetry
+		disable # Disable telemetry
+		status # Show telemetry status
+	triggers # Manage Worker triggers
+		deploy # Deploy trigger configuration
+	types # Generate TypeScript types for bindings
+	vectorize # Manage Vectorize indexes
+		create # Create index
+		delete # Delete index
+		get # Get index details
+		list # List indexes
+		list-vectors # List vectors
+		query # Query vectors
+		insert # Insert vectors
+		upsert # Upsert vectors
+		get-vectors # Get vectors by ID
+		delete-vectors # Delete vectors by ID
+		info # Show index info
+		create-metadata-index # Create metadata index
+		list-metadata-index # List metadata indexes
+		delete-metadata-index # Delete metadata index
+	versions # Manage Worker versions
+		upload # Upload a new version
+		deploy # Deploy an uploaded version
+		list # List uploaded versions
+		view # View version details
+		secret # Manage version secrets
+			put # Add secret to a version
+			delete # Delete version secret
+			bulk # Bulk add version secrets
+	whoami # Show current authenticated user/account
+	workflows # Manage Workflows
+		list # List workflows
+		describe # Describe workflow
+		delete # Delete workflow
+		trigger # Trigger workflow
+		instances # Manage workflow instances
+			list # List instances
+			describe # Describe instance
+			send-event # Send event to instance
+			terminate # Terminate instance
+			restart # Restart instance
+			pause # Pause instance
+			resume # Resume instance

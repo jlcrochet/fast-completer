@@ -35,7 +35,9 @@ else
     BINDIR ?= $(PREFIX)/bin
 endif
 
-.PHONY: all clean install uninstall debug release test test-clean
+ANALYZE_DIR ?= /tmp/scan-build-fast-completer
+
+.PHONY: all clean install uninstall debug release analyze test test-clean
 
 all: $(TARGET)
 
@@ -73,6 +75,17 @@ debug:
 release:
 	$(MAKE) clean
 	$(MAKE) all CFLAGS="-O3 $(WARNINGS) $(HARDENING) -DNDEBUG" LDFLAGS="-s"
+
+# Static analysis (clang scan-build)
+analyze:
+	@command -v scan-build >/dev/null 2>&1 || { \
+		echo "scan-build not found. Install clang static analyzer tools."; \
+		exit 1; \
+	}
+	rm -rf $(ANALYZE_DIR)
+	mkdir -p $(ANALYZE_DIR)
+	scan-build --status-bugs -o $(ANALYZE_DIR) $(MAKE) clean all CC=clang
+	@echo "scan-build report: $(ANALYZE_DIR)"
 
 # --- Test targets ---
 TEST_DIR = tests

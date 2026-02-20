@@ -1,0 +1,77 @@
+zip # Package and compress files into zip archives
+	-f @bool # Freshen: only update changed files
+	-u @bool # Update: only changed or new files
+	-d @bool # Delete entries in zipfile
+	-m @bool # Move into zipfile (delete OS files)
+	-r @bool # Recurse into directories
+	-R @bool # Recurse current dir and match patterns
+	-j @bool # Junk directory names
+	-0 @bool # Store only (no compression)
+	-1 @bool # Compress faster
+	-2 @bool # Compression level 2
+	-3 @bool # Compression level 3
+	-4 @bool # Compression level 4
+	-5 @bool # Compression level 5
+	-6 @bool # Compression level 6
+	-7 @bool # Compression level 7
+	-8 @bool # Compression level 8
+	-9 @bool # Compress better
+	-q @bool # Quiet operation
+	-v @bool # Verbose operation
+	-c @bool # Add one-line comments for each entry
+	-z @bool # Add zipfile comment
+	-@ @bool # Read names from stdin
+	-o @bool # Make zipfile as old as latest entry
+	-x # Exclude the following names
+	-i # Include only the following names
+	-F @bool # Fix zipfile
+	-D @bool # Do not add directory entries
+	-A @bool # Adjust self-extracting exe offsets
+	-J @bool # Junk zipfile prefix
+	-T @bool # Test zipfile integrity
+	-X @bool # Exclude extra file attributes
+	-y @bool # Store symbolic links as links
+	-e @bool # Encrypt with standard encryption
+	-l @bool # Convert LF to CR LF
+	-n # Don't compress these suffixes
+	-b # Path for temporary archive
+	-t # Exclude files before date (mmddyyyy)
+	-P # Password for encryption
+	-s # Create split archive with given size
+	-Z (store|deflate|bzip2) # Set compression method
+	-h @bool # Show help
+	-h2 @bool # Show extended help
+	-L @bool # Show software license
+	--out # Output to new archive
+	--copy @bool # Select entries in archive to copy
+	--dif @bool # Only include changed or new files
+	-FS @bool # File sync mode
+	-U @bool # Copy mode, select entries to copy
+	-RE @bool # Enable regex matching for brackets
+	-ic @bool # Ignore case of archive entries
+	-db @bool # Display running byte count
+	-dc @bool # Display running entry count
+	-dd @bool # Display dots while processing
+	-dg @bool # Display dots globally for archive
+	-ds # Dot size for progress display
+	-du @bool # Display uncompressed size per entry
+	-dv @bool # Display volume numbers
+	-lf # Open logfile at path
+	-la @bool # Append to existing logfile
+	-li @bool # Include info messages in log
+	-TT # Command to test archive instead of unzip
+	-FF @bool # Try harder to fix zipfile
+	-DF @bool # Difference mode for incremental backups
+	-sf @bool # Show files to operate on and exit
+	-su @bool # Show files with escaped UTF-8 names
+	-sU @bool # Show escaped UTF-8 names instead
+	-sp @bool # Pause after each split closed
+	-sb @bool # Ring bell when split pause
+	-sv @bool # Verbose about creating splits
+	-sc @bool # Show command line arguments and exit
+	-sd @bool # Show debugging during each step
+	-so @bool # Show all available options
+	-nw @bool # No wildcards
+	-ws @bool # Wildcards don't span directory boundaries
+	-MM @bool # Input patterns must match at least one file
+	-FI @bool # Enable reading Unix FIFOs

@@ -354,7 +354,7 @@ fast-completer --lint schemas/aws/aws.fcmps
 
 ### Example Schemas
 
-The `schemas/` directory contains export scripts for 115 popular CLIs. To add a new one, use the scaffolding script:
+The `schemas/` directory contains export scripts for many popular CLIs. To add a new one, use the scaffolding script:
 
 ```bash
 python scripts/new_schema.py <framework> <cli_name> "<description>"
@@ -371,6 +371,7 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | AWS CLI | `schemas/aws/` | argparse |
 | Azure CLI | `schemas/az/` | argparse |
 | Azure Functions Core Tools | `schemas/func/` | hand-maintained |
+| Bazel | `schemas/bazel/` | hand-maintained |
 | bacon | `schemas/bacon/` | clap |
 | bat | `schemas/bat/` | clap |
 | bun | `schemas/bun/` | helptext |
@@ -397,6 +398,7 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | etcdctl | `schemas/etcdctl/` | Cobra |
 | eza | `schemas/eza/` | clap |
 | fd | `schemas/fd/` | clap |
+| Firebase CLI | `schemas/firebase/` | hand-maintained |
 | Flux | `schemas/flux/` | Cobra |
 | Fly.io CLI | `schemas/flyctl/` | Cobra |
 | gcloud CLI | `schemas/gcloud/` | custom |
@@ -406,8 +408,10 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | golangci-lint | `schemas/golangci-lint/` | Cobra |
 | GoReleaser | `schemas/goreleaser/` | Cobra |
 | gpg | `schemas/gpg/` | helptext |
+| Gradle | `schemas/gradle/` | hand-maintained |
 | grype | `schemas/grype/` | Cobra |
 | Helm | `schemas/helm/` | Cobra |
+| Helmfile | `schemas/helmfile/` | hand-maintained |
 | Heroku CLI | `schemas/heroku/` | oclif |
 | htop | `schemas/htop/` | systemd |
 | Hugo | `schemas/hugo/` | Cobra |
@@ -425,6 +429,7 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | Kustomize | `schemas/kustomize/` | Cobra |
 | Kyverno | `schemas/kyverno/` | Cobra |
 | Linkerd | `schemas/linkerd/` | Cobra |
+| Maven | `schemas/mvn/` | hand-maintained |
 | mdbook | `schemas/mdbook/` | clap |
 | MinIO Client | `schemas/mc/` | Cobra |
 | minikube | `schemas/minikube/` | Cobra |
@@ -464,6 +469,7 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | tar | `schemas/tar/` | helptext |
 | Task (go-task) | `schemas/task/` | Cobra |
 | Tekton CLI | `schemas/tkn/` | Cobra |
+| Terragrunt | `schemas/terragrunt/` | hand-maintained |
 | Terraform | `schemas/terraform/` | HashiCorp |
 | tokei | `schemas/tokei/` | clap |
 | Trivy | `schemas/trivy/` | Cobra |

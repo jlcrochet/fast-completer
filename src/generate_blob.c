@@ -640,7 +640,7 @@ static bool parse_list_items(const char *input, const char *path, int line_num,
             }
             if (in_double) {
                 if (escaped) {
-                    char out = c;
+                    char out;
                     switch (c) {
                         case 'n': out = '\n'; break;
                         case 'r': out = '\r'; break;
@@ -2121,10 +2121,16 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     bool result = false;
     BlobGen bg;
     blobgen_init(&bg, desc_mode, desc_max_len);
-    if (bg.error) return false;
+    if (bg.error) {
+        blobgen_free(&bg);
+        return false;
+    }
 
     CommandNode *root = node_create("");
-    if (!root) return false;
+    if (!root) {
+        blobgen_free(&bg);
+        return false;
+    }
     char *root_desc = NULL;
     uint32_t cli_name_off = 0;
     uint32_t *parent_ref = NULL;
@@ -2603,12 +2609,12 @@ bool generate_blob(const char *schema_path, const char *output_path, Description
     }
 
     // Choices section
-    offset = write_string_list_section(blob, off_choices,
-                                       bg.choices_lists, bg.choices_count, choice_off_adj);
+    (void)write_string_list_section(blob, off_choices,
+                                    bg.choices_lists, bg.choices_count, choice_off_adj);
 
     // Members section
-    offset = write_string_list_section(blob, off_members,
-                                       bg.members_lists, bg.members_count, choice_off_adj);
+    (void)write_string_list_section(blob, off_members,
+                                    bg.members_lists, bg.members_count, choice_off_adj);
 
     // Root command
     write_u32(blob + off_root, 0);
@@ -2689,7 +2695,10 @@ cleanup:
 bool lint_schema(const char *schema_path) {
     BlobGen bg;
     blobgen_init(&bg, DESC_SHORT, 0);
-    if (bg.error) return false;
+    if (bg.error) {
+        blobgen_free(&bg);
+        return false;
+    }
 
     CommandNode *root = node_create("");
     if (!root) {

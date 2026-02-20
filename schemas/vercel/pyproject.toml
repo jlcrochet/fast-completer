@@ -1,0 +1,8 @@
+[project]
+name = "vercel-schema-export"
+version = "0.1.0"
+description = "Export Vercel command tree for fast-completer"
+requires-python = ">=3.8"
+
+[project.scripts]
+export-vercel = "export_command_tree:main"

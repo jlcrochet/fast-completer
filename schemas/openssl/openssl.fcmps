@@ -1,0 +1,1085 @@
+openssl # Cryptography and SSL/TLS toolkit
+	-help @bool # Display help
+	-engine # Use engine, possibly a hardware device
+	req # Certificate request management
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-inform (PEM|DER) # CSR input format
+		-outform (PEM|DER) # Output format
+		-new @bool # Generate new certificate request
+		-config # Request template file
+		-section # Config section to use
+		-utf8 @bool # Input characters are UTF8
+		-nameopt # Certificate name printing options
+		-text @bool # Print text form of request
+		-x509 @bool # Output X.509 certificate instead of CSR
+		-x509v1 @bool # Request cert generation with X.509 version 1
+		-CA # Issuer certificate for signing
+		-CAkey # Issuer private key for signing
+		-subj # Set or modify subject of request or cert
+		-subject @bool # Print the subject of the output
+		-days # Number of days certificate is valid for
+		-set_serial # Serial number to use
+		-copy_extensions # Copy extensions from request
+		-extensions # Cert or request extension section
+		-reqexts # Alias for -extensions
+		-addext # Additional cert extension key=value pair
+		-precert @bool # Add poison extension to generated cert
+		-key # Key for signing
+		-keyform # Key file format
+		-pubkey @bool # Output public key
+		-keyout # File to write private key to
+		-passin # Private key password source
+		-passout # Output file pass phrase source
+		-newkey # Generate new key with alg:nbits
+		-pkeyopt # Public key options as opt:value
+		-sigopt # Signature parameter in n:v form
+		-batch @bool # Do not ask anything during generation
+		-verbose @bool # Verbose output
+		-quiet @bool # Terse output
+		-noenc @bool # Don't encrypt private keys
+		-nodes @bool # Don't encrypt private keys (deprecated)
+		-noout @bool # Do not output REQ
+		-newhdr @bool # Output NEW in the header lines
+		-modulus @bool # RSA modulus
+		-verify @bool # Verify self-signature on the request
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-provider-path # Provider load path
+		-provider # Provider to load
+	x509 # X.509 certificate management
+		-help @bool # Display help
+		-in # Certificate or CSR input file
+		-out # Output file
+		-inform (PEM|DER) # Input format
+		-outform (PEM|DER) # Output format
+		-passin # Private key pass phrase source
+		-new @bool # Generate certificate from scratch
+		-x509toreq @bool # Output a certification request
+		-req @bool # Input is a CSR file
+		-copy_extensions # Copy extensions when converting
+		-key # Key for signing
+		-signkey # Same as -key
+		-keyform (PEM|DER|ENGINE) # Key input format
+		-nocert @bool # No cert output
+		-noout @bool # No output except requested printing
+		-text @bool # Print certificate in text form
+		-dateopt (rfc_822|iso_8601) # Datetime format for printing
+		-certopt # Certificate text printing options
+		-fingerprint @bool # Print certificate fingerprint
+		-alias @bool # Print certificate alias
+		-serial @bool # Print serial number
+		-startdate @bool # Print notBefore field
+		-enddate @bool # Print notAfter field
+		-dates @bool # Print both notBefore and notAfter
+		-subject @bool # Print subject DN
+		-issuer @bool # Print issuer DN
+		-nameopt # Certificate name printing options
+		-email @bool # Print email addresses
+		-hash @bool # Print subject hash value
+		-subject_hash @bool # Print subject hash value
+		-issuer_hash @bool # Print issuer hash value
+		-ext # Restrict which X.509 extensions to print
+		-ocspid @bool # Print OCSP hash values
+		-ocsp_uri @bool # Print OCSP responder URLs
+		-purpose @bool # Print certificate purposes
+		-pubkey @bool # Print public key in PEM format
+		-modulus @bool # Print RSA key modulus
+		-checkend # Check if cert expires in N seconds
+		-checkhost # Check certificate matches host
+		-checkemail # Check certificate matches email
+		-checkip # Check certificate matches IP
+		-set_serial # Serial number to use
+		-next_serial @bool # Increment current serial number
+		-days # Days until certificate expires
+		-not_before # Value for notBefore field
+		-not_after # Value for notAfter field
+		-preserve_dates @bool # Preserve existing validity dates
+		-set_issuer # Set or override certificate issuer
+		-set_subject # Set or override certificate subject
+		-subj # Alias for -set_subject
+		-force_pubkey # Key to place in new certificate
+		-clrext @bool # Do not take over extensions from source
+		-extfile # Config file with X509V3 extensions
+		-extensions # Section of extfile to use
+		-sigopt # Signature parameter in n:v form
+		-CA # CA certificate file
+		-CAform (PEM|DER) # CA cert format
+		-CAkey # CA private key
+		-CAkeyform (PEM|DER|ENGINE) # CA key format
+		-CAserial # File tracking CA serial number
+		-CAcreateserial @bool # Create CA serial number file
+		-trustout @bool # Mark output as trusted
+		-setalias # Set certificate alias
+		-clrtrust @bool # Clear all trusted purposes
+		-addtrust # Trust certificate for a given purpose
+		-clrreject @bool # Clear all rejected uses
+		-addreject # Reject certificate for a given purpose
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	genrsa # Generate RSA private key
+		-help @bool # Display help
+		-out # Output file
+		-passout # Output file pass phrase source
+		-primes # Number of primes
+		-verbose @bool # Verbose output
+		-quiet @bool # Terse output
+		-traditional @bool # Use traditional format for private keys
+		-F4 @bool # Use Fermat number F4 for E value
+		-f4 @bool # Use Fermat number F4 for E value
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	genpkey # Generate private key
+		-help @bool # Display help
+		-out # Output file
+		-outpubkey # Output public key file
+		-outform (PEM|DER) # Output format
+		-pass # Output file pass phrase source
+		-algorithm # Public key algorithm
+		-verbose @bool # Output status while generating
+		-quiet @bool # Do not output status
+		-pkeyopt # Public key option as opt:value
+		-config # Load configuration file
+		-genparam @bool # Generate parameters, not key
+		-text @bool # Print private key in text
+		-paramfile # Parameters file
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	enc # Symmetric cipher operations
+		-help @bool # Display help
+		-list @bool # List ciphers
+		-ciphers @bool # Alias for -list
+		-e @bool # Encrypt
+		-d @bool # Decrypt
+		-p @bool # Print the iv/key
+		-P @bool # Print the iv/key and exit
+		-in # Input file
+		-out # Output file
+		-k # Passphrase
+		-kfile # Read passphrase from file
+		-pass # Passphrase source
+		-v @bool # Verbose output
+		-a @bool # Base64 encode/decode
+		-base64 @bool # Same as -a
+		-A @bool # Base64 buffer as single line
+		-nopad @bool # Disable standard block padding
+		-salt @bool # Use salt in KDF
+		-nosalt @bool # Do not use salt in KDF
+		-debug @bool # Print debug info
+		-bufsize # Buffer size
+		-K # Raw key in hex
+		-S # Salt in hex
+		-iv # IV in hex
+		-md # Digest to create key from passphrase
+		-iter # PBKDF2 iteration count
+		-pbkdf2 @bool # Use PBKDF2
+		-none @bool # Don't encrypt
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	dgst # Message digest operations
+		-help @bool # Display help
+		-list @bool # List digests
+		-c @bool # Print digest with separating colons
+		-r @bool # Print digest in coreutils format
+		-out # Output file
+		-hex @bool # Print as hex dump
+		-binary @bool # Print in binary form
+		-xoflen # Output length for XOF algorithms
+		-d @bool # Print debug info
+		-debug @bool # Print debug info
+		-sign # Sign digest using private key
+		-verify # Verify signature using public key
+		-prverify # Verify signature using private key
+		-sigopt # Signature parameter in n:v form
+		-signature # File with signature to verify
+		-hmac # Create hashed MAC with key
+		-mac # Create MAC
+		-macopt # MAC algorithm parameters in n:v form
+		-fips-fingerprint @bool # Compute HMAC with FIPS fingerprint key
+		-passin # Input file pass phrase source
+		-keyform # Key file format
+		-engine # Use engine
+		-engine_impl @bool # Use engine for digest operations
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-provider-path # Provider load path
+		-provider # Provider to load
+	s_client # SSL/TLS client
+		-help @bool # Display help
+		-connect # TCP/IP host:port to connect to
+		-host # Hostname to connect to
+		-port # Port to connect to
+		-bind # Bind local address for connection
+		-proxy # Connect via specified proxy
+		-proxy_user # UserID for proxy authentication
+		-proxy_pass # Proxy authentication password source
+		-unix # Connect over Unix-domain socket
+		-4 @bool # Use IPv4 only
+		-6 @bool # Use IPv6 only
+		-servername # Set TLS extension servername (SNI)
+		-noservername @bool # Do not send SNI extension
+		-cert # Client certificate file
+		-certform (PEM|DER) # Client certificate format
+		-cert_chain # Client certificate chain file
+		-build_chain @bool # Build client certificate chain
+		-key # Private key file
+		-keyform (PEM|DER|ENGINE) # Key format
+		-pass # Private key pass phrase source
+		-verify # Turn on peer certificate verification
+		-nameopt # Certificate name printing options
+		-CApath # PEM format directory of CAs
+		-CAfile # PEM format file of CAs
+		-CAstore # URI to store of CAs
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-requestCAfile # PEM file of CA names to send to server
+		-reconnect @bool # Re-make connection with same Session-ID
+		-sess_out # File to write SSL session to
+		-sess_in # File to read SSL session from
+		-crlf @bool # Convert LF to CRLF
+		-quiet @bool # No s_client output
+		-ign_eof @bool # Ignore input eof
+		-no_ign_eof @bool # Don't ignore input eof
+		-starttls (smtp|pop3|imap|ftp|xmpp|xmpp-server|telnet|ldap|lmtp|nntp|postgres|sieve|mysql) # Use STARTTLS before TLS
+		-brief @bool # Brief summary of connection parameters
+		-prexit @bool # Print session info on exit
+		-showcerts @bool # Show all certificates sent by server
+		-debug @bool # Extra output
+		-msg @bool # Show protocol messages
+		-msgfile # File for -msg output
+		-state @bool # Print SSL states
+		-nbio @bool # Use non-blocking IO
+		-alpn # ALPN protocols (comma-separated)
+		-cipher # TLSv1.2 cipher list
+		-ciphersuites # TLSv1.3 ciphersuites
+		-min_protocol # Minimum protocol version
+		-max_protocol # Maximum protocol version
+		-tls1 @bool # Use TLSv1
+		-tls1_1 @bool # Use TLSv1.1
+		-tls1_2 @bool # Use TLSv1.2
+		-tls1_3 @bool # Use TLSv1.3
+		-dtls @bool # Use any DTLS version
+		-dtls1 @bool # Use DTLSv1
+		-dtls1_2 @bool # Use DTLSv1.2
+		-no_ssl3 @bool # Disable SSLv3
+		-no_tls1 @bool # Disable TLSv1
+		-no_tls1_1 @bool # Disable TLSv1.1
+		-no_tls1_2 @bool # Disable TLSv1.2
+		-no_tls1_3 @bool # Disable TLSv1.3
+		-bugs @bool # Turn on SSL bug compatibility
+		-no_comp @bool # Disable SSL/TLS compression
+		-comp @bool # Use SSL/TLS-level compression
+		-no_ticket @bool # Disable session tickets
+		-serverpref @bool # Use server cipher preferences
+		-no_renegotiation @bool # Disable all renegotiation
+		-legacy_renegotiation @bool # Enable legacy renegotiation
+		-sigalgs # Signature algorithms (colon-separated)
+		-groups # Groups to advertise (colon-separated)
+		-curves # Groups to advertise (colon-separated)
+		-named_curve # Elliptic curve for ECDHE
+		-ct @bool # Request and parse SCTs
+		-noct @bool # Do not request or parse SCTs
+		-status @bool # Send certificate status request (OCSP stapling)
+		-tlsextdebug @bool # Hex dump of all TLS extensions received
+		-keylogfile # Write TLS secrets to file
+		-early_data # File to send as early data
+		-enable_pha @bool # Enable post-handshake authentication
+		-verify_return_error @bool # Close connection on verification error
+		-verify_quiet @bool # Restrict verify output to errors
+		-async @bool # Support asynchronous operation
+		-maxfraglen # Maximum fragment length negotiation
+		-psk_identity # PSK identity
+		-psk # PSK in hex
+		-psk_session # File to read PSK SSL session from
+		-CRL # CRL file to use
+		-CRLform (PEM|DER) # CRL format
+		-crl_download @bool # Download CRLs from distribution points
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	s_server # SSL/TLS server
+		-help @bool # Display help
+		-port # TCP/IP port to listen on
+		-accept # Host and port to listen on
+		-unix # Unix domain socket to accept on
+		-unlink @bool # Unlink existing socket first
+		-4 @bool # Use IPv4 only
+		-6 @bool # Use IPv6 only
+		-context # Set session ID context
+		-cert # Server certificate file
+		-certform (PEM|DER) # Server certificate format
+		-cert_chain # Server certificate chain file
+		-build_chain @bool # Build server certificate chain
+		-key # Private key file
+		-keyform # Key format
+		-pass # Private key pass phrase source
+		-dcert # Second server certificate (usually DSA)
+		-dkey # Second private key (usually DSA)
+		-dpass # Second key pass phrase source
+		-dhparam # DH parameters file
+		-CAfile # PEM format file of CAs
+		-CApath # PEM format directory of CAs
+		-CAstore # URI to store of CAs
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-nocert @bool # Don't use any certificates
+		-verify # Turn on peer certificate verification
+		-Verify # Peer verification, must have a cert
+		-nameopt # Certificate name printing options
+		-servername # Servername for TLS extension
+		-servername_fatal @bool # Fatal alert on servername mismatch
+		-crlf @bool # Convert LF to CRLF
+		-quiet @bool # No server output
+		-www @bool # Respond to GET / with status page
+		-WWW @bool # Respond to GET with file
+		-HTTP @bool # Like -WWW but with HTTP headers
+		-brief @bool # Brief summary of connection
+		-debug @bool # Print more output
+		-msg @bool # Show protocol messages
+		-msgfile # File for -msg output
+		-state @bool # Print SSL states
+		-nbio @bool # Use non-blocking IO
+		-async @bool # Operate in asynchronous mode
+		-naccept # Terminate after N connections
+		-keylogfile # Write TLS secrets to file
+		-id_prefix # Session ID prefix
+		-status @bool # Provide certificate status response
+		-status_verbose @bool # More output in status callback
+		-status_timeout # Status request responder timeout
+		-status_url # Status request fallback URL
+		-status_file # DER encoded OCSP response file
+		-alpn # ALPN protocols (comma-separated)
+		-cipher # TLSv1.2 cipher list
+		-ciphersuites # TLSv1.3 ciphersuites
+		-min_protocol # Minimum protocol version
+		-max_protocol # Maximum protocol version
+		-tls1 @bool # Use TLSv1
+		-tls1_1 @bool # Use TLSv1.1
+		-tls1_2 @bool # Use TLSv1.2
+		-tls1_3 @bool # Use TLSv1.3
+		-dtls @bool # Use any DTLS version
+		-dtls1 @bool # Use DTLSv1
+		-dtls1_2 @bool # Use DTLSv1.2
+		-no_ssl3 @bool # Disable SSLv3
+		-no_tls1 @bool # Disable TLSv1
+		-no_tls1_1 @bool # Disable TLSv1.1
+		-no_tls1_2 @bool # Disable TLSv1.2
+		-no_tls1_3 @bool # Disable TLSv1.3
+		-bugs @bool # Turn on SSL bug compatibility
+		-no_comp @bool # Disable SSL/TLS compression
+		-comp @bool # Use SSL/TLS-level compression
+		-no_ticket @bool # Disable session tickets
+		-serverpref @bool # Use server cipher preferences
+		-no_renegotiation @bool # Disable all renegotiation
+		-legacy_renegotiation @bool # Enable legacy renegotiation
+		-no_dhe @bool # Disable ephemeral DH
+		-no_resumption_on_reneg @bool # Disallow resumption on renegotiation
+		-sigalgs # Signature algorithms (colon-separated)
+		-groups # Groups to advertise (colon-separated)
+		-curves # Groups to advertise (colon-separated)
+		-named_curve # Elliptic curve for ECDHE
+		-no_cache @bool # Disable session cache
+		-ext_cache @bool # Use external cache only
+		-verify_return_error @bool # Close connection on verification error
+		-verify_quiet @bool # No verify output except errors
+		-num_tickets # Number of TLSv1.3 session tickets
+		-anti_replay @bool # Enable anti-replay protection
+		-no_anti_replay @bool # Disable anti-replay protection
+		-early_data @bool # Attempt to read early data
+		-max_early_data # Maximum bytes of early data advertised
+		-listen @bool # Listen for DTLS ClientHello with cookie
+		-CRL # CRL file to use
+		-CRLform (PEM|DER) # CRL format
+		-crl_download @bool # Download CRLs from distribution points
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	pkcs12 # PKCS#12 file management
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-passin # Input file pass phrase source
+		-passout # Output file pass phrase source
+		-password # PKCS#12 import/export password source
+		-twopass @bool # Separate MAC and encryption passwords
+		-nokeys @bool # Don't output private keys
+		-nocerts @bool # Don't output certificates
+		-noout @bool # Don't output anything, just verify
+		-legacy @bool # Use legacy encryption
+		-export @bool # Create PKCS12 file
+		-inkey # Private key file
+		-certfile # Extra certificates for output
+		-passcerts # Certificate file pass phrase source
+		-chain @bool # Build and add certificate chain
+		-untrusted # Untrusted certificates for chain building
+		-CAfile # PEM format file of CAs
+		-CApath # PEM format directory of CAs
+		-CAstore # URI to store of CAs
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-name # Use name as friendly name
+		-caname # Use name as CA friendly name
+		-CSP # Microsoft CSP name
+		-LMK @bool # Add local machine keyset attribute
+		-keyex @bool # Set key type to MS key exchange
+		-keysig @bool # Set key type to MS key signature
+		-keypbe # Private key PBE algorithm
+		-certpbe # Certificate PBE algorithm
+		-descert @bool # Encrypt output with 3DES
+		-macalg # Digest algorithm for MAC
+		-iter # Iteration count for encryption and MAC
+		-noiter @bool # Don't use encryption iteration
+		-nomaciter @bool # Don't use MAC iteration
+		-nomac @bool # Don't generate MAC
+		-info @bool # Print info about PKCS#12 structure
+		-nomacver @bool # Don't verify integrity MAC
+		-clcerts @bool # Only output client certificates
+		-cacerts @bool # Only output CA certificates
+		-noenc @bool # Don't encrypt private keys
+		-nodes @bool # Don't encrypt private keys (deprecated)
+		-jdktrust # Mark cert as trusted for JDK compatibility
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	ca # Certificate authority management
+		-help @bool # Display help
+		-verbose @bool # Verbose output
+		-quiet @bool # Terse output
+		-in # Input cert request file
+		-inform (PEM|DER) # CSR input format
+		-out # Output file
+		-outdir # Output directory for certs
+		-config # Configuration file
+		-name # CA definition to use
+		-section # Alias for -name
+		-policy # CA policy to support
+		-batch @bool # Don't ask questions
+		-notext @bool # Do not print generated certificate
+		-ss_cert # Self-signed cert to sign
+		-spkac # DN and signed public key file
+		-subj # Use arg instead of request subject
+		-utf8 @bool # Input characters are UTF8
+		-create_serial @bool # Create random serial if reading fails
+		-rand_serial @bool # Always create random serial
+		-startdate # Value for notBefore field
+		-not_before # Alias for -startdate
+		-enddate # Value for notAfter field
+		-not_after # Alias for -enddate
+		-days # Number of days to certify for
+		-extensions # Extension section
+		-extfile # Configuration file with X509v3 extensions
+		-preserveDN @bool # Don't re-order the DN
+		-noemailDN @bool # Don't add EMAIL to DN
+		-md # Digest algorithm to use
+		-keyfile # CA private key
+		-keyform # Private key file format
+		-passin # Key and cert pass phrase source
+		-key # Key to decrypt private key
+		-cert # CA certificate
+		-certform (PEM|DER) # Certificate input format
+		-selfsign @bool # Sign with key associated with cert
+		-sigopt # Signature parameter in n:v form
+		-gencrl @bool # Generate a new CRL
+		-crlexts # CRL extension section
+		-crl_reason # Revocation reason
+		-crl_hold # Hold instruction OID
+		-crl_compromise # Compromise time for keyCompromise
+		-crl_CA_compromise # Compromise time for CACompromise
+		-crldays # Days until next CRL is due
+		-crlhours # Hours until next CRL is due
+		-crlsec # Seconds until next CRL is due
+		-revoke # Revoke a certificate
+		-valid # Add valid DB entry about a cert
+		-status # Show cert status by serial number
+		-updatedb @bool # Update DB for expired certs
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	verify # Certificate verification
+		-help @bool # Display help
+		-verbose @bool # Print extra information
+		-nameopt # Certificate name printing options
+		-trusted # File of trusted certificates
+		-CAfile # File of trusted certificates
+		-CApath # Directory of trusted certificates
+		-CAstore # URI to store of trusted certificates
+		-no-CAfile @bool # Do not load default trusted certificates file
+		-no-CApath @bool # Do not load from default trusted directory
+		-no-CAstore @bool # Do not load from default trusted store
+		-untrusted # File of untrusted certificates
+		-CRLfile # CRL file to load
+		-crl_download @bool # Download CRL via CDP entries
+		-show_chain @bool # Display certificate chain info
+		-policy # Add policy to acceptable set
+		-purpose # Certificate chain purpose
+		-verify_name # Verification policy name
+		-verify_depth # Chain depth limit
+		-auth_level # Chain authentication security level
+		-attime # Verification epoch time
+		-verify_hostname # Expected peer hostname
+		-verify_email # Expected peer email
+		-verify_ip # Expected peer IP address
+		-ignore_critical @bool # Permit unhandled critical extensions
+		-crl_check @bool # Check leaf certificate revocation
+		-crl_check_all @bool # Check full chain revocation
+		-policy_check @bool # Perform RFC 5280 policy checks
+		-x509_strict @bool # Disable certificate compatibility workarounds
+		-partial_chain @bool # Accept chains anchored by intermediate CAs
+		-no_check_time @bool # Ignore certificate validity time
+		-allow_proxy_certs @bool # Allow use of proxy certificates
+		-vfyopt # Verification parameter in n:v form
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	version # Display OpenSSL version information
+		-help @bool # Display help
+		-a @bool # Show all data
+		-b @bool # Show build date
+		-d @bool # Show configuration directory
+		-e @bool # Show engines directory
+		-m @bool # Show modules directory
+		-f @bool # Show compiler flags
+		-o @bool # Show internal datatype options
+		-p @bool # Show target build platform
+		-r @bool # Show random seeding options
+		-v @bool # Show library version
+		-c @bool # Show CPU settings info
+	rand # Generate pseudo-random bytes
+		-help @bool # Display help
+		-out # Output file
+		-base64 @bool # Base64 encode output
+		-hex @bool # Hex encode output
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	passwd # Compute password hashes
+		-help @bool # Display help
+		-in # Read passwords from file
+		-noverify @bool # Never verify when reading from terminal
+		-stdin @bool # Read passwords from stdin
+		-quiet @bool # No warnings
+		-table @bool # Format output as table
+		-reverse @bool # Switch table columns
+		-salt # Use provided salt
+		-6 @bool # SHA512-based password algorithm
+		-5 @bool # SHA256-based password algorithm
+		-apr1 @bool # MD5-based password algorithm, Apache variant
+		-1 @bool # MD5-based password algorithm
+		-aixmd5 @bool # AIX MD5-based password algorithm
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-provider-path # Provider load path
+		-provider # Provider to load
+	ec # EC key processing
+		-help @bool # Display help
+		-in # Input file
+		-inform (PEM|DER) # Input format
+		-out # Output file
+		-outform (PEM|DER) # Output format
+		-pubin @bool # Expect public key in input
+		-passin # Input file pass phrase source
+		-passout # Output file pass phrase source
+		-check @bool # Check key consistency
+		-param_enc # EC parameters encoding
+		-conv_form # Point conversion form
+		-noout @bool # Don't print key out
+		-text @bool # Print the key
+		-param_out @bool # Print elliptic curve parameters
+		-pubout @bool # Output public key, not private
+		-no_public @bool # Exclude public key from private key
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	rsa # RSA key processing
+		-help @bool # Display help
+		-in # Input file
+		-inform (PEM|DER) # Input format
+		-out # Output file
+		-outform (PEM|DER) # Output format
+		-pubin @bool # Expect public key in input
+		-RSAPublicKey_in @bool # Input is RSAPublicKey
+		-passin # Input file pass phrase source
+		-passout # Output file pass phrase source
+		-check @bool # Verify key consistency
+		-noout @bool # Don't print key out
+		-text @bool # Print key in text
+		-modulus @bool # Print RSA key modulus
+		-pubout @bool # Output public key
+		-RSAPublicKey_out @bool # Output is RSAPublicKey
+		-traditional @bool # Use traditional format for private keys
+		-pvk-strong @bool # Enable strong PVK encoding
+		-pvk-weak @bool # Enable weak PVK encoding
+		-pvk-none @bool # Don't enforce PVK encoding
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	pkey # Public or private key processing
+		-help @bool # Display help
+		-in # Input key
+		-inform # Key input format
+		-out # Output file
+		-outform (PEM|DER) # Output encoding format
+		-pubin @bool # Read only public components from input
+		-passin # Key input pass phrase source
+		-passout # Output PEM file pass phrase source
+		-traditional @bool # Use traditional format for PEM output
+		-pubout @bool # Restrict output to public components
+		-noout @bool # Do not output key in encoded form
+		-text @bool # Output key components in plaintext
+		-text_pub @bool # Output only public key components in text
+		-check @bool # Check key consistency
+		-pubcheck @bool # Check public key consistency
+		-ec_conv_form # EC point conversion form
+		-ec_param_enc # EC parameters encoding
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	crl # Certificate revocation list management
+		-help @bool # Display help
+		-in # Input file
+		-inform (PEM|DER) # CRL input format
+		-out # Output file
+		-outform (PEM|DER) # Output format
+		-key # CRL signing private key
+		-keyform (PEM|DER) # Private key format
+		-dateopt (rfc_822|iso_8601) # Datetime format for printing
+		-text @bool # Print text form
+		-verify @bool # Verify CRL signature
+		-hash @bool # Print hash value
+		-hash_old @bool # Print old-style (MD5) hash value
+		-nameopt # Certificate name printing options
+		-issuer @bool # Print issuer DN
+		-lastupdate @bool # Print lastUpdate field
+		-nextupdate @bool # Print nextUpdate field
+		-noout @bool # No CRL output
+		-fingerprint @bool # Print CRL fingerprint
+		-crlnumber @bool # Print CRL number
+		-badsig @bool # Corrupt last byte of CRL signature
+		-gendelta # Other CRL to compare to
+		-CApath # Verify CRL using certificates in dir
+		-CAfile # Verify CRL using certificates in file
+		-CAstore # Verify CRL using certificates in store
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-provider-path # Provider load path
+		-provider # Provider to load
+	ocsp # Online Certificate Status Protocol
+		-help @bool # Display help
+		-url # Responder URL
+		-host # TCP/IP hostname:port
+		-port # Port to run responder on
+		-path # Path for OCSP request
+		-proxy # HTTP proxy to use
+		-no_proxy # Servers to not proxy
+		-out # Output file
+		-timeout # Connection timeout in seconds
+		-cert # Certificate to check
+		-serial # Serial number to check
+		-issuer # Issuer certificate
+		-signkey # Private key to sign request with
+		-signer # Certificate to sign request with
+		-sign_other # Additional certificates for signed request
+		-nonce @bool # Add OCSP nonce to request
+		-no_nonce @bool # Don't add OCSP nonce
+		-noverify @bool # Don't verify response
+		-no_signature_verify @bool # Don't check response signature
+		-no_cert_verify @bool # Don't check signing certificate
+		-no_chain @bool # Don't chain verify response
+		-no_cert_checks @bool # Don't do additional checks on signing cert
+		-no_explicit @bool # Don't explicitly check chain
+		-no_intern @bool # Don't search response for signer
+		-trust_other @bool # Don't verify additional certificates
+		-text @bool # Print text form of request and response
+		-req_text @bool # Print text form of request
+		-resp_text @bool # Print text form of response
+		-reqin # File with DER-encoded request
+		-reqout # Output file for DER-encoded request
+		-respin # File with DER-encoded response
+		-respout # Output file for DER-encoded response
+		-verify_other # Additional certificates for verification
+		-VAfile # Validator certificates file
+		-validity_period # Maximum validity discrepancy in seconds
+		-status_age # Maximum status age in seconds
+		-resp_no_certs @bool # Don't include any certificates in response
+		-no_certs @bool # Don't include certificates in request
+		-badsig @bool # Corrupt last byte of response signature
+		-CA # CA certificates file
+		-rsigner # Responder certificate for signing
+		-rkey # Responder key for signing
+		-passin # Responder key pass phrase source
+		-rother # Other certificates in response
+		-rmd # Digest algorithm for response signature
+		-rsigopt # Response signature parameter in n:v form
+		-header # Key=value header to add
+		-index # Certificate status index file
+		-nmin # Minutes before next update
+		-ndays # Days before next update
+		-nrequest # Number of requests to accept
+		-multi # Run multiple responder processes
+		-CAfile # Trusted certificates file
+		-CApath # Trusted certificates directory
+		-CAstore # Trusted certificates store URI
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-ignore_err @bool # Ignore OCSP request/response errors
+		-provider-path # Provider load path
+		-provider # Provider to load
+	cms # Cryptographic Message Syntax operations
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-config # Configuration file
+		-encrypt @bool # Encrypt message
+		-decrypt @bool # Decrypt encrypted message
+		-sign @bool # Sign message
+		-verify @bool # Verify signed message
+		-resign @bool # Resign a signed message
+		-sign_receipt @bool # Generate signed receipt
+		-verify_receipt # Verify receipts
+		-digest # Sign pre-computed digest in hex
+		-digest_create @bool # Create DigestedData object
+		-digest_verify @bool # Verify DigestedData object
+		-compress @bool # Create CompressedData object
+		-uncompress @bool # Uncompress CompressedData object
+		-EncryptedData_encrypt @bool # Create EncryptedData with symmetric key
+		-EncryptedData_decrypt @bool # Decrypt EncryptedData with symmetric key
+		-data_create @bool # Create CMS Data object
+		-data_out @bool # Copy CMS Data to output
+		-cmsout @bool # Output CMS structure
+		-inform (SMIME|PEM|DER) # Input format
+		-outform (SMIME|PEM|DER) # Output format
+		-rctform (PEM|DER) # Receipt file format
+		-stream @bool # Enable CMS streaming
+		-indef @bool # Same as -stream
+		-noindef @bool # Disable CMS streaming
+		-binary @bool # Treat input as binary
+		-crlfeol @bool # Use CRLF as EOL termination
+		-asciicrlf @bool # Perform CRLF canonicalization when signing
+		-secretkey # Hex-encoded key for decrypt/encrypt
+		-secretkeyid # Identity of the secret key
+		-inkey # Input private key
+		-passin # Input file pass phrase source
+		-keyopt # Public key parameters as n:v pairs
+		-keyform # Input private key format
+		-recip # Recipient cert file
+		-originator # Originator certificate file
+		-wrap # Key wrap algorithm
+		-aes128-wrap @bool # Use AES128 to wrap key
+		-aes192-wrap @bool # Use AES192 to wrap key
+		-aes256-wrap @bool # Use AES256 to wrap key
+		-des3-wrap @bool # Use 3DES-EDE to wrap key
+		-debug_decrypt @bool # Disable MMA protection
+		-md # Digest algorithm for signing
+		-signer # Signer certificate file
+		-certfile # Extra signer and intermediate CA certificates
+		-cades @bool # Include signingCertificate attribute
+		-nodetach @bool # Use opaque signing
+		-nocerts @bool # Don't include signer certificate
+		-noattr @bool # Don't include signed attributes
+		-nosmimecap @bool # Omit SMIMECapabilities attribute
+		-no_signing_time @bool # Omit signing time attribute
+		-content # Supply content for detached signature
+		-no_content_verify @bool # Do not verify content signatures
+		-no_attr_verify @bool # Do not verify attribute signatures
+		-nosigs @bool # Don't verify message signature
+		-noverify @bool # Don't verify signer certificate
+		-nointern @bool # Don't search message for signer
+		-verify_retcode @bool # Exit non-zero on verification failure
+		-CAfile # Trusted certificates file
+		-CApath # Trusted certificates directory
+		-CAstore # Trusted certificates store URI
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-keyid @bool # Use subject key identifier
+		-econtent_type # OID for external content
+		-text @bool # Include or delete text MIME headers
+		-certsout # Certificate output file
+		-to # To address
+		-from # From address
+		-subject # Subject
+		-noout @bool # Don't output parsed CMS structure
+		-print @bool # Print all fields of CMS structure
+		-nameopt # String printing options for -print
+		-receipt_request_print @bool # Print CMS receipt request
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	smime # S/MIME message handling
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-inform (SMIME|PEM|DER) # Input format
+		-outform (SMIME|PEM|DER) # Output format
+		-inkey # Input private key
+		-keyform # Input private key format
+		-encrypt @bool # Encrypt message
+		-decrypt @bool # Decrypt encrypted message
+		-sign @bool # Sign message
+		-resign @bool # Resign a signed message
+		-verify @bool # Verify signed message
+		-pk7out @bool # Output PKCS#7 structure
+		-stream @bool # Enable CMS streaming
+		-indef @bool # Same as -stream
+		-noindef @bool # Disable CMS streaming
+		-config # Configuration file
+		-passin # Input file pass phrase source
+		-md # Digest algorithm for signing
+		-nointern @bool # Don't search message for signer
+		-nodetach @bool # Use opaque signing
+		-noattr @bool # Don't include signed attributes
+		-binary @bool # Don't translate message to text
+		-signer # Signer certificate file
+		-content # Supply content for detached signature
+		-nocerts @bool # Don't include signer certificate
+		-nosigs @bool # Don't verify message signature
+		-noverify @bool # Don't verify signer certificate
+		-certfile # Extra certificates for signing/verification
+		-recip # Recipient certificate file
+		-to # To address
+		-from # From address
+		-subject # Subject
+		-text @bool # Include or delete text MIME headers
+		-nosmimecap @bool # Omit SMIMECapabilities attribute
+		-CApath # Trusted certificates directory
+		-CAfile # Trusted certificates file
+		-CAstore # Trusted certificates store URI
+		-no-CAfile @bool # Do not load default certificates file
+		-no-CApath @bool # Do not load from default certificates directory
+		-no-CAstore @bool # Do not load from default certificates store
+		-nochain @bool # Don't use certs in message as untrusted CAs
+		-crlfeol @bool # Use CRLF as EOL termination
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	pkeyutl # Public key algorithm utility
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-sign @bool # Sign input data with private key
+		-verify @bool # Verify with public key
+		-encrypt @bool # Encrypt input with public key
+		-decrypt @bool # Decrypt input with private key
+		-derive @bool # Derive shared secret
+		-decap @bool # Decapsulate shared secret
+		-encap @bool # Encapsulate shared secret
+		-config # Configuration file
+		-inkey # Input key
+		-pubin @bool # Input key is a public key
+		-passin # Input file pass phrase source
+		-peerkey # Peer key file for key derivation
+		-peerform (PEM|DER|ENGINE) # Peer key format
+		-certin @bool # Input is a cert with public key
+		-rev @bool # Reverse order of input buffer
+		-sigfile # Signature file for verify
+		-keyform (PEM|DER|ENGINE) # Private key format
+		-rawin @bool # Input data is not yet hashed
+		-digest # Digest algorithm for raw input
+		-pkeyopt # Public key options as opt:value
+		-kdf # KDF algorithm
+		-kdflen # KDF algorithm output length
+		-secret # File to store secret on encapsulation
+		-asn1parse @bool # Parse output as ASN.1
+		-hexdump @bool # Hex dump output
+		-verifyrecover @bool # Verify and recover original data
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-engine_impl @bool # Use engine for crypto operations
+		-provider-path # Provider load path
+		-provider # Provider to load
+	dhparam # DH parameter generation and management
+		-help @bool # Display help
+		-in # Input file
+		-inform (PEM|DER) # Input format
+		-out # Output file
+		-outform (PEM|DER) # Output format
+		-check @bool # Check DH parameters
+		-dsaparam @bool # Read/generate DSA parameters, convert to DH
+		-text @bool # Print text form of DH parameters
+		-noout @bool # Don't output DH parameters
+		-2 @bool # Use 2 as generator value
+		-3 @bool # Use 3 as generator value
+		-5 @bool # Use 5 as generator value
+		-verbose @bool # Verbose output
+		-quiet @bool # Terse output
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	ecparam # EC parameter generation and manipulation
+		-help @bool # Display help
+		-list_curves @bool # List all curve short names
+		-in # Input file
+		-inform (PEM|DER) # Input format
+		-out # Output file
+		-outform (PEM|DER) # Output format
+		-genkey @bool # Generate EC key
+		-text @bool # Print EC parameters in text form
+		-noout @bool # Do not print EC parameters
+		-param_enc # EC parameters encoding
+		-check @bool # Validate EC parameters
+		-check_named @bool # Check named curve parameters unmodified
+		-no_seed @bool # Don't use seed for explicit parameters
+		-name # EC parameters short name
+		-conv_form # Point conversion form
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	asn1parse # ASN.1 parsing tool
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file for DER encoded data
+		-inform (PEM|DER) # Input format
+		-offset # Offset into file
+		-length # Length of section in file
+		-dump @bool # Hex dump unknown data
+		-dlimit # Dump first N bytes of unknown data
+		-strparse # Offset to parse ASN.1 at
+		-genstr # String to generate ASN.1 structure from
+		-genconf # Config file for ASN.1 generation
+		-strictpem @bool # Do not allow non-PEM data
+		-item # Library item to parse
+	ciphers # Display available SSL/TLS ciphers
+		-help @bool # Display help
+		-v @bool # Verbose listing of each cipher
+		-V @bool # Verbose with cipher suite code
+		-s @bool # Only supported ciphers
+		-tls1 @bool # TLSv1 ciphers
+		-tls1_1 @bool # TLSv1.1 ciphers
+		-tls1_2 @bool # TLSv1.2 ciphers
+		-tls1_3 @bool # TLSv1.3 ciphers
+		-stdname @bool # Show standard cipher name
+		-psk @bool # Include ciphers requiring PSK
+		-srp @bool # Include ciphers requiring SRP
+		-convert # Convert standard cipher name to OpenSSL name
+	speed # Benchmark cryptographic algorithms
+		-help @bool # Display help
+		-elapsed @bool # Measure time in real time
+		-evp # EVP algorithm to test
+		-hmac # HMAC using specified digest
+		-cmac # CMAC using specified cipher
+		-decrypt @bool # Time decryption instead of encryption
+		-aead @bool # Benchmark in AEAD mode
+		-multi # Run N benchmarks in parallel
+		-async_jobs # Number of async jobs
+		-misalign # Misalign buffers by N bytes
+		-mr @bool # Produce machine-readable output
+		-mb @bool # Multi-block mode for EVP
+		-primes # Number of RSA primes
+		-seconds # Duration of benchmark in seconds
+		-bytes # Size of buffer for speed test
+		-rand # Load files into random number generator
+		-writerand # Write random data to file
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	pkcs8 # PKCS#8 private key conversion
+		-help @bool # Display help
+		-in # Input file
+		-out # Output file
+		-inform (PEM|DER) # Input format
+		-outform (PEM|DER) # Output format
+		-passin # Input file pass phrase source
+		-passout # Output file pass phrase source
+		-topk8 @bool # Read traditional format private key, write PKCS#8
+		-noiter @bool # Don't use encryption iteration
+		-nocrypt @bool # Don't encrypt private key
+		-traditional @bool # Use traditional format for private keys
+		-v2 # PKCS#5 v2.0 encryption algorithm
+		-v2prf # PKCS#5 v2.0 PRF algorithm
+		-v1 # PKCS#5 v1.5 or PKCS#12 encryption algorithm
+		-scrypt @bool # Use scrypt for private key encryption
+		-scrypt_N # Set scrypt N parameter
+		-scrypt_r # Set scrypt r parameter
+		-scrypt_p # Set scrypt p parameter
+		-engine # Use engine
+		-provider-path # Provider load path
+		-provider # Provider to load
+	list # List algorithms and features
+		-help @bool # Display help
+		-1 @bool # List one entry per line
+		-verbose @bool # Verbose listing
+		-commands @bool # List standard commands
+		-digest-commands @bool # List message digest commands
+		-digest-algorithms @bool # List message digest algorithms
+		-cipher-commands @bool # List cipher commands
+		-cipher-algorithms @bool # List cipher algorithms
+		-mac-algorithms @bool # List MAC algorithms
+		-kdf-algorithms @bool # List KDF algorithms
+		-public-key-algorithms @bool # List public key algorithms
+		-public-key-methods @bool # List public key methods
+		-kem-algorithms @bool # List KEM algorithms
+		-signature-algorithms @bool # List signature algorithms
+		-disabled @bool # List disabled features
+		-missing-help @bool # List missing help strings
+		-objects @bool # List objects
+		-provider-path # Provider load path
+		-provider # Provider to load
+	rehash # Create hash symlinks for certificate directory
+		-help @bool # Display help
+		-old @bool # Use old-style hash
+		-n @bool # Don't actually do anything
+		-v @bool # Verbose output
+	prime # Compute primes
+		-help @bool # Display help
+		-hex @bool # Hex output
+		-generate @bool # Generate a prime
+		-bits # Size of prime in bits
+		-safe @bool # Generate safe prime
+		-checks # Number of checks to perform
+	storeutl # Store utility
+		-help @bool # Display help
+		-out # Output file
+		-noout @bool # Don't print objects
+		-passin # Password source
+		-text @bool # Print objects in text form
+		-engine # Use engine
+		-r @bool # Fetch objects recursively
+		-certs @bool # Only list certificates
+		-keys @bool # Only list keys
+		-crls @bool # Only list CRLs
+		-criterion # Search criterion
+		-searchfor (certs|keys|crls) # Search for type
+		-subject # Search by subject
+		-issuer # Search by issuer
+		-serial # Search by serial number
+		-alias # Search by alias
+		-fingerprint # Search by fingerprint
+		-provider-path # Provider load path
+		-provider # Provider to load

@@ -176,10 +176,14 @@ static uint32_t g_short_total_entries = 0;
 // Working buffers (allocated based on header values)
 static char *path_buf = NULL;
 
-// Completion context (set once per complete() call)
-static const char **g_spans = NULL;
-static size_t *g_arg_lens = NULL;
-static int g_span_count = 0;
+// Per-invocation completion context (threaded through completion helpers).
+typedef struct {
+    const char **spans;
+    const size_t *arg_lens;
+    int span_count;          // Number of parsed spans excluding the completion token.
+    bool used_set_ready;     // Lazy-init state for used option sets.
+    bool used_short_ready;   // Lazy-init state for short option bitmap.
+} CompletionContext;
 
 // Hash set for O(1) used-param lookups (lazily built only when completing params)
 // For small span counts, linear scan is faster (avoids 4KB memset overhead)
@@ -187,9 +191,7 @@ static int g_span_count = 0;
 #define USED_SET_SIZE 256  // Power of 2, must be >= 2*MAX_SPANS
 typedef struct { const char *p; size_t n; } UsedEntry;
 static UsedEntry g_used_set[USED_SET_SIZE];
-static bool g_used_set_ready = false;
 static bool g_used_short[256];
-static bool g_used_short_ready = false;
 
 // Emitted option de-duplication (across inheritance)
 static UsedEntry *g_emit_set = NULL;
@@ -506,14 +508,15 @@ static inline void emit_set_add(const char *p, size_t n) {
     }
 }
 
-static void used_set_build(void) {
-    if (g_used_set_ready && g_used_short_ready) return;
+static void used_set_build(CompletionContext *ctx) {
+    if (!ctx) return;
+    if (ctx->used_set_ready && ctx->used_short_ready) return;
     memset(g_used_set, 0, sizeof(g_used_set));
     memset(g_used_short, 0, sizeof(g_used_short));
-    for (int i = 0; i < g_span_count; i++) {
-        const char *span = g_spans[i];
+    for (int i = 0; i < ctx->span_count; i++) {
+        const char *span = ctx->spans[i];
         if (span[0] != '-') continue;
-        size_t n = g_arg_lens[i];
+        size_t n = ctx->arg_lens[i];
         if (n >= 2 && span[1] == '-') {
             const char *eq = memchr(span, '=', n);
             size_t base_len = eq ? (size_t)(eq - span) : n;
@@ -522,8 +525,8 @@ static void used_set_build(void) {
             used_short_mark(span, n);
         }
     }
-    g_used_set_ready = true;
-    g_used_short_ready = true;
+    ctx->used_set_ready = true;
+    ctx->used_short_ready = true;
 }
 
 static bool used_set_contains(const char *p, size_t n) {
@@ -1191,21 +1194,21 @@ static const Command *g_cmd_path[MAX_CMD_DEPTH];
 static int g_cmd_path_len = 0;
 
 // Find the deepest matching command, tracking the path
-static const Command *find_command(void) {
+static const Command *find_command(const CompletionContext *ctx) {
     g_cmd_path_len = 0;
     const Command *cmd = get_root_command();
     g_cmd_path[g_cmd_path_len++] = cmd;
     int i = 1;  // Skip first arg (CLI name)
 
-    while (i < g_span_count && cmd->subcommands_count > 0) {
-        const char *arg = g_spans[i];
+    while (ctx && i < ctx->span_count && cmd->subcommands_count > 0) {
+        const char *arg = ctx->spans[i];
 
         if (arg[0] == '-') {
             i++;
             continue;
         }
 
-        size_t arg_len = g_arg_lens[i];
+        size_t arg_len = ctx->arg_lens[i];
         const Command *found = find_subcommand_by_name(cmd_subcommands(cmd), cmd->subcommands_count, arg, arg_len);
 
         if (found) {
@@ -1223,14 +1226,15 @@ static const Command *find_command(void) {
 }
 
 // Linear scan for small span counts - avoids 4KB memset overhead of hash table
-static bool param_used_linear(const Param *param) {
+static bool param_used_linear(const CompletionContext *ctx, const Param *param) {
+    if (!ctx) return false;
     String name = str_get(param->name_off);
     String short_opt = param->short_off ? str_get(param->short_off) : (String){NULL, 0};
 
-    for (int i = 0; i < g_span_count; i++) {
-        if (g_spans[i][0] != '-') continue;
-        size_t n = g_arg_lens[i];
-        const char *span = g_spans[i];
+    for (int i = 0; i < ctx->span_count; i++) {
+        if (ctx->spans[i][0] != '-') continue;
+        size_t n = ctx->arg_lens[i];
+        const char *span = ctx->spans[i];
         if (name.n > 0) {
             const char *eq = memchr(span, '=', n);
             size_t base_len = eq ? (size_t)(eq - span) : n;
@@ -1251,12 +1255,13 @@ static bool param_used_linear(const Param *param) {
 
 // Check if a parameter has already been used (by long or short name)
 // Uses linear scan for small span counts, hash set for large
-static bool param_used(const Param *param) {
-    if (g_span_count <= USED_LINEAR_THRESHOLD) {
-        return param_used_linear(param);
+static bool param_used(CompletionContext *ctx, const Param *param) {
+    if (!ctx) return false;
+    if (ctx->span_count <= USED_LINEAR_THRESHOLD) {
+        return param_used_linear(ctx, param);
     }
 
-    used_set_build();  // Lazy init on first call
+    used_set_build(ctx);  // Lazy init on first call
     String name = str_get(param->name_off);
     if (name.n > 0 && used_set_contains(name.p, name.n)) return true;
     if (param->short_off) {
@@ -1747,7 +1752,7 @@ static void completer_line_finish(CompleterCacheEntry *store_entry, const char *
 }
 
 // Execute a dynamic completer command and output results
-// cli_name: CLI name (e.g., "az") from g_spans[0]
+// cli_name: CLI name (e.g., "az") from current completion context span 0
 // completer: subcommand args (e.g., "aks get-versions --output tsv") - String with length
 // prefix: optional prefix to filter results
 // prefix_len: length of prefix
@@ -2192,7 +2197,8 @@ static inline bool get_short_slice(uint32_t cmd_ref, Slice32 *out) {
 }
 
 // Complete params for current command using precomputed long/short indexes.
-static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
+static void complete_path_params(CompletionContext *ctx, const char *prefix, const PrefixInfo *pinfo) {
+    if (!ctx) return;
     if (!g_emit_set_ready) emit_set_reset();
     if (pinfo->len > 0 && !pinfo->is_dash) return;
     bool case_sensitive = is_match_case_sensitive(prefix, pinfo->len);
@@ -2206,7 +2212,7 @@ static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
                 if (pidx >= header.param_count) continue;
                 const Param *p = get_param(pidx);
                 if (p->short_off == 0) continue;
-                if (param_used(p)) continue;
+                if (param_used(ctx, p)) continue;
                 String short_opt = str_get(p->short_off);
                 if (str_starts_with_mode(short_opt.p, short_opt.n, prefix, pinfo->len, case_sensitive)) {
                     uint32_t desc = !has_descriptions || output_format == OUT_LINES ? 0 : p->desc_off;
@@ -2227,7 +2233,7 @@ static void complete_path_params(const char *prefix, const PrefixInfo *pinfo) {
             uint32_t pidx = e->param_idx;
             if (pidx >= header.param_count) continue;
             const Param *p = get_param(pidx);
-            if (param_used(p)) continue;
+            if (param_used(ctx, p)) continue;
             String name = str_get(p->name_off);
             if (name.n == 0) continue;
             if (str_starts_with_mode(name.p, name.n, prefix, pinfo->len, case_sensitive)) {
@@ -2353,12 +2359,15 @@ static OutputFormat parse_format(const char *name) {
 }
 
 // Complete param values (choices, members, or dynamic completer)
-static void complete_param_values(const Param *param, const char *prefix, size_t prefix_len,
+static void complete_param_values(const CompletionContext *ctx, const Param *param,
+                                  const char *prefix, size_t prefix_len,
                                   String out_prefix) {
     if (PARAM_HAS_CHOICES(param) || PARAM_HAS_MEMBERS(param)) {
         complete_string_list(param->value_ref, PARAM_HAS_MEMBERS(param), prefix, prefix_len, out_prefix);
     } else if (PARAM_HAS_COMPLETER(param)) {
-        execute_completer(g_spans[0], str_get(param->value_ref), prefix, prefix_len, out_prefix);
+        if (ctx && ctx->spans && ctx->spans[0]) {
+            execute_completer(ctx->spans[0], str_get(param->value_ref), prefix, prefix_len, out_prefix);
+        }
     }
 }
 
@@ -2367,7 +2376,7 @@ static void complete_param_values(const Param *param, const char *prefix, size_t
 
 // Main completion logic
 static void complete(int nspans, const char **spans) {
-    if (nspans == 0) {
+    if (nspans <= 0) {
         if (output_format == OUT_JSON) put_lit("[]\n");
         return;
     }
@@ -2388,27 +2397,23 @@ static void complete(int nspans, const char **spans) {
         exit(1);
     }
 
-    // Pre-compute all arg lengths once and set globals (fixed-size to avoid VLA)
-    size_t arg_lens[MAX_SPANS];
+    // Pre-compute all arg lengths once (fixed-size to avoid VLA).
+    size_t arg_lens[MAX_SPANS] = {0};
     for (int i = 0; i < nspans; i++) {
         arg_lens[i] = strlen(spans[i]);
     }
-    g_spans = spans;
-#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 12
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdangling-pointer"
-#endif
-    g_arg_lens = arg_lens;  // Safe: only accessed during complete()'s lifetime
-#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 12
-#pragma GCC diagnostic pop
-#endif
-    g_span_count = nspans > 1 ? nspans - 1 : 1;
-    g_used_set_ready = false;  // Reset for lazy init
-    g_used_short_ready = false;
+
+    CompletionContext ctx = {
+        .spans = spans,
+        .arg_lens = arg_lens,
+        .span_count = nspans > 1 ? nspans - 1 : 1,
+        .used_set_ready = false,
+        .used_short_ready = false,
+    };
     g_emit_set_ready = false;
 
     // Find the deepest matching command
-    const Command *cmd = find_command();
+    const Command *cmd = find_command(&ctx);
     g_current_cmd_ref = command_to_ref(cmd);
 
     if (output_format == OUT_JSON) {
@@ -2432,12 +2437,12 @@ static void complete(int nspans, const char **spans) {
         if (prev && prev[0] == '-') {
             // If the previous token already has an inline value (--opt=val), don't treat the current token as its value.
             if (!memchr(prev, '=', prev_len)) {
-                const Param *param = find_path_param(prev, prev_len);
-                if (param && PARAM_TAKES_VALUE(param)) {
-                    complete_param_values(param, last_span, last_span_len, (String){NULL, 0});
-                    if (output_format == OUT_JSON) put_lit("]\n");
-                    return;
-                }
+                    const Param *param = find_path_param(prev, prev_len);
+                    if (param && PARAM_TAKES_VALUE(param)) {
+                        complete_param_values(&ctx, param, last_span, last_span_len, (String){NULL, 0});
+                        if (output_format == OUT_JSON) put_lit("]\n");
+                        return;
+                    }
             }
         }
     }
@@ -2450,13 +2455,13 @@ static void complete(int nspans, const char **spans) {
             if (param && PARAM_TAKES_VALUE(param)) {
                 const char *val_prefix = eq + 1;
                 size_t val_len = last_span_len - opt_len - 1;
-                complete_param_values(param, val_prefix, val_len, (String){last_span, opt_len + 1});
+                complete_param_values(&ctx, param, val_prefix, val_len, (String){last_span, opt_len + 1});
                 if (output_format == OUT_JSON) put_lit("]\n");
                 return;
             }
         }
         PrefixInfo pinfo = make_prefix_info(last_span, last_span_len);
-        complete_path_params(last_span, &pinfo);
+        complete_path_params(&ctx, last_span, &pinfo);
         if (output_format == OUT_JSON) put_lit("]\n");
         return;
     }
@@ -2474,14 +2479,14 @@ static void complete(int nspans, const char **spans) {
         return;
     }
 
-    const char *prev_arg = g_span_count > 0 ? spans[g_span_count - 1] : "";
+    const char *prev_arg = ctx.span_count > 0 ? spans[ctx.span_count - 1] : "";
 
     if (prev_arg[0] == '-') {
-        size_t prev_len = arg_lens[g_span_count - 1];
+        size_t prev_len = arg_lens[ctx.span_count - 1];
 
         const Param *param = find_path_param(prev_arg, prev_len);
         if (param && PARAM_TAKES_VALUE(param)) {
-            complete_param_values(param, NULL, 0, (String){NULL, 0});
+            complete_param_values(&ctx, param, NULL, 0, (String){NULL, 0});
             if (output_format == OUT_JSON) put_lit("]\n");
             return;
         }
@@ -2492,7 +2497,7 @@ static void complete(int nspans, const char **spans) {
     }
 
     PrefixInfo pinfo = {0};  // Empty prefix
-    complete_path_params(NULL, &pinfo);
+    complete_path_params(&ctx, NULL, &pinfo);
 
     if (output_format == OUT_JSON) put_lit("]\n");
 }

@@ -1,0 +1,79 @@
+# Bazel CLI schema for fast-completer
+# Curated from Bazel command line usage docs (last checked: 2026-02-20)
+
+bazel # Bazel build and test tool
+	--help @bool # Show help
+	--version @bool # Show Bazel version
+	--announce_rc @bool # Print options read from rc files
+	--batch @bool # Run in batch mode without server process
+	--nobatch @bool # Use the Bazel server process
+	--bazelrc # Path to an additional bazelrc file
+	--home_rc @bool # Read ~/.bazelrc
+	--system_rc @bool # Read system bazelrc
+	--workspace_rc @bool # Read workspace bazelrc
+	--nosystem_rc @bool # Do not read system bazelrc
+	--noworkspace_rc @bool # Do not read workspace bazelrc
+	--output_base # Output base directory
+	--output_user_root # Output user root directory
+	--max_idle_secs # Max idle lifetime for server process
+	--host_jvm_args # JVM argument passed to Bazel server
+	--color (yes|no|auto) # Color output mode
+	--curses (yes|no|auto) # Cursor control mode
+	--client_debug @bool # Enable client debug logging
+	help # Show help for Bazel commands and options
+	version # Print Bazel version information
+	info # Show runtime info values
+	build # Build specified targets
+	test # Build and run tests
+	run # Build and run a binary target
+	query # Execute a dependency query
+	cquery # Execute a configured target query
+	aquery # Execute an action graph query
+	coverage # Generate coverage information for tests
+	clean # Remove Bazel output state
+	fetch # Fetch external dependencies and repositories
+	sync # Sync external repositories
+	shutdown # Shut down the Bazel server
+	license # Print license information
+	dump # Dump internal Bazel state
+	mobile-install # Build and install mobile app targets
+	print_action # Print command line for a build action
+	analyze-profile # Analyze Bazel profile data
+	canonicalize-flags # Canonicalize command line flags
+	mod # Inspect Bazel modules and lockfile data
+	build
+		--config # Use named config section from bazelrc
+		--compilation_mode (fastbuild|dbg|opt) # Compilation mode
+		--cpu # Target CPU
+		--platforms # Target platform labels
+		--jobs # Max concurrent jobs
+		--keep_going @bool # Keep going after an error
+		--verbose_failures @bool # Print full command lines on failure
+		--show_result # Show target results at end of build
+	test
+		--config # Use named config section from bazelrc
+		--compilation_mode (fastbuild|dbg|opt) # Compilation mode
+		--cpu # Target CPU
+		--jobs # Max concurrent jobs
+		--keep_going @bool # Keep going after an error
+		--test_output (summary|errors|all|streamed) # Test output mode
+		--test_arg # Argument forwarded to test binary
+		--flaky_test_attempts # Number of retries for flaky tests
+		--cache_test_results (yes|no|auto) # Control test result caching
+	run
+		--config # Use named config section from bazelrc
+		--compilation_mode (fastbuild|dbg|opt) # Compilation mode
+		--cpu # Target CPU
+		--script_path # Write launcher script to file
+		--run_under # Prefix command used to run target
+	query
+		--output (label|label_kind|build|xml|proto|graph|minrank|maxrank|location) # Query output format
+	cquery
+		--output (label|label_kind|text|transitions|starlark|proto|files) # Configured query output format
+	aquery
+		--output (text|summary|commands|proto) # Action query output format
+	clean
+		--async @bool # Perform clean asynchronously
+		--expunge @bool # Remove output base and stop server
+	coverage
+		--combined_report (lcov) # Combined coverage report format

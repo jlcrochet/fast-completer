@@ -1,0 +1,172 @@
+# Homebrew CLI schema for fast-completer
+brew # Homebrew package manager
+	--version @bool # Print version
+	--help @bool # Print help
+	--verbose|-v @bool # Make some output more verbose
+	--debug|-d @bool # Display any debugging information
+	--quiet|-q @bool # Make some output more quiet
+	install # Install a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--verbose|-v @bool # Print verification and post-install steps
+		--debug|-d @bool # Show debugging information during installation
+		--force|-f @bool # Install formulae without checking for conflicts
+		--quiet|-q @bool # Make some output more quiet
+		--build-from-source|-s @bool # Compile from source even if a bottle is available
+		--force-bottle @bool # Install from a bottle if it exists for the current version
+		--include-test @bool # Install testing dependencies
+		--HEAD @bool # Install the HEAD version
+		--fetch-HEAD @bool # Fetch the upstream repository to detect HEAD version
+		--keep-tmp @bool # Retain temp files created during installation
+		--display-times @bool # Print install times for each formula
+		--interactive @bool # Download and patch formula then open a shell
+		--overwrite @bool # Delete files that already exist in the prefix
+		--adopt @bool # Adopt existing artifacts in the destination
+		--skip-cask-deps @bool # Skip installing cask dependencies
+		--zap @bool # Remove all files associated with a cask
+		--appdir # Target location for Applications
+		--no-binaries @bool # Disable symlinking of helper executables
+		--no-quarantine @bool # Disable quarantine of cask downloads
+		--require-sha @bool # Require all casks to have a checksum
+	uninstall # Uninstall a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--force|-f @bool # Delete all installed versions
+		--ignore-dependencies @bool # Don't fail if dependencies still installed
+		--zap @bool # Remove all files associated with a cask
+	upgrade # Upgrade outdated formulae and casks
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--force|-f @bool # Install formulae without checking for conflicts
+		--verbose|-v @bool # Print verification and post-install steps
+		--debug|-d @bool # Show debugging information during upgrade
+		--dry-run|-n @bool # Show what would be upgraded
+		--fetch-HEAD @bool # Fetch the upstream repository to detect HEAD version
+		--greedy @bool # Also include casks with auto_updates or version latest
+		--greedy-latest @bool # Also include casks with version latest
+		--greedy-auto-updates @bool # Also include casks with auto_updates
+		--no-quarantine @bool # Disable quarantine of cask downloads
+		--require-sha @bool # Require all casks to have a checksum
+	search # Search for formulae and casks
+		--formula @bool # Search for formulae
+		--cask @bool # Search for casks
+		--desc @bool # Search for formulae with a description matching text
+		--open @bool # Search for only open pull requests
+		--closed @bool # Search for only closed pull requests
+	info # Display information about a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--json @bool # Print a JSON representation
+		--installed @bool # Print JSON of all installed formulae
+		--eval-all @bool # Evaluate all available formulae and casks
+		--verbose|-v @bool # Show more verbose analytics data
+		--github @bool # Open the GitHub source page in a browser
+	list # List installed formulae and casks
+		--formula @bool # List only formulae
+		--cask @bool # List only casks
+		--full-name @bool # Print formulae with fully qualified names
+		--versions @bool # Show the version number for installed formulae
+		--multiple @bool # Only show formulae with multiple versions
+		--pinned @bool # List only pinned formulae
+		-1 @bool # Force output to be one entry per line
+		-l @bool # List formulae and casks in long format
+		-r @bool # Reverse the order of output
+		-t @bool # Sort by time modified, newest first
+	update # Fetch newest version of Homebrew and all formulae
+		--merge @bool # Use git merge to apply updates
+		--auto-update @bool # Run on auto-updates
+		--force|-f @bool # Always do a slower full update check
+	outdated # List installed casks and formulae with updated versions
+		--formula @bool # List only formulae
+		--cask @bool # List only casks
+		--json @bool # Print output in JSON format
+		--fetch-HEAD @bool # Fetch the upstream repository to detect HEAD changes
+		--greedy @bool # Also include casks with auto_updates or version latest
+		--verbose|-v @bool # Include detailed version information
+		--quiet|-q @bool # List only names of outdated formulae
+	deps # Show dependencies for a formula
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--tree @bool # Show dependencies as a tree
+		--all @bool # List dependencies for all available formulae
+		--installed @bool # List dependencies for all installed formulae
+		--1 @bool # Only show dependencies one level down
+		--for-each @bool # Switch into every formula or cask argument
+		--include-build @bool # Include :build dependencies
+		--include-optional @bool # Include :optional dependencies
+		--include-test @bool # Include :test dependencies
+		--skip-recommended @bool # Skip :recommended dependencies
+		--include-requirements @bool # Include requirements
+	cleanup # Remove stale lock files and outdated formulae
+		--prune # Remove all cache files older than specified days
+		--dry-run|-n @bool # Show what would be removed
+		-s @bool # Scrub the cache
+	pin # Pin a formula to prevent upgrades
+	unpin # Unpin a formula to allow upgrades
+	tap # Tap a formula repository
+		--force-auto-update @bool # Auto-update even for non-core taps
+		--custom-remote @bool # Install from a custom remote
+		--repair @bool # Migrate tapped formulae from symlink-based to directory-based
+	untap # Remove a tapped formula repository
+		--force|-f @bool # Untap even if formulae or casks are installed
+	config # Show Homebrew and system configuration info
+	doctor # Check your system for potential problems
+		--list-checks @bool # List all audit methods
+		--audit-debug @bool # Enable debugging and profiling of audit methods
+	link # Symlink a formula's installed files into Homebrew prefix
+		--overwrite @bool # Delete files that already exist
+		--dry-run|-n @bool # List files that would be linked
+		--force|-f @bool # Allow keg-only formulae to be linked
+		--HEAD @bool # Link the HEAD version
+	unlink # Remove symlinks for a formula from Homebrew prefix
+		--dry-run|-n @bool # List files that would be unlinked
+	edit # Open a formula or cask in an editor
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+	home # Open the homepage of a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+	log # Show git log for a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		-1 @bool # Print only one entry
+		--oneline @bool # Print only one line per commit
+		--max-count # Print only a specified number of commits
+	cat # Display the source of a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+	uses # Show formulae and casks that depend on a formula
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--recursive @bool # Resolve more than one level of dependencies
+		--installed @bool # Only list formulae and casks that are installed
+		--include-build @bool # Include :build dependencies
+		--include-optional @bool # Include :optional dependencies
+		--include-test @bool # Include :test dependencies
+		--skip-recommended @bool # Skip :recommended dependencies
+	fetch # Download a bottle or source for a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--force|-f @bool # Remove a previously cached version and re-fetch
+		--HEAD @bool # Fetch HEAD version instead of stable
+		--build-from-source|-s @bool # Fetch source packages
+		--force-bottle @bool # Fetch a bottle if it exists
+		--retry @bool # Retry if downloading fails
+		--deps @bool # Also download dependencies
+	reinstall # Uninstall then install a formula or cask
+		--formula @bool # Treat all named arguments as formulae
+		--cask @bool # Treat all named arguments as casks
+		--force|-f @bool # Install without checking for conflicts
+		--verbose|-v @bool # Print verification and post-install steps
+		--debug|-d @bool # Show debugging information
+		--keep-tmp @bool # Retain temp files
+	autoremove # Uninstall formulae not required by any formula
+		--dry-run|-n @bool # List what would be uninstalled
+	services # Manage background services with macOS launchctl or Linux systemctl
+		list # List information about all managed services
+		info # List information about specified service
+		run # Run the service without registering to launch at login
+		start # Start the service and register it to launch at login
+		stop # Stop the service and unregister it
+		restart # Stop and start the service and register it
+		cleanup # Remove all unused services

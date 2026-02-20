@@ -1,0 +1,209 @@
+# Go CLI schema for fast-completer
+go # Go programming language toolchain
+	bug # Start a bug report
+	build # Compile packages and dependencies
+		-a @bool # Force rebuilding of packages
+		-n @bool # Print commands but do not run them
+		-p # Number of parallel builds
+		-race @bool # Enable data race detection
+		-msan @bool # Enable memory sanitizer
+		-asan @bool # Enable address sanitizer
+		-cover @bool # Enable code coverage instrumentation
+		-covermode (set|count|atomic) # Coverage analysis mode
+		-v @bool # Print package names as compiled
+		-work @bool # Print and preserve temp work directory
+		-x @bool # Print commands as executed
+		-buildmode (archive|c-archive|c-shared|default|shared|exe|pie|plugin) # Build mode
+		-buildvcs (true|false|auto) # Stamp binaries with version control info
+		-compiler (gccgo|gc) # Compiler to use
+		-gccgoflags # Arguments for gccgo compiler
+		-gcflags # Arguments for gc compiler
+		-ldflags # Arguments for linker
+		-linkshared @bool # Build with shared libraries
+		-mod (readonly|vendor|mod) # Module download mode
+		-modcacherw @bool # Leave module cache read-write
+		-modfile # Alternate go.mod file
+		-overlay # JSON config file for build overlay
+		-pgo # Profile-guided optimization file
+		-pkgdir # Install and load packages from dir
+		-tags # Comma-separated build tags
+		-trimpath @bool # Remove file system paths from executable
+		-o # Output file or directory
+	clean # Remove object files and cached files
+		-cache @bool # Remove entire go build cache
+		-fuzzcache @bool # Remove fuzz cache
+		-i @bool # Remove installed archive or binary
+		-modcache @bool # Remove entire module download cache
+		-n @bool # Print remove commands but do not run
+		-r @bool # Apply recursively to dependencies
+		-testcache @bool # Expire all test results in cache
+		-x @bool # Print remove commands as executed
+	doc # Show documentation for package or symbol
+		-all @bool # Show all documentation
+		-c @bool # Case-sensitive symbol matching
+		-cmd @bool # Treat command like regular package
+		-short @bool # One-line representation
+		-src @bool # Show full source code
+		-u @bool # Show unexported symbols
+	env # Print Go environment information
+		-json @bool # Print in JSON format
+		-u @bool # Unset environment variables
+		-w @bool # Write environment variables
+	fix # Update packages to use new APIs
+	fmt # Gofmt (reformat) package sources
+		-n @bool # Print commands but do not run
+		-x @bool # Print commands as executed
+		-mod (readonly|vendor|mod) # Module download mode
+	generate # Generate Go files by processing source
+		-n @bool # Print commands but do not run
+		-run # Regex to select directives
+		-skip # Regex to suppress directives
+		-v @bool # Print package names as processed
+		-x @bool # Print commands as executed
+	get # Add dependencies to current module
+		-d @bool # Download only, don't install
+		-t @bool # Include test dependencies
+		-u @bool # Update dependencies
+		-v @bool # Verbose output
+		-x @bool # Print commands as executed
+		-insecure @bool # Allow insecure protocols
+	install # Compile and install packages and dependencies
+		-a @bool # Force rebuilding of packages
+		-n @bool # Print commands but do not run
+		-p # Number of parallel builds
+		-race @bool # Enable data race detection
+		-msan @bool # Enable memory sanitizer
+		-asan @bool # Enable address sanitizer
+		-v @bool # Print package names as compiled
+		-work @bool # Print and preserve temp work directory
+		-x @bool # Print commands as executed
+		-buildmode (archive|c-archive|c-shared|default|shared|exe|pie|plugin) # Build mode
+		-compiler (gccgo|gc) # Compiler to use
+		-gcflags # Arguments for gc compiler
+		-ldflags # Arguments for linker
+		-mod (readonly|vendor|mod) # Module download mode
+		-tags # Comma-separated build tags
+		-trimpath @bool # Remove file system paths from executable
+	list # List packages or modules
+		-compiled @bool # Include compiled Go source
+		-deps @bool # Include dependencies
+		-e @bool # Handle erroneous packages
+		-export @bool # Include export data
+		-f # Format string
+		-find @bool # Identify packages but not resolve deps
+		-json @bool # Print in JSON format
+		-m @bool # List modules instead of packages
+		-retracted @bool # Include retracted module versions
+		-test @bool # Include test binaries
+		-u @bool # Include update info for modules
+		-versions @bool # List available versions
+		-mod (readonly|vendor|mod) # Module download mode
+	mod # Module maintenance
+		download # Download modules to local cache
+			-json @bool # Print in JSON format
+			-x @bool # Print commands as executed
+		edit # Edit go.mod from tools or scripts
+			-dropexclude # Drop exclusion
+			-dropreplace # Drop replacement
+			-droprequire # Drop requirement
+			-exclude # Add exclusion
+			-fmt @bool # Reformats without other changes
+			-go # Set expected Go version
+			-json @bool # Print in JSON format
+			-module # Change module path
+			-print @bool # Print in text format
+			-replace # Add replacement
+			-require # Add requirement
+			-retract # Add retraction
+			-dropretract # Drop retraction
+			-toolchain # Set expected Go toolchain
+		graph # Print module requirement graph
+			-go # Report graph as seen by given Go version
+		init # Initialize new module in current directory
+		tidy # Add missing and remove unused modules
+			-compat # Preserve compat with Go version
+			-e @bool # Attempt to proceed despite errors
+			-go # Update go directive
+			-v @bool # Print removed modules to stderr
+		vendor # Make vendored copy of dependencies
+			-e @bool # Attempt to proceed despite errors
+			-o # Create vendor directory at given path
+			-v @bool # Print vendored packages to stderr
+		verify # Verify dependencies have expected content
+		why # Explain why packages or modules are needed
+			-m @bool # Treat args as modules
+			-vendor @bool # Exclude tests of dependencies
+	run # Compile and run Go program
+		-a @bool # Force rebuilding of packages
+		-n @bool # Print commands but do not run
+		-race @bool # Enable data race detection
+		-v @bool # Print package names as compiled
+		-x @bool # Print commands as executed
+		-exec # Invocation to use for running binary
+		-tags # Comma-separated build tags
+	test # Test packages
+		-bench # Run benchmarks matching regex
+		-benchmem @bool # Print memory allocation statistics
+		-benchtime # Run each benchmark for duration
+		-count # Run tests and benchmarks n times
+		-cover @bool # Enable coverage analysis
+		-covermode (set|count|atomic) # Coverage analysis mode
+		-coverpkg # Apply coverage to listed packages
+		-coverprofile # Write coverage profile
+		-cpu # Specify GOMAXPROCS values
+		-failfast @bool # Stop after first test failure
+		-fuzz # Run fuzz test matching regex
+		-fuzzminimizetime # Minimize time for fuzzing
+		-fuzztime # Run fuzz target for duration
+		-json @bool # Log verbose output in JSON format
+		-list # List tests matching regex
+		-parallel # Max test parallelism
+		-run # Run tests matching regex
+		-short @bool # Tell tests to run in short mode
+		-shuffle (on|off|N) # Randomize test execution order
+		-skip # Skip tests matching regex
+		-timeout # Timeout for test binary
+		-v @bool # Verbose output
+		-vet # Configure go vet during testing
+		-race @bool # Enable data race detection
+		-a @bool # Force rebuilding of packages
+		-tags # Comma-separated build tags
+		-o # Compile test binary to named file
+		-outputdir # Place output files in directory
+		-blockprofile # Write goroutine blocking profile
+		-blockprofilerate # Control goroutine blocking profile
+		-cpuprofile # Write CPU profile
+		-memprofile # Write allocation profile
+		-memprofilerate # Control allocation profiling
+		-mutexprofile # Write mutex contention profile
+		-mutexprofilefraction # Control mutex profiling
+		-trace # Write execution trace
+	tool # Run specified go tool
+	vet # Report likely mistakes in packages
+		-n @bool # Print commands but do not run
+		-v @bool # Print package names as vetted
+		-x @bool # Print commands as executed
+		-tags # Comma-separated build tags
+		-vettool # Alternative vet tool
+	version # Print Go version
+		-m @bool # Print module version info in binary
+		-v @bool # Report unrecognized files
+	work # Workspace maintenance
+		edit # Edit go.work from tools or scripts
+			-fmt @bool # Reformats without other changes
+			-go # Set expected Go version
+			-json @bool # Print in JSON format
+			-print @bool # Print in text format
+			-use # Add use directive
+			-dropuse # Drop use directive
+			-replace # Add replacement
+			-dropreplace # Drop replacement
+			-toolchain # Set expected Go toolchain
+		init # Initialize workspace file
+		sync # Sync workspace build list to modules
+		use # Add modules to workspace file
+			-r @bool # Recursively search for go.mod files
+		vendor # Make vendored copy of workspace dependencies
+			-e @bool # Attempt to proceed despite errors
+			-o # Create vendor directory at given path
+			-v @bool # Print vendored packages to stderr

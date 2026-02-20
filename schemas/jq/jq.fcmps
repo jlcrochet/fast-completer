@@ -1,0 +1,27 @@
+# Jq CLI schema for fast-completer
+# Generated from jq 1.8.1
+
+jq # Command-line JSON processor
+	--null-input|-n @bool # use `null` as the single input value;
+	--raw-input|-R @bool # read each line as string instead of JSON;
+	--slurp|-s @bool # read all inputs into an array and use it as
+	--compact-output|-c @bool # compact instead of pretty-printed output;
+	--raw-output|-r @bool # output strings without escapes and quotes;
+	--raw-output0 @bool # implies -r and output NUL after each output;
+	--join-output|-j @bool # implies -r and output without newline after
+	--ascii-output|-a @bool # output strings by only ASCII characters
+	--sort-keys|-S @bool # sort keys of each object on output;
+	--color-output|-C @bool # colorize JSON output;
+	--monochrome-output|-M @bool # disable colored output;
+	--tab @bool # use tabs for indentation;
+	--indent # use n spaces for indentation (max 7 spaces);
+	--unbuffered @bool # flush output stream after each output;
+	--stream @bool # parse the input value in streaming fashion;
+	--stream-errors @bool # implies --stream and report parse error as
+	--seq @bool # parse input/output as application/json-seq;
+	--from-file|-f @bool # load the filter from a file;
+	--library-path|-L # search modules from the directory;
+	--args @bool # consume remaining arguments as positional
+	--jsonargs @bool # consume remaining arguments as positional
+	--exit-status|-e @bool # set exit status code based on the output;
+	--build-configuration @bool # show jq's build configuration;

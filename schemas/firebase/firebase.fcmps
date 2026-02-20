@@ -1,0 +1,174 @@
+# Firebase CLI schema for fast-completer
+# Curated from Firebase CLI command reference (last checked: 2026-02-20)
+
+firebase # Firebase command-line tools
+	--account # Google account to use
+	--config|-c # Path to firebase.json
+	--debug @bool # Enable verbose debug logging
+	--force @bool # Skip interactive prompts where possible
+	--help|-h @bool # Show help
+	--json @bool # Output JSON
+	--non-interactive @bool # Disable interactive prompts
+	--project|-P # Firebase project id or alias
+	--token # Refresh token for authentication
+	--version @bool # Show CLI version
+	help # Show command help
+	init # Set up Firebase in the current directory
+	login # Authenticate to Firebase
+		--no-localhost @bool # Disable localhost callback auth flow
+	login:add # Add a new authenticated account
+	login:list # List authenticated accounts
+	login:ci # Generate a CI auth token
+	logout # Log out from Firebase
+	open # Open Firebase console for current project
+	use # Set/list active project alias
+	projects:list # List Firebase projects
+	projects:create # Create a new Firebase project
+	projects:addfirebase # Add Firebase services to a Google Cloud project
+	setup:web # Create a Firebase web app config snippet
+	deploy # Deploy to Firebase services
+		--except # Comma-separated services to exclude
+		--message|-m # Optional deploy message
+		--only # Comma-separated services/targets to deploy
+		--project|-P # Project id or alias
+	serve # Serve static files/functions locally (legacy)
+		--host # Hostname to bind
+		--only # Comma-separated services to serve
+		--port # Port to bind
+		--project|-P # Project id or alias
+	emulators:start # Start the local Firebase emulators
+		--export-on-exit # Export emulator data on shutdown
+		--import # Import emulator data from directory
+		--only # Comma-separated emulators to start
+		--project|-P # Project id or alias
+	emulators:exec # Run script with emulators, then stop
+		--export-on-exit # Export emulator data on shutdown
+		--import # Import emulator data from directory
+		--only # Comma-separated emulators to start
+		--project|-P # Project id or alias
+	emulators:export # Export emulator data
+		--force @bool # Overwrite output directory if needed
+		--project|-P # Project id or alias
+	target:apply # Apply target aliases for deploy commands
+	target:clear # Clear target aliases
+	experiments:list # List available CLI experiments
+	experiments:enable # Enable CLI experiment
+	experiments:disable # Disable CLI experiment
+	# App management
+	apps:create # Create a Firebase app
+	apps:list # List Firebase apps in project
+	apps:sdkconfig # Print SDK config for an app
+	apps:android:sha:create # Add SHA cert fingerprint for Android app
+	apps:android:sha:delete # Delete SHA cert fingerprint
+	apps:android:sha:list # List SHA cert fingerprints
+	# App Distribution
+	appdistribution:distribute # Upload and distribute app build
+		--app # App id
+		--groups # Comma-separated tester groups
+		--release-notes # Inline release notes
+		--release-notes-file # Path to release notes file
+		--test-devices # Device matrix for automated tests
+	appdistribution:testers:add # Add testers
+	appdistribution:testers:remove # Remove testers
+	appdistribution:testers:list # List testers
+	appdistribution:groups:create # Create tester group
+	appdistribution:groups:delete # Delete tester group
+	appdistribution:groups:list # List tester groups
+	# App Hosting
+	apphosting:backends:create # Create App Hosting backend
+	apphosting:backends:get # Get App Hosting backend
+	apphosting:backends:list # List App Hosting backends
+	apphosting:backends:delete # Delete App Hosting backend
+	apphosting:config:export # Export App Hosting config
+	apphosting:rollouts:create # Create App Hosting rollout
+	apphosting:secrets:set # Set App Hosting secret value
+	apphosting:secrets:grantaccess # Grant backend access to secret
+	apphosting:secrets:describe # Describe App Hosting secret
+	apphosting:secrets:access # Access latest secret value
+	# Authentication
+	auth:import # Import users into Firebase Auth
+	auth:export # Export users from Firebase Auth
+	# Cloud Firestore
+	firestore:locations # List Firestore available locations
+	firestore:databases:create # Create Firestore database
+	firestore:databases:list # List Firestore databases
+	firestore:databases:get # Show Firestore database metadata
+	firestore:databases:update # Update Firestore database settings
+	firestore:databases:delete # Delete Firestore database
+	firestore:indexes # Deploy local Firestore indexes
+	firestore:delete # Delete documents from Firestore
+	# Cloud Functions
+	functions:config:get # Get Runtime Config
+	functions:config:set # Set Runtime Config values
+	functions:config:unset # Unset Runtime Config values
+	functions:config:clone # Copy Runtime Config between projects
+	functions:config:export # Export Runtime Config as dotenv
+	functions:list # List deployed functions
+	functions:log # Read function logs
+	functions:shell # Start local interactive functions shell
+	functions:delete # Delete deployed functions
+		--force @bool # Skip confirmation prompt
+		--region # Function region
+	functions:secrets:set # Set Secret Manager secret
+	functions:secrets:get # Get Secret Manager secret metadata
+	functions:secrets:access # Access secret value
+	functions:secrets:destroy # Destroy secret version
+	functions:secrets:prune # Delete unreferenced secrets
+	# Crashlytics
+	crashlytics:mappingfile:generateid # Generate mapping file id
+	crashlytics:mappingfile:upload # Upload Android mapping file
+	crashlytics:symbols:upload # Upload native symbols
+	# Data Connect
+	dataconnect:services:list # List Data Connect services
+	dataconnect:sql:diff # Diff SQL schema changes
+	dataconnect:sql:migrate # Run SQL migrations
+	dataconnect:sql:grant # Grant SQL permissions
+	dataconnect:sdk:generate # Generate Data Connect SDK
+	# Extensions
+	ext # List installed extensions
+	ext:list # List installed extensions
+	ext:info # Show extension details
+	ext:configure # Configure extension instance
+	ext:install # Install extension instance
+	ext:update # Update extension instance
+	ext:uninstall # Uninstall extension instance
+	ext:export # Export extension instances to local config
+	ext:sdk:install # Install local extension SDK helpers
+	ext:dev:init # Initialize local extension development
+	ext:dev:list # List locally linked extension sources
+	ext:dev:register # Register local extension source
+	ext:dev:deprecate # Deprecate extension version
+	ext:dev:undeprecate # Remove extension deprecation
+	ext:dev:upload # Upload extension source/version
+	ext:dev:usage # Show extension usage metrics
+	# Hosting
+	hosting:disable # Disable Firebase Hosting for project/site
+	hosting:clone # Clone Hosting configuration between sites/channels
+	hosting:sites:create # Create Hosting site
+	hosting:sites:delete # Delete Hosting site
+	hosting:sites:get # Get Hosting site metadata
+	hosting:sites:list # List Hosting sites
+	hosting:channel:create # Create Hosting preview channel
+	hosting:channel:delete # Delete Hosting preview channel
+	hosting:channel:deploy # Deploy to Hosting preview channel
+	hosting:channel:list # List Hosting preview channels
+	hosting:channel:open # Open preview channel URL
+	# Realtime Database
+	database:get # Export data from Realtime Database
+	database:set # Write JSON data to Realtime Database path
+	database:update # Update JSON children at a path
+	database:push # Push JSON value to list at a path
+	database:remove # Remove data at a Realtime Database path
+	database:profile # Profile Realtime Database usage
+	database:instances:create # Create Realtime Database instance
+	database:instances:list # List Realtime Database instances
+	# Remote Config
+	remoteconfig:get # Get current Remote Config template
+	remoteconfig:rollback # Roll back to a previous template version
+	remoteconfig:versions:list # List template versions
+	remoteconfig:experiments:list # List Remote Config A/B experiments
+	remoteconfig:experiments:get # Get Remote Config experiment details
+	remoteconfig:experiments:delete # Delete Remote Config experiment
+	remoteconfig:rollouts:list # List Remote Config rollouts
+	remoteconfig:rollouts:get # Get rollout details
+	remoteconfig:rollouts:delete # Delete rollout

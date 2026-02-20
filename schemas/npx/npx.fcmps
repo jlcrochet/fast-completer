@@ -1,0 +1,11 @@
+# npx CLI schema for fast-completer
+npx # Execute npm package binaries
+	--package|-p # Package to install
+	--call|-c # Command string to execute
+	--workspace|-w # Run in context of specified workspace
+	--workspaces @bool # Run in context of all workspaces
+	--include-workspace-root @bool # Include workspace root
+	--yes|-y @bool # Accept all prompts
+	--no @bool # Refuse all prompts
+	--shell|-s # Shell to use for execution
+	--ignore-existing @bool # Ignore existing binaries in PATH

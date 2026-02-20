@@ -1,0 +1,37 @@
+# Ansible CLI schema for fast-completer
+ansible # Automation platform for IT tasks
+	--version @bool # Show program version
+	--help|-h @bool # Show help message
+	--verbose|-v @bool # Verbose mode (-vvv for more, -vvvv for debug)
+	--check|-C @bool # Don't make any changes; dry run
+	--diff|-D @bool # Show changed file differences
+	--inventory|-i # Specify inventory host path or comma-separated hosts
+	--list-hosts @bool # List matching hosts
+	--limit|-l # Limit selected hosts to pattern
+	--module-path|-M # Prepend paths to module library
+	--syntax-check @bool # Perform a syntax check on the playbook
+	--ask-pass|-k @bool # Ask for connection password
+	--private-key # Use this file to authenticate the connection
+	--user|-u # Connect as this user
+	--connection|-c # Connection type to use
+	--timeout|-T # Override connection timeout in seconds
+	--ssh-common-args # Specify common arguments for sftp/scp/ssh
+	--ssh-extra-args # Specify extra arguments for ssh only
+	--sftp-extra-args # Specify extra arguments for sftp only
+	--scp-extra-args # Specify extra arguments for scp only
+	--become|-b @bool # Run operations with become
+	--become-method # Privilege escalation method to use
+	--become-user # Run operations as this user
+	--ask-become-pass|-K @bool # Ask for privilege escalation password
+	--module-name|-m # Name of the module to execute
+	--args|-a # Module arguments
+	--extra-vars|-e # Set additional variables as key=value or YAML/JSON
+	--forks|-f # Specify number of parallel processes
+	--background|-B # Run asynchronously, failing after N seconds
+	--poll|-P # Set the poll interval if using -B
+	--one-line|-o @bool # Condense output
+	--tree|-t # Log output to this directory
+	--task-timeout # Set task timeout limit in seconds
+	--vault-id # Vault identity to use
+	--ask-vault-pass @bool # Ask for vault decrypt password
+	--vault-password-file # Vault password file

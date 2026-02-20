@@ -1,0 +1,10 @@
+{
+  "npx --help": {
+    "returncode": 0,
+    "stdout": "Run a command from a local or remote npm package\n\nUsage:\nnpm exec -- <pkg>[@<version>] [args...]\nnpm exec --package=<pkg>[@<version>] -- <cmd> [args...]\nnpm exec -c '<cmd> [args...]'\nnpm exec --package=foo -c '<cmd> [args...]'\n\nOptions:\n[--package <package-spec> [--package <package-spec> ...]] [-c|--call <call>]\n[-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\n[--workspaces] [--include-workspace-root]\n\n  --package\n    The package or packages to install for [`npm exec`](/commands/npm-exec)\n\n  -c|--call\n    Optional companion option for `npm exec`, `npx` that allows for\n\n  -w|--workspace\n    Enable running a command in the context of the configured workspaces of the\n\n  --workspaces\n    Set to true to run the command in the context of **all** configured\n\n  --include-workspace-root\n    Include the workspace root when workspaces are enabled for a command.\n\n\nalias: x\n\nRun \"npm help exec\" for more info\n"
+  },
+  "npx --version": {
+    "returncode": 0,
+    "stdout": "11.10.0\n"
+  }
+}

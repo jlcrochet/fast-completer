@@ -1,0 +1,47 @@
+# OpenSSH CLI schema for fast-completer
+ssh # OpenSSH remote login client
+	-4 @bool # Force IPv4 addresses only
+	-6 @bool # Force IPv6 addresses only
+	-A @bool # Enable agent forwarding
+	-a @bool # Disable agent forwarding
+	-B # Bind to interface before connecting
+	-b # Use bind address as source address
+	-C @bool # Enable compression
+	-c # Cipher specification for encryption
+	-D # Dynamic application-level port forwarding
+	-E # Append debug logs to log file
+	-e # Set escape character for sessions
+	-F # Alternative per-user config file
+	-f @bool # Go to background before command execution
+	-G @bool # Print configuration and exit
+	-g @bool # Allow remote hosts to connect to local forwarded ports
+	-I # PKCS#11 shared library for authentication
+	-i # Identity file for public key authentication
+	-J # Jump host destination
+	-K @bool # Enable GSSAPI authentication and forwarding
+	-k @bool # Disable GSSAPI credential forwarding
+	-L # Local port forwarding address
+	-l # Login name on remote machine
+	-M @bool # Place client into master mode for connection sharing
+	-m # MAC algorithms specification
+	-N @bool # Do not execute remote command
+	-n @bool # Redirect stdin from /dev/null
+	-O (check|forward|cancel|proxy|exit|stop) # Control multiplexing master process
+	-o # Configuration option in ssh_config format
+	-P # Tag name for configuration selection
+	--port|-p # Port to connect to on remote host
+	-Q (cipher|cipher-auth|help|mac|kex|key|key-ca-sign|key-cert|key-plain|key-sig|protocol-version|sig) # Query supported algorithms
+	-q @bool # Quiet mode
+	-R # Remote port forwarding address
+	-S # Control socket location for connection sharing
+	-s @bool # Request subsystem invocation
+	-T @bool # Disable pseudo-terminal allocation
+	-t @bool # Force pseudo-terminal allocation
+	-V @bool # Display version number and exit
+	--verbose|-v @bool # Verbose mode
+	-W # Forward stdin/stdout to host:port
+	-w # Tunnel device forwarding
+	-X @bool # Enable X11 forwarding
+	-x @bool # Disable X11 forwarding
+	-Y @bool # Enable trusted X11 forwarding
+	-y @bool # Send log info via syslog

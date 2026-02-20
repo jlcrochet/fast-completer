@@ -1,0 +1,124 @@
+tsc # TypeScript compiler
+	--help|-h @bool # Print help message
+	--all @bool # Show all compiler options
+	--watch|-w @bool # Watch input files
+	--project|-p # Compile project from tsconfig.json path
+	--build|-b @bool # Build composite project references
+	--init @bool # Create a tsconfig.json file
+	--showConfig @bool # Print final configuration
+	--version @bool # Print compiler version
+	--listFilesOnly @bool # Print compilation file names and stop
+	--locale # Set messaging language
+	--allowJs @bool # Allow JavaScript files in the program
+	--checkJs @bool # Enable error reporting in JS files
+	--maxNodeModuleJsDepth # Max folder depth for checking JS in node_modules
+	--allowSyntheticDefaultImports @bool # Allow import x from y without default export
+	--esModuleInterop @bool # Emit JS to ease CommonJS module imports
+	--forceConsistentCasingInFileNames @bool # Ensure correct casing in imports
+	--isolatedModules @bool # Ensure each file can be safely transpiled alone
+	--preserveSymlinks @bool # Disable resolving symlinks to realpath
+	--allowUmdGlobalAccess @bool # Allow accessing UMD globals from modules
+	--baseUrl # Base directory for non-relative module names
+	--module|-m (none|commonjs|amd|umd|system|es6|es2015|es2020|es2022|esnext|node16|nodenext) # Module code generation
+	--moduleResolution (classic|node|node16|nodenext) # Module specifier resolution strategy
+	--moduleSuffixes # File name suffixes for module resolution
+	--noResolve @bool # Disallow expanding files via imports
+	--paths # Re-map imports to additional lookup locations
+	--resolveJsonModule @bool # Enable importing .json files
+	--rootDir # Root folder within source files
+	--rootDirs # Multiple folders treated as one for modules
+	--typeRoots # Folders that act like node_modules/@types
+	--types # Type package names to include
+	--allowUnreachableCode @bool # Disable error reporting for unreachable code
+	--allowUnusedLabels @bool # Disable error reporting for unused labels
+	--alwaysStrict @bool # Always emit use strict
+	--exactOptionalPropertyTypes @bool # Interpret optional properties as written
+	--noFallthroughCasesInSwitch @bool # Error on fallthrough in switch statements
+	--noImplicitAny @bool # Error on implied any type
+	--noImplicitOverride @bool # Require override modifier on overriding members
+	--noImplicitReturns @bool # Error on codepaths without explicit return
+	--noImplicitThis @bool # Error when this has type any
+	--noPropertyAccessFromIndexSignature @bool # Enforce indexed accessors for index signatures
+	--noUncheckedIndexedAccess @bool # Add undefined to indexed access types
+	--noUnusedLocals @bool # Error when local variables are not read
+	--noUnusedParameters @bool # Error when function parameters are not read
+	--strict @bool # Enable all strict type-checking options
+	--strictBindCallApply @bool # Check bind, call, apply argument types
+	--strictFunctionTypes @bool # Check function assignment subtype compatibility
+	--strictNullChecks @bool # Account for null and undefined in type checking
+	--strictPropertyInitialization @bool # Check class properties set in constructor
+	--useUnknownInCatchVariables @bool # Default catch variables as unknown
+	--assumeChangesOnlyAffectDirectDependencies @bool # Limit recompile scope in watch mode
+	--charset # Text encoding for reading files (deprecated)
+	--keyofStringsOnly @bool # Make keyof return only strings (legacy)
+	--noImplicitUseStrict @bool # Disable use strict in emitted JS
+	--noStrictGenericChecks @bool # Disable strict generic signature checks
+	--out # Deprecated, use outFile instead
+	--suppressExcessPropertyErrors @bool # Suppress excess property errors
+	--suppressImplicitAnyIndexErrors @bool # Suppress noImplicitAny index errors
+	--composite @bool # Enable project references support
+	--disableReferencedProjectLoad @bool # Reduce auto-loaded projects
+	--disableSolutionSearching @bool # Opt out of multi-project reference checking
+	--disableSourceOfProjectReferenceRedirect @bool # Prefer declaration files over source
+	--incremental|-i @bool # Save .tsbuildinfo for incremental compilation
+	--tsBuildInfoFile # Path to .tsbuildinfo file
+	--declaration|-d @bool # Generate .d.ts files
+	--declarationDir # Output directory for declaration files
+	--declarationMap @bool # Create sourcemaps for d.ts files
+	--downlevelIteration @bool # Emit verbose JS for iteration
+	--emitBOM @bool # Emit UTF-8 BOM in output files
+	--emitDeclarationOnly @bool # Only output d.ts files
+	--importHelpers @bool # Import helper functions from tslib
+	--importsNotUsedAsValues (remove|preserve|error) # Emit behavior for type-only imports
+	--inlineSourceMap @bool # Include sourcemaps inside emitted JS
+	--inlineSources @bool # Include source code in sourcemaps
+	--mapRoot # Location for debugger to find map files
+	--newLine (crlf|lf) # Newline character for emitting files
+	--noEmit @bool # Disable emitting files from compilation
+	--noEmitHelpers @bool # Disable custom helper functions in output
+	--noEmitOnError @bool # Disable emit if type errors are reported
+	--outDir # Output folder for all emitted files
+	--outFile # Bundle all outputs into one JS file
+	--preserveConstEnums @bool # Keep const enum declarations in output
+	--preserveValueImports @bool # Preserve unused imported values in output
+	--removeComments @bool # Disable emitting comments
+	--sourceMap @bool # Create source map files for emitted JS
+	--sourceRoot # Root path for debugger source references
+	--stripInternal @bool # Disable declarations with @internal JSDoc
+	--diagnostics @bool # Output compiler performance information
+	--explainFiles @bool # Print files read during compilation
+	--extendedDiagnostics @bool # Output detailed performance information
+	--generateCpuProfile # Emit a v8 CPU profile for debugging
+	--generateTrace # Generate an event trace and type list
+	--listEmittedFiles @bool # Print names of emitted files
+	--listFiles @bool # Print all files read during compilation
+	--traceResolution @bool # Log paths used during module resolution
+	--disableSizeLimit @bool # Remove 20mb cap on JS source code size
+	--plugins # Language service plugins to include
+	--emitDecoratorMetadata @bool # Emit design-type metadata for decorators
+	--experimentalDecorators @bool # Enable TC39 stage 2 decorators
+	--jsx (preserve|react|react-native|react-jsx|react-jsxdev) # JSX code generation mode
+	--jsxFactory # JSX factory function for React emit
+	--jsxFragmentFactory # JSX Fragment reference for React emit
+	--jsxImportSource # Module specifier for JSX factory functions
+	--lib # Bundled library declaration files for target runtime
+	--moduleDetection (legacy|auto|force) # Method to detect module-format JS files
+	--noLib @bool # Disable including any library files
+	--reactNamespace # Object invoked for createElement in React
+	--target|-t (es3|es5|es6|es2015|es2016|es2017|es2018|es2019|es2020|es2021|es2022|esnext) # JavaScript language version for output
+	--useDefineForClassFields @bool # Emit standard-compliant class fields
+	--noErrorTruncation @bool # Disable truncating types in error messages
+	--preserveWatchOutput @bool # Disable wiping console in watch mode
+	--pretty @bool # Enable color and formatting in output
+	--skipDefaultLibCheck @bool # Skip type checking included .d.ts files
+	--skipLibCheck @bool # Skip type checking all .d.ts files
+	--watchFile (fixedpollinginterval|prioritypollinginterval|dynamicprioritypolling|fixedchunksizepolling|usefsevents|usefseventsonparentdirectory) # Watch mode file strategy
+	--watchDirectory (usefsevents|fixedpollinginterval|dynamicprioritypolling|fixedchunksizepolling) # Watch mode directory strategy
+	--fallbackPolling (fixedinterval|priorityinterval|dynamicpriority|fixedchunksize) # Watcher fallback when native watchers exhausted
+	--synchronousWatchDirectory @bool # Sync callbacks for directory watchers
+	--excludeDirectories # Directories to remove from watch process
+	--excludeFiles # Files to remove from watch processing
+	--verbose @bool # Enable verbose logging for build mode
+	--dry @bool # Show what would be built or deleted
+	--force|-f @bool # Build all projects including up-to-date ones
+	--clean @bool # Delete outputs of all projects

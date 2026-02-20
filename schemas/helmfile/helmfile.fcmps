@@ -1,0 +1,62 @@
+# Helmfile CLI schema for fast-completer
+# Curated from Helmfile command line usage docs (last checked: 2026-02-20)
+
+helmfile # Helmfile declarative Helm orchestration
+	--help|-h @bool # Show help
+	--version|-v @bool # Show version
+	--file|-f # State file path
+	--environment|-e # Target environment name
+	--namespace|-n # Override Kubernetes namespace
+	--selector|-l # Label selector
+	--kube-context # Kubernetes context
+	--helm-binary # Path to Helm binary
+	--state-values-file # Additional state values file
+	--state-values-set # Inline state values
+	--state-values-set-string # Inline state values as strings
+	--interactive|-i @bool # Ask for confirmation before mutating operations
+	--quiet|-q @bool # Reduce output verbosity
+	--debug @bool # Enable debug logs
+	--log-level # Log level
+	--allow-no-matching-release @bool # Do not fail when selectors match no release
+	--no-color @bool # Disable color output
+	--enable-live-output @bool # Stream helm output while running
+	--skip-deps @bool # Skip dependency building
+	--skip-charts @bool # Skip chart download/update
+	--skip-tests @bool # Skip test hooks
+	help # Show help for commands
+	version # Show Helmfile version
+	init # Initialize helm plugins and dependencies
+	build # Render state files with environments and templates
+	apply # Diff then sync releases when changed
+	diff # Show diffs against live cluster
+	sync # Sync desired state to cluster
+	destroy # Uninstall all releases in state
+	test # Run helm tests for selected releases
+	template # Render Kubernetes manifests from charts
+	lint # Run helm lint against selected releases
+	list # List matching releases
+	status # Show release status
+	deps # Build chart dependencies
+	fetch # Fetch chart sources
+	repos # Sync helm repositories
+	cache # Manage helmfile cache
+		cleanup # Remove helmfile cache data
+	write-values # Write generated values files for releases
+	show-dag # Show release dependency DAG
+	apply
+		--skip-diff-on-install @bool # Skip diff on first install
+		--suppress-secrets @bool # Hide secret values from diff output
+	diff
+		--context # Number of context lines in diff output
+		--detailed-exitcode @bool # Return non-zero when differences exist
+		--suppress-secrets @bool # Hide secret values from diff output
+	sync
+		--skip-crds @bool # Skip CRD installation
+	template
+		--include-crds @bool # Include CRDs in rendered manifests
+		--output-dir # Directory for rendered manifests
+		--skip-tests @bool # Skip tests during template run
+	test
+		--cleanup @bool # Delete test pods after completion
+	list
+		--output (table|json|yaml) # Output format

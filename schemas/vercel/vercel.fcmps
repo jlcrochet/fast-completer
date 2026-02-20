@@ -1,0 +1,183 @@
+# Vercel CLI schema for fast-completer
+# Curated from Vercel CLI docs (last checked: 2026-02-20)
+
+vercel # Vercel CLI
+	--cwd # Set the current working directory
+	--debug @bool # Enable debug mode
+	--global-config # Path to the global `.vercel` directory
+	--help @bool # Show help
+	--local-config # Path to the local `vercel.json` file
+	--no-color @bool # Disable colored output
+	--scope # Set a custom scope
+	--token # Login token
+	--version @bool # Show CLI version
+	alias # Assign domains to deployments
+		set # Assign a custom domain to a deployment
+		rm # Remove an alias
+			--yes @bool # Skip confirmation prompt
+		ls # List aliases
+			--limit # Max aliases to return
+	api # Access Vercel APIs from the CLI
+		ls # List available API endpoints
+	bisect # Find the commit that introduced a deployment issue
+	blob # Manage Vercel Blob storage
+	build # Build a Vercel project locally
+	cache # Manage build cache
+	certs # Manage SSL certificates
+	contract # Work with deployment contracts
+	curl # Make HTTP requests with deployment protection bypass
+	deploy # Deploy a project
+	dev # Run local dev server
+	dns # Manage DNS records
+		ls # List DNS records
+			--limit # Max records to return
+		add # Add a DNS record
+		rm # Remove a DNS record
+		import # Import records from a zone file
+	domains # Manage domains
+		ls # List domains
+			--limit # Max domains to return
+			--next # Pagination cursor
+		inspect # Inspect a domain
+		add # Add a domain
+		rm # Remove a domain
+			--yes @bool # Skip confirmation prompt
+		buy # Buy a domain
+		move # Move a domain to another scope
+		transfer-in # Transfer a domain into Vercel
+		verify # Verify a domain
+	env # Manage project environment variables
+		ls # List environment variables
+		add # Add an environment variable
+			--sensitive @bool # Mark variable as sensitive
+			--yes @bool # Skip prompts
+		update # Update an environment variable
+			--sensitive @bool # Mark variable as sensitive
+		rm # Remove an environment variable
+			--yes @bool # Skip prompts
+		pull # Pull environment variables to a file
+		run # Run a command with environment variables
+			--environment|-e (development|preview|production) # Target environment
+			--git-branch # Target Git branch variables
+	flags # Manage Vercel feature flags
+	git # Manage Git provider connections
+		ls # List connections
+		connect # Connect a Git provider
+		disconnect # Disconnect a Git provider
+	guidance # Manage guidance messages
+		enable # Enable guidance messages
+		disable # Disable guidance messages
+		status # Show guidance status
+	help # Show help for commands
+	httpstat # Measure HTTP request timing
+	init # Initialize an example project
+	inspect # Inspect a deployment
+	install # Install an integration
+	integration # Manage integrations
+		add # Add an integration
+		open # Open integration details
+		list # List installed integrations/resources
+			--integration|-i # Filter by integration slug
+			--all|-a @bool # List across all projects
+		remove # Remove an integration
+	integration-resource # Manage integration resources
+		remove # Remove an integration resource
+		disconnect # Disconnect an integration resource
+	link # Link local directory to a Vercel project
+	list # List recent deployments
+	login # Login to Vercel
+	logout # Logout from Vercel
+	logs # Show runtime logs for a deployment
+	mcp # Configure MCP for a project
+	microfrontends # Manage microfrontend configuration
+		pull # Pull microfrontends config
+	open # Open project in Vercel dashboard
+	project # Manage projects
+		ls # List projects
+			--json @bool # Output JSON
+			--update-required @bool # Show projects requiring update
+		add # Create a project
+		inspect # Inspect a project
+		rm # Remove a project
+	promote # Promote a deployment
+		status # Show promotion status
+	pull # Pull project settings and env vars locally
+	redeploy # Redeploy an existing deployment
+	redirects # Manage project redirects
+		list # List redirects
+			--page # Page number
+			--per-page # Page size
+			--search|-s # Search query
+			--staged @bool # Show staged redirects
+			--version # Show redirects from a version
+		list-versions # List redirect versions
+		add # Add a redirect
+			--case-sensitive @bool # Match source case-sensitively
+			--name # Version name
+			--preserve-query-params @bool # Keep query params
+			--status (301|302|307|308) # Redirect status code
+			--yes|-y @bool # Skip prompts
+		upload # Upload redirects from CSV or JSON
+			--overwrite @bool # Replace existing redirects
+			--yes|-y @bool # Skip prompts
+		remove # Remove a redirect
+			--yes|-y @bool # Skip prompts
+		promote # Promote staged redirect version
+			--yes|-y @bool # Skip prompts
+		restore # Restore redirect version
+			--yes|-y @bool # Skip prompts
+	remove # Remove a deployment or project
+	rollback # Roll back production deployment
+		status # Show rollback status
+	rolling-release # Manage gradual rollout of deployments
+		configure # Configure rolling-release behavior
+			--cfg # Rolling-release configuration JSON
+		start # Start rolling release
+			--dpl # Deployment ID or URL
+			--yes @bool # Skip confirmation prompt
+		approve # Approve current stage
+			--dpl # Deployment ID or URL
+			--currentStageIndex # Current stage index
+		abort # Abort rolling release
+			--dpl # Deployment ID or URL
+		complete # Complete rolling release
+			--dpl # Deployment ID or URL
+		fetch # Fetch rolling-release details
+	rr # Alias for rolling-release
+		configure
+		start
+		approve
+		abort
+		complete
+		fetch
+	switch # Switch active team scope
+	target # Manage custom deployment environments
+		list # List targets
+		ls # Alias for list
+	targets # Alias for target
+		ls # List targets
+	teams # Manage teams
+		list # List teams
+		add # Create a team
+		invite # Invite a team member
+	telemetry # Manage telemetry settings
+		enable # Enable telemetry
+		disable # Disable telemetry
+		status # Show telemetry status
+	usage # Show usage information
+	webhooks # Manage account webhooks
+		list # List webhooks
+		ls # Alias for list
+			--format (json) # Output format
+		get # Get webhook details
+		inspect # Alias for get
+			--format (json) # Output format
+		create # Create a webhook
+		add # Alias for create
+			--event|-e # Event type (repeatable)
+			--project|-p # Project ID (repeatable)
+		rm # Remove a webhook
+		remove # Alias for rm
+		delete # Alias for rm
+			--yes @bool # Skip confirmation prompt
+	whoami # Show current user and scope

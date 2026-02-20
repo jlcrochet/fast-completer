@@ -1,0 +1,79 @@
+# Maven CLI schema for fast-completer
+# Curated from Apache Maven CLI reference (last checked: 2026-02-20)
+
+mvn # Apache Maven build tool
+	-am|--also-make @bool # Build required upstream projects
+	-amd|--also-make-dependents @bool # Build downstream dependent projects
+	-B|--batch-mode @bool # Run in non-interactive mode
+	-b|--builder # Build strategy id
+	-C|--strict-checksums @bool # Fail if checksums do not match
+	-c|--lax-checksums @bool # Warn (instead of fail) on bad checksums
+	-cpu|--check-plugin-updates @bool # Check for plugin updates (deprecated)
+	-D|--define # Define a user property
+	-e|--errors @bool # Print stack traces on errors
+	-emp|--encrypt-master-password # Encrypt master security password
+	-ep|--encrypt-password # Encrypt server password
+	-f|--file # Alternate POM file (or directory)
+	-fa|--fail-at-end @bool # Fail at end of reactor build
+	-ff|--fail-fast @bool # Stop at first failure (default)
+	-fn|--fail-never @bool # Never fail build regardless of test outcomes
+	-gs|--global-settings # Alternate global settings file
+	-G|--global-toolchains # Alternate global toolchains file
+	-h|--help @bool # Show help
+	-l|--log-file # Log file path
+	-llr|--legacy-local-repository @bool # Use legacy local repository behavior
+	-N|--non-recursive @bool # Do not recurse into subprojects
+	-npr|--no-plugin-registry @bool # Ignore plugin registry (deprecated)
+	-npu|--no-plugin-updates @bool # Suppress plugin update checks (deprecated)
+	-ns|--no-snapshot-updates @bool # Suppress snapshot updates
+	-ntp|--no-transfer-progress @bool # Disable artifact transfer progress output
+	-o|--offline @bool # Work offline
+	-P|--activate-profiles # Comma-separated profile list
+	-pl|--projects # Reactor project list
+	-q|--quiet @bool # Quiet output
+	-rf|--resume-from # Resume reactor from project
+	-s|--settings # Alternate user settings file
+	-t|--toolchains # Alternate user toolchains file
+	-T|--threads # Thread count (e.g. 1C, 2)
+	-U|--update-snapshots @bool # Force snapshot updates
+	-up|--update-plugins @bool # Force plugin updates (deprecated)
+	-v|--version @bool # Show Maven version
+	-V|--show-version @bool # Show version without stopping
+	-X|--debug @bool # Enable debug output
+	--color (auto|always|never|yes|no|force) # ANSI color mode
+	--raw-streams @bool # Do not encode stdout/stderr streams
+	validate # Validate project is correct and all needed information is available
+	initialize # Initialize build state
+	generate-sources # Generate source code for compilation
+	process-sources # Process source code
+	generate-resources # Generate resources for packaging
+	process-resources # Copy/process resources into target directory
+	compile # Compile project source code
+	process-classes # Post-process compiled classes
+	generate-test-sources # Generate test source code
+	process-test-sources # Process test source code
+	generate-test-resources # Generate test resources
+	process-test-resources # Copy/process test resources
+	test-compile # Compile test source code
+	process-test-classes # Post-process test classes
+	test # Run unit tests
+	prepare-package # Perform operations before packaging
+	package # Package compiled code into distributable format
+	pre-integration-test # Prepare integration test environment
+	integration-test # Run integration tests
+	post-integration-test # Tear down integration test environment
+	verify # Run checks to verify package validity
+	install # Install package into local repository
+	deploy # Copy final package to remote repository
+	clean # Remove build output
+	site # Generate project site/documentation
+	help:effective-pom # Show effective POM
+	help:effective-settings # Show effective settings
+	help:describe # Describe plugin/goal details
+	dependency:tree # Print dependency tree
+	dependency:analyze # Analyze declared/used dependencies
+	versions:display-dependency-updates # Show dependency updates
+	versions:display-plugin-updates # Show plugin updates
+	surefire:test # Run tests via Surefire plugin
+	failsafe:integration-test # Run integration tests via Failsafe
+	failsafe:verify # Verify integration-test results via Failsafe

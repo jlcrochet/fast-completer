@@ -1,0 +1,68 @@
+# Gradle CLI schema for fast-completer
+# Curated from Gradle command line usage docs (last checked: 2026-02-20)
+
+gradle # Gradle build automation tool
+	--help|-h @bool # Show help
+	--version|-v @bool # Show version
+	--daemon @bool # Use the Gradle daemon
+	--no-daemon @bool # Do not use the Gradle daemon
+	--console (auto|plain|rich|verbose) # Console output mode
+	--warning-mode (all|fail|summary|none) # Warning display mode
+	--stacktrace|-s @bool # Print stacktrace
+	--full-stacktrace|-S @bool # Print full stacktrace
+	--scan @bool # Publish a build scan
+	--no-scan @bool # Disable build scan publishing
+	--profile @bool # Profile build execution
+	--quiet|-q @bool # Show errors only
+	--info|-i @bool # Set log level to info
+	--debug|-d @bool # Set log level to debug
+	--build-cache @bool # Enable local/remote build cache
+	--no-build-cache @bool # Disable build cache
+	--configuration-cache @bool # Enable configuration cache
+	--no-configuration-cache @bool # Disable configuration cache
+	--configuration-cache-problems (fail|warn) # Configuration cache problem mode
+	--parallel @bool # Build projects in parallel
+	--no-parallel @bool # Disable parallel project execution
+	--max-workers # Maximum worker count
+	--project-dir|-p # Project directory
+	--project-cache-dir # Project-specific cache directory
+	--gradle-user-home|-g # Gradle user home directory
+	--include-build # Include a composite build
+	--init-script|-I # Specify an init script
+	--settings-file|-c # Specify settings file
+	--build-file|-b # Specify build file
+	--offline @bool # Run without network access
+	--refresh-dependencies @bool # Refresh dependency cache
+	--rerun-tasks @bool # Ignore task up-to-date checks
+	--continue @bool # Continue task execution after a failure
+	--dry-run|-m @bool # Show task execution plan without executing
+	--write-locks @bool # Persist dependency lock state
+	--update-locks # Update selected locked dependencies
+	--watch-fs @bool # Enable file system watching
+	--no-watch-fs @bool # Disable file system watching
+	--status @bool # Show daemon status
+	--stop @bool # Stop all Gradle daemons
+	--priority (normal|low) # Build process priority
+	help # Show help about tasks or options
+	projects # Show project hierarchy
+	tasks # Show available tasks
+	properties # Show project properties
+	dependencies # Show dependency graph
+	dependencyInsight # Inspect a specific dependency
+	buildEnvironment # Show buildscript dependencies
+	wrapper # Generate/update Gradle wrapper scripts
+	init # Initialize a new Gradle project
+	assemble # Assemble outputs for this project
+	build # Assemble and test this project
+	clean # Delete build outputs
+	check # Run verification tasks
+	test # Run unit tests
+	testClasses # Compile and process test classes
+	classes # Compile and process main classes
+	jar # Assemble JAR artifact
+	compileJava # Compile Java source
+	compileTestJava # Compile test Java source
+	processResources # Process main resources
+	processTestResources # Process test resources
+	publish # Publish produced artifacts
+	publishToMavenLocal # Publish artifacts to local Maven repository

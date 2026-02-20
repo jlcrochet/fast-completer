@@ -1,0 +1,170 @@
+# Node CLI schema for fast-completer
+# Generated from node 25.6.1
+
+node # Server-side JavaScript runtime
+	--abort-on-uncaught-exception @bool # aborting instead of exiting causes a
+	--allow-addons @bool # allow use of addons when any
+	--allow-child-process @bool # allow use of child process when any
+	--allow-fs-read # allow permissions to read the
+	--allow-fs-write # allow permissions to write in the
+	--allow-inspector @bool # allow use of inspector when any
+	--allow-net @bool # allow use of network when any
+	--allow-wasi @bool # allow wasi when any permissions are set
+	--allow-worker @bool # allow worker threads when any
+	--build-sea # Build a Node.js single executable
+	--build-snapshot @bool # Generate a snapshot blob when the
+	--check|-c @bool # syntax check script without executing
+	--completion-bash @bool # print source-able bash completion
+	--conditions|-C # additional user conditions for
+	--cpu-prof @bool # Start the V8 CPU profiler on start up,
+	--cpu-prof-dir # Directory where the V8 profiles
+	--cpu-prof-interval # specified sampling interval in
+	--cpu-prof-name # specified file name of the V8 CPU
+	--diagnostic-dir # set dir for all output files (default:
+	--disable-proto # disable Object.prototype.__proto__
+	--disable-sigusr1 @bool # Disable inspector thread to be
+	--disable-warning # silence specific process warnings
+	--disallow-code-generation-from-strings @bool # disallow eval and friends
+	--dns-result-order # set default value of verbatim in
+	--enable-etw-stack-walking @bool # provides heap data to ETW Windows
+	--enable-fips @bool # enable FIPS crypto at startup
+	--enable-source-maps @bool # Source Map V3 support for stack traces
+	--entry-url @bool # Treat the entrypoint as a URL
+	--env-file # set environment variables from supplied
+	--env-file-if-exists # set environment variables from supplied
+	--eval|-e # evaluate script
+	--experimental-addon-modules @bool # experimental import support for addons
+	--experimental-config-file # set config file from supplied file
+	--experimental-default-config-file @bool # set config file from default config
+	--experimental-eventsource @bool # experimental EventSource API
+	--experimental-import-meta-resolve @bool # experimental ES Module
+	--experimental-inspector-network-resource @bool # experimental load network resources via
+	--experimental-network-inspection @bool # experimental network inspection support
+	--experimental-print-required-tla @bool # Print pending top-level await. If
+	--experimental-sea-config # Generate a blob that can be embedded
+	--experimental-storage-inspection @bool # experimental storage inspection support
+	--experimental-test-coverage @bool # enable code coverage in the test runner
+	--experimental-test-module-mocks @bool # enable module mocking in the test
+	--experimental-transform-types @bool # enable transformation of
+	--experimental-vm-modules @bool # experimental ES Module support in vm
+	--experimental-worker-inspection @bool # experimental worker inspection support
+	--expose-gc @bool # expose gc extension
+	--force-context-aware @bool # disable loading non-context-aware
+	--force-fips @bool # force FIPS crypto (cannot be disabled)
+	--force-node-api-uncaught-exceptions-policy @bool # enforces 'uncaughtException' event on
+	--frozen-intrinsics @bool # experimental frozen intrinsics support
+	--heap-prof @bool # Start the V8 heap profiler on start up,
+	--heap-prof-dir # Directory where the V8 heap profiles
+	--heap-prof-interval # specified sampling interval in bytes
+	--heap-prof-name # specified file name of the V8 heap
+	--heapsnapshot-near-heap-limit # Generate heap snapshots whenever V8 is
+	--heapsnapshot-signal # Generate heap snapshot on specified
+	--icu-data-dir # set ICU data load path to dir
+	--import # ES module to preload (option can be
+	--input-type # set module type for string input
+	--insecure-http-parser @bool # use an insecure HTTP parser that
+	--inspect # activate inspector on host:port
+	--inspect-publish-uid # comma separated list of destinations
+	--inspect-wait # activate inspector on host:port and
+	--interactive|-i @bool # always enter the REPL even if stdin
+	--interpreted-frames-native-stack @bool # help system profilers to translate
+	--jitless @bool # disable runtime allocation of
+	--localstorage-file # file used to persist localStorage data
+	--max-http-header-size # set the maximum size of HTTP headers
+	--max-old-space-size-percentage # set V8's max old space size as a
+	--max-old-space-size. @bool
+	--network-family-autoselection-attempt-timeout # Sets the default value for the network
+	--no-addons @bool # disable loading native addons
+	--no-async-context-frame @bool # Improve AsyncLocalStorage performance
+	--no-deprecation @bool # silence deprecation warnings
+	--no-experimental-detect-module @bool # when ambiguous modules fail to evaluate
+	--no-experimental-global-navigator @bool # expose experimental Navigator API on
+	--no-experimental-repl-await @bool # experimental await keyword support in
+	--no-experimental-require-module @bool # Legacy alias for --require-module
+	--no-experimental-sqlite @bool # experimental node:sqlite module
+	--no-experimental-webstorage @bool # experimental Web Storage API
+	--no-extra-info-on-fatal-exception @bool # hide extra information on fatal
+	--no-force-async-hooks-checks @bool # disable checks for async_hooks
+	--no-global-search-paths @bool # disable global module search paths
+	--enable-network-family-autoselection @bool # Disable network address family
+	--no-require-module @bool # Allow loading synchronous ES Modules in
+	--experimental-strip-types @bool # Type-stripping for TypeScript files.
+	--no-warnings @bool # silence all process warnings
+	--node-memory-debug @bool # Run with extra debug checks for memory
+	--openssl-config # load OpenSSL configuration from the
+	--openssl-legacy-provider @bool # enable OpenSSL 3.0 legacy provider
+	--openssl-shared-config @bool # enable OpenSSL shared configuration
+	--pending-deprecation @bool # emit pending deprecation warnings
+	--permission @bool # enable the permission system
+	--preserve-symlinks @bool # preserve symbolic links when resolving
+	--preserve-symlinks-main @bool # preserve symbolic links when resolving
+	--print|-p # evaluate script and print result
+	--prof @bool # Generate V8 profiler output.
+	--prof-process @bool # process V8 profiler output generated
+	--redirect-warnings # write warnings to file instead of
+	--report-compact @bool # output compact single-line JSON
+	--report-exclude-env @bool # Exclude environment variables when
+	--report-exclude-network @bool # exclude network interface diagnostics.
+	--report-filename # define custom report file name.
+	--report-on-fatalerror @bool # generate diagnostic report on fatal
+	--report-on-signal @bool # generate diagnostic report upon
+	--report-signal # causes diagnostic report to be produced
+	--require|-r # CommonJS module to preload (option can
+	--run # Run a script specified in package.json
+	--secure-heap # total size of the OpenSSL secure heap
+	--secure-heap-min # minimum allocation size from the
+	--snapshot-blob # Path to the snapshot blob that's either
+	--test @bool # launch test runner on startup
+	--test-concurrency # specify test runner concurrency
+	--test-coverage-branches # the branch coverage minimum threshold
+	--test-coverage-functions # the function coverage minimum threshold
+	--test-coverage-lines # the line coverage minimum threshold
+	--test-force-exit @bool # force test runner to exit upon
+	--test-global-setup # specifies the path to the global setup
+	--test-name-pattern # run tests whose name matches this
+	--test-only @bool # run tests with 'only' option set
+	--test-reporter # report test output using the given
+	--test-reporter-destination # report given reporter to the given
+	--test-rerun-failures # specifies the path to the rerun state
+	--test-shard # run test at specific shard
+	--test-skip-pattern # run tests whose name do not match this
+	--test-timeout # specify test runner timeout
+	--test-update-snapshots @bool # regenerate test snapshots
+	--throw-deprecation @bool # throw an exception on deprecations
+	--title # the process title to use on startup
+	--tls-cipher-list # use an alternative default TLS cipher
+	--tls-keylog # log TLS decryption keys to named file
+	--tls-max-v1.2 @bool # set default TLS maximum to TLSv1.2
+	--tls-max-v1.3 @bool # set default TLS maximum to TLSv1.3
+	--tls-min-v1.0 @bool # set default TLS minimum to TLSv1.0
+	--tls-min-v1.1 @bool # set default TLS minimum to TLSv1.1
+	--tls-min-v1.2 @bool # set default TLS minimum to TLSv1.2
+	--tls-min-v1.3 @bool # set default TLS minimum to TLSv1.3
+	--trace-deprecation @bool # show stack traces on deprecations
+	--trace-env @bool # Print accesses to the environment
+	--trace-env-js-stack @bool # Print accesses to the environment
+	--trace-env-native-stack @bool # Print accesses to the environment
+	--trace-event-categories # comma separated list of trace event
+	--trace-event-file-pattern # Template string specifying the filepath
+	--trace-exit @bool # show stack trace when an environment
+	--trace-promises @bool # show stack traces on promise
+	--trace-require-module # Print access to require(esm). Options
+	--trace-sigint @bool # enable printing JavaScript stacktrace
+	--trace-sync-io @bool # show stack trace when use of sync IO is
+	--trace-tls @bool # prints TLS packet trace information to
+	--trace-uncaught @bool # show stack traces for the `throw`
+	--trace-warnings @bool # show stack traces on process warnings
+	--track-heap-objects @bool # track heap object allocations for heap
+	--unhandled-rejections # define unhandled rejections behavior.
+	--use-bundled-ca @bool # use bundled CA store (default)
+	--use-env-proxy @bool # parse proxy settings from
+	--use-largepages # Map the Node.js static code to large
+	--use-openssl-ca @bool # use OpenSSL's default CA store
+	--use-system-ca @bool # use system's CA store
+	--v8-options @bool # print V8 command line options
+	--v8-pool-size # set V8's thread pool size
+	--watch @bool # run in watch mode
+	--watch-kill-signal # kill signal to send to the process on
+	--watch-path # path to watch
+	--watch-preserve-output @bool # preserve outputs on watch mode restart
+	--zero-fill-buffers @bool # automatically zero-fill all newly

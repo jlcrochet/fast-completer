@@ -1,0 +1,156 @@
+ip # Show and manipulate routing, network devices, interfaces
+	-V @bool # Print version
+	-s @bool # Output more statistics
+	-d @bool # Output more details
+	-r @bool # Resolve names
+	-h @bool # Human-readable output
+	-iec @bool # Print human-readable rates in IEC units
+	-j @bool # Output results in JSON
+	-p @bool # Pretty print JSON output
+	-4 @bool # Shortcut for -family inet
+	-6 @bool # Shortcut for -family inet6
+	-M @bool # Shortcut for -family mpls
+	-B @bool # Shortcut for -family bridge
+	-0 @bool # Shortcut for -family link
+	-f (inet|inet6|mpls|bridge|link) # Protocol family to use
+	-l # Maximum number of address flush attempts
+	-o @bool # Output each record on one line
+	-t @bool # Display timestamp
+	-ts @bool # Display short timestamp
+	-b # Read commands from file or stdin
+	-rc # Set netlink socket receive buffer size
+	-n # Switch to specified network namespace
+	-N @bool # Print protocol numbers instead of names
+	-a @bool # Execute over all objects
+	-c @bool # Use color output
+	-br @bool # Print brief output
+	-echo @bool # Request kernel to send echo of requests
+	-force @bool # Don't terminate on errors in batch mode
+	link # Network device configuration
+		show # Display device attributes
+		set # Change device attributes
+		add # Add virtual link
+		delete # Delete virtual link
+		change # Change device attributes
+		xstats # Display extended statistics
+		afstats # Display address family statistics
+		property # Manage device properties
+	address # Protocol address management
+		show # Display protocol addresses
+		add # Add new protocol address
+		change # Change existing protocol address
+		replace # Add or update protocol address
+		del # Delete protocol address
+		flush # Flush protocol addresses
+		save # Save protocol addresses
+		restore # Restore protocol addresses
+		showdump # Show saved address dump
+	route # Routing table management
+		list # List routes
+		flush # Flush routes
+		save # Save routing table
+		restore # Restore routing table
+		showdump # Show saved route dump
+		get # Get a single route
+		add # Add new route
+		del # Delete route
+		change # Change existing route
+		append # Append route
+		replace # Add or update route
+	neighbour # Neighbour and ARP table management
+		show # Display neighbour entries
+		flush # Flush neighbour entries
+		add # Add neighbour entry
+		del # Delete neighbour entry
+		change # Change neighbour entry
+		replace # Add or update neighbour entry
+		get # Get a single neighbour entry
+	rule # Routing policy rule management
+		list # List rules
+		add # Add new rule
+		del # Delete rule
+		flush # Flush rules
+		save # Save rules
+		restore # Restore rules
+	netns # Network namespace management
+		list # List network namespaces
+		add # Add network namespace
+		attach # Attach process to network namespace
+		set # Assign an id to a network namespace
+		delete # Delete network namespace
+		identify # Report network namespace for a process
+		pids # Report processes in a network namespace
+		exec # Execute command in network namespace
+		monitor # Monitor network namespace events
+		list-id # List network namespace IDs
+	tunnel # Tunnel configuration
+		add # Add new tunnel
+		change # Change existing tunnel
+		del # Delete tunnel
+		show # Show tunnel info
+		prl # Manage potential router list
+		6rd # Manage 6rd prefix
+	tuntap # TUN/TAP device management
+		add # Add TUN/TAP device
+		del # Delete TUN/TAP device
+		show # Show TUN/TAP devices
+		list # List TUN/TAP devices
+	l2tp # L2TPv3 tunnel management
+		add # Add L2TP tunnel or session
+		del # Delete L2TP tunnel or session
+		show # Show L2TP tunnel or session info
+	xfrm # IPsec framework management
+		state # Manage xfrm states
+		policy # Manage xfrm policies
+		monitor # Monitor xfrm events
+	vrf # Virtual routing and forwarding management
+		show # Show VRF devices
+		exec # Execute command in VRF context
+		identify # Identify VRF for a process
+		pids # List processes in a VRF
+	nexthop # Nexthop object management
+		list # List nexthop entries
+		flush # Flush nexthop entries
+		add # Add nexthop entry
+		replace # Replace nexthop entry
+		get # Get a single nexthop entry
+		del # Delete nexthop entry
+		bucket # Manage nexthop buckets
+	addrlabel # Address label management
+		list # List address labels
+		add # Add address label
+		del # Delete address label
+		flush # Flush address labels
+	maddress # Multicast address management
+		show # Display multicast addresses
+		add # Add multicast address
+		del # Delete multicast address
+	mroute # Multicast routing cache
+		show # Display multicast routes
+	monitor # Watch for netlink messages
+	ntable # Neighbour table configuration
+		show # Show neighbour table
+		change # Change neighbour table parameters
+	macsec # MACsec device configuration
+		add # Add MACsec transmit or receive association
+		set # Modify MACsec association
+		del # Delete MACsec association
+		show # Show MACsec device info
+		offload # Configure MACsec offload
+	token # Tokenized interface identifier management
+		list # List token identifiers
+		set # Set token identifier
+		del # Delete token identifier
+		get # Get token identifier
+	stats # Network statistics management
+		show # Display network statistics
+		set # Configure statistics collection
+	netconf # Network configuration monitoring
+	tcpmetrics # TCP metrics management
+		show # Show TCP metrics
+		delete # Delete TCP metrics
+		flush # Flush TCP metrics
+	mptcp # MPTCP path management
+	ioam # IOAM configuration
+	fou # Foo-over-UDP tunnel management
+	sr # Segment routing management

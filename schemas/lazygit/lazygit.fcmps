@@ -1,0 +1,15 @@
+# Lazygit CLI schema for fast-completer
+lazygit # Simple terminal UI for git commands
+	--path|-p # Path of git repo
+	--filter|-f # Path to filter on in git log
+	--version|-v @bool # Print the current version
+	--debug|-d @bool # Run in debug mode with logging
+	--logs|-l @bool # Tail lazygit logs
+	--profile @bool # Start the profiler on http port 6060
+	--config|-c @bool # Print the default config
+	--print-config-dir @bool # Print the config directory
+	--use-config-dir # Override default config directory
+	--work-tree|-w # Equivalent of the --work-tree git argument
+	--git-dir|-g # Equivalent of the --git-dir git argument
+	--use-config-file # Comma separated list of custom config files
+	--screen-mode (normal|half|full) # Initial screen mode

@@ -1,0 +1,191 @@
+# Terragrunt CLI schema for fast-completer
+# Curated from Terragrunt CLI reference (last checked: 2026-02-20)
+
+terragrunt # Terragrunt wrapper and orchestration CLI
+	--experiment # Enable one or more experiments
+	--experiment-mode @bool # Enable all non-alpha experiments
+	--log-custom-format # Custom log format template
+	--log-disable @bool # Disable all Terragrunt logging output
+	--log-format # Log format
+	--log-level # Log level
+	--log-show-abs-paths @bool # Show absolute paths in log output
+	--no-color @bool # Disable color output
+	--no-tip @bool # Disable tips
+	--no-tips @bool # Disable tips
+	--non-interactive @bool # Assume yes for prompts
+	--strict-control # Enable one strict-control by name
+	--strict-mode @bool # Enable all strict controls
+	--working-dir # Working directory
+	--help|-h @bool # Show command help
+	--version @bool # Show Terragrunt version
+	run # Run an OpenTofu/Terraform subcommand across units
+		--all @bool # Include all units in stack
+		--auth-provider-cmd # Command that returns auth credentials
+		--experiment # Enable one or more experiments
+		--experiment-mode @bool # Enable all non-alpha experiments
+		--filter # Filter units by query
+		--graph @bool # Traverse via dependency graph
+		--iam-assume-role # IAM role ARN to assume
+		--iam-assume-role-duration # IAM role session duration
+		--iam-assume-role-session-name # IAM role session name
+		--iam-web-identity-token # Web identity token for IAM role assumption
+		--inputs-debug @bool # Emit debug inputs file for unit execution
+		--json-out-dir # Directory for structured JSON run outputs
+		--no-auto-approve @bool # Do not auto-approve apply/destroy
+		--no-auto-init @bool # Skip auto init before run
+		--no-stack-generate @bool # Skip stack generation phase
+		--queue-construct-as # Queue strategy for unit ordering
+		--queue-exclude-dir # Exclude units under directory
+		--queue-exclude-external @bool # Exclude external dependencies
+		--queue-excludes-file # File containing excludes
+		--queue-ignore-dag-order @bool # Ignore dependency DAG order
+		--queue-ignore-errors @bool # Continue despite errors
+		--queue-ignore-errors-warnings @bool # Suppress ignore-errors warnings
+		--queue-ignore-units-reading @bool # Ignore units that read changed files
+		--queue-ignore-units-reading-errors @bool # Ignore file-reading detection errors
+		--queue-include-dir # Include units under directory
+		--queue-include-external @bool # Include external dependencies
+		--report-file # Output path for run report
+		--report-format # Report format
+		--source # Module source override
+		--tf-forward-stdout @bool # Forward Terraform/OpenTofu stdout
+		--tf-path # Terraform/OpenTofu binary path
+		--units-that-include # Select units by included file match
+		--working-dir # Working directory
+	exec # Execute an arbitrary command across units
+		--all @bool # Include all units in stack
+		--auth-provider-cmd # Command that returns auth credentials
+		--experiment # Enable one or more experiments
+		--experiment-mode @bool # Enable all non-alpha experiments
+		--filter # Filter units by query
+		--graph @bool # Traverse via dependency graph
+		--iam-assume-role # IAM role ARN to assume
+		--iam-assume-role-duration # IAM role session duration
+		--iam-assume-role-session-name # IAM role session name
+		--iam-web-identity-token # Web identity token for IAM role assumption
+		--inputs-debug @bool # Emit debug inputs file for unit execution
+	backend # Manage remote backend bootstrap/migration/cleanup
+		bootstrap # Bootstrap remote state backend resources
+			--all @bool # Operate on all units
+			--config # Backend bootstrap configuration file
+			--download-dir # Download directory for module source
+		migrate # Migrate backend configuration/state
+			--all @bool # Operate on all units
+			--config # Backend migration configuration file
+			--download-dir # Download directory for module source
+			--force @bool # Skip interactive confirmation
+		delete # Delete backend resources
+			--all @bool # Operate on all units
+			--config # Backend deletion configuration file
+			--download-dir # Download directory for module source
+			--force @bool # Skip interactive confirmation
+	stack # Stack management helpers
+		generate # Generate stack units from stack definitions
+			--filter # Filter stack units to generate
+		run # Run OpenTofu/Terraform command via stack traversal
+			--all @bool # Include all units
+			--filter # Filter units by query
+			--graph @bool # Traverse via dependency graph
+			--no-stack-generate @bool # Skip stack generation phase
+		output # Print outputs across units in a stack
+			--all @bool # Include all units
+			--format # Output format
+			--json @bool # Emit JSON output
+			--raw @bool # Emit raw output values
+			--no-stack-generate @bool # Skip stack generation phase
+		clean # Remove generated stack artifacts
+	catalog # Generate/inspect catalog entries from units
+		--all @bool # Include all units
+		--filter # Filter units by query
+		--format # Output format
+		--no-hooks @bool # Disable hooks while evaluating units
+		--no-include-root @bool # Exclude root unit from catalog
+		--no-shell @bool # Disable shell execution while evaluating units
+		--root-file-name # Root Terragrunt file name
+	scaffold # Scaffold files from catalog templates
+		--all @bool # Include all units
+		--filter # Filter units by query
+		--format # Output format
+		--no-hooks @bool # Disable hooks while evaluating units
+		--no-include-root @bool # Exclude root unit from scaffold inputs
+		--no-shell @bool # Disable shell execution while evaluating units
+		--root-file-name # Root Terragrunt file name
+		--var # Template variable assignment
+		--var-file # Template variable file
+	find # Find units matching query criteria
+		--dag @bool # Respect dependency DAG in results
+		--dependencies @bool # Include dependencies
+		--exclude # Exclude units matching selector
+		--external @bool # Include external dependencies
+		--filter # Filter units by query
+		--filter-affected @bool # Filter affected units from change detection
+		--format # Output format
+		--include # Include units matching selector
+		--json @bool # Emit JSON output
+		--no-hidden @bool # Exclude hidden units
+		--queue-construct-as # Queue strategy for output ordering
+		--reading # Match units by files they read
+	list # List units in the current stack
+		--dag @bool # Respect dependency DAG in results
+		--dependencies @bool # Include dependencies
+		--exclude # Exclude units matching selector
+		--external @bool # Include external dependencies
+		--filter # Filter units by query
+		--filter-affected @bool # Filter affected units from change detection
+		--format # Output format
+		--include # Include units matching selector
+		--json @bool # Emit JSON output
+		--long @bool # Long listing format
+		--no-hidden @bool # Exclude hidden units
+		--queue-construct-as # Queue strategy for output ordering
+		--reading # Match units by files they read
+		--tree @bool # Tree output format
+	hcl # HCL formatting and validation utilities
+		fmt # Format Terragrunt HCL files
+			--check @bool # Check formatting without writing changes
+			--diff @bool # Print formatting diff
+			--exclude-dir # Exclude directory
+			--file # Single file path
+			--filter # Filter target files by query
+			--parallelism # Number of parallel workers
+			--queue-exclude-dir # Exclude directories from queue
+			--queue-exclude-external @bool # Exclude external dependencies
+			--queue-excludes-file # File containing excludes
+			--queue-ignore-dag-order @bool # Ignore dependency DAG order
+			--queue-ignore-errors @bool # Continue despite errors
+			--queue-include-dir # Include directories in queue
+			--queue-include-external @bool # Include external dependencies
+			--stdin @bool # Read content from stdin
+		validate # Validate Terragrunt configuration
+			--filter # Filter units by query
+			--inputs @bool # Validate resolved inputs
+			--json @bool # Emit JSON output
+			--queue-exclude-dir # Exclude directories from queue
+			--queue-exclude-external @bool # Exclude external dependencies
+			--queue-excludes-file # File containing excludes
+			--queue-ignore-dag-order @bool # Ignore dependency DAG order
+			--queue-ignore-errors @bool # Continue despite errors
+			--queue-include-dir # Include directories in queue
+			--queue-include-external @bool # Include external dependencies
+			--show-config-path @bool # Show config path in output
+			--strict @bool # Enable strict validation mode
+	dag # Render dependency graph data
+		graph # Output dependency graph
+	render # Render effective Terragrunt configuration
+		--all @bool # Render all units
+		--format # Output format
+		--write # Write rendered result to file
+	info # Display Terragrunt runtime metadata
+		print # Print detailed Terragrunt metadata
+	apply # Shortcut to terragrunt run -- apply
+	destroy # Shortcut to terragrunt run -- destroy
+	force-unlock # Shortcut to terragrunt run -- force-unlock
+	import # Shortcut to terragrunt run -- import
+	init # Shortcut to terragrunt run -- init
+	output # Shortcut to terragrunt run -- output
+	plan # Shortcut to terragrunt run -- plan
+	refresh # Shortcut to terragrunt run -- refresh
+	show # Shortcut to terragrunt run -- show
+	state # Shortcut to terragrunt run -- state
+	test # Shortcut to terragrunt run -- test
+	validate # Shortcut to terragrunt run -- validate

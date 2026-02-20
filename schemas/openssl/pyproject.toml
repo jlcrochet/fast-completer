@@ -1,0 +1,4 @@
+[project]
+name = "openssl-schema"
+version = "0.1.0"
+description = "Hand-maintained OpenSSL schema for fast-completer"

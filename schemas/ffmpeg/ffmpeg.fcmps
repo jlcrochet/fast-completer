@@ -1,0 +1,92 @@
+# ffmpeg CLI schema for fast-completer
+ffmpeg # Multimedia framework for audio/video processing
+	-i # Input file URL
+	-y @bool # Overwrite output files without asking
+	-n @bool # Never overwrite output files
+	-f # Force input or output file format
+	-c # Codec name
+	-codec # Codec name
+	-t # Duration of data to process
+	-to # Stop writing output at position
+	-ss # Start time offset
+	-sseof # Set start time relative to EOF
+	-seek_timestamp @bool # Enable seeking by timestamp
+	-timestamp # Set the recording timestamp
+	-metadata # Set metadata key=value pair
+	-target # Specify target file type
+	-frames # Set the number of frames to output
+	-filter # Set stream filtergraph
+	-filter_complex # Set complex filtergraph
+	-filter_script # Read filtergraph description from a file
+	-pre # Preset name
+	-map # Set input stream mapping
+	-map_metadata # Set metadata information of output file from input
+	-map_chapters # Set chapters mapping
+	-dn @bool # Disable data
+	-an @bool # Disable audio
+	-vn @bool # Disable video
+	-sn @bool # Disable subtitle
+	-vcodec # Set video codec
+	-acodec # Set audio codec
+	-scodec # Set subtitle codec
+	-vf # Set video filters
+	-af # Set audio filters
+	-b # Set bitrate
+	-ab # Set audio bitrate
+	-vb # Set video bitrate
+	-r # Set frame rate
+	-s # Set frame size
+	-aspect # Set aspect ratio
+	-pix_fmt # Set pixel format
+	-vframes # Set the number of video frames to output
+	-aframes # Set the number of audio frames to output
+	-ar # Set audio sampling rate
+	-ac # Set number of audio channels
+	-sample_fmt # Set sample format
+	-channel_layout # Set channel layout
+	-threads # Set number of processing threads
+	-preset (ultrafast|superfast|veryfast|faster|fast|medium|slow|slower|veryslow|placebo) # Encoding preset
+	-tune # Encoding tune parameter
+	-profile # Encoding profile
+	-level # Encoding level
+	-crf # Set constant rate factor
+	-qscale|-q # Use fixed quality scale
+	-pass # Select the pass number
+	-passlogfile # Set two-pass log file name prefix
+	-vstats @bool # Dump video coding statistics to file
+	-vstats_file # Dump video coding statistics to file
+	-vol # Change audio volume
+	-loglevel|-v # Set logging level
+	-report @bool # Generate a report
+	-hide_banner @bool # Suppress printing banner
+	-max_alloc # Set maximum size of a single allocated block
+	-cpuflags # Set CPU flags mask
+	-max_muxing_queue_size # Set maximum number of packets in muxing queue
+	-muxdelay # Set maximum demux-decode delay
+	-muxpreload # Set initial demux-decode delay
+	-stream_loop # Set number of times input stream shall be looped
+	-re @bool # Read input at native frame rate
+	-shortest @bool # Finish encoding when shortest output stream ends
+	-accurate_seek @bool # Enable accurate seeking with -ss
+	-xerror @bool # Exit on error
+	-abort_on # Abort on specified condition flags
+	-stats @bool # Print progress report during encoding
+	-stats_period # Set period at which encoding progress is updated
+	-bits_per_raw_sample # Set the number of bits per raw sample
+	-autorotate @bool # Automatically rotate video
+	-autoscale @bool # Automatically scale video
+	-hwaccel (none|auto|vaapi|qsv|cuda|vdpau|dxva2|d3d11va|videotoolbox) # Set hardware acceleration method
+	-hwaccel_device # Select a device for HW acceleration
+	-hwaccel_output_format # Select output format used with HW accelerated decoding
+	-fix_sub_duration @bool # Fix subtitles duration
+	-canvas_size # Set canvas size
+	-copyts @bool # Copy timestamps
+	-start_at_zero @bool # Shift input timestamps to start at 0
+	-copytb (1|-1|0) # Copy input stream time base when transcoding
+	-enc_time_base # Set the desired time base for the encoder
+	-bitexact @bool # Bitexact mode
+	-tag # Force codec tag/fourcc
+	-timecode # Set initial TimeCode value
+	-disposition # Set stream disposition
+	-movflags # Set MOV muxer flags
+	-fflags # Set format flags

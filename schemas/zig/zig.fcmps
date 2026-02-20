@@ -1,0 +1,559 @@
+# Zig CLI schema for fast-completer
+# Generated from zig unknown
+
+zig # Zig language compiler and toolchain
+	ar # Use Zig as a drop-in archiver
+		--format @bool # - archive format to create
+		--plugin # - ignored for compatibility
+		--output @bool # - the directory to extract archive members to
+		--rsp-quoting @bool # - quoting style for response files
+		--thin @bool # - create a thin archive
+	ast-check # Look for simple compile errors in any set of files
+		--zon @bool # Treat the input file as ZON, regardless of file extension
+	build # Build project from build.zig
+	build-exe # Create executable from source or object files
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	build-lib # Create library from source or object files
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	build-obj # Create object from source or object files
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	cc # Use Zig as a drop-in C compiler
+		--amdgpu-arch-tool # Tool used for detecting AMD GPU arch in the system.
+		--analyzer-output # Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|sarif-html|text).
+		--analyze @bool # Run the static analyzer
+		--config # Specify configuration file
+		--cuda-compile-host-device @bool # Compile CUDA code for both host and device (default). Has no effect on non-CUDA compilations.
+		--cuda-device-only @bool # Compile CUDA code for device only
+		--cuda-feature # Manually specify the CUDA feature to use
+		--cuda-host-only @bool # Compile CUDA code for host only. Has no effect on non-CUDA compilations.
+		--cuda-include-ptx # Include PTX for the following GPU architecture (e.g. sm_35) or 'all'. May be specified more than once.
+		--cuda-noopt-device-debug @bool # Enable device-side debug info generation. Disables ptxas optimizations.
+		--cuda-path-ignore-env @bool # Ignore environment variables to detect CUDA installation
+		--cuda-path # CUDA installation path
+		--embed-dir # Add directory to embed search path
+		--emit-extension-symbol-graphs @bool # Generate additional symbol graphs for extended modules.
+		--emit-static-lib @bool # Enable linker job to emit a static library.
+		--end-no-unused-arguments @bool # Start emitting warnings for unused driver arguments
+		--extract-api-ignores # Comma separated list of files containing a new line separated list of API symbols to ignore when extracting API information.
+		--gcc-install-dir # Use GCC installation in the specified directory. The directory ends with path components like 'lib{,32,64}/gcc{,-cross}/$triple/$version'. Note: executables (e.g. ld) used by the compiler are not overridden by the selected GCC installation
+		--gcc-triple # Search for the GCC installation with the specified triple.
+		--gpu-bundle-output @bool # Bundle output files of HIP device compilation
+		--gpu-instrument-lib # Instrument device library for HIP, which is a LLVM bitcode containing __cyg_profile_func_enter and __cyg_profile_func_exit
+		--gpu-max-threads-per-block # Default max threads per block for kernel launch bounds for HIP
+		--help-hidden @bool # Display help for hidden options
+		--hip-device-lib # HIP device library
+		--hip-link @bool # Link clang-offload-bundler bundles for HIP
+		--hip-path # HIP runtime installation path, used for finding HIP version and adding HIP include path.
+		--hip-version # HIP version in the format of major.minor.patch
+		--hipspv-pass-plugin # path to a pass plugin for HIP to SPIR-V passes.
+		--hipstdpar-interpose-alloc @bool # Replace all memory allocation / deallocation calls with hipManagedMalloc / hipFree equivalents
+		--hipstdpar-path # HIP Standard Parallel Algorithm Acceleration library path, used for finding and implicitly including the library header
+		--hipstdpar-prim-path # rocPrim path, required by the HIP Standard Parallel Algorithm Acceleration library, used to implicitly include the rocPrim library
+		--hipstdpar-thrust-path # rocThrust path, required by the HIP Standard Parallel Algorithm Acceleration library, used to implicitly include the rocThrust library
+		--hipstdpar @bool # Enable HIP acceleration for standard parallel algorithms
+		--libomptarget-amdgcn-bc-path # Path to libomptarget-amdgcn bitcode library
+		--libomptarget-amdgpu-bc-path # Path to libomptarget-amdgcn bitcode library
+		--libomptarget-nvptx-bc-path # Path to libomptarget-nvptx bitcode library
+		--libomptarget-spirv-bc-path # Path to libomptarget-spirv bitcode library
+		--migrate @bool # Run the migrator
+		--no-cuda-include-ptx # Do not include PTX for the following GPU architecture (e.g. sm_35) or 'all'. May be specified more than once.
+		--no-default-config @bool # Disable loading default configuration files
+		--no-gpu-bundle-output @bool # Do not bundle output files of HIP device compilation
+		--no-offload-arch # Remove CUDA/HIP offloading device architecture (e.g. sm_35, gfx906) from the list of devices to compile for. 'all' resets the list to its default value.
+		--no-system-header-prefix # Treat all #include paths starting with <prefix> as not including a system header.
+		--no-wasm-opt @bool # Disable the wasm-opt optimizer
+		--nvptx-arch-tool # Tool used for detecting NVIDIA GPU arch in the system.
+		--offload-arch # Specify an offloading device architecture for CUDA, HIP, or OpenMP. (e.g. sm_35). If 'native' is used the compiler will detect locally installed architectures. For HIP offloading, the device architecture can be followed by target ID features delimited by a colon (e.g. gfx908:xnack+:sramecc-). May be specified more than once.
+		--offload-compress @bool # Compress offload device binaries (HIP only)
+		--offload-device-only @bool # Only compile for the offloading device.
+		--offload-host-device @bool # Compile for both the offloading host and device (default).
+		--offload-host-only @bool # Only compile for the offloading host.
+		--offload-link @bool # Use the new offloading linker to perform the link job.
+		--offload-new-driver @bool # Use the new driver for offloading compilation.
+		--offload # Specify comma-separated list of offloading target triples (CUDA and HIP only)
+		--precompile @bool # Only precompile the input
+		--pretty-sgf @bool # Emit pretty printed symbol graphs
+		--ptxas-path # Path to ptxas (used for compiling CUDA code)
+		--rocm-device-lib-path # ROCm device library path. Alternative to rocm-path.
+		--rocm-path # ROCm installation path, used for finding and automatically linking required bitcode libraries.
+		--start-no-unused-arguments @bool # Don't emit warnings about unused arguments for the following arguments
+		--symbol-graph-dir # Directory in which to emit symbol graphs.
+		--system-header-prefix # Treat all #include paths starting with <prefix> as including a system header.
+		--target # Generate code for the given target
+		--verify-debug-info @bool # Verify the binary representation of debug output
+		--warning-suppression-mappings # File containing diagnostic suppresion mappings. See user manual for file format.
+		--wasm-opt @bool # Enable the wasm-opt optimizer (default)
+		--dxv-path # DXIL validator installation path
+	dlltool # Use Zig as a drop-in dlltool.exe
+		--identify-strict @bool # Error out if the --identify option detects more than one DLL
+	env # Print lib path, std path, cache directory, and version
+	fetch # Copy a package into global cache and print its hash
+		--global-cache-dir # Override path to global Zig cache directory
+		--debug-hash @bool # Print verbose hash information to stdout
+		--save @bool # Add the fetched package to build.zig.zon
+		--save # Add the fetched package to build.zig.zon as name
+		--save-exact @bool # Add the fetched package to build.zig.zon, storing the URL verbatim
+		--save-exact # Add the fetched package to build.zig.zon as name, storing the URL verbatim
+	fmt # Reformat Zig source into canonical form
+		--color # Enable or disable colored error messages
+		--stdin @bool # Format code from stdin; output to stdout
+		--check @bool # List non-conforming files and exit with an error
+		--ast-check @bool # Run zig ast-check on every file
+		--exclude # Exclude file or directory from formatting
+		--zon @bool # Treat all input files as ZON, regardless of file extension
+	init # Initialize a Zig package in the current directory
+		--minimal|-m @bool # Use minimal init template
+	lib # Use Zig as a drop-in lib.exe
+	libc # Display native libc paths file or validate one
+	objcopy # Use Zig as a drop-in objcopy
+		--output-target # Format of the output file
+		--only-section # Remove all but <section>
+		--pad-to # Pad the last section up to address <addr>
+		--strip-debug|-g @bool # Remove all debug sections from the output.
+		--strip-all|-S @bool # Remove all debug sections and symbol table from the output.
+		--only-keep-debug @bool # Strip a file, removing contents of any sections that would not be stripped by --strip-debug and leaving the debugging sections intact.
+		--add-gnu-debuglink # Creates a .gnu_debuglink section which contains a reference to <file> and adds it to the output file.
+		--extract-to # Extract the removed sections into <file>, and add a .gnu-debuglink section.
+		--compress-debug-sections @bool # Compress DWARF debug sections with zlib
+	ranlib # Use Zig as a drop-in ranlib
+	rc # Use Zig as a drop-in rc.exe
+	reduce # Minimize a bug report
+	run # Create executable and run immediately
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	std # View standard library documentation in a browser
+	targets # List available compilation targets
+	test # Perform unit testing
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	test-obj # Create object for unit testing
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	translate-c # Convert C code to Zig code
+		--color # Enable or disable colored error messages
+		--show-builtin @bool # Output the source of @import("builtin") then exit
+		--cache-dir # Override the local cache directory
+		--zig-lib-dir # Override path to Zig installation lib directory
+		--name # Compilation unit name (not a file path)
+		--libc # Provide a file which specifies libc paths
+		--dep # Add an entry to the next module's import table
+		--error-limit # Set the maximum amount of distinct error values
+		--time-report @bool # Send timing diagnostics to '--listen' clients
+		--embed-dir # Add directory to embed search path
+		--version-script # Provide a version .map file
+		--undefined-version @bool # Allow version scripts to refer to undefined symbols
+		--no-undefined-version @bool # (default) Disallow version scripts from referring to undefined symbols
+		--enable-new-dtags @bool # Use the new behavior for dynamic tags (RUNPATH)
+		--disable-new-dtags @bool # Use the old behavior for dynamic tags (RPATH)
+		--dynamic-linker # Set the dynamic interpreter path (usually ld.so)
+		--sysroot # Set the system root directory (usually /)
+		--force_undefined # Specify the symbol must be defined for the link to succeed
+		--build-id # At a minor link-time expense, embeds a build ID in binaries
+		--eh-frame-hdr @bool # Enable C++ exception handling by passing --eh-frame-hdr to linker
+		--no-eh-frame-hdr @bool # Disable C++ exception handling by passing --no-eh-frame-hdr to linker
+		--emit-relocs @bool # Enable output of relocation sections for post build tools
+		--compress-debug-sections # Debug section compression settings
+		--gc-sections @bool # Force removal of functions and data that are unreachable by the entry point or exported symbols
+		--no-gc-sections @bool # Don't force removal of unreachable functions and data
+		--sort-section # Sort wildcard section patterns by 'name' or 'alignment'
+		--subsystem # (Windows) /SUBSYSTEM:<subsystem> to the linker
+		--stack # Override default stack size
+		--image-base # Set base address for executable image
+		--entitlements # (Darwin) add path to entitlements file for embedding in code signature
+		--import-memory @bool # (WebAssembly) import memory from the environment
+		--export-memory @bool # (WebAssembly) export memory to the host (Default unless --import-memory used)
+		--import-symbols @bool # (WebAssembly) import missing symbols from the host environment
+		--import-table @bool # (WebAssembly) import function table from the host environment
+		--export-table @bool # (WebAssembly) export function table to the host environment
+		--initial-memory # (WebAssembly) initial size of the linear memory
+		--max-memory # (WebAssembly) maximum size of the linear memory
+		--shared-memory @bool # (WebAssembly) use shared linear memory
+		--global-base # (WebAssembly) where to start to place global data
+		--needed-library
+		--export # (WebAssembly) Force a symbol to be exported
+		--test-filter # Skip tests that do not match any filter
+		--test-name-prefix # Add prefix to all tests
+		--test-cmd # Specify test execution command one arg at a time
+		--test-cmd-bin @bool # Appends test binary path to test cmd args
+		--test-evented-io @bool # Runs the test in evented I/O mode
+		--test-no-exec @bool # Compiles test binary without running it
+		--test-runner # Specify a custom test runner
+		--verbose-link @bool # Display linker invocations
+		--verbose-cc @bool # Display C compiler invocations
+		--verbose-air @bool # Enable compiler debug output for Zig AIR
+		--verbose-intern-pool @bool # Enable compiler debug output for InternPool
+		--verbose-generic-instances @bool # Enable compiler debug output for generic instance generation
+		--verbose-llvm-ir # Enable compiler debug output for unoptimized LLVM IR
+		--verbose-llvm-bc # Enable compiler debug output for unoptimized LLVM BC
+		--verbose-cimport @bool # Enable compiler debug output for C imports
+		--verbose-llvm-cpu-features @bool # Enable compiler debug output for LLVM CPU features
+		--debug-log # Enable printing debug/info log messages for scope
+		--debug-compile-errors @bool # Crash with helpful diagnostics at the first compile error
+		--debug-link-snapshot @bool # Enable dumping of the linker's state in JSON format
+		--debug-rt @bool # Debug compiler runtime libraries
+		--debug-incremental @bool # Enable incremental compilation debug features
+	version # Print version number and exit
+	zen # Print Zen of Zig and exit

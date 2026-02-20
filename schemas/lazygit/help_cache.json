@@ -1,0 +1,10 @@
+{
+  "lazygit --help": {
+    "returncode": 0,
+    "stdout": "lazygit\n\n  Usage:\n    lazygit [git-arg]\n\n  Positional Variables: \n    git-arg   Panel to focus upon opening lazygit. Accepted values (based on git terminology): status, branch, log, stash. Ignored if --filter arg is passed.\n  Flags: \n    -h --help               Displays help with available flag, subcommand, and positional value parameters.\n    -p --path               Path of git repo. (equivalent to --work-tree=<path> --git-dir=<path>/.git/)\n    -f --filter             Path to filter on in `git log -- <path>`. When in filter mode, the commits, reflog, and stash are filtered based on the given path, and some operations are restricted\n    -v --version            Print the current version\n    -d --debug              Run in debug mode with logging (see --logs flag below). Use the LOG_LEVEL env var to set the log level (debug/info/warn/error)\n    -l --logs               Tail lazygit logs (intended to be used when `lazygit --debug` is called in a separate terminal tab)\n       --profile            Start the profiler and serve it on http port 6060. See CONTRIBUTING.md for more info.\n    -c --config             Print the default config\n    -cd --print-config-dir   Print the config directory\n    -ucd --use-config-dir     override default config directory with provided directory\n    -w --work-tree          equivalent of the --work-tree git argument\n    -g --git-dir            equivalent of the --git-dir git argument\n    -ucf --use-config-file    Comma separated list to custom config file(s)\n    -sm --screen-mode        The initial screen-mode, which determines the size of the focused panel. Valid options: 'normal' (default), 'half', 'full'\n\n"
+  },
+  "lazygit --version": {
+    "returncode": 0,
+    "stdout": "commit=v0.59.0, build date=2026-02-07T11:43:43Z, build source=binaryRelease, version=0.59.0, os=linux, arch=amd64, git version=2.53.0\n"
+  }
+}

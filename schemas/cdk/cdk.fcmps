@@ -1,0 +1,117 @@
+# AWS CDK CLI schema for fast-completer
+# Curated from AWS CDK Toolkit docs (last checked: 2026-02-20)
+
+cdk # AWS Cloud Development Kit CLI
+	--all @bool # Deploy/list all stacks
+	--app|-a # Command for executing your app
+	--asset-metadata @bool # Include asset metadata in synthesized templates
+	--build # Command to build your app before synthesis
+	--ca-bundle-path # Path to a CA certificate bundle
+	--ci @bool # Enable CI mode
+	--context|-c # Add context values to your CDK app
+	--debug @bool # Enable debug logging
+	--ec2creds|-i @bool # Force use of EC2 instance credentials
+	--help|-h @bool # Show command help
+	--ignore-errors @bool # Continue on errors in multi-stack operations
+	--json|-j @bool # Use JSON output where supported
+	--lookups @bool # Perform context lookups (default true)
+	--no-color @bool # Disable colored output
+	--notices @bool # Show CDK notices
+	--output|-o # Directory for synthesized templates
+	--path-metadata @bool # Include construct path metadata
+	--plugin|-p # Load additional CDK plugin module
+	--profile # AWS profile name
+	--proxy # Proxy URL for AWS calls
+	--role-arn|-r # Assume this role for deployments
+	--staging @bool # Copy local files into staging directory (default true)
+	--strict @bool # Use strict mode where available
+	--trace @bool # Show stack traces on errors
+	--verbose|-v # Verbosity level
+	--version @bool # Show CDK version
+	--version-reporting @bool # Include CDK version in synthesized templates
+	acknowledge # Acknowledge a notice by ID
+		--id # Notice ID to acknowledge
+	ack # Alias for acknowledge
+	bootstrap # Provision bootstrapping resources for an environment
+		--bootstrap-bucket-name # Custom S3 bucket name for assets
+		--bootstrap-customer-key # Use a customer-managed KMS key for assets
+		--bootstrap-kms-key-id # Existing KMS key ID for asset bucket encryption
+		--cloudformation-execution-policies # Comma-separated IAM policy ARNs
+		--custom-permissions-boundary # Permissions boundary name
+		--force @bool # Force bootstrap even if it appears current
+		--previous-parameters @bool # Reuse previous template parameters
+		--public-access-block-configuration @bool # Configure S3 public access blocks
+		--qualifier # Bootstrap stack qualifier
+		--show-template @bool # Print bootstrap template and exit
+		--tags # Comma-separated stack tags
+		--template # Use custom bootstrap template file
+		--termination-protection @bool # Enable stack termination protection
+		--toolkit-stack-name # Bootstrap stack name
+		--trust # Comma-separated account IDs to trust for deployments
+		--trust-for-lookup # Comma-separated account IDs for lookup-only trust
+	context # Manage cached context values
+		--clear @bool # Clear all cached context values
+		--force @bool # Skip confirmation prompts
+		--reset # Reset a specific context key
+		--set # Set a context key/value pair
+	deploy # Deploy stacks
+		--change-set-name # Name for generated CloudFormation change set
+		--concurrency # Number of stacks to deploy in parallel
+		--direct @bool # Deploy directly without change set
+		--exclusively @bool # Deploy only requested stacks
+		--force @bool # Force deployment even if no changes are detected
+		--hotswap @bool # Attempt hotswap deployments
+		--hotswap-fallback @bool # Fall back to full deployment when hotswap fails
+		--method (change-set|direct|prepare-change-set) # Deployment method
+		--outputs-file # Write stack outputs to a JSON file
+		--parameters # Pass parameter overrides
+		--progress (events|bar) # Progress output style
+		--require-approval (never|any-change|broadening) # Security approval mode
+		--rollback @bool # Roll back on deployment failure
+		--watch @bool # Watch source and redeploy on changes
+	destroy # Destroy deployed stacks
+		--exclusively @bool # Destroy only requested stacks
+		--force @bool # Do not prompt for confirmation
+	diff # Compare deployed stacks with local state
+		--change-set @bool # Use change set for more accurate diff
+		--context-lines # Number of context lines in diff
+		--fail @bool # Return non-zero exit code when differences are found
+		--processed @bool # Show transformed template diff
+		--quiet @bool # Omit unchanged sections
+		--security-only @bool # Show only security-relevant differences
+	docs # Open AWS CDK documentation
+	doc # Alias for docs
+	doctor # Check your CDK project and environment for common issues
+	drift # Detect CloudFormation drift for stacks
+		--fail @bool # Return non-zero exit code when drift is detected
+		--json @bool # Output drift report as JSON
+	flags # Manage feature flags
+	import # Import existing resources into a stack
+		--change-set-name # Name for generated import change set
+		--execute @bool # Execute change set without prompt
+		--record-resource-mapping # Output discovered resource mapping file
+		--resource-mapping # Input resource mapping file
+		--rollback @bool # Roll back if import fails
+	init # Initialize a new CDK project
+		--generate-only @bool # Generate files but skip dependency install
+		--language (typescript|javascript|python|java|csharp|fsharp|go) # Project language
+		--list @bool # List available templates
+		--type (app|lib) # Project template type
+	list # List stacks in the app
+		--long @bool # Show additional stack metadata
+		--show-dependencies @bool # Show stack dependency graph
+	ls # Alias for list
+	metadata # Display metadata associated with stacks
+	migrate # Migrate CDK app structure or features
+	notices # Display active notices
+	refactor # Run CDK refactor workflows
+	rollback # Roll back a failed deployment
+	synthesize # Synthesize CloudFormation templates
+		--exclusively @bool # Synthesize only requested stacks
+		--quiet @bool # Suppress template output to stdout
+	synth # Alias for synthesize
+	watch # Watch for file changes and deploy automatically
+		--build-exclude # Glob pattern to exclude from build triggers
+		--concurrency # Number of stacks to watch/deploy in parallel
+		--hotswap @bool # Use hotswap where possible
+		--logs @bool # Stream CloudWatch logs for affected resources

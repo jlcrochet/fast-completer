@@ -1,0 +1,137 @@
+# rsync CLI schema for fast-completer
+rsync # Fast, versatile file copying tool
+	--verbose|-v @bool # Increase verbosity
+	--info # Fine-grained informational verbosity
+	--debug # Fine-grained debug verbosity
+	--msgs2stderr @bool # Special output handling for debugging
+	--quiet|-q @bool # Suppress non-error messages
+	--no-motd @bool # Suppress daemon-mode MOTD
+	--checksum|-c @bool # Skip based on checksum, not mod-time and size
+	--archive|-a @bool # Archive mode (-rlptgoD)
+	--recursive|-r @bool # Recurse into directories
+	--relative|-R @bool # Use relative path names
+	--no-implied-dirs @bool # Don't send implied dirs with --relative
+	--backup|-b @bool # Make backups
+	--backup-dir # Make backups into hierarchy based in dir
+	--suffix # Backup suffix (default ~)
+	--update|-u @bool # Skip files that are newer on receiver
+	--inplace @bool # Update destination files in-place
+	--append @bool # Append data onto shorter files
+	--append-verify @bool # Like --append but verify old data in file
+	--dirs|-d @bool # Transfer directories without recursing
+	--old-dirs @bool # Works like --dirs when not combined with -r
+	--mkpath @bool # Create the destination path component
+	--links|-l @bool # Copy symlinks as symlinks
+	--copy-links|-L @bool # Transform symlink into referent file/dir
+	--copy-unsafe-links @bool # Only unsafe symlinks are transformed
+	--safe-links @bool # Ignore symlinks that point outside the tree
+	--munge-links @bool # Munge symlinks to make them safe and unusable
+	--copy-dirlinks|-k @bool # Transform symlink to dir into referent dir
+	--keep-dirlinks|-K @bool # Treat symlinked dir on receiver as dir
+	--hard-links|-H @bool # Preserve hard links
+	--perms|-p @bool # Preserve permissions
+	--executability|-E @bool # Preserve executability
+	--chmod # Affect file and/or directory permissions
+	--acls|-A @bool # Preserve ACLs (implies --perms)
+	--xattrs|-X @bool # Preserve extended attributes
+	--owner|-o @bool # Preserve owner (super-user only)
+	--group|-g @bool # Preserve group
+	--devices @bool # Preserve device files (super-user only)
+	--specials @bool # Preserve special files
+	--times|-t @bool # Preserve modification times
+	--atimes|-U @bool # Preserve access (use) times
+	--open-noatime @bool # Avoid changing the atime on opened files
+	--crtimes @bool # Preserve create times (newness)
+	--omit-dir-times|-O @bool # Omit directories from --times
+	--omit-link-times|-J @bool # Omit symlinks from --times
+	--super @bool # Receiver attempts super-user activities
+	--fake-super @bool # Store/recover privileged attrs using xattrs
+	--sparse|-S @bool # Turn sequences of nulls into sparse blocks
+	--preallocate @bool # Allocate dest files before writing them
+	--write-devices @bool # Write to devices as files
+	--dry-run|-n @bool # Perform a trial run with no changes made
+	--whole-file|-W @bool # Copy files whole (without delta-xfer algorithm)
+	--checksum-choice # Choose the checksum algorithm
+	--one-file-system|-x @bool # Don't cross filesystem boundaries
+	--block-size|-B # Force a fixed checksum block-size
+	--rsh|-e # Specify the remote shell to use
+	--rsync-path # Specify the rsync to run on remote machine
+	--existing @bool # Skip creating new files on receiver
+	--ignore-existing @bool # Skip updating files that exist on receiver
+	--remove-source-files @bool # Sender removes synchronized files
+	--del @bool # An alias for --delete-during
+	--delete @bool # Delete extraneous files from dest dirs
+	--delete-before @bool # Receiver deletes before xfer, not during
+	--delete-during @bool # Receiver deletes during the transfer
+	--delete-delay @bool # Find deletions during, delete after
+	--delete-after @bool # Receiver deletes after transfer, not during
+	--delete-excluded @bool # Also delete excluded files from dest dirs
+	--ignore-missing-args @bool # Ignore missing source args without error
+	--delete-missing-args @bool # Delete missing source args from destination
+	--ignore-errors @bool # Delete even if there are I/O errors
+	--force @bool # Force deletion of dirs even if not empty
+	--max-delete # Don't delete more than NUM files
+	--max-size # Don't transfer any file larger than SIZE
+	--min-size # Don't transfer any file smaller than SIZE
+	--max-alloc # Change a limit relating to memory alloc
+	--partial @bool # Keep partially transferred files
+	--partial-dir # Put a partially transferred file into DIR
+	--delay-updates @bool # Put all updated files into place at end
+	--prune-empty-dirs|-m @bool # Prune empty directory chains from file-list
+	--numeric-ids @bool # Don't map uid/gid values by user/group name
+	--usermap # Custom username mapping
+	--groupmap # Custom groupname mapping
+	--chown # Simple username/groupname mapping
+	--timeout # Set I/O timeout in seconds
+	--contimeout # Set daemon connection timeout in seconds
+	--ignore-times|-I @bool # Don't skip files that match size and time
+	--size-only @bool # Skip files that match in size
+	--modify-window|-@ # Set the accuracy for mod-time comparisons
+	--temp-dir|-T # Create temporary files in directory DIR
+	--fuzzy|-y @bool # Find similar file for basis if no dest file
+	--compare-dest # Also compare received files relative to DIR
+	--copy-dest # Include copies of unchanged files
+	--link-dest # Hardlink to files in DIR when unchanged
+	--compress|-z @bool # Compress file data during the transfer
+	--compress-choice # Choose the compression algorithm
+	--compress-level # Explicitly set compression level
+	--skip-compress # Skip compressing files with suffix in LIST
+	--cvs-exclude|-C @bool # Auto-ignore files in the same way CVS does
+	--filter|-f # Add a file-filtering RULE
+	--exclude # Exclude files matching PATTERN
+	--exclude-from # Read exclude patterns from FILE
+	--include # Include files matching PATTERN
+	--include-from # Read include patterns from FILE
+	--files-from # Read list of source-file names from FILE
+	--from0|-0 @bool # All *-from/filter files are delimited by 0s
+	--protect-args|-s @bool # No space-splitting; wildcard chars only
+	--address # Bind address for outgoing socket to daemon
+	--port # Specify double-colon alternate port number
+	--sockopts # Specify custom TCP options
+	--blocking-io @bool # Use blocking I/O for the remote shell
+	--outbuf (none|line|block) # Set the output buffering
+	--stats @bool # Give some file-transfer stats
+	--8-bit-output|-8 @bool # Leave high-bit chars unescaped in output
+	--human-readable|-h @bool # Output numbers in a human-readable format
+	--progress @bool # Show progress during transfer
+	--itemize-changes|-i @bool # Output a change-summary for all updates
+	--remote-option|-M # Send option to the remote side only
+	--out-format # Output updates using the specified FORMAT
+	--log-file # Log what we're doing to the specified FILE
+	--log-file-format # Log updates using the specified FMT
+	--password-file # Read daemon-access password from FILE
+	--early-input # Use FILE for daemon's early exec input
+	--list-only @bool # List the files instead of copying them
+	--bwlimit # Limit socket I/O bandwidth
+	--stop-at # Stop rsync at the specified point in time
+	--time-limit # Stop rsync after MINS minutes have elapsed
+	--stop-after # Stop rsync after MINS minutes have elapsed
+	--write-batch # Write a batched update to FILE
+	--only-write-batch # Like --write-batch but no destination update
+	--read-batch # Read a batched update from FILE
+	--protocol # Force an older protocol version to be used
+	--iconv # Request charset conversion of filenames
+	--checksum-seed # Set block/file checksum seed
+	--ipv4|-4 @bool # Prefer IPv4
+	--ipv6|-6 @bool # Prefer IPv6
+	--version|-V @bool # Print version number

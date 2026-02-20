@@ -1,0 +1,27 @@
+python3 # Python language interpreter
+	-b @bool # Issue warnings about bytes/bytearray conversions
+	-B @bool # Don't write .pyc files on import
+	-c # Execute program passed as string
+	-d @bool # Turn on parser debugging output
+	-E @bool # Ignore PYTHON* environment variables
+	-h @bool # Print help message and exit
+	-i @bool # Inspect interactively after running script
+	-I @bool # Isolate Python from the user's environment
+	-m # Run library module as a script
+	-O @bool # Remove assert and __debug__-dependent statements
+	-P @bool # Don't prepend unsafe path to sys.path
+	-q @bool # Don't print version and copyright on startup
+	-s @bool # Don't add user site directory to sys.path
+	-S @bool # Don't imply 'import site' on initialization
+	-u @bool # Force unbuffered stdout and stderr streams
+	-v @bool # Verbose mode, trace import statements
+	-V @bool # Print Python version number and exit
+	-W # Warning control (action:message:category:module:lineno)
+	-x @bool # Skip first line of source
+	-X # Set implementation-specific option
+	--check-hash-based-pycs (default|always|never) # Control hash-based .pyc validation
+	--help @bool # Print help message and exit
+	--help-env @bool # Print help about environment variables and exit
+	--help-xoptions @bool # Print help about -X options and exit
+	--help-all @bool # Print complete help information and exit
+	--version @bool # Print Python version number and exit

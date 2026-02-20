@@ -1,0 +1,495 @@
+# tmux CLI schema for fast-completer
+tmux # Terminal multiplexer
+	-2 @bool # Force 256 colors
+	-C @bool # Start in control mode
+	-c # Execute shell command
+	-D @bool # Do not start the tmux server as a daemon
+	-f # Specify configuration file
+	-L # Socket name
+	-l @bool # Behave as a login shell
+	-N @bool # Do not start the server
+	-S # Socket path
+	-u @bool # Flag for UTF-8
+	-T # Set terminal features
+	-v @bool # Verbose logging
+	-V @bool # Report version
+	attach-session # Attach to an existing session
+		-d @bool # Detach other clients from session
+		-E @bool # Do not apply update-environment
+		-f # Set client flags
+		-r @bool # Session is read-only
+		-t # Target session
+		-x @bool # Set width of client
+	bind-key # Bind a key to a command
+		-n @bool # Bind in root table
+		-r @bool # Key may repeat
+		-T # Bind in specified key table
+		-N # Add a note to the key
+	break-pane # Break a pane out into a new window
+		-a @bool # Move window after current
+		-b @bool # Move window before current
+		-d @bool # Do not make new window current
+		-n # Name for new window
+		-P @bool # Print window info
+		-s # Source pane
+		-t # Target window
+	capture-pane # Capture contents of a pane
+		-a @bool # Use alternate screen
+		-b # Target buffer name
+		-e @bool # Include escape sequences
+		-J @bool # Join wrapped lines and trim trailing spaces
+		-N @bool # Preserve trailing spaces
+		-p @bool # Output to stdout
+		-q @bool # Quiet mode
+		-S # Starting line number
+		-E # Ending line number
+		-t # Target pane
+	choose-buffer # Choose a buffer interactively
+		-F # Format string
+		-f # Filter
+		-N @bool # Start without preview
+		-O # Initial sort order
+		-r @bool # Reverse sort order
+		-t # Target pane
+		-Z @bool # Zoom the pane
+	choose-client # Choose a client interactively
+		-F # Format string
+		-f # Filter
+		-N @bool # Start without preview
+		-O # Initial sort order
+		-r @bool # Reverse sort order
+		-t # Target pane
+		-Z @bool # Zoom the pane
+	choose-tree # Choose a session or window interactively
+		-F # Format string
+		-f # Filter
+		-G @bool # Include all sessions
+		-N @bool # Start without preview
+		-O # Initial sort order
+		-r @bool # Reverse sort order
+		-s @bool # Choose only sessions
+		-t # Target pane
+		-w @bool # Choose only windows
+		-Z @bool # Zoom the pane
+	clock-mode # Enter clock mode
+		-t # Target pane
+	command-prompt # Open the command prompt
+		-1 @bool # Accept only one key press
+		-F @bool # Expand formats in template
+		-i @bool # Execute on each keypress
+		-k @bool # Accept only one key press with name
+		-N @bool # Accept only numeric input
+		-p # Prompts
+		-t # Target client
+		-T # Prompt type
+	confirm-before # Confirm before running a command
+		-b @bool # Run in background
+		-p # Prompt string
+		-t # Target client
+		-y @bool # Default to yes
+	copy-mode # Enter copy mode
+		-e @bool # Exit on scroll to bottom
+		-H @bool # Hide position indicator
+		-q @bool # Cancel copy mode and any pending selection
+		-s # Source pane
+		-t # Target pane
+		-u @bool # Scroll up one page
+	delete-buffer # Delete a paste buffer
+		-b # Buffer name
+	detach-client # Detach a client from the server
+		-a @bool # Kill all clients except specified
+		-E # Execute shell command when client detaches
+		-P @bool # Send SIGHUP to parent of client
+		-s # Target session
+		-t # Target client
+	display-menu # Display a menu
+		-c # Target client
+		-t # Target pane
+		-T # Title
+		-x # X position
+		-y # Y position
+	display-message # Display a message
+		-a @bool # List format variables
+		-c # Target client
+		-d # Display delay in milliseconds
+		-I @bool # Do not wait for client
+		-l @bool # Message is sent literally
+		-N @bool # Ignore key presses
+		-p @bool # Print to stdout
+		-t # Target pane
+		-v @bool # Verbose format
+	display-panes # Display pane numbers
+		-b @bool # Do not block other commands
+		-d # Display duration
+		-N @bool # Ignore key press
+		-t # Target client
+	find-window # Find a window
+		-C @bool # Match visible contents
+		-i @bool # Case-insensitive matching
+		-N @bool # Match window name
+		-r @bool # Use regular expressions
+		-T @bool # Match window title
+		-t # Target pane
+		-Z @bool # Zoom the pane
+	has-session # Check if session exists
+		-t # Target session
+	if-shell # Execute command conditionally
+		-b @bool # Run in background
+		-F @bool # Expand formats in shell command
+		-t # Target pane
+	join-pane # Move a pane into another window
+		-b @bool # Join to the left/above
+		-d @bool # Do not make new window active
+		-f @bool # Use full window size
+		-h @bool # Join horizontally
+		-l # Size of pane
+		-s # Source pane
+		-t # Target pane
+		-v @bool # Join vertically
+	kill-pane # Destroy a given pane
+		-a @bool # Kill all panes except target
+		-t # Target pane
+	kill-server # Kill the tmux server
+	kill-session # Destroy a session
+		-a @bool # Kill all sessions except target
+		-C @bool # Clear alerts in target session
+		-t # Target session
+	kill-window # Destroy a window
+		-a @bool # Kill all windows except target
+		-t # Target window
+	last-pane # Select the previously active pane
+		-d @bool # Do not change active pane
+		-e @bool # Enable input to the pane
+		-t # Target window
+		-Z @bool # Toggle pane zoom
+	last-window # Select the previously active window
+		-t # Target session
+	link-window # Link a window to another session
+		-a @bool # Move window after current
+		-b @bool # Move window before current
+		-d @bool # Do not make new window current
+		-k @bool # Kill target window if exists
+		-s # Source window
+		-t # Target window
+	list-buffers # List paste buffers
+		-F # Format string
+		-f # Filter
+	list-clients # List clients attached to server
+		-F # Format string
+		-f # Filter
+		-t # Target session
+	list-commands # List supported commands
+		-F # Format string
+	list-keys # List key bindings
+		-1 @bool # List only first matching key
+		-a @bool # List key table for command keys
+		-N @bool # List only keys with notes
+		-P # Prefix string
+		-T # Key table
+	list-panes # List panes
+		-a @bool # List all panes on the server
+		-F # Format string
+		-f # Filter
+		-s @bool # List all panes in the session
+		-t # Target window
+	list-sessions # List sessions
+		-F # Format string
+		-f # Filter
+	list-windows # List windows
+		-a @bool # List all windows on the server
+		-F # Format string
+		-f # Filter
+		-t # Target session
+	load-buffer # Load a file into a paste buffer
+		-b # Buffer name
+		-t # Target client
+		-w @bool # Send to clipboard
+	lock-client # Lock a client
+		-t # Target client
+	lock-server # Lock all clients
+	lock-session # Lock all clients attached to session
+		-t # Target session
+	move-pane # Move a pane into another window
+		-b @bool # Move to the left/above
+		-d @bool # Do not make new window active
+		-f @bool # Use full window size
+		-h @bool # Split horizontally
+		-l # Size of pane
+		-s # Source pane
+		-t # Target pane
+		-v @bool # Split vertically
+	move-window # Move a window to another session
+		-a @bool # Move after current
+		-b @bool # Move before current
+		-d @bool # Do not make new window current
+		-k @bool # Kill target window if exists
+		-r @bool # Renumber remaining windows
+		-s # Source window
+		-t # Target window
+	new-session # Create a new session
+		-A @bool # Attach to existing session if exists
+		-c # Working directory
+		-d @bool # Do not attach to new session
+		-D @bool # Detach all other clients if -A
+		-E @bool # Do not apply update-environment
+		-e # Environment variable to set
+		-f # Client flags
+		-F # Format string for output
+		-n # Window name
+		-P @bool # Print session info
+		-s # Session name
+		-t # Target session for grouping
+		-x # Window width
+		-X @bool # Detach client if already attached to -A
+		-y # Window height
+	new-window # Create a new window
+		-a @bool # Insert after current window
+		-b @bool # Insert before current window
+		-c # Working directory
+		-d @bool # Do not make new window current
+		-e # Environment variable to set
+		-F # Format string for output
+		-k @bool # Destroy window if already exists
+		-n # Window name
+		-P @bool # Print window info
+		-S @bool # Select existing window if name matches
+		-t # Target window
+	next-layout # Change to next layout
+		-t # Target window
+	next-window # Move to the next window
+		-a @bool # Move to next window with alert
+		-t # Target session
+	paste-buffer # Paste a buffer into a pane
+		-b # Buffer name
+		-d @bool # Delete buffer after pasting
+		-p @bool # Use bracketed paste mode
+		-r @bool # Do not replace LF with CR
+		-s # Separator
+		-t # Target pane
+	pipe-pane # Pipe pane output to a shell command
+		-I @bool # Connect stdin of command to pane
+		-O @bool # Connect stdout of command from pane
+		-o @bool # Only open a pipe if not already open
+		-t # Target pane
+	previous-layout # Change to previous layout
+		-t # Target window
+	previous-window # Move to the previous window
+		-a @bool # Move to previous window with alert
+		-t # Target session
+	refresh-client # Refresh a client
+		-A # Set visible area of a pane
+		-B # Set subscription to pane
+		-c @bool # Restore size of recently resized visible area
+		-C # Set client size
+		-D @bool # Move visible area down
+		-f # Set client flags
+		-L @bool # Move visible area left
+		-l @bool # Request clipboard from client
+		-R @bool # Move visible area right
+		-S @bool # Refresh only status line
+		-t # Target client
+		-U @bool # Move visible area up
+	rename-session # Rename a session
+		-t # Target session
+	rename-window # Rename a window
+		-t # Target window
+	resize-pane # Resize a pane
+		-D @bool # Resize down
+		-L @bool # Resize left
+		-M @bool # Toggle mouse resize
+		-R @bool # Resize right
+		-t # Target pane
+		-U @bool # Resize up
+		-x # Set width
+		-y # Set height
+		-Z @bool # Toggle pane zoom
+	resize-window # Resize a window
+		-a @bool # Set smallest size for all sessions
+		-A @bool # Set largest size for all sessions
+		-D @bool # Resize down
+		-L @bool # Resize left
+		-R @bool # Resize right
+		-t # Target window
+		-U @bool # Resize up
+		-x # Set width
+		-y # Set height
+	respawn-pane # Reuse a pane
+		-c # Working directory
+		-e # Environment variable to set
+		-k @bool # Kill existing command if running
+		-t # Target pane
+	respawn-window # Reuse a window
+		-c # Working directory
+		-e # Environment variable to set
+		-k @bool # Kill existing command if running
+		-t # Target window
+	rotate-window # Rotate positions of panes
+		-D @bool # Rotate down
+		-t # Target window
+		-U @bool # Rotate up
+		-Z @bool # Keep zoomed pane zoomed
+	run-shell # Execute a command without creating a window
+		-b @bool # Run in background
+		-C @bool # Run tmux command instead of shell
+		-d # Delay before running
+		-t # Target pane
+	save-buffer # Save a paste buffer to a file
+		-a @bool # Append to file
+		-b # Buffer name
+	select-layout # Choose a pane layout
+		-E @bool # Spread panes evenly
+		-n @bool # Next layout
+		-o @bool # Apply last set layout
+		-p @bool # Previous layout
+		-t # Target pane
+	select-pane # Select a pane
+		-D @bool # Select pane below
+		-d @bool # Disable input to pane
+		-e @bool # Enable input to pane
+		-g @bool # Show current path
+		-L @bool # Select pane to the left
+		-l @bool # Select last pane
+		-M @bool # Clear marked pane
+		-m @bool # Set marked pane
+		-R @bool # Select pane to the right
+		-T # Set pane title
+		-t # Target pane
+		-U @bool # Select pane above
+		-Z @bool # Keep window zoomed
+	select-window # Select a window
+		-l @bool # Select last window
+		-n @bool # Select next window
+		-p @bool # Select previous window
+		-T @bool # Select if not already current else last
+		-t # Target window
+	send-keys # Send keys to a pane
+		-F @bool # Expand formats
+		-H @bool # Expect hex format
+		-K @bool # Use key name
+		-l @bool # Disable key name lookup
+		-M @bool # Pass through mouse event
+		-N # Repeat count
+		-R @bool # Reset terminal state
+		-t # Target pane
+	send-prefix # Send the prefix key
+		-2 @bool # Send secondary prefix
+		-t # Target pane
+	server-access # Control server access
+		-a @bool # Give access
+		-d @bool # Remove access
+		-l @bool # List access
+		-r @bool # Read-only access
+		-w @bool # Read-write access
+	set-buffer # Set contents of a paste buffer
+		-a @bool # Append to buffer
+		-b # Buffer name
+		-n # New buffer name
+		-t # Target client
+		-w @bool # Send to clipboard
+	set-environment # Set an environment variable
+		-F @bool # Expand formats
+		-g @bool # Set global environment
+		-h @bool # Mark as hidden
+		-r @bool # Remove from environment
+		-t # Target session
+		-u @bool # Unset variable
+	set-hook # Set a hook
+		-a @bool # Append to hook
+		-g @bool # Set global hook
+		-p @bool # Set pane hook
+		-R @bool # Run hook immediately
+		-t # Target session
+		-u @bool # Unset hook
+		-w @bool # Set window hook
+	set-option # Set a session option
+		-a @bool # Append to string value
+		-F @bool # Expand formats
+		-g @bool # Set global option
+		-o @bool # Prevent overwriting
+		-p @bool # Set pane option
+		-q @bool # Suppress errors
+		-s @bool # Set server option
+		-t # Target session
+		-u @bool # Unset option
+		-U @bool # Unset option in all sessions
+		-w @bool # Set window option
+	show-environment # Show environment variables
+		-g @bool # Show global environment
+		-h @bool # Include hidden variables
+		-s @bool # Format as shell commands
+		-t # Target session
+	show-hooks # Show hooks
+		-g @bool # Show global hooks
+		-p @bool # Show pane hooks
+		-t # Target session
+		-w @bool # Show window hooks
+	show-messages # Show client messages
+		-J @bool # Show debugging output
+		-T @bool # Show debugging output for terminal
+		-t # Target client
+	show-options # Show options
+		-A @bool # Include inherited options
+		-g @bool # Show global options
+		-H @bool # Include hooks
+		-p @bool # Show pane options
+		-q @bool # Suppress errors
+		-s @bool # Show server options
+		-t # Target session
+		-v @bool # Show only values
+		-w @bool # Show window options
+	show-prompt-history # Show prompt history
+		-T # Prompt type
+	source-file # Execute commands from a file
+		-F @bool # Expand formats
+		-n @bool # File errors do not fail
+		-q @bool # Suppress errors
+		-v @bool # Show parsed commands
+	split-window # Split a window into panes
+		-b @bool # Create pane to the left/above
+		-c # Working directory
+		-d @bool # Do not make new pane active
+		-e # Environment variable to set
+		-f @bool # Use full window size
+		-F # Format string for output
+		-h @bool # Split horizontally
+		-I @bool # Create empty pane and pipe stdin
+		-l # Size of new pane
+		-P @bool # Print pane info
+		-t # Target pane
+		-v @bool # Split vertically
+		-Z @bool # Zoom new pane
+	start-server # Start the tmux server
+	suspend-client # Suspend a client
+		-t # Target client
+	swap-pane # Swap two panes
+		-d @bool # Do not change active pane
+		-D @bool # Swap with next pane
+		-s # Source pane
+		-t # Target pane
+		-U @bool # Swap with previous pane
+		-Z @bool # Keep window zoomed
+	swap-window # Swap two windows
+		-d @bool # Do not make swapped window current
+		-s # Source window
+		-t # Target window
+	switch-client # Switch the client to another session
+		-c # Working directory
+		-E @bool # Do not apply update-environment
+		-l @bool # Move to last session
+		-n @bool # Move to next session
+		-p @bool # Move to previous session
+		-r @bool # Toggle read-only
+		-t # Target session
+		-Z @bool # Keep window zoomed
+	unbind-key # Unbind a key
+		-a @bool # Remove all key bindings
+		-n @bool # Unbind in root table
+		-q @bool # Do not report error if key not bound
+		-T # Key table
+	unlink-window # Unlink a window
+		-k @bool # Kill window if only linked once
+		-t # Target window
+	wait-for # Wait for or signal an event
+		-L @bool # Lock event
+		-S @bool # Signal event
+		-U @bool # Unlock event

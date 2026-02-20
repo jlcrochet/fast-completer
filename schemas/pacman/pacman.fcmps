@@ -1,0 +1,116 @@
+# Pacman CLI schema for fast-completer
+pacman # Arch Linux package manager
+	--dbpath|-b # Set an alternate database location
+	--root|-r # Set an alternate installation root
+	--verbose|-v @bool # Be verbose
+	--arch # Set an alternate architecture
+	--cachedir # Set an alternate package cache location
+	--color (auto|always|never) # Colorize the output
+	--config # Set an alternate configuration file
+	--confirm @bool # Always ask for confirmation
+	--debug @bool # Display debug messages
+	--disable-download-timeout @bool # Disable download timeout
+	--gpgdir # Set an alternate home directory for GnuPG
+	--hookdir # Set an alternate hook location
+	--logfile # Set an alternate log file
+	--noconfirm @bool # Do not ask for any confirmation
+	--sysroot # Set an alternate system root
+	database # Modify the package database
+		--check|-k @bool # test local database for validity (-kk for sync databases)
+		--quiet|-q @bool # suppress output of success messages
+		--asdeps @bool # mark packages as non-explicitly installed
+		--asexplicit @bool # mark packages as explicitly installed
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+	files # Query the files database
+		--list|-l @bool # list the files owned by the queried package
+		--quiet|-q @bool # show less information for query and search
+		--regex|-x @bool # enable searching using regular expressions
+		--refresh|-y @bool # download fresh package databases from the server
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+		--machinereadable @bool
+	query # Query installed packages
+		--changelog|-c @bool # view the changelog of a package
+		--deps|-d @bool # list packages installed as dependencies [filter]
+		--explicit|-e @bool # list packages explicitly installed [filter]
+		--groups|-g @bool # view all members of a package group
+		--info|-i @bool # view package information (-ii for backup files)
+		--check|-k @bool # check that package files exist (-kk for file properties)
+		--list|-l @bool # list the files owned by the queried package
+		--foreign|-m @bool # list installed packages not found in sync db(s) [filter]
+		--native|-n @bool # list installed packages only found in sync db(s) [filter]
+		--owns|-o # <file>    query the package that owns <file>
+		--file|-p # <package> query a package file instead of the database
+		--quiet|-q @bool # show less information for query and search
+		--search|-s # <regex> search locally-installed packages for matching strings
+		--unrequired|-t @bool # list packages not (optionally) required by any
+		--upgrades|-u @bool # list outdated packages [filter]
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+	remove # Remove packages
+		--cascade|-c @bool # remove packages and all packages that depend on them
+		--nodeps|-d @bool # skip dependency version checks (-dd to skip all checks)
+		--nosave|-n @bool # remove configuration files
+		--print|-p @bool # print the targets instead of performing the operation
+		--recursive|-s @bool # remove unnecessary dependencies
+		--unneeded|-u @bool # remove unneeded packages
+		--assume-installed @bool # <package=version>
+		--dbonly @bool # only modify database entries, not package files
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+		--noprogressbar @bool # do not show a progress bar when downloading files
+		--noscriptlet @bool # do not execute the install scriptlet if one exists
+		--print-format # <string>
+	sync # Synchronize packages
+		--clean|-c @bool # remove old packages from cache directory (-cc for all)
+		--nodeps|-d @bool # skip dependency version checks (-dd to skip all checks)
+		--groups|-g @bool # view all members of a package group
+		--info|-i @bool # view package information (-ii for extended information)
+		--list|-l # <repo>    view a list of packages in a repo
+		--print|-p @bool # print the targets instead of performing the operation
+		--quiet|-q @bool # show less information for query and search
+		--search|-s # <regex> search remote repositories for matching strings
+		--sysupgrade|-u @bool # upgrade installed packages (-uu enables downgrades)
+		--downloadonly|-w @bool # download packages but do not install/upgrade anything
+		--refresh|-y @bool # download fresh package databases from the server
+		--asdeps @bool # install packages as non-explicitly installed
+		--asexplicit @bool # install packages as explicitly installed
+		--assume-installed @bool # <package=version>
+		--dbonly @bool # only modify database entries, not package files
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+		--ignore # <pkg>   ignore a package upgrade (can be used more than once)
+		--ignoregroup # <grp>
+		--needed @bool # do not reinstall up to date packages
+		--noprogressbar @bool # do not show a progress bar when downloading files
+		--noscriptlet @bool # do not execute the install scriptlet if one exists
+		--overwrite # <glob>
+		--print-format # <string>
+	deptest # Check dependency satisfaction
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+	upgrade # Upgrade or add packages from file
+		--nodeps|-d @bool # skip dependency version checks (-dd to skip all checks)
+		--print|-p @bool # print the targets instead of performing the operation
+		--downloadonly|-w @bool # download packages but do not install/upgrade anything
+		--asdeps @bool # install packages as non-explicitly installed
+		--asexplicit @bool # install packages as explicitly installed
+		--assume-installed @bool # <package=version>
+		--dbonly @bool # only modify database entries, not package files
+		--disable-sandbox @bool
+		--disable-sandbox-filesystem @bool
+		--disable-sandbox-syscalls @bool
+		--ignore # <pkg>   ignore a package upgrade (can be used more than once)
+		--ignoregroup # <grp>
+		--needed @bool # do not reinstall up to date packages
+		--noprogressbar @bool # do not show a progress bar when downloading files
+		--noscriptlet @bool # do not execute the install scriptlet if one exists
+		--overwrite # <glob>
+		--print-format # <string>

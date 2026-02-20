@@ -1,0 +1,172 @@
+# Nix CLI schema for fast-completer
+nix # Nix package manager
+	--help @bool # Show help message
+	--version @bool # Show version
+	--debug @bool # Set verbosity level to debug
+	--quiet @bool # Decrease verbosity level
+	--verbose|-v @bool # Increase verbosity level
+	--log-format (bar|bar-with-logs|internal-json|raw) # Set format of log output
+	--no-net @bool # Disable substituters and flake fetching
+	--option # Set a Nix configuration option
+	--print-build-logs|-L @bool # Print full build logs
+	--max-jobs|-j # Maximum number of parallel builds
+	--cores # Number of CPU cores to use
+	--extra-experimental-features # Enable experimental Nix features
+	--refresh @bool # Consider all previously downloaded files out-of-date
+	build # Build a derivation or fetch a store path
+		--out-link|-o # Path of result symlink
+		--no-link @bool # Do not create a result symlink
+		--print-out-paths @bool # Print output paths
+		--rebuild @bool # Rebuild an already built package
+		--json @bool # Produce output in JSON format
+		--derivation @bool # Operate on the store derivation
+	develop # Run a bash shell with the build environment
+		--build @bool # Run the build phase
+		--check @bool # Run the check phase
+		--command|-c # Command to run instead of a shell
+		--configure @bool # Run the configure phase
+		--ignore-environment|-i @bool # Clear entire environment
+		--install @bool # Run the install phase
+		--keep|-k # Keep specified environment variable
+		--phase # Phase to run
+		--profile # Profile to update
+		--redirect # Redirect a store path to a mutable location
+		--unset|-u # Unset specified environment variable
+	edit # Open the Nix expression of a package in an editor
+	eval # Evaluate a Nix expression
+		--apply # Apply a function to each evaluation result
+		--json @bool # Produce output in JSON format
+		--raw @bool # Print raw strings
+		--read-only @bool # Do not instantiate each evaluated derivation
+		--write-to # Write each evaluation result to a file
+	flake # Manage Nix flakes
+		check # Check whether the flake evaluates
+		clone # Clone flake repository
+			--dest-dir # Clone destination directory
+		info # Show flake metadata
+			--json @bool # Produce output in JSON format
+		init # Create a flake in the current directory
+			--template|-t # Template flake URL
+		lock # Create missing lock file entries
+			--update-input # Update a specific flake input
+			--override-input # Override a specific flake input
+		metadata # Show flake metadata
+			--json @bool # Produce output in JSON format
+		new # Create a flake in a new directory
+			--template|-t # Template flake URL
+		prefetch # Download a flake into the Nix store
+			--json @bool # Produce output in JSON format
+		show # Show the outputs provided by a flake
+			--json @bool # Produce output in JSON format
+			--legacy @bool # Show legacy packages
+		update # Update flake lock file
+			--override-input # Override a specific flake input
+			--commit-lock-file @bool # Commit updated lock file
+	hash # Compute and convert cryptographic hashes
+		file # Print cryptographic hash of a regular file
+			--base16 @bool # Print hash in base-16
+			--base32 @bool # Print hash in base-32
+			--base64 @bool # Print hash in base-64
+			--sri @bool # Print hash in SRI format
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+		path # Print cryptographic hash of the NAR serialisation of a path
+			--base16 @bool # Print hash in base-16
+			--base32 @bool # Print hash in base-32
+			--base64 @bool # Print hash in base-64
+			--sri @bool # Print hash in SRI format
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+		to-base16 # Convert a hash to base-16
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+		to-base32 # Convert a hash to base-32
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+		to-base64 # Convert a hash to base-64
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+		to-sri # Convert a hash to SRI format
+			--type|-t (md5|sha1|sha256|sha512) # Hash algorithm
+	log # Show the build log of a derivation
+	path-info # Query information about store paths
+		--json @bool # Produce output in JSON format
+		--sigs @bool # Show signatures
+		--size|-s @bool # Print size of the NAR serialisation
+		--human-readable|-h @bool # Print sizes in human-readable format
+		--closure-size|-S @bool # Print closure size
+	profile # Manage Nix profiles
+		diff-closures # Show closure difference between profile versions
+			--profile # Profile to operate on
+		history # Show profile history
+			--profile # Profile to operate on
+			--json @bool # Produce output in JSON format
+		install # Install a package into a profile
+			--profile # Profile to operate on
+			--priority # Package priority
+		list # List profile contents
+			--profile # Profile to operate on
+			--json @bool # Produce output in JSON format
+		remove # Remove packages from a profile
+			--profile # Profile to operate on
+		rollback # Roll back to previous profile version
+			--profile # Profile to operate on
+			--to # Version to roll back to
+		upgrade # Upgrade packages in a profile
+			--profile # Profile to operate on
+		wipe-history # Delete non-current profile versions
+			--profile # Profile to operate on
+			--older-than # Delete versions older than
+	registry # Manage flake registries
+		add # Add a flake registry entry
+		list # List flake registries
+			--json @bool # Produce output in JSON format
+		pin # Pin a flake to its current version
+		remove # Remove a flake registry entry
+	repl # Start an interactive Nix expression evaluator
+	run # Run a Nix application
+	search # Search for packages
+		--json @bool # Produce output in JSON format
+		--exclude|-e # Hide packages matching regex
+	shell # Run a shell with specified packages available
+		--command|-c # Command to run
+		--ignore-environment|-i @bool # Clear entire environment
+		--keep|-k # Keep specified environment variable
+		--unset|-u # Unset specified environment variable
+	show-config # Show Nix configuration
+		--json @bool # Produce output in JSON format
+	show-derivation # Show the contents of a store derivation
+		--recursive|-r @bool # Include derivations of dependencies
+	store # Manipulate a Nix store
+		cat # Print contents of a file in the Nix store
+		copy-log # Copy build log to another store
+		copy-sigs # Copy signatures to a store
+		delete # Delete paths from the Nix store
+			--ignore-liveness @bool # Ignore liveness
+		diff-closures # Show closure difference between store paths
+		dump-path # Dump a store path to stdout as NAR
+		gc # Perform garbage collection
+			--max # Stop after freeing specified bytes
+			--dry-run @bool # Print what would be deleted
+		info # Show store configuration
+		ls # Show information about a path in the Nix store
+			--long|-l @bool # Show more detailed info
+			--recursive|-R @bool # List recursively
+			--directory|-d @bool # Show directory itself
+			--json @bool # Produce output in JSON format
+		make-content-addressed # Rewrite a path to content-addressed form
+		optimise # Replace identical files in the store by hard links
+		path-from-hash-part # Query a store path from its hash part
+		ping # Test whether a store can be accessed
+		prefetch-file # Download a file into the Nix store
+			--hash-type # Hash algorithm
+			--name # Name component of the store path
+			--json @bool # Produce output in JSON format
+			--executable @bool # Make the resulting file executable
+		repair # Repair store paths
+		sign # Sign store paths
+			--key-file|-k # File containing signing key
+		verify # Verify the integrity of store paths
+			--sigs-needed|-n # Require N valid signatures
+			--no-contents @bool # Do not verify contents
+			--no-trust @bool # Do not verify trust
+	upgrade-nix # Upgrade Nix to the latest version
+		--profile # Profile to operate on
+	why-depends # Show why a store path depends on another
+		--all|-a @bool # Show all edges, not just shortest
+		--precise @bool # Print exact files causing dependency
