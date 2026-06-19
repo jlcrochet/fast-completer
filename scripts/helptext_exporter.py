@@ -115,17 +115,28 @@ def discover_subcommands_from_help(config, command_parts):
         'switches',
     }
 
-    # Command entry regex: name[, alias]... followed by gap and description
-    # Captures all names (e.g. "build, b" or "i, install") then picks longest
-    # Also handles oclif "$ name" prefix format (e.g. "  $ deploy  Deploy site")
-    _CMD_RE = re.compile(r'^\s{2,}\$?\s*([\w.-]+(?:,\s+[\w.-]+)*)\s{2,}(.+)')
+    # Command entry regex: name[, alias]... followed by gap and description.
+    # Captures all names (e.g. "build, b" or "i, install") then picks longest.
+    # Also handles oclif "$ name" prefix format (e.g. "  $ deploy  Deploy site").
+    # Some CLIs use helper commands prefixed with "+" (e.g. "+upload").
+    cmd_name_re = r'\+?[\w][+\w.-]*'
+    _CMD_RE = re.compile(
+        rf'^\s{{2,}}\$?\s*({cmd_name_re}(?:,\s+{cmd_name_re})*)\s{{2,}}(.+)'
+    )
 
     for line in output.split('\n'):
         stripped = line.strip()
 
         # Detect start of commands section
-        if re.match(r'^(Commands|Subcommands|Available Commands|Available commands):?\s*$', stripped, re.IGNORECASE) or \
-           re.match(r'^(Main |Other |Additional )?[Cc]ommands:?\s*$', stripped, re.IGNORECASE):
+        if re.match(
+            r'^(Commands|Subcommands|Available Commands|Available commands|Services):?\s*$',
+            stripped,
+            re.IGNORECASE,
+        ) or re.match(
+            r'^(Main |Other |Additional )?([Cc]ommands|[Ss]ervices):?\s*$',
+            stripped,
+            re.IGNORECASE,
+        ):
             in_commands = True
             continue
 
@@ -141,7 +152,7 @@ def discover_subcommands_from_help(config, command_parts):
                     continue
 
                 # Headers that mention commands restart/continue command parsing.
-                if re.search(r'\bcommands?\b', header):
+                if re.search(r'\b(commands?|services?)\b', header):
                     in_commands = True
                     continue
 
@@ -161,16 +172,16 @@ def discover_subcommands_from_help(config, command_parts):
                 names = [n.strip() for n in m.group(1).split(',')]
                 name = max(names, key=len)
                 # Skip placeholder entries like "..."
-                if re.fullmatch(r'[\w](?:[\w.-]*[\w-])?', name):
+                if re.fullmatch(cmd_name_re, name):
                     subcommands.append({
                         'name': name,
                         'summary': m.group(2).strip()
                     })
-            elif re.match(r'^\s{2,8}([\w][\w.-]*)\s*$', line):
+            elif re.match(rf'^\s{{2,8}}({cmd_name_re})\s*$', line):
                 # Command with no description (limit indent to avoid
                 # picking up continuation lines from multi-line descriptions)
                 name = line.strip()
-                if re.fullmatch(r'[\w](?:[\w.-]*[\w-])?', name):
+                if re.fullmatch(cmd_name_re, name):
                     subcommands.append({'name': name, 'summary': ''})
             elif not re.match(r'^\s', line):
                 # Non-indented line = end of commands section
@@ -263,11 +274,14 @@ def discover_subcommands(config, command_parts):
 
 # Standard flag regex: matches clap, git, pip formats (single-line)
 # "  -s, --long <VALUE>  description" or "      --long  description"
+_STD_LONG_FLAG = r'--(?:\[no-\])?[\w][\w.-]*'
+_STD_VALUE = r'(?:\[?=?\s*<?([^>\]\s]+)>?\]?)?'
+
 _STD_FLAG_RE = re.compile(
     r'^\s+'
     r'(?:(-\w),\s+)?'            # optional short flag
-    r'(--[\w][\w.-]*)'           # long flag
-    r'(?:\[?=?\s*<?([^>\s]+)>?)?' # optional value placeholder
+    rf'({_STD_LONG_FLAG})'        # long flag
+    rf'{_STD_VALUE}'              # optional value placeholder
     r'\s{2,}'                     # gap before description
 )
 
@@ -276,8 +290,8 @@ _STD_FLAG_RE = re.compile(
 _STD_FLAG_MULTILINE_RE = re.compile(
     r'^\s{2,}'
     r'(?:(-\w),\s+)?'            # optional short flag
-    r'(--[\w][\w.-]*)'           # long flag
-    r'(?:\[?=?\s*<?([^>\s]+)>?)?' # optional value placeholder
+    rf'({_STD_LONG_FLAG})'        # long flag
+    rf'{_STD_VALUE}'              # optional value placeholder
     r'\s*$'                       # end of line (no description)
 )
 
@@ -349,11 +363,25 @@ def _normalize_flag_alias(flag):
 
     Some CLIs (notably clap-based) render repeatable flags as
     `--verbose...`. The trailing ellipsis is not part of the actual option
-    token, so strip it before writing schemas.
+    token, so strip it before writing schemas. Git renders flags that can be
+    negated as `--[no-]flag`; the positive spelling is the canonical option
+    token for completion.
     """
+    if flag and flag.startswith('--[no-]'):
+        flag = '--' + flag[len('--[no-]'):]
     if flag and flag.endswith('...'):
         return flag[:-3]
     return flag
+
+
+def _is_negatable_flag(flag):
+    return bool(flag and flag.startswith('--[no-]'))
+
+
+def _negative_flag_alias(flag):
+    if not _is_negatable_flag(flag):
+        return None
+    return '--no-' + flag[len('--[no-]'):]
 
 
 def _pick_primary_aliases(alias_spec):
@@ -398,6 +426,42 @@ def _pick_primary_aliases(alias_spec):
     return short, long
 
 
+def _append_standard_flag(flags, config, short, long, value_type, desc):
+    """Append parsed standard-style flag(s), expanding Git --[no-] aliases."""
+    raw_long = long
+    short = _normalize_flag_alias(short)
+    long = _normalize_flag_alias(long)
+
+    if long in config.inherited_skip_flags:
+        return
+    if short and short in config.inherited_skip_flags:
+        return
+
+    flag = {'name': long, 'description': desc}
+    if short:
+        flag['short'] = short
+    if value_type:
+        flag['takes_value'] = True
+        # Check for choices in description: [possible values: a, b, c]
+        choices_m = re.search(r'\[possible values:\s*([^\]]+)\]', desc)
+        if choices_m:
+            flag['choices'] = [
+                c.strip() for c in choices_m.group(1).split(',')
+            ]
+    else:
+        flag['type'] = 'bool'
+
+    flags.append(flag)
+
+    negative = _negative_flag_alias(raw_long)
+    if negative and negative not in config.inherited_skip_flags:
+        flags.append({
+            'name': negative,
+            'description': f"opposite of {long}",
+            'type': 'bool',
+        })
+
+
 def parse_flags_standard(config, command_parts):
     """Parse standard --help flag format (clap, git, pip).
 
@@ -421,8 +485,6 @@ def parse_flags_standard(config, command_parts):
         m = _STD_FLAG_RE.match(line)
         if m:
             short, long, value_type = m.group(1), m.group(2), m.group(3)
-            short = _normalize_flag_alias(short)
-            long = _normalize_flag_alias(long)
             desc_start = m.end()
             desc = line[desc_start:].strip() if desc_start < len(line) else ''
             i += 1
@@ -448,8 +510,6 @@ def parse_flags_standard(config, command_parts):
                 if m:
                     short, long = m.group(1), m.group(2)
                     value_type = m.group(3)
-                    short = _normalize_flag_alias(short)
-                    long = _normalize_flag_alias(long)
                     desc_start = m.end()
                     desc = line[desc_start:].strip() if desc_start < len(line) else ''
                     # Nushell types: "string", "int", "path" indicate value
@@ -463,8 +523,6 @@ def parse_flags_standard(config, command_parts):
                     m = _STD_FLAG_MULTILINE_RE.match(line)
                     if m:
                         short, long, value_type = m.group(1), m.group(2), m.group(3)
-                        short = _normalize_flag_alias(short)
-                        long = _normalize_flag_alias(long)
                         # Grab description from next indented line(s)
                         desc = ''
                         if i + 1 < len(lines):
@@ -499,27 +557,7 @@ def parse_flags_standard(config, command_parts):
                             i += 1
                             continue
 
-        # Skip filtered flags
-        if long in config.inherited_skip_flags:
-            continue
-        if short and short in config.inherited_skip_flags:
-            continue
-
-        flag = {'name': long, 'description': desc}
-        if short:
-            flag['short'] = short
-        if value_type:
-            flag['takes_value'] = True
-            # Check for choices in description: [possible values: a, b, c]
-            choices_m = re.search(r'\[possible values:\s*([^\]]+)\]', desc)
-            if choices_m:
-                flag['choices'] = [
-                    c.strip() for c in choices_m.group(1).split(',')
-                ]
-        else:
-            flag['type'] = 'bool'
-
-        flags.append(flag)
+        _append_standard_flag(flags, config, short, long, value_type, desc)
 
     return flags
 

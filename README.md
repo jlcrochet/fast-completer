@@ -402,6 +402,7 @@ python scripts/new_schema.py <framework> <cli_name> "<description>"
 | Flux | `schemas/flux/` | Cobra |
 | Fly.io CLI | `schemas/flyctl/` | Cobra |
 | gcloud CLI | `schemas/gcloud/` | custom |
+| Google Workspace CLI | `schemas/gws/` | custom |
 | git | `schemas/git/` | custom |
 | GitHub CLI | `schemas/gh/` | Cobra |
 | GitLab CLI | `schemas/glab/` | Cobra |

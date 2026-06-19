@@ -1916,10 +1916,9 @@ static bool parse_tsv_schema(const char *path, BlobGen *bg, CommandNode *root, c
         }
 
         // Command line: name [# description]
-        // Validate that line starts with a valid command name character (alphanumeric or _)
+        // Validate that line starts with a valid command name character.
         char c = content_start[0];
-        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
-              (c >= '0' && c <= '9') || c == '_')) {
+        if (!(isalnum((unsigned char)c) || c == '_' || c == '+')) {
             fcmp_errorf("%s:%d: error: unexpected character '%c'; expected command name, parameter (--), or comment (#)\n",
                     path, line_num, c);
             free(content);
